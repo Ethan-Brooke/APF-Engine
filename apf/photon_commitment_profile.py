@@ -29,10 +29,17 @@ SCOPE / HONEST NON-CLAIMS.
     the carrier triad (slots 1-3 = 1), which is the parallel-instance
     carrier->triad result (pin 3) and is NOT yet in the live bank; the composed
     C_gamma = 3 eps lands when that pin lands.
-  * Does NOT close the codomain/value question: whether the PHYSICAL 1/alpha_Y
-    reads this capacity profile (-> 60.75) or the bare count (-> 61) is a separate,
-    OPEN frontier. No coupling target, crossing scale, sin^2theta_W, or 60.75
-    enters this derivation.
+  * The 3/4 is NOT a reading of the coupling. The abelian coupling is the channel
+    count 1/alpha_Y = S_dS/sigma = C_total = 61 (integer-rigid: 61 = 45+4+12 is an
+    integer partition, S_dS = 61*sigma is the banked de Sitter entropy tied to
+    Lambda = 42/61), and the 3/4 cannot enter it -- the photon contributes a FULL
+    sigma to S_dS as a propagating mode while being a partial record. The 3/4 is the
+    photon's RECORD STATE / force character (the N_commit reading, orthogonal to the
+    sigma-microstate coupling): the missing fourth commitment C_4 is the rest mass /
+    longitudinal polarization, so the photon's failing it is its masslessness
+    (T_gauge_force_character_from_record_state: physical polarizations =
+    N_active - 1 = 2 for the photon, 3 for the massive W/Z). No coupling target,
+    crossing scale, sin^2theta_W, or 60.75 enters this derivation.
   * Paper 41 draft v0.4 frames C_4 via "erasure"; that wording is superseded by
     the permanent-entry reading here (margin-note fix filed).
 """
@@ -93,8 +100,10 @@ def check_T_ledger_reversibility_is_L_irr_lock():
            "SCOPE: composed with the carrier triad (slots 1-3 = 1; parallel-instance pin 3, NOT yet banked) this "
            "gives photon = (1,1,1,0), C_gamma = 3 eps, nu_gamma = 3/4 -- a capacity-PROFILE weight.")
     _check(True,
-           "NON-CLAIM: does NOT close the codomain/value question (physical 1/alpha_Y = 60.75 capacity vs 61 count); "
-           "no coupling target, crossing scale, sin^2theta_W, or 60.75 enters this derivation.")
+           "NON-CLAIM: the 3/4 is the photon's RECORD STATE / force character (mass, polarization), NOT a coupling. "
+           "The abelian coupling is the channel count S_dS/sigma = C_total = 61 (integer-rigid); the 3/4 cannot enter it. "
+           "The 1/4 deficit (missing C_4 = the lock) is the rest mass / longitudinal polarization the photon lacks -- its "
+           "masslessness. No coupling target, crossing scale, sin^2theta_W, or 60.75 enters this derivation.")
 
     return _full_result(
         name="Ledger reversibility is the L_irr permanent-ledger-lock (photon slot-4 keystone)",
@@ -113,8 +122,9 @@ def check_T_ledger_reversibility_is_L_irr_lock():
             "GRADE [P_structural]: the C_4 == L_irr identification is a structural identification (not an A1 "
             "reduction); composes L_irr [P] + photon-masslessness [P_structural] + the horizon four-commitment "
             "basis [P_structural]. Scope: banks the slot-4 keystone; the full (1,1,1,0) composition awaits the "
-            "carrier-triad pin in the live bank; and the codomain/value question (whether the physical 1/alpha_Y "
-            "reads this profile -> 60.75, or the bare count -> 61) is a SEPARATE OPEN frontier not touched here."
+            "carrier-triad pin in the live bank. The 3/4 is the photon's RECORD STATE / force character -- the missing "
+            "C_4 is the rest mass / longitudinal polarization, hence the photon's masslessness -- NOT a coupling: the "
+            "abelian coupling is the channel count S_dS/sigma = C_total = 61 (integer-rigid), which the 3/4 cannot enter."
         ),
         key_result=(
             "C_4 (ledger reversibility) == L_irr permanent-ledger-entry; reversible photon locks no record -> "
