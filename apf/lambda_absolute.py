@@ -1009,6 +1009,124 @@ def check_T_Lambda_absolute_bulletproof():
 
 
 # =============================================================================
+# §6b  EW-Lambda unified suppression form  (2026-06-08)
+# =============================================================================
+
+_M_PL_GEV = 1.220910e19   # Planck mass, standard convention (GeV) -- comparator only
+_N_C = 3                  # color triplet (the sqrt(N_c) carrier, T_field)
+
+
+def check_T_ew_lambda_unified_suppression():
+    """T_ew_lambda_unified_suppression [P_structural] -- the electroweak hierarchy and the
+    cosmological-constant smallness are ONE suppression mechanism.
+
+    Both physical scales are the Planck scale times an order-unity capacity prefactor times the
+    Boltzmann occupation exp(-S) of a single microstate of the relevant capacity ledger:
+
+        v_H^2 / M_Pl^2     = (prefactor_EW)^2 * exp(-S_bos),   S_bos = C_boson * sigma = 16*ln(102)
+        rho_Lambda / M_Pl^4 = (C_vacuum/d_eff) * exp(-S_dS),   S_dS  = C_total * sigma = 61*ln(102)
+
+    The electroweak well is a MASS-squared reading the bosonic sub-ledger (C_boson = C_gauge +
+    C_Higgs = 12+4 = 16); the vacuum energy is an energy DENSITY reading the full ledger
+    (C_total = 61). The mass enters at amplitude power (the Born root, -1/2), the density at
+    probability power (-1). Both directions are FORCED by entropy positivity: S>0 -> exp(-S)<1 ->
+    scale < M_Pl; an enhancing-condensate reading would need a negative entropy, excluded by the
+    A1 capacity cap (M_Pl is the maximal admissible scale).
+
+    Mass-sibling of the banked Lambda two-factor form (T_Lambda_coefficient_degeneracy_audit).
+    Cross-references the EW-floor modules ew_bosonic_enforcement_reservoir.py and
+    ew_pre_branch_necessity.py (the floor exponent d_eff^(-C_boson/2) = exp(-S_bos/2)). What stays
+    [P_structural] is the shared core principle -- scale^2/M_Pl^2 = single-microstate occupation of
+    the sector ledger -- together with identification (B) (the vev read as a per-state amplitude,
+    not a coherent condensate); the count of which ledger is forced (16 by measure type + staging;
+    61 the full ledger).
+
+    [P_structural]; v_H and rho_Lambda are predictions vs comparators (Fermi v_H, observed
+    rho_Lambda); no measured target consumed.
+    """
+    d_eff = _CANON_D_EFF_SM
+    sigma = _math.log(d_eff)
+    C_boson = _CANON_K_GAUGE + _CANON_K_HIGGS          # 12 + 4 = 16
+    check(C_boson == 16, "C_boson = C_gauge + C_Higgs = 12 + 4 = 16")
+    C_total = _CANON_K_SM                              # 61
+    C_vacuum = _CANON_C_VACUUM                         # 42
+
+    S_bos = C_boson * sigma
+    S_dS = C_total * sigma
+
+    # exact suppression identities
+    check(abs(_math.exp(-S_bos / 2.0) / d_eff ** (-(C_boson / 2.0)) - 1.0) < 1e-9,
+          "EW suppression exp(-S_bos/2) = d_eff^(-C_boson/2) = 102^(-8) exactly")
+    check(abs(_math.exp(-S_dS) / d_eff ** (-C_total) - 1.0) < 1e-9,
+          "Lambda suppression exp(-S_dS) = d_eff^(-C_total) = 102^(-61) exactly")
+
+    # EW vev (a MASS): amplitude = half the entropy (Born root)
+    pref_ew = _math.sqrt(_N_C) / (_math.pi * _math.sqrt(C_boson)) * (12.0 / 7.0)
+    v_H = _M_PL_GEV * pref_ew * _math.exp(-S_bos / 2.0)
+    check(abs(v_H - 246.22) / 246.22 < 0.01,
+          "v_H = M_Pl * pref_ew * exp(-S_bos/2) = %.2f GeV (comparator: Fermi 246.22)" % v_H)
+
+    # Lambda density: probability = full entropy
+    pref_cc = C_vacuum / d_eff                          # 42/102
+    rho_ratio = pref_cc * _math.exp(-S_dS)
+    log10_rho = _math.log10(rho_ratio)
+    check(abs(log10_rho - (-122.944)) < 0.05,
+          "rho_Lambda/M_Pl^4 = (42/102)*exp(-S_dS), log10 = %.3f (comparator obs -122.944, ~8%%)" % log10_rho)
+
+    # shared structural form: mass reads the bosonic sub-ledger, density reads the full ledger
+    check(C_boson < C_total, "EW reads the bosonic sub-ledger (16); Lambda reads the full ledger (61)")
+
+    # direction forced
+    check(S_bos > 0 and _math.exp(-S_bos / 2.0) < 1.0,
+          "S_bos>0 -> suppression v_H<M_Pl forced; enhancement needs S<0 (excluded by A1 cap)")
+
+    return _result(
+        name=("T_ew_lambda_unified_suppression: the electroweak hierarchy (v_H) and the "
+              "cosmological-constant smallness (rho_Lambda) are ONE suppression -- M_Pl * "
+              "(capacity prefactor) * exp(-capacity entropy); mass reads the bosonic sub-ledger "
+              "(C_boson=16) at amplitude/half-power (Born root), density reads the full ledger "
+              "(C_total=61) at probability/full-power [P_structural]"),
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            "Unifies the two hierarchies. v_H^2/M_Pl^2 = pref_EW^2*exp(-S_bos), S_bos=C_boson*sigma="
+            "16*ln(102); rho_Lambda/M_Pl^4 = (C_vacuum/d_eff)*exp(-S_dS), S_dS=C_total*sigma="
+            "61*ln(102). Same object: a Planck scale times an order-unity capacity prefactor times "
+            "the single-microstate occupation exp(-S) of the relevant ledger. The EW well is a "
+            "mass-squared reading the bosonic sub-ledger (16); the vacuum energy is a density "
+            "reading the full ledger (61). Mass enters at amplitude (Born root, -1/2), density at "
+            "probability (-1). Direction FORCED by entropy positivity (S>0 -> scale<M_Pl); "
+            "enhancement needs S<0, excluded by the A1 cap. Mass-sibling of the banked Lambda "
+            "two-factor form (T_Lambda_coefficient_degeneracy_audit); cross-refs the EW-floor "
+            "modules. v_H=246.2 GeV (Fermi 246.22), rho_Lambda/M_Pl^4 ~ 10^-122.9 (obs -122.944, "
+            "~8%). [P_structural]: shared core principle (scale^2/M_Pl^2 = single-microstate "
+            "occupation) + identification (B) (vev = per-state amplitude). Comparators only; no "
+            "measured target consumed."
+        ),
+        key_result=(
+            "EW hierarchy + cosmological constant = one suppression M_Pl*(prefactor)*exp(-capacity "
+            "entropy): EW v_H reads C_boson=16 at half-power (Born root), Lambda reads C_total=61 at "
+            "full power; both suppressions exact (exp(-S/2)=d_eff^-8, exp(-S_dS)=d_eff^-61); "
+            "direction forced by entropy positivity. [P_structural], shared with the banked Lambda form."
+        ),
+        dependencies=['T_Lambda_coefficient_degeneracy_audit',
+                      'T_ew_bosonic_enforcement_reservoir_theorem',
+                      'T_ew_pre_branch_necessity'],
+        artifacts=dict(
+            S_bos=round(S_bos, 4), S_dS=round(S_dS, 4),
+            C_boson=C_boson, C_total=C_total, C_vacuum=C_vacuum, d_eff=d_eff,
+            v_H_GeV=round(v_H, 3), v_H_comparator_Fermi=246.22,
+            log10_rho_Lambda=round(log10_rho, 4), log10_rho_comparator_obs=-122.944,
+            ew_power="amplitude / -1/2 (Born root, mass)",
+            lambda_power="probability / -1 (density)",
+            direction="forced: S>0 -> scale<M_Pl; enhancement (S<0) excluded by A1 cap",
+            grade_note="shared core principle [P_structural] + identification (B); count forced",
+            measured_target_consumed=0,
+        ),
+    )
+
+
+# =============================================================================
 # §7  Registration
 # =============================================================================
 
@@ -1023,6 +1141,8 @@ _CHECKS = {
     'T_Lambda_to_H0_inversion': check_T_Lambda_to_H0_inversion,
     # §6  Composed bulletproof theorem (1 [P], tier 4)
     'T_Lambda_absolute_bulletproof': check_T_Lambda_absolute_bulletproof,
+    # §6b EW-Lambda unified suppression (1 [P_structural], tier 4) -- 2026-06-08
+    'T_ew_lambda_unified_suppression': check_T_ew_lambda_unified_suppression,
 }
 
 

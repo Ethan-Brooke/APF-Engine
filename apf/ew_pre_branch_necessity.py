@@ -32,20 +32,36 @@ SECOND SSB-stage object alongside the lift -- double-using the branch the lift a
 The floor/lift staging (H1, H2) excludes it: the floor is the pre-lift base. So the floor is
 pre-gauge-SSB.
 
-CONSEQUENCE. This UPGRADES:
-  v24.3.182 (pre_branch_typing_proven_forced 0 -> 1; exponent_unconditionally_closed 0 -> 1), and
-  v24.3.179 (reservoir_reading_proven_forced 0 -> 1).
-The EW floor exponent d_eff^(-C_boson/2) = 102^(-8) with C_boson = 16 is now FORCED (the pre-branch
-reservoir reading is the unique consistent interpretation of the banked y_t-free, C_boson=16 floor).
-The audit's gluon objection is dissolved: it applies to the post-SSB local Hessian (Case B), which
-is excluded.
+CONSEQUENCE. The COUNT (C_boson = 16) is forced: 61 is excluded by measure type (the root-measure is
+a bosonic Gaussian-determinant object; Grassmann fermion slots give det^(+1), no root-volume), and
+7-8 is excluded by STAGING (Case B is post-SSB; the 12/7 lift already carries the SSB cone, so the
+floor is the pre-SSB base). With the count forced, the exponent d_eff^(-C_boson/2) = 102^(-8) follows.
+The audit's gluon objection is dissolved: it applies to the post-SSB local Hessian (Case B), excluded.
+
+DE-CIRCULARIZATION (2026-06-08). The earlier Case-B exclusion cited "active 7-8 != C_boson=16" --
+circular, since 16 is the very count the arm establishes. Case B is now excluded by STAGING (it is
+post-SSB; the floor is pre-SSB by the 12/7 lift carrying the SSB cone), which needs no appeal to 16.
+The "exotic absolute" escape uses the same staging exclusion.
+
+GRADE. [P_structural], not unconditional. The count is forced (above); the framing it sits in -- the
+floor as the inverse square root of a bosonic microstate volume, v_floor/M_Pl = (d_eff^C_boson)^(-1/2)
+-- rests on three structural identifications: (staging) the floor is the pre-branch base because the
+lift carries the SSB cone [forced, this check]; (A) the Higgs vacuum is the equipartition measure over
+the bosonic reservoir [P_structural]; (B) the macroscopic Higgs vev is read as a microscopic per-state
+amplitude Omega^(-1/2) (suppressing), not a coherent condensate Omega^(+1/2) (enhancing) [P_structural
+-- the hierarchy mechanism, the load-bearing open frontier]. Identification (B) is the mass-sibling of
+the cosmological constant's smallness (see check_T_ew_lambda_unified_suppression in lambda_absolute.py):
+both read M_Pl x (capacity prefactor) x exp(-capacity entropy), forced in direction by entropy
+positivity / the A1 cap. The export flags below dropped the earlier "unconditionally_forced" /
+"proven_forced" wording to match this grade.
 
 WHAT REMAINS. The exact v_H is still blocked by ONE prefactor clause: the sqrt(N_c) color carrier
 (the y_t no-go v24.3.169 blocks the gauge route). The measure (v24.3.181) and the Planck anchor
-(v24.3.183, gravity) are closed; the exponent (this check) is closed. Only the color carrier is
-left.
+(v24.3.183, gravity) are closed; the exponent count is forced. Identification (B) is the deep open
+frontier; the sqrt(N_c) carrier is the remaining prefactor clause.
 
-[P_structural_ew_pre_branch_necessity; exponent forced by exclusion]; no measured target consumed.
+[P_structural_ew_pre_branch_necessity; count forced by exclusion, framing modulo three structural
+identifications]; no measured target consumed.
 """
 from __future__ import annotations
 
@@ -59,9 +75,9 @@ CASE_B_ACTIVE = (8, 7)               # post-SSB bosonic local Hessian (gluons ca
 EXPORT_FLAGS = dict(
     Export_pre_branch_necessity_theorem_P=1,
     Export_caseA_post_ssb_with_fermions_excluded_by_yt_free_P=1,
-    Export_caseB_post_ssb_bosonic_excluded_by_Cboson16_P=1,
+    Export_caseB_post_ssb_bosonic_excluded_by_staging_P=1,   # de-circularized 2026-06-08 (was: by_Cboson16)
     Export_post_ssb_absolute_escape_excluded_by_floor_lift_staging_P=1,
-    Export_floor_exponent_unconditionally_forced_P=1,    # the close
+    Export_floor_exponent_forced_modulo_structural_identifications_P=1,  # [P_structural]; count forced, framing structural
     Export_only_sqrtNc_carrier_clause_remains_P=1,
     Export_exact_native_vH_P=0,
     measured_target_consumed=0,
@@ -75,17 +91,25 @@ def check_T_ew_pre_branch_necessity_P():
     # CASE A excluded by y_t-freeness: a post-SSB fermion-inclusive object is y_t-dependent
     check(EXPORT_FLAGS["Export_caseA_post_ssb_with_fermions_excluded_by_yt_free_P"] == 1,
           "Case A (post-SSB + fermions): m_t = y_t v/sqrt2 -> y_t-dependent -> contradicts y_t-free")
-    # CASE B excluded by the 16-ledger: a post-SSB bosonic local Hessian gives 7-8 (gluons cancel)
-    for a in CASE_B_ACTIVE:
-        check(a < C_BOSON, f"Case B (post-SSB bosonic): active {a} != 16 (gluons cancel, v24.3.178)")
-    check(EXPORT_FLAGS["Export_caseB_post_ssb_bosonic_excluded_by_Cboson16_P"] == 1,
-          "Case B contradicts C_boson=16")
-    # exhaustiveness + the exotic escape excluded by floor/lift staging
+    # CASE B excluded by STAGING (de-circularized 2026-06-08): a post-SSB bosonic local Hessian is a
+    # post-symmetry-breaking object -- its gluon cancellation needs the color-singlet Higgs order
+    # parameter, which exists only after the vacuum is chosen. The 12/7 lift ALREADY carries the SSB
+    # cone (H2, v24.3.175), so the floor is the pre-SSB base; a post-SSB object is simply not the
+    # floor. This replaces the earlier CIRCULAR "active 7-8 != C_boson=16" citation, which assumed the
+    # very count the arm establishes. (Case B's would-be 7-8 active count is recorded in artifacts.)
+    check(min(CASE_B_ACTIVE) < C_BOSON,
+          "Case B's would-be active count (7-8) differs from 16 -- but this is NOT the exclusion reason")
+    check(EXPORT_FLAGS["Export_caseB_post_ssb_bosonic_excluded_by_staging_P"] == 1,
+          "Case B (post-SSB bosonic) excluded by STAGING: it is post-SSB; the 12/7 lift carries the "
+          "SSB cone, so the floor is the pre-SSB base -> Case B is not the floor (no appeal to 16)")
+    # exhaustiveness + the exotic escape excluded by the same floor/lift staging principle
     check(EXPORT_FLAGS["Export_post_ssb_absolute_escape_excluded_by_floor_lift_staging_P"] == 1,
           "post-SSB absolute escape excluded: the 12/7 lift already carries the SSB stage; floor is pre-lift base")
-    # therefore: exponent forced
-    check(EXPORT_FLAGS["Export_floor_exponent_unconditionally_forced_P"] == 1,
-          "floor is the pre-branch reservoir -> exponent d_eff^(-C_boson/2) = 102^-8 forced")
+    # therefore: the COUNT is forced (16 not 61 by measure type, not 7-8 by staging); the reservoir
+    # framing it sits in is [P_structural] (identifications A + B), so the exponent is [P_structural]
+    check(EXPORT_FLAGS["Export_floor_exponent_forced_modulo_structural_identifications_P"] == 1,
+          "count forced -> exponent d_eff^(-C_boson/2) = 102^-8; [P_structural] modulo identifications "
+          "(A) vacuum=reservoir-measure, (B) vev=per-state amplitude")
     supp = float(D_EFF) ** (-(C_BOSON / 2.0))
     check(abs(supp - D_EFF ** (-8)) < 1e-30, "forced exponent: 102^(-8)")
     # what remains
@@ -97,9 +121,10 @@ def check_T_ew_pre_branch_necessity_P():
     return _result(
         name=("T_ew_pre_branch_necessity: {y_t-free floor AND C_boson=16 ledger AND separated 12/7 "
               "lift} => the floor is the pre-gauge-SSB bosonic reservoir, by exclusion (post-SSB "
-              "with fermions is y_t-dependent; post-SSB bosonic gives 7-8 != 16). CLOSES the floor "
-              "exponent d_eff^(-C_boson/2)=102^-8 unconditionally; upgrades v24.3.179 + v24.3.182 "
-              "[P_structural]"),
+              "with fermions is y_t-dependent; post-SSB bosonic excluded by staging). FORCES the "
+              "floor count C_boson=16 (61 by measure type, 7-8 by staging) -> exponent "
+              "d_eff^(-C_boson/2)=102^-8 [P_structural, modulo identifications A+B]; upgrades "
+              "v24.3.179 + v24.3.182"),
         tier=4,
         epistemic='P_structural',
         summary=(
@@ -107,20 +132,22 @@ def check_T_ew_pre_branch_necessity_P():
             "residual was against 'y_t-free alone', which is too weak). Given the banked floor "
             "(y_t-free, C_boson=16) and the separated 12/7 lift: assume post-SSB. CASE A (with "
             "fermions) carries m_t=y_t v/sqrt2 -> y_t-dependent -> contradicts y_t-free. CASE B "
-            "(bosonic) has the color-singlet Higgs cancel the gluon block (v24.3.178) -> active 7-8 "
-            "-> contradicts C_boson=16. Exhaustive for a post-SSB LOCAL object; both excluded. The "
+            "(bosonic) is post-SSB (its gluon cancellation needs the chosen color-singlet vacuum) -> "
+            "excluded by STAGING: the 12/7 lift carries the SSB cone, the floor is pre-SSB "
+            "(de-circularized 2026-06-08; no appeal to 16). Exhaustive for a post-SSB LOCAL object; both excluded. The "
             "only escape (post-SSB absolute non-local bosonic measure, keeping 16) is excluded by "
             "the floor/lift staging: the 12/7 lift already carries the SSB stage, so the floor is "
-            "the pre-lift base. Therefore the floor is the pre-branch reservoir and the exponent "
-            "d_eff^(-C_boson/2)=102^-8 is FORCED. Upgrades v24.3.179 (reservoir_reading_proven_forced "
-            "0->1) and v24.3.182 (pre_branch_typing + exponent_unconditionally_closed 0->1). The "
+            "the pre-lift base. Therefore the floor is the pre-branch reservoir and the count is "
+            "forced; the exponent d_eff^(-C_boson/2)=102^-8 follows [P_structural] (modulo "
+            "identifications A+B). Upgrades v24.3.179 (reservoir reading) and v24.3.182 (typing). The "
             "audit's gluon objection is dissolved (it applies to Case B, excluded). REMAINS: only the "
             "sqrt(N_c) color carrier (measure v24.3.181 + Planck anchor v24.3.183 already closed)."
         ),
         key_result=(
-            "floor exponent 102^-8 FORCED by exclusion: post-SSB+fermions is y_t-dependent, "
-            "post-SSB+bosonic gives 7-8!=16; floor/lift staging kills the exotic escape. Exponent "
-            "unconditionally closed; only the sqrt(N_c) carrier remains for exact v_H."
+            "floor count C_boson=16 forced by exclusion: post-SSB+fermions is y_t-dependent, "
+            "post-SSB+bosonic (Case B) excluded by staging (de-circularized); floor/lift staging "
+            "kills the exotic escape. Exponent 102^-8 [P_structural] (modulo identifications A+B); "
+            "only the sqrt(N_c) carrier remains for exact v_H."
         ),
         dependencies=['T_ew_pre_branch_reservoir_ordering',
                       'T_ew_bosonic_enforcement_reservoir_theorem',
@@ -128,9 +155,10 @@ def check_T_ew_pre_branch_necessity_P():
                       'T_sigma_scale_yukawa_free_geometric_component',
                       'T_ew_branch_incidence_density_geometry'],
         artifacts=dict(
-            C_boson=16, case_B_active="7-8 (gluons cancel)", forced_exponent="102^-8",
-            excludes="post-SSB local Hessian (A: y_t-dependent; B: 7-8 != 16) + post-SSB absolute (staging)",
-            remaining_open="sqrt(N_c) color carrier only",
+            C_boson=16, case_B_active="7-8 (would-be; excluded by staging, not by count)",
+            forced_exponent="102^-8",
+            excludes="post-SSB local Hessian (A: y_t-dependent; B: post-SSB, excluded by staging) + post-SSB absolute (staging)",
+            remaining_open="sqrt(N_c) color carrier + identifications A/B",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

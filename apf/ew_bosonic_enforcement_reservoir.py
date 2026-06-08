@@ -42,7 +42,9 @@ WHAT IS BANKED vs HELD.
   Export_EW_hierarchy_exponent_d_eff_minus_8_under_reservoir_reading_P       = 1
   Export_Paper7_Ctotal61_restricted_by_capacity_type_for_static_bosonic_well_P = 1
   Export_EW_floor_active_capacity_Cboson_equals_16_under_local_Higgs_Hessian_P = 0  (rejected, v24.3.178)
-  Export_reservoir_reading_proven_forced_P = 1   (CLOSED v24.3.184 by the necessity theorem)
+  Export_reservoir_reading_forced_modulo_structural_identifications_P = 1   ([P_structural]; necessity
+    theorem v24.3.184, de-circularized 2026-06-08 -- the count is forced, the reservoir framing rests
+    on identifications (A) vacuum=measure and (B) vev=per-state amplitude)
   Export_exact_native_vH_P = 0                   (prefactor still blocked, v24.3.177)
 
 THE RESIDUAL (the one thing that keeps this conditional). The reservoir reading is ADMISSIBLE,
@@ -74,7 +76,7 @@ EXPORT_FLAGS = dict(
     Export_EW_hierarchy_exponent_d_eff_minus_8_under_reservoir_reading_P=1,
     Export_Paper7_Ctotal61_restricted_by_capacity_type_for_static_bosonic_well_P=1,
     Export_EW_floor_active_capacity_Cboson_equals_16_under_local_Higgs_Hessian_P=0,
-    Export_reservoir_reading_proven_forced_P=1,       # CLOSED v24.3.184 (necessity-by-exclusion)
+    Export_reservoir_reading_forced_modulo_structural_identifications_P=1,  # [P_structural]; v24.3.184, de-circularized 2026-06-08
     Export_no_double_count_with_12_over_7_lift_P=1,
     Export_exact_native_vH_P=0,
     measured_target_consumed=0,
@@ -104,9 +106,11 @@ def check_T_ew_bosonic_enforcement_reservoir_theorem_P():
     check(EXPORT_FLAGS["Export_no_double_count_with_12_over_7_lift_P"] == 1,
           "reservoir count 16 (depth) and 12/7 (EW SSB cone lift) are different objects, no double-count")
 
-    # the residual: reading admissible + motivated but NOT proven forced
-    check(EXPORT_FLAGS["Export_reservoir_reading_proven_forced_P"] == 1,
-          "reservoir reading FORCED v24.3.184: post-SSB readings excluded (A y_t-dependent, B gives 7-8)")
+    # the count is forced (post-SSB readings excluded: A y_t-dependent, B by staging), but the
+    # reservoir FRAMING rests on identifications (A) vacuum=measure, (B) vev=per-state amplitude -> [P_structural]
+    check(EXPORT_FLAGS["Export_reservoir_reading_forced_modulo_structural_identifications_P"] == 1,
+          "reservoir reading forced modulo structural identifications (necessity v24.3.184, "
+          "de-circularized 2026-06-08): post-SSB readings excluded (A y_t-dependent, B by staging)")
     # prefactor + exact value still blocked
     check(EXPORT_FLAGS["Export_exact_native_vH_P"] == 0, "exact native v_H still blocked (prefactor, v24.3.177)")
     check(EXPORT_FLAGS["measured_target_consumed"] == 0, "no measured target consumed")
@@ -150,7 +154,7 @@ def check_T_ew_bosonic_enforcement_reservoir_theorem_P():
             suppression="d_eff^(-C_boson/2) = 102^-8",
             reservoir_reading="EW floor = absolute pre-branch bosonic reservoir root-volume",
             disclaimed_reading="local Higgs branch Hessian (active 7-8) gives 16 -> 0",
-            residual="reservoir reading admissible+motivated but NOT proven forced",
+            residual="reservoir reading admissible+motivated but NOT proven forced (forced modulo identifications A/B)",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )
