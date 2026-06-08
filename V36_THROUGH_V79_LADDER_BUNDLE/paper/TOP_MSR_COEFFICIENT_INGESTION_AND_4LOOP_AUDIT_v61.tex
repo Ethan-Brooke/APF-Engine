@@ -1,0 +1,70 @@
+
+\section{APF v61: Top MSR Coefficient Ingestion and Four-Loop Audit}
+\label{sec:top-msr-v61}
+
+\paragraph{Purpose.}
+Version v60 implemented a fail-closed evaluator for the APF top object
+\[
+  m_t^{\rm MSR}(R_\star)=168.1690557938\,\mathrm{GeV},\qquad
+  R_\star=85.857222698385\,\mathrm{GeV}.
+\]
+Version v61 ingests sourced coefficients for the MSR-to-pole series through four-loop order, evaluates the resulting pole witness, and audits the result before any claim promotion.
+
+\paragraph{Coefficient normalization.}
+The evaluator uses
+\[
+  m_t^{\rm pole}-m_t^{\rm MSR}(R)
+  = R\sum_{n=1}^L c_n\left(\frac{\alpha_s(R)}{4\pi}\right)^n.
+\]
+The ingested coefficient vector is
+\[
+  (c_1,c_2,c_3,c_4)
+  = \left(
+  5.333333333333,\ 131.785000000000,\ 4699.703000000000,\ 214829.905730030296
+  \right),
+\]
+where the fourth coefficient is obtained from the top four-loop on-shell/MSbar coefficient
+\((8.615\pm0.017)\alpha_s^4\) after conversion to the \(\alpha_s/(4\pi)\) normalization.
+
+\paragraph{Four-loop running witness.}
+Using \(n_f=5\) QCD beta coefficients through \(\beta_3\), the evaluator gives
+\[
+  \alpha_s(R_\star)=0.119084611158869.
+\]
+The termwise mass shifts are
+\[
+\begin{aligned}
+  \Delta_1 &= 4.339316649273\,\mathrm{GeV},\\
+  \Delta_2 &= 1.016095141009\,\mathrm{GeV},\\
+  \Delta_3 &= 0.343387582223\,\mathrm{GeV},\\
+  \Delta_4 &= 0.148749217342\,\mathrm{GeV}.
+\end{aligned}
+\]
+Thus
+\[
+  \Phi_t^{\rm pole,4\ell}
+  = 174.016604383647\,\mathrm{GeV}.
+\]
+
+\paragraph{Audit result.}
+Against the audit-only direct/MC-style top reference
+\(172.56\pm0.31\,\mathrm{GeV}\), the residual is
+\[
+  \Delta_t^{4\ell}=1.456604383647\,\mathrm{GeV}.
+\]
+A conservative envelope including the quoted audit uncertainty, \(\alpha_s\) parametric uncertainty, the four-loop coefficient uncertainty, pole-renormalon floor, and five-loop-and-beyond estimate is
+\[
+  \sigma_{v61}=0.449435570715\,\mathrm{GeV},
+  \qquad
+  \frac{\Delta_t^{4\ell}}{\sigma_{v61}}=3.240963729972.
+\]
+Therefore the sourced four-loop pole witness does not support promotion to physical-final top closure.
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{
+\textbf{v61 conclusion.} The top branch is now stronger but more honest: coefficient ingestion and a four-loop executable evaluator are closed, while top physical-final closure is blocked. The earlier LO near-hit is not stable under sourced higher-order QCD coefficients. Top remains an APF MSR-route object unless a revised APF-native codomain or full R-evolution comparison theorem is supplied.
+}}
+\end{center}
+
+\paragraph{No-smuggling rule.}
+The PDG/direct top value is audit-only. It is not used to select \(R_\star\), \(\alpha_s\), loop order, or any coefficient. Coefficients are fixed before comparison. If agreement worsens at higher order, the result is reported rather than tuned away.

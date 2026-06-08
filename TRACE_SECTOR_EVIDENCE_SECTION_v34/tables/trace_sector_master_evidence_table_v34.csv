@@ -1,0 +1,11 @@
+sector,object,trace_or_route_value,status,result,boundary
+EW,sin2_theta_W,3/13 = 0.230769230769,[P_trace],EW mixing trace anchor,not a scheme-free physical weak-angle claim
+EW,gprime_over_g,sqrt(3/10) = 0.547722557505,[P_derived],coupling-ratio consequence of trace anchor,trace-level geometry not running-coupling export
+EW,M_W_APF_TRACE,80.362164334 GeV,[P_trace],W trace anchor,not directly physical on-shell mass
+EW,M_W_APF_to_OS,DIZET same-input 80.357341077578084 GeV; residual -4.823256 MeV; pull 1.090034 sigma,[P_export_candidate],reviewed same-input on-shell transport validation,not independent APF derivation of full EW loops
+EW,WZ_bridge,0.881283906299,[P_bridge],external-MZ on-shell consistency bridge,MZ is external input not derived here
+fermion,bottom,4.1774904559270665 GeV,[P_export_candidate_not_physical_final],MSbar self-scale export candidate; residual -5.509544 MeV; pull -0.787 sigma,publication review of trace-to-MSbar codomain admission
+fermion,top,168.1690557938 GeV,[P_trace + P_ext-MSR_codomain + P_terminal_scheme_closeout],external high-scale MSR lane only; physical export blocked,no APF-native top trace to MSR scale-selection theorem without external pole anchor
+fermion,charged_leptons,"raw=(1.290305474,261.429844901,4178.022853) MeV; lambda6 normalized=(0.526765004,106.728287,1705.453337) MeV",[P_trace_vector + P_normalization_candidate + P_generation_residual_closeout],six-channel normalization candidate; residuals +3.09 percent,+1.01 percent,-4.02 percent,no charged-lepton generation residual operator derivation
+fermion,charm,0.6800912249261419 GeV,[P_trace + P_MSbar_route_knockout],direct self-scale MSbar export rejected; residual about -46.6 percent,missing charm trace-to-MSbar normalization or transport map
+fermion,light_quarks,"u=1.153209852 MeV; d=3.870916422 MeV; s=87.143281634 MeV",[P_trace + P_low_energy_QCD_obstruction],direct MSbar(2GeV) pole self-scale constituent and ratio routes rejected,missing light-quark trace-to-MSbar 2GeV chiral/lattice transport map

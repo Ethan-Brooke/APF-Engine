@@ -1,0 +1,192 @@
+{
+  "status": "P_bottom_msbar_transport_route",
+  "version": "v23_0",
+  "apf_version": "23.0.0",
+  "pass_status": "BOTTOM_MSBAR_TRANSPORT_ROUTE_PASS",
+  "route_status": "P_validation_plus_MSbar_route_contract",
+  "export_status": "OPEN_identity_or_QCD_transport_required",
+  "first_failed_gate": "APF_TRACE_TO_MSBAR_CODOMAIN_IDENTITY_OR_QCD_TRANSPORT_MAP",
+  "next_gate": "BOTTOM_QCD_RUNNING_THRESHOLD_COVARIANCE_LEDGER",
+  "metrics": {
+    "m_b_trace_gev": 4.1774904559270665,
+    "pdg_msbar_gev": 4.183,
+    "residual_gev": -0.005509544072933359,
+    "residual_mev": -5.509544072933359,
+    "relative_residual_percent": -0.13171274379472528,
+    "pull_quoted_scale": -0.7870777247047656,
+    "pull_90cl_rescaled": -1.294627650173346,
+    "pdg_one_sigma_equiv_gev": 0.004255697823382384,
+    "pole_residual_gev": -0.6025095440729338,
+    "pole_pull": -10.041825734548897
+  },
+  "route_stages": [
+    {
+      "stage_id": "B_TRACE_ANCHOR",
+      "status": "CLOSED",
+      "input_object": "APF trace-ratio theorem",
+      "output_object": "m_b^APF_TRACE",
+      "consumes_target_observable": false,
+      "required_for_export": true,
+      "note": "Banked trace value; no bottom target observable consumed."
+    },
+    {
+      "stage_id": "B_MSBAR_TARGET_CONTRACT",
+      "status": "CLOSED",
+      "input_object": "PDG target definition",
+      "output_object": "mbar_b(mbar_b)_MSbar comparison codomain",
+      "consumes_target_observable": false,
+      "required_for_export": true,
+      "note": "Defines the comparison target; not an input to the trace derivation."
+    },
+    {
+      "stage_id": "B_SHORT_DISTANCE_VALIDATION",
+      "status": "CLOSED",
+      "input_object": "m_b^APF_TRACE and PDG MSbar anchor",
+      "output_object": "few-MeV validation residual",
+      "consumes_target_observable": false,
+      "required_for_export": false,
+      "note": "Validation comparison only; does not prove codomain identity."
+    },
+    {
+      "stage_id": "B_POLE_KNOCKOUT",
+      "status": "CLOSED",
+      "input_object": "PDG pole-mass context",
+      "output_object": "not-pole-like certificate",
+      "consumes_target_observable": false,
+      "required_for_export": false,
+      "note": "TRACE value is far from pole-mass context, supporting short-distance interpretation."
+    },
+    {
+      "stage_id": "B_QCD_RUNNING_MAP",
+      "status": "OPEN",
+      "input_object": "APF_TRACE codomain",
+      "output_object": "MSbar running mass at self scale",
+      "consumes_target_observable": false,
+      "required_for_export": true,
+      "note": "Requires identity theorem or evaluated QCD running/threshold map."
+    },
+    {
+      "stage_id": "B_ALPHA_S_THRESHOLD_LEDGER",
+      "status": "OPEN",
+      "input_object": "alpha_s, thresholds, correlations",
+      "output_object": "uncertainty/covariance payload",
+      "consumes_target_observable": false,
+      "required_for_export": true,
+      "note": "Needed for physical export, not needed for validation."
+    },
+    {
+      "stage_id": "B_PHYSICAL_EXPORT",
+      "status": "BLOCKED",
+      "input_object": "all prior stages",
+      "output_object": "m_b^APF->MSbar(m_b)",
+      "consumes_target_observable": false,
+      "required_for_export": true,
+      "note": "Blocked until route map and covariance are evaluated."
+    }
+  ],
+  "comparison_table": [
+    {
+      "object_id": "m_b_APF_TRACE",
+      "value_gev": 4.1774904559270665,
+      "uncertainty_gev": null,
+      "scheme": "APF_TRACE",
+      "source_status": "P_local",
+      "role": "prediction_anchor",
+      "note": "Computed from trace-ratio theorem."
+    },
+    {
+      "object_id": "m_b_m_b_MSbar_PDG_2025",
+      "value_gev": 4.183,
+      "uncertainty_gev": 0.007,
+      "scheme": "MSbar running mass at self scale",
+      "source_status": "external_reviewed_anchor",
+      "role": "validation_target",
+      "note": "PDG/pdgLive: mbar_b(mu=mbar_b) in MSbar; quoted CL=90%."
+    },
+    {
+      "object_id": "m_b_pole_context_PDG",
+      "value_gev": 4.78,
+      "uncertainty_gev": 0.06,
+      "scheme": "pole mass context",
+      "source_status": "external_context",
+      "role": "knockout_target",
+      "note": "PDG listing gives pole-mass context from two-loop conversion; APF trace is not pole-like."
+    }
+  ],
+  "claim_boundaries": [
+    {
+      "claim_id": "BOTTOM_VALIDATION_NEIGHBORHOOD",
+      "status": "SAFE",
+      "safe_language": "APF bottom TRACE lies within a few MeV of the PDG MSbar self-scale anchor.",
+      "forbidden_language": "APF has already proved the physical MSbar mass."
+    },
+    {
+      "claim_id": "BOTTOM_SHORT_DISTANCE",
+      "status": "SAFE",
+      "safe_language": "The pole-mass knockout supports treating APF_TRACE as short-distance-like, not pole-like.",
+      "forbidden_language": "APF_TRACE is identical to MSbar by definition."
+    },
+    {
+      "claim_id": "BOTTOM_ROUTE_CONTRACT",
+      "status": "SAFE",
+      "safe_language": "The bottom route has a closed target contract and an explicit transport/covariance obligation.",
+      "forbidden_language": "No transport theorem is needed."
+    },
+    {
+      "claim_id": "BOTTOM_EXPORT_STATUS",
+      "status": "SAFE",
+      "safe_language": "m_b^{APF->MSbar}(m_b) remains an export candidate only after the codomain identity or QCD map is evaluated.",
+      "forbidden_language": "This module exports final physical bottom mass."
+    },
+    {
+      "claim_id": "NEXT_WORK",
+      "status": "SAFE",
+      "safe_language": "Next work is the QCD running/threshold/correlation ledger or a codomain-identity theorem.",
+      "forbidden_language": "Move to light quarks before resolving bottom transport."
+    }
+  ],
+  "no_smuggling_table": [
+    {
+      "item": "m_b_PDG_MSbar",
+      "value": "4.183",
+      "class_": "target_observable",
+      "consumed_by_trace_derivation": false,
+      "allowed_role": "comparison_only"
+    },
+    {
+      "item": "PDG_uncertainty",
+      "value": "0.007",
+      "class_": "target_uncertainty",
+      "consumed_by_trace_derivation": false,
+      "allowed_role": "pull_context_only"
+    },
+    {
+      "item": "alpha_s(m_b)",
+      "value": "0.223 +/- 0.008",
+      "class_": "transport_constant",
+      "consumed_by_trace_derivation": false,
+      "allowed_role": "future_route_input"
+    },
+    {
+      "item": "pole_mass_context",
+      "value": "4.78 +/- 0.06",
+      "class_": "knockout_context",
+      "consumed_by_trace_derivation": false,
+      "allowed_role": "not_pole_like_test"
+    },
+    {
+      "item": "m_t_APF_TRACE",
+      "value": "168.1690557938",
+      "class_": "APF_trace_anchor",
+      "consumed_by_trace_derivation": true,
+      "allowed_role": "permitted_internal_anchor"
+    },
+    {
+      "item": "bottom_trace_ratio",
+      "value": "0.024841017488076312",
+      "class_": "APF_trace_ratio",
+      "consumed_by_trace_derivation": true,
+      "allowed_role": "permitted_internal_ratio"
+    }
+  ]
+}

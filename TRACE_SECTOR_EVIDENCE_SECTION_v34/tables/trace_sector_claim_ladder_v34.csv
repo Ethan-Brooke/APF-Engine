@@ -1,0 +1,9 @@
+claim_id,status,safe_language,forbidden_language
+TRACE_SECTOR_EVIDENCE_CLOSED,SAFE,"APF closes the EW trace sector and fermion trace sector locally; physical export is route-dependent.","APF derives all physical fermion masses and electroweak observables."
+EW_SECTOR_CLOSED,SAFE,"The APF EW trace sector closes at mixing/coupling/W export-candidate level.","Full physical electroweak sector final derivation is complete."
+W_EXPORT_CANDIDATE,SAFE,"The APF W trace anchor survives reviewed same-input DIZET on-shell transport at about 1.09 sigma.","APF independently derives all electroweak loops."
+BOTTOM_EXPORT_CANDIDATE,SAFE,"The APF bottom trace is admitted as an MSbar self-scale export candidate.","All quark masses export directly."
+TOP_TERMINAL_SCHEME,SAFE,"Top closes as a terminal scheme/codomain result with external MSR lane only.","APF exports the physical top mass."
+CHARGED_LEPTON_RESIDUAL,SAFE,"Charged leptons have a six-channel normalization candidate but retain a generation residual obstruction.","APF exports charged-lepton pole masses."
+CHARM_KNOCKOUT,SAFE,"Charm direct self-scale MSbar export is knocked out.","APF exports charm mass without a normalization/transport map."
+LIGHT_QUARK_QCD_OBSTRUCTION,SAFE,"Light quarks require low-energy QCD/chiral/lattice transport.","APF directly exports light-quark current masses."

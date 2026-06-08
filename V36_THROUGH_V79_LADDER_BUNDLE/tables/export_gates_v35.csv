@@ -1,0 +1,7 @@
+gate,required_for_export_candidate,description,failure_status
+G1_CODOMAIN_DECLARED,yes,"scheme/codomain such as OS, MSbar, MSR, pole, MC, or lattice MSbar(2 GeV)",trace remains local only
+G2_TRANSPORT_MAP,yes,non-inverse map or identity codomain admission,transport obstruction
+G3_CONSTANTS_LEDGER,yes,"external constants, scales, and conventions listed",hidden input risk
+G4_COVARIANCE,yes,uncertainty/covariance propagated through route,validation incomplete
+G5_NO_SMUGGLING,yes,target observable not consumed as route input,claim invalid
+G6_RESIDUAL_CHANNELS,yes,residual assigned to named route/scheme/covariance channels,uninterpreted near-hit

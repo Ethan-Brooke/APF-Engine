@@ -1,0 +1,5 @@
+object,status,evidence,claim
+APF MSR source,closed,m_t^MSR(Rstar)=168.1690557938 GeV; Rstar=85.857222698385 GeV,P_source_closed
+LO numeric evaluator,closed executable,script computes LO pole witness and reproduces v58,P_LO_numeric_evaluator_closed
+L>=2 evaluator,fail-closed until coefficient ingestion,script exits with TOP_MSR_MULTILOOP_NUMERIC_EVALUATOR_FAIL_CLOSED when c2+ missing,P_fail_closed_multiloop_boundary
+full physical-final top mass,not claimed,multi-loop MSR/R-evolution/OS-MSbar coefficient ingestion still required,not_P_physical_final

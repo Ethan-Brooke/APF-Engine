@@ -1,0 +1,44 @@
+{
+  "active_outputs": {
+    "alpha_s_10GeV": 0.18034846867202772,
+    "alpha_s_3GeV": 0.2575869836500778,
+    "alpha_s_bottom_start_from_MZ": 0.22810693284895198,
+    "alpha_s_charm_start_from_MZ": 0.3977811577835508,
+    "m_b_APF_10GeV_GeV": 3.62505496939129,
+    "m_c_APF_3GeV_GeV": 0.979226596181155
+  },
+  "active_status": {
+    "bottom": "[P_threshold-matched QCD evaluator benchmark closed] at m_b(10 GeV)",
+    "charm": "[P_threshold-matched QCD evaluator benchmark closed] at m_c(3 GeV)"
+  },
+  "benchmark_closure": {
+    "bottom": {
+      "delta_MeV": 0.11184622835180846,
+      "published_case": "m_b(m_b)=4.163 GeV -> m_b(10 GeV)=3.610 GeV",
+      "published_target_GeV": 3.61,
+      "status": "BENCHMARK_PASS",
+      "tolerance_MeV": 1.0,
+      "v78_result_GeV": 3.6101118462283517
+    },
+    "charm": {
+      "delta_MeV": 0.5518890879715466,
+      "published_case": "m_c(m_c)=1.279 GeV -> m_c(3 GeV)=0.986 GeV",
+      "published_target_GeV": 0.986,
+      "status": "BENCHMARK_PASS",
+      "tolerance_MeV": 1.0,
+      "v78_result_GeV": 0.9865518890879715
+    }
+  },
+  "closed_claim": "c,b QCD running evaluator closed to threshold-matched benchmark parity",
+  "module": "APF_v79_QCD_EVALUATOR_CLOSEOUT_AND_REGISTRY_UPDATE",
+  "next_optional_work": "attach real RunDec/CRunDec adapter for exact library parity; otherwise branch is closed for APF registry use",
+  "nonclaims": [
+    "not a full official RunDec binary replacement",
+    "not complete higher-loop decoupling-constant parity",
+    "not pole mass export",
+    "not physical final",
+    "not Delta=0",
+    "not fitted to APF outputs"
+  ],
+  "status": "QCD_EVALUATOR_CLOSEOUT_AND_REGISTRY_UPDATE_PASS"
+}

@@ -1,0 +1,46 @@
+{
+  "stamp": "LIGHT_QUARK_APF_SIDE_COMPLETION_BOUNDARY_PASS",
+  "version": "v54",
+  "status": "P_light_quark_APF_side_complete_external_chilat_required_v54",
+  "Tuds_APF_MeV": {
+    "u": 1.1532098523996768,
+    "d": 3.870916422334003,
+    "s": 87.14328163365137
+  },
+  "identity_residual_percent": {
+    "u": -46.610654981496445,
+    "d": -17.64007612055313,
+    "s": -6.798629268822064
+  },
+  "least_squares_scalar_kappa": 1.0733634928018108,
+  "least_squares_scalar_residual_percent": {
+    "u": -42.69382615253807,
+    "d": -11.59786443786565,
+    "s": 0.038948821933607006
+  },
+  "closed": [
+    "source_Tuds",
+    "identity_knockout",
+    "universal_scalar_knockout",
+    "no_APF_only_export_boundary",
+    "external_ledger_requirements"
+  ],
+  "external_required": [
+    "hadronic_calibration_set",
+    "lattice_spacing_and_scale_setting",
+    "lattice_action_and_ensembles",
+    "chiral_ansatz",
+    "em_isospin_convention",
+    "renormalization_factor",
+    "scheme_conversion",
+    "joint_covariance"
+  ],
+  "not_claimed": [
+    "P_export_candidate_uds",
+    "P_physical_final",
+    "Delta_uds_zero"
+  ],
+  "next_theorem": "APF_LIGHT_QUARK_EXTERNAL_CHIRAL_LATTICE_EVALUATOR_IMPORT",
+  "checks_passed": 77,
+  "checks_total": 77
+}

@@ -1,0 +1,85 @@
+{
+  "package": "APF_v41_CHARGED_LEPTON_TRACE_VECTOR_CLOSURE",
+  "status": "CHARGED_LEPTON_TRACE_VECTOR_CLOSURE_PASS",
+  "theorem": "APF charged-lepton trace-vector closure from down-family trace source and pole-LO export candidate",
+  "claim": "v41 closes the charged-lepton APF trace vector using T_l=diag(1/3,3,1) T_d and promotes charged leptons to a leading-order pole export candidate, not a final physical mass theorem.",
+  "source_inputs": {
+    "T_d_APF_TRACE_GeV": [
+      0.003870916422334,
+      0.087143281633652,
+      4.1774904559271
+    ],
+    "N_c": 3,
+    "R_d_to_l": "diag(1/3,3,1)",
+    "nu_l": "1/sqrt(6)",
+    "pole_codomain": "Z_l^pole=I for LO bookkeeping"
+  },
+  "new_closed": {
+    "T_l_APF_TRACE_GeV": [
+      0.0012903054741113334,
+      0.261429844900956,
+      4.1774904559271
+    ],
+    "source_map": "T_l=R_d_to_l T_d",
+    "pole_LO_prediction_GeV": [
+      0.0005267650039821162,
+      0.10672828725704815,
+      1.7054533370613425
+    ],
+    "no_double_count_gate": "R_d_to_l is source map only; applying it again to T_l is forbidden",
+    "G1_G2_status": "pole codomain and LO transport map closed"
+  },
+  "diagnostic_only_external_comparison": {
+    "pole_reference_GeV": [
+      0.00051099895,
+      0.1056583755,
+      1.77693
+    ],
+    "absolute_residual_GeV": [
+      1.5766053982116152e-05,
+      0.0010699117570481531,
+      -0.0714766629386574
+    ],
+    "relative_residual_percent": [
+      3.0853398000360177,
+      1.0126142409298666,
+      -4.022480510693016
+    ],
+    "note": "external pole masses are used only after the APF route is fixed; they do not define T_l or coefficients"
+  },
+  "still_open": {
+    "QED_pole_finite_transport": "needed to explain residual vector beyond LO",
+    "numeric_trace_covariance": "deferred until Sigma_d is imported from trace-sector bank",
+    "running_codomain": "MSbar(mu) requires QED running constants and thresholds",
+    "physical_final": "not claimed"
+  },
+  "forbidden_inputs_not_used": [
+    "m_e_pole_as_source",
+    "m_mu_pole_as_source",
+    "m_tau_pole_as_source",
+    "running_charged_lepton_masses_as_source",
+    "PDG_or_world_average_fit",
+    "least_squares_fit_to_target_vector",
+    "inverse_solution_for_T_l_from_targets"
+  ],
+  "gate_status": {
+    "G1_CODOMAIN_DECLARED": "closed for leading pole codomain",
+    "G2_TRANSPORT_MAP": "closed at LO: Phi=nu_l R_d_to_l T_d",
+    "G3_CONSTANTS_LEDGER": "closed for APF-side LO ledger: T_d,N_c,nu_l; QED constants deferred for residual/running",
+    "G4_COVARIANCE": "formal propagation closed; numeric Sigma_d deferred",
+    "G5_NO_SMUGGLING": "pass: no charged-lepton target masses used in source or route",
+    "G6_RESIDUAL_CHANNELS": "pass at candidate level: QED/pole, APF-route, trace-covariance, experimental channels named"
+  },
+  "promotion": {
+    "before": "charged leptons: P_source_gate^T_l + P_codomain^pole_ready / not exported",
+    "after": "charged leptons: P_export_candidate^pole_LO / not physical final",
+    "not_claimed": [
+      "P_physical_final",
+      "P_QED_running_final",
+      "zero residual",
+      "pole mass derivation to experimental precision"
+    ]
+  },
+  "next_theorem": "APF_CHARGED_LEPTON_QED_RESIDUAL_TRANSPORT_THEOREM",
+  "checks_total": 152
+}

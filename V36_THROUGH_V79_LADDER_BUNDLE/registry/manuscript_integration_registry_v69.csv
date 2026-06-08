@@ -1,0 +1,7 @@
+sector,v69_status,active_value,codomain,boundary
+W/EW,P_on_shell_EW_completion_PDG2025_CMS2026,80.362164334 GeV,on-shell EW,no combined average; no physical-final
+charged_leptons,P_pole_completion_APF_envelope_CODATA2022_plus_QED_boundary,"0.511002635789,105.658243985342,1776.916832008411 MeV",pole/CODATA audit,full QED running external
+charm,P_MSbar_mc_covariance_admitted_PDG2025_90CL,1.272334177712 GeV,MSbar(m_c),no pole/final conversion
+bottom,P_MSbar_mb_covariance_admitted_PDG2025_90CL,4.177490455927 GeV,MSbar(m_b),no pole/final conversion
+top,P_direct_MSR_R_evolution_numeric_evaluator_closed,172.716805649486 GeV,MSR(MW_TRACE/2pi),pole branch blocked; no MC equality
+light_quarks,P_source_pretransport_chiral_lattice_boundary,"1.153209852400,3.870916422334,87.143281633651 MeV",source vector only,external chiral/lattice evaluator required

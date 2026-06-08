@@ -1,0 +1,5 @@
+audit_object,value,uncertainty_GeV,role
+PDG direct/MC-style top average,172.560000000000,0.310000000000,audit-only comparator; not input
+APF 4-loop pole witness,174.016604383647,not final; see envelope components,computed output
+residual,1.456604383647,0.449435570715,outside conservative envelope if ratio > 1
+residual_over_envelope,3.240963729972,dimensionless,top finalization fails if >1

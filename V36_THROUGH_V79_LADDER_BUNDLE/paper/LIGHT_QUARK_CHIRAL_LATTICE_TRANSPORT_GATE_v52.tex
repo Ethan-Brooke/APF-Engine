@@ -1,0 +1,84 @@
+% APF v52 -- Light-Quark Chiral/Lattice Transport Gate
+\section{Light-Quark Chiral--Lattice Transport Gate}
+\label{sec:light-quark-chiral-lattice-v52}
+
+\paragraph{Purpose.}
+The heavy-quark routes close because their codomains are either self-scale
+$\overline{\rm MS}$ masses or an explicitly typed MSR scale.  The light quarks
+are different.  The external reference quantities
+\[
+(m_u,m_d,m_s)^{\overline{\rm MS}}(2\,{\rm GeV})
+\]
+are low-energy current-quark masses extracted through chiral and lattice-QCD
+machinery.  A trace anchor is therefore not exportable by identity transport.
+
+\begin{theorem}[Light-quark transport gate]
+Let
+\[
+T_{uds}^{\rm APF}=(T_u,T_d,T_s)
+\]
+be the APF light-quark trace source vector.  A physical light-quark export to
+$\overline{\rm MS}(2\,{\rm GeV})$ is APF-admissible only if there exists a
+source-independent chiral/lattice transport evaluator
+\[
+U_{\chi{\rm lat}}(\mathcal L_{\chi{\rm lat}}):
+T_{uds}^{\rm APF}\longmapsto
+(m_u,m_d,m_s)^{\overline{\rm MS}}(2\,{\rm GeV}),
+\]
+where
+\[
+\mathcal L_{\chi{\rm lat}}=
+\{a,\text{scale setting},\text{lattice action},Z_m,
+\text{chiral ansatz},\text{EM/isospin convention},
+\alpha_s,\text{thresholds},\Sigma_{uds}\}.
+\]
+The evaluator and its constants ledger may not be solved from the external
+$(m_u,m_d,m_s)$ targets.
+\end{theorem}
+
+\paragraph{Source inventory.}
+The inherited down-family trace source contains
+\[
+T_d^{\rm APF}=0.003870916422334\ {\rm GeV},\qquad
+T_s^{\rm APF}=0.087143281633652\ {\rm GeV},
+\]
+but v52 does not contain an APF-native first-generation up trace source
+$T_u^{\rm APF}$.  The heavy up-family anchors $T_c$ and $T_t$ do not determine
+$T_u$ without an additional APF source theorem.
+
+\paragraph{Identity-transport knockout.}
+The identity map is explicitly rejected.  Using the down-family trace components
+as if they were already $\overline{\rm MS}(2\,{\rm GeV})$ values gives
+\[
+T_d^{\rm APF}=3.870916422334\ {\rm MeV},\qquad
+T_s^{\rm APF}=87.143281633652\ {\rm MeV},
+\]
+whereas the external light-quark codomain ledger uses approximately
+\[
+m_d(2\,{\rm GeV})=4.70\ {\rm MeV},\qquad
+m_s(2\,{\rm GeV})=93.5\ {\rm MeV}.
+\]
+The diagnostic residuals are
+\[
+\delta_d=-17.640076120553\%,\qquad
+\delta_s=-6.798629269891\%.
+\]
+They are not repaired by rescaling the trace anchors; they are assigned to the
+missing chiral/lattice transport channel.
+
+\paragraph{No-smuggling rule.}
+The following are forbidden: defining $T_u$ by inverting $m_u(2\,{\rm GeV})$,
+choosing a diagonal three-component correction from the PDG values, selecting a
+lattice scale or chiral ansatz by best APF agreement, or using heavy-quark
+self-scale routes as substitutes for low-energy chiral transport.
+
+\paragraph{Status.}
+Version v52 closes the codomain declaration, the typed transport schema, the
+source inventory, the identity-transport knockout, and the no-smuggling audit:
+\[
+\boxed{
+(u,d,s):[P_{\rm light\ transport\ gate}^{\chi{\rm lat}}]
+/[T_u+\mathcal L_{\chi{\rm lat}}+\Sigma_{uds}\ {\rm required}].
+}
+\]
+It does not claim a light-quark export candidate or final physical masses.

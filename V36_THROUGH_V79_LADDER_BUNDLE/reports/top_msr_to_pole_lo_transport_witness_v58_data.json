@@ -1,0 +1,32 @@
+{
+  "stamp": "TOP_MSR_TO_POLE_LO_TRANSPORT_WITNESS_PASS",
+  "checks_total": 164,
+  "apf_msr_Rstar_GeV": 168.1690557938,
+  "R_star_GeV": 85.8572226983853,
+  "alpha_s_MZ": 0.118,
+  "alpha_s_MZ_error": 0.0009,
+  "MZ_GeV": 91.1876,
+  "n_f": 5,
+  "beta0": 7.666666666666666,
+  "C_F": 1.3333333333333333,
+  "alpha_s_Rstar_1loop": 0.11903230865325212,
+  "delta_m_LO_GeV": 4.337410801563721,
+  "top_pole_LO_witness_GeV": 172.50646659536372,
+  "pdg_direct_average_GeV": 172.56,
+  "pdg_direct_error_GeV": 0.31,
+  "residual_GeV": -0.05353340463628342,
+  "residual_over_pdg_error": -0.17268840205252717,
+  "alpha_covariance_GeV": 0.03337136017762532,
+  "truncation_scale_LO_GeV": 0.21912113937824193,
+  "combined_witness_envelope_GeV": 0.38108755083644985,
+  "residual_over_combined_envelope": -0.1404753435759915,
+  "status_upgrade": "t:P_MSR_Rstar_boundary -> P_MSR_Rstar_plus_LO_pole_transport_witness",
+  "not_claimed": [
+    "P_physical_final",
+    "exact_pole_mass",
+    "MC_mass_equality",
+    "zero_residual",
+    "full_multiloop_MSR_conversion"
+  ],
+  "next_recommended": "APF_PUBLICATION_SCORECARD_OR_FULL_MULTILOOP_TOP_CONVERSION_LEDGER"
+}

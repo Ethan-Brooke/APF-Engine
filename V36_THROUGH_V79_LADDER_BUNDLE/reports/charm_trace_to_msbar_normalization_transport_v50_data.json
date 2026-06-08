@@ -1,0 +1,57 @@
+{
+  "package": "APF_v50_CHARM_TRACE_TO_MSBAR_NORMALIZATION_TRANSPORT",
+  "status": "CHARM_TRACE_TO_MSBAR_NORMALIZATION_TRANSPORT_PASS",
+  "claim": "P_export_candidate_MSBAR_self_scale_v50",
+  "trace_anchor": {
+    "mc_TRACE_GeV": 0.680091224926,
+    "source": "APF trace-sector case table"
+  },
+  "apf_counts": {
+    "K_SM": 61,
+    "K_c": 16,
+    "K_b": 3,
+    "N_gen": 3,
+    "numerator_K_SM_plus_K_c": 77,
+    "denominator_K_c_plus_K_b_plus_N_gen": 22
+  },
+  "transport": {
+    "kappa_c_squared": 3.5,
+    "kappa_c": 1.8708286933869707,
+    "formula": "Phi_c = sqrt((K_SM+K_c)/(K_c+K_b+N_gen)) mc_TRACE = sqrt(7/2) mc_TRACE",
+    "Phi_c_MSbar_mc_GeV": 1.272334177712253
+  },
+  "external_audit": {
+    "ledger": "PDG 2025 update",
+    "codomain": "MSbar mc(mc)",
+    "reference_GeV": 1.273,
+    "uncertainty_GeV": 0.0046,
+    "absolute_residual_GeV": -0.00066582228774692,
+    "relative_residual_percent": -0.05230340045144698,
+    "sigma_units": -0.14474397559715652,
+    "inside_uncertainty": true
+  },
+  "covariance": {
+    "Schur_structural_envelope_percent": 2.6,
+    "residual_over_Schur_envelope": 0.02011669248132576,
+    "QCD_full_covariance": "admitted_boundary_not_finalized"
+  },
+  "forbidden_inputs_not_used": [
+    "PDG charm mass to define kappa_c",
+    "lattice charm averages to define kappa_c",
+    "QCD sum-rule charm value to define kappa_c",
+    "least-squares choice of sqrt(7/2)",
+    "alpha_s chosen from charm residual",
+    "threshold convention chosen from charm residual",
+    "pole mass conversion to set trace value",
+    "manual rescaling of mc_TRACE"
+  ],
+  "status_change": "charm: P_MSbar_knockout -> P_export_candidate_MSBAR_self_scale_v50",
+  "not_claimed": [
+    "P_physical_final",
+    "zero_residual",
+    "full_QCD_covariance_final",
+    "pole_mass_prediction"
+  ],
+  "next_theorem": "APF_BOTTOM_TOP_CHARM_SHARED_QCD_COVARIANCE_LEDGER",
+  "checks_total": 135
+}

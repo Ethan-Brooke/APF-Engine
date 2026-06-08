@@ -1,0 +1,11 @@
+gate_id,status,object,evidence,blocks_full_native_one_loop
+G2M_PV_TENSOR_SUBSTRATE,CLOSED,PV scalar/tensor substrate,v16.9/v17.0 dependencies pass,False
+G2M_RELATION_IMPORT,CLOSED,reviewed Ward/counterterm relations,eleven relation rows imported with dependencies and output objects,False
+G2M_NATIVE_EVALUATED_ROWS,CLOSED,Delta-alpha and leading-rho rows,two same-input rows evaluated natively or as admitted input row,False
+G2M_RELATION_DAG,CLOSED,relation-to-family DAG,all eight families map to imported relation ids or target quarantine,False
+G2M_TARGET_LOCALIZATION,CLOSED,same-input finite target,open numeric families collectively target 0.009880894878,False
+G2M_NO_TARGET_FIT,CLOSED_GUARD,no target fitting,target-only family is quarantined and not admitted as a formula,False
+G2M_SELF_ENERGY_NUMERIC,OPEN,reviewed W/Z/gamma/gamma-Z self-energy evaluator,relations imported but coefficients not evaluated,True
+G2M_VERTEX_BOX_NUMERIC,OPEN,reviewed vertex/box finite evaluator,relations imported but C/D tensor coefficient maps not evaluated,True
+G2M_GAUGE_CANCELLATION_NUMERIC,OPEN,tadpole/ghost/gauge cancellation evaluator,relation slot imported but gauge audit not numeric,True
+G2M_FULL_NATIVE_ONE_LOOP,OPEN,full APF-native one-loop Delta-r,APF_NATIVE_REVIEWED_DIAGRAM_FAMILY_NUMERIC_EVALUATORS_NOT_IMPORTED,True

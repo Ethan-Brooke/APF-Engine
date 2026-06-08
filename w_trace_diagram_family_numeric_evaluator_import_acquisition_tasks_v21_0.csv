@@ -1,0 +1,6 @@
+task_id,family_id,required_formulae,required_integrals,current_support,blocking_reason,next_action
+TASK_SELF_ENERGY_WZ,F_MASS_WEAK_ANGLE_CT,"('Sigma_T^W(M_W^2)', 'Sigma_T^Z(M_Z^2)', 'derivatives where required')","('A0', 'B0', 'B00', 'B1')","('PV substrate', 'Ward mass CT relations')",coefficient formulae not imported,import reviewed Denner self-energy coefficient tables
+TASK_CHARGE_GAMMAZ,F_CHARGE_FIELD_CT,"('Sigma_AA_prime(0)', 'Sigma_AZ(0)')","('B0', 'B0_prime', 'B00', 'B1')","('PV substrate', 'charge Ward relation')",neutral field formulae not imported,import photon/gamma-Z field-renormalization formulas
+TASK_VERTEX,F_VERTEX,"('muon-decay W vertex finite amplitudes',)","('B0', 'C0', 'C_tensor')","('relation slot',)",vertex coefficient maps absent,import reviewed vertex coefficient formulas
+TASK_BOX,F_BOX,"('muon-decay box matching finite amplitudes',)","('C0', 'D0', 'D_tensor')","('relation slot',)",box coefficient maps absent,import reviewed box coefficient formulas
+TASK_GAUGE,F_GAUGE_RESTORING,"('tadpole convention', 'ghost finite rows', 'gauge-parameter cancellation rows')","('A0', 'B0')","('gauge-restoring relation slot',)",gauge-cancellation numeric audit absent,define and verify gauge/tadpole convention across all families

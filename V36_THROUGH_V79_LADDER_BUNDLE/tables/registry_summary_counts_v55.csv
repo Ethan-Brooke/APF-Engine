@@ -1,0 +1,12 @@
+category,key,count
+sector_count,total,6
+route_family,QED pole plus external running ledger,1
+route_family,electroweak on-shell,1
+route_family,heavy-QCD MSR scale-selected,1
+route_family,heavy-QCD self-scale MSbar,2
+route_family,low-energy chiral/lattice QCD,1
+highest_closed_status,P_export_candidate,1
+highest_closed_status,P_export_candidate_MSBAR_self_scale_QCD_ledger,2
+highest_closed_status,P_export_candidate_MSR_Rstar_QCD_ledger,1
+highest_closed_status,P_pole_completion_APF_envelope_CODATA2022_plus_QED_boundary,1
+highest_closed_status,P_source_pretransport_complete_external_chilat_required,1

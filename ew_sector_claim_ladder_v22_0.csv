@@ -1,0 +1,6 @@
+claim_id,claim,status,safe_language,forbidden_language
+EW_TRACE_CLOSED,"The APF electroweak trace sector closes at the level of mixing, coupling ratio, and W trace export-candidate validation.",SAFE,EW trace-sector closure,full physical electroweak sector final derivation
+W_EXPORT_CANDIDATE,The APF W trace anchor survives reviewed same-input on-shell DIZET transport at about 1.09 sigma.,SAFE,on-shell export candidate,APF has independently derived all electroweak loop corrections
+WZ_BRIDGE,"Using external MZ, the APF W trace gives an on-shell W/Z bridge value and scheme-boundary check.",SAFE,external-MZ bridge,APF derives MZ here
+LOOP_PROGRAM_OPEN,Full APF-native electroweak loop reconstruction remains a downstream theorem program.,SAFE,downstream open theorem program,already closed as a native derivation
+NEXT_SECTOR,"After EW closure, the next clean export candidate is bottom-quark MSbar transport.",SAFE,next-sector sequencing,all fermion physical masses are already exported

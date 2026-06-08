@@ -1,0 +1,8 @@
+gate,status,reason
+TRACE_VECTOR_IMPORTED,PASS,APF charged-lepton trace vector preserved from v25/v26
+SIX_CHANNEL_NORMALIZATION_EVALUATED,PASS,lambda_6=1/sqrt(6) applied without target masses
+UNIVERSAL_SCALE_EXACT_EXPORT,FAIL_CLOSED,percent-level generation residuals remain
+KOIDE_GEOMETRY_QUANTIFIED,PASS,APF trace shape is near but not on charged-lepton Koide cone
+ONE_PARAMETER_RESIDUAL_TRANSPORT,FAIL_CLOSED,mean-only and one-mode residual tests do not close all generations
+FULL_RESIDUAL_RECONSTRUCTION,QUARANTINED,three-basis exact residual reconstruction consumes pole masses
+POLE_EXPORT_CANDIDATE,BLOCKED,requires APF generation residual operator

@@ -1,0 +1,60 @@
+{
+  "verifier_status": "CMB_FINITE_MODE_COVARIANCE_BANK_PASS",
+  "all_passed": true,
+  "bank_check_count": 6,
+  "bank_checks_passed": 6,
+  "projection_config": {
+    "ell_min": 2,
+    "ell_max": 30,
+    "theta_c_deg": 60.0,
+    "lambda_pressure": 0.2,
+    "reference_spectrum": "toy_sachs_wolfe_plateau"
+  },
+  "projection_result": {
+    "S_proj": 183.81379328965332,
+    "S_std": 132908.33020323166,
+    "ratio": 0.0013830118323552897,
+    "success": true
+  },
+  "bank_check_results": [
+    {
+      "name": "T_cmb_fm_finite_multipliers",
+      "passed": true,
+      "key_result": "29 multipliers finite=True in [0,2]=True"
+    },
+    {
+      "name": "T_cmb_fm_nonneg_reference",
+      "passed": true,
+      "key_result": "a_ell min=27.33 max=833.3"
+    },
+    {
+      "name": "T_cmb_fm_large_angle_reduction",
+      "passed": true,
+      "key_result": "S_proj/S_std = 0.00138301 (reduced=True)"
+    },
+    {
+      "name": "T_cmb_fm_quadrupole_suppression",
+      "passed": true,
+      "key_result": "m_2 = 0.1021 (target < 0.5; suppressed=True)"
+    },
+    {
+      "name": "T_cmb_fm_high_ell_preservation",
+      "passed": true,
+      "key_result": "max |m_ell - 1| for ell>=20: 0.0171 (preserved=True)"
+    },
+    {
+      "name": "T_cmb_fm_legendre_recurrence",
+      "passed": true,
+      "key_result": "max |Bonnet residual| at x=0.3: 4.441e-16 (tol=1e-12)"
+    }
+  ],
+  "paper_reference": "Paper 19 v0.2 \u00a710 (working draft 2026-05-12)",
+  "audit_reference": "Reference - Paper 19 v0.2 Audit (2026-05-12).md \u2014 G1 closure",
+  "promotion_status": "C1+ (banked finite-mode covariance prototype)",
+  "non_claims": [
+    "Not a Planck likelihood result",
+    "Not a public-data comparison",
+    "Not a C2 promotion (adversarial-alternatives comparison deferred)",
+    "Not a C4 derivation (theta_c and lambda still conventional, not APF-derived)"
+  ]
+}

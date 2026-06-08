@@ -1,0 +1,61 @@
+\section{Structural-Codomain Extension of the Trace-to-Scheme Export Theorem}
+\label{sec:structural-codomain-extension}
+
+The export theorem of \S\ref{sec:trace-to-scheme-export-v35} states the six necessary gates G1--G6 for an APF trace value to be physically exported. Its empirical training set (the W on-shell route, the four fermion-sector routes, the charged-lepton residual closeout) is uniformly numerical: each route's codomain is a single number with a propagated uncertainty. The framework's \textsf{closed} Reconstruction Programs include routes of a different kind --- structural-codomain routes whose target is a theorem-shape rather than a number-shape. The Riemannian-geometry closure (RP1) is the canonical example: the codomain is GR's geometric structure, derived from $A_1$ plus algebraic data without any numerical residual to propagate.
+
+This section extends the export theorem to cover structural-codomain routes by giving G4 and G6 their natural structural-form readings. G1, G2, G3, and G5 read identically across numerical and structural forms.
+
+\subsection{Numerical and structural routes}
+\label{subsec:numerical-vs-structural}
+
+A route $\mathcal{R}$ is \emph{numerical} if its codomain is a real number $M_{\mathcal{S}} \in \mathbb{R}$ together with a measurement uncertainty $\sigma_M > 0$. A route is \emph{structural} if its codomain is a theorem-shape: an assertion about the structural form of an object derived from APF, holding inside a declared domain of validity and breaking down at named edge cases.
+
+Mass routes are numerical: $M_W^{\rm OS}$, $m_b(m_b)_{\rm MSbar}$, etc. Cosmological budget predictions are numerical: $\eta_B$, $n_s$, $\Omega_b/\Omega_c/\Omega_\Lambda$. Riemannian geometry's emergence is structural: the codomain is ``causal order $\Rightarrow$ conformal class $[g]$'' (HKM 1976) or ``$\delta Q = T\, dS \Rightarrow$ linearized Einstein equations.'' No single number is the codomain.
+
+\subsection{Structural form of G4 (covariance $\to$ domain of validity)}
+\label{subsec:G4-structural}
+
+Numerical-form G4 requires the route to propagate input uncertainty through the transport $\tau$ to produce a covariance on $\tau(T)$. For a structural-codomain route there is no numerical $\tau(T)$ to attach a covariance to; the closure is an assertion of structural form, valid uniformly within its domain.
+
+Structural-form G4 reads: \emph{the domain of validity of the structural closure is declared}. The conditions under which the derivation holds are named; the regimes in which it does not extend are explicit. For RP1, the domain of validity is the finite-physical regime within causally connected regions; the closure does not extend to the quantum-gravity regime (parked at RP5 long-term capstone) or to far-from-equilibrium spacetimes (named in Paper 25 H4).
+
+The structural form preserves G4's underlying necessity: $A_1$ requires every distinction's cost to be accounted for. For numerical routes that accounting takes the form of propagated covariance; for structural routes it takes the form of declared domain of validity --- distinctions outside the domain remain unaccounted for and are \emph{by declaration} not part of the route's claim.
+
+\subsection{Structural form of G6 (residual channel $\to$ named edge cases)}
+\label{subsec:G6-structural}
+
+Numerical-form G6 requires the post-comparison residual $\rho = \tau(T) - M_{\mathcal{S}}$ to be assigned to a named channel (covariance-consistent, named operator-of-this-route, named scheme convention, named theory-uncertainty band). For a structural-codomain route there is no $\rho$ in the numerical sense; what plays the analogous role is the set of regimes at the boundary of the route's domain of validity.
+
+Structural-form G6 reads: \emph{the edge cases at the derivation's boundary are named}. RP1's structural-form G6 closes by naming the quantum-gravity regime as RP5, the far-from-equilibrium regime as Paper 25 H4, and the non-Lorentzian structural variants as out-of-scope. The framework does not claim its structural derivation extends into these regimes, and it names each regime explicitly so that any reader knows where the closure stops.
+
+The structural form preserves G6's underlying necessity: $A_1 + $ MD require every distinction in the framework's content to have a paying ledger. For numerical routes that means residuals must have a channel; for structural routes it means edge cases must have a parking destination. An unnamed edge case at the derivation's boundary is content the framework has not paid for.
+
+\subsection{Worked example: RP1 spacetime emergence}
+\label{subsec:rp1-walk}
+
+We walk RP1's structural closure through G1--G6 in the structural-form interpretation.
+
+\begin{itemize}
+\item \textbf{G1.} The codomain is declared as GR-shape geometry: a Lorentzian metric $g_{\mu\nu}$, a conformal class $[g]$, and the linearized Einstein equations $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}$. The codomain category is \emph{differential geometry on a Lorentzian manifold}, an external category to the trace category $\mathcal{T}$.
+\item \textbf{G2.} Four bank witnesses provide the transport. \texttt{check\_L\_HKM\_causal\_geometry} (causal order from $L_{\rm irr}$ uniquely determines $[g]$; HKM 1976). \texttt{check\_L\_metric\_from\_entanglement\_data} (full $g_{\mu\nu}$ from algebraic data, no spatial input). \texttt{check\_L\_spacetime\_emergence\_v2} (spacetime from $A_1$ with zero spatial postulates). \texttt{check\_L\_Einstein\_from\_entanglement} (linearized Einstein equations from $\delta Q = T\, dS$). All non-inverse: GR's structure is the output, not the input.
+\item \textbf{G3.} The mathematical inputs are declared: manifold theory, the entanglement-entropy framework (von Neumann entropy + first law), causal-set order theory. No numerical PDG-style external constants enter at this layer; the inputs are structural-mathematical.
+\item \textbf{G4 (structural).} The domain of validity is declared as the finite-physical regime ($C_\Gamma < \infty$) within causally connected regions. Excluded regimes are named: quantum-gravity scale (Planck regime, parked as RP5 long-term capstone), far-from-equilibrium spacetimes (named in Paper 25 H4 boundary), non-Lorentzian structural variants (out of scope by declaration).
+\item \textbf{G5.} The Lorentzian metric is not consumed as input. The derivation produces $[g]$ from $L_{\rm irr}$ and $g_{\mu\nu}$ from algebraic data; GR's content is output, not input.
+\item \textbf{G6 (structural).} The edge cases at the derivation's boundary are named. Each named edge case has an explicit parking destination: RP5 for quantum gravity, Paper 25 H4 for far-from-equilibrium, ``out of scope'' for non-Lorentzian variants. No edge case is left unnamed.
+\end{itemize}
+
+All six gates close in the structural-form interpretation. RP1 satisfies the export theorem under the structural-codomain extension.
+
+\subsection{Status of the lemma extension}
+\label{subsec:lemma-extension}
+
+The route-status determination lemma extends to nine-for-nine across the codomain-transport program: the six articulated mass routes (W on-shell, bottom, top, charm, light-quark, charged-lepton) plus the three closed Reconstruction Programs (RP1 spacetime emergence, RP3 matter-antimatter asymmetry, RP6 inflation) all instantiate gate-availability patterns consistent with their named statuses.
+
+Sufficiency of G1--G6 (no-G7-exists) and uniqueness of the status determination (no other status patterns possible) remain open as separate theorem programs. The empirical evidence is sufficient to commit to the lemma as a working principle; deductive proof is the next theorem layer.
+
+\subsection{Schema extension}
+\label{subsec:schema-extension}
+
+The structural extension implies one focused modification to the codomain-transport schema (\texttt{apf/codomain\_transport\_schema.py}, banked at v9.6): a new per-route field \texttt{codomain\_type $\in$ \{numerical, structural\}}. The gate-pattern check runs the appropriate G4 / G6 interpretation per route based on this field. Existing routes are typed at landing: mass routes, RP3, RP6, and RP-CT.H0 are numerical; RP1 is structural; routes added in the future declare their type at registration.
+
+This modification is a focused schema-extension task: one new field, one new check (\texttt{check\_T\_codomain\_type\_declared}), one expected bump. It is queued as a Tier-1 follow-on task and does not require any change to the v35 export-theorem statement itself.

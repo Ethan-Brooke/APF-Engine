@@ -1,0 +1,6 @@
+gate,status,evidence
+NO_TARGET_CONSUMPTION,PASS,"External PDG/lattice/code targets appear only as comparison/codomain contracts, not as inputs to trace anchors."
+CODOMAIN_SEPARATION,PASS,"Pole, MSbar, MC, MSR, 2 GeV light-quark and lepton pole lanes are separated."
+EXPORT_CANDIDATE_ONLY_WHEN_ROUTE_ADMITTED,PASS,Only bottom reaches export-candidate status; top/charm/leptons/light quarks remain route-bounded.
+NEGATIVE_CONTROL_KNOCKOUTS_RETAINED,PASS,Failed direct routes are recorded rather than hidden or fitted away.
+MASTER_CLOSURE_DOES_NOT_UPGRADE_BRANCHES,PASS,v33 consolidates v24-v32 outcomes without promoting any unresolved sector.

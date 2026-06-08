@@ -1,0 +1,64 @@
+{
+  "stamp": "LIGHT_QUARK_UP_TRACE_SOURCE_AND_SCALAR_KNOCKOUT_PASS",
+  "version": "v53",
+  "Tuds_APF_GeV": {
+    "u": 0.0011532098523996768,
+    "d": 0.003870916422334003,
+    "s": 0.08714328163365137
+  },
+  "Tuds_APF_MeV": {
+    "u": 1.1532098523996768,
+    "d": 3.870916422334003,
+    "s": 87.14328163365137
+  },
+  "pdg2025_MSbar_2GeV_MeV": {
+    "u": 2.16,
+    "d": 4.7,
+    "s": 93.5
+  },
+  "identity_residual_percent": {
+    "u": -46.610654981496445,
+    "d": -17.64007612055313,
+    "s": -6.798629268822064
+  },
+  "target_over_trace": {
+    "u": 1.8730329050738914,
+    "d": 1.2141827637720202,
+    "s": 1.0729455931332967
+  },
+  "scalar_kappa": {
+    "least_squares_unweighted": 1.0733634928018108,
+    "log_geometric_component_mean": 1.3462810215535337,
+    "PDG_uncertainty_weighted": 1.1156603073932876
+  },
+  "APF_trace_ratios": {
+    "u_over_d": 0.2979164948501623,
+    "s_over_d": 22.51231288044901,
+    "s_over_ud_average": 34.68992492163055
+  },
+  "PDG_central_ratios": {
+    "u_over_d": 0.4595744680851064,
+    "s_over_d": 19.893617021276594,
+    "s_over_ud_average": 27.259475218658892
+  },
+  "closed": [
+    "APF_native_T_u_source_imported",
+    "T_uds_source_vector_closed",
+    "identity_transport_knockout",
+    "universal_scalar_transport_knockout",
+    "no_smuggling_audit_refined"
+  ],
+  "still_required": [
+    "source_independent_U_chilat_evaluator",
+    "external_lattice_chiral_ledger",
+    "joint_covariance_Sigma_uds"
+  ],
+  "not_claimed": [
+    "P_export_candidate_uds",
+    "P_physical_final",
+    "Delta_uds_zero"
+  ],
+  "next_theorem": "APF_LIGHT_QUARK_CHIRAL_LATTICE_EVALUATOR_AND_COVARIANCE_LEDGER",
+  "checks_passed": 127,
+  "checks_total": 127
+}

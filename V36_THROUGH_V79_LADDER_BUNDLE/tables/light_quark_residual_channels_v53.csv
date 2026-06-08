@@ -1,0 +1,10 @@
+channel,status,assignment
+source_T_u,closed_v53,APF-native up first-generation trace source imported from trace-sector source bank
+source_T_d_T_s,closed,"down-family d,s trace components inherited as source anchors only"
+identity_transport,knockout,"u,d,s identity route misses MSbar(2GeV)"
+universal_scalar_transport,knockout,one scalar cannot describe low-energy light-quark codomain
+chiral_lattice_transport,typed_open,external low-energy lattice/chiral evaluator required
+EM_isospin_corrections,typed_open,needed for u/d split and light-quark ratios
+MSbar_2GeV_matching,typed_open,Z_m and renormalization/matching convention required
+covariance,typed_open,joint covariance matrix required before export candidate
+physical_export,not_claimed,"v53 is source closure + knockout theorem, not a numeric light-quark export"

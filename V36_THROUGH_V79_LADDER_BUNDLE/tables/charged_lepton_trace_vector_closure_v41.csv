@@ -1,0 +1,9 @@
+quantity,value,unit,status,meaning
+T_d,"(0.003870916422334,0.087143281633652,4.1774904559271)",GeV,inherited_APF_TRACE_source,down-family trace source; not physical scheme vector
+R_d_to_l,"diag(1/3,3,1)",dimensionless,closed_v39_retyped,capacity-color source map from down branch to charged-lepton branch
+T_l,"(0.001290305474111,0.261429844900956,4.1774904559271)",GeV,closed_v41,charged-lepton APF trace vector T_l=R_d_to_l T_d
+nu_l,1/sqrt(6),dimensionless,inherited_closed,charged-lepton scalar normalization
+Phi_pole_LO_GeV,"(0.000526765003982,0.106728287257048,1.7054533370613)",GeV,pole_LO_export_candidate,leading pole route Phi=nu_l T_l
+Phi_pole_LO_MeV,"(0.526765004,106.728287,1705.453337)",MeV,pole_LO_export_candidate,same route in MeV
+forbidden_inverse,T_l=(Z nu)^(-1) m_l^S,n/a,forbidden,target-smuggling inverse source construction
+forbidden_double_R,Z nu R_d_to_l T_l,n/a,forbidden,double-counts capacity-color modulation

@@ -1,0 +1,9 @@
+forbidden_input,reason,v50_audit
+PDG charm mass to define kappa_c,would be inverse fitting,not used
+lattice charm averages to define kappa_c,would be target-selected normalization,not used
+QCD sum-rule charm value to define kappa_c,would consume codomain as input,not used
+least-squares choice of sqrt(7/2),would be numeric cleanup,not used
+alpha_s chosen from charm residual,would hide QCD transport in target matching,not used
+threshold convention chosen from charm residual,would turn scheme into a fit knob,not used
+pole mass conversion to set trace value,wrong codomain and target reuse,not used
+manual rescaling of mc_TRACE,would alter APF trace anchor,not used

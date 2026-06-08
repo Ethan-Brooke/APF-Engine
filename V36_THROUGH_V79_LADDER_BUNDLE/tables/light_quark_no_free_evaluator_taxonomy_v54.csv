@@ -1,0 +1,7 @@
+route_class,degrees_or_inputs,v54_status,reason
+identity,0 parameters,knocked_out,wrong codomain; residuals large
+universal_scalar,1 parameter,knocked_out,cannot capture u/d isospin + strange chiral structure
+diagonal_three_scalar,3 parameters,forbidden_as_export,equivalent to fitting each target component
+ratio_import,2+ external ratios,forbidden_as_derivation,"PDG/chiral ratios are external outputs, not APF source"
+heavy_family_extrapolation,"uses c,t or b anchors",forbidden_as_light_export,heavy self-scale/MSR routes are not low-energy chiral/lattice routes
+source_independent_chiral_lattice,external ledger plus covariance,admissible_next,only valid route class after v54

@@ -1,0 +1,5 @@
+sector,gate,meaning
+top,APF_NATIVE_TOP_TRACE_TO_MSR_SCALE_SELECTION_THEOREM_WITHOUT_EXTERNAL_POLE_ANCHOR,"external MSR lane exists, but no no-smuggling physical top export"
+charged leptons,APF_CHARGED_LEPTON_GENERATION_RESIDUAL_OPERATOR_DERIVATION,six-channel normalization is promising but generation-dependent residual remains
+charm,APF_CHARM_TRACE_TO_MSBAR_NORMALIZATION_OR_TRANSPORT_MAP,APF charm trace is far from self-scale MSbar target
+light quarks,APF_LIGHT_QUARK_TRACE_TO_MSBAR_2GEV_CHIRAL_LATTICE_TRANSPORT_MAP,low-energy QCD/chiral/lattice transport required

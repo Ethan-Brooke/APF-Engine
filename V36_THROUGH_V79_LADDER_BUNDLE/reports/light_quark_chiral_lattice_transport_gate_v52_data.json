@@ -1,0 +1,53 @@
+{
+  "package": "APF_v52_LIGHT_QUARK_CHIRAL_LATTICE_TRANSPORT_GATE",
+  "stamp": "LIGHT_QUARK_CHIRAL_LATTICE_TRANSPORT_GATE_PASS",
+  "claim": "v52 closes the typed light-quark chiral/lattice transport gate and no-smuggling audit; it does not export u,d,s masses.",
+  "APF_sources": {
+    "T_d_GeV": 0.003870916422334,
+    "T_s_GeV": 0.087143281633652,
+    "T_b_GeV": 4.1774904559271,
+    "T_u_status": "not_banked_v52"
+  },
+  "external_codomain_PDG2025_MSbar_2GeV_MeV": {
+    "u": {
+      "value_MeV": 2.16,
+      "unc_MeV": 0.07
+    },
+    "d": {
+      "value_MeV": 4.7,
+      "unc_MeV": 0.07
+    },
+    "s": {
+      "value_MeV": 93.5,
+      "unc_MeV": 0.8
+    }
+  },
+  "identity_diagnostic": {
+    "d": {
+      "APF_trace_MeV": 3.870916422334,
+      "pdg_value_MeV": 4.7,
+      "absolute_residual_MeV": -0.8290835776660002,
+      "relative_residual_percent": -17.640076120553196
+    },
+    "s": {
+      "APF_trace_MeV": 87.143281633652,
+      "pdg_value_MeV": 93.5,
+      "absolute_residual_MeV": -6.356718366348005,
+      "relative_residual_percent": -6.798629268821395
+    }
+  },
+  "status_change": [
+    "light quarks: low-energy QCD obstruction -> typed chiral/lattice transport gate with source/evaluator boundaries",
+    "G1 codomain closed; G2 schema typed; G5 no-smuggling closed; G3/G4 numeric ledgers required"
+  ],
+  "not_claimed": [
+    "P_export_candidate_uds",
+    "P_physical_final",
+    "zero_residual",
+    "numeric_chiral_lattice_export",
+    "APF_native_T_u_source_closed"
+  ],
+  "next_theorem": "APF_LIGHT_QUARK_UP_TRACE_SOURCE_AND_CHIRAL_LATTICE_EVALUATOR_LEDGER",
+  "checks_total": 95,
+  "checks_passed": 95
+}

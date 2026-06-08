@@ -1,0 +1,8 @@
+item,closeout,status
+export architecture,G1-G6 are derived as APF admissible-continuation requirements; trace values do not self-export to physical observables,closed
+W/on-shell EW,on-shell EW codomain completion under separately frozen PDG2025 and CMS2026 ledgers,codomain completion
+charged leptons,pole-codomain APF completion with CODATA2022 audit and QED boundary typed,codomain completion plus external boundary
+charm/bottom,self-scale MSbar covariance admitted under PDG2025 90CL ledgers,covariance admitted
+top,direct-MSR EW-resolution completion; 4-loop pole branch knockout retained,codomain completion in repaired codomain
+light quarks,source/pretransport complete; chiral/lattice evaluator required,external boundary
+global physical final,not assigned to any sector or whole program in v64,not claimed

@@ -1,0 +1,4 @@
+object_id,value_gev,uncertainty_gev,scheme,source_status,role,note
+m_b_APF_TRACE,4.1774904559270665,,APF_TRACE,P_local,prediction_anchor,Computed from trace-ratio theorem.
+m_b_m_b_MSbar_PDG_2025,4.183,0.007,MSbar running mass at self scale,external_reviewed_anchor,validation_target,PDG/pdgLive: mbar_b(mu=mbar_b) in MSbar; quoted CL=90%.
+m_b_pole_context_PDG,4.78,0.06,pole mass context,external_context,knockout_target,PDG listing gives pole-mass context from two-loop conversion; APF trace is not pole-like.

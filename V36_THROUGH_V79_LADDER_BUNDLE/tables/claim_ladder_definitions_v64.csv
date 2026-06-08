@@ -1,0 +1,9 @@
+rank,status,meaning,promotion_rule,physical_final_allowed
+0,P_trace,APF trace anchor or trace-sector quantity is locally banked,no physical comparison unless codomain and route are supplied,no
+1,P_source,source vector or source theorem is APF-side complete,requires typed transport route,no
+2,P_route,transport route form is typed and no-smuggling audited,"requires declared codomain, ledger, and covariance",no
+3,P_export_candidate,same-codomain route is numerically evaluable and audit-ready,requires external ledger/covariance admission,no
+4,P_covariance_admitted,residual lies inside declared source-independent covariance/comparison envelope,requires no remaining open external ledger affecting the reported codomain,no
+5,P_codomain_completion,claim is complete only in its declared codomain,physical-final requires all downstream scheme conversions also closed,no
+6,P_external_ledger_boundary,APF side is complete but external convention/evaluator remains required,must import/evaluate external ledger before numerical downstream claim,no
+7,P_physical_final,all APF and external scheme ledgers closed with covariance,not assigned in v64,not assigned

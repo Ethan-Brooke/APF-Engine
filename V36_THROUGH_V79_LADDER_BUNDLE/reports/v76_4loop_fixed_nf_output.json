@@ -1,0 +1,35 @@
+{
+  "coefficient_table": "/mnt/data/APF_v76_QCD_COEFFICIENT_TABLE_VENDORING_AND_4LOOP_EVALUATOR/tables/qcd_coefficient_table_v76.json",
+  "non_claims": [
+    "not threshold matching",
+    "not full RunDec parity",
+    "not pole conversion",
+    "not physical final",
+    "not fitted to APF outputs"
+  ],
+  "results": {
+    "b": {
+      "alpha0": 0.223,
+      "alpha1_4loop_fixed_nf": 0.17720809745708266,
+      "codomain": "MSbar fixed-nf run to 10 GeV",
+      "m0_GeV": 4.177490455927,
+      "mass_ratio": 0.8707716230474154,
+      "mass_target_4loop_fixed_nf_GeV": 3.637640144572641,
+      "mu0_GeV": 4.177490455927,
+      "mu1_GeV": 10.0,
+      "nf": 5
+    },
+    "c": {
+      "alpha0": 0.38,
+      "alpha1_4loop_fixed_nf": 0.2506713935272896,
+      "codomain": "MSbar fixed-nf run to 3 GeV",
+      "m0_GeV": 1.272334177712,
+      "mass_ratio": 0.7799219024183565,
+      "mass_target_4loop_fixed_nf_GeV": 0.9923212923930383,
+      "mu0_GeV": 1.272334177712,
+      "mu1_GeV": 3.0,
+      "nf": 4
+    }
+  },
+  "status": "APF_V76_4LOOP_FIXED_NF_EVALUATOR_CLOSED"
+}

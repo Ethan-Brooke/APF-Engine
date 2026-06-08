@@ -1,0 +1,48 @@
+{
+  "benchmarks": {
+    "crundec_bottom_mb10_reverse": {
+      "alpha0_test": 0.223,
+      "benchmark": "crundec_bottom_mb10_reverse",
+      "delta_GeV": 0.013284185244519353,
+      "description": "CRunDec example states m_b(10 GeV)=3.610 GeV maps to m_b(m_b)=4.163 GeV with alpha_s(M_Z)=0.1189; reverse fixed-nf audit uses m_b(m_b)=4.163 to 10 GeV.",
+      "fixed_nf_result_GeV": 3.6232841852445192,
+      "implied_alpha0_for_parity": 0.22839599569953017,
+      "implied_alpha1": 0.18037618954301,
+      "interpretation": "fixed-nf coefficient subset is useful but not full RunDec parity; full adapter must provide alpha_s(MZ) running/threshold/matching protocol.",
+      "m0_GeV": 4.163,
+      "mu0_GeV": 4.163,
+      "mu1_GeV": 10.0,
+      "nf": 5,
+      "published_target_GeV": 3.61,
+      "source": "Schmidt-Steinhauser CRunDec useful example",
+      "status": "PARITY_FAIL_FIXED_NF_SUBSET",
+      "tolerance_GeV": 0.002
+    },
+    "rundec_v3_charm_mc3": {
+      "alpha0_test": 0.38,
+      "benchmark": "rundec_v3_charm_mc3",
+      "delta_GeV": 0.012662084561155362,
+      "description": "RunDec v3 example ledger lists m_c(m_c)=1.279 GeV and m_c(3 GeV)=0.986 GeV under full RunDec-style running/decoupling context.",
+      "fixed_nf_result_GeV": 0.9986620845611553,
+      "implied_alpha0_for_parity": 0.39713785808057833,
+      "implied_alpha1": 0.25787352330791424,
+      "interpretation": "fixed-nf coefficient subset is useful but not full RunDec parity; full adapter must provide alpha_s(MZ) running/threshold/matching protocol.",
+      "m0_GeV": 1.279,
+      "mu0_GeV": 1.279,
+      "mu1_GeV": 3.0,
+      "nf": 4,
+      "published_target_GeV": 0.986,
+      "source": "Herren-Steinhauser RunDec/CRunDec v3 useful examples",
+      "status": "PARITY_FAIL_FIXED_NF_SUBSET",
+      "tolerance_GeV": 0.002
+    }
+  },
+  "claim": "v77 validates that the v76 fixed-nf 4-loop evaluator is not full RunDec parity; a real RunDec/CRunDec adapter or full alpha_s(MZ)+threshold evaluator is required.",
+  "non_claims": [
+    "not full RunDec parity",
+    "not full threshold matching",
+    "not physical final",
+    "not fitted to APF outputs"
+  ],
+  "status": "RUNDEC_BENCHMARK_PARITY_BLOCKED_PENDING_ADAPTER"
+}

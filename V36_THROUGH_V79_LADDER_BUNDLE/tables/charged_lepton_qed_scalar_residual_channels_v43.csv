@@ -1,0 +1,9 @@
+channel,status,meaning
+v41_pole_LO_vector,closed,source vector from v41
+v42_generation_shape,closed_count_witness,eta1=1/28 and eta2=3/584 from APF counts
+v43_scalar_normalization,C_count_witness,eta0=1/5063 from APF scalar count-source ledger
+forbidden_inverse_scalar,closed_as_audit_only,inverse zeta0 computed after comparison; not a source
+sub_1e_minus_3_residual_band,open_covariance_channel,"remaining residual band assigned to covariance/running codomain, not fitted away"
+QED_running_codomain,open,"MSbar(mu) or another running codomain requires constants, thresholds, loop order, convention"
+trace_covariance,open,numeric Sigma_d/Sigma_l still deferred
+no_smuggling_audit,pass,witness coefficients do not use target lepton masses

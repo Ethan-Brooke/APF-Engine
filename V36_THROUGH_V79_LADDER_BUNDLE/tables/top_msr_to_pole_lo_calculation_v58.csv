@@ -1,0 +1,10 @@
+quantity,formula,value,unit,status
+alpha_s(R_star) one-loop,alpha_s(MZ)/(1+alpha_s(MZ) beta0/(2pi) ln(R_star/MZ)),0.119032308653252,dimensionless,external-ledger witness
+LO MSR-to-pole shift,R_star*(4/3)*alpha_s(R_star)/pi,4.337410801564,GeV,one-loop QCD witness
+"m_t^pole,LO witness",m_t^MSR(R_star)+delta_LO,172.506466595364,GeV,pole/MC-proxy witness; not final
+residual vs PDG direct average,"m_t^pole,LO-172.56",-0.053533404636,GeV,diagnostic
+residual over PDG uncertainty,residual/0.31,-0.172688402053,dimensionless,diagnostic
+alpha_s covariance contribution,|d m/d alpha_s(MZ)| sigma_alpha,0.033371360178,GeV,external covariance input
+declared LO truncation scale,R_star*((4/3)*alpha_s(R_star)/pi)^2,0.219121139378,GeV,truncation-envelope witness
+combined witness envelope,sqrt(PDG_err^2+sigma_alpha^2+truncation^2),0.381087550836,GeV,non-fit comparison envelope
+combined-envelope z,residual/combined_envelope,-0.140475343576,dimensionless,diagnostic

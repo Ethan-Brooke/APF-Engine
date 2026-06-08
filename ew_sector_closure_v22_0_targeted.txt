@@ -1,0 +1,25 @@
+EW_TRACE_SECTOR_CLOSURE_PASS
+PASS status_declared
+PASS sin2_exact
+PASS cos2_exact
+PASS sin_cos_partition
+PASS tan2_exact
+PASS gprime_over_g
+PASS g_components_partition
+PASS w_trace_positive
+PASS dizet_transport_positive
+PASS dizet_residual_mev
+PASS pull_positive
+PASS export_candidate_within_two_sigma
+PASS delta_r_ledger_closes
+PASS external_mz_positive
+PASS wz_bridge_ratio
+PASS sw2_bridge_definition
+PASS bridge_distinct_from_trace_angle
+PASS claim_table_nonempty
+PASS closure_table_has_open_boundary
+PASS closure_table_has_export_candidate
+PASS coupling_table_has_gprime_over_g
+PASS no_physical_final_claim
+PASS mz_marked_external
+PASS safe_claims_present

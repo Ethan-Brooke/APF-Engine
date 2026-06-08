@@ -1,0 +1,121 @@
+
+\section{Charged-Lepton QED Covariance and Running-Codomain Gate}\label{sec:v44_qed_covariance_running_codomain}
+
+\paragraph{Purpose.}
+The v43 charged-lepton route produced a scalar-normalized pole-codomain witness
+\[
+\Phi_\ell^{\rm v43}
+=\exp\!\left({1\over5063}I+{1\over28}H_1+{3\over584}H_2\right)
+\Phi_\ell^{\rm pole,LO},
+\]
+with the remaining diagnostic pole residual band below $10^{-3}\%$.  This section closes the next admissibility question: whether that remaining band is a named covariance/running channel or an unassigned defect.
+
+\paragraph{Two distinct codomains.}
+APF export must not conflate a pole comparison with a running-QED comparison.  We therefore separate
+\[
+S_{\rm pole}:=(\hbox{charged-lepton pole/reference codomain})
+\]
+from a running codomain
+\[
+S_{\rm run}:=(\overline{\rm MS}/\hbox{QED running codomain at declared }\mu,\hbox{ loop order, thresholds, and convention}).
+\]
+The v43 vector lives in $S_{\rm pole}$ only.  A running statement requires an additional route
+\[
+U_{\rm QED}^{S_{\rm pole}\to S_{\rm run}}(\alpha,\mu,\hbox{thresholds},\hbox{loop order},\hbox{convention}).
+\]
+Without this object, APF permits a typed running codomain but not a numerical running export.
+
+\begin{definition}[APF charged-lepton QED covariance envelope]\label{def:v44_qed_cov_envelope}
+The scalar-normalization layer identified the minimal common QED/pole-interface count
+\[
+D_0=5063=K_{\rm SM}(K_{\rm SM}+K_c+K_b+N_{\rm gen}).
+\]
+The corresponding APF covariance envelope for a pole-codomain residual is
+\[
+\boxed{\varepsilon_{\ell,{\rm QED}}^{\rm APF}={1\over5063}.}
+\]
+For each component $i\in\{e,\mu,\tau\}$, a pole-codomain residual $\Delta_i$ is covariance-admitted when
+\[
+\boxed{|\Delta_i|\le \varepsilon_{\ell,{\rm QED}}^{\rm APF}\,m_i^{\rm pole}.}
+\]
+Equivalently, in percent units,
+\[
+|\Delta_i|/m_i^{\rm pole}\times100 \le {100\over5063}\%=0.0197511356903\%.
+\]
+\end{definition}
+
+\begin{theorem}[v44 pole-codomain covariance admission]\label{thm:v44_covariance_admission}
+For the charged-lepton v43 vector, the residual band
+\[
+(+0.000721290823\%,\ -0.000124471588\%,\ -0.000741052916\%)
+\]
+is strictly inside the APF covariance envelope $100/5063\%$.  Hence the pole-codomain charged-lepton route has no unassigned residual at v44 resolution:
+\[
+\boxed{
+\ell:[P_{\rm export\ candidate}^{\rm pole,LO}+C_{\rm scalar\ normalized}^{\rm APF\ count\ witness}]
+\longrightarrow
+\ell:[P_{\rm export\ candidate}^{\rm pole,v43}+P_{\rm covariance\ admitted}^{\rm APF\ envelope}].
+}
+\]
+\end{theorem}
+
+\begin{proof}[Verification]
+The APF envelope is fixed before comparison by the same scalar-interface count used in v43:
+\[
+\varepsilon_{\ell,{\rm QED}}^{\rm APF}=1/5063.
+\]
+Therefore the allowed percent envelope is
+\[
+100\varepsilon_{\ell,{\rm QED}}^{\rm APF}=0.0197511356903\%.
+\]
+The largest v43 diagnostic residual is
+\[
+\max_i |\delta_i|=0.000741052916\%,
+\]
+so
+\[
+{\max_i |\delta_i|\over 100/5063}=0.0375195092<1.
+\]
+All three residuals are therefore inside the predeclared APF covariance envelope.  No lepton pole mass is used to choose the envelope; the pole references enter only after $D_0=5063$ and the v43 map have been fixed.
+\end{proof}
+
+\paragraph{Running-codomain theorem boundary.}
+The same result does not license a final QED-running theorem.  A running export must supply
+\[
+\mathcal L_{\rm QED}=
+\{\alpha(\mu),\mu,\hbox{scheme},\hbox{loop order},\hbox{thresholds},\hbox{matching convention},\Sigma_{\rm QED}\},
+\]
+and must evaluate
+\[
+\boxed{
+\Phi_\ell^{S_{\rm run}}
+=U_{\rm QED}^{S_{\rm pole}\to S_{\rm run}}(\mathcal L_{\rm QED})\,
+\Phi_\ell^{\rm v43}.
+}
+\]
+Until $U_{\rm QED}$ and $\mathcal L_{\rm QED}$ are supplied, the running codomain is typed but not numerically closed.
+
+\begin{corollary}[G1--G6 status after v44]\label{cor:v44_gates}
+For the pole codomain, G1--G6 are now satisfied at export-candidate/covariance-admitted status: the codomain is declared, the transport map is supplied, the internal count ledger is closed, the covariance envelope is explicit, no inverse target use occurs, and the residual band is assigned.  For a running-QED codomain, G1 is typed and G2 is formal, but G3--G4 require the external QED ledger and covariance protocol before numerical export.
+\end{corollary}
+
+\paragraph{No-smuggling statement.}
+The following remain forbidden as sources: solving the envelope from the three charged-lepton pole masses, choosing a loop-order or threshold convention because it improves the residuals, adjusting $\eta_0,\eta_1,\eta_2$, or absorbing the residual band into a hidden empirical renormalization.  The envelope is admitted only because it is fixed by APF count data before comparison.
+
+\paragraph{Status.}
+The charged-lepton route is now
+\[
+\boxed{
+\ell:[P_{\rm export\ candidate}^{\rm pole,v43}+P_{\rm covariance\ admitted}^{\rm APF\ envelope}],
+}
+\]
+not
+\[
+\ell:[P_{\rm physical\ final}],\qquad
+\ell:[P_{\rm QED\ running\ final}],\qquad
+\Delta_\ell=0.
+\]
+The next theorem is therefore not another residual fit.  It is the explicit running transport map:
+\[
+\boxed{\texttt{APF\_CHARGED\_LEPTON\_QED\_RUNNING\_TRANSPORT\_THEOREM}.}
+\]

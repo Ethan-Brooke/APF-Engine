@@ -1,0 +1,8 @@
+layer,status_after_v49,closed_or_open,meaning,not_meaning
+APF_trace_source,P_trace_vector_closed,closed,T_l derived from APF trace-sector source theorem,not inverse from CODATA masses
+residual_operator,P_operator_and_coefficients_closed,closed,"diag(1/3,3,1) and APF count coefficients closed",not fitted generation residuals
+pole_completion,P_pole_completion_APF_envelope_CODATA2022,closed,official CODATA ledger residuals inside APF envelope,not CODATA-sigma agreement for e and mu
+LO_QED_transport,P_LO_QED_numeric_witness,closed_as_witness,1/(1+alpha/pi) self-scale witness evaluated,not full multi-loop running
+QED_truncation_covariance,P_QED_truncation_covariance_admitted,closed,residuals inside APF plus O((alpha/pi)^2) envelope,not zero residual
+full_QED_running,P_full_QED_ledger_boundary,closed_as_boundary,full running requires declared external coefficient ledger,not APF-side missing theorem
+physical_final,not_claimed,open_external_metrology,requires selected scheme scale loop order thresholds matching covariance,not claimed in v49

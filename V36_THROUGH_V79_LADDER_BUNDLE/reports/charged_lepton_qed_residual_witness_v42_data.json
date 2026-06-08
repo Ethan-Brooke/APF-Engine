@@ -1,0 +1,128 @@
+{
+  "package": "APF_v42_CHARGED_LEPTON_QED_RESIDUAL_TRANSPORT_WITNESS",
+  "status": "CHARGED_LEPTON_QED_RESIDUAL_SHAPE_WITNESS_PASS",
+  "theorem": "APF charged-lepton QED residual transport witness: minimal diagonal basis plus APF-count residual shape",
+  "claim": "v42 does not finalize charged-lepton physical masses; it banks a determinant-preserving APF-count witness for the generation-dependent residual shape and leaves the scalar/covariance/source-denominator theorem open.",
+  "source_inputs": {
+    "P_l_pole_LO_v41_GeV": [
+      0.0005267650039821162,
+      0.10672828725704815,
+      1.7054533370613425
+    ],
+    "APF_counts": {
+      "K_SM": 61,
+      "K_Lambda": 42,
+      "K_c": 16,
+      "K_b": 3,
+      "N_gen": 3,
+      "N_c": 3,
+      "N_H": 4,
+      "d_adj_SU3": 8
+    },
+    "basis": {
+      "H1": [
+        -1,
+        0,
+        1
+      ],
+      "H2": [
+        1,
+        -2,
+        1
+      ]
+    }
+  },
+  "forbidden_inverse_diagnostic": {
+    "pole_reference_GeV": [
+      0.00051099895,
+      0.1056583755,
+      1.77693
+    ],
+    "log_coefficients": {
+      "zeta0": 0.00019799215392433608,
+      "zeta1": 0.03572159743370476,
+      "zeta2": 0.005136604341552455
+    },
+    "status": "diagnostic_only_forbidden_as_source"
+  },
+  "new_witness": {
+    "eta0": 0.0,
+    "eta1": "1/28",
+    "eta1_float": 0.03571428571428571,
+    "eta1_count_formula": "1/(K_c+K_b+N_gen*N_c)",
+    "eta2": "3/584",
+    "eta2_float": 0.005136986301369863,
+    "eta2_count_formula": "K_b/((N_c^2-1)*(K_SM+N_gen*N_H))",
+    "Z_witness_factors": [
+      0.9698854575930389,
+      0.9897786243730395,
+      1.0416971645041568
+    ],
+    "P_l_witness_GeV": [
+      0.0005109017169311937,
+      0.10563737734297172,
+      1.7765659054109526
+    ],
+    "P_l_witness_MeV": [
+      0.5109017169311937,
+      105.63737734297173,
+      1776.5659054109526
+    ],
+    "determinant_preserving": true
+  },
+  "diagnostic_only_external_comparison": {
+    "pole_reference_GeV": [
+      0.00051099895,
+      0.1056583755,
+      1.77693
+    ],
+    "absolute_residual_GeV": [
+      -9.723306880634296e-08,
+      -2.0998157028273567e-05,
+      -0.0003640945890472924
+    ],
+    "relative_residual_percent": [
+      -0.019028036908166436,
+      -0.019873632287933072,
+      -0.02049009184645948
+    ],
+    "max_abs_relative_residual_percent": 0.02049009184645948,
+    "note": "external pole masses are used after the witness is fixed; they do not define eta1 or eta2"
+  },
+  "still_open": {
+    "denominator_source_lemma": "prove 28 and 584 are forced route denominators rather than APF-count witnesses",
+    "common_scalar_eta0": "scalar offset near 1.98e-4 not closed",
+    "numeric_trace_covariance": "deferred until Sigma_d/Sigma_l imported",
+    "QED_running_codomain": "MSbar(mu) requires QED constants, thresholds, loop order, convention",
+    "physical_final": "not claimed"
+  },
+  "forbidden_inputs_not_used": [
+    "m_e_pole_as_source",
+    "m_mu_pole_as_source",
+    "m_tau_pole_as_source",
+    "least_squares_fit_to_target_vector",
+    "inverse_solution_for_Z_l_from_targets",
+    "PDG_or_world_average_fit"
+  ],
+  "gate_status": {
+    "G1_CODOMAIN_DECLARED": "inherited pole-LO codomain; running codomain open",
+    "G2_TRANSPORT_MAP": "witness transport map Z_wit Phi_LO supplied at C_witness status",
+    "G3_CONSTANTS_LEDGER": "APF count ledger declared; QED constants not yet invoked",
+    "G4_COVARIANCE": "formal residual channels named; numeric covariance still open",
+    "G5_NO_SMUGGLING": "pass for witness; inverse diagnostic quarantined",
+    "G6_RESIDUAL_CHANNELS": "pass: scalar eta0, denominator source, covariance, running codomain channels named"
+  },
+  "promotion": {
+    "before": "charged leptons: P_export_candidate^pole_LO / residual vector open",
+    "after": "charged leptons: P_export_candidate^pole_LO + C_residual_shape^APF_count_witness / scalar and source-denominator theorem open",
+    "not_claimed": [
+      "P_physical_final",
+      "P_QED_running_final",
+      "eta0_closed",
+      "forced_denominator_theorem",
+      "zero residual"
+    ]
+  },
+  "next_theorem": "APF_QED_SCALAR_NORMALIZATION_AND_COUNT_SOURCE_THEOREM",
+  "checks_total": 134
+}

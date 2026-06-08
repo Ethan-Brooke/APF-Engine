@@ -1,0 +1,73 @@
+% APF v56 -- W Trace to On-Shell EW Covariance Closure
+\section{W Trace to On-Shell Electroweak Covariance Closure}
+\label{sec:w-onshell-ew-covariance-closure-v56}
+
+\paragraph{Purpose.}
+Version v56 closes the next registry-selected route object: the W trace anchor
+is promoted from an export candidate to an on-shell electroweak completion under
+separately declared external covariance ledgers.  The closure is deliberately
+narrow.  It concerns the on-shell W mass branch, not the entire electroweak
+sector and not an unauthorized global average.
+
+\begin{definition}[v56 on-shell W audit ledgers]
+The APF trace anchor is
+\[
+M_W^{\rm APF\text{-}TRACE}=80.362164334000\,{\rm GeV}.
+\]
+The external audit ledgers are frozen separately:
+\[
+M_W^{\rm PDG2025}=80.3692\pm 0.0133\,{\rm GeV},
+\qquad
+M_W^{\rm CMS2026}=80.3602\pm 0.0099\,{\rm GeV}.
+\]
+The PDG and CMS ledgers are comparison ledgers only; neither is used to construct
+the APF trace anchor, the route map, or the residual envelope.
+\end{definition}
+
+\begin{theorem}[W on-shell covariance completion]
+The W trace branch satisfies all six export gates at the on-shell covariance
+audit level.  Its residuals are
+\[
+\Delta_{\rm PDG2025}=-0.007035666000\,{\rm GeV}
+= -7.035666\,{\rm MeV},
+\qquad
+z_{\rm PDG2025}=-0.528997443610,
+\]
+\[
+\Delta_{\rm CMS2026}=0.001964334000\,{\rm GeV}
+= 1.964334\,{\rm MeV},
+\qquad
+z_{\rm CMS2026}=0.198417575757.
+\]
+Hence
+\[
+\max(|z_{\rm PDG2025}|,|z_{\rm CMS2026}|)=0.528997443610<1.
+\]
+Therefore the W route is promoted to
+\[
+\boxed{W:[P_{\rm on\text{-}shell\ EW\ completion}^{\rm PDG2025+CMS2026\ ledgers}]}.
+\]
+\end{theorem}
+
+\begin{proof}[Audit proof]
+Gate G1 is closed because the codomain is the on-shell W mass.  Gate G2 is the
+same-input on-shell EW route inherited from v35.  Gate G3 is closed at this
+layer by separately declaring the PDG 2025 and CMS 2026 comparison ledgers.  Gate
+G4 is closed because the APF residual is evaluated in each ledger's stated
+uncertainty model and lies within one standard deviation in both ledgers.  Gate
+G5 is closed because the external masses are not used in the APF construction.
+Gate G6 is closed because the nonzero residuals are assigned to the declared
+external covariance/measurement ledgers and inherited on-shell EW transport
+channel, rather than absorbed into the trace anchor.  Thus the route is complete
+at the declared on-shell covariance level.
+\end{proof}
+
+\paragraph{Non-combination rule.}
+Version v56 does not combine the PDG 2025 and CMS 2026 ledgers.  Such a
+combination requires an external correlation and working-group protocol.  The
+audit is therefore a two-ledger robustness check, not a new world average.
+
+\paragraph{Non-claims.}
+The theorem does not claim zero residual, all electroweak observables, the full
+EW global fit, or physical-final Standard Model closure.  It closes only the
+on-shell W mass branch under the declared ledgers.

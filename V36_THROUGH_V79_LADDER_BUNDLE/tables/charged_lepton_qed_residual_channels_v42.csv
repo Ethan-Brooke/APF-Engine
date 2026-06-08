@@ -1,0 +1,9 @@
+channel,status,meaning
+v41_pole_LO_vector,closed,source vector from v41
+residual_basis_H1_H2,closed,minimal diagonal generation-shape basis
+forbidden_inverse_diagnostic,closed_as_audit_only,diagnostic zeta coefficients computed after comparison; not a source
+APF_count_witness_shape,C_witness,eta1=1/28 and eta2=3/584 from APF counts; denominator-forcing source lemma still open
+common_scalar_eta0,open_residual,nearly common scalar offset ~1.98e-4 remains unclosed
+QED_running_codomain,open,MSbar(mu) or other QED running codomain still requires constants and thresholds
+trace_covariance,open,numeric Sigma_d/Sigma_l still deferred
+no_smuggling_audit,pass,witness coefficients do not use target lepton masses

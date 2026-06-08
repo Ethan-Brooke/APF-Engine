@@ -1,0 +1,7 @@
+sector,allowed_v55_claim,forbidden_v55_claim,reason
+EW/W,EW/W on-shell export candidate,physical-final W closure; zero residual; all EW observables final,EW covariance/finalization review; DIZET row protocol publication hardening
+charged leptons,charged-lepton pole-codomain APF completion under envelope and external-ledger boundary,QED-running final; physical-final; exact equality; residual-free fit,full multi-loop QED coefficient/threshold/matching/covariance ledger required for running-final
+charm,charm self-scale MSbar export candidate,physical-final charm; pole mass; zero residual; full QCD covariance final,full alpha_s/threshold/correlation covariance publication review
+bottom,bottom self-scale MSbar export candidate,physical-final bottom; pole mass; zero residual; full QCD covariance final,full alpha_s/threshold/correlation covariance publication review
+top,top MSR(R_star) export candidate,top pole mass; MC mass; direct PDG top closure; physical-final top,MSR-to-pole/MC/MSbar conversion ledger required before direct top comparison
+light quarks,light-quark APF source/pretransport completion at chiral-lattice boundary,"light-quark export candidate; MSbar(2 GeV) numeric prediction; physical-final u,d,s",external source-independent chiral/lattice evaluator and joint covariance required

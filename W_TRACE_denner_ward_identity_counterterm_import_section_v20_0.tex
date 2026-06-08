@@ -1,0 +1,53 @@
+\section{Denner--Sirlin Ward/Counterterm Import Layer for the W Route}\label{sec:w-trace-v20-ward-import}
+
+This layer pushes the APF-native electroweak loop program below the scalar-integral and tensor-scaffold layers.  The result is not a full APF-native one-loop evaluation of $\Delta r$; rather, it imports the reviewed on-shell Ward and counterterm relation structure needed before the remaining diagram-family coefficient functions can be evaluated without smuggling fitted coefficients.
+
+The route status is
+\[
+\boxed{\mathcal R_W^{\rm OS}:[P_{\rm export\ candidate}+P_{\rm Ward/counterterm\ relation\ import}]}
+\]
+while the full APF-native one-loop evaluator remains open:
+\[
+\boxed{\texttt{APF\_NATIVE\_REVIEWED\_DIAGRAM\_FAMILY\_NUMERIC\_EVALUATORS\_NOT\_IMPORTED}.}
+\]
+
+The imported relation layer includes the on-shell mass counterterms
+\[
+\delta M_W^2=\operatorname{Re}\Sigma_T^W(M_W^2),\qquad
+\delta M_Z^2=\operatorname{Re}\Sigma_T^Z(M_Z^2),
+\]
+the weak-angle counterterm
+\[
+\frac{\delta s_W}{s_W}=-\frac{c_W^2}{2s_W^2}
+\left(\frac{\delta M_W^2}{M_W^2}-\frac{\delta M_Z^2}{M_Z^2}\right),
+\]
+and the charge/neutral-field Ward relation
+\[
+\delta Z_e\vert_{\alpha(0)}=-\frac12\operatorname{Re}
+\left(\delta Z_{AA}+\frac{s_W}{c_W}\delta Z_{ZA}\right).
+\]
+These relations are admitted as reviewed formula relations, but their diagram-family numerical evaluators are not claimed closed.
+
+The evaluated native rows remain
+\[
+\Delta r_{\Delta\alpha}=0.05907386039640014,
+\qquad
+\Delta r_{\rho,{\rm lead}}=-0.032452969615,
+\]
+so
+\[
+\Delta r_{\rm native,partial}=0.026620890781.
+\]
+The finite/counterterm target is still
+\[
+\Delta r_{\rm ct,target}=0.009880894878,
+\]
+and the target identity closes as
+\[
+0.026620890781+0.009880894878
+=0.036501785659414865
+=\Delta r_{\rm DIZET}(x_{\rm APF}).
+\]
+This target identity is a localization certificate only.  It is not used as a fitted derivation of the missing diagram-family coefficients.
+
+Thus the next concrete task is no longer to build scalar integrals, tensor primitives, or symbolic counterterm slots.  It is to import or derive reviewed numerical evaluators for the W/Z/photon self-energy, $\gamma Z$ mixing, muon-decay vertex, muon-decay box, and tadpole/ghost/gauge-cancellation finite families.

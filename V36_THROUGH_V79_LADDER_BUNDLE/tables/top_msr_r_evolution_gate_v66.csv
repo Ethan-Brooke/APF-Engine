@@ -1,0 +1,7 @@
+component,object,value,status
+input,m_t^MSR(R_star),168.169055793800 GeV,closed_APF_top_MSR_object
+scale,R_star,85.857222698385 GeV,closed_v37
+scale,R_EW=M_W_TRACE/(2pi),12.790035691319 GeV,closed_v63_EW_resolution_scale
+witness,m_t^MSR(R_EW),172.564754410708 GeV,fixed_order_witness_retained
+blocked,"m_t^pole,4loop",174.016604383647 GeV,pole_branch_blocked_by_v61
+open_external,full R-evolution evaluator,gamma_R/beta/threshold/covariance table required,fail_closed_until_ingested

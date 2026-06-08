@@ -1,0 +1,10 @@
+entry,value,standard_uncertainty,unit,source,role,v47_status
+alpha_inverse,137.035999177000,0.000000021000,dimensionless,NIST CODATA 2022 inverse fine-structure constant,QED LO transport ledger input,imported_external_constant_not_fit
+alpha,0.007297352564331424,1.118278443411242748e-12,dimensionless,derived from NIST CODATA 2022 inverse fine-structure constant,QED LO transport ledger input,derived_external_constant_not_fit
+electron_mass_energy_equivalent,0.51099895069,1.60000000000e-10,MeV,NIST/CODATA 2022,diagnostic reference only,not_used_to_construct_APF_vector
+muon_mass_energy_equivalent,105.6583755,2.3000000e-06,MeV,NIST/CODATA 2022,diagnostic reference only,not_used_to_construct_APF_vector
+tau_mass_energy_equivalent,1776.86,0.12,MeV,NIST/CODATA 2022,diagnostic reference only,not_used_to_construct_APF_vector
+scheme,MSbar_self_scale_LO_witness,not_applicable,convention,v47 declaration,running codomain declaration,declared_before_evaluation
+loop_order,one_loop,truncation_not_evaluated,convention,v47 declaration,running transport declaration,declared_before_evaluation
+scale_convention,mu_i=m_i_self_scale,scheme_boundary,convention,v47 declaration,running transport declaration,declared_before_evaluation
+threshold_schedule,none_at_LO_frozen_alpha_witness,deferred,convention,v47 declaration,not_final_running,deferred_to_final_QED_ledger

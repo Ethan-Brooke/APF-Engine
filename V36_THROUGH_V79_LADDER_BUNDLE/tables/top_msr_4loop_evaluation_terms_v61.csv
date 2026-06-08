@@ -1,0 +1,8 @@
+term,value_GeV_or_dimensionless,note
+alpha_s_Rstar_4loop,0.119084611158869,dimensionless
+term_1,4.339316649273,R c1 a
+term_2,1.016095141009,R c2 a^2
+term_3,0.343387582223,R c3 a^3
+term_4,0.148749217342,R c4 a^4
+delta_total,5.847548589847,sum terms
+m_pole_4loop_witness,174.016604383647,m_MSR + delta

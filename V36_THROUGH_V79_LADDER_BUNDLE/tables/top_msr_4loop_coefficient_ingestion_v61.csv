@@ -1,0 +1,5 @@
+coefficient,value,normalization,source_status,used
+c1,5.333333333333333,alpha_s/(4pi),color/C_F exact; equals 16/3,yes
+c2,131.784999999999997,alpha_s/(4pi),MSR/pole coefficient listed in top MC calibration literature,yes
+c3,4699.703000000000429,alpha_s/(4pi),MSR/pole coefficient listed in top MC calibration literature,yes
+c4,214829.905730030295672,alpha_s/(4pi),converted from 8.615 +/- 0.017 alpha_s^4 top MSbar-on-shell coefficient,yes

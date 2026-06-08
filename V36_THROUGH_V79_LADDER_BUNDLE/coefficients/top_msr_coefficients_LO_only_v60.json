@@ -1,0 +1,24 @@
+{
+  "schema": "APF_TOP_MSR_EVALUATOR_COEFFICIENTS_v60",
+  "scheme": "MSR_to_pole_generic_series_coefficients",
+  "normalization": "Delta m = R * sum_n c_n (alpha_s(R)/pi)^n",
+  "coefficient_status": "LO_only_validated_from_color_factor_C_F",
+  "c": {
+    "1": 1.3333333333333333
+  },
+  "missing_required_for_loop_orders": {
+    "2": [
+      "c2_MSR_pole"
+    ],
+    "3": [
+      "c2_MSR_pole",
+      "c3_MSR_pole"
+    ],
+    "4": [
+      "c2_MSR_pole",
+      "c3_MSR_pole",
+      "c4_MSR_pole"
+    ]
+  },
+  "forbidden": "Do not infer c2,c3,c4 from the PDG/direct top mass residual."
+}

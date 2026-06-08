@@ -1,0 +1,7 @@
+object,status,required_inputs,meaning
+S_pole,P_declared,none beyond inherited pole references for diagnostic comparison,v43 vector admitted in pole/reference codomain
+S_running,P_typed,"scheme, scale mu, loop order, thresholds, convention",running QED codomain is typed but not numerically exported
+U_QED^{pole_to_running},open_route_object,"alpha(mu), matching, thresholds, loop order, covariance",transport map required for running masses
+Sigma_trace,open_numeric_covariance,trace covariance or certified tolerance source,numeric covariance not yet imported
+Sigma_QED,open_numeric_covariance,QED constants covariance and truncation estimate,needed for final running codomain
+no_smuggling_audit,pass,no target-derived envelope or tuned loop choice,v44 envelope fixed before comparison

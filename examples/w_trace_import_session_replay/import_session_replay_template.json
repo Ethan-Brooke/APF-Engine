@@ -1,0 +1,12 @@
+{
+  "exports_physical_M_W": false,
+  "not_real_finite_part_evidence": true,
+  "physical_W_export_enabled": false,
+  "recompute_digest": true,
+  "replay_id": "REPLACE_WITH_REPLAY_ID",
+  "source_payload_digest": "sha256:<payload-digest-from-session-log>",
+  "source_session_id": "REPLACE_WITH_SESSION_ID",
+  "status": "P_w_import_session_replay_validator",
+  "template_only": true,
+  "version": "w_trace_import_session_replay_v1"
+}

@@ -1,0 +1,508 @@
+{
+  "apf_version": "20.0.0",
+  "assembly_vector": {
+    "DIZET_delta_r_total": 0.036501785659414865,
+    "Delta_alpha": 0.05907386039640014,
+    "counterterm_target_delta_r": 0.009880894878317302,
+    "native_open_gap": 0.009880894878317302,
+    "native_partial_delta_r": 0.026620890781097563,
+    "rho_leading_branch": -0.03245296961530258,
+    "target_closed_delta_r": 0.036501785659414865,
+    "target_closure_residual": 0.0
+  },
+  "coverage": {
+    "evaluated_families": 2,
+    "evaluated_family_fraction": 0.25,
+    "evaluated_relations": 2,
+    "families": 8,
+    "open_numeric_families": 5,
+    "relation_rows": 11,
+    "relation_rows_imported": 11,
+    "target_families": 1
+  },
+  "dependency": {
+    "pv_pass_status": "W_TRACE_PV_SCALAR_INTEGRAL_SUBSTRATE_PASS",
+    "tensor_pass_status": "W_TRACE_TENSOR_COEFFICIENT_MAP_SCAFFOLD_PASS",
+    "v19_pass_status": "W_TRACE_DENNER_FORMULA_IMPORT_NATIVE_ASSEMBLY_PASS",
+    "v19_status": "P_w_trace_denner_formula_import_native_assembly"
+  },
+  "dependency_graph": {
+    "F_BOX": [
+      "R_BOX_FAMILY"
+    ],
+    "F_CHARGE_FIELD_CT": [
+      "R_CHARGE_CT_ALPHA0",
+      "R_FIELD_AA",
+      "R_FIELD_ZA"
+    ],
+    "F_DELTA_ALPHA": [
+      "R_DELTA_ALPHA_ROW"
+    ],
+    "F_GAUGE_RESTORING": [
+      "R_TAD_GHOST_GAUGE"
+    ],
+    "F_MASS_WEAK_ANGLE_CT": [
+      "R_OS_MASS_CT_W",
+      "R_OS_MASS_CT_Z",
+      "R_WEAK_ANGLE_CT"
+    ],
+    "F_RHO_LEAD": [
+      "R_RHO_LEAD_ROW"
+    ],
+    "F_TARGET_FINITE": [],
+    "F_VERTEX": [
+      "R_VERTEX_FAMILY"
+    ]
+  },
+  "export_candidate_state": {
+    "DIZET_minus_APF_MeV": -4.823256421915,
+    "M_W_DIZET_GeV": 80.35734107757808,
+    "M_W_TRACE_GeV": 80.362164334,
+    "pull_sigma": 1.0900344137035074,
+    "sigma_total_MW_MeV": 4.424866188882492
+  },
+  "families": [
+    {
+      "admission_status": "ADMITTED_EVALUATED",
+      "blocks_full_native_one_loop": false,
+      "current_value": 0.05907386039640014,
+      "family_id": "F_DELTA_ALPHA",
+      "relation_inputs": [
+        "R_DELTA_ALPHA_ROW"
+      ],
+      "required_numeric_evaluator": "evaluated input row",
+      "role_in_delta_r": "large positive vacuum-polarization channel"
+    },
+    {
+      "admission_status": "ADMITTED_EVALUATED",
+      "blocks_full_native_one_loop": false,
+      "current_value": -0.03245296961530258,
+      "family_id": "F_RHO_LEAD",
+      "relation_inputs": [
+        "R_RHO_LEAD_ROW"
+      ],
+      "required_numeric_evaluator": "analytic evaluated row",
+      "role_in_delta_r": "dominant negative leading top-rho channel"
+    },
+    {
+      "admission_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+      "blocks_full_native_one_loop": true,
+      "current_value": null,
+      "family_id": "F_MASS_WEAK_ANGLE_CT",
+      "relation_inputs": [
+        "R_OS_MASS_CT_W",
+        "R_OS_MASS_CT_Z",
+        "R_WEAK_ANGLE_CT"
+      ],
+      "required_numeric_evaluator": "W/Z self-energy coefficient evaluator",
+      "role_in_delta_r": "mass and weak-angle counterterm finite family"
+    },
+    {
+      "admission_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+      "blocks_full_native_one_loop": true,
+      "current_value": null,
+      "family_id": "F_CHARGE_FIELD_CT",
+      "relation_inputs": [
+        "R_CHARGE_CT_ALPHA0",
+        "R_FIELD_AA",
+        "R_FIELD_ZA"
+      ],
+      "required_numeric_evaluator": "neutral self-energy derivative/mixing evaluator",
+      "role_in_delta_r": "charge/field-renormalization finite family"
+    },
+    {
+      "admission_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+      "blocks_full_native_one_loop": true,
+      "current_value": null,
+      "family_id": "F_VERTEX",
+      "relation_inputs": [
+        "R_VERTEX_FAMILY"
+      ],
+      "required_numeric_evaluator": "vertex coefficient evaluator",
+      "role_in_delta_r": "muon-decay vertex finite family"
+    },
+    {
+      "admission_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+      "blocks_full_native_one_loop": true,
+      "current_value": null,
+      "family_id": "F_BOX",
+      "relation_inputs": [
+        "R_BOX_FAMILY"
+      ],
+      "required_numeric_evaluator": "box coefficient evaluator",
+      "role_in_delta_r": "muon-decay box finite family"
+    },
+    {
+      "admission_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+      "blocks_full_native_one_loop": true,
+      "current_value": null,
+      "family_id": "F_GAUGE_RESTORING",
+      "relation_inputs": [
+        "R_TAD_GHOST_GAUGE"
+      ],
+      "required_numeric_evaluator": "gauge-cancellation numerical audit",
+      "role_in_delta_r": "tadpole/ghost/gauge-cancellation finite family"
+    },
+    {
+      "admission_status": "TARGET_ONLY_QUARANTINED",
+      "blocks_full_native_one_loop": true,
+      "current_value": 0.009880894878317302,
+      "family_id": "F_TARGET_FINITE",
+      "relation_inputs": [],
+      "required_numeric_evaluator": "target only, not proof",
+      "role_in_delta_r": "same-input full finite target for all open families"
+    }
+  ],
+  "first_failed_gate": "APF_NATIVE_REVIEWED_DIAGRAM_FAMILY_NUMERIC_EVALUATORS_NOT_IMPORTED",
+  "forbidden_claims": [
+    "v20 evaluates the full APF-native one-loop Delta-r.",
+    "The counterterm target is derived rather than target-localized.",
+    "The vertex, box, and gauge-cancellation finite rows are numerically imported.",
+    "Fitted coefficients are accepted as Denner/Sirlin proof."
+  ],
+  "frontier": [
+    {
+      "closed_object": "A0/B0/C0/D0 finite substrate",
+      "frontier_id": "FRONTIER_SCALAR",
+      "next_acquisition_step": "keep as dependency",
+      "remaining_object": "none at scalar level",
+      "why_it_matters": "integrals are available for coefficient maps"
+    },
+    {
+      "closed_object": "B1/B00 tensor primitives and slot schema",
+      "frontier_id": "FRONTIER_TENSOR",
+      "next_acquisition_step": "extend tensor reduction only when source formulas demand it",
+      "remaining_object": "full C/D tensor coefficient maps",
+      "why_it_matters": "vertex/box families require higher tensor assembly"
+    },
+    {
+      "closed_object": "OS mass, weak-angle, charge, field, vertex, box relation imports",
+      "frontier_id": "FRONTIER_RELATIONS",
+      "next_acquisition_step": "import reviewed coefficient formulae family by family",
+      "remaining_object": "numeric diagram-family evaluators",
+      "why_it_matters": "relations alone do not produce finite rows"
+    },
+    {
+      "closed_object": "Delta-alpha and leading-rho rows",
+      "frontier_id": "FRONTIER_NATIVE_ROWS",
+      "next_acquisition_step": "start with self-energy finite coefficients",
+      "remaining_object": "finite/counterterm families",
+      "why_it_matters": "dominant scaffold closed; finite target remains"
+    }
+  ],
+  "gates": [
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "v16.9/v17.0 dependencies pass",
+      "gate_id": "G2M_PV_TENSOR_SUBSTRATE",
+      "object": "PV scalar/tensor substrate",
+      "status": "CLOSED"
+    },
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "eleven relation rows imported with dependencies and output objects",
+      "gate_id": "G2M_RELATION_IMPORT",
+      "object": "reviewed Ward/counterterm relations",
+      "status": "CLOSED"
+    },
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "two same-input rows evaluated natively or as admitted input row",
+      "gate_id": "G2M_NATIVE_EVALUATED_ROWS",
+      "object": "Delta-alpha and leading-rho rows",
+      "status": "CLOSED"
+    },
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "all eight families map to imported relation ids or target quarantine",
+      "gate_id": "G2M_RELATION_DAG",
+      "object": "relation-to-family DAG",
+      "status": "CLOSED"
+    },
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "open numeric families collectively target 0.009880894878",
+      "gate_id": "G2M_TARGET_LOCALIZATION",
+      "object": "same-input finite target",
+      "status": "CLOSED"
+    },
+    {
+      "blocks_full_native_one_loop": false,
+      "evidence": "target-only family is quarantined and not admitted as a formula",
+      "gate_id": "G2M_NO_TARGET_FIT",
+      "object": "no target fitting",
+      "status": "CLOSED_GUARD"
+    },
+    {
+      "blocks_full_native_one_loop": true,
+      "evidence": "relations imported but coefficients not evaluated",
+      "gate_id": "G2M_SELF_ENERGY_NUMERIC",
+      "object": "reviewed W/Z/gamma/gamma-Z self-energy evaluator",
+      "status": "OPEN"
+    },
+    {
+      "blocks_full_native_one_loop": true,
+      "evidence": "relations imported but C/D tensor coefficient maps not evaluated",
+      "gate_id": "G2M_VERTEX_BOX_NUMERIC",
+      "object": "reviewed vertex/box finite evaluator",
+      "status": "OPEN"
+    },
+    {
+      "blocks_full_native_one_loop": true,
+      "evidence": "relation slot imported but gauge audit not numeric",
+      "gate_id": "G2M_GAUGE_CANCELLATION_NUMERIC",
+      "object": "tadpole/ghost/gauge cancellation evaluator",
+      "status": "OPEN"
+    },
+    {
+      "blocks_full_native_one_loop": true,
+      "evidence": "APF_NATIVE_REVIEWED_DIAGRAM_FAMILY_NUMERIC_EVALUATORS_NOT_IMPORTED",
+      "gate_id": "G2M_FULL_NATIVE_ONE_LOOP",
+      "object": "full APF-native one-loop Delta-r",
+      "status": "OPEN"
+    }
+  ],
+  "native_one_loop_status": "P_partial_native_rows_plus_reviewed_relation_import_open_numeric_family_evaluators",
+  "next_gate": "G2M_SELF_ENERGY_VERTEX_BOX_GAUGE_FAMILY_EVALUATORS",
+  "payload_digest": "sha256:09cb2d707dfb618cd86bf3d5c64cd7db4cda2e468b3d4c9682b2fe36a45b0345",
+  "relations": [
+    {
+      "admits_as_formula": true,
+      "expression": "delta M_W^2 = Re Sigma_T^W(M_W^2)",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "NEEDS_SELF_ENERGY_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "delta_MW2"
+      ],
+      "pv_or_tensor_dependencies": [
+        "A0",
+        "B0",
+        "B00"
+      ],
+      "relation_class": "ON_SHELL_MASS_COUNTERTERM",
+      "relation_id": "R_OS_MASS_CT_W",
+      "required_inputs": [
+        "Sigma_T^W",
+        "M_W"
+      ],
+      "source_anchor": "Denner on-shell mass renormalization relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "delta M_Z^2 = Re Sigma_T^Z(M_Z^2)",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "NEEDS_SELF_ENERGY_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "delta_MZ2"
+      ],
+      "pv_or_tensor_dependencies": [
+        "A0",
+        "B0",
+        "B00"
+      ],
+      "relation_class": "ON_SHELL_MASS_COUNTERTERM",
+      "relation_id": "R_OS_MASS_CT_Z",
+      "required_inputs": [
+        "Sigma_T^Z",
+        "M_Z"
+      ],
+      "source_anchor": "Denner on-shell mass renormalization relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "delta s_W/s_W = -(c_W^2/(2 s_W^2))*(delta M_W^2/M_W^2 - delta M_Z^2/M_Z^2)",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "COMPOSITE_NEEDS_MASS_CTS",
+      "output_objects": [
+        "delta_sW_over_sW"
+      ],
+      "pv_or_tensor_dependencies": [
+        "A0",
+        "B0",
+        "B00"
+      ],
+      "relation_class": "ON_SHELL_WEAK_ANGLE_COUNTERTERM",
+      "relation_id": "R_WEAK_ANGLE_CT",
+      "required_inputs": [
+        "delta_MW2",
+        "delta_MZ2",
+        "M_W",
+        "M_Z"
+      ],
+      "source_anchor": "Denner on-shell weak-mixing-angle counterterm relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "delta Z_e|alpha(0) = -1/2 Re[delta Z_AA + (s_W/c_W) delta Z_ZA]",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "NEEDS_NEUTRAL_FIELD_RENORM_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "delta_Z_e_alpha0"
+      ],
+      "pv_or_tensor_dependencies": [
+        "B0_prime",
+        "B1"
+      ],
+      "relation_class": "WARD_CHARGE_RENORMALIZATION",
+      "relation_id": "R_CHARGE_CT_ALPHA0",
+      "required_inputs": [
+        "delta_Z_AA",
+        "delta_Z_ZA",
+        "s_W",
+        "c_W"
+      ],
+      "source_anchor": "Denner charge-renormalization Ward relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "delta Z_AA = - Re d Sigma_T^AA(k^2)/dk^2 | k^2=0",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "NEEDS_PHOTON_SELF_ENERGY_DERIVATIVE",
+      "output_objects": [
+        "delta_Z_AA"
+      ],
+      "pv_or_tensor_dependencies": [
+        "B0_prime"
+      ],
+      "relation_class": "FIELD_RENORMALIZATION",
+      "relation_id": "R_FIELD_AA",
+      "required_inputs": [
+        "Sigma_T^AA_prime_0"
+      ],
+      "source_anchor": "Neutral gauge-field wave-function counterterm relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "delta Z_ZA = 2 Sigma_T^AZ(0)/M_Z^2",
+      "import_status": "REVIEWED_RELATION_IMPORTED",
+      "numeric_status": "NEEDS_GAMMA_Z_MIXING_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "delta_Z_ZA"
+      ],
+      "pv_or_tensor_dependencies": [
+        "B0",
+        "B00"
+      ],
+      "relation_class": "FIELD_MIXING_RENORMALIZATION",
+      "relation_id": "R_FIELD_ZA",
+      "required_inputs": [
+        "Sigma_T^AZ_0",
+        "M_Z"
+      ],
+      "source_anchor": "Neutral gauge-field mixing counterterm relation"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "Delta r_DeltaAlpha = Delta alpha admitted at same-input route point",
+      "import_status": "REVIEWED_INPUT_ROW_IMPORTED_EVALUATED",
+      "numeric_status": "EVALUATED",
+      "output_objects": [
+        "Delta_r_DeltaAlpha"
+      ],
+      "pv_or_tensor_dependencies": [
+        "B0_prime_gamma_gamma_0"
+      ],
+      "relation_class": "RUNNING_ALPHA_INPUT_ROW",
+      "relation_id": "R_DELTA_ALPHA_ROW",
+      "required_inputs": [
+        "DeltaAlpha_had5",
+        "leptonic_vacuum_polarization"
+      ],
+      "source_anchor": "DIZET same-input diagnostic and standard running-alpha convention"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "Delta r_rho_lead = -(c_W^2/s_W^2) * 3 G_F m_t^2/(8 sqrt(2) pi^2)",
+      "import_status": "REVIEWED_ANALYTIC_ROW_IMPORTED_EVALUATED",
+      "numeric_status": "EVALUATED",
+      "output_objects": [
+        "Delta_r_rho_lead"
+      ],
+      "pv_or_tensor_dependencies": [
+        "A0_top_asymptotic",
+        "B0_tb_asymptotic"
+      ],
+      "relation_class": "LEADING_TOP_RHO_ROW",
+      "relation_id": "R_RHO_LEAD_ROW",
+      "required_inputs": [
+        "G_F",
+        "m_t",
+        "M_W",
+        "M_Z"
+      ],
+      "source_anchor": "Sirlin/Denner leading top-rho structure"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "Delta r_vertex = finite one-loop muon-decay vertex correction after OS subtraction",
+      "import_status": "RELATION_SLOT_IMPORTED",
+      "numeric_status": "NEEDS_VERTEX_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "Delta_r_vertex"
+      ],
+      "pv_or_tensor_dependencies": [
+        "B0",
+        "C0",
+        "C_tensor"
+      ],
+      "relation_class": "MUON_DECAY_VERTEX_FINITE_RELATION",
+      "relation_id": "R_VERTEX_FAMILY",
+      "required_inputs": [
+        "vertex_amplitudes",
+        "external_leg_convention"
+      ],
+      "source_anchor": "Sirlin/Denner muon-decay vertex family"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "Delta r_box = finite one-loop muon-decay box correction after matching to Fermi theory",
+      "import_status": "RELATION_SLOT_IMPORTED",
+      "numeric_status": "NEEDS_BOX_NUMERIC_COEFFICIENTS",
+      "output_objects": [
+        "Delta_r_box"
+      ],
+      "pv_or_tensor_dependencies": [
+        "C0",
+        "D0",
+        "D_tensor"
+      ],
+      "relation_class": "MUON_DECAY_BOX_FINITE_RELATION",
+      "relation_id": "R_BOX_FAMILY",
+      "required_inputs": [
+        "box_amplitudes",
+        "Fermi_matching_convention"
+      ],
+      "source_anchor": "Sirlin/Denner muon-decay box family"
+    },
+    {
+      "admits_as_formula": true,
+      "expression": "Delta r_gauge_restoring = tadpole + ghost + gauge-parameter-cancelling finite terms",
+      "import_status": "RELATION_SLOT_IMPORTED",
+      "numeric_status": "NEEDS_GAUGE_CANCELLATION_NUMERIC_AUDIT",
+      "output_objects": [
+        "Delta_r_gauge_restoring"
+      ],
+      "pv_or_tensor_dependencies": [
+        "A0",
+        "B0"
+      ],
+      "relation_class": "GAUGE_CANCELLATION_RELATION",
+      "relation_id": "R_TAD_GHOST_GAUGE",
+      "required_inputs": [
+        "tadpole_convention",
+        "gauge_fixing",
+        "ghost_rows"
+      ],
+      "source_anchor": "Denner tadpole/gauge-restoring convention"
+    }
+  ],
+  "route_status": "P_export_candidate_plus_ward_counterterm_import_layer",
+  "safe_claims": [
+    "v20 imports reviewed Ward/counterterm relation structure beneath the v19 formula matrix.",
+    "The scalar/tensor substrate is sufficient to host the next coefficient maps, but not enough to infer coefficients.",
+    "The APF-native evaluated content remains Delta-alpha plus leading top-rho; the finite target is localized but quarantined.",
+    "The next obstruction is numeric reviewed diagram-family evaluators, not DIZET transport or scalar integrals."
+  ],
+  "title": "W_TRACE Denner/Sirlin Ward-identity and counterterm formula import layer",
+  "version": "v20_0"
+}

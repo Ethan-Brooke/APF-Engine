@@ -1,0 +1,50 @@
+{
+  "validator_version": "w_trace_review_packet_validator_v1",
+  "preflight_timestamp_or_revision": "UNSET",
+  "packet_digest": "UNCOMPUTED",
+  "preflight_decision": "NO_PACKET_SUPPLIED",
+  "ready_for_import_attempt": false,
+  "physical_export_requested": false,
+  "packet": {
+    "packet_id": "template_packet_no_real_source",
+    "candidate_entry": {
+      "source_candidate_id": "reviewed_finite_part_table_candidate",
+      "source_candidate_class": "reviewed_literature_finite_part_table",
+      "intended_component_coverage": [
+        "Delta_alpha_run",
+        "Delta_rho_oblique",
+        "Delta_r_fermion_finite",
+        "Delta_r_boson_finite",
+        "Delta_r_vertex_box",
+        "Delta_r_ct_OS",
+        "Delta_r_covariance_pullback",
+        "sigma_Delta_r_pushforward"
+      ],
+      "public_or_archival_locator": "UNACQUIRED",
+      "version_or_revision_id": "UNACQUIRED",
+      "license_or_access_note": "UNACQUIRED",
+      "extraction_method": "manual_or_scripted_table_extraction_after_review",
+      "extraction_log_digest": "UNCOMPUTED",
+      "pack_digest_plan": "UNCOMPUTED",
+      "review_attestation_plan": "PENDING",
+      "forbidden_input_audit_plan": "REQUIRED_BEFORE_IMPORT",
+      "scheme_and_gauge_policy_note": "REQUIRED_BEFORE_IMPORT",
+      "counterterm_convention_note": "REQUIRED_BEFORE_IMPORT",
+      "acquired": false,
+      "imported": false,
+      "admitted": false,
+      "synthetic_or_template_only": false,
+      "consumes_forbidden_input": false,
+      "exports_physical_mw": false
+    },
+    "reviewer_or_process": "UNREVIEWED",
+    "review_decision": "TEMPLATE_ONLY_DO_NOT_IMPORT",
+    "review_notes_digest": "UNCOMPUTED",
+    "evidence_bundle_digest": "UNCOMPUTED",
+    "worksheet_sections_completed": [],
+    "preimport_steps_attested": [],
+    "forbidden_input_audit_passed": false,
+    "template_only": true,
+    "physical_export_requested": false
+  }
+}

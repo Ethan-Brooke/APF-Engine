@@ -1,0 +1,6 @@
+family,needed_coefficients,source,needed_for
+MSR-pole difference,"c2,c3,c4 in declared normalization",Hoang et al. MSR mass/R-evolution; on-shell self-energy coefficient literature,L>=2 MSR-to-pole numeric evaluator
+R-evolution,gamma_R^0..gamma_R^4,Hoang et al. MSR mass/R-evolution,scale evolution away from Rstar or direct MSbar connection
+QCD beta function,"beta_2,beta_3,beta_4",RunDec/CRunDec v3 and five-loop QCD beta-function literature,multi-loop alpha_s(Rstar)
+OS-MSbar relation,d1..d4,Marquard et al. four-loop on-shell/MSbar mass relation,pole/MSbar branch
+threshold decoupling,"zeta_g,zeta_m",RunDec/CRunDec v3,flavour threshold variations and covariance

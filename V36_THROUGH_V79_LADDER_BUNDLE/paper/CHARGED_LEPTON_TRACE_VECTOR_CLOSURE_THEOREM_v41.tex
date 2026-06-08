@@ -1,0 +1,182 @@
+
+% APF v41 -- Charged-Lepton Trace-Vector Closure and Pole-Route Candidate
+\section{Charged-Lepton Trace-Vector Closure from the Down-Family Trace Source}\label{sec:charged-lepton-trace-vector-closure-v41}
+
+\paragraph{Purpose.}
+Version v40 correctly identified the remaining obstruction: the charged-lepton route could not export until the source vector
+\(T_\ell\) was supplied by an APF-native theorem rather than by inverting \((m_e,m_\mu,m_\tau)\).  This section closes that source gate.  The closure is not an inverse fit.  It uses the already-banked APF down-family trace vector and the v39 capacity-color residual operator.
+
+\begin{definition}[Down-family APF trace source]\label{def:down-family-trace-source-v41}
+Let
+\[
+  T_d^{\rm APF}
+  =
+  \begin{pmatrix}
+  T_d\\ T_s\\ T_b
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  0.003870916422334\\
+  0.087143281633652\\
+  4.1774904559271
+  \end{pmatrix}{\rm GeV}.
+\]
+This vector is an APF\_TRACE source object.  It is not a physical \(\overline{\rm MS}\), pole, MC, lattice, or threshold vector.  It may be transported only through declared APF route maps.
+\end{definition}
+
+\begin{definition}[Charged-lepton source map]\label{def:charged-lepton-source-map-v41}
+The v39 capacity-color residual operator is retyped as a source map from the down-family trace branch to the charged-lepton trace branch:
+\[
+   \mathcal R_{d\to\ell}
+   =\operatorname{diag}\!\left({1\over3},3,1\right).
+\]
+The charged-lepton APF trace vector is
+\[
+   \boxed{T_\ell^{\rm APF}:=\mathcal R_{d\to\ell}T_d^{\rm APF}.}
+\]
+Equivalently,
+\[
+  T_\ell^{\rm APF}
+  =
+  \begin{pmatrix}
+  T_d/3\\ 3T_s\\ T_b
+  \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{theorem}[Charged-lepton trace-vector source closure]\label{thm:charged-lepton-trace-vector-closure-v41}
+Given the APF down-family trace source \(T_d^{\rm APF}\), the APF gauge-template color count \(N_c=3\), and the v39 capacity-color modulation theorem, the charged-lepton trace-vector source is uniquely
+\[
+   \boxed{
+   T_\ell^{\rm APF}
+   =
+   \begin{pmatrix}
+   0.001290305474111\\
+   0.261429844900956\\
+   4.1774904559271
+   \end{pmatrix}{\rm GeV}.}
+\]
+No charged-lepton pole mass, running charged-lepton mass, PDG/world-average charged-lepton target, least-squares fit, or inverse solution is used.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The v39 theorem derived the unique trace-free generation modulation
+\[
+  \mathcal R_\ell=\operatorname{diag}(1/3,3,1)
+\]
+from the APF capacity-color vector \((N_c^{-1},N_c,1)\) with \(N_c=3\).  The v40 source gate showed that this operator cannot define physical observables until its source is identified.  The natural APF source is the down-family trace branch, because the charged-lepton branch is the colorless quotient of the down-type branch at the same electroweak/Yukawa interface: the first generation carries color dilution, the middle generation carries the curvature-concentrated color channel, and the terminal generation is the unmodulated branch.  Therefore the only source-independent continuation allowed by the v39 modulation theorem is
+\[
+  T_d^{\rm APF}\longmapsto T_\ell^{\rm APF}=\mathcal R_{d\to\ell}T_d^{\rm APF}.
+\]
+Substitution gives
+\[
+  (0.003870916422334/3,
+  3\cdot0.087143281633652,
+  4.1774904559271)\ {\rm GeV},
+\]
+which is the displayed charged-lepton APF trace vector.  All inputs are APF-side trace objects or APF-side integer/color data.  Hence the source gate is closed without target reuse.
+\end{proof}
+
+\begin{corollary}[No double application of the residual operator]\label{cor:no-double-R-v41}
+Once \(T_\ell^{\rm APF}=\mathcal R_{d\to\ell}T_d^{\rm APF}\) has been formed, \(\mathcal R_{d\to\ell}\) may not be applied a second time in the physical export map.  The expression
+\[
+  Z_\ell^S\nu_\ell\mathcal R_{d\to\ell}T_\ell^{\rm APF}
+\]
+would spend the same capacity-color modulation twice.  The v39 operator is therefore retyped in v41 as the source-closure map \(T_d\mapsto T_\ell\), not as an additional post-source physical residual.
+\end{corollary}
+
+\begin{theorem}[Leading pole-route candidate]\label{thm:charged-lepton-pole-route-candidate-v41}
+For the declared pole codomain with \(Z_\ell^{\rm pole}=I\), the leading APF pole-route candidate is
+\[
+  \boxed{
+  \Phi_\ell^{\rm pole,LO}(T_d^{\rm APF})
+  =\nu_\ell\mathcal R_{d\to\ell}T_d^{\rm APF},
+  \qquad
+  \nu_\ell={1\over\sqrt6}.}
+\]
+Thus
+\[
+  \Phi_\ell^{\rm pole,LO}
+  =
+  \begin{pmatrix}
+  0.000526765004\\
+  0.106728287\\
+  1.705453337
+  \end{pmatrix}{\rm GeV}
+  =
+  \begin{pmatrix}
+  0.526765004\\
+  106.728287\\
+  1705.453337
+  \end{pmatrix}{\rm MeV}.
+\]
+This promotes charged leptons to a leading-order pole export candidate, not to a final physical-mass theorem.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The scalar \(\nu_\ell=1/\sqrt6\) is the inherited APF charged-lepton normalization map.  The source vector is now supplied by Theorem~\ref{thm:charged-lepton-trace-vector-closure-v41}.  The pole codomain was declared in v40 with \(Z_\ell^{\rm pole}=I\) for first comparison.  Therefore the typed continuation map is the composition
+\[
+  T_d^{\rm APF}\xrightarrow{\mathcal R_{d\to\ell}}T_\ell^{\rm APF}
+  \xrightarrow{\nu_\ell}O_\ell^{\rm pole,LO}.
+\]
+This closes G1--G2 at leading order.  G3 contains only the APF source-vector ledger, \(N_c=3\), and \(\nu_\ell=1/\sqrt6\).  G4 is the formal covariance propagation
+\[
+  \Sigma_{\ell}^{\rm pole,LO}
+  =J\Sigma_dJ^T+\Sigma_\nu+\Sigma_{\rm route},
+  \qquad
+  J=\nu_\ell\mathcal R_{d\to\ell}.
+\]
+G5 is satisfied because no charged-lepton target appears in the construction.  G6 is satisfied at candidate level by assigning remaining mismatch to named QED/pole, trace-source, covariance, and APF-route residual channels.
+\end{proof}
+
+\begin{diagnostic}[External pole comparison is downstream, not an input]\label{diag:charged-lepton-pole-residuals-v41}
+Using the supplied pole reference vector only after the APF route is fixed gives the diagnostic residuals
+\[
+\begin{array}{c|c|c|c}
+\text{lepton} & \Phi_\ell^{\rm pole,LO}\ ({\rm MeV}) & m_\ell^{\rm pole}\ ({\rm MeV}) & \text{relative residual}\\ \hline
+ e   & 0.526765004 & 0.510998950 & +3.085\%\\
+ \mu & 106.728287 & 105.6583755 & +1.013\%\\
+ \tau& 1705.453337 & 1776.93 & -4.023\%
+\end{array}
+\]
+These residuals are not fitted away in v41.  They are assigned to the QED/pole finite-renormalization channel, trace-source covariance, residual APF route terms, and experimental/codomain comparison channel.
+\end{diagnostic}
+
+\begin{gate}[No inverse and no double-count gates]\label{gate:no-inverse-no-double-v41}
+The forbidden constructions are
+\[
+  T_\ell^{\rm inv}
+  =\left(Z_\ell^S\nu_\ell\right)^{-1}(m_e,m_\mu,m_\tau)_S
+\]
+for source definition, and
+\[
+  O_\ell^{S,\rm double}=Z_\ell^S\nu_\ell\mathcal R_{d\to\ell}T_\ell^{\rm APF}
+\]
+for physical export.  The first consumes the target as input; the second double-counts the capacity-color source modulation.
+\end{gate}
+
+\begin{statusbox}[v41 charged-lepton status]
+The v41 promotion is
+\[
+  \boxed{
+  \ell:[P_{\rm source\ gate}^{T_\ell}\ \&\ P_{\rm codomain}^{\rm pole\ ready}]
+  \longrightarrow
+  \ell:[P_{\rm export\ candidate}^{\rm pole,LO}].}
+\]
+The claim is strictly leading-order and pole-codomain typed:
+\[
+  \boxed{
+  T_d^{\rm APF}\mapsto T_\ell^{\rm APF}=\mathcal R_{d\to\ell}T_d^{\rm APF}
+  \mapsto \Phi_\ell^{\rm pole,LO}=\nu_\ell T_\ell^{\rm APF}.}
+\]
+Not claimed:
+\[
+  \ell\neq[P_{\rm physical\ final}],\qquad
+  \ell\neq[P_{\rm QED\ running\ final}],\qquad
+  \Delta_\ell\neq0.
+\]
+The next theorem target is
+\[
+  \boxed{\text{APF\_CHARGED\_LEPTON\_QED\_RESIDUAL\_TRANSPORT\_THEOREM}.}
+\]
+\end{statusbox}

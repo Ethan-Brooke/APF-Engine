@@ -1,0 +1,7 @@
+requirement,source,closed,note
+MSR definition and R-evolution source,MSR_HOANG_2017,source_manifested_v65,MSR is R-dependent low-scale short-distance mass
+QCD running/decoupling implementation reference,RUNDEC_V3/RUNDEC_ORIGINAL,source_manifested_v65,external evaluator reference for alpha_s and mass running
+gamma_R coefficients through loop order L,coefficient ledger not yet ingested,no,full numerical R-evolution blocked until table is supplied
+threshold convention,external QCD convention,no,must be chosen before numerical final
+covariance protocol,external QCD covariance ledger,no,"must propagate alpha_s, coefficients, thresholds, integration tolerances"
+no target residual tuning,APF no-smuggling rule,yes,"R_EW fixed from M_W_TRACE/(2pi), not top target"

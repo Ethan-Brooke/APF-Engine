@@ -1,0 +1,1257 @@
+{
+  "atlas_name": "APF_interface_atlas_v02_full_registry",
+  "timestamp": "2026-05-19T12:56:12.827928Z",
+  "input_count": 42,
+  "input_kinds": {
+    "CLAIM": 39,
+    "ROUTE_PAYLOAD": 3
+  },
+  "obstruction_counts": {
+    "EVALUATOR_MISSING": 33,
+    "CODOMAIN_MISMATCH": 24,
+    "OVERLAP_INCOHERENCE": 9,
+    "CAPACITY_OVERSPEND": 11,
+    "PROVENANCE_SMUGGLE": 3,
+    "REVERSAL_MISSING": 2,
+    "COMPLEX_ACTION_MISSING": 2,
+    "NORM_MISSING": 2
+  },
+  "route_distribution": {
+    "ew": 17,
+    "dark": 8,
+    "gauge": 1,
+    "horizon": 4,
+    "capacity": 3,
+    "provenance": 3,
+    "cstar": 2,
+    "generic": 4
+  },
+  "solver_status_distribution": {
+    "SOLVED_LOCAL_HELD_FOR_REPAIR": 37,
+    "FAIL_CLOSED_PROVENANCE": 3,
+    "BLOCKED_SUBSTRATE_REVISION_REQUIRED": 2
+  },
+  "global_p_count": 0,
+  "route_summaries": [
+    {
+      "input_id": "claim:ew_global_export",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:ew_local_trace",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:dark_runtime",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:gauge_fiber",
+      "route": "gauge",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "gauge codomain map",
+        "overlap cocycle",
+        "anomaly/evaluator check"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "anomaly_check_passed",
+        "codomain_map_declared",
+        "overlap_cocycle_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:horizon_cost",
+      "route": "horizon",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "CAPACITY_OVERSPEND",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "horizon area cost map",
+        "horizon overlap gluing"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "capacity_bound_checked",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:capacity_overspend",
+      "route": "capacity",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "CAPACITY_OVERSPEND"
+      ],
+      "failed_edges": [
+        "capacity load after coarse-graining"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST"
+      ],
+      "critical_fields": [
+        "coarse_grain_factor"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "claim:provenance_smuggling",
+      "route": "provenance",
+      "solver_status": "FAIL_CLOSED_PROVENANCE",
+      "export_global_P": false,
+      "obstruction": [
+        "PROVENANCE_SMUGGLE"
+      ],
+      "failed_edges": [
+        "no target/posterior/fitted output consumed"
+      ],
+      "failed_kinds": [
+        "PROVENANCE"
+      ],
+      "critical_fields": [],
+      "packet_status": "BLOCKED_PROVENANCE_REBUILD_REQUIRED"
+    },
+    {
+      "input_id": "claim:cstar_substrate",
+      "route": "cstar",
+      "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+      "export_global_P": false,
+      "obstruction": [
+        "REVERSAL_MISSING",
+        "COMPLEX_ACTION_MISSING",
+        "NORM_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "complex scalar action at substrate",
+        "cost-preserving reversal at substrate",
+        "operator/C*-norm at substrate",
+        "C* codomain declaration"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "SUBSTRATE_BOUNDARY"
+      ],
+      "critical_fields": [],
+      "packet_status": "BLOCKED_SUBSTRATE_THEOREM_REQUIRED"
+    },
+    {
+      "input_id": "claim:generic",
+      "route": "generic",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "CODOMAIN_MISMATCH",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "ACC base record",
+        "generic evaluator map",
+        "generic codomain transport",
+        "generic overlap gluing",
+        "generic capacity budget",
+        "generic empirical/posterior closure"
+      ],
+      "failed_kinds": [
+        "ACC_RECORD",
+        "CAPACITY_COST",
+        "CODOMAIN_TRANSPORT",
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "acc_base_present",
+        "capacity_budget_verified",
+        "codomain_transport_found",
+        "empirical_or_posterior_closed",
+        "evaluator_map_found",
+        "local_solution_found",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "payload:ew_transport_open",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "codomain transport",
+        "scheme evaluator map",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "payload:dark_runtime_open",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "payload:capacity_overspend",
+      "route": "capacity",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "CAPACITY_OVERSPEND"
+      ],
+      "failed_edges": [
+        "capacity load after coarse-graining"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST"
+      ],
+      "critical_fields": [
+        "coarse_grain_factor"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route01_charged_lepton_pole",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route02_charged_lepton_qed_running",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route03_charm_msbar_self_scale",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route04_charm_pole",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "immutable APF_TRACE input",
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "TRACE_INPUT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "trace_sector_closed",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route05_bottom_msbar_self_scale",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route06_bottom_pole",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "immutable APF_TRACE input",
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "TRACE_INPUT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "trace_sector_closed",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route07_top_external_msr",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route08_top_msr_ew_transport",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route09_top_pole_mc",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "immutable APF_TRACE input",
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "TRACE_INPUT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "trace_sector_closed",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route10_light_quark_flag_external_kernel",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route11_mw_on_shell_dizet",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route12_sin2_theta_w_source_identity",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route13_sin2_theta_eff_bsy_four_channel",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "mass:route14_sin2_theta_w_mass_ratio_identity",
+      "route": "ew",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "target-scheme contract",
+        "codomain transport",
+        "scheme evaluator map",
+        "external constants ledger",
+        "counterterm finite parts",
+        "uncertainty/comparison protocol"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "COUNTERTERM",
+        "EVALUATOR_MAP",
+        "EXTERNAL_CONSTANT",
+        "SCHEME_CONTRACT",
+        "UNCERTAINTY_PROTOCOL"
+      ],
+      "critical_fields": [
+        "codomain_transport_found",
+        "counterterm_finite_parts_declared",
+        "evaluator_map_found",
+        "external_constants_ledger_clean",
+        "source_to_scheme_registry_present",
+        "uncertainty_protocol_declared"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_w2_a_background",
+      "route": "provenance",
+      "solver_status": "FAIL_CLOSED_PROVENANCE",
+      "export_global_P": false,
+      "obstruction": [
+        "PROVENANCE_SMUGGLE"
+      ],
+      "failed_edges": [
+        "no target/posterior/fitted output consumed"
+      ],
+      "failed_kinds": [
+        "PROVENANCE"
+      ],
+      "critical_fields": [],
+      "packet_status": "BLOCKED_PROVENANCE_REBUILD_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_cross_sn_profile_probe",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_desi_full_shape_exact",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_full_growth_likelihood",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed",
+        "run_completed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_dark_particle_id",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed",
+        "run_completed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "dark:route_modified_gravity",
+      "route": "horizon",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "horizon area cost map",
+        "area-cost evaluator",
+        "horizon overlap gluing"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "area_cost_map_defined",
+        "capacity_bound_checked",
+        "horizon_partition_defined",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "gravity:route_gr_limit_full_close",
+      "route": "horizon",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "horizon area cost map",
+        "area-cost evaluator",
+        "horizon overlap gluing"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "area_cost_map_defined",
+        "capacity_bound_checked",
+        "horizon_partition_defined",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "gravity:route_bianchi_rigidity",
+      "route": "provenance",
+      "solver_status": "FAIL_CLOSED_PROVENANCE",
+      "export_global_P": false,
+      "obstruction": [
+        "PROVENANCE_SMUGGLE"
+      ],
+      "failed_edges": [
+        "no target/posterior/fitted output consumed"
+      ],
+      "failed_kinds": [
+        "PROVENANCE"
+      ],
+      "critical_fields": [],
+      "packet_status": "BLOCKED_PROVENANCE_REBUILD_REQUIRED"
+    },
+    {
+      "input_id": "gravity:route_ringdown_capacity_schema",
+      "route": "horizon",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "horizon area cost map",
+        "area-cost evaluator",
+        "horizon overlap gluing"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "area_cost_map_defined",
+        "capacity_bound_checked",
+        "horizon_partition_defined",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "cosmogenesis:route_t1_t4_quartet",
+      "route": "generic",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "CODOMAIN_MISMATCH",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "ACC base record",
+        "generic evaluator map",
+        "generic codomain transport",
+        "generic overlap gluing",
+        "generic capacity budget",
+        "generic empirical/posterior closure"
+      ],
+      "failed_kinds": [
+        "ACC_RECORD",
+        "CAPACITY_COST",
+        "CODOMAIN_TRANSPORT",
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "acc_base_present",
+        "capacity_budget_verified",
+        "codomain_transport_found",
+        "empirical_or_posterior_closed",
+        "evaluator_map_found",
+        "local_solution_found",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "evaporation:route_e1_e4_quartet",
+      "route": "capacity",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "CAPACITY_OVERSPEND"
+      ],
+      "failed_edges": [
+        "capacity load after coarse-graining"
+      ],
+      "failed_kinds": [
+        "CAPACITY_COST"
+      ],
+      "critical_fields": [
+        "coarse_grain_factor"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "neutrino:route_mbb_reconciliation",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed",
+        "run_completed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "neutrino:route_dune_juno_hierarchy",
+      "route": "dark",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING"
+      ],
+      "failed_edges": [
+        "dark empirical evaluator",
+        "posterior/robustness closure"
+      ],
+      "failed_kinds": [
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP"
+      ],
+      "critical_fields": [
+        "posterior_closed",
+        "robustness_checks_passed",
+        "run_completed"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "arch:route_rdfi_global_descent_kernel",
+      "route": "cstar",
+      "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+      "export_global_P": false,
+      "obstruction": [
+        "REVERSAL_MISSING",
+        "COMPLEX_ACTION_MISSING",
+        "NORM_MISSING",
+        "CODOMAIN_MISMATCH"
+      ],
+      "failed_edges": [
+        "complex scalar action at substrate",
+        "cost-preserving reversal at substrate",
+        "operator/C*-norm at substrate",
+        "C* codomain declaration"
+      ],
+      "failed_kinds": [
+        "CODOMAIN_TRANSPORT",
+        "SUBSTRATE_BOUNDARY"
+      ],
+      "critical_fields": [],
+      "packet_status": "BLOCKED_SUBSTRATE_THEOREM_REQUIRED"
+    },
+    {
+      "input_id": "arch:route_defect_calculus_architecture",
+      "route": "generic",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "CODOMAIN_MISMATCH",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "ACC base record",
+        "generic evaluator map",
+        "generic codomain transport",
+        "generic overlap gluing",
+        "generic capacity budget",
+        "generic empirical/posterior closure"
+      ],
+      "failed_kinds": [
+        "ACC_RECORD",
+        "CAPACITY_COST",
+        "CODOMAIN_TRANSPORT",
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "acc_base_present",
+        "capacity_budget_verified",
+        "codomain_transport_found",
+        "empirical_or_posterior_closed",
+        "evaluator_map_found",
+        "local_solution_found",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    },
+    {
+      "input_id": "arch:route_interface_engine_operational",
+      "route": "generic",
+      "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+      "export_global_P": false,
+      "obstruction": [
+        "EVALUATOR_MISSING",
+        "CAPACITY_OVERSPEND",
+        "CODOMAIN_MISMATCH",
+        "OVERLAP_INCOHERENCE"
+      ],
+      "failed_edges": [
+        "ACC base record",
+        "generic evaluator map",
+        "generic codomain transport",
+        "generic overlap gluing",
+        "generic capacity budget",
+        "generic empirical/posterior closure"
+      ],
+      "failed_kinds": [
+        "ACC_RECORD",
+        "CAPACITY_COST",
+        "CODOMAIN_TRANSPORT",
+        "EMPIRICAL_POSTERIOR",
+        "EVALUATOR_MAP",
+        "OVERLAP_GLUING"
+      ],
+      "critical_fields": [
+        "acc_base_present",
+        "capacity_budget_verified",
+        "codomain_transport_found",
+        "empirical_or_posterior_closed",
+        "evaluator_map_found",
+        "local_solution_found",
+        "overlap_gluing_verified"
+      ],
+      "packet_status": "OPEN_EVIDENCE_REQUIRED"
+    }
+  ]
+}

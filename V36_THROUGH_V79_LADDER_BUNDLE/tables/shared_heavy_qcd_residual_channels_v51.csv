@@ -1,0 +1,7 @@
+channel,status,description
+same_codomain_MSbar_c,closed_for_export_candidate,charm v50 prediction audited directly against mc(mc)
+same_codomain_MSbar_b,closed_for_export_candidate,bottom trace anchor audited directly against mb(mb)
+top_MSR_Rstar,closed_for_export_candidate,top MSR scale selected internally; no same-codomain external average supplied
+top_conversion,boundary,MSR-to-pole/MC/MSbar conversion requires external coefficients and covariance
+alpha_s_threshold_covariance,typed_required,shared QCD covariance ledger named for publication finalization
+physical_final,not_claimed,"v51 closes export-candidate ledger discipline, not final physical masses"

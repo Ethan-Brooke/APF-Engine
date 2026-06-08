@@ -1,0 +1,87 @@
+## trace_to_scheme_export_v35_targeted_v59_rerun.txt
+```
+PASS export_candidates_exact
+PASS obstruction_or_terminal_count
+Total checks: 42/42
+TRACE_TO_SCHEME_EXPORT_THEOREM_PASS
+```
+
+## top_msr_scale_selection_v37_targeted_v59_rerun.txt
+```
+PASS v35_trace_to_scheme_theorem_present
+PASS v36_gates_derived_present
+Total checks: 85/85
+TOP_MSR_SCALE_SELECTION_THEOREM_PASS
+```
+
+## charged_lepton_qed_closure_boundary_v49_targeted_v59_rerun.txt
+```
+PASS inherited_exists_check_charged_lepton_codata_ledger_lo_qed_transport_v47.py
+PASS inherited_exists_check_charged_lepton_full_qed_running_ledger_covariance_v48.py
+Total checks: 190/190
+CHARGED_LEPTON_QED_CLOSURE_BOUNDARY_THEOREM_PASS
+```
+
+## charm_trace_to_msbar_normalization_transport_v50_targeted_v59_rerun.txt
+```
+PASS inherited_exists_check_top_msr_scale_selection_v37.py
+PASS inherited_exists_check_charged_lepton_qed_closure_boundary_v49.py
+Total checks: 135/135
+CHARM_TRACE_TO_MSBAR_NORMALIZATION_TRANSPORT_PASS
+```
+
+## bottom_top_charm_shared_qcd_covariance_ledger_v51_targeted_v59_rerun.txt
+```
+PASS inherited_check_charged_lepton_qed_closure_boundary_v49.py
+PASS inherited_check_top_msr_scale_selection_v37.py
+Total checks: 145/145
+BOTTOM_TOP_CHARM_SHARED_QCD_COVARIANCE_LEDGER_PASS
+```
+
+## light_quark_apf_side_completion_boundary_v54_targeted_v59_rerun.txt
+```
+PASS inherits_reports_light_quark_up_trace_source_scalar_knockout_v53_data.json
+PASS inherits_scripts_check_light_quark_up_trace_source_scalar_knockout_v53.py
+Total checks: 77/77
+LIGHT_QUARK_APF_SIDE_COMPLETION_BOUNDARY_PASS
+```
+
+## global_trace_to_scheme_closure_registry_v55_targeted_v59_rerun.txt
+```
+PASS summary_counts_nonempty
+PASS summary_total_six
+Total checks: 88/88
+GLOBAL_TRACE_TO_SCHEME_CLOSURE_REGISTRY_PASS
+```
+
+## w_trace_to_onshell_ew_covariance_closure_v56_targeted_v59_rerun.txt
+```
+PASS max_abs_z_matches_pdg
+PASS pdg_more_limiting_than_cms
+Total checks: 103/103
+W_TRACE_TO_ONSHELL_EW_COVARIANCE_CLOSURE_PASS
+```
+
+## heavy_qcd_final_covariance_ledger_v57_targeted_v59_rerun.txt
+```
+PASS charm_residual_smaller_than_bottom
+PASS both_same_codomain_closed
+Total checks: 123/123
+HEAVY_QCD_FINAL_COVARIANCE_LEDGER_PASS
+```
+
+## top_msr_to_pole_lo_transport_witness_v58_targeted_v59_rerun.txt
+```
+PASS not_claimed_zero_residual
+PASS not_claimed_full_multiloop_MSR_conversion
+Total checks: 102/102
+TOP_MSR_TO_POLE_LO_TRANSPORT_WITNESS_PASS
+```
+
+## top_msr_full_qcd_conversion_ledger_v59_targeted.txt
+```
+PASS inherited_scripts_check_w_trace_to_onshell_ew_covariance_closure_v56.py
+PASS next_v60
+Total checks: 157/157
+TOP_MSR_FULL_QCD_CONVERSION_LEDGER_PASS
+```

@@ -1,0 +1,202 @@
+
+% APF v39 -- Charged-Lepton Coefficient Closure Theorem
+% verifier token: APF_CHARGED_LEPTON_TRACE_VECTOR_AND_QED_SCHEME_EXPORT_THEOREM
+\section{Charged-Lepton Coefficient Closure from Capacity-Color Modulation}
+\label{sec:charged-lepton-coefficient-closure-v39}
+
+\paragraph{Purpose.}
+The preceding charged-lepton route theorem closed the operator form
+\[
+        \mathcal R_\ell(\alpha,\beta)
+        =\exp\!\left(\alpha H_1+\beta H_2\right),
+        \qquad
+        H_1=\operatorname{diag}(-1,0,1),\quad
+        H_2=\operatorname{diag}(1,-2,1),
+\]
+but left the coefficients $(\alpha,\beta)$ open.  This section closes the
+coefficient layer using only APF-side generation-interface data.  It does
+\emph{not} import the electron, muon, or tau masses, and it does not yet claim
+charged-lepton physical export.  The result is a coefficient-closed route
+operator; the remaining gates are the numeric APF trace vector and the
+QED/pole/running scheme transport ledger.
+
+\subsection{APF-side data}
+
+\begin{definition}[Capacity-color modulation vector]
+APF's gauge-template theorem selects the minimal confining color factor
+\[
+        N_c=3.
+\]
+At a charged-lepton/down-sector comparison interface, the color channel is not
+an external $SU(5)$ assumption.  It is the APF capacity-color asymmetry left
+by quotienting the quark color channel against the colorless charged-lepton
+branch.  The generation-resolved modulation is therefore
+\[
+        g_\ell=(N_c^{-1},\,N_c,\,1).
+\]
+The first slot carries the color dilution channel, the middle slot carries the
+curvature-concentrated color amplification channel, and the third slot is the
+unmodulated terminal generation channel.
+\end{definition}
+
+\begin{definition}[Forbidden coefficient inputs]
+A coefficient-closure proof is source-independent only if $(\alpha,\beta)$ are
+derived before comparison to physical charged-lepton masses.  The following are
+forbidden inputs:
+\[
+        m_e^{\rm pole},\quad
+        m_\mu^{\rm pole},\quad
+        m_\tau^{\rm pole},\quad
+        m_\ell(\mu),\quad
+        \text{PDG/world-average charged-lepton data},
+\]
+and any least-squares, inverse, or regression choice of $(\alpha,\beta)$ from
+those quantities.
+\end{definition}
+
+\subsection{Coefficient closure}
+
+\begin{lemma}[Capacity-color modulation is trace-free after logarithm]
+Let
+\[
+        g_\ell=(N_c^{-1},N_c,1).
+\]
+Then
+\[
+        \log g_\ell=(-\log N_c,\log N_c,0)
+\]
+has total sum zero.
+\end{lemma}
+
+\begin{proof}
+The sum is
+\[
+        -\log N_c+\log N_c+0=0.
+\]
+Thus the modulation is a pure generation-residual action on the trace-free
+plane; it does not introduce a new scalar normalization beyond
+$\nu_\ell=1/\sqrt6$.
+\end{proof}
+
+\begin{theorem}[Charged-lepton coefficient closure]
+\label{thm:charged-lepton-coefficient-closure-v39}
+Within the APF-minimal charged-lepton residual family
+\[
+        \mathcal R_\ell(\alpha,\beta)
+        =\exp\!\left(\alpha H_1+\beta H_2\right),
+\]
+the unique coefficients realizing the APF capacity-color modulation vector
+$g_\ell=(N_c^{-1},N_c,1)$ are
+\[
+        \boxed{\alpha_\ell={1\over2}\log N_c,
+        \qquad
+        \beta_\ell=-{1\over2}\log N_c.}
+\]
+For the APF gauge-template value $N_c=3$,
+\[
+        \boxed{\alpha_\ell={1\over2}\log 3,
+        \qquad
+        \beta_\ell=-{1\over2}\log 3.}
+\]
+Consequently
+\[
+        \boxed{\mathcal R_\ell
+        =\operatorname{diag}\!\left({1\over3},3,1\right).}
+\]
+\end{theorem}
+
+\begin{proof}
+The exponential residual operator has diagonal logarithms
+\[
+\alpha H_1+\beta H_2
+ =\operatorname{diag}(-\alpha+\beta,-2\beta,\alpha+\beta).
+\]
+To realize $g_\ell=(N_c^{-1},N_c,1)$ we require
+\[
+        -\alpha+\beta=-\log N_c,
+        \qquad
+        -2\beta=\log N_c,
+        \qquad
+        \alpha+\beta=0.
+\]
+The last two equations give
+\[
+        \beta=-{1\over2}\log N_c,
+        \qquad
+        \alpha={1\over2}\log N_c,
+\]
+and these automatically satisfy the first equation.  Since $H_1$ and $H_2$
+span the full diagonal trace-free generation plane, the solution is unique.
+Substituting $N_c=3$ gives the displayed APF coefficient closure.  No physical
+charged-lepton mass is used in the derivation.
+\end{proof}
+
+\begin{corollary}[Coefficient-closed charged-lepton route]
+The charged-lepton route is promoted from operator-form only to
+coefficient-closed route status:
+\[
+        T_\ell
+        \longmapsto
+        O_\ell^S
+        =Z_\ell^S\,{1\over\sqrt6}\,
+        \operatorname{diag}\!\left({1\over3},3,1\right)T_\ell.
+\]
+Equivalently,
+\[
+        \boxed{
+        \Phi_\ell^S(T_\ell)
+        = Z_\ell^S\,\nu_\ell\,\mathcal R_\ell T_\ell,
+        \qquad
+        \nu_\ell={1\over\sqrt6},
+        \quad
+        \mathcal R_\ell=\operatorname{diag}\!\left({1\over3},3,1\right).
+        }
+\]
+This is not yet a charged-lepton physical export because the numeric APF trace
+vector $T_\ell$, the QED/pole/running codomain choice $S$, the scheme factor
+$Z_\ell^S$, and the covariance protocol remain to be supplied.
+\end{corollary}
+
+\subsection{Gate status}
+
+The coefficient-closure layer changes the charged-lepton route status as
+follows:
+\[
+        \boxed{
+        \ell:[P_{\rm route}^{\rm operator\ form}]
+        \quad\longrightarrow\quad
+        \ell:[P_{\rm route}^{\rm coefficient\ closed}].
+        }
+\]
+The six export gates now read:
+\[
+\begin{array}{c|c|p{9cm}}
+\text{Gate} & \text{status} & \text{reason}\\ \hline
+G1 & \text{partial} & pole/running QED codomain must still be selected for a physical comparison\\
+G2 & \text{advanced} & operator form and coefficients are now APF-derived\\
+G3 & \text{partial} & internal generation/color ledger closed; QED constants and scheme conventions deferred\\
+G4 & \text{formal} & covariance form exists but numeric trace/scheme covariance is deferred\\
+G5 & \text{pass for coefficient layer} & no electron, muon, tau, PDG, or fit target is consumed\\
+G6 & \text{pass as route obstruction} & remaining residual channels are named: trace vector, QED running, scheme choice, covariance, and APF residual\\
+\end{array}
+\]
+
+\paragraph{No-smuggling audit.}
+The derivation uses only $N_c=3$, the generation ladder, and the already-banked
+trace-free residual basis.  The coefficient values
+\[
+        (\alpha_\ell,\beta_\ell)
+        =\left({1\over2}\log3,-{1\over2}\log3\right)
+\]
+are not selected by minimizing a residual against $(m_e,m_\mu,m_\tau)$.  Physical
+masses enter only downstream, after the route is declared.
+
+\paragraph{Remaining theorem target.}
+The next obstruction is no longer coefficient closure.  It is the trace/scheme
+export layer:
+\[
+        \boxed{\texttt{APF\_CHARGED\_LEPTON\_TRACE\_VECTOR\_AND\_QED\_SCHEME\_EXPORT\_THEOREM}.}
+\]
+That theorem must supply the APF trace vector $T_\ell$, the physical codomain
+$S$, the scheme factor $Z_\ell^S$, and the covariance protocol without using the
+target charged-lepton masses as inverse inputs.

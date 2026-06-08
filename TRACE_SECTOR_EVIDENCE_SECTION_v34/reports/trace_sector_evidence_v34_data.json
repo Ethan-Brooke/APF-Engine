@@ -1,0 +1,48 @@
+{
+  "version": "34.0",
+  "module": "trace_sector_evidence_section",
+  "status": "TRACE_SECTOR_EVIDENCE_SECTION_PASS",
+  "main_conclusion": "EW trace sector and fermion trace sector locally closed; physical export is route-dependent.",
+  "ew": {
+    "sin2_theta_W_trace": "3/13",
+    "gprime_over_g": "sqrt(3/10)",
+    "M_W_APF_TRACE_GeV": 80.362164334,
+    "M_W_DIZET_same_input_GeV": 80.357341077578084,
+    "delta_MW_MeV": -4.823256421915,
+    "sigma_input_theory_MeV": 4.424866188882492,
+    "pull_sigma": 1.0900344137,
+    "status": "P_sector_closure_plus_W_export_candidate"
+  },
+  "fermions": {
+    "bottom": {
+      "trace_GeV": 4.1774904559270665,
+      "status": "P_export_candidate_not_physical_final",
+      "residual_MeV": -5.509544,
+      "pull_sigma": -0.787
+    },
+    "top": {
+      "trace_GeV": 168.1690557938,
+      "status": "P_trace_plus_P_ext_MSR_codomain_plus_P_terminal_scheme_closeout"
+    },
+    "charged_leptons": {
+      "raw_MeV": {"e": 1.2903054741112938, "mu": 261.429844900952, "tau": 4178.022853},
+      "lambda6_normalized_MeV": {"e": 0.526765004, "mu": 106.728287, "tau": 1705.453337},
+      "status": "P_trace_vector_plus_P_normalization_candidate_plus_P_generation_residual_closeout"
+    },
+    "charm": {
+      "trace_GeV": 0.6800912249261419,
+      "status": "P_trace_plus_P_MSbar_route_knockout"
+    },
+    "light_quarks": {
+      "trace_MeV": {"u": 1.153209852, "d": 3.870916422, "s": 87.143281634},
+      "status": "P_trace_plus_P_low_energy_QCD_obstruction"
+    }
+  },
+  "export_candidates": ["W", "bottom"],
+  "no_smuggling": {
+    "target_consumption": false,
+    "codomain_separation": true,
+    "negative_controls_retained": true,
+    "unresolved_branches_not_promoted": true
+  }
+}

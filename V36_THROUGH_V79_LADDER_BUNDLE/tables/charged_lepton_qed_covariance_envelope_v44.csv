@@ -1,0 +1,8 @@
+quantity,value,status,meaning
+D0_covariance,5063,P_count_source,K_SM*(K_SM+K_c+K_b+N_gen)=61*(61+16+3+3)
+epsilon_QED_APF,1/5063,P_covariance_envelope,APF pole-codomain residual envelope
+epsilon_QED_percent,0.019751135690302,P_covariance_envelope,percent form of APF envelope
+max_v43_residual_percent,0.000741052916473,diagnostic_only,largest absolute v43 diagnostic residual
+max_residual_over_envelope,0.037519509161019,P_inside_envelope,largest absolute residual divided by APF envelope
+running_codomain_map,U_QED^{pole_to_running},typed_not_evaluated,"requires alpha, mu, thresholds, loop order, convention, covariance"
+forbidden_envelope_source,inverse fit to pole masses,forbidden,cannot choose covariance envelope from targets

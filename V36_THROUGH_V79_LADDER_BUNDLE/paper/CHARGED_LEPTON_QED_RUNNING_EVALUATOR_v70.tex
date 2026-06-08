@@ -1,0 +1,98 @@
+
+% APF v70 -- Charged-Lepton QED Running Evaluator
+% Generated 2026-05-10
+
+\section{Charged-Lepton QED Running Evaluator}
+\label{sec:v70-charged-lepton-qed-running}
+
+\subsection{Purpose}
+The trace-to-scheme export sprint left the charged-lepton sector at
+\[
+\ell:
+[P_{\rm pole\,completion}]^{\rm APF\,envelope,CODATA2022}
++
+[P_{\rm QED\,boundary}].
+\]
+This module closes the source-clean one-loop QED evaluator and keeps the full multi-loop QED running claim fail-closed until a complete external coefficient, threshold, scheme, and covariance ledger is supplied.
+
+\subsection{Frozen APF input}
+The charged-lepton pole-codomain APF vector is
+\[
+\Phi_\ell^{v43}=
+(0.511002635789,\;105.658243985342,\;1776.916832008411)\;{\rm MeV}.
+\]
+The CODATA 2022 pole ledger used for audit is
+\[
+(m_e,m_\mu,m_\tau)_{\rm CODATA2022}
+=
+(0.51099895069,\;105.6583755,\;1776.86)\;{\rm MeV}.
+\]
+The fine structure constant ledger is frozen as
+\[
+\alpha^{-1}=137.035999177(21),
+\qquad
+\frac{\alpha}{\pi}=0.002322819464195.
+\]
+
+\subsection{Closed evaluator}
+The source-clean one-loop same-self-scale evaluator is defined by
+\[
+\overline m_i^{\rm QED,LO}(\mu_i=m_i)
+=
+\frac{M_i^{\rm pole}}{1+\alpha/\pi}.
+\]
+Therefore
+\[
+\boxed{
+\overline m_\ell^{\rm QED,LO}(\mu_i=m_i)
+=
+(0.509818419641,\;105.413387716567,\;1772.798940124185)\;{\rm MeV}.
+}
+\]
+This is a declared QED transport object, not a new APF trace derivation.
+
+\subsection{Audit residuals remain pole-codomain diagnostics}
+Before QED running, the APF pole vector has CODATA residuals
+\[
+\delta_\ell=
+(+0.000721155884\%,\;-0.000124471588\%,\;+0.003198451674\%).
+\]
+These residuals were already inside the APF/CODATA envelope in the closeout registry. The running evaluator is not used to fit, erase, or redistribute those residuals.
+
+\subsection{No-smuggling rule}
+No scale is selected from the residual vector. No coefficient is selected from the residual vector. No separate generation factors
+\((r_e,r_\mu,r_\tau)\) are admitted. In particular,
+\[
+\overline m_i\mapsto r_i\overline m_i,
+\qquad
+r_i\;{\rm chosen\;from}\;(m_e,m_\mu,m_\tau)_{\rm target},
+\]
+is forbidden. QED running is a codomain transport operation, not a residual-fitting operation.
+
+\subsection{Fail-closed full-QED boundary}
+The full multi-loop running object remains
+\[
+U_{\rm QED}^{L\ge 2}(
+\beta_i,\gamma_m^i,\mathcal T,\mathcal M,\Sigma_{\rm QED}),
+\]
+where \(\mathcal T\) denotes thresholds, \(\mathcal M\) matching conventions, and \(\Sigma_{\rm QED}\) covariance. Without that external ledger the evaluator must fail closed.
+
+\subsection{Status theorem}
+\begin{theorem}[Charged-lepton QED evaluator closeout]
+Given the APF pole-complete charged-lepton vector \(\Phi_\ell^{v43}\) and the frozen CODATA 2022 fine-structure constant ledger, the one-loop same-self-scale QED evaluator is closed:
+\[
+\ell:
+[P_{\rm pole\,completion}]^{\rm APF\,envelope,CODATA2022}
++
+[P_{\rm QED\,LO\,self\text{-}scale\,evaluator}].
+\]
+The full multi-loop QED running route remains an external-ledger boundary:
+\[
+\ell:
+[P_{\rm full\,QED\,boundary}]/
+[\beta_i,\gamma_m^i,\mathcal T,\mathcal M,\Sigma_{\rm QED}\;{\rm required}].
+\]
+\end{theorem}
+
+\paragraph{Nonclaims.}
+This module does not claim \([P_{\rm physical\,final}]\), exact zero residuals, or a multi-loop QED final mass vector. It closes the source-clean LO evaluator and the fail-closed boundary for all higher-order evaluator claims.

@@ -1,0 +1,1513 @@
+% ======================================================================
+% Paper 2 — The Structure of Admissible Physics
+% v5.0: Conceptual introductions, expanded boxes, numbered equations
+% ======================================================================
+
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Paper 2: The Structure of Admissible Physics}
+\fancyhead[R]{\small\itshape E.\,Brooke}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\tcbset{
+    apfbox/.style={
+        enhanced,
+        colback=black!3,
+        frame hidden,
+        borderline={0.5pt}{0pt}{black},
+        arc=0pt,
+        left=8pt, right=8pt, top=8pt, bottom=8pt,
+        fonttitle=\bfseries\color{black},
+        coltitle=black,
+        detach title,
+        before upper={\tcbtitle\par\smallskip},
+        before skip=14pt,
+        after skip=14pt,
+        grow to left by=-8pt,
+        grow to right by=-8pt,
+        sharp corners,
+        breakable,
+    }
+}
+
+\newenvironment{varlist}{\begin{itemize}[nosep,leftmargin=2em]}{\end{itemize}}
+\newcommand{\coderef}[2]{\smallskip\noindent\textit{Code reference:} \texttt{#1} in \texttt{#2}.}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+
+\title{
+  \textbf{Paper 2: The Structure of Admissible Physics}\\
+  \large Non-Closure, Gauge Origin, Capacity Counting, and the 61-Type Partition\\
+  \normalsize E.\ S.\ Brooke\\
+  Admissibility Physics --- March 2026
+}
+\author{}
+\date{}
+
+\setstretch{1.05}
+\setlist[itemize]{itemsep=3pt,topsep=4pt}
+\setlist[enumerate]{itemsep=3pt,topsep=4pt}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Paper~1: \emph{The Enforceability of Distinction} derived the quantum skeleton---Hilbert space, the Born rule, gauge symmetry, tensor products, and entropy---from a single axiom (A1: finite enforcement capacity), two regularity inputs (MD: uniform per-test cost floor; BW: budget-window richness), and constitutive admissibility semantics (SP, K3, FD1--FD6).  This paper deploys those results.
+
+We begin with the Non-Closure Theorem ($L_{\mathrm{nc}}$): individually admissible enforcement demands, when composed at shared interfaces, generically exceed local budgets.  Admissible sets are not closed under composition.  This is the engine behind all competition, selection, and structure in the framework.  We provide constructive witnesses and quantitative consequences, then show that non-closure \emph{requires} non-abelian gauge structure: abelian composition is additive ($\Delta = 0$), which is incompatible with non-closure; the complete exclusion of abelian carriers is proved in the Formal Supplement~\cite{BrookeP2Supplement} ($B1'$, \S3.3), and the structural argument establishing that only non-abelian routing can sustain $\Delta > 0$ is developed in Section~\ref{sec:gauge_origin}.
+
+The cost function is proved unique via Cauchy's functional equation~(1821): the only monotone additive cost function with unit normalization is $F(d) = d$.  This eliminates a potential free parameter and anchors the Weinberg angle derivation.
+
+The gauge template is then proved unique by exhaustive classification of all 17 compact simple Lie algebras: the three carrier requirements derived in Paper~1~\cite{BrookePaper1} (complex ternary, pseudoreal binary, abelian grading) select $\SU(N_c) \times \SU(2) \times \U(1)$ as the only viable product structure.  Capacity minimality selects $N_c = 3$.  The fermion content is derived by exhaustive scan of 1{,}680 chiral templates under seven filters, with five closed-form exclusion proofs covering all representations outside the scan.  The unique survivor is the Standard Model at 45 Weyl fermions.
+
+Capacity counting---structural enforcement channels, not field-theoretic degrees of freedom---yields $C_{\mathrm{total}} = 61$ ($45 + 4 + 12$).  The MECE (mutually exclusive, collectively exhaustive) partition by two mechanism predicates gives:
+\begin{equation}
+\underbrace{61}_{C_{\mathrm{total}}} \;=\; \underbrace{42}_{\text{vacuum}} \;+\; \underbrace{3}_{\text{baryonic}} \;+\; \underbrace{16}_{\text{dark}}.
+\label{eq:mece_abstract}
+\end{equation}
+This partition, proved saturation-independent, determines the cosmological density fractions $\Omega_\Lambda = 42/61 = 0.6885$ and $\Omega_m = 19/61 = 0.3115$ via horizon equipartition ($L_{\mathrm{equip}}$).
+
+All results trace to named check functions in the codebase.  No free parameters are introduced; no physics is imported.  The correlation space now has rooms, and we can count them.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+
+% ======================================================================
+\section{Introduction: from skeleton to architecture}
+\label{sec:intro}
+% ======================================================================
+
+Paper~1: \emph{The Enforceability of Distinction} derived that finite enforcement capacity~(A1), together with regularity conditions (MD, BW) and constitutive admissibility semantics, yields quantum structure---Hilbert space, the Born rule, gauge symmetry, entropy---as mathematical consequences.  The Formal Supplement~\cite{BrookeSupplement} provides the end-to-end proof.  That paper built the skeleton: it proved that any universe with finite enforcement resources must have an operator algebra, a state space, a gauge symmetry, and an entropy functional.  But a skeleton is not a building.  Paper~1 said nothing about which gauge group, which particles, or how many of them.  The skeleton is compatible with many possible architectures.
+
+This paper shows that only one architecture fits.
+
+The argument begins with a simple observation about how enforcement works---not in extreme conditions, but always.
+
+Consider a hydrogen atom.  Two physical distinctions are being maintained at the same interface.  The first is the electron's spin: up or down.  Spin is genuinely binary---exactly two states, one enforcement channel, the simplest possible distinction the universe can maintain.  The second is the electron's position within the orbital: where in the probability cloud the electron actually is.  Position is not binary.  It is a continuous observable, enforced through a stack of binary distinctions, each one resolving a finer question about location---is the electron in this half of the orbital? this quarter? this eighth?  Each layer in that stack costs capacity to maintain, and the depth of the stack determines how precisely position is resolved.  It costs capacity to keep each distinction definite, to prevent it from dissolving into indefinite superposition.
+
+The precise identification of which channels carry spin enforcement and which carry position enforcement depends on spacetime structure that this paper does not yet derive.  That accounting is completed in Paper~5: \emph{Spacetime and Gravity}, where the local Lorentz frame channels are named and the hydrogen atom example can be given its full channel-level treatment.  What this paper establishes is the mechanism: both tasks draw from the same local enforcement pool, their joint cost exceeds the sum of their individual costs, and the consequence is structural.  The starting point is the arena established by Paper~1: the finite orthogonal sector form ($T_{\mathrm{sector}}$, Formal Supplement~\cite{BrookeSupplement}), which packages the substrate into a finite-dimensional vector space $V$ with block-orthogonal inner product, sector decomposition $V = (\bigoplus_d M_d) \oplus \Pi$, and self-adjoint enforcement projections.  Paper~2 builds on this arena.
+
+These two enforcement tasks interfere with each other, and the reason is straightforward in capacity language.  Both distinctions draw enforcement from the same pool of channels at the same interface.  The interface does not have separate, dedicated infrastructure for spin and separate infrastructure for position---it has a single pool of enforcement channels through which all local distinctions must be routed.
+
+When the interface commits channels to enforcing the spin distinction, it partitions the local enforcement resources into two camps: those consistent with spin-up and those consistent with spin-down.  This commitment reshapes the landscape of available channels.  The channels that remain for enforcing the position distinction are no longer the same channels that would have been available if spin had not been enforced first.  Some channels well-suited for position enforcement have already been committed to the spin partition; the position task must now work with what remains, in a configuration it did not choose.
+
+The result is that the second task is harder than it would have been in isolation---not because capacity has been ``used up'' in a simple bookkeeping sense, but because the first commitment has rearranged the infrastructure that the second task must operate on.  The additional cost of working in this rearranged landscape is the interference surplus, $\Delta > 0$.  It is not an overhead fee or a penalty---it is the genuine cost of enforcing a distinction in a context that has already been shaped by another enforcement commitment.
+
+This interference is not a crisis that arises when the budget is tight.  It is the normal mode of operation.  The surplus $\Delta$ is present in a lone hydrogen atom drifting in deep space with vast capacity headroom.  It is present in every quantum system, at every scale, in every regime.  The Heisenberg uncertainty principle is the most familiar consequence: you cannot simultaneously enforce both spin and position with arbitrary precision because the joint cost always exceeds the sum of the individual costs, regardless of how much capacity is available.  The interference is structural---a property of how enforcement works, not of how close the system is to saturation.
+
+What finiteness adds is not the interference itself, but its consequences.  In a universe with unlimited capacity, the surplus $\Delta$ would be real but harmless---every combination of enforcement tasks would still fit, no matter how much interference they generated.  Nothing would be excluded, nothing selected, no structure forced.  But capacity is finite~(A1).  The interference costs accumulate.  They eat into a budget that has an upper bound.  And this means that not every combination of individually affordable enforcement tasks remains affordable when composed.  Two things that each fit within the budget can collectively exceed it---not because something went wrong, but because the interference surplus that was always present now pushes the total past the limit.
+
+This is \emph{non-closure}: the set of individually admissible enforcement configurations is not closed under combination.  Putting it plainly: nature can afford A, and nature can afford B, but nature cannot always afford A and B at the same time.  Non-closure was proved in Paper~1~\cite{BrookePaper1} (\S4.3); this paper explores its consequences.
+
+Non-closure has two faces, and the hydrogen atom contains both.  The electron shows the mild face: spin and position interfere, the joint cost exceeds the sum ($L_{\mathrm{nc}}^{\mathrm{interf}}$, $\Delta > 0$), and the Heisenberg uncertainty principle is the result.  The proton shows the severe face: each quark carries a colour charge, and at hadronic scales the enforcement cost of an isolated coloured state exceeds the available capacity entirely---the configuration is inadmissible.  What remains is the colour-singlet proton, the only combination whose cost fits.  Confinement is not a force that traps quarks.  It is non-closure selecting the only surviving configuration.
+
+Those consequences are far-reaching.  Combinations whose total enforcement cost exceeds the available capacity are simply excluded---they overflow the budget and cannot be maintained.  But many combinations do fit.  Among those satisfying all structural requirements, the combination with the lowest total enforcement cost is the one that persists.  This is not a selection principle layered on top of the physics---it \emph{is} the physics: cost minimization under structural constraints, with both the costs and the constraints determined by A1.  The question becomes: what is cheapest?
+
+To answer that question precisely, we need two concepts that will appear throughout this paper.
+
+The first is \textbf{superadditivity}.  We have already seen it at work in the hydrogen atom: the joint enforcement cost exceeds the sum of the individual costs by the surplus $\Delta > 0$.  The formal statement is $\varepsilon(\{d_1, d_2\}) = \varepsilon(d_1) + \varepsilon(d_2) + \Delta$, where $\Delta$ is the cost of enforcing the second distinction in a channel landscape that has already been rearranged by the first.
+
+This pattern is familiar from everyday experience, even if the word is not.  Two roommates sharing a kitchen do not simply sum their individual grocery bills; they must also coordinate schedules, negotiate shelf space, and avoid conflicts over the stove.  The coordination overhead is the surplus.  Two musicians playing simultaneously do not just add their individual sounds; they must also manage the acoustic interaction between them---the result is not ``musician A plus musician B'' but something qualitatively different that depends on how their contributions interact.  In each case, sharing infrastructure creates overhead that would not exist if the tasks were performed independently.
+
+The second is the distinction between \textbf{abelian} and \textbf{non-abelian} structure.  An abelian system is one where the order of operations does not matter: performing task A then task B gives the same result as B then A.  Ordinary addition is abelian: $3 + 5 = 5 + 3$.  Depositing money in a bank account is abelian: depositing \$100 then \$50 leaves the same balance as depositing \$50 then \$100.  In capacity language, an abelian enforcement commitment does not rearrange the channel landscape---it simply removes capacity from the pool without affecting how the remaining capacity is configured.  The second task finds the same infrastructure it would have found anyway, just with less of it.  No rearrangement means no surplus: $\Delta = 0$.
+
+A non-abelian system is one where order matters: A-then-B gives a different result from B-then-A.  This is not exotic---it is the everyday reality of the physical world.  Putting on socks then shoes produces a different result from putting on shoes then socks.  Rotating a book 90$^\circ$ around the $x$-axis then 90$^\circ$ around the $z$-axis leaves the book in a different orientation than the reverse order---pick up any book and try it.  Driving north then turning east puts you in a different place than turning east then driving north.  Twisting a Rubik's cube: a clockwise turn of the top face followed by a clockwise turn of the right face scrambles the colors differently than the reverse order, because each twist rearranges the pieces that the next twist acts on.
+
+The pattern is clear: whenever the first operation changes the \emph{context} in which the second operation acts, order matters.  In capacity language, this is precisely what we saw in the hydrogen atom: committing enforcement channels to spin rearranges the landscape for position, and vice versa.  The rearrangement is asymmetric---committing to spin first and then enforcing position costs a different total than the reverse order---because the two commitments reshape the channel landscape differently.  This asymmetry is the operational origin of noncommutativity: $AB \ne BA$.  And the physical consequence is the surplus $\Delta > 0$: if performing $A$ rearranges the context for $B$, then the joint cost of $A$ and $B$ includes the cost of operating in that rearranged context.
+
+This is why the distinction matters for physics.  An abelian universe---one where no enforcement commitment rearranges the channel landscape---would have $\Delta = 0$ everywhere.  Every combination of distinctions that individually fits would also jointly fit.  There would be nothing to select, nothing to exclude, no structure.  But the physical world is manifestly non-abelian.  The order in which you measure spin and position matters.  The order in which you apply color rotations to quarks matters.  Non-closure requires $\Delta > 0$; $\Delta > 0$ requires channel rearrangement; channel rearrangement requires non-abelian structure.  The gauge group of the universe cannot be abelian because the universe has non-closure, and non-closure demands it.
+
+With these concepts in hand, the paper derives the unique architecture in seven stations.
+
+Section~\ref{sec:nonclosure} makes the machinery of non-closure precise---superadditivity, path dependence, and saturation regimes---and shows that these are not three separate phenomena but three faces of a single mechanism.  The reader who has followed the hydrogen atom example already understands the physics; Section~\ref{sec:nonclosure} gives it teeth.
+
+Section~\ref{sec:gauge_origin} is where the framework first makes contact with the Standard Model.  The three carrier requirements---ternary, chiral, and abelian grading---emerge not from empirical observation but from the structure of non-closure itself.  By the end of Section~\ref{sec:gauge_origin}, without ever naming a Lie group, the framework has already determined \emph{what kind of thing} the gauge group must be.  The identification of the specific group follows in Section~\ref{sec:gauge_template}, but the constraints that force it are set here.
+
+Section~\ref{sec:cauchy} closes the last door through which a free parameter could enter.  The gauge derivation requires a cost function that ranks algebras by expense.  If that function were a free choice, everything downstream---including the Weinberg angle---would inherit an arbitrary parameter.  A 200-year-old theorem of Cauchy proves the cost function is unique: $F(d) = d$, no alternatives, no wiggle room.  After Section~\ref{sec:cauchy}, the framework has zero adjustable parameters.
+
+Section~\ref{sec:gauge_template} is the main event.  The three carrier requirements meet the complete classification of compact simple Lie algebras---all 17 of them---and every candidate except one is eliminated.  $\SU(3) \times \SU(2) \times \U(1)$ is not selected from a shortlist; it is the only structure that survives.  An exhaustive scan of 1{,}680 chiral fermion templates under seven simultaneous filters then yields a single survivor: the Standard Model at 45 Weyl fermions.  A final subsection derives the scalar sector: one complex $\SU(2)$ doublet, four real components, derived from the chiral fermion content and A1 minimality.
+
+Section~\ref{sec:counting} introduces a counting principle that departs from standard field theory.  What A1 constrains is not field-theoretic degrees of freedom---not polarizations, not helicities---but structural enforcement channels: the capacity types that the interface must independently track.  The count is $C_{\mathrm{total}} = 61$, and it includes a contribution that field theory does not see: the 42 capacity types consumed by the vacuum itself, the enforcement cost of maintaining empty space.
+
+Section~\ref{sec:partition} partitions those 61 types into three sectors by two binary predicates---gauge addressability and confinement---and proves the partition is exhaustive: no third predicate exists.  The result is $42 + 3 + 16 = 61$, with the vacuum sector consuming 69\% of the total budget.  This partition is proved saturation-independent: the fractions $42/61$ and $19/61$ are topological invariants, locked by discrete type classifications, not by continuous parameters.  A short equipartition argument ($L_{\mathrm{equip}}$) then proves that these capacity fractions \emph{are} the cosmological density parameters $\Omega_\Lambda$ and $\Omega_m$, matching observation to 0.05\%.
+
+Section~\ref{sec:generations} answers what is perhaps the most famous open question in particle physics: why are there exactly three generations of fermions?  The answer is a capacity ladder.  Each generation costs enforcement resources, and the cost grows \emph{quadratically} with the number of generations because every new generation must be distinguished from all existing ones.  Three generations fit within the available budget.  Four do not.  The number of generations is not a free parameter---it is the largest integer compatible with the capacity wall.
+
+Section~\ref{sec:hydrogen_revisited} returns to the hydrogen atom with the full machinery in place.  The electron's 7 active channels are named and its absent channels identified as structural predictions.  The proton's 24 channels are enumerated and confinement is located precisely as non-closure in the $\SU(3)$ baryonic sector.  The hydrogen atom as a two-body system is then described as the combination of both channel sets.  The section closes with an exact statement of what Paper~5 will complete.
+
+Section~\ref{sec:corr_space} describes what we now know about the correlation space---the mathematical object whose skeleton was established in Paper~1~\cite{BrookePaper1}.  That paper proved the space exists and has the right mathematical type.  This paper has filled in its rooms, its walls, and its budget.  The correlation space is no longer abstract: it is a 61-dimensional object with $\SU(3) \times \SU(2) \times \U(1)$ symmetry, three generations of fermions, and a vacuum sector that is the most expensive thing in the universe.
+
+
+% ======================================================================
+\section{Non-closure: the engine of structure}
+\label{sec:nonclosure}
+% ======================================================================
+
+\subsection{The theorem and its witnesses}
+
+Non-closure was derived in Paper~1~\cite{BrookePaper1} (\S4.3) from A1 and $L_{\mathrm{loc}}$ (Locality).  We restate it here with additional constructive content, beginning with the plain-English statement: things that individually fit within a budget can collectively exceed it.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{nc}}^{\mathrm{budget}}$ (Budget Non-Closure)}]
+\textbf{Statement.}  The set of admissible distinction-sets is not closed under composition.  There exist individually admissible enforcement demands $E_1, E_2$ such that:
+\begin{equation}
+E_1 \le C, \qquad E_2 \le C, \qquad E_1 + E_2 > C.
+\label{eq:nonclosure}
+\end{equation}
+
+In plain language: nature can afford to enforce $E_1$ alone, and nature can afford to enforce $E_2$ alone, but nature cannot afford to enforce both simultaneously at the same interface.
+
+\smallskip\noindent\textbf{Proof.}  By $L_{\mathrm{loc}}$, enforcement distributes over interfaces each with finite budget $C(\Gamma)$.  By $L_{\varepsilon^*}$, every distinction costs at least $\varepsilon^* > 0$.  Any two demands each exceeding $C/2$ overflow when composed.  \textbf{Witness:} $C = 10$, $E_1 = E_2 = 6$.  $\square$
+
+\smallskip\noindent\textit{Note.}  This is a pure budget statement.  It holds for additive costs with $\Delta = 0$ and requires no quantum structure.  The classical reading is: two items costing \$6 each exceed a \$10 budget when purchased together.
+
+\coderef{check\_L\_nc}{core.py}
+\end{tcolorbox}
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{nc}}^{\mathrm{interf}}$ (Interference Non-Closure)}]
+\textbf{Statement.}  When two distinctions $d_1, d_2$ are enforced \emph{at the same interface} with a shared channel resource, their joint cost strictly exceeds the sum of their individual costs:
+\begin{equation}
+\varepsilon(\{d_1, d_2\}) \;=\; \varepsilon(d_1) + \varepsilon(d_2) + \Delta(d_1, d_2), \qquad \Delta > 0.
+\label{eq:superadditivity}
+\end{equation}
+
+\smallskip\noindent\textbf{Derivation.}  Established in Paper~1 via the bridge chain $L_\Delta \to L_{\mathrm{blk}} \to T_{\mathrm{alg}}$ (full proof: Formal Supplement~\cite{BrookeSupplement}, \S3--4).  The pre-algebraic route derives $\Delta > 0$ from K2, K3, $T_{\mathrm{sep}}$, and SP (non-null directions in the pool $\Pi$) without invoking Hilbert space or field selection.  The key step: coordinating two distinctions at a shared interface requires defending both against pool-supported perturbations---a third enforcement act beyond the two individual ones, whose cost is $\Delta > 0$.  The joint defender's codespace $W_*$ is rotated into $\Pi$ ($L_\Pi$), producing the off-diagonal component $F_\Pi \ne 0$ that makes the enforcement algebra noncommutative ($T_{\mathrm{alg}}$).  Formally: the automorphism group of the local operator algebra is non-trivial (T3), so the enforcement map is order-sensitive, and the marginal cost $m(d_2 \mid d_1) = \varepsilon(\{d_1,d_2\}) - \varepsilon(d_1) \ne \varepsilon(d_2)$.
+
+\smallskip\noindent\textit{Distinction from $L_{\mathrm{nc}}^{\mathrm{budget}}$.}  Budget non-closure holds even with $\Delta = 0$ (additive costs in a classical world).  Interference non-closure is the specifically quantum statement: $\Delta > 0$ is a structural property of the enforcement algebra, not merely a consequence of a tight budget.  The gauge derivation in Section~\ref{sec:gauge_origin} uses $L_{\mathrm{nc}}^{\mathrm{interf}}$, not $L_{\mathrm{nc}}^{\mathrm{budget}}$.
+
+\coderef{check\_L\_nc, check\_T1}{core.py}
+\end{tcolorbox}
+
+The witness is minimal but the mechanism is universal.  For $n$ sectors with demands $E_i > C/n$, the composition exceeds $C$.  This is the structural origin of competition: when finite resources cannot accommodate all enforcement tasks simultaneously, some combinations persist and others are excluded.  Among the surviving combinations, the one with the lowest total cost is the architecture that the framework selects.
+
+\subsection{Three quantitative consequences of non-closure}
+
+Non-closure has three immediate quantitative consequences, each of which plays a structural role in the sections that follow.  The first---superadditivity ($L_{\mathrm{nc}}^{\mathrm{interf}}$)---was developed at length in the introduction: joint enforcement at a shared interface costs more than the sum of individual costs by the interference surplus $\Delta > 0$, because the first enforcement commitment rearranges the channel landscape for every subsequent task.  We state it formally in the box below and move to the other two.
+
+The second consequence is \textbf{path dependence}.  Channel rearrangement is not symmetric.  When the interface commits to spin first, the channels available for position are rearranged in one way; when it commits to position first, the channels available for spin are rearranged in a different way.  The total cost of enforcing spin-then-position is not the same as the total cost of enforcing position-then-spin, because the two orderings produce different rearrangements.
+
+This means there is no ``true'' cost of enforcing position that exists independently of context.  The cost is always relative to the current state of the channel landscape---which commitments have already been made, and how they have reshaped the remaining infrastructure.  Each new enforcement task encounters a terrain that has been sculpted by everything that came before it.  This is the operational content of noncommutativity: the order of operations matters because each operation reshapes the terrain for whatever comes next.
+
+The third consequence is \textbf{saturation}.  In the introduction we saw that the interference surplus $\Delta$ is always present---it is structural, not crisis-driven.  But the \emph{impact} of $\Delta$ depends on how much slack remains in the budget.
+
+When demand is low---when only a few distinctions are being enforced and the budget has ample headroom---each new commitment rearranges the channel landscape, but there is enough unused capacity to absorb the interference cost comfortably.  This is the quiet regime: $\Delta$ exists, but it does not yet force hard choices about what can coexist.  Perturbation theory works because the corrections are small relative to the available slack.
+
+As demand increases, the surplus begins to bite.  The remaining slack shrinks, and rearrangement costs that were once easily absorbed now compete with new enforcement tasks for the dwindling budget.  Distinctions that coexisted peacefully in the quiet regime begin to crowd each other out.  This is the competitive regime---the regime of quantum exclusion, decoherence, and the transition from ``everything fits'' to ``something has to give.''
+
+Near the capacity limit, the system is maximally constrained.  Nearly every channel is committed; any new enforcement task must displace an existing one.  The surplus $\Delta$ is no longer a correction to the budget---it dominates the budget.  This is where confinement lives: the enforcement cost of maintaining a non-singlet colored state exceeds the available slack, and only singlet combinations survive.  At the wall itself---full saturation---no slack remains, and the system admits no further distinctions at all.
+
+The enforcement spectrum is not a metaphor.  It is a quantitative classification of physical regimes by a single dimensionless ratio: total demand divided by total capacity.  The box below formalizes all three consequences.
+
+
+\begin{tcolorbox}[apfbox, title={Consequences of $L_{\mathrm{nc}}^{\mathrm{interf}}$: Superadditivity, Path Dependence, Saturation}]
+
+\textbf{\textit{Superadditivity.}}  When two distinctions $d_1, d_2$ share enforcement resources at an interface, their joint enforcement cost exceeds the sum of their individual costs (Eq.~\ref{eq:superadditivity}, $\Delta > 0$).  The surplus $\Delta$ is what separates quantum enforcement from classical bookkeeping: in a classical budget, costs simply add; in quantum enforcement, coordinating two distinctions at a shared interface requires an additional enforcement act whose cost is $\Delta > 0$.
+
+\medskip
+\textbf{\textit{Path dependence.}}  The marginal cost of enforcing $d_2$ given that $d_1$ is already active differs from the cost of enforcing $d_2$ alone:
+\begin{equation}
+m(d_2 \mid d_1) \;=\; \varepsilon(\{d_1, d_2\}) - \varepsilon(d_1) \;\ne\; \varepsilon(d_2).
+\label{eq:path_dependence}
+\end{equation}
+
+\smallskip\noindent\textbf{\textit{Variables:}}
+\begin{varlist}
+\item $m(d_2 \mid d_1)$ --- the marginal cost of enforcing $d_2$ given that $d_1$ is already being enforced.  Because $\Delta > 0$, this exceeds $\varepsilon(d_2)$.
+\end{varlist}
+
+This is the operational origin of noncommutativity (T1 in Paper~1~\cite{BrookePaper1}): the order in which enforcement commitments are made affects the total cost.  Enforcing spin-up-vs-down \emph{first}, then position-here-vs-there, costs a different amount than the reverse order.
+
+\medskip
+\textbf{\textit{Saturation regimes.}}  As the total enforcement demand approaches the capacity, the system enters progressively more constrained regimes.  The enforcement spectrum organizes all of physics by the ratio of demand to capacity:
+\begin{equation}
+\frac{E}{C} \;=\; \frac{\sum_d \varepsilon(d)}{C(\Gamma)}
+\label{eq:saturation_ratio}
+\end{equation}
+
+\smallskip\noindent\textbf{\textit{Variables:}}
+\begin{varlist}
+\item $E/C$ --- the saturation ratio.  Ranges from 0 (no enforcement demands) to 1 (capacity fully committed).
+\item \textit{Regimes}: quiet ($E/C \ll 1$, perturbation theory exact), competitive ($E/C \sim 0.3$--$0.5$, exclusion and decoherence), saturation ($E/C \sim 0.6$--$0.9$, confinement and phase transitions), wall ($E/C \to 1$, singularities and breakdown).
+\end{varlist}
+
+\coderef{check\_L\_nc, check\_L\_irr}{core.py}
+\end{tcolorbox}
+
+
+% ======================================================================
+\section{Why non-closure requires gauge structure}
+\label{sec:gauge_origin}
+% ======================================================================
+
+The connection between non-closure and gauge structure is the central structural argument of the framework.  The logical chain runs: $L_\Delta$ (superadditivity, from K2 + K3 + $T_{\mathrm{sep}}$ + SP) derives $\Delta > 0$ at any interface with a non-trivial pool.  $L_{\mathrm{blk}}$ shows that direct-sum encoding of jointly enforced distinctions is impossible when $\Delta > 0$.  The joint defender's codespace rotates into the pool ($L_\Pi$), producing off-diagonal generators $F_\Pi \ne 0$ that make the enforcement algebra noncommutative ($T_{\mathrm{alg}}$: $[E_{d_1}, F_\Pi] \ne 0$).  The Hilbert space is then constructed from the algebra via GNS ($T_{\mathrm{GNS}}$), not assumed beforehand.  Non-closure is not a consequence of non-commutativity; non-commutativity is a consequence of non-closure.  The Formal Supplement~\cite{BrookeSupplement} provides the complete derivation; the introduction sketched the intuition; we now trace the consequences for gauge structure.
+
+\subsection{Abelian composition cannot produce non-closure}
+
+If enforcement costs were purely additive---if $\varepsilon(\{d_1, d_2\}) = \varepsilon(d_1) + \varepsilon(d_2)$ with $\Delta = 0$ everywhere---then any pair of individually admissible distinctions fitting within half the budget would compose admissibly.  There would be no superadditivity, no path dependence, no noncommutativity.  The enforcement algebra would be abelian (all operations commute), the dynamics classical, and the structure trivial.
+
+An abelian gauge group---a product of $\U(1)$ factors, where $\U(1)$ is the group of phase rotations---routes enforcement additively.  Each $\U(1)$ channel contributes independently; costs simply add.  This is the additive countermodel of Paper~1~\cite{BrookePaper1} (\S4.3): $\Delta = 0$ implies full reversibility and no non-closure.
+
+\subsection{Non-abelian routing is derived}
+
+$L_{\mathrm{nc}}^{\mathrm{interf}}$ requires $\Delta > 0$: enforcement costs at shared interfaces are superadditive (Eq.~\ref{eq:superadditivity}).  The key step is that $\Delta > 0$ directly implies non-commutativity of the enforcement algebra --- not merely ``channel rearrangement'' in some vague sense, but a provable operator identity.  The argument runs through two named lemmas: $L_{\mathrm{irred}}$ establishes that the enforcement algebra is irreducible, and $L_{\Delta\to\mathrm{nc}}$ then uses Schur's lemma to derive non-commutativity.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{irred}}$ (Irreducibility of the Derived Algebra)}]
+\textbf{Statement.}  The local enforcement algebra acts irreducibly on the GNS Hilbert space $\mathcal{H}_\omega$ (Theorem~$T_{\mathrm{GNS}}$, Formal Supplement~\cite{BrookeSupplement}).  That is, $\mathcal{H}_\omega$ has no proper closed subspace that is invariant under every enforcement operator.
+
+\smallskip\noindent\textbf{Proof.}  Suppose for contradiction that a proper closed invariant subspace $\mathcal{V} \subsetneq \mathcal{H}_\omega$ exists.  Every state in $\mathcal{V}$ and every state in $\mathcal{H}_\omega \setminus \mathcal{V}$ are mapped, under every enforcement operator, into their respective subspaces.  This means the enforcement algebra cannot produce any operator whose action distinguishes a state in $\mathcal{V}$ from a state outside it.  Equivalently: two states, one from $\mathcal{V}$ and one from $\mathcal{H}_\omega \setminus \mathcal{V}$ that agree on all operators within $\mathcal{V}$, are assigned identical enforcement records.  But A1 requires that all physically distinct admissible states receive distinguishable enforcement records.  These two states are distinct (they lie in different subspaces) yet receive the same record: a direct contradiction.  Therefore no proper invariant subspace exists; the algebra acts irreducibly.  $\square$
+
+\smallskip\noindent\textit{Logical status.}  Irreducibility is a \emph{consequence} of the derived algebraic structure, not a premise in the derivation of noncommutativity.  The primary noncommutativity proof ($T_{\mathrm{alg}}$, Formal Supplement) is pre-Hilbert: it derives $[E_{d_1}, F_\Pi] \ne 0$ from $L_\Delta$, $L_{\mathrm{blk}}$, and $L_\Pi$ without invoking Hilbert space or Schur's lemma.  $L_{\mathrm{irred}}$ then confirms that the algebra, once represented on $\mathcal{H}_\omega$, is irreducible---a consistency check, not a load-bearing step.
+
+\coderef{check\_L\_irred}{core.py}
+\end{tcolorbox}
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\Delta\to\mathrm{nc}}$ (Interference Non-Closure Implies Non-Commutativity)}]
+\textbf{Statement.}  The enforcement algebra of the admissibility framework is non-commutative: there exist enforcement operations $A, B$ such that $AB \ne BA$.
+
+\smallskip\noindent\textbf{Proof (primary route: pre-Hilbert, from Formal Supplement~\cite{BrookeSupplement}).}  Three steps.
+
+\textit{Step 1 ($L_\Delta$: superadditivity).}  For co-located distinctions $d_1, d_2$ at an interface $\Gamma$ with non-trivial pool $\Pi \ne \{0\}$, pool-supported perturbations threaten both distinctions simultaneously.  K2 + K3 + SP give $\Delta(d_1, d_2) > 0$: the joint enforcement cost strictly exceeds the sum.
+
+\textit{Step 2 ($L_{\mathrm{blk}}$ + $L_\Pi$: codespace rotation).}  Direct-sum encoding ($E_{d_1} + E_{d_2}$) achieves cost $\varepsilon(d_1) + \varepsilon(d_2)$ but fails to defend against pool perturbations.  The minimum-cost joint defender $\pi_{W_*}$ has a codespace $W_*$ rotated into $\Pi$ by angle $\theta \ne 0$.  The off-diagonal component $F_\Pi := \pi_{W_*} - E_{d_1} - E_{d_2} \ne 0$.
+
+\textit{Step 3 ($T_{\mathrm{alg}}$: commutator witness).}  For $v \in M_{d_1}$: $[E_{d_1}, F_\Pi]\,v = -\pi_v \ne 0$, where $\pi_v \in \Pi$ is the pool component of $\pi_{W_*} v$.  The full algebra $\mathcal{A} = \mathrm{Alg}_\mathbb{R}(\{E_d\} \cup \{E_{\{d_1,d_2\}}\})$ admits no faithful commutative $*$-representation.  $\square$
+
+\smallskip\noindent\textbf{Corollary (Schur route).}  Once the algebra is represented on $\mathcal{H}_\omega$ (via $T_{\mathrm{GNS}}$), $L_{\mathrm{irred}}$ confirms irreducibility, and Schur's lemma gives the familiar characterization: any operator commuting with the entire irreducible algebra must be a scalar.  Since enforcement operators are non-trivial, non-commutativity follows independently.
+
+\smallskip\noindent\textbf{Connection to $\Delta_{12} \ne \Delta_{21}$.}  The non-commutativity $AB \ne BA$ implies that the composition cost is order-sensitive.  Define $\Delta_{12}$ as the surplus when $d_1$ is committed before $d_2$, and $\Delta_{21}$ as the surplus in the reverse order.  Since $AB \ne BA$, the states $AB|\psi\rangle$ and $BA|\psi\rangle$ are distinct, encoding different enforcement records.  The surplus terms $\Delta_{12}$ and $\Delta_{21}$ measure the additional cost encoded in these distinct records; since the records differ, $\Delta_{12} \ne \Delta_{21}$ for some pair $(d_1, d_2)$.
+
+\smallskip\noindent\textit{Distinction from classical contention.}  A classical resource-contention system can produce $\varepsilon(\{d_1,d_2\}) > \varepsilon(d_1) + \varepsilon(d_2)$, but with a symmetric surplus $\Delta_{12} = \Delta_{21}$.  That matches $L_{\mathrm{nc}}^{\mathrm{budget}}$ (classical pigeonhole).  The pre-Hilbert route derives asymmetry ($\Delta_{12} \ne \Delta_{21}$) directly from codespace rotation ($L_\Pi$): the rotation angle $\theta$ generically differs depending on enforcement order.  Witness: $\sigma_x \sigma_z = -\sigma_z \sigma_x$ (\texttt{check\_T0}, core.py).
+
+\coderef{check\_T0, check\_L\_nc}{core.py}
+\end{tcolorbox}
+
+Formally, T3 (Paper~1) then establishes that the automorphism group of the non-commutative local enforcement algebra is the gauge group.  If the algebra were abelian, every automorphism would be trivial (phase rotations only), and $\Delta = 0$ identically.  Non-closure requires a non-trivial gauge group with non-commuting generators.
+
+\smallskip\noindent\textit{Gauge identification (detailed in Formal Supplement~\cite{BrookeP2Supplement}, \S2).}\quad The Formal Supplement proves the full gauge identification theorem: the gauge group is the inner automorphism group $G = \mathrm{Inn}(\mathcal{A}) = \prod_k \mathrm{PU}(n_k)$, sitting in the exact sequence $1 \to Z(\mathcal{A}) \to \mathcal{U}(\mathcal{A}) \to \mathrm{Inn}(\mathcal{A}) \to 1$.  Abelian factors arise exclusively from the center $Z(\mathcal{A})$ and carry no self-interaction ($\Delta = 0$ within the abelian sector).  For the Standard Model template, the lift from $\mathrm{PU}(n)$ to $\SU(n)$ and the global structure $[\SU(3) \times \SU(2) \times \U(1)_Y]/\mathbb{Z}_6$ are established as derived consequences.
+
+\smallskip
+\noindent\textbf{The precise non-abelian criterion.}\quad Interference non-closure ($L_{\mathrm{nc}}^{\mathrm{interf}}$) is not merely superadditivity ($\Delta > 0$) but \emph{order-asymmetric} superadditivity ($\Delta_{12} \ne \Delta_{21}$).  A classical congestion system can have $\Delta > 0$ with $\Delta_{12} = \Delta_{21}$ (the contention cost is symmetric in the order of operations).  Only when $\Delta_{12} \ne \Delta_{21}$---which $L_{\Delta\to\mathrm{nc}}$ derives from codespace rotation ($L_\Pi$) in the enforcement algebra---does the algebra become genuinely non-commutative.  It is therefore order-asymmetric superadditivity, not mere superadditivity, that requires non-abelian gauge structure.
+
+\smallskip
+\noindent\textbf{Proof boundary.}\quad The argument above establishes that the gauge group must be non-trivial and non-commutative.  A complete proof that \emph{no} abelian routing can sustain $\Delta > 0$ requires Lemma $B1'$ (Formal Supplement~\cite{BrookeP2Supplement}, \S3.3), which shows that any complex carrier admitting only bilinear invariants produces composites satisfying $B = \bar{B}$---the composite is self-conjugate and provides no independent enforcement channel under $T_M$.  The ternary invariant and complex carrier required by R1 are the \emph{minimal} structure that survives this constraint.  Paper~2 establishes the structural necessity of non-abelian routing via the oriented-composite argument; $B1'$ closes the proof that bilinear (abelian-type) carriers are generically excluded.
+
+
+\subsection{What non-abelian structure creates}
+
+Non-abelian routing solves the non-closure problem---it produces the interference surplus $\Delta > 0$ that the framework requires.  But it creates new problems that the framework must also solve.
+
+In an abelian gauge group like $\U(1)$, the enforcement channels are neutral---they direct traffic but do not participate in it.  A photon routes electromagnetic enforcement between charged particles, but the photon itself carries no electric charge.  In a non-abelian gauge group, this is no longer true.  The enforcement channels themselves carry charge.  They interact with each other.  The traffic cops are themselves subject to traffic law.
+
+This self-interaction is not optional---it is the mathematical signature of non-commutativity.  If the generators of the group do not commute, their commutator produces new generators, and those generators act on each other.  The enforcement infrastructure is entangled with itself.  This self-entanglement has consequences that cascade through the framework, ultimately determining the specific gauge group and matter content of the universe.
+
+To follow the cascade, we need to understand four things: why the gauge group must be a \emph{Lie group}, why the strength of gauge interactions changes with energy scale, why it changes in the specific direction it does, and why that direction leads to confinement.
+
+\subsection{Why the gauge group is a Lie group}
+
+The enforcement algebra operates on a continuous state space---this was derived in Paper~1~\cite{BrookePaper1} (T2: Hilbert space via GNS, Formal Supplement~\cite{BrookeSupplement} $T_{\mathrm{GNS}}$).  The symmetries of a continuous space form a continuous group.  A continuous group with a smooth structure is a \emph{Lie group}, named after the mathematician Sophus Lie.  Discrete symmetry groups---like the group of permutations, where you can swap objects but only in whole jumps---cannot capture the full symmetry of a continuous enforcement structure.  They would leave gaps: directions in the state space that no symmetry operation reaches.  The gauge group must be a Lie group because the state space it acts on is continuous.
+
+Among Lie groups, the relevant ones are \emph{compact}---meaning, roughly, that the group has finite volume.  This is required by A1: an infinite-volume gauge group would require infinite capacity to distinguish its elements, since enforcement must resolve \emph{which} group element is active at each interface, and distinguishing points in a space of infinite volume requires infinitely many independent measurements.  Compact Lie groups are the finite-capacity-compatible symmetries.
+
+The classification of compact simple Lie algebras is a finished problem in mathematics.  There are exactly 17 types (the compact real forms of the complex simple Lie algebras), organized into four infinite families ($A_n, B_n, C_n, D_n$) and five exceptional cases ($G_2, F_4, E_6, E_7, E_8$)~\cite{Humphreys1972}.  This finite list is what makes the exhaustive elimination in Section~\ref{sec:gauge_template} possible: the framework does not search an infinite landscape, but checks every entry on a short, complete list.
+
+\subsection{Why coupling constants change with energy}
+
+That coupling constants ``run'' with energy---that the effective strength of an interaction depends on the scale at which it is measured---is one of the most precisely tested facts in quantum field theory.  The discovery that non-abelian couplings grow at low energy (asymptotic freedom) was made independently by Gross and Wilczek~\cite{GrossWilczek1973} and by Politzer~\cite{Politzer1973}, and has been confirmed experimentally across many orders of magnitude in energy~\cite{PDG2024}.  The admissibility framework does not discover this phenomenon; it \emph{re-derives} it from A1 without importing any field-theoretic machinery, and the capacity-language explanation makes the mechanism transparent.
+
+The strength of a gauge interaction---how strongly the enforcement channels influence the distinctions they route---is not a fixed number.  It depends on the resolution at which you probe the system.
+
+The reason is that enforcement channels are not bare wires.  They are embedded in a medium of virtual fluctuations---other enforcement commitments that exist at every scale, briefly borrowing and returning capacity.  When you probe the system at high energy (fine resolution, short distances), you see the channels before the surrounding fluctuations have had time to accumulate.  The effective coupling is relatively clean.  When you probe at low energy (coarse resolution, long distances), you see the channels dressed by all the fluctuations between your probe scale and the channel itself.  The accumulated fluctuations modify the effective coupling strength.
+
+This is not a quantum mystery---it is a consequence of the same channel-rearrangement logic we saw in the introduction.  Each virtual fluctuation is an enforcement commitment that reshapes the channel landscape.  The coupling you measure at any given scale reflects the cumulative rearrangement produced by all fluctuations between that scale and the bare channel.
+
+Which direction the modification goes---whether the effective coupling grows or shrinks at low energy---depends on what the fluctuations are doing.  And this is where the distinction between abelian and non-abelian becomes consequential once more.
+
+\subsection{Asymptotic freedom: why coupling grows at low energy}
+
+In an abelian gauge theory (like electromagnetism), the virtual fluctuations are matter-field pairs---electron-positron pairs that briefly pop into existence and screen the central charge, the way a dielectric medium screens an embedded charge.  The screening makes the effective coupling \emph{weaker} at long distances.  This is why the electromagnetic coupling constant is small at everyday energies: you are seeing a screened version of a larger bare coupling.
+
+In a non-abelian gauge theory, something additional happens.  The enforcement channels carry charge---they interact with each other.  Their self-interaction produces an \emph{anti-screening} effect: instead of diluting the coupling, the gauge-channel fluctuations amplify it.  For non-abelian groups with sufficiently few matter fields, the anti-screening from gauge self-interaction overwhelms the screening from matter fluctuations.  The net effect is that the coupling grows at low energy and shrinks at high energy.
+
+This is \emph{asymptotic freedom}: the interaction becomes weaker at short distances (high energy) and stronger at long distances (low energy).  In the admissibility framework, it is derived rather than imported: $L_{\mathrm{AF}}$ follows from the fact that non-abelian enforcement channels carry charge (a consequence of non-commutativity) and that the resulting self-interaction anti-screens (a consequence of the sign structure of the gauge algebra).  The derivation requires no input beyond the non-abelian structure that non-closure already derived.
+
+\subsection{Confinement: finite capacity meets growing coupling}
+
+Now the cascade is complete.  At low energy, the non-abelian coupling grows.  As it grows, the cost of maintaining a state that carries non-abelian charge increases---because the strongly-coupled enforcement channels demand more and more capacity to keep the charged state distinguished from the vacuum.
+
+In a universe with unlimited capacity, this would be no problem.  The coupling could grow without bound, the cost of charged states could grow without bound, and they would all remain admissible.  But capacity is finite~(A1).  There is a scale---the IR saturation scale---where the enforcement cost of maintaining a non-singlet state exceeds the available capacity at the interface.  Beyond that scale, non-singlet states are simply inadmissible.  They are not ``confined by a force'' in the Newtonian sense---they are excluded by the budget.  Only gauge-singlet combinations, whose net non-abelian charge is zero, can be maintained within the finite capacity.
+
+This is $T_{\mathrm{confinement}}$: confinement is derived from A1 $+$ asymptotic freedom $+$ finite capacity.  The structural necessity of the $\beta$-function sign is established in the Formal Supplement~\cite{BrookeP2Supplement}, \S4; the quantitative one-loop coefficient is derived in Paper~4A.  The mechanism is not imported from lattice QCD or any other external theory.  It follows directly from the cascade:
+\begin{center}
+\small
+non-closure $\to$ non-abelian structure $\to$ self-interacting channels $\to$ asymptotic freedom $\to$ IR coupling growth $\to$ capacity overflow $\to$ only singlets survive.
+\end{center}
+
+
+\subsection{Three independent enforcement problems}
+
+With confinement established, three independent enforcement problems become visible---each arising from a different aspect of what non-closure does, each requiring its own carrier.  A \emph{carrier} is the mathematical object that tracks how enforcement obligations transform under the gauge group; it is the representation in which matter fields live.
+
+\textbf{The confinement problem.}  Confinement produces stable singlet composites---objects whose total non-abelian charge is zero.  But for those composites to provide independent enforcement channels (as required by $T_M$, enforcement independence), they must be \emph{oriented}: a composite must be robustly distinguishable from its anti-composite.  Unoriented composites---those where a composite and its conjugate can be identified by an internal relabeling---provide no independent enforcement channel, because the ``forward'' and ``backward'' versions collapse into the same physical state.
+
+What does orientation require of the carrier?  Each constraint eliminates alternatives:
+
+\begin{varlist}
+\item \textit{Complex type} ($V \not\cong V^*$).  If the carrier were real or pseudoreal ($V \cong V^*$), there would exist an equivariant antilinear map $J^{\otimes n}$ identifying every composite with its conjugate: $B \leftrightarrow \bar{B}$.  The oriented distinction would collapse.  Complex type blocks this identification---conjugation is non-trivial, and composites are robustly distinguishable from anti-composites.
+\item \textit{Three-dimensional}.  Orientation requires a genuinely trilinear invariant $\epsilon_{ijk} v^i w^j x^k$---one that cannot be decomposed into pairwise contractions.  Two-dimensional carriers admit only bilinear invariants ($v^i w_i$), which are effectively abelian: they contract pairs, not triples, and provide no oriented composites.  Four-dimensional and higher carriers are non-minimal by Schur--Weyl duality: they contain the trilinear structure but add unnecessary capacity cost.  Three is the minimum dimension that supports irreducible trilinear contraction.
+\item \textit{Faithful}.  Every non-identity group element must act non-trivially on the carrier.  If some group elements acted trivially, the carrier would fail to distinguish them, and enforcement could not resolve the full gauge structure.  No group information can be lost.
+\end{varlist}
+
+\noindent Nothing else satisfies all three constraints simultaneously.  The confinement problem requires a carrier that is complex, three-dimensional, and faithful---\textbf{R1}.
+
+\medskip
+\textbf{The irreversibility problem.}  Non-closure requires irreversibility ($L_{\mathrm{irr}}$, derived in Paper~1, \S4.5): some enforcement commitments cannot be undone.  But enforcement independence ($T_M$) requires that this irreversibility be \emph{intrinsic} to the gauge sector---each gauge factor must provide its own irreversible channels, not merely inherit irreversibility from gravity or from the environment.  This is a stronger requirement than simply producing entropy: a vector-like gauge theory coupled to an environment can produce entropy through decoherence without the gauge sector itself containing any intrinsically irreversible process.  The requirement is that the gauge structure, in isolation, breaks time-reversal symmetry.
+
+The question is: what makes a gauge theory intrinsically irreversible?  To answer this, consider what makes a gauge theory \emph{reversible}.  A theory that treats left-handed and right-handed fields identically is called ``vector-like.''  Such a theory has four properties that, taken together, guarantee zero intrinsic irreversibility:
+
+\begin{varlist}
+\item Every interaction vertex has a CPT-conjugate vertex that exactly reverses it.
+\item Gauge-invariant bare masses exist without spontaneous symmetry breaking---particles can be massive without any mechanism to ``break'' the symmetry.
+\item No sphalerons arise---there are no topologically irreversible processes.
+\item All CP-violating phases can be rotated away by field redefinitions.
+\end{varlist}
+
+\noindent A vector-like theory is, at the gauge level, a perfectly reversible machine.  Every process has an exact inverse.  This violates $T_M$: the gauge sector provides zero irreversible channels of its own.
+
+The only escape is \emph{chirality}: the gauge theory must treat left-handed and right-handed fields \emph{differently}.  Once left and right are treated asymmetrically, the four reversibility conditions above all fail: CPT conjugation no longer maps every vertex to its reverse, bare masses are forbidden (requiring a Higgs mechanism), sphalerons become possible, and irremovable CP phases appear.  The gauge sector acquires intrinsic irreversibility.
+
+What carrier provides chirality at minimum cost?
+
+\begin{varlist}
+\item \textit{Pseudoreal type}.  The carrier must be orientation-asymmetric---it must distinguish left from right.  Real carriers ($J^2 = +1$) are orientation-blind.  Complex carriers work but are non-minimal for this purpose (they provide more structure than chirality alone requires).  Pseudoreal carriers ($J^2 = -1$) are the minimal orientation-asymmetric option: they distinguish handedness without the full machinery of complex type.
+\item \textit{Two-dimensional}.  Dimension 2 is the minimum faithful dimension for a pseudoreal carrier.  A one-dimensional pseudoreal carrier does not exist ($J^2 = -1$ requires at least a two-dimensional space).
+\item \textit{Faithful}.  As with R1: every group element must act non-trivially.
+\end{varlist}
+
+\noindent Chirality at minimum cost requires a carrier that is pseudoreal, two-dimensional, and faithful---\textbf{R2}.
+
+\medskip
+\textbf{The distinguishability problem.}  The two non-abelian carriers above are powerful but incomplete.  They cannot, by themselves, distinguish all physically different states.
+
+To see why, consider what the non-abelian factors actually track.  The R1 carrier (complex, 3-dimensional) assigns a ``color'' label to each state---it tracks which of three color charges the state carries.  The R2 carrier (pseudoreal, 2-dimensional) assigns a ``weak'' label---it tracks whether the state is in a weak doublet or singlet.  But some physically distinct states carry the \emph{same} color and weak labels.  For example, up-type and down-type antiquarks both transform as $(\bar{3}, 1)$ under color and weak isospin---the non-abelian factors see them identically.  Yet they are physically different: they have different masses, different electric charges, and different roles in nuclear physics.
+
+The framework requires that all physically distinct states be distinguishable by the gauge structure (enforcement completeness under A1).  This requires a third carrier that ``breaks the tie'':
+
+\begin{varlist}
+\item \textit{Abelian} ($\U(1)$).  The bookkeeping carrier must be abelian---its only job is to assign a distinct numerical label (hypercharge) to each multiplet.  A non-abelian bookkeeper would introduce unnecessary self-interaction and capacity cost.
+\item \textit{Single factor}.  One $\U(1)$ factor suffices to resolve all degeneracies in the non-abelian spectrum.  A second $\U(1)$ would be non-minimal under A1: it would add capacity cost without resolving any additional degeneracy.
+\item \textit{Distinct charge assignments}.  Every physical multiplet must receive a different hypercharge, so that no two representations are conflated by the full gauge structure.
+\end{varlist}
+
+\noindent Distinguishability at minimum cost requires a single $\U(1)$ factor with distinct charge assignments---\textbf{R3}.
+
+\medskip
+These three problems are independent: confinement addresses the stability and orientation of composites, chirality addresses the arrow of time within the gauge sector, and grading addresses the completeness of the labeling system.  Each demands its own carrier.  Theorem~R, derived in Paper~1~\cite{BrookePaper1} (Appendix~A), consolidates these three requirements into a single formal statement.
+
+\begin{tcolorbox}[apfbox, title={Theorem R: Representation Requirements from Admissibility}]
+\textbf{Statement.}  Any admissible interaction theory satisfying A1 must support three independent carriers:
+
+\medskip
+\textbf{R1} $L_{\mathrm{ternary}}$ (Ternary Carrier): A faithful complex 3-dimensional carrier with irreducible trilinear invariant.
+
+\smallskip\noindent\textbf{\textit{Variables and source:}}
+\begin{varlist}
+\item \textit{Faithful} --- every non-identity group element acts non-trivially on the carrier.  No group information is lost.
+\item \textit{Complex} --- the carrier $V$ is not isomorphic to its conjugate $V^*$.  This prevents the identification of composites with their anticomposites ($B \ne \bar{B}$).
+\item \textit{Trilinear invariant} --- an irreducible contraction $\epsilon_{ijk} v^i w^j x^k$ that cannot be decomposed into pairwise contractions.  This is the mathematical signature of three-body composites (baryons).
+\item \textit{Source}: $L_{\mathrm{nc}}$ (non-closure requires stable composites) $+$ $T_{\mathrm{confinement}}$ (IR saturation makes non-singlets inadmissible; schematic $\beta$-function sign: Formal Supplement~\cite{BrookeP2Supplement}, \S4) $+$ $T_M$ (enforcement independence requires oriented composites) $+$ $B_1'$ (complex type blocks $B \leftrightarrow \bar{B}$ identification; Formal Supplement~\cite{BrookeP2Supplement}, \S3.3).
+\end{varlist}
+
+\medskip
+\textbf{R2} $L_{\mathrm{chiral}}$ (Chiral Carrier): A faithful pseudoreal 2-dimensional carrier.
+
+\smallskip\noindent\textbf{\textit{Variables and source:}}
+\begin{varlist}
+\item \textit{Pseudoreal} --- the carrier admits an anti-unitary map $J: V \to V$ with $J^2 = -1$.  This is orientation-asymmetric: it distinguishes left-handed from right-handed without being fully complex.
+\item \textit{Chiral} --- the carrier treats left-handed and right-handed fields differently.  A non-chiral (``vector-like'') theory would be CPT-symmetric at the gauge level, with zero intrinsic irreversibility.
+\item \textit{Source}: $L_{\mathrm{irr}}$ (irreversibility) $+$ $T_M$ (each gauge factor must provide its own irreversible channels).
+\end{varlist}
+
+\medskip
+\textbf{R3} $L_{\mathrm{grading}}$ (Abelian Grading): A single $\U(1)$ factor with distinct charge assignments for all physical multiplets.
+
+\smallskip\noindent\textbf{\textit{Variables and source:}}
+\begin{varlist}
+\item \textit{Abelian grading} --- a $\U(1)$ ``bookkeeper'' that assigns a numerical label (hypercharge) to each matter field.  Without it, the non-abelian factors cannot distinguish physically distinct states: $u^c$ and $d^c$ both carry the same color and weak charges, differing only in hypercharge.
+\item \textit{Source}: enforcement completeness (A1 requires that the gauge structure distinguish all physically distinct matter representations) $+$ A1 minimality (one $\U(1)$ resolves all degeneracies; more than one is non-minimal).
+\end{varlist}
+
+\coderef{check\_Theorem\_R}{gauge.py}
+\end{tcolorbox}
+
+
+These three requirements are independent and jointly exhaustive: R1 addresses non-closure (the confining sector), R2 addresses irreversibility (the chiral sector), and R3 addresses distinguishability (the bookkeeping sector).  No reference to any specific Lie group has been made---the requirements are stated entirely in terms of carrier properties.
+
+The next two sections show that these requirements, combined with Lie group classification and capacity optimization, select a unique gauge template and matter content.
+
+
+
+% ======================================================================
+\section{The uniqueness of the cost function}
+\label{sec:cauchy}
+% ======================================================================
+
+Before deriving the gauge template, we close a potential gap: the cost function $F(d)$ that maps the number of enforcement channels $d$ to the per-channel cost.  If $F$ were a free function, downstream results (including the Weinberg angle) would depend on an arbitrary choice.  We show it is unique.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{Cauchy}}$ (Cost Function Uniqueness)}]
+\textbf{Statement.}  The per-channel enforcement cost function $F: \mathbb{N} \to \mathbb{R}^+$ is uniquely determined to be $F(n) = n$ by three conditions:
+\begin{align}
+&\text{C1 (Additivity):} &&F(a + b) = F(a) + F(b) \quad \text{for all } a, b \in \mathbb{N} \label{eq:C1}\\
+&\text{C2 (Monotonicity):} &&a > b \;\Rightarrow\; F(a) > F(b) \label{eq:C2}\\
+&\text{C3 (Unit):} &&F(1) = 1 \label{eq:C3}
+\end{align}
+
+\smallskip\noindent\textbf{Derivation of conditions from A1:}
+\begin{varlist}
+\item C1 $\leftarrow$ $L_{\mathrm{loc}}$ + $L_{\mathrm{cost}}$: independently enforceable channels at separate interfaces add costs (locality requires additive decomposition over interfaces).
+\item C2 $\leftarrow$ A1: more enforcement channels require more capacity (monotonicity of cost in the number of channels).
+\item C3 $\leftarrow$ Convention: unit choice, analogous to $c = 1$ in relativity.
+\end{varlist}
+
+\smallskip\noindent\textbf{Proof.}  Enforcement channels are discrete countable units (A1: capacity is finite and positive, $L_{\varepsilon^*}$: each distinction costs exactly one unit at saturation).  The domain of $F$ is therefore $\mathbb{N}$.
+
+\textit{Step 1 (Natural numbers).}  By C1, $F(n) = F(1 + 1 + \cdots + 1) = n \cdot F(1)$ for all $n \in \mathbb{N}$.  Applying C3: $F(n) = n$.
+
+\textit{Step 2 (Rational extension).}  Downstream results (the Weinberg angle derivation in Paper~4A) require evaluating $F$ at rational arguments $p/q$.  By C1 applied to $q$ copies of $F(p/q)$: $q \cdot F(p/q) = F(q \cdot (p/q)) = F(p) = p$, giving $F(p/q) = p/q$ for all positive rationals $p/q$.  This is not an additional assumption---it is C1 evaluated on rational multiples.  $\square$
+
+\smallskip\noindent\textbf{Consequence.}  No downstream quantity in Paper~2 requires the extended domain.  The unique result $F(n) = n$ on $\mathbb{N}$ establishes that enforcement cost is linear in channel count, with no free parameter.  The full derivation of the trace ratio $\gamma_2/\gamma_1 = d + 1/d = 17/4$ and hence $\sin^2\theta_W = 3/13$ uses the rational extension and is carried out in Paper~4A (T27d), which defines $\gamma_2/\gamma_1$ as the ratio of two sector-level cost functionals and derives both the two-term structure and the addition rule from $L_{\mathrm{irr}}$ and R3 (refinement covariance).
+
+\coderef{check\_L\_Cauchy\_uniqueness}{L\_Cauchy\_uniqueness.py}
+\end{tcolorbox}
+
+The significance of this result is methodological: the uniqueness of $F(n) = n$ eliminates all free parameters from the cost functional.  The derivation rests only on three conditions---additivity, monotonicity, and a unit choice---all derived from A1 and $L_{\mathrm{loc}}$.  No representation-theory input is required at this stage.
+
+\smallskip
+\noindent\textbf{Note on the Weinberg angle preview.}\quad Section~\ref{sec:weinberg} quotes $\sin^2\theta_W = 3/13 = 0.2308$ and gives a partial derivation.  The full logical chain requires the trace ratio $\gamma_2/\gamma_1 = 17/4$, which depends on how the cost functional is applied across two sectors simultaneously.  The complete derivation is in Paper~4A; Section~\ref{sec:weinberg} states the result with a forward reference so the reader can see where the framework is heading.
+
+
+% ======================================================================
+\section{The gauge template and matter content}
+\label{sec:gauge_template}
+% ======================================================================
+
+\subsection{Template uniqueness: exhaustive Lie algebra classification}
+
+Theorem~R provides three abstract carrier requirements (R1--R3).  We now show that these requirements, applied to the classification of compact simple Lie algebras, select a unique gauge template.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{gauge,unique}}$ (Gauge Template Uniqueness)}]
+\textbf{Statement.}  Given R1--R3 from Theorem~R, the gauge group must factor as:
+\begin{equation}
+G \;=\; \SU(N_c) \times \SU(2) \times \U(1), \qquad N_c \ge 3 \text{ (odd)}.
+\label{eq:gauge_template}
+\end{equation}
+This template is unique.  No alternative Lie group structure satisfies all three requirements.
+
+\smallskip\noindent\textbf{Proof.}  Six steps.
+
+\medskip\noindent\textit{Step 1 (Factorization).}  R1 (confining carrier) and R2 (chiral carrier) serve independent enforcement roles: confinement redistributes capacity among incompatible channels ($L_{\mathrm{nc}}$), while chirality distinguishes forward/backward transitions ($L_{\mathrm{irr}}$).  By $T_M$ (Monogamy) and $L_{\mathrm{loc}}$ (Locality), independent enforcement channels cannot share gauge resources.  The gauge group factors as $G_{\mathrm{conf}} \times G_{\mathrm{chir}} \times G_{\mathrm{abel}}$.
+
+\medskip\noindent\textit{Step 2 (Confining factor = $\SU(N_c)$, $N_c \ge 3$).}  R1 requires a compact simple Lie group whose fundamental representation is faithful, complex, and admits a totally antisymmetric invariant of some rank $k \ge 2$.  The minimum rank for oriented composites (Section~\ref{sec:gauge_origin}, $T_M$) is $k = 3$: a bilinear invariant ($k=2$, common to real and pseudoreal representations such as $\mathrm{SO}(N)$ and $\mathrm{Sp}(N)$) pairs two states but produces self-conjugate composites ($B = \bar{B}$) that cannot serve as independent enforcement channels.  A rank-$k$ antisymmetric invariant on a complex $N_c$-dimensional carrier has $k = N_c$ (the invariant $\epsilon_{i_1 \cdots i_{N_c}}$ of $\SU(N_c)$).  Therefore $k \ge 3$ requires $N_c \ge 3$.  The family selection is based on which Lie algebra families admit a complex fundamental with any totally antisymmetric invariant; minimality ($k = N_c = 3$, i.e., $A_1 = \SU(3)$) is applied in the next subsection.  Exhaustive classification over all compact simple Lie algebras:
+
+\smallskip
+\begin{center}
+\small
+\begin{tabular}{llp{4.2cm}l}
+\toprule
+\textbf{Family} & \textbf{Fund.\ type} & \textbf{R1 verdict} & \textbf{Outcome} \\
+\midrule
+$A_n = \SU(n\!+\!1)$, $n \ge 2$ & Complex & Yes (rank $= n+1 \ge 3$) & \textbf{Pass} \\
+$B_n = \mathrm{SO}(2n\!+\!1)$ & Real & No (real; no complex carrier) & Excluded \\
+$C_n = \mathrm{Sp}(2n)$ & Pseudoreal & No (pseudoreal; $B = \bar{B}$) & Excluded \\
+$D_n = \mathrm{SO}(2n)$ & Real & No (real; no complex carrier) & Excluded \\
+$G_2, F_4, E_8$ & Real & No & Excluded \\
+$E_7$ & Pseudoreal & No & Excluded \\
+$E_6$ & Complex & Min.\ faithful dim.\ $= 27$ violates A1 & Excluded \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+
+Only the $A_n$ family ($\SU(N_c)$ with $N_c \ge 3$) passes all R1 requirements.  Minimality selects $N_c = 3$ in the next subsection.
+
+\medskip\noindent\textit{Step 3 (Chiral factor = $\SU(2)$).}  R2 requires a faithful pseudoreal 2-dimensional representation.  At the Lie algebra level, $\mathfrak{su}(2)$ is the unique compact simple Lie algebra admitting a 2-dimensional irreducible representation.  At the group level, the gauge factor must be the simply connected cover $\SU(2)$ rather than its quotient $\mathrm{SO}(3)$: the 2-dimensional (doublet) representation of $\mathfrak{su}(2)$ does not descend to $\mathrm{SO}(3)$, so faithfulness requires $\SU(2)$.  All other compact simple Lie algebras have minimum faithful dimension $\ge 3$.
+
+\medskip\noindent\textit{Step 4 (Abelian factor = $\U(1)$).}  R3 requires exactly one abelian grading.  $\U(1)$ is the unique connected compact 1-dimensional abelian Lie group.
+
+\medskip\noindent\textit{Step 5 (Even $N_c$ excluded).}  Even values of $N_c$ produce zero chiral fermion templates satisfying all admissibility constraints.  This is established during the fermion scan ($T_{\mathrm{field}}$, Section~\ref{sec:gauge_template}, filter~5): for even $N_c$, no template survives the Witten anomaly filter~\cite{Witten1982}, which requires the total number of $\SU(2)$ doublets to be even.  The result is recorded here: only odd $N_c \ge 3$ remain as candidates.
+
+\medskip\noindent\textit{Step 6 (No simple-group alternative).}  Any simple group $G_{\mathrm{simple}}$ containing $\SU(3) \times \SU(2) \times \U(1)$ has $\dim(G_{\mathrm{simple}}) \ge 24 > 12 = \dim(\SU(3) \times \SU(2) \times \U(1))$.  The product structure is always cheaper.  Independence of enforcement roles (Step~1) also requires factorization.  $\square$
+
+\coderef{check\_L\_gauge\_template\_uniqueness}{gauge.py}
+\end{tcolorbox}
+
+\subsection{Capacity optimization selects $N_c = 3$}
+
+Step~2 of $L_{\mathrm{gauge,unique}}$ left $N_c \ge 3$ as candidates.  Minimality now selects $N_c = 3$.  The antisymmetric invariant of $\SU(N_c)$ has rank $k = N_c$; the minimum rank compatible with oriented composites is $k = 3$ (bilinear $k=2$ is excluded, higher ranks are non-minimal by A1).  Therefore $k = N_c = 3$ and the confining factor is $\SU(3)$.  The table below confirms this via the independent capacity-cost route:
+
+Within the $\SU(N_c) \times \SU(2) \times \U(1)$ template, the anomaly cancellation equation for each $N_c$ is:
+\begin{equation}
+z^2 - 2z - (N_c^2 - 1) \;=\; 0, \qquad z = Y_u / Y_Q.
+\label{eq:anomaly_cancel}
+\end{equation}
+This is solved analytically for every candidate: $z = 1 \pm N_c$.  All odd $N_c \ge 3$ have viable solutions.  The capacity cost of each is $\dim(G) = N_c^2 - 1 + 3 + 1 = N_c^2 + 3$.  Capacity minimality (A1) selects the cheapest:
+
+\begin{center}
+\small
+\begin{tabular}{cccccl}
+\toprule
+$N_c$ & Witten & Anomaly & $\dim(G)$ & Cost & Verdict \\
+\midrule
+2 & Fail & --- & --- & --- & Excluded (Witten) \\
+3 & Pass & $z \in \{4, -2\}$ & 12 & \textbf{12} & \textbf{Winner} \\
+4 & Fail & --- & --- & --- & Excluded (Witten) \\
+5 & Pass & $z \in \{6, -4\}$ & 28 & 28 & Non-minimal \\
+6 & Fail & --- & --- & --- & Excluded (Witten) \\
+7 & Pass & $z \in \{8, -6\}$ & 52 & 52 & Non-minimal \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$\SU(3) \times \SU(2) \times \U(1)$ is the unique capacity-optimal gauge group satisfying all admissibility requirements.
+
+\coderef{check\_T\_gauge}{gauge.py}
+
+\subsection{The three-stage argument}
+
+The gauge group derivation rests on three logically independent stages, each of which can be attacked separately:
+
+\textit{Stage 1: Physical necessity} (A1 $\to$ carrier requirements R1--R3, Theorem~R in Section~\ref{sec:gauge_origin}).  Finite enforceability determines which information carriers must exist.  This stage is pure constraint logic: it uses A1, the structural lemmas, and no Lie theory.
+
+\textit{Stage 2: Mathematical classification} (R1--R3 $\to$ $\SU(N_c) \times \SU(2) \times \U(1)$, $T_{\mathrm{gauge}}$ in Section~\ref{sec:gauge_template}).  The representation theory of compact Lie groups determines that the unique minimal algebra hosting all three carriers is $\SU(N_c) \times \SU(2) \times \U(1)$.  This stage is standard mathematics: exhaustive classification over the 17 compact simple Lie algebras.
+
+\textit{Stage 3: Cost closure} (A1 $\to$ unique cost functional $\to$ $N_c = 3$ selected, $L_{\mathrm{Cauchy}}$ in Section~\ref{sec:cauchy}).  The cost functional measuring ``complexity'' of a gauge algebra is itself uniquely determined by A1: $C(G) = \dim(G) \cdot \varepsilon$.  No alternative cost functional compatible with A1 exists.  This closes the selection to a theorem rather than a modeling choice.
+
+The independence of the three stages is methodologically significant.  A critic can challenge any stage without affecting the others: Stage~1 by exhibiting an A1-compatible theory without R1--R3; Stage~2 by finding a smaller algebra hosting the same carriers; Stage~3 by constructing an alternative A1-compatible cost functional that ranks a different algebra as minimal.
+
+\subsection{Fermion content: exhaustive derivation}
+
+The gauge group is fixed.  The number of generations is fixed (Section~\ref{sec:generations}).  One question remains: which fermions?
+
+The answer is not selected---it is eliminated.  The gauge group $\SU(3) \times \SU(2) \times \U(1)$ determines the menu of available representations: the mathematical objects that describe how fermions can transform under the gauge symmetry.  The question is which combination of representations is consistent with all the constraints that A1 imposes---not one constraint, but seven simultaneously.
+
+The derivation is exhaustive.  A \emph{chiral fermion template} is a finite multiset $\mathcal{T} = \{(r_i, n_i)\}$ where each $r_i$ is an irreducible representation of $\SU(3) \times \SU(2)$ and $n_i \ge 1$ is its multiplicity, subject to three constraints: (i) each $r_i$ is a left-handed Weyl field (chirality imposed by filter~3 below), (ii) each $\SU(3)$ factor lies in $\{3, \bar{3}, 6, \bar{6}, 8\}$ (the AF bound P1 excludes larger representations), and (iii) each $\SU(2)$ factor is $\{1, 2\}$ (P2--P3 exclude higher representations).  The number of distinct field types is $|\mathcal{T}| \le 5$ (P5 excludes larger sets).  Under these constraints the search space is finite: 1{,}680 distinct candidate templates.\footnote{Colored singlets are unordered within a template (the multiset $\{u^c, d^c\}$ is one template, not two), so the correct enumeration uses combinations with replacement.  A standalone verification script reproducing the full scan with exact rational arithmetic, four built-in red-team challenges, and both hypercharge solutions is archived at \url{https://doi.org/10.5281/zenodo.19154197} with an interactive Colab walkthrough at \url{https://colab.research.google.com/drive/1otO1Qwp_Lr3OsK6ykkeMRATanecPkKg6}.  Source code: \url{https://github.com/Ethan-Brooke/APF-Paper-2-The-Structure-of-Admissible-Physics}.}  Five closed-form proofs (P1--P5 in the box below) demonstrate that no candidates exist outside this explicitly bounded set.
+
+Seven filters are then applied sequentially.  Each filter is derived from the framework, not imposed externally: asymptotic freedom for both gauge factors (the coupling must weaken at short distances), chirality (the gauge sector must be intrinsically irreversible), three independent anomaly cancellation conditions (the quantum theory must be mathematically self-consistent), and capacity minimality (among the survivors, the cheapest wins).  The filters are not redundant---each eliminates candidates that passed all previous filters.
+
+Of the 1{,}680 templates, 1{,}679 fail.  One survives.
+
+\begin{tcolorbox}[apfbox, title={Theorem $T_{\mathrm{field}}$ (SM Fermion Content)}]
+\textbf{Statement.}  The unique minimal chiral fermion content consistent with $\SU(3) \times \SU(2) \times \U(1)$, three generations, and all admissibility constraints is the Standard Model:
+\begin{equation}
+\{Q(3,2),\; L(1,2),\; u^c(\bar{3},1),\; d^c(\bar{3},1),\; e^c(1,1)\} \times 3 \;\text{ generations}
+\label{eq:fermion_content}
+\end{equation}
+with $15 \times 3 = 45$ Weyl degrees of freedom.
+
+\smallskip\noindent\textbf{Proof.}  Two phases.
+
+\textit{Phase 1 (Scan).}  1{,}680 distinct chiral templates constructed from $\SU(3)$ representations $\{3, \bar{3}, 6, \bar{6}, 8\}$ crossed with $\SU(2)$ representations $\{1, 2\}$, up to 5 field types.  Seven sequential filters applied: (1)~$\SU(3)$ asymptotic freedom, (2)~$\SU(2)$ asymptotic freedom, (3)~chirality, (4)~$[\SU(3)]^3$ anomaly cancellation, (5)~Witten anomaly freedom~\cite{Witten1982}, (6)~full anomaly system with rational hypercharge solutions (including spectator-field reduction for $A(R)=0$ representations), (7)~CPT quotient.  Waterfall: $1{,}680 \to 348 \to 324 \to 24 \to 12 \to 8 \to 4$.  Minimality selects the unique survivor at 45 Weyl DOF.
+
+\textit{Phase 2 (Exclusion proofs).}  Five closed-form proofs exclude all categories outside the scan.  The asymptotic freedom filters (P1, P2) use the one-loop gauge beta-function coefficients for $\SU(3)$ and $\SU(2)$; the standard formula is $b = (11/3)C_A - (4/3)T_R N_f$ where $C_A$ is the adjoint Casimir and $T_R$ is the index of the matter representation~\cite{PeskinSchroeder1995}.  These coefficients are structural results derived in Paper~4A via $L_{\mathrm{beta,capacity}}$ and used here as inputs.  No perturbative QFT is imported.
+\begin{varlist}
+\item P1: $\SU(3)$ reps $\ge 10$ are AF-excluded (single field exceeds budget: $15 > 11$).
+\item P2: Colored $\SU(2)$ reps $\ge 3$ are AF-excluded ($12 > 7.3$).
+\item P3: Colorless $\SU(2)$ reps $\ge 3$ are DOF-excluded (minimality).
+\item P4: Multi-colored-multiplet templates have DOF $\ge 63 > 45$ (minimality).
+\item P5: $> 5$ field types add $\ge 3$ DOF total (minimality).
+\end{varlist}
+
+Hypercharges are uniquely determined by anomaly cancellation ($L_{\mathrm{hypercharge}}$, next subsection).  $\square$
+
+\coderef{check\_T\_field}{gauge.py}; standalone verification: \texttt{fermion\_scan\_standalone.py}~\cite{BrookeFermionScan}
+\end{tcolorbox}
+
+That survivor is the Standard Model: three generations of quarks and leptons in precisely the representations and with precisely the hypercharges that experiments observe.  The derivation starts from a single axiom about finite enforcement capacity and arrives here by elimination, through a chain of derivations with no free parameters and no empirical input.
+
+\subsection{Hypercharges: the numbers textbooks insert by hand}
+
+The surviving template has five multiplet types: $Q(3,2)$, $L(1,2)$, $u^c(\bar{3},1)$, $d^c(\bar{3},1)$, $e^c(1,1)$.  Each must be assigned a hypercharge $Y$ --- the $\U(1)$ quantum number from R3 --- and the assignments must satisfy the anomaly cancellation conditions that ensure the quantum theory is mathematically self-consistent.  There are five unknowns ($Y_Q$, $Y_L$, $Y_u$, $Y_d$, $Y_e$) and four independent anomaly conditions.  One overall normalization is a convention (the ``size'' of the $\U(1)$ charge unit).  So the question is: after fixing the convention, are the hypercharges determined?
+
+Three of the four anomaly conditions are linear and can be solved immediately:
+
+\begin{varlist}
+\item $[\SU(2)]^2[\U(1)] = 0$: the sum of hypercharges weighted by weak isospin must vanish.  This gives $Y_L = -N_c \, Y_Q = -3 Y_Q$.
+\item $[\SU(3)]^2[\U(1)] = 0$: the sum of hypercharges weighted by color charge must vanish.  This gives $Y_d = 2Y_Q - Y_u$.
+\item $[\mathrm{grav}]^2[\U(1)] = 0$: the sum of all hypercharges (gravitational anomaly) must vanish.  After substituting the first two results, this gives $Y_e = -6 Y_Q$.
+\end{varlist}
+
+\noindent Three unknowns eliminated.  Two remain: $Y_Q$ itself (which sets the normalization) and the ratio $z \equiv Y_u / Y_Q$ (which carries the physical content).
+
+The fourth condition is the cubic anomaly $[\U(1)]^3 = 0$: the sum of cubed hypercharges must vanish.  This looks formidable --- it involves fifth powers and cross-terms.  But after substituting the three linear solutions, the entire expression simplifies.  Define $z = Y_u / Y_Q$ and substitute $Y_L = -3Y_Q$, $Y_d = (2-z)Y_Q$, $Y_e = -6Y_Q$ into $[\U(1)]^3 = 0$:
+\begin{equation}
+2 N_c Y_Q^3 + 2 Y_L^3 - N_c Y_u^3 - N_c Y_d^3 - Y_e^3 = 0.
+\end{equation}
+Every term is proportional to $Y_Q^3$.  Dividing through and collecting terms:
+\begin{equation}
+z^2 - 2z - 8 = 0.
+\label{eq:hypercharge_quadratic}
+\end{equation}
+The cubic anomaly condition has reduced to a quadratic.  The discriminant is $\Delta = 4 + 32 = 36$, giving two rational roots: $z = 4$ and $z = -2$.  These are related by the $u \leftrightarrow d$ exchange ($z \to 2 - z$): they describe the same physics with the up-type and down-type labels swapped.  There is one physical solution.
+
+\begin{tcolorbox}[apfbox, title={$L_{\mathrm{hypercharge}}$ (Unique Hypercharge Assignment)}]
+\textbf{Statement.}  Given the surviving template $\{Q(3,2),\, L(1,2),\, u^c(\bar{3},1),\, d^c(\bar{3},1),\, e^c(1,1)\}$ with $N_c = 3$, anomaly cancellation uniquely determines the hypercharge ratios.  Normalizing $Y_Q = 1/6$ (conventional):
+
+\begin{equation}
+Y_Q = \tfrac{1}{6}, \quad Y_u = \tfrac{2}{3}, \quad Y_d = -\tfrac{1}{3}, \quad Y_L = -\tfrac{1}{2}, \quad Y_e = -1.
+\label{eq:hypercharges}
+\end{equation}
+
+\smallskip\noindent\textbf{Derived consequences:}
+\begin{varlist}
+\item \textit{Electric charges} ($Q = T_3 + Y$): $Q(u) = 2/3$, $Q(d) = -1/3$, $Q(e) = -1$, $Q(\nu) = 0$.
+\item \textit{Charge quantization}: all electric charges are integer multiples of $1/3$.  This is derived from the anomaly structure, not assumed.
+\item \textit{Quark-lepton relation}: $Y_L = -N_c \, Y_Q$ ties the lepton hypercharge to the number of colors.  The connection between quarks and leptons is not a feature of grand unification imposed from above --- it is derived from anomaly cancellation within the derived gauge group.
+\end{varlist}
+
+\smallskip\noindent\textbf{Proof.}  Four anomaly conditions on five unknowns.  Three linear conditions fix $Y_L$, $Y_d$, $Y_e$ in terms of $Y_Q$ and $z = Y_u/Y_Q$.  The cubic $[\U(1)]^3 = 0$ reduces to $z^2 - 2z - 8 = 0$ (Eq.~\ref{eq:hypercharge_quadratic}), with roots $z = 4$ and $z = -2$ related by $u \leftrightarrow d$.  One normalization fixes $Y_Q = 1/6$.  $\square$
+
+\coderef{check\_L\_anomaly\_free}{gauge.py}
+\end{tcolorbox}
+
+Every number in the Standard Model's hypercharge column --- the numbers that have been measured in accelerator experiments since the 1970s and inserted into textbooks as given --- is the output of a quadratic equation whose coefficients are determined by the gauge group and fermion template, both of which were derived from A1.
+
+\subsection{The scalar sector}
+\label{sec:higgs}
+
+The fermion content has been derived.  The hypercharges have been derived.  One structural question remains: the fermions are chiral, and chirality (R2) forbids bare gauge-invariant masses.  To avoid an infinite enforcement cost at the IR scale, the chiral vacuum must be broken.  A scalar field with a vacuum expectation value (VEV) is the minimal mechanism.
+
+\begin{tcolorbox}[apfbox, title={Theorem $T_{\mathrm{Higgs}}$ (Scalar Sector)}]
+\textbf{Statement.}  The admissibility constraints force exactly one complex $\SU(2)$ doublet scalar with 4 real components.
+
+\smallskip\noindent\textbf{Proof.}  Three steps.
+
+\textit{Step 1 (A scalar VEV is required).}  R2 (chiral carrier) makes the fermion sector chirally asymmetric: left- and right-handed components transform differently under $\SU(2) \times \U(1)$.  This forbids gauge-invariant bare mass terms.  Without mass generation, the enforcement cost of maintaining massless charged states diverges in the IR: massless gauge-charged particles require long-range correlations, which require unbounded capacity ($L_{\mathrm{irr}}$: costs accumulate irreversibly).  An IR-stable vacuum must break the chiral symmetry via a background field with a non-zero VEV~\cite{Englert1964,Higgs1964}.  The unbroken EW vacuum ($v = 0$) is therefore inadmissible.
+
+\textit{Step 2 (The scalar transforms as an $\SU(2)$ doublet).}  To generate gauge-invariant Yukawa couplings to the derived fermion content $\{Q(3,2), L(1,2), u^c(\bar{3},1), d^c(\bar{3},1), e^c(1,1)\}$, the scalar must pair with the $\SU(2)$ doublet fermions.  The only representation that forms gauge-invariant bilinears with both quark doublets $Q(3,2)$ and lepton doublets $L(1,2)$ is the $\SU(2)$ doublet.  Singlets and triplets are excluded: a singlet decouples from the doublet fermions (no Yukawa); a triplet generates lepton-number-violating couplings excluded by the derived anomaly cancellation conditions.
+
+\textit{Step 3 (One doublet is the minimum by A1).}  A single complex $\SU(2)$ doublet has 4 real components.  After spontaneous symmetry breaking $\SU(2) \times \U(1)_Y \to \U(1)_{\mathrm{em}}$, the 3 Goldstone modes are absorbed by $W^\pm$ and $Z$ (Goldstone theorem~\cite{Goldstone1962}: $\dim[\SU(2) \times \U(1)] - \dim[\U(1)_{\mathrm{em}}] = 4 - 1 = 3$), leaving exactly 1 physical massive scalar.  A second doublet would add 4 more real components and introduce additional physical scalars and free parameters (two VEVs, a mixing angle, and three extra Higgs bosons) without resolving any structural degeneracy not already resolved by the first doublet.  By A1 (minimality of enforcement cost), the second doublet is inadmissible: additional enforcement channels without structural necessity exceed the minimum capacity required.  $\square$
+\end{tcolorbox}
+
+\coderef{check\_T\_Higgs}{gauge.py}
+
+The scalar sector contributes 4 structural enforcement channels to the capacity budget.  The gauge sector is now complete: gauge group, fermion content, hypercharges, and scalar sector are all derived.  Section~\ref{sec:counting} assembles the total.
+
+
+% ======================================================================
+\section{Capacity counting: what constitutes one unit}
+\label{sec:counting}
+% ======================================================================
+
+The previous sections derived the gauge group, the fermion content, and the number of generations.  Every piece of the architecture is now in place.  This section asks a different question: how large is the budget?
+
+The answer requires a decision that field theory never makes, because field theory never needed to.  In quantum field theory, degrees of freedom are counted for the purpose of computing amplitudes and cross-sections.  The counting is kinematic: a photon has 2 polarizations, a massive vector boson has 3, a Dirac fermion has 4 spin states.  These are the modes that propagate, scatter, and show up in detectors.
+
+But A1 constrains something else.  What the interface must enforce is not the number of propagation modes but the number of \emph{independent structural distinctions} --- the binary questions that the enforcement algebra must resolve to maintain the architecture.  A gauge boson has 2 polarizations, but these are propagation modes of a single structural entity: one Lie algebra direction, one enforcement channel.  The interface does not need separate capacity to track each polarization; it needs capacity to track whether that gauge direction is \emph{active} at this interface.  Similarly, a Weyl fermion has a helicity, but helicity is a kinematic property of a propagating particle, not a structural distinction that the interface enforces.  What the interface tracks is whether that chiral species is \emph{present} --- a single binary fact.
+
+This distinction between structural and kinematic degrees of freedom has no analogue in standard field theory, where the question never arises.  In the admissibility framework, it determines the capacity budget and everything downstream of it.
+
+Before proceeding to the count, it is worth registering a structural fact already established in Paper~1 that shapes everything downstream.  $T_\kappa$ (Directed Enforcement Multiplier) proved that $\kappa = 2$: each independently enforceable distinction locks exactly two states.  This is not a normalization convention.  It means that enforcement is genuinely binary at the base level.  Every structural channel answers a single yes-or-no question --- is this distinction enforced or not? --- and there is no intermediate option.  The interface does not set a dial between zero and one; it commits or it does not.
+
+The consequence for the capacity budget is immediate.  Each channel contributes an occupation number $n_i \in \{0,1\}$, not a continuous variable.  The 61 structural channels derived below are 61 bits, not 61 continuous degrees of freedom.  The enforcement Hamiltonian takes the form $H = -\varepsilon^* \sum_{i=1}^{61} n_i$: a uniform cost per occupied channel, with no cross-coupling terms and no continuous tuning parameters.  The ground state of the architecture is a specific bit string --- the unique anomaly-free assignment of all 61 channels --- not a point in a smooth landscape.
+
+The counting principle rests on a prior lemma establishing what constitutes an independent structural channel.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{species}}$ (Species as Enforcement Channels)}]
+\textbf{Statement.}  Each irreducible representation of the derived gauge group $\SU(3) \times \SU(2) \times \U(1)$ that appears in the anomaly-free fermion content defines exactly one independent structural enforcement channel.  Kinematic properties of that representation (helicity, polarization, propagation mode) do not contribute additional channels.
+
+\smallskip\noindent\textbf{Proof.}  Three steps.
+
+\textit{Step 1 (What the interface tracks).}  By A1, enforcement capacity is finite.  What the interface must maintain is not the kinematics of propagating excitations but the \emph{structural distinctions} --- the binary facts about which representations are active.  For a representation $\rho$, the binary fact is: is this chiral species present at this interface?  That is one enforcement question, costing $\varepsilon^*$ per $L_{\varepsilon^*}$.
+
+\textit{Step 2 (Kinematic properties are free).}  Helicity is determined by the Lorentz group representation, not by the gauge enforcement algebra.  Once the interface has committed to enforcing that a left-handed electron is present (one capacity unit), its helicity follows from the kinematics of the Lorentz frame (Paper~5); no additional enforcement is required.  The same holds for polarizations of gauge bosons: the Lie algebra direction (one structural channel) determines the gauge enforcement role; the two transverse polarizations are kinematic modes of that one channel.
+
+\textit{Step 3 (Monogamy enforces independence).}  By $T_M$ (Monogamy), each distinct irreducible representation requires its own enforcement capacity and cannot share with a different representation.  Therefore distinct representations contribute independently, and the count is additive.  $\square$
+
+\coderef{check\_L\_species}{gauge.py}
+\end{tcolorbox}
+
+The counting principle is then derived from three further ingredients: $L_{\varepsilon^*}$ (every distinction has a minimum cost), $T_\kappa$ (each distinction locks exactly 2 states), and $T_M$ (no two channels share enforcement resources).  At Bekenstein saturation~\cite{Bekenstein1973} --- the regime where the interface is maximally packed --- every channel costs exactly $\varepsilon^*$, and the total count is simply the number of independent channels.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{count}}$ (Capacity Counting)}]
+\textbf{Statement.}  At Bekenstein saturation, the number of independently enforceable capacity units equals the number of structural enforcement channels:
+\begin{equation}
+C_{\mathrm{total}} \;=\; \underbrace{45}_{\text{chiral species}} \;+\; \underbrace{4}_{\text{Higgs components}} \;+\; \underbrace{12}_{\text{gauge directions}} \;=\; 61.
+\label{eq:ctotal}
+\end{equation}
+
+\smallskip\noindent\textbf{Proof.}  Five steps.
+
+\textit{Step 1 ($L_{\varepsilon^*}$).}  Every independently enforceable distinction costs $\ge \varepsilon^* > 0$.  At saturation, each costs exactly $\varepsilon^*$ (maximally packed).
+
+\textit{Step 2 ($T_\kappa$).}  $\kappa = 2$: each distinction locks exactly 2 states (binary observable: present vs.\ absent).
+
+\textit{Step 3 (Structural vs.\ kinematic DOF).}
+\begin{varlist}
+\item \textbf{Gauge directions} ($T_3$ + $T_{\mathrm{gauge}}$): 12 Lie algebra generators.  Each is one automorphism direction, regardless of polarization.  Polarizations are propagation modes (kinematic), not enforcement structure.
+\item \textbf{Chiral species} ($T_{\mathrm{field}}$): 45 Weyl fermions.  Each is one chiral presence.  Helicity is kinematic.
+\item \textbf{Higgs components} ($T_{\mathrm{Higgs}}$): 4 real components of the complex $\SU(2)$ doublet.  Each is one binary VEV-direction distinction.
+\end{varlist}
+
+\textit{Step 4 (Independence).}  By $T_M$ (Monogamy) and $L_{\mathrm{loc}}$ (Locality), no two structural channels share enforcement resources.  The counting is additive.
+
+\textit{Step 5 (Minimality).}  Each channel resolves exactly 2 states ($\kappa = 2$) and cannot be decomposed further without violating $L_{\varepsilon^*}$.  $\square$
+
+\coderef{check\_L\_count}{gauge.py}
+\end{tcolorbox}
+
+\smallskip\noindent\textit{Why gauge constraints are not subtracted (the BRST question).}\quad A field-theorist's instinct is to subtract gauge redundancies via BRST ghost counting, reducing the number of physical degrees of freedom below $\dim(G)$.  The admissibility framework does not subtract because the counting principle is different: what A1 constrains is the number of \emph{independently enforceable structural distinctions}, not the number of propagating modes.  Each Lie-algebra direction is a structural enforcement channel that the interface must independently track, regardless of whether its kinematic content propagates as a physical particle or is removed by gauge-fixing.  The Formal Supplement~\cite{BrookeP2Supplement}, \S III.1.2 provides the full argument.
+
+\subsection{The number}
+
+Sixty-one.  That is the total enforcement capacity of the universe: 45 chiral fermion species, 12 gauge directions, 4 Higgs components.  Every structural distinction that the interface can maintain is accounted for.  No parameter has been adjusted.  The 45 was derived by exhaustive scan in Section~\ref{sec:gauge_template}.  The 12 is $\dim(\SU(3) \times \SU(2) \times \U(1)) = 8 + 3 + 1$.  The 4 is the real dimensionality of a complex $\SU(2)$ doublet.  The sum is 61.
+
+This number will determine everything that follows.  The partition into vacuum and matter (Section~\ref{sec:partition}) is a partition of these 61 types.  The cosmological density fractions are ratios with 61 in the denominator.  The number of generations (Section~\ref{sec:generations}) is the largest integer whose capacity cost fits within the slack left by these 61 channels.  Sixty-one is not a large number, not a round number, and not a number that anyone would have guessed.  It is the number that falls out of the mathematics.
+
+\subsection{Cross-checks}
+
+Two independent routes yield the same count for the dark sector:
+\begin{align}
+\text{Route 1:} \quad 16 &= 5 \text{ multiplet types} \times 3 \text{ generations} + 1 \text{ Higgs}, \\
+\text{Route 2:} \quad 16 &= 12 \;(\dim G) \;+ 4 \;(\dim H).
+\end{align}
+This boson-multiplet identity $16 = 16$ is a non-trivial consistency check: two different decompositions of the non-baryonic matter sector agree exactly.
+
+
+% ======================================================================
+\section{The MECE partition: vacuum, baryonic, dark}
+\label{sec:partition}
+% ======================================================================
+
+The previous sections derived the architecture: which gauge group, which fermions, how many generations, how many total capacity types.  This section asks how that budget divides up.
+
+The answer is determined by two questions --- and only two.  Every one of the 61 capacity types either routes through the gauge channels or it does not.  Among those that do, each either carries conserved labels protected by confinement or it does not.  These two binary predicates generate three sectors, and the proof of exhaustion shows that no third predicate can refine the partition further.  The result is a complete accounting of the universe: every capacity type is assigned to exactly one sector, and the fractions are determined by arithmetic.
+
+What makes this partition remarkable is that one of the three sectors --- the largest of the matter sectors --- is invisible to every particle detector ever built.  The framework does not postulate dark matter.  It does not add a new field or a new symmetry to accommodate it.  Dark matter falls out of the same partition that produces ordinary matter, as the sector that carries gauge-addressable capacity but no conserved color charge.  We will unpack what this means after the formal statement.
+
+\begin{tcolorbox}[apfbox, title={$P_{\mathrm{exhaust}}$ (Predicate Exhaustion --- MECE Partition)}]
+\textbf{Predicate Q1} (Gauge addressability, from $T_3$): Does the capacity unit route through gauge channels ($\SU(3) \times \SU(2) \times \U(1)$)?
+\begin{varlist}
+\item Q1 = 1 $\to$ \textbf{matter}: 19 types.
+\item Q1 = 0 $\to$ \textbf{vacuum}: 42 types.
+\end{varlist}
+
+\smallskip\noindent\textbf{Predicate Q2} (Confinement, within Q1 = 1): Does the gauge-addressable unit carry conserved labels protected by $\SU(3)$ confinement ($T_{\mathrm{confinement}}$: $L_{\mathrm{AF}}$ + A1 saturation $\Rightarrow$ non-singlet states inadmissible)?
+\begin{varlist}
+\item Q2 = 1 $\to$ \textbf{baryonic}: 3 types.
+\item Q2 = 0 $\to$ \textbf{dark}: 16 types.
+\end{varlist}
+
+\smallskip\noindent\textbf{Combined:}
+\begin{equation}
+\underbrace{61}_{C_{\mathrm{total}}} \;=\; \underbrace{42}_{\text{vacuum}} \;+\; \underbrace{3}_{\text{baryonic}} \;+\; \underbrace{16}_{\text{dark}} \;=\; \underbrace{42}_{\text{vacuum}} \;+\; \underbrace{19}_{\text{matter}}
+\label{eq:mece_partition}
+\end{equation}
+
+\smallskip\noindent\textbf{Exhaustion (no third predicate).}
+\begin{varlist}
+\item \textit{Vacuum} (Q1 = 0): defined by absence of addressable labels.  Any splitting predicate would introduce an addressable distinction, moving units to Q1 = 1.  Contradiction.
+\item \textit{Dark} (Q1 = 1, Q2 = 0): gauge-singlet enforcement.  Further splitting requires a gauge pathway not in the derived group.  $T_{\mathrm{gauge}}$ proves $\SU(3) \times \SU(2) \times \U(1)$ is complete.
+\item \textit{Baryonic} (Q1 = 1, Q2 = 1): indexed by $N_c = 3$, the minimal confining carrier.  Sub-ternary splitting would require $\SU(n < 3)$, which does not confine.
+\end{varlist}
+
+\coderef{check\_P\_exhaust}{core.py}
+\end{tcolorbox}
+
+\smallskip
+\noindent\textbf{The capacity cross-match.}\quad
+A careful reader will notice that the structural count ($45 + 12 + 4 = 61$) and the partition count ($42 + 3 + 16 = 61$) use different organisational principles.  The structural count groups by \emph{field type}; the partition groups by \emph{enforcement mechanism} (predicates Q1 and Q2).  The following lemma makes the assignment of each structural class to its sector a proved statement, not a labeling choice.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{vac}}$ (Vacuum Sector Assignment)}]
+\textbf{Statement.}  Of the 61 structural capacity types, exactly 42 satisfy Q1~=~0 (vacuum predicate).  Their assignment is determined by three sub-cases, each proved independently.
+
+\medskip\noindent\textbf{Case 1: Gauge generators (12 types $\to$ vacuum).}
+Q1 asks whether a capacity type \emph{routes through} the gauge channels.  Gauge generators are the gauge channels themselves --- they are the enforcement infrastructure, not its consumers.  A gauge generator cannot route through itself: it has no ``upstream'' pathway to enter as a matter excitation.  Formally, the generator $T^a \in \mathfrak{g}$ acts as a derivation on the algebra of observables; it is not itself an eigenstate of the Q1 operator.  Therefore Q1~=~0 for all 12 generators by definition of what ``routing through'' means.
+
+\medskip\noindent\textbf{Case 2: Fermion internal structure (27 of 30 channels $\to$ vacuum).}
+The 30 fermion internal-structure channels decompose as: 3 colour charges of the quark sector (Q1~=~1, Q2~=~1, baryonic) plus 27 channels encoding the internal $\mathrm{SU}(N_c) \times \mathrm{SU}(2)$ representation structure of the fermion multiplets.  By $T_M$ (Monogamy), each channel has exactly one enforcement role.  The enforcement role of the 27 internal-structure channels is to index the representation-theoretic decomposition of the multiplets whose \emph{type identity} is already counted among the 15 dark-sector labels.  These 27 are sub-components of that same multiplet role, not independent channels with a separate addressable label.  Formally: assigning an independent Q1=1 label to any of the 27 would require either (a) a second enforcement role for the same channel (violating $T_M$), or (b) a new gauge pathway outside $\SU(3) \times \SU(2) \times \U(1)$ (contradicting $T_{\mathrm{gauge}}$, completeness of the derived group).  Neither is possible.  Therefore Q1~=~0 for all 27.
+
+\medskip\noindent\textbf{Case 3: Higgs components (3 of 4 channels $\to$ vacuum).}
+The 4 real Higgs components split as: 1 VEV direction (the physical Higgs after SSB, gauge-addressable, dark sector, Q1~=~1) plus 3 Goldstone directions absorbed by $W^\pm$ and $Z$ (Goldstone theorem: $\dim[\SU(2) \times \U(1)] - \dim[\U(1)_{\mathrm{em}}] = 3$ absorbed modes, T$_{\mathrm{Higgs}}$ Step~3).  The 3 absorbed Goldstone modes are longitudinal polarizations of massive gauge bosons --- they are part of the gauge infrastructure after SSB, not independently addressable matter labels.  Therefore Q1~=~0 for the 3 absorbed components.
+
+\medskip\noindent\textbf{Combined count:} $12 + 27 + 3 = 42$ vacuum types.  $\square$
+
+\coderef{check\_P\_exhaust}{core.py}
+\end{tcolorbox}
+
+Table~\ref{tab:crossmatch} presents the same information in compact form.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Structural origin} & \textbf{Total} & \textbf{Vacuum} & \textbf{Baryonic} & \textbf{Dark} \\
+\midrule
+Gauge generators ($\mathfrak{su}(3)\!+\mathfrak{su}(2)\!+\mathfrak{u}(1)$) & 12 & 12 & 0 & 0 \\
+Higgs real components & 4 & 3 & 0 & 1 \\
+Fermion type-identities ($5$ types $\times$ $3$ gen.) & 15 & 0 & 0 & 15 \\
+Fermion internal structure (colour $\times$ isospin) & 30 & 27 & 3 & 0 \\
+\midrule
+\textbf{Total} & \textbf{61} & \textbf{42} & \textbf{3} & \textbf{16} \\
+\bottomrule
+\end{tabular}
+\caption{Cross-match between the structural count ($45 + 12 + 4$) and the MECE partition ($42 + 3 + 16$), proved in $L_{\mathrm{vac}}$.  Gauge generators $\to$ vacuum (Case~1 of $L_{\mathrm{vac}}$: they are the enforcement infrastructure, not its consumers).  27 fermion internal channels $\to$ vacuum (Case~2: no independent addressable label without duplicating type-identity or extending the gauge group).  3 Higgs components $\to$ vacuum (Case~3: absorbed Goldstone modes become longitudinal gauge-boson polarizations after SSB).  Remaining 3 baryonic channels are the $N_c = 3$ confined colour charges.  16 dark channels are the 15 multiplet type-identities plus 1 physical Higgs.  Verified: $42 + 3 + 16 = 61$; fermion split $27 + 3 + 15 = 45$.}
+\label{tab:crossmatch}
+\end{table}
+
+\subsection{What dark matter is}
+
+For sixty years, dark matter has been the most conspicuous gap in the Standard Model~\cite{BertoneHooper2018}.  Galaxies rotate too fast, clusters are too heavy, the cosmic microwave background has the wrong power spectrum --- and no particle in the Standard Model can account for it.  The standard response has been to postulate new particles: WIMPs, axions, sterile neutrinos, each requiring new fields, new symmetries, and new parameters.  Decades of direct detection experiments have found nothing.
+
+The admissibility framework offers a different answer.  Dark matter is not a new particle.  It is the gauge-singlet sector of the Standard Model's own enforcement structure --- the 16 capacity types that are gauge-addressable (Q1 = 1) but carry no conserved color charge (Q2 = 0).
+
+To see what these 16 types are, recall that the matter sector has 19 capacity types total.  Three of them carry conserved $\SU(3)$ labels protected by confinement: these are the baryonic types, the capacity that tracks the existence of protons and neutrons.  The remaining 16 carry gauge quantum numbers --- they transform under $\SU(3) \times \SU(2) \times \U(1)$ --- but their gauge representation is trivial at the singlet level.  They are the enforcement cost of maintaining the Standard Model's matter architecture without producing confined composites.
+
+These 16 types have five properties, each derived rather than assumed.  The collisionless and single-fluid properties both rest on the following lemma.
+
+\begin{tcolorbox}[apfbox, title={Lemma $L_{\mathrm{singlet,Gram}}$ (Rank-1 Dark Sector)}]
+\textbf{Statement.}  The Gram matrix of enforcement demand vectors for the 16 dark-sector capacity types has rank~1.
+
+\smallskip\noindent\textbf{Proof.}  Three steps.
+
+\textit{Step 1 (Demand vectors for singlets).}  An enforcement demand vector $\mathbf{v}_i$ for capacity type $i$ encodes how that type loads the local gauge channels.  For a type with gauge charges $(q_3, q_2, q_1)$ under $\SU(3) \times \SU(2) \times \U(1)$, the demand vector has components proportional to those charges in the gauge-channel basis.
+
+\textit{Step 2 (Dark-sector demand vectors are mutually proportional).}  The 16 dark-sector types satisfy Q1~=~1 (gauge-addressable) and Q2~=~0 (no conserved $\SU(3)$ color charge).  Q2~=~0 means the $\SU(3)$ components of every dark-sector demand vector are zero.  The remaining $\SU(2) \times \U(1)$ components are determined by the representation assignments derived in $T_{\mathrm{field}}$.  Crucially, these 16 types are not gauge singlets---they are matter multiplets ($Q, L, u^c, d^c, e^c$) with non-trivial $\SU(2) \times \U(1)$ quantum numbers.  What collapses to a single direction is not their charges but their \emph{enforcement demand vectors in gauge-channel space}: since no dark-sector type carries independent $\SU(3)$ color charge (Q2~=~0), and since $T_M$ (Monogamy) prohibits each channel from mediating more than one independent enforcement role, the demand vectors of all 16 dark-sector types project onto the same one-dimensional subspace of the gauge-channel vector space---namely, the direction orthogonal to all $\SU(3)$ generators.  Every dark-sector demand vector is proportional to the identity operator on the $\SU(3)$-neutral subspace---all 16 point in the same direction in that space.
+
+\textit{Step 3 (Rank~1).}  Vectors all proportional to the same direction span a one-dimensional subspace.  The Gram matrix $G_{ij} = \mathbf{v}_i \cdot \mathbf{v}_j$ has $G_{ij} = \lambda_i \lambda_j$ for scalar multipliers $\lambda_i$, which is an outer product of rank~1.  $\square$
+
+\coderef{check\_L\_singlet\_Gram}{cosmology.py}
+\end{tcolorbox}
+
+\begin{varlist}
+\item \textit{They gravitate.}  All locally committed capacity sources spacetime curvature ($T_9$: the enforcement cost contributes to the stress-energy tensor).  This is not optional --- it follows from the same principle that makes ordinary matter gravitate.
+\item \textit{They are dark.}  Their gauge representation is trivial at the singlet level: no electromagnetic coupling, no photon exchange, no interaction with light.  Dark matter is dark because the gauge structure derived in Section~\ref{sec:gauge_origin} has no channel through which singlet capacity can emit or absorb photons.
+\item \textit{They are collisionless at leading order.}  The 16 singlet types carry no independent, un-cancelled non-abelian charges (Q2~=~0 by construction).  Their enforcement demand vectors therefore have no orthogonal components in the local gauge space; each is strictly proportional to the identity operator on the background volume.  Vectors proportional to the same direction span a one-dimensional subspace, so the Gram matrix of the singlet sector has rank~1 ($L_{\mathrm{singlet,Gram}}$).  Self-interaction requires at least two linearly independent channels to mediate exchange; with rank~1 there are none: $\sigma/m = 0$ at leading order.
+\item \textit{They behave as a single fluid.}  The rank-1 Gram matrix means the dark sector is one collective mode, not 16 independent species.  From the perspective of large-scale dynamics, dark matter is a single substance with a single equation of state.  $N_{\mathrm{species}} = 1$, $\Delta N_{\mathrm{eff}} = 0$, consistent with CMB constraints on dark radiation.
+\item \textit{They are long-lived.}  Trivial gauge charge means no decay channel to gauge-charged final states (gauge charge conservation from $L_{\mathrm{anomaly,free}}$).  Dark matter does not decay because there is nothing for it to decay into without violating conservation laws that are themselves derived from A1.
+\end{varlist}
+
+The dark matter sector contains 16 of the 19 matter capacity types --- it is the dominant component of the matter budget.  The baryonic sector, which accounts for all the matter that interacts with light, contains just 3.  The ratio $f_b = 3/19$ --- three baryonic types out of nineteen matter types --- says that ordinary matter is a small minority of the total matter budget.  The next subsection derives the bridge that converts these capacity counts into the cosmological density fractions that telescopes measure.
+
+What the framework does \emph{not} claim is equally important.  It does not identify a specific particle species for dark matter --- dark matter in this framework is not ``a particle'' but a sector of the enforcement budget.  It does not predict small-scale structure (halo profiles, substructure, stream dynamics), which require dynamical evolution beyond the structural level of this paper.  And it does not predict sub-leading self-interaction corrections, which depend on higher-order terms in the singlet Gram expansion.  These are addressed in Papers~4A and~6.
+
+
+\subsection{From capacity fractions to density fractions}
+
+The partition $42 + 3 + 16 = 61$ is an arithmetic fact about capacity types.  But cosmologists do not measure capacity types.  They measure energy density fractions: the fraction of the universe's total energy budget contained in dark energy, in baryonic matter, in dark matter.  The question is whether the capacity fractions \emph{are} the density fractions --- and if so, why.
+
+The answer is a short argument with one physical input and one mathematical input.  The physical input is that at the causal horizon --- the outermost boundary at which enforcement obligations can be coherently maintained --- entropy is maximized.  This follows from the irreversibility principle ($L_{\mathrm{irr}}$): enforcement commitments accumulate monotonically, and at the horizon, where no further information can arrive, the entropy functional reaches its global maximum ($T_{\mathrm{entropy}}$, Paper~1~\cite{BrookePaper1}).
+
+The argument is microcanonical.  At the causal horizon, where $L_{\mathrm{irr}}$ drives entropy to its maximum and no further information arrives, the framework can assign no preferred ordering among the 61 capacity types: they are distinguished only by their discrete labels (Q1, Q2 predicates), not by any dynamical weighting.  A system with $N$ equally unlabeled microstates has a unique maximum-entropy macrostate: all microstates equally likely.  Applied to the 61 discrete types, this gives each type an equal share of the total enforcement capacity.
+
+\begin{tcolorbox}[apfbox, title={$L_{\mathrm{equip}}$ (Horizon Equipartition)}]
+\textbf{Statement.}  At Bekenstein saturation (causal horizon), each of the $C_{\mathrm{total}} = 61$ capacity types carries an equal share of the total enforcement capacity: $\varepsilon_i = C/C_{\mathrm{total}}$ for all $i$.  The energy density fraction of any sector equals its type-count fraction:
+\begin{equation}
+\Omega_{\mathrm{sector}} \;=\; \frac{|\mathrm{sector}|}{C_{\mathrm{total}}}
+\label{eq:omega_equip}
+\end{equation}
+
+\smallskip\noindent\textbf{Proof.}  Three steps.
+
+\textit{Step 1 (Horizon state).}  At the causal horizon, $L_{\mathrm{irr}}$ + $T_{\mathrm{entropy}}$ (Paper~1~\cite{BrookePaper1}) drive entropy to its global maximum subject to the constraint $\sum_i \varepsilon_i = C$ and the floor $\varepsilon_i \ge \varepsilon^* > 0$ ($L_{\varepsilon^*}$).
+
+\textit{Step 2 (Equal priors from label symmetry).}  The 61 types are distinguished only by their discrete classification labels (Q1, Q2 predicates applied to the anomaly-free field content).  No enforcement mechanism in the framework assigns different dynamical weights to types within the same sector.  By the principle of indifference over structurally equivalent microstates, each type receives equal capacity: $\varepsilon_i = C / C_{\mathrm{total}}$.  This is the microcanonical result, not a Shannon entropy maximization over probabilities: the argument is that the enforcement ledger has no basis for preferring one type over another within its classification.
+
+\textit{Step 3 (Surplus cancellation).}  The density fraction of sector $X$ is $\Omega_X = \sum_{i \in X} \varepsilon_i \,/\, \sum_{\mathrm{all}\,i} \varepsilon_i = |X| \cdot (C/C_{\mathrm{total}}) \,/\, C = |X|/C_{\mathrm{total}}$.  The total capacity $C$ cancels.  The fractions depend only on the integer type counts.  $\square$
+
+\coderef{check\_L\_equip}{cosmology.py}
+\end{tcolorbox}
+
+This is the bridge between structural counting and observational cosmology.  It says: if you count the capacity types and sort them into sectors, the fractions you get \emph{are} the density fractions that Planck measures.  The bridge requires no dynamical model, no equation of state, no fitting --- just constrained entropy maximization over a finite discrete set.
+
+\smallskip
+\noindent\textbf{Status of $L_{\mathrm{equip}}$.}\quad This lemma is a framework-derived result, not an import from standard cosmology.  It does not assume that capacity types are uniformly distributed---it \emph{proves} that they must be, at the causal horizon, by strict concavity of the entropy functional over a finite set with a uniform cost floor ($L_{\varepsilon^*}$).  The step that a referee may challenge is the identification of the causal horizon with the cosmological horizon at which Planck's $\Omega$ parameters are defined.  This identification is established in Paper~6 (\emph{Cosmological Evolution}), which derives the full de~Sitter trajectory and confirms that the relevant horizon is the one at which the enforcement ledger reaches Bekenstein saturation.  Paper~2 establishes the structural result; Paper~6 closes the cosmological interpretation.
+
+The predictions are immediate:
+
+\begin{center}
+\small
+\begin{tabular}{lcccr}
+\toprule
+\textbf{Observable} & \textbf{Capacity fraction} & \textbf{Predicted} & \textbf{Observed} & \textbf{Error} \\
+\midrule
+$\Omega_\Lambda$ (dark energy) & $42/61$ & $0.6885$ & $0.6889 \pm 0.0056$~\cite{Planck2020} & $0.05\%$ \\
+$\Omega_m$ (total matter) & $19/61$ & $0.3115$ & $0.3111 \pm 0.0056$~\cite{Planck2020} & $0.12\%$ \\
+$\Omega_{\mathrm{DM}}$ (dark matter) & $16/61$ & $0.2623$ & $0.2607 \pm 0.0056$ & $0.6\%$ \\
+$\Omega_b$ (baryonic) & $3/61$ & $0.04918$ & $0.0490 \pm 0.0003$ & $0.4\%$ \\
+$f_b$ (baryon fraction of matter) & $3/19$ & $0.1579$ & $0.1571 \pm 0.0012$ & $0.5\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Five predictions, zero free parameters, all within $0.6\%$ of observation.  The numerators are integers that count capacity types.  The denominators are 61.  A fit would adjust a continuous parameter to minimize disagreement with data.  Here there is no parameter to adjust.  The fractions are what they are.
+
+\subsection{Saturation independence}
+
+The partition fractions $\Omega_{\mathrm{vac}} = 42/61$ and $\Omega_{\mathrm{mat}} = 19/61$ are \emph{topological invariants} of the matching structure.  They depend on discrete type-classification predicates (Q1, Q2), not on the total capacity or saturation level.  This topological rigidity is sharpened by the robustness result of the Formal Supplement~\cite{BrookeSupplement}: if cross-support couplings of size $\delta$ perturb exact K3 (disjoint-support additivity), continuous quantities (bilinear form, projections, probabilities) degrade as $O(\delta)$, while discrete invariants---including the Wedderburn block structure, field selection $\mathbb{C}$, and the type-classification predicates that determine the partition---are exactly preserved for $\delta < \delta_{\mathrm{crit}}$.  The partition $42 + 3 + 16 = 61$ is therefore structurally stable against perturbations of the cost semantics.
+
+\begin{tcolorbox}[apfbox, title={$L_{\mathrm{sat,part}}$ (Saturation-Independent Partition)}]
+\textbf{Statement.}  The capacity partition $3 + 16 + 42 = 61$ is determined by discrete type-classification predicates applied to the anomaly-free field content.  These predicates are functions of type labels, not of total capacity.  At any saturation $s > s_{\mathrm{crit}} = 1/d_{\mathrm{eff}} = 1/102$, the max-entropy distribution ($L_{\mathrm{equip}}$) assigns capacity uniformly over all 61 types, and the density fractions are surplus-independent:
+\begin{equation}
+\Omega_{\mathrm{sector}} \;=\; \frac{|\mathrm{sector}|}{C_{\mathrm{total}}} \qquad \text{for all } s > s_{\mathrm{crit}}.
+\label{eq:omega_sector}
+\end{equation}
+
+\smallskip\noindent\textbf{Verification.}  The partition fractions are verified invariant over five decades of surplus $\delta \in \{0, 0.01, 0.5, 5, 100\}$: $\Omega_{\mathrm{vac}} = 42/61$ and $\Omega_{\mathrm{mat}} = 19/61$ at every saturation level.
+
+\coderef{check\_L\_saturation\_partition}{cosmology.py}
+\end{tcolorbox}
+
+Below the critical saturation $s_{\mathrm{crit}} = 1/102$, the full matching does not exist (anomaly cancellation requires all 61 types simultaneously).  The pre-matching state is pure de~Sitter vacuum with no particle content.  The partition is undefined below $s_{\mathrm{crit}}$---but irrelevant, because the vacuum has $w = -1$ regardless.
+
+
+\subsection{Where \texorpdfstring{$d_{\mathrm{eff}} = 102$}{deff = 102} comes from}
+\label{sec:deff}
+
+The threshold $s_{\mathrm{crit}} = 1/102$ used above depends on $d_{\mathrm{eff}} = 102$, the effective number of distinguishable states per capacity channel at saturation.  This number is not a free parameter; it is determined by the partition just derived.
+
+\textit{What states are available to an active channel?}\quad  At full saturation, each active channel~$i$ occupies exactly one of two types of state.
+
+\begin{varlist}
+\item \textbf{Sector A --- cross-channel correlations (60 states).}  Channel~$i$ forms a bipartite correlation with any one of the other $C_{\mathrm{total}} - 1 = 60$ active channels~$j$.  This is a genuine enforcement correlation: mutual information $I(i;j) > 0$, cost $\eta(i,j) \ge \varepsilon^* > 0$ (from $L_{\varepsilon^*}$), two distinct endpoints required ($T_M$: monogamy).  The structure is the complete graph $K_{61}$: every channel has exactly 60 neighbors.
+\item \textbf{Sector B --- vacuum background configurations (42 states).}  Channel~$i$ occupies one of the $C_{\mathrm{vac}} = 42$ gauge-neutral background configurations provided by the vacuum sector.  These are not bipartite correlations with specific partners; they are locally entropic states indexed by the 42 vacuum channels.  The mutual information is $I(i;j) = 0$: measuring the vacuum label $j$ gives no additional information about $i$ beyond what~$j$'s own occupation already tells you.  Sector B labels must be gauge-neutral (no conserved flavour quantum numbers) because any conserved quantum number flowing between~$i$ and~$j$ would constitute a Sector A correlation.  The 42 vacuum types (Q1 = 0 from $P_{\mathrm{exhaust}}$) are the unique gauge-neutral index set; the 19 matter types are excluded as Sector B labels.
+\end{varlist}
+
+\textit{Why the sectors are disjoint.}\quad The two sectors are mutually exclusive states of channel~$i$, not overlapping categories.  Sector A requires $I(i;j) > 0$; Sector B requires $I(i;j) = 0$.  These are mutually exclusive conditions on the same quantity, enforced by monogamy ($T_M$): if channel~$i$'s enforcement capacity is committed to a bipartite link (Sector A), it cannot simultaneously be in an uncommitted background configuration (Sector B).
+
+\textit{Self-exclusion.}\quad The raw count before self-exclusion is $d_{\mathrm{raw}} = 60 + 42 + 1 = 103$, where the $+1$ is the candidate self-correlation state.  This state is excluded by two independent arguments.  (A) \emph{Cost argument}: the self-mutual-information $I(i;i) = H(i)$ is already paid for by channel~$i$'s existence cost ($L_{\varepsilon^*}$); the additional cost $\eta(i,i) = I(i;i) - H(i) = 0 < \varepsilon^*$ falls below the minimum enforcement threshold, so the self-correlation is not a meaningful distinction.  (B) \emph{Monogamy}: $T_M$ requires two distinct endpoints; the self-correlation $(i,i)$ has only one.
+
+\begin{tcolorbox}[apfbox, title={$L_{\mathrm{self\text{-}excl}}$: Effective Dimension per Capacity Channel}]
+\textbf{Statement.}  At saturation, the effective number of distinguishable states per capacity channel is:
+\begin{equation}
+d_{\mathrm{eff}} \;=\; (C_{\mathrm{total}} - 1) + C_{\mathrm{vac}} \;=\; 60 + 42 \;=\; 102.
+\label{eq:deff}
+\end{equation}
+\textit{Inputs:} $C_{\mathrm{total}} = 61$ (derived, $L_{\mathrm{count}}$); $C_{\mathrm{vac}} = 42$ (derived, $P_{\mathrm{exhaust}}$); self-exclusion (two proofs above).
+
+\smallskip
+\noindent\textit{Why 102 is an integer.}\quad $\kappa = 2$ (T$_\kappa$, Paper~1) makes each channel binary: it either enforces its distinction or it does not.  Non-integer occupancy would dissolve the channel boundary and render the state count non-integer.  The sharpness of $d_{\mathrm{eff}} = 102$---rather than $102$-point-something---is a direct consequence of binary enforcement.
+
+\coderef{check\_L\_self\_exclusion}{gravity.py}
+\end{tcolorbox}
+
+The critical saturation threshold now follows immediately: the full matching requires at least one microstate per channel, so $s_{\mathrm{crit}} = 1/d_{\mathrm{eff}} = 1/102$.  The full consequences of $d_{\mathrm{eff}} = 102$ for de~Sitter entropy and the cosmological constant are developed in Papers~4 and~6.
+
+\smallskip
+\noindent\textbf{Remark} (why $60 + 42$ and not $60 \times 42$).\quad
+A natural objection: if a channel maintains a bipartite correlation with partner $j$ (Sector~A), could it not simultaneously carry a vacuum background label $k$ (Sector~B), making the two sectors independent axes with a $60 \times 42 = 2520$-dimensional product?
+
+The answer is no, for two independent reasons.
+
+First, the mutual information criterion is a condition on the \emph{same quantity} $I(i;j)$.  Sector~A with partner $j$ requires $I(i;j) > 0$; Sector~B with vacuum channel $k$ requires $I(i;k) = 0$.  These are mutually exclusive values of the same function.  For any given partner, the two states cannot coexist.
+
+Second, $T_M$ (monogamy) prohibits simultaneous occupation of both sectors even across different partners.  Being in a Sector~A state means channel~$i$'s capacity is fully committed to maintaining the bipartite correlation with $j$, at cost $\ge \varepsilon^*$ ($L_{\varepsilon^*}$).  Simultaneously occupying a Sector~B state with vacuum channel $k$ would require that same capacity budget to be committed to a second enforcement role.  Monogamy forbids it: each channel has one enforcement role at a time.
+
+Sector~B states are not passive labels.  They are active enforcement states that cost $\varepsilon^*$ to maintain, in direct competition with Sector~A.  The microstate space of channel~$i$ is the \emph{disjoint union} of the two sectors: $d_{\mathrm{eff}} = 60 + 42 = 102$, not a product.  At any moment, channel~$i$ is in exactly one state from exactly one sector.
+
+
+\subsection{The vacuum is not empty}
+
+The vacuum sector consumes 42 of 61 capacity units---69\% of the total budget.  This is invisible in the Standard Model because the SM treats the vacuum as given, not as an enforcement cost.  In the admissibility framework, the vacuum is the most expensive thing in the universe: maintaining the geometric and gauge structure of empty space costs more than all the matter in it combined.
+
+The identification $\Omega_\Lambda = 42/61 = 0.6885$ (observed: $0.6889 \pm 0.0056$~\cite{Planck2020}, error 0.05\%) follows from $L_{\mathrm{equip}}$: at Bekenstein saturation, max-entropy requires each capacity type to carry the same enforcement cost, so the density fraction of any sector equals its type-count fraction.  The number 42 counts gauge directions plus Higgs components plus the vacuum-sector fermion types that are globally locked (not locally attributable at any finite interface).  The partition is derived, not fitted.  The reason the prediction takes the form of an exact fraction --- rather than a real number to be fitted or a transcendental constant to be estimated --- is $T_\kappa$: enforcement is binary, so the partition is a count of bits, and a ratio of two integer bit-counts is necessarily rational.  Continuous enforcement would yield continuous density fractions with no reason to be rational; binary enforcement makes rationality inevitable.
+
+
+% ======================================================================
+\section{The Weinberg angle: a preview}
+\label{sec:weinberg}
+% ======================================================================
+
+The machinery developed in this paper---the unique cost function, the gauge template, the capacity counting---enables the derivation of the weak mixing angle.  The full treatment appears in Paper~4A; we state the result here because it is a direct consequence of the structural content of this paper.
+
+The electroweak sector has 4 enforcement channels: 3 mixers ($\SU(2)$ generators) plus 1 bookkeeper ($\U(1)$ hypercharge).  The two gauge sectors compete for capacity at each channel.  The Gram matrix of demand vectors is:
+\begin{equation}
+A = \begin{pmatrix} 1 & x \\ x & x^2 + 3 \end{pmatrix}, \qquad x = \tfrac{1}{2}, \qquad \det(A) = 3 = \dim\mathfrak{su}(2).
+\label{eq:weinberg_matrix}
+\end{equation}
+The Lyapunov functional governing the coupling flow has a unique UV attractor, with the key input $\gamma_2/\gamma_1 = 17/4$ derived in Paper~4A (T27d) from the cost function uniqueness established in Section~\ref{sec:cauchy}.  The fixed-point formula gives:
+\begin{equation}
+\sin^2\!\theta_W \;=\; \frac{3}{13} \;=\; 0.23077\ldots
+\label{eq:weinberg_value}
+\end{equation}
+Observed: $0.23122 \pm 0.00004$~\cite{PDG2024}.  Error: 0.19\%.  All gates closed.
+
+
+% ======================================================================
+\section{Why three generations}
+\label{sec:generations}
+% ======================================================================
+
+Section~\ref{sec:gauge_template} derived the fermion content per generation---15 Weyl fermions in 5 multiplet types---by exhaustive elimination.  Section~\ref{sec:counting} established $C_{\mathrm{total}} = 61$.  Section~\ref{sec:partition} partitioned those 61 types into 42 vacuum and 19 matter.  One question remains: how many copies of the 15-fermion generation exist?
+
+The answer follows from a capacity ladder, but it is essential to note that the bound is derived \emph{before} counting 61---it depends only on the electroweak sector, which was established in Section~\ref{sec:gauge_origin}.  This keeps the argument non-circular: the generation bound uses the gauge architecture, and the global count 61 is derived afterwards using the result.
+
+The available capacity for inter-generational tracking is bounded by the electroweak infrastructure capable of routing distinctions between generations.  From $T_{\mathrm{channels}}$: the electroweak sector has exactly 4 independent enforcement channels ($\SU(2)$: 3 generators; $\U(1)$: 1 generator).  From $T_\kappa$: $\kappa = 2$.  The electroweak capacity budget is therefore:
+\begin{equation}
+C_{\mathrm{EW}} \;=\; \kappa \times \dim_{\mathrm{EW}} \;=\; 2 \times 4 \;=\; 8.
+\label{eq:c_ew}
+\end{equation}
+This is the capacity available to route inter-generational distinctions.  It is derived entirely from Section~\ref{sec:gauge_origin} and does not reference the global count 61.
+
+Each generation costs enforcement capacity in two parts.  First, each generation pays a \emph{self-cost}: locking $\kappa = 2$ capacity units for its own existence as a distinct entity with a chirality label ($E_{\mathrm{self}} = \kappa/2 = 1$ in units of $\varepsilon^*$, since $\kappa = 2\varepsilon^*$).  Second, each new generation must be distinguished from all previous ones: each pairwise cross-generation distinction costs $E_{\mathrm{pair}} = \varepsilon^* = 1$.  With $g$ generations there are $\binom{g}{2} = g(g-1)/2$ such pairs.  The total cost is:
+\begin{equation}
+E(g) \;=\; g \cdot E_{\mathrm{self}} + \binom{g}{2} \cdot E_{\mathrm{pair}} \;=\; g \cdot 1 + \frac{g(g-1)}{2} \cdot 1 \;=\; \frac{g(g+1)}{2}.
+\label{eq:capacity_ladder}
+\end{equation}
+The quadratic growth is the key: $E(1) = 1$, $E(2) = 3$, $E(3) = 6$, $E(4) = 10$.  Each new generation must be distinguished from \emph{all} existing ones, not just the most recent, so the interference cost grows faster than linearly.
+
+Now evaluate the ladder against $C_{\mathrm{EW}} = 8$:
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+$g$ & $E(g) = g(g+1)/2$ & $C_{\mathrm{EW}} = 8$ & Admissible? \\
+\midrule
+1 & 1 & 8 & Yes \\
+2 & 3 & 8 & Yes \\
+3 & 6 & 8 & Yes \\
+4 & 10 & 8 & \textbf{No} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three generations fit within the electroweak capacity budget.  Four do not.  $E(3) = 6 \le 8 < 10 = E(4)$.  The quadratic growth of the interference cost---the same superadditivity mechanism that drove non-closure in Section~\ref{sec:nonclosure}---is what makes the wall sharp.
+
+This is the same logic that excluded non-singlet states in Section~\ref{sec:gauge_origin}: a combination of individually affordable commitments becomes collectively unaffordable because of the interference surplus.  The first three generations coexist because their mutual interference costs fit within the electroweak budget.  A fourth generation would push the total past the capacity wall.
+
+The number of generations is not a free parameter.  It is the largest integer $g$ satisfying $E(g) \le C_{\mathrm{EW}}$.  The inputs---$\kappa$, $\varepsilon^*$, and $C_{\mathrm{EW}} = \kappa \times \dim_{\mathrm{EW}}$---are all derived from A1 and the gauge architecture of Section~\ref{sec:gauge_origin}.  The global count of 61 plays no role in this derivation; the generation bound is established before the full budget is assembled.
+
+\smallskip
+\noindent\textit{$\kappa$-class invariance.}\quad The qualitative algebraic skeleton (Hilbert space, $C^*$-algebra, Born rule, Tsirelson bound) is structurally invariant across the entire admissible $\kappa$-class: any cost function satisfying K1--K3 produces the same inter-sector orthogonality, the same projection structure, and the same downstream algebra (Proposition~$\kappa_{\mathrm{class}}$, Formal Supplement~\cite{BrookeSupplement}).  The value $\kappa = 2$ is the specific derived value for the physical interface (T$_\kappa$, Paper~1); the generation bound $N_{\mathrm{gen}} = 3$ uses this value quantitatively and would change if $\kappa$ differed, but the gauge architecture and noncommutativity that produce the generation ladder are $\kappa$-independent.
+
+
+\coderef{T7}{gauge.py}
+
+
+% ======================================================================
+\section{The hydrogen atom revisited}
+\label{sec:hydrogen_revisited}
+% ======================================================================
+
+The introduction opened with a hydrogen atom drifting in deep space and
+used it to motivate non-closure before any machinery was in place.  The
+machinery is now in place.  We can say precisely what the hydrogen atom
+is in the admissibility framework---and precisely what we cannot yet say.
+
+\subsection*{The channels present}
+
+The electron is a Gen~1 lepton.  Its type-identity is carried by three
+channels in the 61:
+
+\begin{varlist}
+\item $L_1, L_2$ --- the lepton doublet, gauge-addressable under
+$\SU(2)$, dark sector (Q1~=~1, Q2~=~0).
+\item $e_c$ --- the right-handed electron singlet, gauge-addressable
+under $\U(1)$, dark sector.
+\end{varlist}
+
+The electroweak gauge channels active at this energy are $W_1, W_2, W_3$
+($\SU(2)$, dark sector) and $B$ ($\U(1)$, dark sector).  The photon is
+the post-symmetry-breaking mixture of $B$ and $W_3$; the Coulomb binding
+of the electron to the proton routes through these two channels.  That is
+7 channels from the 61, all in the dark sector (Q1~=~1, Q2~=~0).
+
+Three classes of channels are \emph{absent}, and their absence is a
+structural prediction:
+
+\begin{varlist}
+\item \textbf{$\SU(3)$ channels} ($g_1,\ldots,g_8$): not involved.  The
+electron is colorless; no $\SU(3)$ enforcement is required.
+\item \textbf{Higgs channels} ($H^\pm_r, H^\pm_i, H^0_r, H^0_i$): not
+active at hydrogen energies.
+\item \textbf{Gen~2 and Gen~3 channels}: not involved.  Generation
+identity is a quantum-number value, not a mechanism-level channel
+distinction.  The electron does not draw on muon or tau channels.
+\end{varlist}
+
+\subsection*{The shared pool}
+
+Both spin enforcement and position enforcement draw additionally from a
+subset of the 42 vacuum-sector channels at the electron's
+locus---the channels maintaining the local geometric structure.  Spin is
+a representation of the local Lorentz group $\mathrm{SO}(1,3)$; in the
+framework, the Lorentz frame at a locus is maintained by a subset of the
+vacuum-sector channels derived in Paper~5 from the vielbein and spin
+connection.  Position is a distribution of the electron's type channels
+across multiple spatial loci; the distances between those loci are
+maintained by a further subset of the vacuum-sector channels, derived
+from the cost metric ($L_{\mathrm{cost}}$) and the polarization identity
+($T_{7B}$), also in Paper~5.
+
+The interference is real and structural: spin and position both draw from
+the same local vacuum-sector budget, their joint enforcement cost exceeds
+the sum of their individual costs by the surplus $\Delta > 0$, and that
+surplus is the enforcement-language statement of the Heisenberg
+uncertainty relation $\Delta x\,\Delta p \ge \hbar/2$.
+
+\subsection*{What this paper cannot yet say}
+
+This paper cannot name the specific vacuum-sector channels that carry
+Lorentz frame enforcement or spatial metric enforcement.  The
+identification requires the spacetime derivation of Paper~5.  What this
+paper \emph{can} say is:
+
+\begin{enumerate}
+\item The channels exist and are vacuum-sector (Q1~=~0), drawn from the
+42.
+\item They constitute the local geometric infrastructure that both spin
+and position tasks must share.
+\item The interference $\Delta > 0$ is a consequence of that sharing,
+not of scarcity.
+\item The Heisenberg bound is the quantitative expression of
+non-closure at this interface.
+\end{enumerate}
+
+The hydrogen atom opened this paper as an intuition.  Paper~5 closes it
+as a derived result: the same example, fully accounted for at the channel
+level, with every vacuum-sector contribution named.
+
+\subsection*{The proton: non-closure as exclusion}
+
+The proton consists of two up quarks and one down quark.  Its
+type-identity draws on 12 fermion channels from the 61, all Gen~1, all
+baryonic sector (Q1~=~1, Q2~=~1):
+
+\begin{varlist}
+\item $Q_1,\ldots,Q_6$ --- the quark doublet $Q(\mathbf{3},\mathbf{2})_{1/6}$: 6 channels
+(3 colours $\times$ 2 $\SU(2)$ components).
+\item $u^c_1, u^c_2, u^c_3$ --- right-handed up singlet: 3 channels.
+\item $d^c_1, d^c_2, d^c_3$ --- right-handed down singlet: 3 channels.
+\end{varlist}
+
+The gauge channels active at hadronic energies are all 8 gluon channels
+$g_1,\ldots,g_8$ ($\SU(3)$, vacuum sector), together with $W_1, W_2,
+W_3$ ($\SU(2)$) and $B$ ($\U(1)$).  That is 24 channels from the 61 in
+total---more than three times the 7 active at the electron.
+
+Three classes of channels are again absent:
+\begin{varlist}
+\item \textbf{Lepton channels} ($L_1, L_2, e_c$, and their generational
+copies): not involved.  The quarks carry colour; the leptons do not.
+\item \textbf{Higgs channels}: not active at these energies.
+\item \textbf{Gen~2 and Gen~3 channels}: not involved for a
+ground-state proton.
+\end{varlist}
+
+The mechanism of confinement is not an additional postulate.  It is
+$T_{\mathrm{confinement}}$ (\S\ref{sec:gauge_origin}): asymptotic freedom
+($L_{\mathrm{AF}}$) means the $\SU(3)$ coupling grows as the interface
+scale increases toward the infrared.  The enforcement cost of maintaining
+a non-singlet coloured state grows with it.  At the confinement scale, that
+cost exceeds the available local capacity---the non-singlet state overflows
+the budget and is excluded.  The surviving configuration is the
+colour-singlet proton: three quarks whose $\SU(3)$ charges cancel exactly,
+costing nothing to the $\SU(3)$ budget at the interface.
+
+The electron showed non-closure as interference: both tasks survive, the
+joint cost is elevated, Heisenberg is the result.  The proton shows
+non-closure as exclusion: the coloured state does not merely cost more, it
+cannot exist.  Same mechanism, different severity, determined entirely by
+the structure of the $\SU(3)$ channels and the capacity budget.
+
+What this paper cannot say about the proton is the \emph{scale} at which
+exclusion occurs---the value of $\Lambda_{\mathrm{QCD}}$, the string
+tension, the hadron spectrum.  Those require quantitative beta
+coefficients derived in Paper~4A.  The mechanism is derived here; the
+scale is not.
+
+\subsection*{The hydrogen atom: a two-body system}
+
+The hydrogen atom as a bound state draws simultaneously on both channel
+sets.  The electron contributes $L_1, L_2, e_c$ (matter channels) and
+shares $W_1, W_2, W_3, B$ (gauge channels) with the proton.  The proton
+contributes $Q_1,\ldots,Q_6$, $u^c_1, u^c_2, u^c_3$, $d^c_1, d^c_2,
+d^c_3$ (matter channels) and $g_1,\ldots,g_8$ (gluon channels, absent
+at the electron but present at the proton's locus).  The photon---the
+$B$-$W_3$ mixture---mediates the Coulomb binding between the two loci.
+
+The total channel count active in a hydrogen atom: 24 from the proton
+side, 3 additional lepton channels from the electron side, the shared 4
+electroweak channels, plus vacuum-sector geometric channels at each
+locus.  The $\SU(3)$ channels are active at the proton's locus and
+screened at the electron's locus---the electron does not see the colour
+field because it carries no colour charge.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{llcc}
+\toprule
+\textbf{Channel} & \textbf{Sector} & \textbf{Electron locus} & \textbf{Proton locus} \\
+\midrule
+$g_1,\ldots,g_8$ & vacuum (gauge) & absent & active \\
+$W_1, W_2, W_3$ & dark & active & active \\
+$B$              & dark & active & active \\
+$Q_1,\ldots,Q_6$, $u^c_{1-3}$, $d^c_{1-3}$ & baryonic & absent & active \\
+$L_1, L_2$, $e_c$ & dark & active & absent \\
+vacuum geometric & vacuum & active & active \\
+\midrule
+\textbf{Total (named)} & & \textbf{7} & \textbf{24} \\
+\bottomrule
+\end{tabular}
+\caption{Channel activity in hydrogen by locus.  Vacuum-sector geometric
+channels (Lorentz frame, spatial metric) are present at both loci but not
+individually named until Paper~5.}
+\end{table}
+
+The hydrogen atom is not exotic physics.  It is the simplest system in
+which all three faces of non-closure are simultaneously present:
+interference (electron spin and position), exclusion (quark confinement
+inside the proton), and cost minimisation (the bound state is the cheapest
+combination that survives both constraints).  The framework derives all
+three from A1.  Paper~5 will name every channel in the table.
+
+
+% ======================================================================
+\section{The correlation space after this paper}
+\label{sec:corr_space}
+% ======================================================================
+
+Paper~1~\cite{BrookePaper1} established that the correlation space $\mathcal{S}_{\mathrm{adm}}$ is a finite-dimensional convex body inside the space of density operators, carrying an operator algebra, a gauge symmetry, and an entropy functional.  We knew its mathematical type but not its size, its symmetry group, or its physical content.
+
+After Paper~2, we know:
+
+\begin{enumerate}
+\item \textit{It has rooms.}  The 61 capacity types define the dimensionality of the enforcement structure.  The correlation space is stratified by the partition $42 + 19 = 61$ into a 42-dimensional vacuum chamber and a 19-dimensional matter chamber.
+
+\item \textit{The floor plan is unique.}  The gauge group $\SU(3) \times \SU(2) \times \U(1)$, the fermion content (45 Weyl fermions in 3 generations), and the Higgs sector (4 real components) are the unique architecture consistent with A1.  No alternative exists.
+
+\item \textit{The partition is rigid.}  The fractions $\Omega_{\mathrm{vac}} = 42/61$ and $\Omega_{\mathrm{mat}} = 19/61$ are topological invariants of the matching structure.  They cannot evolve, cannot be tuned, and cannot depend on continuous parameters.
+
+\item \textit{Competition is quantified.}  Non-closure ($L_{\mathrm{nc}}$) provides the mechanism, the unique cost function ($L_{\mathrm{Cauchy}}$) provides the metric, and the capacity count ($L_{\mathrm{count}}$) provides the budget.  The framework can now compute which combinations survive and which are excluded.
+\end{enumerate}
+
+The correlation space now has structure.  It has a gauge architecture, a particle content, and a budget partition.  What it does not yet have is a direction---an arrow of time, a thermodynamic interpretation, an entropy gradient.  That is Paper~3: \emph{Ledgers}.
+
+
+% ======================================================================
+\section{What this paper does not claim}
+\label{sec:caveats}
+% ======================================================================
+
+Several important results are \emph{previewed} in this paper but \emph{derived} in later papers.  To maintain logical clarity:
+
+\begin{varlist}
+\item \textbf{The number of generations} ($N_{\mathrm{gen}} = 3$) is derived in Section~\ref{sec:generations} from the capacity ladder: the quadratic growth of inter-generation interference costs makes four generations inadmissible.  The inputs ($\kappa$, $\varepsilon^*$, $C_{\mathrm{EW}} = 8$) are all derived from A1 and the gauge architecture.
+\item \textbf{The Weinberg angle} is previewed in Section~\ref{sec:weinberg} but fully derived in Paper~4A.  This paper establishes the cost function uniqueness that the derivation requires.
+\item \textbf{Cosmological density fractions} ($\Omega_\Lambda = 42/61$, $\Omega_m = 19/61$) are derived in Section~\ref{sec:partition} from the capacity partition and horizon equipartition ($L_{\mathrm{equip}}$).  The \emph{dynamical interpretation}---what these fractions mean for the expansion history, the cosmological constant magnitude ($\Lambda \cdot G = 3\pi/102^{61}$), and confrontation with CMB anisotropy data---is the subject of Paper~6.
+\item \textbf{Confinement mechanism class} is derived in this paper ($T_{\mathrm{confinement}}$, Section~\ref{sec:gauge_origin}): asymptotic freedom ($L_{\mathrm{AF}}$) plus IR saturation (A1) makes non-singlet states inadmissible.  The structural necessity of the $\beta$-function sign is established in the Formal Supplement~\cite{BrookeP2Supplement}, \S4.  What remains open---and is addressed in Paper~4A---is the confinement \emph{scale} ($\Lambda_{\mathrm{QCD}}$), string tension, and hadronization dynamics, which require quantitative beta coefficients.
+\item \textbf{Mass hierarchy, mixing matrices, and CP~violation} are derived in Papers~4A and~4B.  This paper establishes the gauge and matter architecture; the quantitative predictions require the generation structure.
+\item \textbf{Spacetime derivation.}  The Formal Supplement~\cite{BrookeP2Supplement} derives Lorentzian signature ($\Delta_{\mathrm{sig}}$), spacetime dimension $d = 4$ ($T_8$), and the Einstein field equations ($T_{9,\mathrm{grav}}$) from the cost kernel and Lovelock's theorem.  These are conditional on the full dynamical treatment in Paper~6 but are self-contained at the structural level.
+\item \textbf{Neutrino masses.}  The 45-fermion prediction (Majorana neutrinos, no right-handed neutrino in the gauge spectrum) is a sharp falsifiability test: the $\nu_R$-extended template (48 Weyl fermions) predicts $C_{\mathrm{total}} = 64$ and $\Omega_\Lambda = 42/64 = 0.656$, excluded at ${>}\,5\sigma$ by Planck~\cite{Planck2020}.  The full analysis is in the Formal Supplement~\cite{BrookeP2Supplement}, \S8.
+\end{varlist}
+
+This paper makes \emph{no} claim that could not be stated at the structural level.  It counts rooms, draws the floor plan, and establishes the budget.  What happens inside the rooms---the dynamics, the masses, the mixing---is the subject of the remaining papers.
+
+
+% ======================================================================
+\section{How to falsify this paper}
+\label{sec:falsify}
+% ======================================================================
+
+The structural claims of this paper are sharp enough to be falsified.  Each corresponds to a specific challenge:
+
+\begin{varlist}
+\item \textbf{(F1) An A1-compatible theory without R1--R3.}  Construct a consistent interaction theory obeying finite enforcement capacity that does not require a ternary carrier, a chiral carrier, or an abelian grading.  This would falsify Stage~1 of the three-stage argument.
+\item \textbf{(F2) A smaller gauge group supporting R1--R3.}  Exhibit a compact gauge group with $\dim(G) < 12$ that hosts all three carrier requirements.  This would falsify Stage~2.
+\item \textbf{(F3) An alternative cost functional.}  Construct a cost functional compatible with A1 (additive, monotone, positively normalized) that is not $C(G) = \dim(G) \cdot \varepsilon$.  This would falsify Stage~3 and potentially select a different minimal algebra.
+\item \textbf{(F4) Alternative fermion content.}  Exhibit a chiral fermion set with fewer than 45 Weyl degrees of freedom that satisfies all seven filters (asymptotic freedom, anomaly cancellation, chirality, Witten freedom, minimality).  This would falsify $T_{\mathrm{field}}$.
+\item \textbf{(F5) Alternative capacity counting.}  Demonstrate that kinematic degrees of freedom (polarizations, helicities) are structurally enforceable at Bekenstein saturation.  This would change $C_{\mathrm{total}}$ from 61 to 73 (or another value) and falsify the MECE partition fractions.
+\end{varlist}
+
+Experimentally, the following observations would falsify specific results of this paper:
+
+\begin{varlist}
+\item \textbf{(F6)} A fourth fermion generation participating coherently without saturation-like behavior (falsifies $N_{\mathrm{gen}} = 3$).
+\item \textbf{(F7)} Dirac neutrinos with standard electroweak couplings (changes $C_{\mathrm{total}}$ from 61 to 64, predicting $\Omega_\Lambda = 42/64 = 0.656$---excluded at ${>}\,5\sigma$ by Planck~\cite{Planck2020}).  The 45-fermion vs.\ 48-fermion discrimination is the sharpest single-observable test of $T_{\mathrm{field}}$; see Formal Supplement~\cite{BrookeP2Supplement}, \S8.
+\item \textbf{(F8)} Dark matter detected as a fundamental particle species not in the Standard Model field content (falsifies $T_{\mathrm{field}}$ completeness).
+\end{varlist}
+
+Constructive counter-models are explicitly invited.
+
+
+% ======================================================================
+\section{Summary}
+\label{sec:summary}
+% ======================================================================
+
+This paper has deployed the results of Paper~1~\cite{BrookePaper1} and established the structural architecture of admissible physics:
+
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{2.8cm}p{4.2cm}l}
+\toprule
+\textbf{Result} & \textbf{Theorem} & \textbf{Key content} & \textbf{Code reference} \\
+\midrule
+Non-closure engine & $L_{\mathrm{nc}}$ & $\Delta > 0$ derives competition & \texttt{check\_L\_nc} \\
+Confinement & $T_{\mathrm{conf}}$ & IR saturation $\to$ singlets & \texttt{check\_T\_confinement} \\
+Cost uniqueness & $L_{\mathrm{Cauchy}}$ & $F(d) = d$ from Cauchy 1821 & \texttt{check\_L\_Cauchy} \\
+Gauge template & $L_{\mathrm{gauge,uniq}}$ & 17 algebras $\to$ unique & \texttt{check\_L\_gauge\_template} \\
+Gauge group & $T_{\mathrm{gauge}}$ & $\SU(3) \!\times\! \SU(2) \!\times\! \U(1)$ & \texttt{check\_T\_gauge} \\
+Fermion content & $T_{\mathrm{field}}$ & 1{,}680 $\to$ 1 survivor & \texttt{check\_T\_field} \\
+Capacity count & $L_{\mathrm{count}}$ & $45 + 4 + 12 = 61$ & \texttt{check\_L\_count} \\
+MECE partition & $P_{\mathrm{exhaust}}$ & $42 + 3 + 16 = 61$ & \texttt{check\_P\_exhaust} \\
+Saturation indep. & $L_{\mathrm{sat,part}}$ & Fractions are topological & \texttt{check\_L\_sat\_partition} \\
+Eff.\ dimension & $L_{\mathrm{self\text{-}excl}}$ & $d_{\mathrm{eff}} = 60 + 42 = 102$ & \texttt{check\_L\_self\_exclusion} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Free parameters introduced: 0.  Physics imported: 0.  The Standard Model's gauge group and matter content are the unique solution to a capacity optimization problem stated in the language of A1.
+
+
+% ======================================================================
+\section{Appendix A: theorem index}
+\label{app:theorems}
+% ======================================================================
+
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{3.2cm}p{4.5cm}l}
+\toprule
+\textbf{Name} & \textbf{Full title} & \textbf{Dependencies} & \textbf{Code / P2S} \\
+\midrule
+$L_{\mathrm{nc}}$ & Non-Closure & A1, $L_{\mathrm{loc}}$; P1S: $L_\Delta$ & \texttt{check\_L\_nc} \\
+$L_{\mathrm{Cauchy}}$ & Cost Function Uniqueness & A1, $L_{\mathrm{loc}}$, $L_{\mathrm{cost}}$ & \texttt{check\_L\_Cauchy}; P2S \S1 \\
+$T_{7B}$ & Cost Kernel (pos.\ def.) & A1, K2, K3, SP, $L_\omega$, $T_{\mathrm{adj}}$ & P2S \S3.1 \\
+$L_{\mathrm{irr,unif}}$ & Sector-Uniform Irrev. & $L_{\mathrm{loc}}$, $L_{\mathrm{nc}}$, $L_{\mathrm{irr}}$, $T_{7B}$ & P2S \S3.2 \\
+$L_{\mathrm{AF}}$ & Asymptotic Freedom & $T_3$, $\dim(\mathrm{adj}) > 0$ & \texttt{check\_T\_conf}; P2S \S4 \\
+$T_{\mathrm{conf}}$ & Confinement Mechanism & $L_{\mathrm{AF}}$, A1, $L_{\varepsilon^*}$ & \texttt{check\_T\_conf}; P2S \S4 \\
+$B_1'$ & Complex Carrier & $T_{\mathrm{conf}}$, $T_M$, rep.\ theory & \texttt{check\_B1\_prime}; P2S \S3.3 \\
+Theorem R & Repr.\ Requirements & $L_{\mathrm{nc}}$, $L_{\mathrm{irr,unif}}$, $T_M$, $T_{\mathrm{conf}}$, $B_1'$ & \texttt{check\_Theorem\_R} \\
+$L_{\mathrm{gauge,uniq}}$ & Gauge Template Uniq. & Thm R, $L_{\mathrm{Cauchy}}$, Lie classif. & \texttt{check\_L\_gauge}; P2S \S II.1 \\
+$T_{\mathrm{gauge}}$ & Gauge Group Selection & $T_4$, $T_5$, $L_{\mathrm{cost}}$ & \texttt{check\_T\_gauge} \\
+$T_{\mathrm{field}}$ & Fermion Content & $T_{\mathrm{gauge}}$, $T_7$, $L_{\mathrm{AF}}$ & \texttt{check\_T\_field}~\cite{BrookeFermionScan}; P2S \S II.2 \\
+$L_{\mathrm{hypercharge}}$ & Hypercharge Uniq. & $T_{\mathrm{field}}$, anomaly conditions & P2S \S II.3 \\
+$L_{\mathrm{count}}$ & Capacity Counting & $L_{\varepsilon^*}$, $T_\kappa$, $T_3$, $T_{\mathrm{field}}$ & \texttt{check\_L\_count}; P2S \S III.1 \\
+$P_{\mathrm{exhaust}}$ & MECE Partition & A1, $T_3$, $T_{\mathrm{gauge}}$, $T_4$ & \texttt{check\_P\_exhaust}; P2S \S III.2 \\
+$L_{\mathrm{equip}}$ & Horizon Equipartition & $P_{\mathrm{exhaust}}$, $L_{\mathrm{irr}}$, $L_{\varepsilon^*}$ & \texttt{check\_L\_equip}; P2S \S III.3 \\
+$L_{\mathrm{sat,part}}$ & Saturation Indep. & $L_{\mathrm{equip}}$, $L_{\mathrm{count}}$; P1S: $\delta_{\mathrm{crit}}$ & \texttt{check\_L\_sat}; P2S \S III.4 \\
+$L_{\mathrm{self\text{-}excl}}$ & Effective Dimension & $L_{\varepsilon^*}$, $T_M$, $T_\kappa$, $L_{\mathrm{count}}$, $P_{\mathrm{exhaust}}$ & \texttt{check\_L\_self\_exclusion} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All check functions reside in \texttt{core.py}, \texttt{gauge.py}, \texttt{cosmology.py}, or \texttt{L\_Cauchy\_uniqueness.py}.  The fermion-content derivation ($T_{\mathrm{field}}$) additionally has a standalone verification script \texttt{fermion\_scan\_standalone.py}~\cite{BrookeFermionScan} with an interactive Colab walkthrough.  ``P1S'' denotes the Paper~1 Formal Supplement~\cite{BrookeSupplement}; ``P2S'' denotes the Paper~2 Formal Supplement~\cite{BrookeP2Supplement}.
+
+
+% ======================================================================
+\section{Appendix B: symbol index}
+\label{app:symbols}
+% ======================================================================
+
+\begin{center}
+\small
+\begin{tabular}{lp{8.5cm}l}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Defined} \\
+\midrule
+\multicolumn{3}{l}{\textit{From Paper 1~\cite{BrookePaper1} and Formal Supplement~\cite{BrookeSupplement} (used throughout)}} \\[2pt]
+A1 & Finite enforcement capacity (the axiom) & P1, \S2 \\
+$L_{\mathrm{nc}}$ & Non-Closure lemma & P1, \S4.3 \\
+$L_{\mathrm{irred}}$ & Irreducibility of the derived algebra & \S\ref{sec:gauge_origin} \\
+$L_{\mathrm{loc}}$ & Locality lemma & P1, \S4.2; FS, $T_{\mathrm{loc}}$ \\
+$L_{\mathrm{irr}}$ & Irreversibility lemma & P1, \S4.5 \\
+$L_\Delta$ & Superadditivity ($\Delta > 0$ at shared interfaces) & FS, \S3 \\
+$L_\Pi$ & Codespace rotation (joint defender rotated into pool) & FS, \S4 \\
+$T_{\mathrm{alg}}$ & Noncommutativity of enforcement algebra & FS, \S4 \\
+$T_{\mathrm{sector}}$ & Finite orthogonal sector form & FS, \S3 \\
+$T_M$ & Interface monogamy & P1, \S5.10; FS, $T_M$ \\
+$T_3$ & Gauge structure (Skolem--Noether) & P1, \S5.7 \\
+$\varepsilon^*$ & Minimum enforcement cost & P1, \S4.1; FS, $L_{\varepsilon^*}$ \\
+$\kappa$ & Directed multiplier ($= 2$) & P1, \S5.11 \\[4pt]
+\multicolumn{3}{l}{\textit{Introduced in this paper (proofs: Formal Supplement~\cite{BrookeP2Supplement})}} \\[2pt]
+$L_{\mathrm{AF}}$ & Asymptotic freedom ($\dim(\mathrm{adj}) > 0 \Rightarrow$ UV fixed point) & \S\ref{sec:gauge_origin}; P2S \S4 \\
+$T_{\mathrm{confinement}}$ & Confinement mechanism (IR saturation $\to$ singlets only) & \S\ref{sec:gauge_origin}; P2S \S4 \\
+$B_1'$ & Complex carrier ($V \not\cong V^*$ derived) & \S\ref{sec:gauge_origin}; P2S \S3.3 \\
+$T_{7B}$ & Positive-definite cost kernel at single interface & P2S \S3.1 \\
+$L_{\mathrm{irr,uniform}}$ & Gauge-sector irreversibility at saturated interfaces & P2S \S3.2 \\
+$F(d)$ & Per-channel cost function ($= d$, unique) & \S\ref{sec:cauchy}; P2S \S1 \\
+$\gamma_2/\gamma_1$ & Trace ratio ($= 17/4$, derived in Paper~4A) & \S\ref{sec:weinberg} \\
+$C_{\mathrm{total}}$ & Total capacity ($= 61$) & \S\ref{sec:counting}; P2S \S III.1 \\
+$C_{\mathrm{vac}}$ & Vacuum capacity ($= 42$) & \S\ref{sec:partition}; P2S \S III.2 \\
+$C_{\mathrm{mat}}$ & Matter capacity ($= 19$) & \S\ref{sec:partition} \\
+$d_{\mathrm{eff}}$ & Effective states per channel ($= (C_{\mathrm{total}}-1) + C_{\mathrm{vac}} = 60 + 42 = 102$) & \S\ref{sec:deff} \\
+$s_{\mathrm{crit}}$ & Critical saturation ($= 1/d_{\mathrm{eff}} = 1/102$) & \S\ref{sec:partition} \\
+$\Omega_\Lambda$ & Vacuum density fraction ($= 42/61$) & \S\ref{sec:partition} \\
+$\Omega_m$ & Matter density fraction ($= 19/61$) & \S\ref{sec:partition} \\
+Q1, Q2 & MECE partition predicates & \S\ref{sec:partition} \\
+$E(g)$ & Generation cost ladder ($g(g+1)/2$ in units of $\varepsilon^*$) & \S\ref{sec:generations} \\
+$N_{\mathrm{gen}}$ & Number of generations ($= 3$, largest $g$ with $E(g) \le C_{\mathrm{EW}}$) & \S\ref{sec:generations} \\
+$C_{\mathrm{EW}}$ & Electroweak capacity budget for generations ($= \kappa \times \dim_{\mathrm{EW}} = 8$) & \S\ref{sec:generations} \\
+$L_{\mathrm{equip}}$ & Horizon equipartition ($\Omega_{\mathrm{sector}} = |\mathrm{sector}|/C_{\mathrm{total}}$) & \S\ref{sec:partition} \\
+$L_{\mathrm{hypercharge}}$ & Unique hypercharge assignment ($z^2 - 2z - 8 = 0$) & \S\ref{sec:gauge_template} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{PeskinSchroeder1995} M.~E.~Peskin and D.~V.~Schroeder, \emph{An Introduction to Quantum Field Theory}, Addison-Wesley, Reading MA (1995), \S16.5--16.6.
+
+\bibitem{GrossWilczek1973} D.~J.~Gross and F.~Wilczek, ``Ultraviolet Behavior of Non-Abelian Gauge Theories,'' Phys.\ Rev.\ Lett.\ \textbf{30}, 1343--1346 (1973).
+
+\bibitem{Politzer1973} H.~D.~Politzer, ``Reliable Perturbative Results for Strong Interactions?'' Phys.\ Rev.\ Lett.\ \textbf{30}, 1346--1349 (1973).
+
+\bibitem{PDG2024} Particle Data Group (S.~Navas et al.), ``Review of Particle Physics,'' Phys.\ Rev.\ D \textbf{110}, 030001 (2024).
+
+\bibitem{Planck2020} Planck Collaboration (N.~Aghanim et al.), ``Planck 2018 results.\ VI\@. Cosmological parameters,'' Astron.\ Astrophys.\ \textbf{641}, A6 (2020).
+
+\bibitem{Witten1982} E.~Witten, ``An $\mathrm{SU}(2)$ anomaly,'' Phys.\ Lett.\ B \textbf{117}, 324--328 (1982).
+
+\bibitem{Bekenstein1973} J.~D.~Bekenstein, ``Black holes and entropy,'' Phys.\ Rev.\ D \textbf{7}, 2333--2346 (1973).
+
+\bibitem{Englert1964} F.~Englert and R.~Brout, ``Broken Symmetry and the Mass of Gauge Vector Mesons,'' Phys.\ Rev.\ Lett.\ \textbf{13}, 321--323 (1964).
+
+\bibitem{Higgs1964} P.~W.~Higgs, ``Broken Symmetries and the Masses of Gauge Bosons,'' Phys.\ Rev.\ Lett.\ \textbf{13}, 508--509 (1964).
+
+\bibitem{Goldstone1962} J.~Goldstone, A.~Salam, and S.~Weinberg, ``Broken Symmetries,'' Phys.\ Rev.\ \textbf{127}, 965--970 (1962).
+
+\bibitem{Humphreys1972} J.~E.~Humphreys, \emph{Introduction to Lie Algebras and Representation Theory} (Springer, New York, 1972).
+
+\bibitem{BertoneHooper2018} G.~Bertone and T.~M.~P.~Tait, ``A new era in the search for dark matter,'' Nature \textbf{562}, 51--56 (2018).
+
+\bibitem{Cauchy1821} A.-L.~Cauchy, \emph{Cours d'analyse de l'\'{E}cole Royale Polytechnique} (Debure, Paris, 1821).
+
+\bibitem{BrookePaper1} E.~S.~Brooke, ``The Enforceability of Distinction,'' submitted to \emph{Found.\ Phys.} (2025).  Zenodo: 10.5281/zenodo.XXXXXXX.
+
+\bibitem{BrookeSupplement} E.~S.~Brooke, ``Formal Supplement: End-to-End Derivation from Finite Enforcement Capacity to Quantum Structure,'' companion to~\cite{BrookePaper1}.  Zenodo: 10.5281/zenodo.XXXXXXX.
+
+\bibitem{BrookeP2Supplement} E.~S.~Brooke, ``Formal Supplement: The Structure of Admissible Physics---End-to-End Derivations,'' companion to this paper, 2026.  Self-contained proofs of $L_{\mathrm{Cauchy}}$, gauge identification, $T_{7B}$, $L_{\mathrm{irr,uniform}}$, $B1'$, $L_{\mathrm{gauge,unique}}$, $T_{\mathrm{field}}$, $L_{\mathrm{hypercharge}}$, $L_{\mathrm{count}}$, $P_{\mathrm{exhaust}}$, $L_{\mathrm{equip}}$, $L_{\mathrm{sat,part}}$, spacetime derivation chain ($\Delta_{\mathrm{sig}}$, $T_8$, $T_{9,\mathrm{grav}}$).  All imported Paper~1 results re-proved in Appendix~C.
+
+\bibitem{BrookeFermionScan} E.~S.~Brooke, ``APF Fermion Template Scan---Standalone Verification Script (v2),'' (2026).  Zenodo: \url{https://doi.org/10.5281/zenodo.19154197}.  GitHub: \url{https://github.com/Ethan-Brooke/APF-Paper-2-The-Structure-of-Admissible-Physics}.  Interactive walkthrough: \url{https://colab.research.google.com/drive/1otO1Qwp_Lr3OsK6ykkeMRATanecPkKg6}.
+
+\end{thebibliography}
+
+
+\end{document}

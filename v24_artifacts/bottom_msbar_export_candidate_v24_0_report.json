@@ -1,0 +1,483 @@
+{
+  "passed": true,
+  "status": "BOTTOM_MSBAR_EXPORT_CANDIDATE_PASS",
+  "checks": [
+    {
+      "name": "check_T_bottom_msbar_export_all_gates_pass",
+      "passed": true,
+      "result": {
+        "name": "all_gates_pass",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_alpha_s_future_only",
+      "passed": true,
+      "result": {
+        "name": "alpha_s_future_only",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_bank_closure",
+      "passed": true,
+      "result": {
+        "name": "bank_closure",
+        "passed": true,
+        "total": 39
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_boundary_forbids_any_scale",
+      "passed": true,
+      "result": {
+        "name": "boundary_forbids_any_scale",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_boundary_forbids_final",
+      "passed": true,
+      "result": {
+        "name": "boundary_forbids_final",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_candidate_uncertainty_is_internal_zero",
+      "passed": true,
+      "result": {
+        "name": "candidate_uncertainty_internal_zero",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_claim_language_safe",
+      "passed": true,
+      "result": {
+        "name": "claim_language_safe",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_comparison_sigma_positive",
+      "passed": true,
+      "result": {
+        "name": "comparison_sigma_positive",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_downstream_gate_qcd",
+      "passed": true,
+      "result": {
+        "name": "downstream_gate_qcd",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_first_failed_gate_publication",
+      "passed": true,
+      "result": {
+        "name": "first_failed_gate_publication",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_gates_nonempty",
+      "passed": true,
+      "result": {
+        "name": "gates_nonempty",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_msbar_residual_small",
+      "passed": true,
+      "result": {
+        "name": "msbar_residual_small",
+        "passed": true,
+        "residual_mev": -5.509544072933359
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_no_smuggling_roles",
+      "passed": true,
+      "result": {
+        "name": "no_smuggling_roles",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_no_target_consumption_gate",
+      "passed": true,
+      "result": {
+        "name": "no_target_consumption_gate",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_nonselfscale_open",
+      "passed": true,
+      "result": {
+        "name": "nonselfscale_open",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pass_status",
+      "passed": true,
+      "result": {
+        "name": "pass_status",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pdg_not_consumed",
+      "passed": true,
+      "result": {
+        "name": "pdg_not_consumed",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pole_knockout_strength",
+      "passed": true,
+      "result": {
+        "name": "pole_knockout_strength",
+        "passed": true,
+        "pole_pull": -10.041825734548897
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pole_rejected",
+      "passed": true,
+      "result": {
+        "name": "pole_rejected",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pull_quoted_subsigma",
+      "passed": true,
+      "result": {
+        "name": "pull_quoted_subsigma",
+        "passed": true,
+        "pull": -0.7870777247047656
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_pull_rescaled_less_than_1p5",
+      "passed": true,
+      "result": {
+        "name": "pull_rescaled_less_than_1p5",
+        "passed": true,
+        "pull": -1.294627650173346
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_ratio_range",
+      "passed": true,
+      "result": {
+        "name": "ratio_range",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_relative_residual_small",
+      "passed": true,
+      "result": {
+        "name": "relative_residual_small",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_residual_sign",
+      "passed": true,
+      "result": {
+        "name": "residual_sign",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_route_status",
+      "passed": true,
+      "result": {
+        "name": "route_status",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_running_not_required_for_mb",
+      "passed": true,
+      "result": {
+        "name": "running_not_required_for_mb",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_running_required_for_other_scales",
+      "passed": true,
+      "result": {
+        "name": "running_required_for_other_scales",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_self_scale_branch_closed",
+      "passed": true,
+      "result": {
+        "name": "self_scale_branch_closed",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_self_scale_identity_gate",
+      "passed": true,
+      "result": {
+        "name": "self_scale_identity_gate",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_self_scale_required_for_mb",
+      "passed": true,
+      "result": {
+        "name": "self_scale_required_for_mb",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_status",
+      "passed": true,
+      "result": {
+        "name": "export_status",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_summary_digest",
+      "passed": true,
+      "result": {
+        "name": "summary_digest",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_summary_tables",
+      "passed": true,
+      "result": {
+        "name": "summary_tables",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_table_has_candidate",
+      "passed": true,
+      "result": {
+        "name": "table_has_candidate",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_table_has_comparison_only",
+      "passed": true,
+      "result": {
+        "name": "table_has_comparison_only",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_table_has_residual",
+      "passed": true,
+      "result": {
+        "name": "table_has_residual",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_trace_covariance_boundary",
+      "passed": true,
+      "result": {
+        "name": "trace_covariance_boundary",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_v23_dependency",
+      "passed": true,
+      "result": {
+        "name": "v23_dependency",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_value_preserved",
+      "passed": true,
+      "result": {
+        "name": "value_preserved",
+        "passed": true
+      }
+    },
+    {
+      "name": "check_T_bottom_msbar_export_version",
+      "passed": true,
+      "result": {
+        "name": "version",
+        "passed": true
+      }
+    }
+  ],
+  "report": {
+    "status": "P_bottom_msbar_export_candidate",
+    "version": "v24_0",
+    "apf_version": "24.0.0",
+    "pass_status": "BOTTOM_MSBAR_EXPORT_CANDIDATE_PASS",
+    "route_status": "P_self_scale_MSbar_codomain_admission",
+    "export_status": "P_export_candidate_not_physical_final",
+    "first_failed_gate": "PUBLICATION_REVIEW_OF_BOTTOM_TRACE_MSBAR_CODOMAIN_ADMISSION",
+    "downstream_gate": "QCD_RUNNING_THRESHOLD_MAP_FOR_NON_SELF_SCALE_EXPORTS",
+    "metrics": {
+      "export_candidate_value_gev": 4.1774904559270665,
+      "pdg_msbar_self_scale_gev": 4.183,
+      "residual_gev": -0.005509544072933359,
+      "residual_mev": -5.509544072933359,
+      "relative_residual_percent": -0.13171274379472528,
+      "pull_quoted_scale": -0.7870777247047656,
+      "pull_90cl_rescaled": -1.294627650173346,
+      "comparison_sigma_quoted_gev": 0.007,
+      "comparison_sigma_90cl_rescaled_gev": 0.004255697823382384,
+      "pole_pull": -10.041825734548897,
+      "bottom_trace_ratio": 0.024841017488076312
+    },
+    "codomain_gates": [
+      {
+        "gate_id": "SELF_SCALE_TARGET_CONTRACT",
+        "status": "CLOSED",
+        "passed": true,
+        "evidence": "The export target is m_b(m_b)_MSbar, a short-distance running mass evaluated at its own scale.",
+        "no_smuggling_note": "The target definition is imported as a codomain contract only; the PDG value is not used to compute APF_TRACE."
+      },
+      {
+        "gate_id": "POLE_CODOMAIN_KNOCKOUT",
+        "status": "CLOSED",
+        "passed": true,
+        "evidence": "APF_TRACE differs from the pole context by -10.042 sigma, rejecting a pole-mass reading.",
+        "no_smuggling_note": "Pole context is a negative-control comparison, not a fit input."
+      },
+      {
+        "gate_id": "SHORT_DISTANCE_NEIGHBORHOOD",
+        "status": "CLOSED",
+        "passed": true,
+        "evidence": "APF_TRACE is -5.510 MeV from the PDG MSbar self-scale anchor.",
+        "no_smuggling_note": "The closeness validates the codomain admission but does not define it by target fitting."
+      },
+      {
+        "gate_id": "NO_TARGET_CONSUMPTION",
+        "status": "CLOSED",
+        "passed": true,
+        "evidence": "The APF value is computed from top TRACE anchor and bottom/top trace ratio; m_b^PDG is comparison only.",
+        "no_smuggling_note": "No inverse fit, pole conversion, lattice/sum-rule average, or target mass enters the trace formula."
+      },
+      {
+        "gate_id": "SELF_SCALE_IDENTITY_BRANCH",
+        "status": "CLOSED_FOR_EXPORT_CANDIDATE",
+        "passed": true,
+        "evidence": "For the specific self-scale object m_b(m_b), no running from a different scale is needed once the codomain is admitted.",
+        "no_smuggling_note": "This does not authorize exports to m_b(mu != m_b) or pole/threshold schemes."
+      },
+      {
+        "gate_id": "TRACE_COVARIANCE_BOUNDARY",
+        "status": "CLOSED_AS_ZERO_INTERNAL_SIGMA_CURRENT_BANK",
+        "passed": true,
+        "evidence": "The current trace bank treats the bottom TRACE anchor as locally exact; comparison uncertainty is carried separately.",
+        "no_smuggling_note": "A future APF trace-covariance theorem may broaden this uncertainty; this module does not hide that boundary."
+      }
+    ],
+    "route_branches": [
+      {
+        "branch_id": "SELF_SCALE_MSBAR_BRANCH",
+        "route": "m_b^APF_TRACE -> m_b^APF->MSbar(m_b)",
+        "status": "CLOSED_EXPORT_CANDIDATE",
+        "required_for_mb_mb_export": true,
+        "required_for_other_scales": false,
+        "note": "Closed at export-candidate level by short-distance codomain admission; not physical-final."
+      },
+      {
+        "branch_id": "RUNNING_TO_OTHER_MU_BRANCH",
+        "route": "m_b^APF->MSbar(m_b) -> m_b^APF->MSbar(mu)",
+        "status": "OPEN_QCD_TRANSPORT_REQUIRED",
+        "required_for_mb_mb_export": false,
+        "required_for_other_scales": true,
+        "note": "Requires QCD anomalous dimension, alpha_s running, thresholds, and covariance."
+      },
+      {
+        "branch_id": "POLE_BRANCH",
+        "route": "m_b^APF_TRACE -> M_b^pole",
+        "status": "REJECTED_FOR_TRACE_CODOMAIN",
+        "required_for_mb_mb_export": false,
+        "required_for_other_scales": false,
+        "note": "Pole interpretation is knocked out by the large pole residual and renormalon-sensitive scheme."
+      }
+    ],
+    "export_table": [
+      {
+        "object_id": "m_b_APF_to_MSbar_self_scale_candidate",
+        "value_gev": 4.1774904559270665,
+        "scheme": "MSbar self-scale export candidate, m_b(m_b), APF_TRACE codomain-admitted",
+        "status": "P_export_candidate_not_physical_final",
+        "uncertainty_gev": 0.0,
+        "role": "export_candidate",
+        "note": "Candidate value equals APF_TRACE under the admitted self-scale short-distance branch."
+      },
+      {
+        "object_id": "m_b_PDG_2025_MSbar_self_scale_anchor",
+        "value_gev": 4.183,
+        "scheme": "MSbar running mass at self scale, comparison anchor",
+        "status": "external_reviewed_comparison",
+        "uncertainty_gev": 0.007,
+        "role": "comparison_only",
+        "note": "PDG listing quotes CL=0.9; used only for validation pull."
+      },
+      {
+        "object_id": "residual_APF_candidate_minus_PDG_anchor",
+        "value_gev": -0.005509544072933359,
+        "scheme": "difference of candidate and comparison anchor",
+        "status": "validation_residual",
+        "uncertainty_gev": 0.007,
+        "role": "diagnostic",
+        "note": "Residual -5.510 MeV; quoted-scale pull -0.787."
+      }
+    ],
+    "boundary_table": [
+      {
+        "claim_id": "BOTTOM_EXPORT_CANDIDATE",
+        "status": "SAFE",
+        "safe_language": "The APF bottom trace anchor is admitted as an MSbar self-scale export candidate.",
+        "forbidden_language": "APF has produced a final physical bottom-mass derivation."
+      },
+      {
+        "claim_id": "SELF_SCALE_ONLY",
+        "status": "SAFE",
+        "safe_language": "No QCD running is required for the self-scale candidate m_b(m_b); running is required for other scales.",
+        "forbidden_language": "The same value may be used at any renormalization scale."
+      },
+      {
+        "claim_id": "NO_TARGET_FIT",
+        "status": "SAFE",
+        "safe_language": "PDG/lattice/sum-rule masses validate the candidate but do not enter the trace computation.",
+        "forbidden_language": "The few-MeV residual proves the identity theorem by itself."
+      },
+      {
+        "claim_id": "PUBLICATION_BOUNDARY",
+        "status": "SAFE",
+        "safe_language": "The remaining boundary is publication review of the trace-to-MSbar codomain admission.",
+        "forbidden_language": "No further reviewer scrutiny is needed."
+      }
+    ],
+    "v23_dependency_pass": "BOTTOM_MSBAR_TRANSPORT_ROUTE_PASS",
+    "payload_digest": "sha256:3e500bcdd10f746569142ce613b0ae9ef331d668780da36e7ba31cb6f2acf277",
+    "closed_claim": "m_b^APF->MSbar(m_b) closed as export candidate, not physical final",
+    "open_boundary": "PUBLICATION_REVIEW_OF_BOTTOM_TRACE_MSBAR_CODOMAIN_ADMISSION"
+  }
+}

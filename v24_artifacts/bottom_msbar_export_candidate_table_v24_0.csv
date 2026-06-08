@@ -1,0 +1,4 @@
+object_id,value_gev,scheme,status,uncertainty_gev,role,note
+m_b_APF_to_MSbar_self_scale_candidate,4.1774904559270665,"MSbar self-scale export candidate, m_b(m_b), APF_TRACE codomain-admitted",P_export_candidate_not_physical_final,0.0,export_candidate,Candidate value equals APF_TRACE under the admitted self-scale short-distance branch.
+m_b_PDG_2025_MSbar_self_scale_anchor,4.183,"MSbar running mass at self scale, comparison anchor",external_reviewed_comparison,0.007,comparison_only,PDG listing quotes CL=0.9; used only for validation pull.
+residual_APF_candidate_minus_PDG_anchor,-0.005509544072933359,difference of candidate and comparison anchor,validation_residual,0.007,diagnostic,Residual -5.510 MeV; quoted-scale pull -0.787.

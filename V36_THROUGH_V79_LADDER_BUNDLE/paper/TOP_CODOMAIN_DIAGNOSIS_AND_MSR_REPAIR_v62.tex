@@ -1,0 +1,129 @@
+
+\section{Top Codomain Diagnosis and MSR-Resolution Repair (v62)}
+\label{sec:top-codomain-diagnosis-msr-repair-v62}
+
+\paragraph{Purpose.}
+Version v61 closed an important negative result: the APF top object does not survive promotion to a full four-loop pole-mass comparison against the direct/MC-style top-mass audit.  The purpose of v62 is to diagnose whether this is a failure of the APF trace anchor or a failure of codomain selection.
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{
+\textbf{v62 conclusion.}  The v61 failure is best understood as a codomain mismatch.  The direct top mass is a kinematic/Monte-Carlo-style mass parameter, not a clean pole-mass observable.  The pole branch remains knocked out, but an MSR finite-resolution branch is opened and evaluated.
+}}
+\end{center}
+
+\subsection{The v61 pole-branch knockout}
+
+The v61 evaluator used the sourced four-loop MSR--pole counterterm
+\[
+\delta m_t^{\rm pole}(R)
+=R\sum_{n=1}^{4}c_n\left({\alpha_s(R)\over 4\pi}\right)^n
+\]
+with the same coefficient ledger as v61.  At the APF scale
+\[
+R_\star=85.857222698385\ {\rm GeV},
+\qquad
+m_t^{\rm MSR}(R_\star)=168.169055793800\ {\rm GeV},
+\]
+the four-loop pole witness is
+\[
+\delta m_t^{\rm pole}(R_\star)=5.847548589847\ {\rm GeV},
+\]
+so that
+\[
+ m_t^{\rm pole,4\ell}=174.016604383647\ {\rm GeV}.
+\]
+Against the audit-only direct top reference
+\[
+ m_t^{\rm dir}=172.56\pm0.31\ {\rm GeV},
+\]
+this gives
+\[
+\Delta_t^{\rm pole}=+1.456604383647\ {\rm GeV}.
+\]
+Thus the direct/MC pole-promotion branch remains knocked out.
+
+\subsection{Codomain repair: direct reconstruction as a finite-resolution MSR mass}
+
+The repair is not to tune the pole conversion.  The repair is to compare the APF top object to the correct codomain.  Direct reconstruction measures a finite-resolution top-mass parameter.  The corresponding APF route should therefore remain in the MSR family and translate from the APF scale $R_\star$ to a reconstruction scale $R_{\rm rec}$:
+\[
+ m_t^{\rm MSR}(R_\star)
+ \longrightarrow
+ m_t^{\rm MSR}(R_{\rm rec}).
+\]
+At fixed order the sourced pole counterterm may be used as a scale-translation kernel without claiming the pole mass as the target:
+\[
+\boxed{
+ m_t^{\rm MSR}(R_{\rm rec})
+ =
+ m_t^{\rm MSR}(R_\star)
+ +\delta m_t^{\rm pole}(R_\star)
+ -\delta m_t^{\rm pole}(R_{\rm rec}).
+ }
+\]
+This cancels the pole object from the comparison and keeps the target in a short-distance finite-resolution mass scheme.
+
+\subsection{EW-resolution witness}
+
+The APF-native EW reconstruction scale is taken to be
+\[
+\boxed{
+ R_{\rm EW}={M_W^{\rm TRACE}\over 2\pi}
+ }
+\]
+with
+\[
+ M_W^{\rm TRACE}=80.362164334\ {\rm GeV},
+\qquad
+ R_{\rm EW}=12.790035691319\ {\rm GeV}.
+\]
+Using the v61 four-loop coefficient ledger,
+\[
+\alpha_s(R_{\rm EW})=0.168529007262,
+\]
+\[
+\delta m_t^{\rm pole}(R_{\rm EW})=1.451849972940\ {\rm GeV}.
+\]
+Therefore
+\[
+\boxed{
+ m_t^{\rm MSR}(R_{\rm EW})
+ =172.564754410708\ {\rm GeV}.
+ }
+\]
+The residual against the audit-only direct reference is
+\[
+\Delta_t^{\rm EW-MSR}=+0.004754410708\ {\rm GeV}
+=4.754410708\ {\rm MeV},
+\]
+with
+\[
+\Delta_t^{\rm EW-MSR}/0.31=0.015336808734.
+\]
+
+\subsection{No-smuggling audit}
+
+The target-fitted scale solving
+\[
+ m_t^{\rm MSR}(R_{\rm fit})=172.56\ {\rm GeV}
+\]
+is
+\[
+R_{\rm fit}=12.854642726179\ {\rm GeV}.
+\]
+This quantity is reported only as a forbidden diagnostic.  It is not used to define the route.  The route scale
+\[
+ R_{\rm EW}=M_W^{\rm TRACE}/(2\pi)
+\]
+is selected from the already banked EW trace sector and does not consume the direct top-mass target.
+
+\subsection{Claim status}
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{
+\textbf{Closed:} the v61 pole failure is diagnosed as a codomain mismatch for direct/MC auditing; the pole branch is quarantined.\\[2mm]
+\textbf{Conditional witness:} the finite-resolution MSR route with $R_{\rm EW}=M_W/(2\pi)$ gives $m_t^{\rm MSR}(R_{\rm EW})=172.564754410708$ GeV.\\[2mm]
+\textbf{Not claimed:} physical-final top mass, exact pole mass, MC equality, target-fitted scale, or full R-evolution finality.
+}}
+\end{center}
+
+The next theorem must either prove the EW-resolution scale $R_{\rm EW}$ as the correct direct-reconstruction scale or replace it with an externally calibrated MC/MSR scale ledger.

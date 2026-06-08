@@ -1,0 +1,22 @@
+{
+  "stamp": "EXTERNAL_LEDGER_AND_EVALUATOR_REGISTRY_PASS",
+  "version": "v65",
+  "created": "2026-05-10",
+  "registry_closed": true,
+  "external_evaluator_phase_open": true,
+  "physical_final_assigned": false,
+  "sector_count": 6,
+  "evaluator_count": 6,
+  "source_count": 11,
+  "status_counts": {
+    "P_on_shell_EW_completion": 1,
+    "P_pole_completion_plus_QED_boundary": 1,
+    "P_MSbar_self_scale_covariance_admitted": 2,
+    "P_direct_MSR_completion_EW_resolution_plus_pole_branch_blocked": 1,
+    "P_source_pretransport_external_chiral_lattice_boundary": 1
+  },
+  "top_msr_rew_gev": 172.564754410708,
+  "top_pole_branch_gev": 174.016604383647,
+  "rew_gev": 12.790035691319,
+  "no_smuggling": "external evaluator may not be selected using target residuals"
+}

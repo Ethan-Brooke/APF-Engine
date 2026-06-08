@@ -1,0 +1,7 @@
+rule,blocked_example,where_enforced
+no inverse solving from target masses,"constructing T_l or residual operators by inverting (m_e,m_mu,m_tau); choosing R_fit from top direct target","v40-v43,v62-v63"
+no identity transport across codomains,T_uds identity as MSbar(2 GeV); trace anchors directly as scheme masses,"v35,v52-v54"
+no treating direct/MC top as exact pole mass,"using m_t^pole,4loop as the direct top measurement codomain",v61-v63
+no QED/QCD running as residual knobs,"choosing alpha, thresholds, loop order, or route coefficients to erase residuals","v45-v49,v57-v60"
+no unauthorized averaging of external ledgers,combining PDG2025 and CMS2026 W masses without correlation protocol,v56
+no light-quark export without chiral/lattice evaluator,"reporting u,d,s MSbar(2 GeV) from APF source vector alone",v52-v54

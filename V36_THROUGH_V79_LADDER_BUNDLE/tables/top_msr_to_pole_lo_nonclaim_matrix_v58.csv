@@ -1,0 +1,8 @@
+claim,v58_status,reason
+top physical-final mass,not claimed,only one-loop conversion witness is evaluated
+exact top pole mass,not claimed,"higher-loop conversion, renormalon convention, and pole ambiguity remain external"
+Monte-Carlo mass equality,not claimed,PDG direct average is treated as MC/pole-proxy audit only
+zero residual,not claimed,residual is nonzero and assigned to declared channels
+using PDG top average as input,forbidden,PDG average enters only after the APF+QCD witness is computed
+choosing alpha_s to fit top,forbidden,"alpha_s(MZ) is frozen from PDG QCD world average, not optimized"
+full MSR-to-MSbar/pole conversion final,not claimed,requires multi-loop coefficient and covariance ledger

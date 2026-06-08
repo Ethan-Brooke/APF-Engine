@@ -1,0 +1,96 @@
+APF v16.1 — Full Verification
+=======================================================
+
+L_mc_mt_twoloop_RG [P]
+========================================================
+  μ_FN  = 1.490e+10 GeV
+  Δln(μ) = 18.9119
+
+  One-loop  integral  I₁ = -0.083500
+  Two-loop  integral  I₂ = -0.001572
+  Two-loop / one-loop    = 1.88%
+
+  RG_ct (1-loop)  = 0.919891
+  RG_ct (1+2-loop)= 0.918446
+
+  m_c (1-loop):  606.37 MeV  (obs 590, err 2.8%)
+  m_c (1+2-loop):605.41 MeV  (obs 590, err 2.6%)
+
+  Improvement: 2.8% → 2.6%
+
+
+L_mu_mc_unified [P]
+============================================================
+
+  GRAM MATRIX ROUTE (primary):
+    Without crossing: eu[0]/eu[1] = 0.0024
+    With crossing:    eu[0]/eu[1] = 0.0017
+    PDG experimental: m_u/m_c     = 0.002 ± 0.0006
+    Distance: 0.5σ  (15% from central)
+    Schur amplification: 2% G[0,0] depletion -> 30% S_00 depletion
+    RG invariance: |Δln(m_u/m_c)| = 2.3e-06 (<0.001%)
+
+  FN TEXTURE ABLATION (cross-check):
+    eta=1/144,  c_Hu=1:   0.0030  (bare NLO)
+    eta=1/144,  c_Hu=x^3: 0.0080  (c_Hu worsens!)
+    eta=1/1152, c_Hu=1:   0.0004  (Dq overshoots)
+    eta=1/1152, c_Hu=x^3: 0.0018  (cancellation)
+
+  Gram route: 0.5σ from PDG (direct geometry)
+  FN NNLO:    0.4σ from PDG (via cancellation)
+  -> Gram is primary; FN Dq mechanism is superseded.
+
+  STATUS: [P]. CLOSED — within experimental uncertainty.
+
+
+L_upGram_PSD_saturation [P]
+========================================================
+  G[0,0]_corr = 2.3937e-04
+  S_lower     = 0.016714  (min required: 0.015936)
+  PSD margin  = +4.88%
+  S₀₀         = 1.1138e-05  ✓ positive
+
+  Corollary — G[1,2] ceiling:
+    G[1,2] = c6²        → eig_min = 1.074e-05  ✓ PD
+    G[1,2] = c6²+x¹⁰   → eig_min = -2.871e-05  ✗ indefinite
+    S₀₀ after +x¹⁰     = -3.0186e-05  ✗ negative
+
+  Gram eu[1]/eu[2] = 0.00404  (12% above obs — structural)
+  m_c after RG     = 606.4 MeV  (obs 590, err 2.8%)
+
+  STATUS: [P]. 12% Gram error protected by PSD boundary.
+
+
+L_upGram_schur_margin [P]
+========================================================
+
+  Exact identity:  S₀₀|_LO − S₀₀|_corr = c_Hu²ξx¹²
+    S₀₀|_LO    = 1.590622e-05
+    S₀₀|_corr  = 1.113785e-05
+    Difference = 4.768372e-06
+    c_Hu²ξx¹² = 4.768372e-06
+    Residual   = 0.00e+00  ✓ machine precision
+
+  Crossing consumes 30.0% of pre-crossing Schur margin
+  Residual fraction: 0.700
+
+  Physical consequence:
+    eu[0]/eu[1] = 0.001696  (obs m_u/m_c = 0.001700, err 0.3%)
+
+  STATUS: [P]. Exact algebraic identity verified to machine precision.
+
+[prelude: ran 286 checks across 8 upstream DAG producer(s) to populate cache for filtered run]
+
+
+Module                                          Checks  Status
+──────                                          ──────  ──────
+w_trace_diagram_family_numeric_evaluator_import.py     79  PASS
+
+=======================================================
+Total checks:      79
+  Theorems  [T]:   79  pass     0  fail     0  flag
+  Lemmas    [L]:    0  pass     0  fail     0  flag
+  Red-team [RT]:    0  pass     0  fail     0  flag
+  Other:            0  pass     0  fail     0  flag
+
+✓ All 79 checks PASSED  (0.6s)

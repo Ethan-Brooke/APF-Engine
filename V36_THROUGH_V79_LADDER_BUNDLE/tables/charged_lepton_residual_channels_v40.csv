@@ -1,0 +1,10 @@
+channel,definition,status
+trace_vector_T_l,source-independent APF charged-lepton trace vector,open_primary_gate
+Omega_l_closure,lepton cooperative-overlap closure or replacement source theorem,open_equivalent_gate
+QED_running,pole-to-running or running-to-pole QED transport if running codomain selected,deferred
+scheme_choice,pole codomain declared as first route; running codomains deferred,partially_closed
+trace_vector_covariance,covariance on APF trace vector T_l,deferred_until_T_l
+operator_covariance,coefficient/operator covariance from v39,closed_for_coefficients
+experimental_covariance,external pole/running observable covariance for comparison only,deferred_until_export_candidate
+APF_route_residual,post-route residual after T_l and QED channels are supplied,deferred_named_channel
+no_smuggling_audit,inverse construction from m_e m_mu m_tau forbidden,pass_for_source_gate

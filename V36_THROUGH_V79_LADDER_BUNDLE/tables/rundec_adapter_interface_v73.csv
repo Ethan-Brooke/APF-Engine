@@ -1,0 +1,8 @@
+field,requirement,status
+RUNDEC_CMD,environment variable pointing to RunDec-compatible command,not_set_in_package_environment
+stdin,JSON payload with c/b cases and requested outputs,specified
+stdout,JSON with results.c/results.b and validation_id,specified
+validation_id,published RunDec/CRunDec example or local benchmark identifier,required_for_promotion
+threshold_schedule,must be declared by adapter,required_for_promotion
+covariance,"mass, alpha_s, threshold, truncation, implementation channels",required_for_promotion
+target_reuse,destination masses cannot select coefficients/scales,forbidden

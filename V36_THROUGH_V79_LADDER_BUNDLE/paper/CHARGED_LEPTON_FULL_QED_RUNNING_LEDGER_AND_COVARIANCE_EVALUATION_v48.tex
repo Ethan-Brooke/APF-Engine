@@ -1,0 +1,156 @@
+\section{Charged-Lepton Full QED Running Ledger and Covariance Evaluation (v48)}
+\label{sec:charged-lepton-full-qed-v48}
+
+\paragraph{Status.}
+This section records the v48 completion of the QED-running \emph{ledger} layer for the charged-lepton branch. It does not convert the branch into a final multi-loop running-mass prediction. The status stamp is
+\[
+\boxed{\texttt{CHARGED\_LEPTON\_FULL\_QED\_RUNNING\_LEDGER\_AND\_COVARIANCE\_EVALUATION\_PASS}}.
+\]
+
+\begin{definition}[QED running ledger]
+A numerical QED running export is admissible only after the external ledger
+\[
+\mathcal L_{\rm QED}
+=\{S_{\rm run},\mu,L,\alpha,\mathcal T,\mathcal M,\mathcal K_1,\ldots,\mathcal K_L,\Sigma_{\rm QED}\}
+\]
+is fixed before comparison with the target charged-lepton masses. Here $S_{\rm run}$ is the running-mass scheme, $\mu$ is the scale convention, $L$ is the loop order, $\mathcal T$ is the threshold schedule, $\mathcal M$ is the matching convention, $\mathcal K_n$ are the perturbative coefficients in that convention, and $\Sigma_{\rm QED}$ is the covariance protocol.
+\end{definition}
+
+\begin{theorem}[Full-running ledger typing]
+The charged-lepton QED transport operator has the typed form
+\[
+U_{\rm QED}^{{\rm pole}\to S_{\rm run}}(\mathcal L_{\rm QED})
+=\exp\!\left(\sum_{n=1}^L
+\mathcal K_n(\mathcal L_{\rm QED})
+\left({\alpha\over\pi}\right)^n\right),
+\]
+and the numerical export
+\[
+\Phi_\ell^{S_{\rm run}}(\mu)
+=U_{\rm QED}^{{\rm pole}\to S_{\rm run}}(\mathcal L_{\rm QED})\,\Phi_\ell^{v43}
+\]
+is APF-admissible only if every entry of $\mathcal L_{\rm QED}$ is declared independently of the target masses.
+\end{theorem}
+
+\begin{proof}[APF proof sketch]
+By the trace-to-scheme export theorem, export is an admissible continuation from a trace context to a measurement-scheme context. A running charged-lepton mass is not a scalar target; it is a scheme- and scale-indexed object. Therefore the codomain, route, constants, covariance, no-smuggling audit, and residual channels must all be fixed. The entries of $\mathcal L_{\rm QED}$ are precisely these commitments for the QED transport layer. If any of them are chosen after seeing the residual vector, the map ceases to be a source-independent continuation and becomes inverse fitting.
+\end{proof}
+
+\paragraph{Frozen CODATA 2022 ledger used for v48 diagnostics.}
+The external constants used in this diagnostic layer are
+\[
+\alpha^{-1}=137.035999177(21),
+\qquad
+\alpha=0.007297352564331424,
+\qquad
+{\alpha\over\pi}=0.002322819464195329.
+\]
+The diagnostic mass-energy references are
+\[
+(m_e,m_\mu,m_\tau)_{\rm CODATA\ 2022}
+=(0.51099895069,105.6583755,1776.86)\ {\rm MeV}.
+\]
+These are external references and transport constants only; they are not used to construct the APF source vector.
+
+\paragraph{Inherited APF pole vector.}
+The APF charged-lepton pole-codomain vector is
+\[
+\Phi_\ell^{v43}
+=(0.511002635789,105.658243985342,1776.916832008411)\ {\rm MeV}.
+\]
+The relative residuals against the CODATA 2022 diagnostic ledger are
+\[
+\delta_\ell
+=(+0.000721155792\%,-0.000124471588\%,+0.003198451674\%).
+\]
+
+\paragraph{QED perturbative scale.}
+The evaluated one-loop self-scale witness remains
+\[
+\bar m_i^{\rm LO}(\mu_i=m_i)
+={\Phi_{\ell,i}^{v43}\over 1+\alpha/\pi},
+\qquad
+{1\over 1+\alpha/\pi}=0.997682563522362.
+\]
+Thus
+\[
+\bar m_\ell^{\rm LO}
+=(0.509818419640,105.413387716567,1772.798940124186)\ {\rm MeV}.
+\]
+The next perturbative scale, without importing any convention-dependent coefficient, is
+\[
+100\left({\alpha\over\pi}\right)^2
+=0.000539549026324\%.
+\]
+This number is not used to tune any generation. It is a declared order-of-magnitude truncation scale attached to the QED route.
+
+\begin{theorem}[v48 covariance admission]
+Let
+\[
+\varepsilon_{\rm APF}={100\over5063}=0.019751135690302\%,
+\qquad
+\varepsilon_{\rm tr}=100\left({\alpha\over\pi}\right)^2=0.000539549026324\%.
+\]
+Define the conservative combined envelope
+\[
+\varepsilon_{\rm v48}
+=\sqrt{\varepsilon_{\rm APF}^2+\varepsilon_{\rm tr}^2}
+=0.019758503845396\%.
+\]
+Then each CODATA-ledger residual satisfies
+\[
+|\delta_i|<\varepsilon_{\rm v48},
+\]
+with maximum normalized residual
+\[
+\max_i {|\delta_i|\over\varepsilon_{\rm v48}}
+=0.161877219998<1.
+\]
+Therefore the charged-lepton pole route is admitted by the APF+QED perturbative covariance envelope.
+\end{theorem}
+
+\begin{proof}
+Direct substitution gives the residual vector displayed above. The envelope $100/5063$ is APF-derived from the v43--v46 scalar-normalization/covariance gate. The perturbative term $100(\alpha/\pi)^2$ is the first unevaluated order scale after the declared one-loop witness. Since all residuals lie below the combined non-fit envelope, the residual is assigned to the declared APF/QED covariance channel rather than to a new fitted generation operator.
+\end{proof}
+
+\paragraph{No-smuggling audit.}
+The following inputs remain forbidden:
+\[
+\{m_e,m_\mu,m_\tau\}_{\rm target}\to T_\ell,
+\quad
+r_e,r_\mu,r_\tau,
+\quad
+\alpha_{\rm chosen\ to\ reduce\ residuals},
+\quad
+\mu_{\rm chosen\ to\ reduce\ residuals},
+\quad
+L_{\rm chosen\ to\ reduce\ residuals},
+\]
+and likewise target-selected thresholds, target-selected matching conventions, and coefficients inferred from the residual vector.
+
+\paragraph{Claim ladder after v48.}
+The charged-lepton branch now has
+\[
+\boxed{
+\ell:
+[P_{\rm pole\ completion}^{\rm APF\ envelope,CODATA2022}]
++[P_{\rm LO\ QED\ numeric\ transport\ witness}]
++[P_{\rm QED\ truncation\ covariance\ admitted}]
++[P_{\rm full\ QED\ running\ ledger\ typed}/\mathcal L_{\rm QED}^{L\ge2}\ {\rm required}]
+}.
+\]
+Still not claimed:
+\[
+\boxed{
+[P_{\rm QED\ running\ final}],\quad
+[P_{\rm physical\ final}],\quad
+\Delta_\ell=0,
+\quad \text{CODATA-sigma agreement for all leptons}.
+}
+\]
+
+\paragraph{Next theorem.}
+The next theorem is
+\[
+\boxed{\texttt{APF\_CHARGED\_LEPTON\_FULL\_QED\_NUMERIC\_RUNNING\_WITH\_DECLARED\_EXTERNAL\_COEFFICIENT\_LEDGER}}.
+\]

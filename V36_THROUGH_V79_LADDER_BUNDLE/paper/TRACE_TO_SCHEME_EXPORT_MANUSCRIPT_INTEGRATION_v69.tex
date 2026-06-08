@@ -1,0 +1,118 @@
+
+% TRACE_TO_SCHEME_MANUSCRIPT_INTEGRATION_PASS
+\section{Trace-to-Scheme Export Manuscript Integration (v69)}
+\label{sec:v69-trace-to-scheme-manuscript-integration}
+
+\paragraph{Purpose.}
+Versions v35--v68 established the trace-to-scheme export architecture, tested it across the electroweak, charged-lepton, heavy-quark, top, and light-quark sectors, and refreshed the post-evaluator registry after the top MSR $R$-evolution evaluator.  This v69 module converts the sprint into a manuscript-ready integration layer.  It is not another numerical derivation.  It is the canonical paper skeleton, claim ladder, theorem map, sector table, nonclaim table, and dependency map to be used when drafting the trace-to-scheme export paper or supplement.
+
+\begin{center}
+\fbox{\parbox{0.94\linewidth}{
+\textbf{v69 closeout.}  The manuscript-level conclusion is not that APF trace values are identical to physical masses.  The conclusion is that APF trace values become auditable physical comparison objects only through a typed route:
+\[
+  \boxed{
+  \text{trace anchor}
+  +\text{codomain}
+  +\text{transport}
+  +\text{external ledger}
+  +\text{covariance}
+  +\text{no-smuggling audit}
+  +\text{residual assignment}.
+  }
+\]
+The export architecture is closed; no sector is assigned $[P_{\rm physical\ final}]$ in this manuscript layer.
+}}
+\end{center}
+
+\subsection{Manuscript abstract skeleton}
+\begin{quote}
+We develop a trace-to-scheme export architecture for Admissibility Physics.  APF trace anchors are not directly equated with physical masses or observables.  A physical comparison is admitted only after a scheme codomain, source-independent transport map, external constants ledger, covariance protocol, no-smuggling audit, and residual-channel assignment have been supplied.  Applying this protocol yields on-shell electroweak completion for $M_W$, APF-envelope pole completion for charged leptons with a QED boundary, covariance-admitted self-scale $\overline{\rm MS}$ completion for charm and bottom, direct-MSR $R$-evolution completion for top at the electroweak reconstruction scale, and a source/pretransport boundary for light quarks pending an external chiral/lattice evaluator.  No sector is promoted to physical-final status; instead the framework supplies a reproducible claim ladder separating APF-side derivation from external scheme transport.
+\end{quote}
+
+\subsection{Claim ladder}
+The manuscript uses only the following statuses:
+\[
+\begin{aligned}
+[P_{\rm trace}]&: \text{APF-side trace anchor only},\\
+[P_{\rm source/pretransport}]&: \text{source vector closed but external transport missing},\\
+[P_{\rm export\ candidate}]&: \text{typed codomain and route object supplied},\\
+[P_{\rm covariance\ admitted}]&: \text{comparison residual inside declared external/covariance envelope},\\
+[P_{\rm codomain\ completion}]&: \text{sector closed in its declared codomain},\\
+[P_{\rm external\ ledger\ boundary}]&: \text{APF-side route closed; further progress requires external evaluator},\\
+[P_{\rm physical\ final}]&: \text{reserved; not assigned in v69}.
+\end{aligned}
+\]
+The manuscript-level safety rule is:
+\[
+  \boxed{[P_{\rm physical\ final}]\ \text{is not assigned unless all scheme, transport, covariance, and evaluator ledgers are closed.}}
+\]
+
+\subsection{Core theorem map}
+\begin{center}
+\begin{tabular}{p{0.18\linewidth} p{0.34\linewidth} p{0.36\linewidth}}
+\hline
+Module & Theorem role & Manuscript use \\
+\hline
+v35--v36 & Trace-to-scheme export gates $G1$--$G6$ & Defines why export is a typed continuation, not numerical resemblance. \\
+v37, v58--v68 & Top MSR route, pole knockout, and $R$-evolution repair & Shows codomain control: top closes as direct-MSR, not pole final. \\
+v38--v49 & Charged-lepton residual, scalar, QED boundary & Shows APF-side pole completion with QED external-ledger boundary. \\
+v50--v57 & Charm/bottom/heavy-QCD ledgers & Shows same-codomain $\overline{\rm MS}$ covariance admission. \\
+v52--v54 & Light-quark source and chiral/lattice boundary & Shows honest boundary when external evaluator is required. \\
+v55, v64, v68 & Global registries and closeouts & Prevents overclaiming and supplies the final sector table. \\
+v65--v67 & External ledger/evaluator registry and top evaluator & Separates APF derivation from external evaluator implementation. \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Current sector table}
+\begin{center}
+\begin{tabular}{p{0.14\linewidth} p{0.39\linewidth} p{0.36\linewidth}}
+\hline
+Sector & Current manuscript claim & Boundary / nonclaim \\
+\hline
+$W$ / EW & $[P_{\rm on\text{-}shell\ EW\ completion}]^{\rm PDG2025+CMS2026}$ with $M_W^{\rm APF}=80.362164334\,\mathrm{GeV}$ & No unauthorized combined average; no global EW-fit final. \\
+Charged leptons & $[P_{\rm pole\ completion}]^{\rm APF\ envelope,CODATA2022}+[P_{\rm QED\ boundary}]$ with $(0.511002635789,105.658243985342,1776.916832008411)\,\mathrm{MeV}$ & Full QED-running final requires external scheme, thresholds, loop order, and covariance. \\
+Charm & $[P_{\overline{\rm MS}(m_c)\ \rm covariance\ admitted}]^{\rm PDG2025,90CL}$ with $1.272334177712\,\mathrm{GeV}$ & No pole/final conversion claim. \\
+Bottom & $[P_{\overline{\rm MS}(m_b)\ \rm covariance\ admitted}]^{\rm PDG2025,90CL}$ with $4.177490455927\,\mathrm{GeV}$ & No pole/final conversion claim. \\
+Top & $[P_{\rm direct\text{-}MSR\ R\text{-}evolution\ numeric\ evaluator\ closed}]$ with $m_t^{\rm MSR}(M_W^{\rm TRACE}/2\pi)=172.716805649486\,\mathrm{GeV}$; v63 fixed-order value $172.564754410708\,\mathrm{GeV}$ is a historical witness only & Pole branch blocked: $m_t^{\rm pole,4\ell}=174.016604383647\,\mathrm{GeV}$; no MC equality. \\
+Light quarks & $[P_{\rm source/pretransport}]/[\mathcal L_{\chi\mathrm{lat}}\ \rm required]$ with $T_{uds}^{\rm APF}=(1.153209852400,3.870916422334,87.143281633651)\,\mathrm{MeV}$ & Requires external chiral/lattice evaluator. \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{No-smuggling rules for the paper}
+The integrated manuscript must visibly enforce the following prohibitions:
+\[
+\boxed{\text{No inverse solving from target masses.}}
+\]
+\[
+\boxed{\text{No identity transport across distinct codomains.}}
+\]
+\[
+\boxed{\text{No use of QED/QCD running as residual-fitting knobs.}}
+\]
+\[
+\boxed{\text{No treatment of direct/MC top mass as an exact pole mass.}}
+\]
+\[
+\boxed{\text{No light-quark export without a chiral/lattice evaluator.}}
+\]
+
+\subsection{Recommended manuscript structure}
+\begin{enumerate}
+\item \textbf{Introduction:} why trace anchors need scheme export.
+\item \textbf{APF export theorem:} derive $G1$--$G6$ from admissible continuation and finite ledgering.
+\item \textbf{Claim ladder:} define statuses and nonclaim rules.
+\item \textbf{Sector applications:} $W$, charged leptons, charm/bottom, top, light quarks.
+\item \textbf{Top codomain lesson:} pole branch fails; direct-MSR $R$-evolution branch closes.
+\item \textbf{External ledgers:} CODATA/NIST, PDG/CMS, QED, QCD, MSR/R-evolution, lattice/chiral boundaries.
+\item \textbf{Results registry:} the v69 sector table.
+\item \textbf{Discussion:} what is APF-side, what is external evaluator work, and what remains open.
+\end{enumerate}
+
+\subsection{Final manuscript-level conclusion}
+The sprint closes the trace-to-scheme export architecture.  It does not close universal physical-final masses.  The paper should present the result as a disciplined bridge from APF trace anchors to scheme-relative comparison objects.  The strongest finished statements are the on-shell $W$ completion, charged-lepton pole completion inside the APF/CODATA envelope, charm and bottom same-codomain covariance admission, and top direct-MSR $R$-evolution completion.  The light-quark branch is correctly left at the chiral/lattice evaluator boundary.
+
+\begin{center}
+\fbox{\texttt{TRACE\_TO\_SCHEME\_MANUSCRIPT\_INTEGRATION\_PASS}}
+\end{center}

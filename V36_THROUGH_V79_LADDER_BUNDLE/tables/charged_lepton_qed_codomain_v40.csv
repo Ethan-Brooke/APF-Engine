@@ -1,0 +1,4 @@
+codomain,Z_factor,constants_required,covariance_required,status
+pole,"I in minimal bookkeeping","none for declaration; experimental pole covariance for comparison","trace covariance + experimental covariance",declared_first_codomain
+MSbar(mu),"Z_l^MSbar(mu)","alpha_QED convention; mu; thresholds; loop order; matching convention","trace covariance + QED transport covariance + truncation",deferred
+other_QED_scheme,"Z_l^S","scheme definition; scale; constants; thresholds; loop order","scheme covariance + trace covariance",deferred

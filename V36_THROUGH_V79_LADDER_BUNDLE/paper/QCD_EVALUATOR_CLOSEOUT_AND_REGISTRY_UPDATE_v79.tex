@@ -1,0 +1,76 @@
+
+\section{v79: QCD Evaluator Closeout and Registry Update}
+\label{sec:v79-qcd-evaluator-closeout}
+
+This module closes the charm--bottom QCD evaluator branch at the appropriate claim level.  The v78 threshold-matched scaffold passed the selected RunDec/CRunDec benchmark audits at sub-MeV tolerance, so the remaining work is not another APF derivation but registry control: the active claim must be locked without over-promoting the scaffold to a full official RunDec replacement.
+
+\subsection{Closeout claim}
+The closed status is
+\[
+  \boxed{c,b:[P_{\rm threshold\text{-}matched\ QCD\ evaluator\ benchmark\ closed}].}
+\]
+This means that the evaluator is suitable for APF registry use as a source-clean external-running layer for the declared charm and bottom tasks:
+\[
+  m_c(m_c)\to m_c(3\,{\rm GeV}),
+  \qquad
+  m_b(m_b)\to m_b(10\,{\rm GeV}).
+\]
+It does not mean that the package is a full official RunDec/CRunDec binary replacement.
+
+\subsection{Benchmark lock}
+The inherited v78 benchmark audit remains active:
+\[
+  m_c(m_c)=1.279\,{\rm GeV}	o m_c(3\,{\rm GeV})_{v78}=0.986551889088\,{\rm GeV},
+\]
+against the published target
+\[
+  0.986\,{\rm GeV},
+\]
+with residual
+\[
+  +0.551889088\,{\rm MeV}.
+\]
+For bottom,
+\[
+  m_b(m_b)=4.163\,{\rm GeV}	o m_b(10\,{\rm GeV})_{v78}=3.610111846228\,{\rm GeV},
+\]
+against the published target
+\[
+  3.610\,{\rm GeV},
+\]
+with residual
+\[
+  +0.111846228\,{\rm MeV}.
+\]
+Both are inside the declared $1\,{\rm MeV}$ benchmark tolerance.
+
+\subsection{Active APF outputs}
+The active APF charm and bottom running outputs are therefore locked as
+\[
+  \boxed{m_c^{\rm APF}(3\,{\rm GeV})=0.979226596181\,{\rm GeV}},
+\]
+\[
+  \boxed{m_b^{\rm APF}(10\,{\rm GeV})=3.625054969391\,{\rm GeV}}.
+\]
+These are threshold-matched evaluator outputs, not new APF trace inputs and not target-fitted numbers.
+
+\subsection{Nonclaims retained}
+The following nonclaims are part of the closeout:
+\[
+\boxed{\text{not a full official RunDec binary replacement}},
+\]
+\[
+\boxed{\text{not complete higher-loop decoupling-constant parity}},
+\]
+\[
+\boxed{\text{not pole-mass export}},
+\]
+\[
+\boxed{\text{not }[P_{\rm physical\ final}]},
+\]
+\[
+\boxed{\Delta\ne0},
+\qquad
+\boxed{\text{not fitted to APF outputs}}.
+\]
+A future optional package may attach a real RunDec/CRunDec adapter for exact library parity, but this is no longer required for the APF trace-to-scheme registry.  The QCD evaluator branch is closed at threshold-matched benchmark parity.

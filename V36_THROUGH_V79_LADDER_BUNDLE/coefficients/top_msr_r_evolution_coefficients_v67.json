@@ -1,0 +1,32 @@
+{
+  "schema_id": "top_msr_r_evolution_coefficients_v67",
+  "source_family": "MSR R-evolution / REvolver coefficient convention",
+  "nf": 5,
+  "beta_convention": "a=alpha_s/(4*pi), da/dlnmu=-2 sum beta_i a^(i+2)",
+  "beta_coefficients": {
+    "beta0": 7.666666666666667,
+    "beta1": 38.66666666666667,
+    "beta2": 180.90740740740753,
+    "beta3": 4826.156328790895
+  },
+  "gamma_R_convention": "dm_MSR/dlnR=-R sum gamma_n^R a^(n+1), a=alpha_s/(4pi)",
+  "gamma_R_coefficients": {
+    "gamma0": 5.333333333333333,
+    "gamma1": 48.3501,
+    "gamma2": 179.49875000000014,
+    "gamma3_central": -18753.775,
+    "gamma3_sigma_naive": 419.98690455774926
+  },
+  "alpha_s_input": {
+    "alpha_s_MZ": 0.118,
+    "sigma": 0.0009,
+    "MZ_GeV": 91.1876
+  },
+  "range": {
+    "R_hi_GeV": 85.857222698385,
+    "R_lo_GeV": 12.79003569131931,
+    "threshold_crossed": false,
+    "nf_fixed": 5
+  },
+  "integration": "coupled RK4 in R; N=5000 central"
+}

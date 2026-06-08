@@ -1,0 +1,87 @@
+
+\section{Charged-Lepton QED Running Transport Theorem}\label{sec:v45_qed_running_transport}
+
+\paragraph{Purpose.}
+The v44 gate separated two statements that must not be conflated.  The pole/reference codomain is already admitted at
+\[
+\ell:[P_{\rm export\ candidate}^{\rm pole,v43}+P_{\rm covariance\ admitted}^{\rm APF\ envelope}],
+\]
+whereas a running-QED codomain still requires a transport object.  This section closes the missing route-object form.  It does not claim final numerical running masses, because the external QED ledger has not been supplied.
+
+\paragraph{Source vector.}
+The only mass vector admitted as input to the running map is the APF-produced pole-codomain candidate
+\[
+\Phi_\ell^{\rm v43}= (0.511002635789,\ 105.658243985,\ 1776.916832008)\ {\rm MeV}.
+\]
+The diagnostic pole references used in earlier tables are not admissible sources for the running transport.
+
+\begin{definition}[QED running ledger]\label{def:v45_qed_ledger}
+A charged-lepton running export requires a finite external ledger
+\[
+\mathcal L_{\rm QED}=\{S_{\rm run},\mu,L,\alpha(\mu_0),\mathcal T,\mathcal M,\mathcal C,\Sigma_{\rm QED}\},
+\]
+where $S_{\rm run}$ is the declared running scheme, $\mu$ is the target scale, $L$ is loop order, $\alpha(\mu_0)$ is the declared electromagnetic input, $\mathcal T$ is the threshold schedule, $\mathcal M$ is the matching convention, $\mathcal C$ is the conversion convention from pole/reference data to the running scheme, and $\Sigma_{\rm QED}$ is the covariance/truncation protocol.  None of these entries may be selected from the residuals to the charged-lepton pole targets.
+\end{definition}
+
+\begin{definition}[APF-admissible QED running transport]\label{def:v45_qed_transport}
+Given $\mathcal L_{\rm QED}$, the running map is the componentwise but non-adjustable route
+\[
+\boxed{
+U_{\rm QED}^{S_{\rm pole}\to S_{\rm run}}(\mathcal L_{\rm QED};x)_i
+=\exp\!\left(\int_{\log x_i}^{\log\mu}\gamma_m^{S_{\rm run}}(\alpha(q),L,\mathcal T,\mathcal M)\,d\log q\right)
+\prod_{a\in\mathcal T_i}M_a^{S_{\rm run}}(\alpha_a,L,\mathcal M),
+}
+\]
+where $x_i$ is the source component and $i\in\{e,\mu,\tau\}$.  The running export is therefore
+\[
+\boxed{
+\Phi_{\ell,i}^{S_{\rm run}}(\mu)
+=U_{\rm QED}^{S_{\rm pole}\to S_{\rm run}}(\mathcal L_{\rm QED};\Phi_\ell^{\rm v43})_i\,\Phi_{\ell,i}^{\rm v43}.
+}
+\]
+The map is generation-indexed only through the APF source values and declared threshold crossings.  It contains no free per-generation residual coefficients.
+\end{definition}
+
+\begin{theorem}[v45 QED running route-object closure]\label{thm:v45_qed_running_route_object}
+The charged-lepton QED running route has a unique APF-admissible type: a finite ledger $\mathcal L_{\rm QED}$ together with the non-target-selected RG/matching map of Definition~\ref{def:v45_qed_transport}.  Consequently G2 is closed as a symbolic running transport object, while G3--G4 remain numerical export gates until the external constants, thresholds, loop order, convention, and covariance protocol are supplied.
+\[
+\boxed{
+\ell:[P_{\rm export\ candidate}^{\rm pole,v43}+P_{\rm covariance\ admitted}^{\rm APF\ envelope}/QED_{\rm running\ open}]
+\longrightarrow
+\ell:[P_{\rm running\ route\ form}^{\rm QED}+P_{\rm constants\ ledger\ required}].
+}
+\]
+\end{theorem}
+
+\begin{proof}[APF derivation]
+Export is an admissible continuation from the APF trace/pole context into a measurement-scheme context.  A running charged-lepton mass is not a new APF trace anchor; it is a scheme continuation of the already produced pole-codomain candidate.  Therefore APF requires: (i) the target scheme and scale to be declared; (ii) a route morphism from the source vector to that scheme; (iii) all external constants and matching conventions to be ledgered; (iv) covariance to be propagated; (v) no target-derived choices; and (vi) any residual to be assigned to named route channels.  The only QED-compatible route satisfying these requirements is an RG/matching functional determined by a finite ledger.  Introducing independent factors $(r_e,r_\mu,r_\tau)$ would add three unledgered distinctions and would duplicate the already closed APF generation residual channel; it is therefore inadmissible.  The symbolic route is closed, but numerical running export is not licensed until $\mathcal L_{\rm QED}$ is filled.
+\end{proof}
+
+\begin{corollary}[No QED residual fitting]\label{cor:v45_no_qed_fitting}
+QED running cannot be used as a hidden charged-lepton residual operator.  In particular, the following replacement is forbidden:
+\[
+\Phi_{\ell,i}^{S_{\rm run}}\mapsto r_i\Phi_{\ell,i}^{\rm v43},\qquad r_i\hbox{ chosen from }(m_e,m_\mu,m_\tau)_{\rm target}.
+\]
+All generation-shaped structure must come from the APF trace vector and the APF residual operator already banked in v41--v43, or from declared threshold/matching terms in $\mathcal L_{\rm QED}$.
+\end{corollary}
+
+\paragraph{G1--G6 status after v45.}
+For the charged-lepton running codomain, G1 is declared and G2 is now route-form closed.  G3 and G4 are not numerical passes because $\alpha$, $\mu$, thresholds, loop order, matching convention, and $\Sigma_{\rm QED}$ have not been imported.  G5 is strengthened: any choice of $\mu$, loop order, threshold convention, or component factors from the pole residuals is forbidden.  G6 is typed: remaining differences must be assigned to RG evolution, matching, thresholds, truncation, external constants covariance, trace covariance, or an APF residual channel.
+
+\paragraph{Status.}
+The charged-lepton route is now
+\[
+\boxed{
+\ell:[P_{\rm running\ route\ form}^{\rm QED}+P_{\rm constants\ ledger\ required}],
+}
+\]
+not
+\[
+\ell:[P_{\rm QED\ running\ final}],\qquad
+\ell:[P_{\rm physical\ final}],\qquad
+\Delta_\ell=0.
+\]
+The next theorem is therefore the constants-ledger import and numerical covariance evaluation:
+\[
+\boxed{\texttt{APF\_CHARGED\_LEPTON\_QED\_CONSTANTS\_LEDGER\_AND\_NUMERIC\_RUNNING\_THEOREM}.}
+\]

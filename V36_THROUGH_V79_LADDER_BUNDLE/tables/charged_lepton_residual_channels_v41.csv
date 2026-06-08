@@ -1,0 +1,11 @@
+channel,status,meaning
+source_trace_T_d,closed,APF down-family trace vector source supplied
+source_map_R_d_to_l,closed,"capacity-color map diag(1/3,3,1) derives charged-lepton trace vector"
+scalar_normalization_nu_l,closed,nu_l=1/sqrt(6)
+pole_codomain,closed_for_LO,Z_l^pole=I declared for leading comparison
+covariance_protocol,formal_open_numeric,Sigma_l=J Sigma_d J^T + Sigma_nu + Sigma_route; numeric Sigma_d deferred
+QED_pole_finite_transport,open_residual,needed to explain residual vector beyond LO
+APF_route_residual,open_residual,remaining APF-side higher-order route terms
+experimental_covariance,external_diagnostic,used only after route fixed
+no_smuggling_audit,pass,no lepton masses used in source or route construction
+no_double_count_audit,pass,R_d_to_l applied once only as source map

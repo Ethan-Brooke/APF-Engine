@@ -1,0 +1,6 @@
+priority,program,reason
+highest,manuscript integration / closeout paper table,v64 is a stable endpoint and should be folded into the export theorem/paper before new derivations
+high,external chiral-lattice evaluator for light quarks,"only path to numerical u,d,s MSbar(2 GeV) export"
+high,EW global-fit correlation ledger,only path beyond separate W ledger audits
+medium,full QED running external coefficient ledger,"needed only for running lepton masses, not pole closeout"
+medium,top external MC calibration ledger,needed only for MC-parameter interpretation; APF direct-MSR codomain already closed

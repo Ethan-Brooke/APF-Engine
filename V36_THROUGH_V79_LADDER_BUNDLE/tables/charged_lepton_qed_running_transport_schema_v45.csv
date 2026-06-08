@@ -1,0 +1,7 @@
+object,status,formula_or_value,required_inputs,meaning
+Phi_l_v43_source,P_source_admitted,"(0.511002635789,105.658243985,1776.916832008) MeV",inherited v41-v43 APF trace/vector/residual chain,only admitted mass source for running transport
+L_QED,P_ledger_schema_closed,"{S_run,mu,L,alpha(mu0),T,M,C,Sigma_QED}",external constants and declared conventions,finite QED ledger required before numerical running export
+U_QED^{pole_to_running},P_route_form_closed,exp(int gamma_m dlogq)*prod matching,L_QED and APF source vector,symbolic RG/matching route object closed
+componentwise_generation_dependence,P_source_determined_only,i-dependence only through Phi_l_v43_i and declared thresholds,"no fitted r_e,r_mu,r_tau",prevents QED running from becoming a residual fit
+numeric_running_values,open_until_ledger_import,not evaluated,"alpha, mu, loop order, thresholds, matching, covariance",final running masses not claimed
+no_smuggling_audit,pass,"no target-selected scale, loop order, convention, or component factors",predeclared ledger,running transport cannot be tuned to pole residuals

@@ -1,0 +1,68 @@
+
+\section{External Ledger and Evaluator Registry Closeout (v65)}
+\label{sec:v65-external-ledger-evaluator-registry}
+
+\paragraph{Purpose.}
+The trace-to-scheme sprint ended with the export architecture closed but not with a global physical-final claim.  The next layer is external-ledger and evaluator work.  This module freezes the registry for that layer: external sources, evaluator objects, fail-closed rules, and next implementation targets.
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{
+\textbf{v65 closeout theorem.}  APF trace outputs are now separated from external scheme/evaluator work.  Every downstream numerical claim must pass through a declared external ledger $\mathcal L_{\rm ext}$, evaluator $U_{\rm ext}$, and covariance object $\Sigma_{\rm ext}$.  No sector is assigned $[P_{\rm physical\ final}]$ in v65.
+}}
+\end{center}
+
+\subsection{External evaluator form}
+For each sector the external phase has the typed form
+\[
+  O^{\rm APF}_{S_0}\xrightarrow{\;U_{\rm ext}(\mathcal L_{\rm ext},\Sigma_{\rm ext})\;}O^{\rm phys}_{S_1}.
+\]
+The evaluator is admissible only if the scheme $S_1$, source ledger $\mathcal L_{\rm ext}$, and covariance protocol $\Sigma_{\rm ext}$ are fixed independently of the target residual.
+
+\subsection{Registered external source families}
+The v65 source manifest registers CODATA/NIST constants, PDG 2025 W/quark/top ledgers, CMS 2026 W mass, MSR/R-evolution theory sources, RunDec/CRunDec running-decoupling references, and top direct/MC codomain warnings.  These are source ledgers, not APF derivations.
+
+\subsection{Sector registry}
+\begin{center}
+\begin{tabular}{p{0.18\linewidth}p{0.35\linewidth}p{0.35\linewidth}}
+\hline
+Sector & v65 status & External evaluator boundary\\
+\hline
+EW/W & $[P_{\rm on\text{-}shell\ EW\ completion}]$ & optional global-fit covariance; no unauthorized PDG+CMS average\\
+Charged leptons & $[P_{\rm pole\ completion}]+[P_{\rm QED\ boundary}]$ & full QED running evaluator requires scheme/scale/loop/threshold ledger\\
+Charm & $[P_{\overline{\rm MS}(m_c)\ covariance\ admitted}]$ & RunDec-style re-expression/covariance if changed scale\\
+Bottom & $[P_{\overline{\rm MS}(m_b)\ covariance\ admitted}]$ & RunDec-style re-expression/covariance if changed scale\\
+Top & $[P_{\rm direct\text{-}MSR\ completion}^{\rm EW\ resolution}]$ & proper MSR $R$-evolution evaluator; pole branch remains blocked\\
+Light quarks & $[P_{\rm source/pretransport}]$ & external chiral/lattice evaluator required\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Top branch control}
+The top result retained by the registry is
+\[
+  m_t^{\rm MSR}(R_{\rm EW})=172.564754410708\,\mathrm{GeV},
+  \qquad R_{\rm EW}=M_W^{\rm TRACE}/(2\pi)=12.790035691319\,\mathrm{GeV}.
+\]
+The four-loop pole branch remains quarantined:
+\[
+  m_t^{{\rm pole},4\ell}=174.016604383647\,\mathrm{GeV}.
+\]
+Thus v65 forbids any statement that the direct/MC top mass is exactly a pole mass.
+
+\subsection{Fail-closed evaluator rules}
+The registered evaluators must fail closed under any of the following conditions:
+\begin{enumerate}
+\item missing external constants, scheme, scale, coefficient, matching, or covariance ledger;
+\item target-mass inversion or residual-selected tuning;
+\item identity transport across inequivalent codomains;
+\item unauthorized averaging of external measurements without correlations;
+\item light-quark numerical export without a source-independent lattice/chiral evaluator;
+\item promotion to $[P_{\rm physical\ final}]$ without closed external covariance.
+\end{enumerate}
+
+\subsection{Closeout}
+The external-ledger/evaluator registry is closed.  The remaining work is implementation of specific external evaluators, beginning with top MSR $R$-evolution, not additional APF trace-source scaffolding.
+
+\begin{center}
+\fbox{\texttt{EXTERNAL\_LEDGER\_AND\_EVALUATOR\_REGISTRY\_PASS}}
+\end{center}

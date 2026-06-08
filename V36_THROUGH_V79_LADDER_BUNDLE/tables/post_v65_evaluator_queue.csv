@@ -1,0 +1,6 @@
+priority,program,target,closure_type,risk
+1,v66_TOP_MSR_R_EVOLUTION_EVALUATOR,replace fixed-order MSR witness by sourced R-evolution evaluator,external_evaluator_implementation,medium-high: coefficient/evolution normalization
+2,v67_CHARGED_LEPTON_FULL_QED_RUNNING_EVALUATOR,choose QED scheme/scale/thresholds and evaluate pole-to-running transport,external_evaluator_implementation,medium: convention-heavy
+3,v68_CHARM_BOTTOM_QCD_RUNNING_COVARIANCE_EVALUATOR,RunDec-style re-expression/covariance for charm and bottom,external_evaluator_implementation,medium
+4,v69_LIGHT_QUARK_CHIRAL_LATTICE_EVALUATOR_SELECTION,select source-independent lattice/chiral evaluator for uds,external_source_selection_and_boundary,high
+5,manuscript_integration,fold v35-v65 into a publication-facing claim-control section,writing/integration,low

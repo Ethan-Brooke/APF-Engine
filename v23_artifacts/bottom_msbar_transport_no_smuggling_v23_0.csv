@@ -1,0 +1,7 @@
+item,value,class_,consumed_by_trace_derivation,allowed_role
+m_b_PDG_MSbar,4.183,target_observable,False,comparison_only
+PDG_uncertainty,0.007,target_uncertainty,False,pull_context_only
+alpha_s(m_b),0.223 +/- 0.008,transport_constant,False,future_route_input
+pole_mass_context,4.78 +/- 0.06,knockout_context,False,not_pole_like_test
+m_t_APF_TRACE,168.1690557938,APF_trace_anchor,True,permitted_internal_anchor
+bottom_trace_ratio,0.024841017488076312,APF_trace_ratio,True,permitted_internal_ratio

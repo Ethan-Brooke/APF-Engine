@@ -1,0 +1,13 @@
+item,value,role,status
+m_c_APF_MSbar_mc,1.272334177712 GeV,APF v50/v57 self-scale MSbar object,frozen
+m_b_APF_MSbar_mb,4.177490455927 GeV,APF v51/v57 self-scale MSbar object,frozen
+PDG2025_m_c_mc,"1.2730 ± 0.0046 GeV, CL=90%",same-codomain audit ledger,external
+PDG2025_m_b_mb,"4.183 ± 0.007 GeV, CL=90%",same-codomain audit ledger,external
+alpha_s_mc,0.38 ± 0.03,PDG charm conversion/running context,external
+alpha_s_mb,0.223 ± 0.008,PDG bottom conversion/running context,external
+LO_QCD_beta0,11 - 2 nf/3,one-loop alpha running,closed
+LO_mass_exponent,4/beta0 = 12/(33-2 nf),one-loop MSbar mass running,closed
+c_target_scale,3 GeV,declared evaluator target below bottom threshold,declared
+b_target_scale,10 GeV,"declared evaluator target above bottom self-scale, fixed nf=5",declared
+RunDec_CRunDec,required for higher-loop running/decoupling/conversion,full evaluator boundary,fail-closed
+no_smuggling,no target masses used to choose scales or coefficients,audit rule,passed

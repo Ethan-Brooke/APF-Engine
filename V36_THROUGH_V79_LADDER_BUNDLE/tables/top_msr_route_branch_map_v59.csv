@@ -1,0 +1,5 @@
+route_id,from,to,transport,closed_in_v59,numeric_status,claim_status
+R1,m_t^MSR(R_star),m_t^pole,MSR-to-pole perturbative series plus R-evolution,ledger complete / LO witness retained,LO only evaluated; L>=2 coefficients required for final,P_full_ledger_boundary
+R2,m_t^MSR(R_star),mbar_t(mbar_t) in MSbar,MSR-to-MSbar using direct MSR-MSbar connection or pole intermediate with OS-MSbar relation,ledger specified,not evaluated; coefficient/evolution implementation required,P_route_specified_not_numeric_final
+R3,m_t^MSR(R_star),m_t^MC proxy,phenomenological comparison to direct reconstruction average,boundary specified,audit-only; no equality map,P_MC_boundary_declared
+R4,m_t^MSR(R_star),cross-section/pole-style top extraction,"external collider-theory extraction with PDFs, alpha_s, scales, perturbative order",ledger requirement specified,not evaluated,P_external_collider_ledger_required

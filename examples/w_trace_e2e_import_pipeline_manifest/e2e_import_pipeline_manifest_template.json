@@ -1,0 +1,116 @@
+{
+  "covariance_certified": false,
+  "do_not_promote_to_real_payload": true,
+  "exports_physical_M_W": false,
+  "failure_reasons": [],
+  "import_session_logged": false,
+  "import_session_replay_validated": false,
+  "not_real_finite_part_evidence": true,
+  "notes": "",
+  "numerical_component_sum_certified": false,
+  "payload_import_cli_reachable": true,
+  "physical_W_export_enabled": false,
+  "pipeline_edges": [
+    [
+      "review_packet_preflight",
+      "reviewed_source_handoff"
+    ],
+    [
+      "reviewed_source_handoff",
+      "payload_import_cli"
+    ],
+    [
+      "payload_import_cli",
+      "import_session_log"
+    ],
+    [
+      "import_session_log",
+      "import_session_replay"
+    ],
+    [
+      "import_session_replay",
+      "real_row_bundle_admission"
+    ],
+    [
+      "real_row_bundle_admission",
+      "row_bundle_to_component_sum_bridge"
+    ],
+    [
+      "row_bundle_to_component_sum_bridge",
+      "admitted_row_covariance_bridge"
+    ],
+    [
+      "admitted_row_covariance_bridge",
+      "component_sum_certificate"
+    ],
+    [
+      "component_sum_certificate",
+      "uncertainty_propagation"
+    ],
+    [
+      "uncertainty_propagation",
+      "physical_export_lock"
+    ],
+    [
+      "physical_export_lock",
+      "final_export_readiness"
+    ]
+  ],
+  "pipeline_manifest_status": "P_w_e2e_import_pipeline_manifest",
+  "pipeline_manifest_version": "w_trace_e2e_import_pipeline_manifest_v1",
+  "pipeline_mode": "END_TO_END_REVIEWED_IMPORT_PIPELINE_MANIFEST__NO_REAL_PAYLOAD_SHIPPED",
+  "pipeline_ready_for_physical_export": false,
+  "pipeline_ready_for_real_payload": false,
+  "readiness_locked": true,
+  "real_external_rows_admitted": false,
+  "real_external_rows_imported": false,
+  "review_packet_validated": false,
+  "reviewed_source_handoff_completed": false,
+  "row_bundle_component_sum_bridged": false,
+  "row_bundle_covariance_bridged": false,
+  "stage_order": [
+    "review_packet_preflight",
+    "reviewed_source_handoff",
+    "payload_import_cli",
+    "import_session_log",
+    "import_session_replay",
+    "real_row_bundle_admission",
+    "row_bundle_to_component_sum_bridge",
+    "admitted_row_covariance_bridge",
+    "component_sum_certificate",
+    "uncertainty_propagation",
+    "physical_export_lock",
+    "final_export_readiness"
+  ],
+  "stage_statuses": {
+    "admitted_row_covariance_bridge": "P_w_admitted_row_covariance_bridge",
+    "component_sum_certificate": "P_w_component_sum_certificate_harness",
+    "final_export_readiness": "P_w_final_export_readiness_aggregator",
+    "import_session_log": "P_w_import_session_log",
+    "import_session_replay": "P_w_import_session_replay_validator",
+    "payload_import_cli": "P_w_payload_import_cli_loader",
+    "physical_export_lock": "P_w_physical_export_lock",
+    "real_row_bundle_admission": "P_w_real_row_bundle_admission",
+    "review_packet_preflight": "P_w_review_packet_validator",
+    "reviewed_source_handoff": "P_w_reviewed_source_import_handoff",
+    "row_bundle_to_component_sum_bridge": "P_w_row_bundle_to_component_sum_bridge",
+    "uncertainty_propagation": "P_w_uncertainty_propagation_harness"
+  },
+  "stage_versions": {
+    "admitted_row_covariance_bridge": "w_trace_admitted_row_covariance_bridge_v0",
+    "component_sum_certificate": "w_trace_component_sum_certificate_harness_v0",
+    "final_export_readiness": "w_trace_final_export_readiness_v0",
+    "import_session_log": "w_trace_import_session_log_v1",
+    "import_session_replay": "w_trace_import_session_replay_v1",
+    "payload_import_cli": "w_trace_payload_import_cli_v0",
+    "physical_export_lock": "w_trace_physical_export_lock_v0",
+    "real_row_bundle_admission": "w_trace_real_row_bundle_admission_v0",
+    "review_packet_preflight": "w_trace_review_packet_validator_v1",
+    "reviewed_source_handoff": "w_trace_reviewed_source_import_handoff_v1",
+    "row_bundle_to_component_sum_bridge": "w_trace_row_bundle_to_component_sum_bridge_v0",
+    "uncertainty_propagation": "w_trace_uncertainty_propagation_harness_v0"
+  },
+  "template_only": true,
+  "terminal_state": "NO_REAL_PAYLOAD_PIPELINE_LOCKED",
+  "uncertainty_propagation_certified": false
+}

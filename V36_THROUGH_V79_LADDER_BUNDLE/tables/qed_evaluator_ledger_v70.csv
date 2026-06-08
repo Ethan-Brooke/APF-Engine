@@ -1,0 +1,8 @@
+item,value,role,status
+alpha_inverse,137.035999177(21),CODATA 2022 fine-structure constant,frozen external ledger
+alpha_over_pi,0.002322819464195,LO QED expansion parameter,computed
+scheme,MSbar QED running mass,target codomain for evaluator,declared
+target_scale,mu_i=m_i self-scale,self-scale LO evaluator,declared
+loop_order,one-loop finite on-shell/MSbar threshold,source-clean closed evaluator,closed
+L>=2,requires sourced QED coefficient ledger and thresholds,full numerical running,fail-closed
+no_smuggling,no scale/coefficient chosen from residual vector,audit rule,passed

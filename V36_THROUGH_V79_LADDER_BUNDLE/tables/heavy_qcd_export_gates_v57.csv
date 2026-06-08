@@ -1,0 +1,7 @@
+gate,name,charm,bottom,top
+G1,codomain declared,closed: MSbar m_c(m_c),closed: MSbar m_b(m_b),"closed as MSR(R_star), not same as PDG direct/pole/MC"
+G2,transport map supplied,closed by v50 kappa_c=sqrt(7/2),closed by identity self-scale trace route from v51,closed only to MSR(R_star) from v37
+G3,constants ledger,PDG 2025 comparison ledger + alpha_s(mc) line frozen,PDG 2025 comparison ledger + alpha_s(mb) line frozen,external MSR conversion constants not supplied
+G4,covariance protocol,inside quoted PDG 90% CL envelope; gaussian-equivalent z recorded,inside quoted PDG 90% CL envelope; gaussian-equivalent z recorded,same-codomain covariance unavailable until conversion ledger
+G5,no-smuggling audit,external m_c not used to form sqrt(7/2),external m_b not used to form trace anchor,PDG direct/pole/MC not used to choose R_star
+G6,residual channels assigned,residual assigned to external QCD comparison/covariance ledger,residual assigned to external QCD comparison/covariance ledger,residual not evaluated until same-codomain conversion ledger exists

@@ -1,0 +1,76 @@
+{
+  "status": "CHARGED_LEPTON_QED_RUNNING_TRANSPORT_THEOREM_PASS",
+  "package": "APF_v45_CHARGED_LEPTON_QED_RUNNING_TRANSPORT_THEOREM",
+  "source_from_v43": {
+    "Phi_l_v43_MeV": [
+      0.5110026357885311,
+      105.658243985342,
+      1776.9168320084111
+    ],
+    "diagnostic_pole_residual_percent": [
+      0.0007212908228403025,
+      -0.00012447158815943914,
+      -0.0007410529164876247
+    ],
+    "D0": 5063,
+    "epsilon_QED_APF": "1/5063",
+    "epsilon_percent": 0.019751135690302193,
+    "max_residual_over_envelope": 0.03751950916176844
+  },
+  "running_transport": {
+    "route_object": "U_QED^{S_pole_to_S_run}(L_QED; Phi_l_v43)",
+    "route_status": "P_route_form_closed_symbolic",
+    "transport_formula": "Phi_i^Srun(mu)=U_QED(L_QED;Phi_v43)_i*Phi_i^v43",
+    "ledger": "{S_run, mu, L, alpha(mu0), thresholds, matching, convention, Sigma_QED}",
+    "generation_dependence": "source_values_and_declared_thresholds_only",
+    "numeric_values": "not_evaluated"
+  },
+  "gate_status": {
+    "G1_CODOMAIN_DECLARED": "pass for running as typed scheme/scale declaration requirement",
+    "G2_TRANSPORT_MAP": "pass route form closed symbolically",
+    "G3_CONSTANTS_LEDGER": "ledger schema closed; external values open",
+    "G4_COVARIANCE": "protocol typed; numeric Sigma_QED/Sigma_trace open",
+    "G5_NO_SMUGGLING": "pass strengthened: no target-selected mu/loop/convention/component factors",
+    "G6_RESIDUAL_CHANNELS": "pass typed channels: RG, matching, thresholds, truncation, constants covariance, trace covariance, APF residual"
+  },
+  "promotion": {
+    "before": "charged leptons: P_export_candidate^pole_v43 + P_covariance_admitted^APF_envelope / QED_running_open",
+    "after": "charged leptons: P_running_route_form^QED + P_constants_ledger_required / numeric_QED_running_open",
+    "not_claimed": [
+      "P_QED_running_final",
+      "P_physical_final",
+      "numeric running masses",
+      "zero residual",
+      "target-selected scale",
+      "free generation factors"
+    ]
+  },
+  "forbidden_inputs_not_used": [
+    "m_e_target_to_choose_U_QED",
+    "m_mu_target_to_choose_U_QED",
+    "m_tau_target_to_choose_U_QED",
+    "target_selected_mu",
+    "target_selected_loop_order",
+    "target_selected_threshold_schedule",
+    "free_generation_factors_r_e_r_mu_r_tau",
+    "least_squares_QED_running_fit"
+  ],
+  "required_ledger_before_numeric_export": [
+    "S_run",
+    "mu",
+    "loop_order_L",
+    "alpha_input_and_scale",
+    "threshold_schedule_T",
+    "matching_convention_M",
+    "conversion_convention_C",
+    "Sigma_QED",
+    "Sigma_trace_or_tolerance"
+  ],
+  "still_open": {
+    "numeric_QED_running_export": "requires external constants ledger and covariance",
+    "QED_running_values": "not evaluated in v45",
+    "physical_final": "not claimed"
+  },
+  "next_theorem": "APF_CHARGED_LEPTON_QED_CONSTANTS_LEDGER_AND_NUMERIC_RUNNING_THEOREM",
+  "checks_total": 131
+}

@@ -1,0 +1,11 @@
+{
+  "handoff_revision": "UNSET",
+  "ingest_format": "json_rows_v1",
+  "payload_path": "PATH_TO_REVIEWED_EXTERNAL_PAYLOAD_FILE",
+  "preflight": "PASTE_VALIDATED_COMPLETED_REVIEW_PACKET_PREFLIGHT_HERE",
+  "request_physical_export": false,
+  "request_real_data": false,
+  "template_only": true,
+  "version": "w_trace_reviewed_source_import_handoff_v1",
+  "warning": "Template only: not a validated packet, not real finite-part evidence, and not a physical-W export request."
+}

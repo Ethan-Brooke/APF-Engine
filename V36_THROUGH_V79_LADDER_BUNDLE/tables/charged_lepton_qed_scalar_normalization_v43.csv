@@ -1,0 +1,11 @@
+quantity,value,unit,status,meaning
+H1,"diag(-1,0,1)",dimensionless,closed_basis,endpoint skew generator inherited from v42
+H2,"diag(1,-2,1)",dimensionless,closed_basis,middle-versus-endpoint curvature generator inherited from v42
+I,"diag(1,1,1)",dimensionless,scalar_basis,common scalar normalization direction
+D0_scalar,5063,dimensionless,count_source_witness,K_SM*(K_SM+K_c+K_b+N_gen)=61*(61+16+3+3)
+eta0_witness,1/5063,dimensionless,count_source_witness,scalar QED/pole normalization floor from APF counts
+eta1_witness,1/28,dimensionless,count_source_witness,1/(K_c+K_b+N_gen N_c)
+eta2_witness,3/584,dimensionless,count_source_witness,K_b/((N_c^2-1)(K_SM+N_gen N_H))
+Z_l_v43,exp((1/5063)I+(1/28)H1+(3/584)H2),dimensionless,scalar_normalized_witness,APF-count scalar plus generation-shape residual transport
+P_l_v43_GeV,"(0.000511002635789,0.105658243985342,1.776916832008411)",GeV,witness_output,v41 pole-LO vector after v43 scalar-normalized witness
+forbidden_inverse_scalar,zeta0=0.000197992153924,dimensionless,diagnostic_only_forbidden_as_source,obtained only by consuming pole targets

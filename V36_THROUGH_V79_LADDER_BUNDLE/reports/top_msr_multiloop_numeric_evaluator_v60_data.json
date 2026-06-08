@@ -1,0 +1,36 @@
+{
+  "stamp": "TOP_MSR_MULTILOOP_NUMERIC_EVALUATOR_IMPLEMENTATION_PASS",
+  "closed_status": "P_LO_numeric_evaluator_closed_fail_closed_multiloop_boundary",
+  "source": {
+    "m_t_MSR_Rstar_GeV": 168.1690557938,
+    "Rstar_GeV": 85.8572226983853,
+    "alpha_s_MZ": 0.118,
+    "MZ_GeV": 91.1876,
+    "nf": 5
+  },
+  "LO_result": {
+    "alpha_s_Rstar": 0.11903230865325212,
+    "delta_m_GeV": 4.337410801563721,
+    "top_pole_LO_witness_GeV": 172.50646659536372,
+    "residual_vs_PDG_direct_GeV": -0.05353340463628342,
+    "envelope_GeV": 0.38108755084974766,
+    "residual_over_envelope": -0.1404753435710897
+  },
+  "fail_closed_test": {
+    "stamp": "TOP_MSR_MULTILOOP_NUMERIC_EVALUATOR_FAIL_CLOSED",
+    "requested_loop_order": 2,
+    "missing_coefficients": [
+      "c2"
+    ],
+    "reason": "explicit sourced coefficients are required; target masses may not be used to infer them"
+  },
+  "not_claimed": [
+    "P_physical_final",
+    "exact_pole_mass",
+    "MC_mass_equality",
+    "full_multiloop_numeric_conversion",
+    "zero_residual",
+    "target_fitted_coefficients"
+  ],
+  "next": "APF_v61_TOP_MSR_COEFFICIENT_INGESTION_AND_MULTILOOP_EVALUATION"
+}

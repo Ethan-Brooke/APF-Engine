@@ -1,0 +1,7 @@
+gate,object,v55_status
+G1,codomain declaration,closed/typed for every registry entry
+G2,transport route object,"closed for EW/W, top, charged leptons, charm, bottom; boundary-typed for light quarks"
+G3,constants ledger,"typed for all; external full ledgers open for QED running, heavy-QCD final, chiral/lattice"
+G4,covariance protocol,admitted for charged-lepton pole; typed/open for EW and QCD final layers
+G5,no-smuggling audit,closed as a required registry invariant
+G6,residual channel assignment,closed/typed for every registry row; final residual closure not claimed

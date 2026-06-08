@@ -1,0 +1,1242 @@
+{
+  "checks": [
+    {
+      "name": "check_T_w_trace_family_numeric_admitted_count",
+      "passed": true,
+      "result": {
+        "check": "admitted_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_anchor_count",
+      "passed": true,
+      "result": {
+        "check": "anchor_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_anchor_ids_unique",
+      "passed": true,
+      "result": {
+        "check": "anchor_ids_unique",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_anchors_map_to_known_families",
+      "passed": true,
+      "result": {
+        "check": "anchors_map_to_known_families",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_bank_closure",
+      "passed": true,
+      "result": {
+        "check": "bank_closure",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS",
+        "total": 78
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_box_present",
+      "passed": true,
+      "result": {
+        "check": "box_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_charge_present",
+      "passed": true,
+      "result": {
+        "check": "charge_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_coverage_anchors_total",
+      "passed": true,
+      "result": {
+        "check": "coverage_anchors_total",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_coverage_family_total",
+      "passed": true,
+      "result": {
+        "check": "coverage_family_total",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_coverage_tasks_total",
+      "passed": true,
+      "result": {
+        "check": "coverage_tasks_total",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_delta_alpha_family_present",
+      "passed": true,
+      "result": {
+        "check": "delta_alpha_family_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_delta_alpha_value",
+      "passed": true,
+      "result": {
+        "check": "delta_alpha_value",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dependency_pv_pass",
+      "passed": true,
+      "result": {
+        "check": "dependency_pv_pass",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dependency_tensor_pass",
+      "passed": true,
+      "result": {
+        "check": "dependency_tensor_pass",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dependency_v20_pass",
+      "passed": true,
+      "result": {
+        "check": "dependency_v20_pass",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_diagnostic_count",
+      "passed": true,
+      "result": {
+        "check": "diagnostic_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_diagnostic_not_native",
+      "passed": true,
+      "result": {
+        "check": "diagnostic_not_native",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dizet_delta_alpha_anchor",
+      "passed": true,
+      "result": {
+        "check": "dizet_delta_alpha_anchor",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dizet_internal_total_close",
+      "passed": true,
+      "result": {
+        "check": "dizet_internal_total_close",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dr1bos_reasonable",
+      "passed": true,
+      "result": {
+        "check": "dr1bos_reasonable",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_dr1ferm_reasonable",
+      "passed": true,
+      "result": {
+        "check": "dr1ferm_reasonable",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_drrem_positive",
+      "passed": true,
+      "result": {
+        "check": "drrem_positive",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_export_mw_preserved",
+      "passed": true,
+      "result": {
+        "check": "export_mw_preserved",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_export_residual_preserved",
+      "passed": true,
+      "result": {
+        "check": "export_residual_preserved",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_family_count",
+      "passed": true,
+      "result": {
+        "check": "family_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_family_ids_unique",
+      "passed": true,
+      "result": {
+        "check": "family_ids_unique",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_finite_remainder_present",
+      "passed": true,
+      "result": {
+        "check": "finite_remainder_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_finite_target_range",
+      "passed": true,
+      "result": {
+        "check": "finite_target_range",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS",
+        "value": 0.009880894878317302
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_first_failed_gate_exact",
+      "passed": true,
+      "result": {
+        "check": "first_failed_gate_exact",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_forbidden_claims_count",
+      "passed": true,
+      "result": {
+        "check": "forbidden_claims_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_forbidden_drrem",
+      "passed": true,
+      "result": {
+        "check": "forbidden_drrem",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_forbidden_full",
+      "passed": true,
+      "result": {
+        "check": "forbidden_full",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_full_closure",
+      "passed": true,
+      "result": {
+        "check": "full_closure",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gate_closed_count",
+      "passed": true,
+      "result": {
+        "check": "gate_closed_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gate_count",
+      "passed": true,
+      "result": {
+        "check": "gate_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gate_ids_unique",
+      "passed": true,
+      "result": {
+        "check": "gate_ids_unique",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gate_no_fit_closed",
+      "passed": true,
+      "result": {
+        "check": "gate_no_fit_closed",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gate_open_count",
+      "passed": true,
+      "result": {
+        "check": "gate_open_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_gauge_present",
+      "passed": true,
+      "result": {
+        "check": "gauge_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_native_partial",
+      "passed": true,
+      "result": {
+        "check": "native_partial",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS",
+        "value": 0.026620890781097563
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_native_partial_matches_v20",
+      "passed": true,
+      "result": {
+        "check": "native_partial_matches_v20",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_native_status_partial",
+      "passed": true,
+      "result": {
+        "check": "native_status_partial",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_newdr_nonzero",
+      "passed": true,
+      "result": {
+        "check": "newdr_nonzero",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_next_gate_exact",
+      "passed": true,
+      "result": {
+        "check": "next_gate_exact",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_no_fit_not_admitted",
+      "passed": true,
+      "result": {
+        "check": "no_fit_not_admitted",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_open_count",
+      "passed": true,
+      "result": {
+        "check": "open_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_open_families_block",
+      "passed": true,
+      "result": {
+        "check": "open_families_block",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_open_gates_block",
+      "passed": true,
+      "result": {
+        "check": "open_gates_block",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_pass_status",
+      "passed": true,
+      "result": {
+        "check": "pass_status",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_payload_id",
+      "passed": true,
+      "result": {
+        "check": "payload_id",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_pull_preserved",
+      "passed": true,
+      "result": {
+        "check": "pull_preserved",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_qcd_aux_nonzero",
+      "passed": true,
+      "result": {
+        "check": "qcd_aux_nonzero",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_quarantined_block",
+      "passed": true,
+      "result": {
+        "check": "quarantined_block",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_quarantined_count",
+      "passed": true,
+      "result": {
+        "check": "quarantined_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_report_has_anchors",
+      "passed": true,
+      "result": {
+        "check": "report_has_anchors",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_report_has_digest",
+      "passed": true,
+      "result": {
+        "check": "report_has_digest",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_report_has_families",
+      "passed": true,
+      "result": {
+        "check": "report_has_families",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_report_has_gates",
+      "passed": true,
+      "result": {
+        "check": "report_has_gates",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_report_has_tasks",
+      "passed": true,
+      "result": {
+        "check": "report_has_tasks",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_rho_cross_target_range",
+      "passed": true,
+      "result": {
+        "check": "rho_cross_target_range",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_rho_family_present",
+      "passed": true,
+      "result": {
+        "check": "rho_family_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_rho_resummation_family_present",
+      "passed": true,
+      "result": {
+        "check": "rho_resummation_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_rho_resummation_negative",
+      "passed": true,
+      "result": {
+        "check": "rho_resummation_negative",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_rho_value",
+      "passed": true,
+      "result": {
+        "check": "rho_value",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_route_status_export_candidate",
+      "passed": true,
+      "result": {
+        "check": "route_status_export_candidate",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_safe_claims_count",
+      "passed": true,
+      "result": {
+        "check": "safe_claims_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_self_energy_present",
+      "passed": true,
+      "result": {
+        "check": "self_energy_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_sigma_preserved",
+      "passed": true,
+      "result": {
+        "check": "sigma_preserved",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_status_strings",
+      "passed": true,
+      "result": {
+        "check": "status_strings",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_target_decomposition",
+      "passed": true,
+      "result": {
+        "check": "target_decomposition",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "residual": 0.0,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_target_not_formula",
+      "passed": true,
+      "result": {
+        "check": "target_not_formula",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_task_count",
+      "passed": true,
+      "result": {
+        "check": "task_count",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_task_ids_unique",
+      "passed": true,
+      "result": {
+        "check": "task_ids_unique",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_tasks_have_formulae",
+      "passed": true,
+      "result": {
+        "check": "tasks_have_formulae",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_tasks_have_integrals",
+      "passed": true,
+      "result": {
+        "check": "tasks_have_integrals",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_tasks_have_next_action",
+      "passed": true,
+      "result": {
+        "check": "tasks_have_next_action",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_tasks_map_to_known_families",
+      "passed": true,
+      "result": {
+        "check": "tasks_map_to_known_families",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_version",
+      "passed": true,
+      "result": {
+        "check": "version",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    },
+    {
+      "name": "check_T_w_trace_family_numeric_vertex_present",
+      "passed": true,
+      "result": {
+        "check": "vertex_present",
+        "epistemic": "P_w_trace_diagram_family_numeric_evaluator_import",
+        "passed": true,
+        "status": "PASS"
+      }
+    }
+  ],
+  "passed": true,
+  "report": {
+    "acquisition_tasks": [
+      {
+        "blocking_reason": "coefficient formulae not imported",
+        "current_support": [
+          "PV substrate",
+          "Ward mass CT relations"
+        ],
+        "family_id": "F_MASS_WEAK_ANGLE_CT",
+        "next_action": "import reviewed Denner self-energy coefficient tables",
+        "required_formulae": [
+          "Sigma_T^W(M_W^2)",
+          "Sigma_T^Z(M_Z^2)",
+          "derivatives where required"
+        ],
+        "required_integrals": [
+          "A0",
+          "B0",
+          "B00",
+          "B1"
+        ],
+        "task_id": "TASK_SELF_ENERGY_WZ"
+      },
+      {
+        "blocking_reason": "neutral field formulae not imported",
+        "current_support": [
+          "PV substrate",
+          "charge Ward relation"
+        ],
+        "family_id": "F_CHARGE_FIELD_CT",
+        "next_action": "import photon/gamma-Z field-renormalization formulas",
+        "required_formulae": [
+          "Sigma_AA_prime(0)",
+          "Sigma_AZ(0)"
+        ],
+        "required_integrals": [
+          "B0",
+          "B0_prime",
+          "B00",
+          "B1"
+        ],
+        "task_id": "TASK_CHARGE_GAMMAZ"
+      },
+      {
+        "blocking_reason": "vertex coefficient maps absent",
+        "current_support": [
+          "relation slot"
+        ],
+        "family_id": "F_VERTEX",
+        "next_action": "import reviewed vertex coefficient formulas",
+        "required_formulae": [
+          "muon-decay W vertex finite amplitudes"
+        ],
+        "required_integrals": [
+          "B0",
+          "C0",
+          "C_tensor"
+        ],
+        "task_id": "TASK_VERTEX"
+      },
+      {
+        "blocking_reason": "box coefficient maps absent",
+        "current_support": [
+          "relation slot"
+        ],
+        "family_id": "F_BOX",
+        "next_action": "import reviewed box coefficient formulas",
+        "required_formulae": [
+          "muon-decay box matching finite amplitudes"
+        ],
+        "required_integrals": [
+          "C0",
+          "D0",
+          "D_tensor"
+        ],
+        "task_id": "TASK_BOX"
+      },
+      {
+        "blocking_reason": "gauge-cancellation numeric audit absent",
+        "current_support": [
+          "gauge-restoring relation slot"
+        ],
+        "family_id": "F_GAUGE_RESTORING",
+        "next_action": "define and verify gauge/tadpole convention across all families",
+        "required_formulae": [
+          "tadpole convention",
+          "ghost finite rows",
+          "gauge-parameter cancellation rows"
+        ],
+        "required_integrals": [
+          "A0",
+          "B0"
+        ],
+        "task_id": "TASK_GAUGE"
+      }
+    ],
+    "apf_version": "21.0.0",
+    "assembly_vector": {
+      "DIZET_DRREM": 0.011667933872161376,
+      "DIZET_delta_r_total": 0.036501785659414865,
+      "DIZET_internal_total": 0.036501785659414865,
+      "DIZET_internal_vs_imported_residual": 0.0,
+      "Delta_alpha": 0.05907386039640014,
+      "finite_target": 0.009880894878317302,
+      "finite_target_recomposed": 0.009880894878317302,
+      "full_closure_residual": 0.0,
+      "native_partial_delta_r": 0.026620890781097563,
+      "rho_leading_branch": -0.03245296961530258,
+      "rho_resummation_delta": -0.0017870389938440742,
+      "target_closed_delta_r": 0.036501785659414865,
+      "target_recomposition_residual": 0.0
+    },
+    "coverage": {
+      "acquisition_tasks": 5,
+      "admitted_families": 2,
+      "closed_gates": 5,
+      "diagnostic_anchors": 9,
+      "diagnostic_families": 2,
+      "families": 9,
+      "open_families": 5,
+      "open_gates": 5,
+      "quarantined_families": 2
+    },
+    "dependencies": {
+      "pv": "W_TRACE_PV_SCALAR_INTEGRAL_SUBSTRATE_PASS",
+      "tensor": "W_TRACE_TENSOR_COEFFICIENT_MAP_SCAFFOLD_PASS",
+      "v20_pass_status": "W_TRACE_DENNER_WARD_IDENTITY_COUNTERTERM_IMPORT_PASS",
+      "v20_status": "P_w_trace_denner_ward_identity_counterterm_import"
+    },
+    "diagnostic_anchors": [
+      {
+        "admission": "ADMITTED_ANCHOR",
+        "anchor_id": "A_DELTA_ALPHA",
+        "dizet_variable": "DELTA_ALPHA",
+        "maps_to_family": "F_DELTA_ALPHA",
+        "reason": "matches running-alpha channel",
+        "value": 0.05907386039640014
+      },
+      {
+        "admission": "DIAGNOSTIC_ONLY",
+        "anchor_id": "A_DR1FERM",
+        "dizet_variable": "DR1FERM",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "fermionic one-loop implementation variable, not APF formula row",
+        "value": 0.02959581035775259
+      },
+      {
+        "admission": "DIAGNOSTIC_ONLY",
+        "anchor_id": "A_DR1BOS",
+        "dizet_variable": "DR1BOS",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "bosonic one-loop implementation variable, not APF formula row",
+        "value": 0.004022763681392053
+      },
+      {
+        "admission": "DIAGNOSTIC_AGGREGATE",
+        "anchor_id": "A_DRREM",
+        "dizet_variable": "DRREM",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "same-input implementation aggregate closes DIZET internal path",
+        "value": 0.011667933872161376
+      },
+      {
+        "admission": "AUXILIARY_SUBROW",
+        "anchor_id": "A_TBQCD",
+        "dizet_variable": "T_BQCD",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "QCD/mixed auxiliary in DIZET DRREM assembly",
+        "value": 0.003409466703510824
+      },
+      {
+        "admission": "AUXILIARY_SUBROW",
+        "anchor_id": "A_CLQQCD",
+        "dizet_variable": "C_LQQCD",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "small QCD/mixed auxiliary in DIZET DRREM assembly",
+        "value": 6.348888191119799e-05
+      },
+      {
+        "admission": "AUXILIARY_SUBROW",
+        "anchor_id": "A_TBQCDL",
+        "dizet_variable": "T_BQCD_L",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "subtracted QCD/mixed auxiliary in DIZET DRREM assembly",
+        "value": 0.003073046013421655
+      },
+      {
+        "admission": "IMPLEMENTATION_LOCAL",
+        "anchor_id": "A_DRREM_NEWDR",
+        "dizet_variable": "DRREM_NEWDR",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "DIZET NEWDR remainder kernel; not source-family formula",
+        "value": 0.011204535418249811
+      },
+      {
+        "admission": "IMPLEMENTATION_LOCAL",
+        "anchor_id": "A_DRKER_NEWDR",
+        "dizet_variable": "DRKER_NEWDR",
+        "maps_to_family": "F_FINITE_REMAINDER",
+        "reason": "DIZET kernel diagnostic; not source-family formula",
+        "value": 0.003910332229007394
+      }
+    ],
+    "export_candidate_state": {
+      "DIZET_minus_APF_MeV": -4.823256421915,
+      "M_W_DIZET_GeV": 80.35734107757808,
+      "M_W_TRACE_GeV": 80.362164334,
+      "pull_sigma": 1.0900344137035074,
+      "sigma_total_MW_MeV": 4.424866188882492
+    },
+    "families": [
+      {
+        "admission_status": "ADMITTED_NATIVE_OR_REVIEWED_INPUT",
+        "blocks_full_native_one_loop": false,
+        "diagnostic_value": 0.05907386039640014,
+        "evaluator_status": "EVALUATED",
+        "family_id": "F_DELTA_ALPHA",
+        "native_value": 0.05907386039640014,
+        "note": "Same-input Delta-alpha row is admitted and numerically stable.",
+        "physical_family": "running-alpha / vacuum-polarization input channel",
+        "source_formula_status": "IMPORTED_EVALUATED",
+        "target_share": 0.05907386039640014,
+        "v20_relation_ids": [
+          "R_DELTA_ALPHA_ROW"
+        ]
+      },
+      {
+        "admission_status": "ADMITTED_NATIVE_LEADING_ROW",
+        "blocks_full_native_one_loop": false,
+        "diagnostic_value": -0.03424000860914665,
+        "evaluator_status": "EVALUATED_LEADING_ONLY",
+        "family_id": "F_RHO_LEAD",
+        "native_value": -0.03245296961530258,
+        "note": "APF owns the leading top-rho row; DIZET's rho-cross includes finite/resummed correction.",
+        "physical_family": "leading top-rho weak-isospin channel",
+        "source_formula_status": "LEADING_ANALYTIC_IMPORTED",
+        "target_share": -0.03245296961530258,
+        "v20_relation_ids": [
+          "R_RHO_LEAD_ROW"
+        ]
+      },
+      {
+        "admission_status": "QUARANTINED_DIAGNOSTIC",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": -0.0017870389938440742,
+        "evaluator_status": "DIAGNOSTIC_TARGET_ONLY",
+        "family_id": "F_RHO_RESUMMATION_DELTA",
+        "native_value": null,
+        "note": "Exact gap between DIZET rho-cross and APF leading rho; not admitted as native proof.",
+        "physical_family": "rho-cross finite/resummation correction",
+        "source_formula_status": "NEEDS_REVIEWED_FORMULA_IMPORT",
+        "target_share": -0.0017870389938440742,
+        "v20_relation_ids": [
+          "R_RHO_LEAD_ROW",
+          "R_WEAK_ANGLE_CT"
+        ]
+      },
+      {
+        "admission_status": "QUARANTINED_IMPLEMENTATION_AGGREGATE",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": 0.011667933872161376,
+        "evaluator_status": "DIAGNOSTIC_AGGREGATE",
+        "family_id": "F_FINITE_REMAINDER",
+        "native_value": null,
+        "note": "DIZET DRREM is a real implementation-local aggregate; it is not a reviewed family formula table.",
+        "physical_family": "finite self-energy/charge/vertex/box/gauge remainder aggregate",
+        "source_formula_status": "NEEDS_FAMILY_FORMULAE",
+        "target_share": 0.011667933872161376,
+        "v20_relation_ids": [
+          "R_OS_MASS_CT_W",
+          "R_OS_MASS_CT_Z",
+          "R_WEAK_ANGLE_CT",
+          "R_CHARGE_CT_ALPHA0",
+          "R_FIELD_AA",
+          "R_FIELD_ZA",
+          "R_VERTEX_FAMILY",
+          "R_BOX_FAMILY",
+          "R_TAD_GHOST_GAUGE"
+        ]
+      },
+      {
+        "admission_status": "OPEN",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": null,
+        "evaluator_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+        "family_id": "F_MASS_WEAK_ANGLE_CT",
+        "native_value": null,
+        "note": "PV/tensor substrate and Ward relation exist; reviewed self-energy coefficient formulae are not imported.",
+        "physical_family": "W/Z self-energy and weak-angle counterterm finite family",
+        "source_formula_status": "NEEDS_WZ_SELF_ENERGY_FORMULAE",
+        "target_share": null,
+        "v20_relation_ids": [
+          "R_OS_MASS_CT_W",
+          "R_OS_MASS_CT_Z",
+          "R_WEAK_ANGLE_CT"
+        ]
+      },
+      {
+        "admission_status": "OPEN",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": null,
+        "evaluator_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+        "family_id": "F_CHARGE_FIELD_CT",
+        "native_value": null,
+        "note": "Charge/Ward relations exist; finite derivative/mixing coefficient rows remain open.",
+        "physical_family": "charge, photon, gamma-Z mixing finite family",
+        "source_formula_status": "NEEDS_PHOTON_GAMMAZ_FORMULAE",
+        "target_share": null,
+        "v20_relation_ids": [
+          "R_CHARGE_CT_ALPHA0",
+          "R_FIELD_AA",
+          "R_FIELD_ZA"
+        ]
+      },
+      {
+        "admission_status": "OPEN",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": null,
+        "evaluator_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+        "family_id": "F_VERTEX",
+        "native_value": null,
+        "note": "Vertex relation slot exists; reviewed B/C tensor coefficient formulae not imported.",
+        "physical_family": "muon-decay vertex finite family",
+        "source_formula_status": "NEEDS_VERTEX_FORMULAE",
+        "target_share": null,
+        "v20_relation_ids": [
+          "R_VERTEX_FAMILY"
+        ]
+      },
+      {
+        "admission_status": "OPEN",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": null,
+        "evaluator_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+        "family_id": "F_BOX",
+        "native_value": null,
+        "note": "Box relation slot exists; reviewed C/D coefficient formulae not imported.",
+        "physical_family": "muon-decay box finite family",
+        "source_formula_status": "NEEDS_BOX_FORMULAE",
+        "target_share": null,
+        "v20_relation_ids": [
+          "R_BOX_FAMILY"
+        ]
+      },
+      {
+        "admission_status": "OPEN",
+        "blocks_full_native_one_loop": true,
+        "diagnostic_value": null,
+        "evaluator_status": "RELATION_IMPORTED_NUMERIC_OPEN",
+        "family_id": "F_GAUGE_RESTORING",
+        "native_value": null,
+        "note": "Gauge-restoring slot exists; convention-specific numeric audit remains open.",
+        "physical_family": "tadpole/ghost/gauge-cancellation finite family",
+        "source_formula_status": "NEEDS_GAUGE_CANCELLATION_AUDIT",
+        "target_share": null,
+        "v20_relation_ids": [
+          "R_TAD_GHOST_GAUGE"
+        ]
+      }
+    ],
+    "first_failed_gate": "APF_NATIVE_REVIEWED_FAMILY_FORMULAE_NUMERIC_IMPORT_AND_VERTEX_BOX_GAUGE_AUDIT",
+    "forbidden_claims": [
+      "v21 derives full APF-native one-loop Delta r.",
+      "DIZET DRREM is a reviewed APF finite-row formula.",
+      "The finite target is proven by fitting coefficients.",
+      "Vertex, box, and gauge-restoring families are numerically evaluated from source formulae."
+    ],
+    "gates": [
+      {
+        "blocks_full_native_one_loop": false,
+        "evidence": "W_TRACE_DENNER_WARD_IDENTITY_COUNTERTERM_IMPORT_PASS",
+        "gate_id": "G2N_V20_DEPENDENCY",
+        "status": "CLOSED"
+      },
+      {
+        "blocks_full_native_one_loop": false,
+        "evidence": "DIZET internal variables imported as diagnostics",
+        "gate_id": "G2N_DIZET_INTERNALS",
+        "status": "CLOSED"
+      },
+      {
+        "blocks_full_native_one_loop": false,
+        "evidence": "Delta-alpha and leading-rho rows evaluated",
+        "gate_id": "G2N_NATIVE_EVALUATED_ROWS",
+        "status": "CLOSED"
+      },
+      {
+        "blocks_full_native_one_loop": false,
+        "evidence": "finite target = DIZET DRREM + rho resummation delta",
+        "gate_id": "G2N_TARGET_DECOMPOSITION",
+        "status": "CLOSED"
+      },
+      {
+        "blocks_full_native_one_loop": false,
+        "evidence": "diagnostic targets cannot become admitted formula rows",
+        "gate_id": "G2N_NO_FIT_GUARD",
+        "status": "CLOSED_GUARD"
+      },
+      {
+        "blocks_full_native_one_loop": true,
+        "evidence": "reviewed W/Z self-energy numeric formulae missing",
+        "gate_id": "G2N_SELF_ENERGY_FORMULAE",
+        "status": "OPEN"
+      },
+      {
+        "blocks_full_native_one_loop": true,
+        "evidence": "reviewed photon/gamma-Z formulae missing",
+        "gate_id": "G2N_CHARGE_GAMMAZ_FORMULAE",
+        "status": "OPEN"
+      },
+      {
+        "blocks_full_native_one_loop": true,
+        "evidence": "reviewed vertex/box coefficient formulae missing",
+        "gate_id": "G2N_VERTEX_BOX_FORMULAE",
+        "status": "OPEN"
+      },
+      {
+        "blocks_full_native_one_loop": true,
+        "evidence": "tadpole/ghost/gauge-cancellation numeric audit missing",
+        "gate_id": "G2N_GAUGE_AUDIT",
+        "status": "OPEN"
+      },
+      {
+        "blocks_full_native_one_loop": true,
+        "evidence": "APF_NATIVE_REVIEWED_FAMILY_FORMULAE_NUMERIC_IMPORT_AND_VERTEX_BOX_GAUGE_AUDIT",
+        "gate_id": "G2N_FULL_NATIVE_ONE_LOOP",
+        "status": "OPEN"
+      }
+    ],
+    "native_one_loop_status": "P_partial_native_rows_plus_diagnostic_family_projection_open_reviewed_formula_import",
+    "next_gate": "G2N_REVIEWED_SELF_ENERGY_VERTEX_BOX_GAUGE_FORMULAE",
+    "payload_digest": "sha256:3ef69620bb7e4f075360d10cb34e6d65f9219cc7999bed6c80f7d3914358e0b1",
+    "route_status": "P_export_candidate_plus_family_numeric_import_frontier",
+    "safe_claims": [
+      "v21 imports a numeric family frontier and decomposes the finite target without admitting fitted coefficients.",
+      "DIZET implementation variables are diagnostic anchors, not APF-native Denner/Sirlin formulae.",
+      "The route remains an export candidate by reviewed same-input transport plus partial APF-native assembly.",
+      "The next wall is reviewed source-formula import for diagram families, not DIZET execution, scalar integrals, tensors, or Ward relations."
+    ],
+    "title": "W_TRACE diagram-family numeric evaluator import and closeout layer",
+    "version": "v21_0"
+  },
+  "status": "W_TRACE_DIAGRAM_FAMILY_NUMERIC_EVALUATOR_IMPORT_PASS"
+}

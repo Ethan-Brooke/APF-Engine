@@ -1,0 +1,9 @@
+family_id,role_in_delta_r,relation_inputs,required_numeric_evaluator,current_value,admission_status,blocks_full_native_one_loop
+F_DELTA_ALPHA,large positive vacuum-polarization channel,"('R_DELTA_ALPHA_ROW',)",evaluated input row,0.05907386039640014,ADMITTED_EVALUATED,False
+F_RHO_LEAD,dominant negative leading top-rho channel,"('R_RHO_LEAD_ROW',)",analytic evaluated row,-0.03245296961530258,ADMITTED_EVALUATED,False
+F_MASS_WEAK_ANGLE_CT,mass and weak-angle counterterm finite family,"('R_OS_MASS_CT_W', 'R_OS_MASS_CT_Z', 'R_WEAK_ANGLE_CT')",W/Z self-energy coefficient evaluator,,RELATION_IMPORTED_NUMERIC_OPEN,True
+F_CHARGE_FIELD_CT,charge/field-renormalization finite family,"('R_CHARGE_CT_ALPHA0', 'R_FIELD_AA', 'R_FIELD_ZA')",neutral self-energy derivative/mixing evaluator,,RELATION_IMPORTED_NUMERIC_OPEN,True
+F_VERTEX,muon-decay vertex finite family,"('R_VERTEX_FAMILY',)",vertex coefficient evaluator,,RELATION_IMPORTED_NUMERIC_OPEN,True
+F_BOX,muon-decay box finite family,"('R_BOX_FAMILY',)",box coefficient evaluator,,RELATION_IMPORTED_NUMERIC_OPEN,True
+F_GAUGE_RESTORING,tadpole/ghost/gauge-cancellation finite family,"('R_TAD_GHOST_GAUGE',)",gauge-cancellation numerical audit,,RELATION_IMPORTED_NUMERIC_OPEN,True
+F_TARGET_FINITE,same-input full finite target for all open families,(),"target only, not proof",0.009880894878317302,TARGET_ONLY_QUARANTINED,True

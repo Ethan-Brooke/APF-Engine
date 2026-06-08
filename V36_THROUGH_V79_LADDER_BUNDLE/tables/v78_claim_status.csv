@@ -1,0 +1,2 @@
+sector,status,closed,remaining_boundary
+c,b,threshold-matched benchmark closure + RunDec-compatible scaffold,yes,complete RunDec parity requires decoupling constants or adapter

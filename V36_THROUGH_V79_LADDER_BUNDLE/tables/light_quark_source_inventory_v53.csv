@@ -1,0 +1,7 @@
+source_object,value,units,status,meaning,export_use
+T_u^APF[1],0.001153209852399677,GeV,banked_trace_sector_import_v53,up-family first-generation trace component imported from upstream APF trace-sector closure bank; not a physical MSbar(2GeV) mass,source input only; no identity export
+T_d^APF[1],0.003870916422334003,GeV,banked_v41_down_family_trace,down-family first-generation trace component; not a physical MSbar(2GeV) mass,source input only; no identity export
+T_d^APF[2],0.087143281633651370,GeV,banked_v41_down_family_trace,down-family second-generation trace component; not a physical MSbar(2GeV) mass,source input only; no identity export
+T_c^APF,0.680091224926141935,GeV,banked_v50_charm_trace,heavy charm trace anchor; not a light-quark codomain value,heavy-QCD ledger only
+T_b^APF,4.177490455927066471,GeV,banked_v51_bottom_trace,heavy bottom trace/codomain anchor,heavy-QCD ledger only
+T_t^APF,168.1690557938000,GeV,banked_v37_top_trace,heavy top trace anchor; not a light-quark codomain value,MSR route only

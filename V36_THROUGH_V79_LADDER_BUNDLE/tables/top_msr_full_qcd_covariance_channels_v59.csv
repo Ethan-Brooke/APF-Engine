@@ -1,0 +1,9 @@
+channel,status,current_value,propagation_required
+alpha_s(M_Z),numeric value and uncertainty declared,0.1180 +/- 0.0009,differentiate full evaluator w.r.t. alpha_s(M_Z)
+R_star,APF exact/trace-derived in current bank,85.857222698385 GeV,APF trace covariance if introduced later
+MSR truncation order,LO evaluated; L>=2 open,LO truncation envelope only,order-by-order difference after coefficient ingestion
+R-evolution truncation,coefficient slots specified,not numeric final,vary loop order and R path
+threshold matching,ledger slot specified,n_f=5 fixed for v58 witness,threshold variation and decoupling covariance for full route
+pole renormalon ambiguity,declared boundary,"O(Lambda_QCD), not exact",must be represented if claiming pole-final
+MC interpretation,audit boundary only,not a mathematical equality,external collider/theory calibration if claiming MC map
+PDF/collider extraction correlations,not part of APF source,external if cross-section route used,import working-group covariance

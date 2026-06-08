@@ -1,0 +1,111 @@
+{
+  "Delta_r_total": 0.036614529324049294,
+  "anti_smuggling_attestations": {
+    "APF_targets_are_comparison_only": true,
+    "physical_export_requested": false,
+    "uses_APF_Delta_r_target_as_source_input": false,
+    "uses_APF_TRACE_M_W_as_source_input": false,
+    "uses_CDF_II_M_W": false,
+    "uses_CMS_observed_M_W": false,
+    "uses_observed_M_W": false,
+    "uses_world_average_M_W": false
+  },
+  "comparison_only": {
+    "Delta_r_APF_TRACE_target": 0.036407526612821685,
+    "Delta_r_source_minus_APF": 0.00020700271122760933,
+    "Delta_r_source_total": 0.036614529324049294,
+    "M_W_TRACE_GeV": 80.362164334,
+    "M_W_source_GeV": 80.35867899232582,
+    "M_W_source_minus_W_TRACE_GeV": -0.003485341674178244,
+    "abs_Delta_r_residual": 0.00020700271122760933,
+    "abs_M_W_gap_MeV": 3.485341674178244
+  },
+  "derivation_note": "ACFW forward SM M_W parametrization evaluated on declared non-W inputs, then inverted through the on-shell G_F-M_W-M_Z-Delta_r relation.",
+  "exports_physical_M_W": false,
+  "input_scheme": "standard_on_shell_GF_alpha_MZ_input_basis; ACFW_SM_parametrization_forward_MW_then_invert_Delta_r",
+  "payload_kind": "standard_delta_r_total",
+  "payload_schema_version": "standard_delta_r_payload_schema_v14_0",
+  "physical_W_export_enabled": false,
+  "physical_export_requested": false,
+  "provenance": {
+    "digest_material": {
+      "arxiv": "hep-ph/0311148",
+      "doi": "10.1103/PhysRevD.69.053006",
+      "formula": {
+        "comparison_only_targets": [
+          "M_W_TRACE_GeV",
+          "Delta_r_APF_TRACE_target"
+        ],
+        "forbidden_inputs": [
+          "observed_M_W",
+          "world_average_M_W",
+          "CDF_II_M_W",
+          "CMS_observed_M_W",
+          "PDG_observed_M_W",
+          "M_W_TRACE_as_source_input",
+          "APF_DELTA_R_TARGET_AS_SOURCE_INPUT",
+          "Delta_r_target_backsolve",
+          "fit_to_APF_anchor",
+          "fit_to_observed_W",
+          "manual_export_override",
+          "physical_export_request"
+        ],
+        "independent_inputs": [
+          "M_H_GeV",
+          "m_t_GeV",
+          "Delta_alpha",
+          "alpha_s_MZ",
+          "M_Z_GeV",
+          "alpha_inverse_for_inversion",
+          "G_F_GeV_minus2"
+        ],
+        "relation_id": "on_shell_GF_MW_MZ_Delta_r_relation",
+        "relation_latex": "G_F = \\frac{\\pi\\alpha}{\\sqrt{2}M_W^2}\\,\\frac{1}{1-M_W^2/M_Z^2}\\,\\frac{1}{1-\\Delta r}",
+        "solved_quantity": "Delta_r_source_total"
+      },
+      "inputs": {
+        "Delta_alpha": 0.059,
+        "G_F_GeV_minus2": 1.1663788e-05,
+        "M_H_GeV": 125.25,
+        "M_Z_GeV": 91.1876,
+        "alpha_inverse_for_inversion": 137.035999177,
+        "alpha_s_MZ": 0.1184,
+        "input_policy": "declared_non_W_inputs_only; no observed W; no APF anchor as source input",
+        "m_t_GeV": 172.57
+      },
+      "source": {
+        "authors": "M. Awramik, M. Czakon, A. Freitas, G. Weiglein",
+        "exports_physical_M_W": false,
+        "notes": "ACFW SM M_W prediction parametrization; inverted downstream to Delta_r_source for APF comparison only.",
+        "payload_kind": "standard_delta_r_parametrization_inverted_from_SM_MW_prediction",
+        "source_id": "ACFW_2004_PRD69_053006_hep-ph_0311148",
+        "title": "Precise Prediction for the W-Boson Mass in the Standard Model",
+        "uses_apf_delta_r_target": false,
+        "uses_apf_trace_M_W": false,
+        "uses_observed_M_W": false
+      },
+      "values": {
+        "Delta_r_source_minus_APF": 0.00020700271122760933,
+        "Delta_r_source_total": 0.036614529324049294,
+        "M_W_source_GeV": 80.35867899232582,
+        "M_W_source_minus_W_TRACE_GeV": -0.003485341674178244,
+        "abs_Delta_r_residual": 0.00020700271122760933,
+        "abs_M_W_gap_MeV": 3.485341674178244
+      }
+    },
+    "extraction_status": "P_w_acfw_delta_r_extraction_attempt",
+    "source_arxiv": "hep-ph/0311148",
+    "source_authors": "M. Awramik, M. Czakon, A. Freitas, G. Weiglein",
+    "source_doi": "10.1103/PhysRevD.69.053006",
+    "source_title": "Precise Prediction for the W-Boson Mass in the Standard Model",
+    "worksheet_id": "W_TRACE_STANDARD_DELTA_R_TOTAL_WORKSHEET_ACFW_v15_1"
+  },
+  "source_candidate_id": "ACFW_2004_PRD69_053006_hep-ph_0311148",
+  "source_digest": "sha256:c6f6f82ad5022eb428227d2729d21785c1887e6a49eba8fb3174b15fc3fe93cd",
+  "source_digest_algorithm": "sha256-canonical-json",
+  "uncertainty": {
+    "Delta_r_uncertainty": "UNPROPAGATED_NO_COVARIANCE_CERTIFICATE",
+    "M_W_theory_uncertainty_MeV_source_quote": 4.0,
+    "role": "source-scale context only; not export uncertainty"
+  }
+}

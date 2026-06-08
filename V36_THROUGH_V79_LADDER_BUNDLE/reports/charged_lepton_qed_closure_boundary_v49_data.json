@@ -1,0 +1,98 @@
+{
+  "status": "CHARGED_LEPTON_QED_CLOSURE_BOUNDARY_THEOREM_PASS",
+  "package": "APF_v49_CHARGED_LEPTON_QED_CLOSURE_BOUNDARY_THEOREM",
+  "inherited_from": "APF_v48_CHARGED_LEPTON_FULL_QED_RUNNING_LEDGER_AND_COVARIANCE_EVALUATION",
+  "closure_claim": "P_QED_BRANCH_CLOSED_AT_APF_POLE_PLUS_EXTERNAL_LEDGER_BOUNDARY",
+  "not_claimed": [
+    "P_QED_RUNNING_FINAL_NOT_CLAIMED",
+    "P_physical_final",
+    "zero_residual",
+    "CODATA_sigma_agreement_for_all_leptons",
+    "multi_loop_QED_running_numerical_final"
+  ],
+  "codata_ledger": {
+    "alpha_inverse": 137.035999177,
+    "alpha_inverse_uncertainty": 2.1e-08,
+    "alpha": 0.0072973525643314245,
+    "alpha_uncertainty": 1.1182784434112427e-12,
+    "charged_lepton_reference_MeV": [
+      0.51099895069,
+      105.6583755,
+      1776.86
+    ],
+    "charged_lepton_uncertainty_MeV": [
+      1.6e-10,
+      2.3e-06,
+      0.12
+    ],
+    "role": "external diagnostic/transport ledger; not APF source input"
+  },
+  "pole_route": {
+    "Phi_l_v43_MeV": [
+      0.5110026357885311,
+      105.658243985342,
+      1776.9168320084111
+    ],
+    "absolute_residual_MeV": [
+      3.6850985311032147e-06,
+      -0.00013151465800831375,
+      0.05683200841122016
+    ],
+    "relative_residual_percent": [
+      0.0007211557922236904,
+      -0.00012447158815943914,
+      0.003198451673807737
+    ],
+    "APF_envelope_percent": 0.019751135690302193,
+    "all_inside_APF_envelope": true,
+    "max_abs_residual_percent": 0.003198451673807737
+  },
+  "qed_transport_witness": {
+    "alpha_over_pi": 0.0023228194641953287,
+    "LO_factor": 0.997682563522362,
+    "LO_running_witness_MeV": [
+      0.5098184196401856,
+      105.41338771656719,
+      1772.7989401241857
+    ],
+    "LO_shift_percent": -0.23174364776380463,
+    "L2_scale_percent": 0.0005395490263244674,
+    "L3_scale_percent": 1.2532749802341106e-06,
+    "status": "LO_numeric_witness_closed_full_L_ge_2_final_not_claimed"
+  },
+  "covariance_closure": {
+    "APF_envelope_percent": 0.019751135690302193,
+    "QED_L2_truncation_scale_percent": 0.0005395490263244674,
+    "combined_envelope_percent": 0.019758503845396208,
+    "residual_over_combined_envelope": [
+      0.036498502005338926,
+      0.0062996464273503885,
+      0.1618772199977574
+    ],
+    "max_residual_over_combined_envelope": 0.1618772199977574,
+    "all_inside_combined_envelope": true
+  },
+  "full_qed_ledger_required_before_running_final": [
+    "S_run",
+    "mu",
+    "L",
+    "K_n",
+    "threshold_schedule",
+    "matching_convention",
+    "alpha_running",
+    "Sigma_QED"
+  ],
+  "forbidden_inputs_not_used": [
+    "CODATA masses to construct T_l",
+    "generation residual ratios as correction factors",
+    "target-selected alpha",
+    "target-selected scale mu",
+    "target-selected loop order",
+    "threshold schedule chosen from residuals",
+    "least-squares QED cleanup",
+    "L>=2 coefficients inferred from residuals"
+  ],
+  "interpretation": "QED branch is complete at APF pole plus external-ledger boundary; final numerical running is downstream external QED metrology, not APF source closure.",
+  "next_theorem": "APF_CHARM_TRACE_TO_MSBAR_NORMALIZATION_OR_TRANSPORT_MAP",
+  "checks_total": 190
+}

@@ -1,0 +1,114 @@
+\section{Exhaustion-by-Deduction: Categorical Formalization of G1--G6}
+\label{sec:g1-g6-exhaustion-by-deduction}
+
+The sufficiency proof of \S\ref{sec:g1-g6-sufficiency} establishes that closing $G_1$--$G_6$ suffices for admissible export, by enumerating six structural surfaces of the trace-to-scheme operation and reducing eleven candidate $G_7$s to those surfaces or to preconditions. The proof depended on an enumeration assumption: that the six-surface list is complete.
+
+This section upgrades the proof from exhaustion-by-enumeration to exhaustion-by-deduction. We define a category $\mathbf{TtS}$ — the trace-to-scheme category — whose objects are $A_1$-admissible interfaces and whose morphisms are admissible export operations. We show that a $\mathbf{TtS}$-morphism is structurally specified by exactly six pieces of data, and that $A_1$ imposes cost-payment at each piece, producing $G_1$--$G_6$ by data correspondence. The enumeration assumption is replaced by the categorical-formalization assumption: that $\mathbf{TtS}$ captures the operation. The latter is a definitional question with cleaner discipline.
+
+\subsection{The trace-to-scheme category $\mathbf{TtS}$}
+\label{subsec:TtS-category}
+
+\begin{definition}[Trace-to-Scheme Category]
+\label{def:TtS}
+The category $\mathbf{TtS}$ has:
+\begin{itemize}
+\item \textbf{Objects:} $A_1$-admissible interfaces, each a triple $(S, \mathfrak{D}, C)$ of substrate, distinction set, and capacity, satisfying $A_1$ + MD + BW + finite-physical-regime $A_2$. The trace category $\mathcal{T}$ is one such object; physical-scheme categories $\mathcal{S}_i$ (OS, $\overline{\rm MS}$, MSR, pole, MC, lattice $\overline{\rm MS}$(2 GeV)) are others.
+\item \textbf{Morphisms:} admissible export operations from a source interface $\mathcal{T}$ to a target interface $\mathcal{S}_i$, with comparison structure on $\mathcal{S}_i$. A morphism $\mathcal{T} \xrightarrow{\tau} \mathcal{S}_i$ is structurally specified by the data enumerated below.
+\end{itemize}
+\end{definition}
+
+The category $\mathbf{TtS}$ is the categorical formalization of the trace-to-scheme export operation. Its morphisms are exactly the operations $G_1$--$G_6$ are designed to gate.
+
+\subsection{Morphism data: the six pieces}
+\label{subsec:morphism-data}
+
+\begin{lemma}[Morphism Data Exhaustion]
+\label{lem:morphism-data}
+A $\mathbf{TtS}$-morphism $\mathcal{T} \xrightarrow{\tau} \mathcal{S}_i$ is structurally specified by exactly six pieces of data, listed below. Any structural feature of the morphism corresponds to one of these six.
+\end{lemma}
+
+\paragraph{Data piece 1: target object $\mathcal{S}_i$.} The morphism's codomain is one specific $A_1$-admissible interface among the available physical-scheme categories. The operation cannot be specified without identifying which interface is the target.
+
+\paragraph{Data piece 2: map graph $\Gamma_\tau \subseteq \mathfrak{D}_T \times \mathfrak{D}_{\mathcal{S}_i}$.} The morphism's underlying function from the source distinction set to the target distinction set, with the function property (each $T \in \mathfrak{D}_T$ has at most one image $\tau(T) \in \mathfrak{D}_{\mathcal{S}_i}$). The map graph carries the structural form of the transport.
+
+\paragraph{Data piece 3: parameter set $\{c_j\}$.} The constants, scales, and conventions consumed by $\tau$ that are external to $\mathcal{T}$ — i.e., paid by some interface other than the source. The parameter set is part of the morphism's specification because two morphisms with the same map graph but different parameter sets are structurally distinct (they pay different external interfaces' ledgers).
+
+\paragraph{Data piece 4: probabilistic structure on inputs.} The spreads $\sigma_T$ on the source value and $\{\sigma_{c_j}\}$ on the parameters. By BW, every $A_1$-admissible interface carries non-degenerate cost spectrum, so distinctions live with finite spread; the morphism inherits these spreads from its source and parameters. Two morphisms with the same map graph and parameter set but different probabilistic structures are structurally distinct.
+
+\paragraph{Data piece 5: comparison structure with role separation.} The morphism is intended for comparison: $\tau(T) \stackrel{?}{=} M_{\mathcal{S}_i}$ where $M_{\mathcal{S}_i} \in \mathfrak{D}_{\mathcal{S}_i}$ is the target observable. The comparison demands a role-separation: $T$ on the input side, $M_{\mathcal{S}_i}$ on the output side. The role-separation is part of the morphism's structural data because morphisms that mix input and output roles are not admissible exports (they're tautologies).
+
+\paragraph{Data piece 6: comparison residual $\rho \in \mathfrak{D}_{\mathcal{S}_i}$.} The residual $\rho = \tau(T) - M_{\mathcal{S}_i}$ produced by the comparison is itself an element of the target's distinction set. It is part of the morphism's output data because the comparison is incomplete without it.
+
+\paragraph{Proof of Lemma~\ref{lem:morphism-data}.} A morphism in any category is specified by its source, target, and data linking them. For $\mathbf{TtS}$, the source is fixed (always $\mathcal{T}$ for export operations), so the morphism's specification reduces to: target (1), map (2), and the operation-specific data (3)--(6) that distinguish admissible exports from arbitrary functions. Pieces (3)--(6) are forced by the categorical type ``function-with-comparison-between-$A_1$-admissible-interfaces-with-probabilistic-structure'': parameters are needed if the function is parameterized, probabilistic structure is needed because $A_1$-admissible interfaces have non-degenerate cost spectra, role-separation is needed for comparison-as-distinct-from-tautology, and comparison residual is needed because the comparison produces an output element. Each is a structural component of the morphism's data; together they exhaust the morphism's specification. $\square$
+
+\subsection{A1 imposes G1--G6 by data correspondence}
+\label{subsec:A1-correspondence}
+
+\begin{theorem}[A1-Forced Gates]
+\label{thm:A1-forced}
+Each of the six pieces of $\mathbf{TtS}$-morphism data carries a distinction-cost demanded by $A_1$. The cost-payment at each piece is exactly one of $G_1$--$G_6$. The gate set is therefore exactly the cost-payment at each morphism-data piece, in bijection.
+\end{theorem}
+
+\begin{proof}
+We pair each data piece with the gate it forces, by $A_1$.
+
+\begin{enumerate}
+\item \textbf{Target object $\mathcal{S}_i$.} The choice of target interface among $\{\mathcal{S}_1, \mathcal{S}_2, \dots\}$ is itself a distinction (different choices produce numerically distinct morphisms). By $A_1$, the distinction has positive cost; the cost is paid by declaring $\mathcal{S}_i$. This is $G_1$ (codomain identification).
+\item \textbf{Map graph $\Gamma_\tau$.} The map's structural form is a distinction in the framework's content (different graphs are different morphisms). By $A_1$, the distinction has cost; the cost is paid by supplying a non-inverse map (otherwise the cost is zero, since an inverse map's value is given). This is $G_2$.
+\item \textbf{Parameter set $\{c_j\}$.} The use of external content is a distinction between APF-paid and externally-paid cost. By $A_1$'s no-overclaim corollary, the distinction must be declared (otherwise the two cost-budgets are conflated). This is $G_3$.
+\item \textbf{Probabilistic structure on inputs.} The propagation of input spreads through $\tau$ is a distinction in the probability dimension of $\mathfrak{D}_{\mathcal{S}_i}$. By $A_1$ + BW, the distinction has cost; the cost is paid by propagating the covariance through $\tau$ (or by declaring the structural-form domain of validity). This is $G_4$.
+\item \textbf{Role separation.} The distinction between input and output content is itself a distinction in the operation's structure. Mixing the roles (target consumed as input) collapses the distinction without payment, violating $A_1$. The role-separation is paid by the no-smuggling discipline. This is $G_5$.
+\item \textbf{Comparison residual $\rho$.} The residual is a distinction in $\mathfrak{D}_{\mathcal{S}_i}$ produced by the comparison. By $A_1$, every distinction in the operation's content must be paid; the residual's cost is paid by channel-assignment (covariance, named operator, scheme convention, theory-uncertainty band). This is $G_6$.
+\end{enumerate}
+
+By Lemma~\ref{lem:morphism-data}, the six pieces are exhaustive of the morphism's data. By the pairing above, $A_1$ imposes exactly $G_1$--$G_6$ as the cost-payment at each piece. There is no seventh data piece, hence no seventh gate. $\square$
+\end{proof}
+
+\subsection{The deductive sufficiency theorem}
+\label{subsec:deductive-sufficiency}
+
+\begin{theorem}[Deductive Sufficiency of $G_1$--$G_6$]
+\label{thm:deductive-sufficiency}
+For any morphism in $\mathbf{TtS}$, closing all of $G_1$--$G_6$ is sufficient for admissible export. There is no missing seventh gate.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:morphism-data}, a $\mathbf{TtS}$-morphism is fully specified by six pieces of data. By Theorem~\ref{thm:A1-forced}, $A_1$ imposes a cost-payment at each piece, and the cost-payments are exactly $G_1$--$G_6$. Closing all six gates closes the cost-payment at every piece of morphism data; therefore every distinction the operation produces or transforms has a paying ledger; therefore the export is admissible.
+
+The exhaustion is now derived from the morphism's data structure rather than from manual enumeration of surfaces. There is no missing gate $G_7$ unless there is a missing data piece in the morphism's specification — and the morphism's specification is fixed by the categorical definition of $\mathbf{TtS}$. $\square$
+\end{proof}
+
+\subsection{What this proof assumes}
+\label{subsec:categorical-assumption}
+
+The deductive sufficiency proof depends on the *categorical-formalization assumption*: that $\mathbf{TtS}$ correctly captures the trace-to-scheme operation. This is a definitional question rather than a factual-completeness question. If $\mathbf{TtS}$ as defined in Definition~\ref{def:TtS} does not capture some structural feature of the operation, then the categorical formalization must be extended to include it, and the new feature would define a new gate.
+
+The categorical assumption is structurally cleaner than v35.3's enumeration assumption in three ways:
+
+\paragraph{(a) Categorical exhaustion is automatic.} A morphism's data is fully specified by the categorical definition. We do not need to enumerate features of the morphism and check we have not missed any; the morphism *is* its data.
+
+\paragraph{(b) Extension via category extension.} If a structural feature of the operation is not captured by $\mathbf{TtS}$, the response is to extend $\mathbf{TtS}$ — define a richer category $\mathbf{TtS}'$ with the additional feature in its morphism data. This is a standard categorical operation and produces a new gate by exactly the same data-correspondence argument.
+
+\paragraph{(c) Uniqueness becomes a categorical question.} The question ``is $\mathbf{TtS}$ the right category?'' becomes a categorical-foundations question: is $\mathbf{TtS}$ initial, terminal, or universal among categories that capture the trace-to-scheme operation? This is a separate theorem program but has standard categorical tools available.
+
+\subsection{Joint state of the gate framework after v35.4}
+\label{subsec:post-v35-4}
+
+The gate framework now has the following deductive structure:
+
+\begin{itemize}
+\item \textbf{Necessity} (v35.2, Lemmas~\ref{lem:G1}--\ref{lem:G6}): each of $G_1$--$G_6$ is $A_1$-derivable. Per-gate deductive proofs.
+\item \textbf{Sufficiency by enumeration} (v35.3, Lemma~\ref{lem:sufficiency}): six surfaces enumerated; eleven candidate $G_7$s reduce.
+\item \textbf{Sufficiency by deduction} (this section, Theorem~\ref{thm:deductive-sufficiency}): morphism data in $\mathbf{TtS}$ exhausts the operation's structural surfaces by categorical definition; $A_1$ imposes the gates by data correspondence.
+\item \textbf{Minimality} (v35.3, Corollary~\ref{cor:minimality}): each gate has an independent witness.
+\end{itemize}
+
+The four together establish $G_1$--$G_6$ as the necessary, sufficient, and minimal gate set for admissible trace-to-scheme export, with sufficiency now deductively derived from the operation's categorical structure rather than from manual enumeration.
+
+\paragraph{What's open after v35.4.} Three theorem programs remain, all in the categorical layer:
+
+\begin{itemize}
+\item \textbf{Categorical uniqueness of $\mathbf{TtS}$.} Show that $\mathbf{TtS}$ is the universal (initial / terminal) category capturing the trace-to-scheme operation. This would close the categorical-formalization assumption.
+\item \textbf{Uniqueness of route-status determination.} The empirical nine-for-nine across articulated routes (six mass routes + RP1 + RP3 + RP6) is consistent with each gate-availability pattern leading to exactly one named status, but a deductive proof from gate-pattern combinatorics is open.
+\item \textbf{Bank module registering the categorical formalization.} A bank module codifying $\mathbf{TtS}$, the morphism data lemma, and the A1-forced gates theorem as tier-3 [P\_structural] checks would put the deductive sufficiency proof on the same footing as other framework theorems.
+\end{itemize}

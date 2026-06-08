@@ -1,0 +1,6 @@
+layer,status_after_v48,closure_status,notes
+APF_pole_source_route,P_pole_completion_APF_envelope_CODATA2022_survives,closed,v46/v47
+LO_QED_numeric_transport,P_LO_QED_numeric_transport_witness,closed_as_witness,v47/v48
+perturbative_covariance_admission,P_QED_truncation_covariance_admitted,closed,residuals inside APF envelope and combined APF+O(alpha/pi)^2 envelope
+full_QED_running,P_full_QED_running_ledger_typed / external_L_ge_2_required,typed_open,"requires external multi-loop coefficients, thresholds, matching, scale and covariance"
+physical_final,not_claimed,not_claimed,no zero-residual or final physical mass claim

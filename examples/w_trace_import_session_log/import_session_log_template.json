@@ -1,0 +1,12 @@
+{
+  "exports_physical_M_W": false,
+  "not_real_finite_part_evidence": true,
+  "physical_W_export_enabled": false,
+  "real_payload_claimed": false,
+  "review_packet_digest": "sha256:<completed-review-packet-digest>",
+  "session_id": "REPLACE_WITH_REVIEWED_SOURCE_SESSION_ID",
+  "source_candidate_digest": "sha256:<source-candidate-digest>",
+  "status": "P_w_import_session_log",
+  "template_only": true,
+  "version": "w_trace_import_session_log_v1"
+}

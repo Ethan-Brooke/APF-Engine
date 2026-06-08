@@ -1,0 +1,5 @@
+layer,status_after_v47,meaning,not_meaning
+APF_pole_source_route,P_pole_completion_APF_envelope_CODATA2022_survives,APF pole vector remains inside APF envelope under CODATA 2022 ledger,not within CODATA metrological uncertainty for every lepton
+LO_QED_numeric_transport,P_LO_QED_numeric_transport_witness,one-loop frozen-alpha self-scale route object evaluated reproducibly,not multi-loop final QED running
+full_QED_running,open_full_external_ledger_required,"requires alpha(mu), thresholds, matching, anomalous dimension, covariance at chosen convention",not a failure of APF pole completion
+physical_final,not_claimed,not yet a final physical charged-lepton mass theorem,no zero residual claim

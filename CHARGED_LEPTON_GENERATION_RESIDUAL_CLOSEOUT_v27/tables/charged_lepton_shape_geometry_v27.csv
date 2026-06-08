@@ -1,0 +1,11 @@
+quantity,value
+apf_koide_Q,0.6613487679759971
+pdg_koide_Q,0.6666644634145
+koide_exact_Q,0.6666666666666666
+apf_koide_defect,-0.005317898690669565
+pdg_koide_defect,-2.2032521665993343e-06
+apf_koide_angle_deg,44.76964012851194
+pdg_koide_angle_deg,44.99990532189934
+exact_koide_angle_deg,45.0
+apf_angle_defect_deg,-0.23035987148806214
+pdg_angle_defect_deg,-9.467810065899585e-05

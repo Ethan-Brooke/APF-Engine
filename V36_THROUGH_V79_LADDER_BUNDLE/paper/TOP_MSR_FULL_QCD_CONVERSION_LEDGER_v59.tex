@@ -1,0 +1,86 @@
+% APF v59 -- Top MSR Full QCD Conversion Ledger
+\section{Top MSR Full QCD Conversion Ledger}
+\label{sec:top-msr-full-qcd-conversion-ledger-v59}
+
+\paragraph{Purpose.}
+Version v59 closes the full external-ledger layer for the top-quark route.  It does
+not promote the top route to a physical-final or exact pole mass.  It converts the
+v58 statement
+\[
+ t:[P_{\rm MSR}(R_\star)+P_{\rm pole,LO\ witness}]
+\]
+into the sharper ledger statement
+\[
+ \boxed{t:[P_{\rm full\ QCD\ conversion\ ledger\ complete}/
+ P_{\rm numeric\ final\ blocked\ by\ evaluator}]}.
+\]
+
+\begin{definition}[v59 APF source object]
+The APF top source object remains
+\[
+ m_t^{\rm MSR}(R_\star)=168.169055793800\,{\rm GeV},\qquad
+ R_\star=85.857222698385\,{\rm GeV}.
+\]
+The v58 one-loop witness is retained only as a continuity check:
+\[
+ \Phi_t^{\rm pole,LO}=172.506466595364\,{\rm GeV}.
+\]
+\end{definition}
+
+\begin{definition}[Full conversion ledger]
+A full top-QCD conversion evaluator from the APF MSR object requires the ledger
+\[
+\mathcal L_t^{\rm QCD}=\{
+\alpha_s(M_Z),M_Z,n_f,C_F,C_A,T_F,\beta_i,\gamma_m^i,
+ a_i^{\rm MSR},\gamma_R^i,d_i^{{\rm OS}/\overline{\rm MS}},
+ \zeta_g^i,\zeta_m^i,\mathcal T,\mathcal P_{\rm ren},\Sigma_t\}.
+\]
+Here \(\mathcal T\) is the threshold/matching convention,
+\(\mathcal P_{\rm ren}\) is the pole/renormalon prescription, and \(\Sigma_t\)
+is the covariance protocol.
+\end{definition}
+
+\begin{theorem}[v59 full-ledger closure]
+The following route branches are now typed and ledger-complete:
+\[
+ m_t^{\rm MSR}(R_\star)\to m_t^{\rm pole},
+\]
+\[
+ m_t^{\rm MSR}(R_\star)\to \overline m_t(\overline m_t),
+\]
+\[
+ m_t^{\rm MSR}(R_\star)\to m_t^{\rm MC\ proxy},
+\]
+\[
+ m_t^{\rm MSR}(R_\star)\to m_t^{\rm cross\text{-}section/pole\text{-}style}.
+\]
+For each branch, v59 supplies the required external coefficient families, source
+references, covariance channels, and no-smuggling restrictions.  Therefore the
+remaining obstruction is no longer an undefined route object; it is specifically
+numeric coefficient ingestion and multi-loop evaluator implementation.
+\end{theorem}
+
+\begin{proof}[No-smuggling and boundary proof]
+The APF source object and scale selector are fixed before any top-mass audit.  The
+external QCD objects are frozen by theory-source ledgers rather than inferred from
+agreement with the top target.  In particular, the PDG direct top mass may appear
+only as an audit comparator, never as an input into \(R_\star\), \(\alpha_s\), loop
+order, threshold convention, MSR coefficients, or residual assignment.  The MC
+branch is explicitly marked as a phenomenological comparison boundary rather than
+a field-theoretic equality.  Hence v59 closes the full ledger but does not collapse
+that ledger into a fitted numeric final.
+\end{proof}
+
+\paragraph{Evaluator boundary.}
+The next step is not another conceptual gate.  It is an implementation/evaluation
+pass:
+\[
+ \boxed{\texttt{APF\_v60\_TOP\_MSR\_MULTILOOP\_NUMERIC\_EVALUATOR}}.
+\]
+That evaluator must import the coefficient values \(\beta_i,\gamma_m^i,a_i^{\rm MSR},
+\gamma_R^i,d_i,\zeta_i\), propagate \(\Sigma_t\), and report separate pole,
+\(\overline{\rm MS}\), and MC-proxy audits.
+
+\paragraph{Nonclaims.}
+Version v59 does not claim a physical-final top mass, exact pole mass, MC mass
+equality, full multi-loop numerical conversion, or zero residual.

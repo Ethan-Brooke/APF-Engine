@@ -1,0 +1,22 @@
+{
+  "schema": "APF_TOP_MSR_COEFFICIENTS_4LOOP_v61",
+  "scheme": "MSR_to_pole_natural_series",
+  "normalization": "Delta m = R * sum_{n=1}^L c_n (alpha_s(R)/(4*pi))^n",
+  "coefficient_status": "c1_color_exact; c2_c3_from MSR/pole series literature; c4_from Marquard_top_MSbar_on-shell_alpha_s^4 coefficient converted to alpha/(4pi) normalization",
+  "nf": 5,
+  "c": {
+    "1": 5.333333333333333,
+    "2": 131.785,
+    "3": 4699.703,
+    "4": 214829.9057300303
+  },
+  "c4_source_alpha_s_power_coefficient": 8.615,
+  "c4_source_alpha_s_power_coefficient_uncertainty": 0.017,
+  "c4_uncertainty_converted": 423.92436417997857,
+  "sources": {
+    "c1_c2_c3": "Butenschoen et al. top MC calibration / MSR definition, c1=5.333,c2=131.785,c3=4699.703 in alpha_s/(4pi) normalization",
+    "c4": "Marquard et al. four-loop MS-on-shell top relation, coefficient (8.615 +/- 0.017) alpha_s^4, converted to alpha_s/(4pi)^4 normalization",
+    "alpha_running": "QCD beta coefficients through beta3, nf=5, integrated numerically"
+  },
+  "forbidden": "Do not alter coefficients or loop order using PDG/direct top agreement."
+}

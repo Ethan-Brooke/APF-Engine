@@ -1,0 +1,116 @@
+{
+  "status": "CHARGED_LEPTON_FULL_QED_RUNNING_LEDGER_AND_COVARIANCE_EVALUATION_PASS",
+  "package": "APF_v48_CHARGED_LEPTON_FULL_QED_RUNNING_LEDGER_AND_COVARIANCE_EVALUATION",
+  "inherited_from": "APF_v47_CHARGED_LEPTON_CODATA_LEDGER_AND_LO_QED_TRANSPORT",
+  "codata_ledger": {
+    "source": "NIST/CODATA 2022 external ledger",
+    "alpha_inverse": 137.035999177,
+    "alpha_inverse_uncertainty": 2.1e-08,
+    "alpha": 0.0072973525643314245,
+    "alpha_uncertainty": 1.1182784434112427e-12,
+    "charged_lepton_reference_MeV": [
+      0.51099895069,
+      105.6583755,
+      1776.86
+    ],
+    "charged_lepton_uncertainty_MeV": [
+      1.6e-10,
+      2.3e-06,
+      0.12
+    ],
+    "ledger_role": "external constants/diagnostic references only; not APF source inputs"
+  },
+  "pole_route": {
+    "Phi_l_v43_MeV": [
+      0.5110026357885311,
+      105.658243985342,
+      1776.9168320084111
+    ],
+    "absolute_residual_MeV": [
+      3.6850985311032147e-06,
+      -0.00013151465800831375,
+      0.05683200841122016
+    ],
+    "relative_residual_percent": [
+      0.0007211557922236904,
+      -0.00012447158815943914,
+      0.003198451673807737
+    ],
+    "APF_envelope_percent": 0.019751135690302193,
+    "residual_over_APF_envelope": [
+      0.03651211776028544,
+      0.006301996508512404,
+      0.16193760824488573
+    ],
+    "max_abs_residual_percent": 0.003198451673807737,
+    "all_inside_APF_envelope": true,
+    "metrology_sigma_count": [
+      23031.865819395094,
+      57.180286090571194,
+      0.47360007009350136
+    ]
+  },
+  "qed_transport": {
+    "L1_self_scale_formula": "mbar_i^LO(mu_i=m_i)=Phi_i_v43/(1+alpha/pi)",
+    "alpha_over_pi": 0.0023228194641953287,
+    "L1_factor": 0.997682563522362,
+    "L1_shift_percent": -0.23174364776380463,
+    "L1_running_witness_MeV": [
+      0.5098184196401856,
+      105.41338771656719,
+      1772.7989401241857
+    ],
+    "L2_order_scale_percent": 0.0005395490263244674,
+    "L3_order_scale_percent": 1.2532749802341106e-06,
+    "full_operator_schema": "U_QED^{pole->S_run}(L_QED)=exp(sum_{n=1}^L K_n(L_QED)(alpha/pi)^n)",
+    "full_running_status": "typed_open_external_L_ge_2_ledger_required"
+  },
+  "covariance_evaluation": {
+    "APF_envelope_percent": 0.019751135690302193,
+    "perturbative_truncation_scale_percent": 0.0005395490263244674,
+    "combined_APF_plus_truncation_percent": 0.019758503845396208,
+    "residual_over_combined_envelope": [
+      0.036498502005338926,
+      0.0062996464273503885,
+      0.1618772199977574
+    ],
+    "max_residual_over_combined_envelope": 0.1618772199977574,
+    "all_inside_combined_envelope": true,
+    "interpretation": "v48 admits residuals under a declared APF+QED perturbative covariance envelope; it does not claim CODATA-sigma agreement or final running masses."
+  },
+  "full_qed_ledger_required_before_final_running": [
+    "scheme S_run",
+    "scale mu",
+    "loop order L",
+    "OS-MSbar matching convention",
+    "active-lepton threshold schedule",
+    "multi-loop coefficients K_n",
+    "alpha running convention",
+    "covariance/correlation matrix Sigma_QED"
+  ],
+  "forbidden_inputs_not_used": [
+    "CODATA masses to define T_l",
+    "inverse reconstruction of trace vector",
+    "free generation residual factors",
+    "target-selected alpha",
+    "target-selected scale",
+    "target-selected loop order",
+    "target-selected threshold schedule",
+    "least-squares QED cleanup",
+    "three independent QED residual knobs",
+    "choosing L>=2 coefficients from residuals"
+  ],
+  "promotion": {
+    "claimed": "P_QED_truncation_covariance_admitted + P_full_QED_running_ledger_typed",
+    "not_claimed": [
+      "P_QED_running_final",
+      "P_physical_final",
+      "zero residual",
+      "inside CODATA standard uncertainties for all leptons",
+      "multi-loop QED running numerical evaluation",
+      "target-fitted QED residual correction"
+    ]
+  },
+  "next_theorem": "APF_CHARGED_LEPTON_FULL_QED_NUMERIC_RUNNING_WITH_DECLARED_EXTERNAL_COEFFICIENT_LEDGER",
+  "checks_total": 154
+}

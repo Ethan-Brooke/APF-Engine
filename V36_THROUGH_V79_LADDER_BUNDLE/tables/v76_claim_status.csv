@@ -1,0 +1,3 @@
+sector,status,claim,nonclaim
+charm,P_4loop_fixed_nf_evaluator_closed,MSbar mc->3GeV fixed nf=4 source-clean evaluator,not full RunDec threshold parity or physical final
+bottom,P_4loop_fixed_nf_evaluator_closed,MSbar mb->10GeV fixed nf=5 source-clean evaluator,not full RunDec threshold parity or physical final

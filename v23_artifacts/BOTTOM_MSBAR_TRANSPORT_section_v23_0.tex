@@ -1,0 +1,69 @@
+\section{Bottom-quark \texorpdfstring{$\overline{\rm MS}$}{MSbar} transport route}
+\label{sec:bottom-msbar-transport-v23}
+
+With the electroweak trace sector closed at export-candidate level, the next
+colored-sector target is the bottom-quark short-distance mass.  The banked APF
+trace-ratio theorem gives
+\begin{equation}
+  m_b^{\rm APF\text{-}TRACE}=4.177490455927\ {\rm GeV}.
+\end{equation}
+This value is an APF trace anchor.  It is not, by itself, a pole mass, a lattice
+mass, or a physical \(\overline{\rm MS}\) export.
+
+The natural comparison codomain is the self-scale running bottom mass
+\(\bar m_b(\bar m_b)_{\overline{\rm MS}}\).  The PDG/pdgLive bottom listing
+identifies the quoted bottom-quark mass as the running mass
+\(\bar m_b(\mu=\bar m_b)\) in the \(\overline{\rm MS}\) scheme and gives
+\begin{equation}
+  \bar m_b(\bar m_b)_{\overline{\rm MS}}
+  =4.183\pm0.007\ {\rm GeV}\quad ({\rm CL}=90\%).
+\end{equation}
+It also states that conversions from other schemes use two-loop QCD with
+\(\alpha_s(\mu=m_b)=0.223\pm0.008\), and gives the corresponding pole-mass
+context \(4.78\pm0.06\) GeV.\cite{PDG2025BottomQuarkMass}
+
+The APF trace residual relative to the \(\overline{\rm MS}\) self-scale anchor is
+\begin{equation}
+  m_b^{\rm APF\text{-}TRACE}
+  -\bar m_b(\bar m_b)_{\overline{\rm MS}}
+  =-0.005509544073\ {\rm GeV}
+  =-5.509544\ {\rm MeV}.
+\end{equation}
+On the quoted PDG error scale this is
+\begin{equation}
+  \frac{-0.005509544073}{0.007}=-0.787078.
+\end{equation}
+If the quoted 90\% confidence interval is converted to a Gaussian one-sigma
+scale using \(1.64485\), the same residual is \(-1.2945\sigma\).  Both figures
+are reported because the comparison is a validation neighborhood, not a fitted
+export.
+
+The pole-mass context supplies a useful knockout.  Relative to \(4.78\pm0.06\)
+GeV, the APF trace value is displaced by roughly \(-0.603\) GeV, or about
+\(-10\sigma\).  Thus the APF bottom trace anchor is not pole-like; it is naturally
+short-distance-like.  The correct closure statement is therefore
+\begin{equation}
+\boxed{
+  m_b^{\rm APF\text{-}TRACE}:
+  [P_{\rm validation}+P_{\overline{\rm MS}\,route\,contract}]
+}
+\end{equation}
+not
+\begin{equation}
+\boxed{
+  m_b^{\rm APF\to\overline{MS}}(m_b):[P_{\rm physical\ final}].
+}
+\end{equation}
+
+The remaining export gate is explicit:
+\begin{equation}
+\boxed{
+  \texttt{APF\_TRACE\_TO\_MSBAR\_CODOMAIN\_IDENTITY\_OR\_QCD\_TRANSPORT\_MAP}.
+}
+\end{equation}
+Equivalently, APF must either prove that this trace codomain is already the
+\(\overline{\rm MS}\) self-scale codomain, or evaluate the QCD running,
+threshold, and covariance map from APF trace variables to
+\(\bar m_b(\bar m_b)_{\overline{\rm MS}}\).  Until that gate is closed, the bottom
+result is a strong validation/route-contract result and the leading colored
+export candidate, but not a final physical scheme mass.

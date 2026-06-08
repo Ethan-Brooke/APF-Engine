@@ -1,0 +1,6 @@
+object,v72_status,v73_status,claim
+RunDec source ledger,closed,closed,unchanged
+LO QCD evaluator,closed in v71,implemented and self-tested in v73,P_LO_scaffold_executable
+RunDec adapter,gate only,"interface implemented, unavailable in package environment",P_adapter_fail_closed
+full QCD numeric evaluator,implementation pending,fail-closed until RUNDEC_CMD or vendored coefficients,not claimed
+charm/bottom physical final,not claimed,not claimed,no P_physical_final

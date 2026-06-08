@@ -1,0 +1,141 @@
+\section{Charged-Lepton Trace-Vector Source Gate and QED Codomain Theorem}\label{sec:charged-lepton-trace-vector-source-gate-v40}
+
+\paragraph{Purpose.}
+Versions v38--v39 closed the charged-lepton route operator,
+\[
+  O_\ell^S=Z_\ell^S\,\nu_\ell\,\mathcal R_\ell\,T_\ell,
+  \qquad
+  \nu_\ell={1\over\sqrt6},
+  \qquad
+  \mathcal R_\ell=\operatorname{diag}(1/3,3,1).
+\]
+They did not close physical charged-lepton export, because the numeric APF trace vector
+\(T_\ell\) and the external QED scheme map remained open.  This section turns that
+remaining obstruction into a typed APF theorem.  The result is deliberately not a mass
+prediction.  It is a source-gate theorem: charged-lepton export is admissible only when
+\(T_\ell\) is supplied by a source-independent trace-sector theorem, not inferred from
+\((m_e,m_\mu,m_\tau)\).
+
+\begin{definition}[Charged-lepton trace-vector source]\label{def:charged-lepton-trace-vector-source-v40}
+A charged-lepton trace-vector source is an APF-native construction
+\[
+   \mathfrak T_\ell:\Gamma_{\rm gen}\longrightarrow T_\ell\in\mathbb R_{>0}^3
+\]
+from the generation-interface trace algebra, using only APF-side objects: generation
+rungs, finite-continuability costs, field-content/gauge counts, trace-sector anchors, and
+cooperative-kernel structure.  It is source-independent iff none of its inputs contains
+\(m_e\), \(m_\mu\), \(m_\tau\), running charged-lepton masses, world averages, or a fit to
+any charged-lepton target vector.
+\end{definition}
+
+\begin{definition}[QED charged-lepton codomain]\label{def:qed-charged-lepton-codomain-v40}
+The charged-lepton external codomain is one of
+\[
+   S\in\{\text{pole},\ \overline{\rm MS}(\mu),\ \text{other declared QED scheme}\}.
+\]
+For the pole codomain, the final route factor is written \(Z_\ell^{\rm pole}\).  In the
+minimal identity-codomain bookkeeping, \(Z_\ell^{\rm pole}=I\) and the comparison is made
+directly to pole observables.  For any running codomain, \(Z_\ell^S\) must be supplied by a
+QED transport ledger containing the coupling convention, scale, thresholds, loop order,
+and uncertainty/covariance protocol.
+\end{definition}
+
+\begin{theorem}[Trace-vector source gate]\label{thm:charged-lepton-trace-vector-source-gate-v40}
+Assume the v39 charged-lepton route operator is closed:
+\[
+  \nu_\ell={1\over\sqrt6},\qquad
+  \mathcal R_\ell=\operatorname{diag}(1/3,3,1).
+\]
+Then charged-lepton physical export is APF-admissible only if there exists a
+source-independent trace-vector source \(\mathfrak T_\ell\).  Equivalently,
+\[
+  \neg\exists\mathfrak T_\ell
+  \quad\Longrightarrow\quad
+  \ell:[P_{\rm route}^{\rm coefficient\ closed}]\ \text{only},
+\]
+and the sector cannot be promoted to \([P_{\rm export\ candidate}]\).
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+APF export is a continuation judgment from an internal trace context to a declared
+external measurement-scheme context.  By v36, such a judgment requires typed source,
+codomain, transport, constants ledger, covariance protocol, no-smuggling audit, and
+residual-channel assignment.  The v39 operator closes only the generation-residual part
+of the transport map.  It does not supply the source vector \(T_\ell\).  If \(T_\ell\) is
+chosen by solving
+\[
+   T_\ell=(\nu_\ell\mathcal R_\ell)^{-1}(Z_\ell^S)^{-1}O_\ell^S,
+\]
+then the target observable \(O_\ell^S\) is consumed as an input.  That violates the v36
+source-independence/no-smuggling gate and collapses prediction into inverse fitting.
+Therefore \(T_\ell\) must be supplied by an APF-native source theorem before any physical
+export claim is admissible.  If no such theorem is available, the correct status is a
+coefficient-closed route with a named trace-vector obstruction.
+\end{proof}
+
+\begin{proposition}[Equivalence to the lepton cooperative-overlap closure]\label{prop:trace-vector-omega-equivalence-v40}
+Within the generation-interface formulation of the APF field-content paper, supplying
+\(T_\ell\) is equivalent to closing the lepton-sector cooperative-overlap content
+\(\Omega^\ell\) or an APF-native trace-sector theorem that replaces it.  The FN rungs and
+Yukawa-bilinear form fix the generation ladder and geometric-mean pairing, but they do not
+by themselves determine the charged-lepton trace-vector components.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The generation-interface construction writes the species-\(f\) Yukawa/cooperative kernel
+in the form
+\[
+    Y_{ij}^{f}\propto \varepsilon^{(q_i+q_j)/2}\Omega_{ij}^{(f)}.
+\]
+The rung data \(q_i\), the suppression convention \(\varepsilon\), and the v39 diagonal
+residual operator determine universal generation-order and capacity-color factors.  The
+remaining species-specific eigencontent is the cooperative-overlap content
+\(\Omega^{(f)}\).  For charged leptons this is \(\Omega^\ell\).  Any numerical trace vector
+for the charged-lepton sector must therefore either be the spectrum/trace anchor produced
+by \(\Omega^\ell\), or be supplied by another APF-native trace-sector theorem with the same
+source-independent content.  Without that object, the vector \(T_\ell\) is not determined
+by v39.
+\end{proof}
+
+\begin{corollary}[QED codomain partially closes but export does not]\label{cor:qed-codomain-partial-v40}
+The charged-lepton pole codomain can be declared as the clean first comparison codomain,
+\[
+   S=\text{pole},\qquad Z_\ell^{\rm pole}=I
+\]
+for bookkeeping purposes.  This closes the G1 codomain declaration for a future pole-mass
+comparison.  It does not close G2/G3/G4/G5/G6 for physical export, because \(T_\ell\) and
+its covariance are still missing.  Running-mass comparisons require an additional QED
+transport ledger \(Z_\ell^{\overline{\rm MS}(\mu)}\).
+\end{corollary}
+
+\begin{gate}[No inverse charged-lepton trace vector]\label{gate:no-inverse-lepton-trace-vector-v40}
+The following construction is forbidden as an APF derivation:
+\[
+   T_\ell^{\rm inv}
+   :=
+   \left(Z_\ell^S\nu_\ell\mathcal R_\ell\right)^{-1}
+   (m_e,m_\mu,m_\tau)_S.
+\]
+It may be used only as a diagnostic residual calculator after a source-independent
+\(T_\ell\) has been supplied.  It cannot define the trace vector, determine hidden
+coefficients, or promote the charged-lepton sector to export-candidate status.
+\end{gate}
+
+\begin{statusbox}[v40 charged-lepton status]
+The v40 promotion is
+\[
+  \ell:[P_{\rm route}^{\rm coefficient\ closed}]
+  \longrightarrow
+  \ell:[P_{\rm source\ gate}^{T_\ell}\ \&\ P_{\rm codomain}^{\rm pole\ ready}],
+\]
+not
+\[
+  \ell:[P_{\rm export\ candidate}].
+\]
+The next theorem target is therefore
+\[
+  \boxed{\text{APF\_LEPTON\_COOPERATIVE\_OVERLAP\_OR\_TRACE\_VECTOR\_CLOSURE\_THEOREM}.}
+\]
+It must derive \(T_\ell\) or \(\Omega^\ell\) from APF generation-interface structure without
+using the charged-lepton target masses.
+\end{statusbox}

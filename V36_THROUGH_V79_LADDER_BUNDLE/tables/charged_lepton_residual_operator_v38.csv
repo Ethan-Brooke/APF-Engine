@@ -1,0 +1,11 @@
+quantity,value,meaning,status
+nu_l,0.408248290463863,scalar ordering normalization 1/sqrt(6),closed
+N_gen,3,charged-lepton generations,closed
+ordering_volume,6,3! admissible generation orderings,closed
+q_vector,"(0,1,2)",ordered FN generation ladder,closed
+q_bar,1,mean generation charge,closed
+H1,"diag(-1,0,1)",first-difference trace-free generation generator,closed
+H2,"diag(1,-2,1)",second-difference trace-free generation generator,closed
+R_l,"exp(alpha H1 + beta H2)",minimal positive residual operator form,closed_form
+alpha,undetermined,source-independent generation-interface coefficient,open_coefficient_closure
+beta,undetermined,source-independent generation-interface coefficient,open_coefficient_closure

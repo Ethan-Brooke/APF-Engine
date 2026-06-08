@@ -1,0 +1,2 @@
+sector,closed_apf_object,apf_trace_GeV,R_star_GeV,same_codomain_external_ledger,boundary_reason,allowed_next_route,forbidden_route
+top,m_t^MSR(R_star) route object,168.169055793800,85.857222698385,not supplied,"PDG top listings are direct/cross-section/pole-style determinations, not m_t^MSR(R_star)","MSR-to-pole/MC/MSbar conversion with declared alpha_s, loop order, thresholds, renormalon/matching convention, and covariance",compare m_t^TRACE directly to PDG direct/MC/pole values

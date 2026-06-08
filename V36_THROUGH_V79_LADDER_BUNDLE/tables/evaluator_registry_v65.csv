@@ -1,0 +1,7 @@
+evaluator_id,family,input_object,output_codomain,required_sources,implementation_status,package,fail_closed_condition
+E_EW_ONSHELL_W,EW,M_W_TRACE,on-shell M_W,PDG_2025_W; CMS_2026_W_Nature,closed,v56,attempt to combine PDG and CMS without correlation protocol
+E_QED_LEPTON_RUNNING,QED,charged lepton pole vector v43,chosen running QED scheme and scale,NIST_CODATA_2022 plus declared QED scheme/scale/loop/threshold ledger,typed_boundary; LO witness only,v47-v49,missing scheme/scale/loop/threshold/covariance or generation-fitted residuals
+E_QCD_CB_SELF_SCALE,QCD heavy self-scale,"mc(mc), mb(mb) APF candidates",MSbar self-scale masses,PDG_2025_C_QUARK; PDG_2025_B_QUARK; PDG_2025_QCD_REVIEW,covariance_admitted,v50-v57,re-expression to another scale without RunDec-style running/covariance
+E_TOP_MSR_R_EVOLUTION,QCD top MSR,mt_MSR(Rstar),mt_MSR(REW),MSR_HOANG_2017; RUNDEC_V3; PDG_2025_QCD_REVIEW,strong witness closed; full R-evolution implementation required,v62-v63,using pole/MC comparison as exact codomain or missing R-evolution coefficients
+E_TOP_POLE_BRANCH,QCD top pole,mt_MSR(Rstar),top pole mass,MSR_HOANG_2017; RUNDEC_V3; top OS/MSbar coefficient ledger,blocked_by_v61_audit,v61,4-loop pole result exceeds audit envelope; no promotion
+E_LIGHT_CHILAT,light QCD/chiral-lattice,T_uds APF source vector,MSbar(2 GeV) light-quark masses,"external lattice/chiral evaluator: action, scale setting, Z_m, EM/isospin, chiral ansatz, covariance",external_required,v52-v54,identity/scalar transport or target-inverted evaluator

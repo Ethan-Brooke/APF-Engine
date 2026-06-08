@@ -1,0 +1,6 @@
+object,status,claim
+4-loop coefficient ingestion,closed,P_coefficient_ingestion_closed
+4-loop numeric evaluator,closed executable,P_4loop_numeric_evaluator_closed
+4-loop pole witness audit,computed but not accepted as completion,P_audit_boundary_detects_nonclosure
+top physical final,not closed,not_P_physical_final
+next obstruction,must resolve APF top MSR scale/codomain or full R-evolution/MSbar route; LO near-hit is not stable under sourced higher-order coefficients,P_obstruction_sharpened

@@ -1,0 +1,21 @@
+{
+  "module": "APF_v72_RUNDEC_SOURCE_LEDGER_AND_FULL_QCD_EVALUATOR_GATE",
+  "status": "SOURCE_LEDGER_CLOSED_IMPLEMENTATION_PENDING",
+  "required_inputs": [
+    "APF self-scale MSbar masses",
+    "alpha_s input ledger",
+    "active flavor schedule",
+    "loop order",
+    "RunDec-compatible coefficient tables",
+    "decoupling/matching convention",
+    "covariance protocol"
+  ],
+  "fail_closed_conditions": [
+    "missing coefficient table",
+    "missing threshold schedule",
+    "unvalidated evaluator",
+    "target-scale residual fitting",
+    "undeclared CL90 to sigma conversion"
+  ],
+  "promotion_target": "P_full_RunDec_evaluator_closed"
+}

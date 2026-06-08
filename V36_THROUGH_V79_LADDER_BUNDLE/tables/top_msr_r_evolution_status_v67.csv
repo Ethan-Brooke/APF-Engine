@@ -1,0 +1,6 @@
+object,value,status
+m_t^MSR(R_star),168.169055793800 GeV,APF source/top MSR anchor
+R_EW=M_W_TRACE/(2pi),12.790035691319 GeV,EW finite-resolution scale
+m_t^MSR(R_EW) 4-loop R-evolved,172.716805649486 GeV,numeric R-evolution evaluator closed
+m_t^pole 4-loop,174.016604383647 GeV,pole branch blocked
+direct/MC reference audit,172.56±0.31 GeV,audit only; not codomain equality

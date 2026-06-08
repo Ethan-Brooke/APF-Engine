@@ -1,0 +1,7 @@
+family,missing_object,current_proxy_or_target,why_not_closed,next_acquisition
+SE_W_TRANSVERSE,finite W self-energy coefficient table,W mass counterterm slot,only symbolic counterterm relation imported,import Denner W self-energy coefficient formulae over PV basis
+SE_Z_TRANSVERSE,finite Z self-energy coefficient table,Z mass/weak-angle counterterm slot,only symbolic counterterm relation imported,import Denner Z self-energy coefficient formulae over PV basis
+SE_GAMMA_Z_MIX,charge/gamma-Z field counterterm coefficient table,charge-renormalization slot,field-mixing coefficients not numerically assembled,"import delta Z_e, delta Z_AA, delta Z_ZA coefficient formulae"
+VERTEX_MU_DECAY,muon-decay vertex coefficient table,vertex slot,full C-tensor finite coefficients not imported,import Sirlin/Denner vertex finite formulae
+BOX_MU_DECAY,muon-decay box coefficient table,box slot,full D-tensor finite coefficients not imported,import Sirlin/Denner box finite formulae
+TAD_GHOST_GAUGE,tadpole/ghost/gauge finite table,gauge-restoring slot,gauge-cancellation proof not native,import tadpole convention and gauge-parameter cancellation rows

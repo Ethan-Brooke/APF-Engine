@@ -1,0 +1,9 @@
+object,description,source_family,gate_role,v72_status
+beta_i,QCD beta-function coefficients,RunDec v3 + Baikov/Chetyrkin/Kühn,required,not_ingested
+gamma_m_i,mass anomalous dimension coefficients,RunDec v3 source ledger,required,not_ingested
+zeta_g_i,alpha_s decoupling coefficients,RunDec v3 source ledger,required,not_ingested
+zeta_m_i,mass decoupling coefficients,RunDec v3 source ledger,required,not_ingested
+d_i_OS_MSbar,on-shell/MSbar mass relation coefficients,Marquard et al. + RunDec v3,required for mass-scheme conversion,not_ingested
+threshold_schedule,active flavor threshold/matching schedule,evaluator declaration,required,not_declared_for_full_run
+validation_examples,published example checks,RunDec/CRunDec papers,required,not_run
+covariance_protocol,mass/alpha_s/threshold/truncation covariance,APF evaluator protocol,required,specified_gate_only

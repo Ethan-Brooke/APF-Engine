@@ -1,0 +1,9 @@
+object_id,value,status,meaning,boundary
+sin2_theta_W_trace,3/13 = 0.230769230769,P_trace,EW mixing trace anchor,not a scheme-free physical weak-angle claim
+gprime_over_g,sqrt(3/10) = 0.547722557505,P_derived,coupling-ratio consequence of trace anchor,"trace-level coupling geometry, not running-coupling export"
+M_W_APF_TRACE,80.362164334 GeV,P_trace,W trace anchor,not directly the physical on-shell mass
+M_W_APF_to_OS,DIZET same-input 80.357341077578 GeV; residual 4.823256 MeV; pull 1.090034 sigma,P_export_candidate,reviewed same-input on-shell transport validation,not an independent APF derivation of full EW loops
+M_Z,91.1876 GeV external,external_input,used for W/Z bridge,not derived in EW trace closure
+WZ_ratio_bridge,0.881283906299,P_bridge,external-MZ on-shell consistency bridge,not identical to trace cos(theta_W)
+sw2_onshell_bridge,0.223338676499,P_bridge,bridge value from APF W trace and external MZ,not the same object as MSbar sin^2(theta_W)
+full_EW_loop_derivation,OPEN,OPEN_family_formulae,downstream APF-native theorem program,not required for EW trace-sector closure

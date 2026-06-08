@@ -1,0 +1,37 @@
+PASS exists_paper_TOP_MSR_R_EVOLUTION_COEFFICIENT_INGESTION_EVALUATOR_v67.tex
+PASS exists_coefficients_top_msr_r_evolution_coefficients_v67.json
+PASS exists_scripts_top_msr_r_evolution_numeric_evaluator_v67.py
+PASS exists_tables_top_msr_r_evolution_loop_convergence_v67.csv
+PASS exists_tables_top_msr_r_evolution_uncertainty_channels_v67.csv
+PASS exists_tables_top_msr_r_evolution_status_v67.csv
+PASS exists_reports_top_msr_r_evolution_numeric_evaluator_v67_data.json
+PASS exists_reports_top_msr_r_evolution_numeric_evaluator_summary_v67.md
+PASS exists_registry_top_route_registry_update_v67.csv
+PASS exists_README_v67.md
+PASS stamp
+PASS numeric_closed
+PASS no_physical_final
+PASS fixed_nf_no_threshold
+PASS rew_value
+PASS m_rew_range
+PASS delta_range
+PASS z_inside_1
+PASS z_comb_inside_1
+PASS pole_blocked
+PASS loop_rows
+PASS loop2_to_4_stable_200MeV
+PASS unc_rows
+PASS coeff_nf
+PASS gamma0
+PASS gamma3_negative
+PASS evaluator_runs
+PASS eval_stamp
+PASS eval_value
+PASS eval_not_final
+PASS eval_L1_runs
+PASS eval_L1_lower
+PASS tex_Coefficient_Ingestion
+PASS tex_Pole_branch_remains_blocked
+PASS tex_TOP_MSR_R_EVOLUTION_COEFFICIENT_INGESTION_EVALUATOR_PASS
+Total checks: 35/35
+TOP_MSR_R_EVOLUTION_COEFFICIENT_INGESTION_EVALUATOR_PASS

@@ -1,0 +1,111 @@
+{
+  "version": "33.0.0",
+  "module": "fermion_sector_master_closure",
+  "status": "FERMION_SECTOR_MASTER_CLOSURE_PASS",
+  "checks_passed": 31,
+  "checks_total": 31,
+  "master_status": "FERMION_TRACE_SECTOR_LOCALLY_CLOSED_ROUTE_DEPENDENT_EXPORT",
+  "headline": "The fermion trace sector is locally closed; physical export is route-dependent.",
+  "export_candidates": [
+    "m_b_APF_to_MSbar(m_b)"
+  ],
+  "non_export_closeouts": [
+    {
+      "sector": "top",
+      "status": "[P_trace + P_ext-MSR_codomain + P_terminal_scheme_closeout]",
+      "gate": "APF_NATIVE_TOP_TRACE_TO_MSR_SCALE_SELECTION_THEOREM_WITHOUT_EXTERNAL_POLE_ANCHOR"
+    },
+    {
+      "sector": "charged_leptons",
+      "status": "[P_trace_vector + P_normalization_candidate + P_generation_residual_closeout]",
+      "gate": "APF_CHARGED_LEPTON_GENERATION_RESIDUAL_OPERATOR_DERIVATION"
+    },
+    {
+      "sector": "charm",
+      "status": "[P_trace + P_MSbar_route_knockout]",
+      "gate": "APF_CHARM_TRACE_TO_MSBAR_NORMALIZATION_OR_TRANSPORT_MAP"
+    },
+    {
+      "sector": "light_quarks",
+      "status": "[P_trace + P_low_energy_QCD_obstruction]",
+      "gate": "APF_LIGHT_QUARK_TRACE_TO_MSBAR_2GEV_CHIRAL_LATTICE_TRANSPORT_MAP"
+    }
+  ],
+  "sector_rows": [
+    {
+      "sector": "bottom",
+      "object": "m_b",
+      "apf_trace": "4.1774904559270665 GeV",
+      "best_external_lane": "MSbar self-scale m_b(m_b)",
+      "status": "[P_export_candidate_not_physical_final]",
+      "result": "Residual vs PDG 2025 MSbar self-scale: -5.509544 MeV; quoted-scale pull -0.787 sigma.",
+      "first_failed_or_boundary": "PUBLICATION_REVIEW_OF_BOTTOM_TRACE_MSBAR_CODOMAIN_ADMISSION",
+      "source_package": "APF_v24_BOTTOM_MSBAR_EXPORT_CANDIDATE.zip"
+    },
+    {
+      "sector": "top",
+      "object": "m_t",
+      "apf_trace": "168.1690557938 GeV",
+      "best_external_lane": "external high-scale MSR codomain",
+      "status": "[P_trace + P_ext-MSR_codomain + P_terminal_scheme_closeout]",
+      "result": "Direct/MC/pole, self-scale MSbar, and EW Delta-rho substitution are knocked out; external MSR lane closes only as codomain pass.",
+      "first_failed_or_boundary": "APF_NATIVE_TOP_TRACE_TO_MSR_SCALE_SELECTION_THEOREM_WITHOUT_EXTERNAL_POLE_ANCHOR",
+      "source_package": "APF_v30_TOP_FINAL_CLOSEOUT.zip"
+    },
+    {
+      "sector": "charged_leptons",
+      "object": "e, mu, tau",
+      "apf_trace": "(1.290305474, 261.429844901, 4178.022853) MeV before normalization",
+      "best_external_lane": "six-channel normalization candidate followed by generation-residual obstruction",
+      "status": "[P_trace_vector + P_normalization_candidate + P_generation_residual_closeout]",
+      "result": "lambda_6=1/sqrt(6) reduces residuals to about +3.09%, +1.01%, -4.02%, but no generation residual operator is derived.",
+      "first_failed_or_boundary": "APF_CHARGED_LEPTON_GENERATION_RESIDUAL_OPERATOR_DERIVATION",
+      "source_package": "APF_v27_CHARGED_LEPTON_GENERATION_RESIDUAL_CLOSEOUT.zip"
+    },
+    {
+      "sector": "charm",
+      "object": "m_c",
+      "apf_trace": "0.6800912249261419 GeV",
+      "best_external_lane": "MSbar self-scale m_c(m_c) tested and rejected",
+      "status": "[P_trace + P_MSbar_route_knockout]",
+      "result": "Residual vs PDG 2025 MSbar self-scale: -0.592908775074 GeV, about -46.6%; direct export rejected.",
+      "first_failed_or_boundary": "APF_CHARM_TRACE_TO_MSBAR_NORMALIZATION_OR_TRANSPORT_MAP",
+      "source_package": "APF_v31_CHARM_MSBAR_TRANSPORT.zip"
+    },
+    {
+      "sector": "light_quarks",
+      "object": "u,d,s",
+      "apf_trace": "u=1.153209852 MeV, d=3.870916422 MeV, s=87.143281634 MeV",
+      "best_external_lane": "MSbar(2 GeV), pole, self-scale, constituent, and simple-ratio routes tested and rejected",
+      "status": "[P_trace + P_low_energy_QCD_obstruction]",
+      "result": "Direct MSbar(2 GeV) export knocked out for u,d,s; low-energy QCD/chiral/lattice transport map required.",
+      "first_failed_or_boundary": "APF_LIGHT_QUARK_TRACE_TO_MSBAR_2GEV_CHIRAL_LATTICE_TRANSPORT_MAP",
+      "source_package": "APF_v32_LIGHT_QUARK_OBSTRUCTION_MAP.zip"
+    }
+  ],
+  "source_hashes": [
+    {
+      "file": "APF_v24_BOTTOM_MSBAR_EXPORT_CANDIDATE.zip",
+      "sha256": "08e41ad8c3fb790bd2e500bc248d0b9452dd599b7bd9bb2530942381b3def07c"
+    },
+    {
+      "file": "APF_v27_CHARGED_LEPTON_GENERATION_RESIDUAL_CLOSEOUT.zip",
+      "sha256": "6291e5a08436f9636e5105a52cf5ada5298b169eb1deeccb60dd74a7d62048b2"
+    },
+    {
+      "file": "APF_v30_TOP_FINAL_CLOSEOUT.zip",
+      "sha256": "162cf14efa857d62541e457952573ad93d64da4b1789555684c9ab5e097c7d31"
+    },
+    {
+      "file": "APF_v31_CHARM_MSBAR_TRANSPORT.zip",
+      "sha256": "b28b2d591505a8be212bea78ba65b98272920862bff3c543e00eebce3f3cdf32"
+    },
+    {
+      "file": "APF_v32_LIGHT_QUARK_OBSTRUCTION_MAP.zip",
+      "sha256": "55982d2734d508ea286723651cda0ea55d6515cae85f9124a13cf317d8d123cb"
+    }
+  ],
+  "safe_claim": "APF closes the fermion trace sector as a route-governed sector: bottom is an MSbar export candidate; top, charged leptons, charm, and light quarks close as named transport/codomain obstructions.",
+  "not_claimed": "APF has not produced final physical mass exports for all fermions; unresolved sectors are not promoted by this master closure.",
+  "next_phase": "Combine EW sector closure and fermion sector master closure into a sector-status paper section, then decide whether to pursue residual transport maps or move to publication packaging."
+}

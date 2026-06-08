@@ -1,0 +1,7 @@
+gate,v50_status,witness,no_smuggling_guard
+G1_CODOMAIN_DECLARED,pass,self-scale MSbar mc(mc),PDG value not used to choose codomain; heavy-quark convention only
+G2_TRANSPORT_MAP,pass,Phi_c(T)=sqrt(7/2) T,normalization derived from APF counts only
+G3_CONSTANTS_LEDGER,pass,"K_SM=61,K_c=16,K_b=3,N_gen=3; PDG ledger only for audit",external charm value excluded from route construction
+G4_COVARIANCE_PROTOCOL,pass,Schur structural envelope and PDG audit sigma recorded,not tuned to target uncertainty
+G5_NO_SMUGGLING_AUDIT,pass,forbidden target inputs table all not used,no inverse solve for kappa_c
+G6_RESIDUAL_CHANNELS,pass,Schur/QCD/codomain/PDG-ledger residual channels assigned,residual not absorbed into trace

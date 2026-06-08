@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+Old/
+DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/
+*_HELD_NOT_BANKED/
+*_output/

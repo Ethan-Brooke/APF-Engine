@@ -1,0 +1,10 @@
+ledger_item,required_content,v54_status,why_required
+hadronic_calibration_set,pion/kaon/eta or other declared hadronic observables used to calibrate light quark masses,external_required,fixes low-energy physical scale; may not be chosen from APF residuals
+lattice_spacing_and_scale_setting,a plus scale-setting observable and continuum extrapolation protocol,external_required,sets dimensionful conversion from lattice units
+lattice_action_and_ensembles,"fermion/gauge action, sea-quark content, volumes, lattice spacings, quark masses",external_required,defines simulation codomain and systematics
+chiral_ansatz,SU(2)/SU(3) chiral perturbation or equivalent extrapolation/interpolation form,external_required,separates current quark masses from hadronic bound-state data
+em_isospin_convention,QED correction convention and m_u != m_d isospin-breaking prescription,external_required,needed for u/d split
+renormalization_factor,Z_m or equivalent mass renormalization factor,external_required,maps lattice/bare masses into renormalized scheme
+scheme_conversion,"conversion to MSbar at mu=2 GeV, loop/order convention, alpha_s, thresholds",external_required,defines exact codomain
+joint_covariance,"statistical, chiral, continuum, finite-volume, matching, EM/isospin covariance among u,d,s",external_required,needed before export candidate comparison
+source_independence_audit,"none of the above may be solved from target u,d,s masses or APF residuals",closed_v54,G5 no-smuggling guard

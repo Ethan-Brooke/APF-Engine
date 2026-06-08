@@ -1,0 +1,4 @@
+lepton,T_l_APF_TRACE_GeV,Phi_pole_LO_MeV,diagnostic_pole_reference_MeV,absolute_residual_MeV,relative_residual_percent,residual_status
+e,0.001290305474111,0.526765004,0.510998950,0.015766054,3.085340,assigned_not_fitted
+mu,0.261429844900956,106.728287257,105.658375500,1.069911757,1.012614,assigned_not_fitted
+tau,4.177490455927100,1705.453337061,1776.930000000,-71.476662939,-4.022481,assigned_not_fitted

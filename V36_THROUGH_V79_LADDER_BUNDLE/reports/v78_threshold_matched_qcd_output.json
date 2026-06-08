@@ -1,0 +1,78 @@
+{
+  "MZ_GeV": 91.1876,
+  "alpha_s_MZ_input": 0.1189,
+  "apf_results": {
+    "b_APF_to_10GeV": {
+      "alpha0_from_MZ": 0.22810693284895198,
+      "alpha1": 0.18034846867202772,
+      "m0_GeV": 4.177490455927,
+      "mass_ratio": 0.86775900690523,
+      "mass_result_GeV": 3.62505496939129,
+      "mu0_GeV": 4.177490455927,
+      "mu1_GeV": 10.0,
+      "nf_mass": 5
+    },
+    "c_APF_to_3GeV": {
+      "alpha0_from_MZ": 0.3977811577835508,
+      "alpha1": 0.2575869836500778,
+      "m0_GeV": 1.272334177712,
+      "mass_ratio": 0.7696300337872465,
+      "mass_result_GeV": 0.979226596181155,
+      "mu0_GeV": 1.272334177712,
+      "mu1_GeV": 3.0,
+      "nf_mass": 4
+    }
+  },
+  "benchmarks": {
+    "crundec_bottom_mb10_threshold_matched": {
+      "alpha0_from_MZ": 0.22835055913157504,
+      "alpha1": 0.1803484686720263,
+      "alpha_source": "alpha_s^(5)(MZ)=0.1189 propagated MZ -> mb with nf=5; no APF-output tuning.",
+      "benchmark": "crundec_bottom_mb10_threshold_matched",
+      "delta_GeV": 0.00011184622835180846,
+      "delta_MeV": 0.11184622835180846,
+      "description": "CRunDec example: m_b(10 GeV)=3.610 GeV maps to m_b(m_b)=4.163 GeV using alpha_s^(5)(MZ)=0.1189; forward audit m_b(m_b)->10 GeV.",
+      "interpretation": "threshold-matched alpha_s(MZ) scaffold passes this published benchmark; full RunDec parity still requires validated higher-loop decoupling constants or adapter.",
+      "m0_GeV": 4.163,
+      "mass_ratio": 0.8671899702686408,
+      "mass_result_GeV": 3.6101118462283517,
+      "mu0_GeV": 4.163,
+      "mu1_GeV": 10.0,
+      "nf_mass": 5,
+      "published_target_GeV": 3.61,
+      "source": "Schmidt-Steinhauser CRunDec useful example",
+      "status": "BENCHMARK_PASS",
+      "tolerance_GeV": 0.001
+    },
+    "rundec_v3_charm_mc3_threshold_matched": {
+      "alpha0_from_MZ": 0.3963892504779707,
+      "alpha1": 0.25758698365007615,
+      "alpha_source": "alpha_s^(5)(MZ)=0.1189 propagated through fixed thresholds MZ -> mb -> mc; continuous alpha_s at thresholds; no APF-output tuning.",
+      "benchmark": "rundec_v3_charm_mc3_threshold_matched",
+      "delta_GeV": 0.0005518890879715466,
+      "delta_MeV": 0.5518890879715466,
+      "description": "RunDec v3 example ledger: alpha_s^(5)(MZ)=0.1189-style benchmark context; m_c(m_c)=1.279 GeV -> m_c(3 GeV)=0.986 GeV.",
+      "interpretation": "threshold-matched alpha_s(MZ) scaffold passes this published benchmark; full RunDec parity still requires validated higher-loop decoupling constants or adapter.",
+      "m0_GeV": 1.279,
+      "mass_ratio": 0.7713462776293758,
+      "mass_result_GeV": 0.9865518890879715,
+      "mu0_GeV": 1.279,
+      "mu1_GeV": 3.0,
+      "nf_mass": 4,
+      "published_target_GeV": 0.986,
+      "source": "Herren-Steinhauser RunDec/CRunDec v3 useful example",
+      "status": "BENCHMARK_PASS",
+      "tolerance_GeV": 0.001
+    }
+  },
+  "closed_claim": "selected RunDec/CRunDec benchmark parity closes for alpha_s(MZ)-driven threshold-matched scaffold",
+  "non_claims": [
+    "not complete RunDec parity",
+    "not full decoupling constants",
+    "not physical final",
+    "not fitted to APF outputs"
+  ],
+  "remaining_boundary": "full RunDec parity still requires adapter or vendored zeta_g/zeta_m higher-loop decoupling/matching implementation",
+  "status": "THRESHOLD_MATCHED_QCD_BENCHMARK_CLOSURE_PASS",
+  "threshold_protocol": "continuous alpha_s at mb benchmark threshold; nf=5 above mb, nf=4 below mb; no higher-loop decoupling constants applied"
+}

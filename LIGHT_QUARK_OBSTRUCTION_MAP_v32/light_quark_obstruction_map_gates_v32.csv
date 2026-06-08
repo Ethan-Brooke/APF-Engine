@@ -1,0 +1,10 @@
+gate,status,detail
+APF_TRACE_ANCHORS_PRESENT,PASS,"u,d,s anchors imported from charged-fermion APF_TRACE spectrum."
+PDG_MSBAR_2GEV_TARGET_CONTRACT,PASS,PDG light-quark masses are current-quark MSbar masses normalized at mu=2 GeV.
+DIRECT_MSBAR_2GEV_EXPORT,FAIL_KNOCKOUT,All three direct APF_TRACE -> MSbar(2 GeV) residuals exceed quoted 90%-CL uncertainty scales by large factors.
+SELF_SCALE_EXPORT,FAIL_KNOCKOUT,"u,d,s are not quoted at self-scale; low-energy current masses use conventional 2 GeV normalization."
+POLE_MASS_EXPORT,FAIL_KNOCKOUT,Confinement and renormalon/chiral physics make light-quark pole-mass export inadmissible.
+CONSTITUENT_MASS_EXPORT,FAIL_KNOCKOUT,"Constituent/hadronic masses are dynamical hadron-scale quantities, not APF_TRACE current-mass codomain values."
+RATIO_EXPORT,FAIL_PARTIAL,s/d is near but outside PDG reported range; u/d and s/mhat fail strongly; no ratio-route closure.
+NO_SMUGGLING_AUDIT,PASS,"PDG values used only as comparison targets, not as computational inputs."
+LIGHT_QCD_OBSTRUCTION_MAP,PASS,Low-energy QCD/chiral/lattice transport theorem required before physical export.

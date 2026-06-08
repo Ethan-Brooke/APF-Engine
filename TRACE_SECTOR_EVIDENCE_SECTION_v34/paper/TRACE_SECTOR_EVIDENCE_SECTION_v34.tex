@@ -1,0 +1,174 @@
+% TRACE_SECTOR_EVIDENCE_SECTION_v34.tex
+% Publication-facing consolidation of APF electroweak and fermion trace-sector results.
+
+\section{Trace-Sector Evidence: Electroweak and Fermion Closure}
+\label{sec:trace-sector-evidence}
+
+This section consolidates the electroweak and fermion trace-sector evidence into a single claim ladder.  The purpose is not to promote every trace value to a physical mass.  The purpose is to separate what is locally closed in the APF trace sector from what requires a scheme-specific transport route before comparison with physical observables.  The organizing principle is therefore:
+\[
+\boxed{\text{trace anchor}\ \longrightarrow\ \text{admissible transport route}\ \longrightarrow\ \text{physical export candidate}.}
+\]
+A direct numerical comparison is admitted only when the codomain, scheme, input deck, and uncertainty route are explicit.  Otherwise the result is recorded as a transport obstruction rather than hidden inside a fitted residual.
+
+\subsection{Electroweak trace-sector closure}
+\label{subsec:ew-trace-sector-closure}
+
+The electroweak trace sector closes at the level of the APF weak-angle trace anchor, its coupling-ratio consequence, and the W trace export-candidate route.  The weak-angle trace anchor is
+\[
+\boxed{
+\sin^2\theta_W^{\rm APF\text{-}TRACE}=\frac{3}{13}=0.230769230769\ldots
+}
+\]
+and therefore
+\[
+\cos^2\theta_W^{\rm APF\text{-}TRACE}=\frac{10}{13},
+\qquad
+\tan^2\theta_W^{\rm APF\text{-}TRACE}=\frac{3}{10},
+\qquad
+\boxed{\frac{g'}{g}=\sqrt{\frac{3}{10}}.}
+\]
+These are trace-level electroweak mixing statements, not scheme-free claims about a measured running weak angle.
+
+The W trace anchor is
+\[
+\boxed{
+M_W^{\rm APF\text{-}TRACE}=80.362164334\ {\rm GeV}.
+}
+\]
+Using the reviewed same-input DIZET on-shell electroweak transport evaluator at the APF route point gives
+\[
+M_W^{\rm DIZET}(x_{\rm APF})=80.357341077578084\ {\rm GeV},
+\]
+so that
+\[
+\Delta M_W
+=
+M_W^{\rm DIZET}(x_{\rm APF})-M_W^{\rm APF\text{-}TRACE}
+=-4.823256421915\ {\rm MeV}.
+\]
+With the row/input covariance and the DIZET theory-toggle scale used in the route audit,
+\[
+\sigma_{\rm input+theory}(M_W)=4.424866188882492\ {\rm MeV},
+\]
+which gives
+\[
+\boxed{
+|\Delta M_W|/\sigma = 1.0900344137.
+}
+\]
+Thus the W trace anchor survives same-input on-shell electroweak transport at the export-candidate level:
+\[
+\boxed{
+M_W^{\rm APF\to OS}:[P_{\rm export\ candidate}].
+}
+\]
+This is not an independent APF derivation of the full electroweak loop stack.  The native loop reconstruction remains a downstream theorem program; the present result is a reviewed-code, same-input, covariance-carrying transport validation.
+
+Using the external value of \(M_Z\) as a bridge input gives
+\[
+\frac{M_W^{\rm APF\text{-}TRACE}}{M_Z}=0.881283906299,
+\qquad
+1-\left(\frac{M_W^{\rm APF\text{-}TRACE}}{M_Z}\right)^2=0.223338676499.
+\]
+This is an external-\(M_Z\) on-shell consistency bridge, not a derivation of \(M_Z\) and not an identification of the trace angle with an on-shell or \(\overline{\rm MS}\) weak angle.
+
+\subsection{Fermion trace-sector closure}
+\label{subsec:fermion-trace-sector-closure}
+
+The fermion trace sector is locally closed, while physical export is route-dependent.  The master status is:
+\[
+\boxed{
+\text{fermion trace sector locally closed; physical export is route-dependent.}
+}
+\]
+The bottom-quark branch gives the cleanest fermion export candidate:
+\[
+\boxed{
+ m_b^{\rm APF\to\overline{MS}}(m_b)
+ =4.1774904559270665\ {\rm GeV}
+ :[P_{\rm export\ candidate\ not\ physical\ final}].
+}
+\]
+Against the self-scale \(\overline{\rm MS}\) bottom lane, the residual recorded in the route audit is
+\[
+-5.509544\ {\rm MeV},
+\qquad
+-0.787\sigma
+\]
+on the quoted comparison scale.  This is admitted as an export candidate because the APF bottom trace sits naturally in the short-distance self-scale \(\overline{\rm MS}\) codomain and the pole-mass branch is explicitly rejected.
+
+The top branch does not close as a physical mass export.  The trace value
+\[
+ m_t^{\rm APF\text{-}TRACE}=168.1690557938\ {\rm GeV}
+\]
+lands in neither the direct/Monte-Carlo, pole, nor self-scale \(\overline{\rm MS}\) lane.  It is admitted only as an external high-scale MSR codomain pass, with physical top export blocked by the missing no-smuggling scale-selection theorem:
+\[
+\boxed{
+ m_t^{\rm APF\text{-}TRACE}:
+ [P_{\rm trace}+P_{\rm ext\text{-}MSR\ codomain}+P_{\rm terminal\ scheme\ closeout}].
+}
+\]
+
+The charged-lepton branch also does not close as a pole-mass export.  A six-channel normalization candidate,
+\[
+\lambda_6=\frac{1}{\sqrt{6}},
+\]
+reduces the raw APF charged-lepton trace vector to
+\[
+ e:0.526765004\ {\rm MeV},
+\qquad
+ \mu:106.728287\ {\rm MeV},
+\qquad
+ \tau:1705.453337\ {\rm MeV},
+\]
+leaving residuals of approximately \(+3.09\%\), \(+1.01\%\), and \(-4.02\%\).  This is recorded as a normalization candidate plus generation-residual obstruction, not as an export candidate:
+\[
+\boxed{
+(e,\mu,\tau)^{\rm APF\text{-}TRACE}:
+[P_{\rm trace\ vector}+P_{\rm normalization\ candidate}+P_{\rm generation\ residual\ closeout}].
+}
+\]
+
+Charm and the light quarks close as transport knockouts.  The charm trace value,
+\[
+ m_c^{\rm APF\text{-}TRACE}=0.6800912249261419\ {\rm GeV},
+\]
+is far from the self-scale \(\overline{\rm MS}\) charm lane and is therefore recorded as
+\[
+\boxed{
+ m_c^{\rm APF\text{-}TRACE}:[P_{\rm trace}+P_{\overline{MS}\ route\ knockout}].
+}
+\]
+The light-quark branch \((u,d,s)\) is recorded as a low-energy QCD/chiral/lattice obstruction.  Direct \(\overline{\rm MS}(2\,{\rm GeV})\), pole, self-scale, constituent-mass, and simple-ratio routes are all rejected:
+\[
+\boxed{
+(u,d,s)^{\rm APF\text{-}TRACE}:
+[P_{\rm trace}+P_{\rm low\text{-}energy\ QCD\ obstruction}].
+}
+\]
+
+\subsection{Claim ladder and no-smuggling discipline}
+\label{subsec:trace-sector-claim-ladder}
+
+The consolidated trace-sector evidence supports the following claim ladder:
+\[
+\boxed{
+\begin{array}{lll}
+\text{Sector} & \text{Status} & \text{Meaning}\\
+\hline
+\text{EW trace} & [P_{\rm sector\ closure}] & \sin^2\theta_W,\ g'/g,\ W\ \text{trace/export-candidate route}\\
+W & [P_{\rm export\ candidate}] & \text{same-input DIZET on-shell transport, }1.09\sigma\\
+b & [P_{\rm export\ candidate}] & \overline{\rm MS}\ \text{self-scale route}\\
+t & [P_{\rm terminal\ scheme}] & \text{external MSR codomain only; no physical export}\\
+e,\mu,\tau & [P_{\rm residual\ obstruction}] & \lambda_6\ \text{candidate, generation residual open}\\
+c & [P_{\overline{\rm MS}\ \rm knockout}] & \text{normalization/transport map missing}\\
+u,d,s & [P_{\rm QCD\ obstruction}] & \text{low-energy QCD/chiral/lattice transport required}
+\end{array}}
+\]
+
+The no-smuggling audit is essential to this conclusion.  External values, lattice/PDG lanes, and DIZET are used only as codomain contracts or transport validators, not as inputs used to manufacture APF trace anchors.  Failed direct routes are retained as negative controls.  Only branches with an admitted transport route are promoted to export-candidate status.  The consolidated result is therefore deliberately smaller than a universal mass-export claim, but stronger as evidence:
+\[
+\boxed{
+\text{APF closes the EW trace sector and the fermion trace sector locally; physical export is admitted only route by route.}
+}
+\]

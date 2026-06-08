@@ -1,0 +1,9 @@
+entry,required_for,v49_status,smuggling_guard,notes
+S_run,final numeric running codomain,external_required,must not be selected from residuals,e.g. MSbar-like running mass scheme
+mu,final numeric running scale,external_required,must not be chosen to improve lepton agreement,self-scale or common-scale convention must be declared before comparison
+L,loop order,external_required,must not be target-selected,finite perturbative order must be fixed
+K_n,multi-loop coefficients,external_required,must come from QED literature/ledger,not inferred from APF residual vector
+threshold_schedule,active lepton thresholds,external_required,not residual dependent,declares electron/muon/tau activity and matching
+matching_convention,pole-to-running matching,external_required,not tuned per generation,common convention required
+alpha_running,alpha(mu) convention,external_required,not target selected,frozen-alpha witness already evaluated only as witness
+Sigma_QED,covariance matrix,external_required,not post-hoc,"propagates constants, truncation, correlations"

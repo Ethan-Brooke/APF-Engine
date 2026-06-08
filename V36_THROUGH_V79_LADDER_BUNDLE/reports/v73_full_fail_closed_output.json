@@ -1,0 +1,37 @@
+{
+  "adapter": {
+    "reason": "RUNDEC_CMD not set",
+    "required_interface": "command reads JSON from stdin and returns JSON with c,b mass_target_GeV plus validation metadata",
+    "status": "FAIL_CLOSED"
+  },
+  "lo_scaffold": {
+    "engine": "internal_LO_scaffold",
+    "results": {
+      "b": {
+        "alpha0": 0.223,
+        "alpha1_LO": 0.18020045008307345,
+        "m0_GeV": 4.177490455927,
+        "mass_exponent": 0.5217391304347826,
+        "mass_target_LO_GeV": 3.7379116829092527,
+        "mass_target_LO_sigma_GeV": 0.013957196360871185,
+        "mu0_GeV": 4.177490455927,
+        "mu1_GeV": 10.0,
+        "nf": 5
+      },
+      "c": {
+        "alpha0": 0.38,
+        "alpha1_LO": 0.2653070677084119,
+        "m0_GeV": 1.272334177712,
+        "mass_exponent": 0.48,
+        "mass_target_LO_GeV": 1.07079047780338,
+        "mass_target_LO_sigma_GeV": 0.012471289433634469,
+        "mu0_GeV": 1.272334177712,
+        "mu1_GeV": 3.0,
+        "nf": 4
+      }
+    },
+    "status": "APF_V73_LO_SCAFFOLD_CLOSED"
+  },
+  "reason": "RunDec-compatible validated adapter unavailable",
+  "status": "FULL_QCD_EVALUATOR_FAIL_CLOSED"
+}

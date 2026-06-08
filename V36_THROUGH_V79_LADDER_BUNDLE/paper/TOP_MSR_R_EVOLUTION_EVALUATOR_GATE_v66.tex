@@ -1,0 +1,38 @@
+
+\section{Top MSR $R$-Evolution Evaluator Gate (v66)}
+\label{sec:v66-top-msr-r-evolution-gate}
+
+\paragraph{Purpose.}
+The v65 registry identifies top MSR $R$-evolution as the first external evaluator implementation target.  This v66 module closes the evaluator gate: it preserves the v63 fixed-order MSR-family witness, blocks the pole branch, and requires the full $R$-evolution coefficient/covariance ledger before any physical-final promotion.
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{
+\textbf{Gate theorem.}  The APF top object may be compared to direct reconstruction only in a finite-resolution MSR codomain.  The retained witness is
+\[
+  m_t^{\rm MSR}(R_{\rm EW})=172.564754410708\,\mathrm{GeV},\qquad
+  R_{\rm EW}=M_W^{\rm TRACE}/(2\pi)=12.790035691319\,\mathrm{GeV}.
+\]
+This is not yet a full numerical $R$-evolution final.  Full $R$-evolution fails closed until the $\gamma_R$ coefficient table, $\beta$-function/running convention, threshold convention, and covariance protocol are ingested.
+}}
+\end{center}
+
+\subsection{Blocked pole branch}
+The four-loop pole conversion remains quarantined:
+\[
+  m_t^{\rm pole,4\ell}=174.016604383647\,\mathrm{GeV}.
+\]
+Therefore v66 continues to forbid the statement that the direct/MC top mass is exactly a pole mass.
+
+\subsection{Evaluator contract}
+A full external evaluator must supply
+\[
+  U_R(\mathcal L_R,\Sigma_R):m_t^{\rm MSR}(R_\star)\mapsto m_t^{\rm MSR}(R_{\rm EW}),
+\]
+where $\mathcal L_R$ contains the MSR definition, $\gamma_R$ coefficients, $\beta$-function convention, $\alpha_s$ input, thresholds, integration method, and covariance protocol.  Without these ingredients the evaluator returns a fail-closed obstruction, not a number.
+
+\subsection{No-smuggling rule}
+$R_{\rm EW}$ is fixed from $M_W^{\rm TRACE}/(2\pi)$ and cannot be varied to reduce the top residual.  Coefficients cannot be re-fit from the top target.
+
+\begin{center}
+\fbox{\texttt{TOP\_MSR\_R\_EVOLUTION\_EVALUATOR\_GATE\_PASS}}
+\end{center}

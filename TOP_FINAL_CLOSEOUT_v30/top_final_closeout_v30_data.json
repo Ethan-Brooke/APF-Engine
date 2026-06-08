@@ -1,0 +1,51 @@
+{
+  "title": "APF v30 top mass final closeout",
+  "pass_status": "TOP_FINAL_CLOSEOUT_PASS",
+  "route_status": "P_trace + P_external_MSR_codomain + P_terminal_scheme_closeout",
+  "physical_export_status": "BLOCKED_NOT_CLAIMED",
+  "apf_trace": {
+    "m_t_APF_TRACE_GeV": 168.1690557938,
+    "codomain": "APF_TRACE"
+  },
+  "external_anchors": {
+    "direct_MC_like_GeV": 172.52,
+    "direct_uncertainty_GeV": 0.33,
+    "pole_context_GeV": 172.5,
+    "MSbar_self_scale_context_GeV": 162.69,
+    "alpha_s_mt_context": 0.1088,
+    "nf": 6
+  },
+  "external_MSR_codomain": {
+    "formula": "m_MSR(R) = m_pole - R*(4/3)*alpha_s(R)/pi, one-loop alpha_s running from alpha_s(mt)",
+    "R_star_GeV": 85.86007607867813,
+    "alpha_s_R_star": 0.11885089487491138,
+    "m_MSR_R_star_GeV": 168.16905579380003,
+    "linear_no_running_R_GeV": 93.79179113951197,
+    "m_MSR_80_GeV": 168.4265198207666,
+    "trace_minus_msr80_GeV": -0.257464026966602,
+    "literature_stability_scale_GeV_context": 80.0
+  },
+  "residuals": {
+    "trace_minus_direct_MC_GeV": -4.350944206200012,
+    "direct_pull_sigma": -13.184679412727307,
+    "trace_minus_MSbar_self_scale_GeV": 5.479055793800001,
+    "trace_minus_MSR_80_GeV": -0.257464026966602,
+    "R_star_over_MW_APF_TRACE": 1.0684141820997728
+  },
+  "closure_decision": {
+    "direct_MC_or_pole_export": "KNOCKED_OUT",
+    "self_scale_MSbar_export": "KNOCKED_OUT",
+    "EW_delta_rho_substitution": "KNOCKED_OUT",
+    "external_MSR_codomain": "CLOSED",
+    "no_smuggling_physical_export": "BLOCKED",
+    "terminal_gate": "APF_NATIVE_TOP_TRACE_TO_MSR_SCALE_SELECTION_THEOREM_WITHOUT_EXTERNAL_POLE_ANCHOR",
+    "final_top_status": "FINISHED_AS_EXTERNAL_SCHEME_CLOSEOUT_NOT_PHYSICAL_EXPORT"
+  },
+  "safe_claim": "The APF top trace is compatible with a high-scale external MSR short-distance codomain, but top is not closed as a no-smuggling physical mass export.",
+  "next_sector": "charm_MSbar_then_light_quark_obstruction_map",
+  "source_hashes": {
+    "APF_v29_TOP_NS_EXT_PASS.zip": "b55739ed4ca2912f22533afc7a803e663295fb6fd31b456099544ef54b782ae5"
+  },
+  "checks_total": 72,
+  "checks_passed": 72
+}

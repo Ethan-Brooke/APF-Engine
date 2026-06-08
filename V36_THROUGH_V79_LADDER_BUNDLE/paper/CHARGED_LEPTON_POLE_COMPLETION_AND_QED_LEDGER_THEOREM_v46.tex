@@ -1,0 +1,101 @@
+
+% APF v46 charged-lepton pole completion and QED ledger theorem
+% Generated package layer: v46
+
+\section{{Charged-Lepton Pole Completion and QED Ledger Boundary}}
+\label{{sec:charged-lepton-pole-completion-v46}}
+
+\paragraph{{Purpose.}}
+v46 closes the charged-lepton branch at the pole-codomain APF level without converting the QED running layer into a residual-fitting device.  The result is not a final QED-running mass theorem.  It is a completion theorem for the APF-side pole route: source vector, generation residual operator, APF count coefficients, scalar count normalization, and covariance admission are all present before comparison.
+
+\begin{{theorem}}[Charged-lepton pole completion under the APF QED envelope]
+Let
+\[
+\Phi_\ell^{{\rm v43}}
+=(0.511002635788531,\ 105.658243985342,\ 1776.916832008411)\ {\rm MeV}
+\]
+be the v43 APF charged-lepton pole-codomain vector obtained from the source theorem
+\[
+T_\ell^{{\rm APF}}=\operatorname{{diag}}(1/3,3,1)T_d^{{\rm APF}},
+\]
+the universal scalar \(1/\sqrt 6\), the APF count residual operator, and the scalar count normalization
+\[
+\eta_0^{{\rm APF}}={1\over 5063},\qquad
+5063=61(61+16+3+3).
+\]
+Let the pole references used only for diagnostic comparison be
+\[
+(0.510998950,\ 105.658375500,\ 1776.930000000)\ {\rm MeV}.
+\]
+Then the relative residuals are
+\[
+(0.000721290823\%,\ -0.000124471588\%,\ -0.000741052916\%).
+\]
+The APF QED covariance envelope is
+\[
+\varepsilon_{{\ell},{\rm QED}}^{{\rm APF}}={1\over 5063},
+\qquad
+100\varepsilon_{{\ell},{\rm QED}}^{{\rm APF}}=0.019751135690302\%.
+\]
+Hence
+\[
+\max_i |\delta_i| = 0.000741052916\%
+<0.019751135690302\%,
+\]
+and, equivalently,
+\[
+{\max_i |\delta_i|\over 100/5063}=0.037519509162<1.
+\]
+Therefore the charged-lepton APF pole route is complete at the status
+\[
+\boxed{{
+\ell:
+[P_{{\rm pole\ completion}}^{{\rm APF\ envelope}}]
+}}
+\]
+provided the claim is understood as envelope-admitted pole-codomain export, not as exact equality and not as numerical QED-running export.
+\end{{theorem}}
+
+\begin{{proof}}[Proof sketch]
+The source theorem supplies \(T_\ell^{{\rm APF}}\) without inversion from \((m_e,m_\mu,m_\tau)\).  The operator and coefficient theorems fix the generation structure using APF count data, not three independent residual coefficients.  The scalar normalization theorem fixes the common scalar count source \(1/5063\) before comparison.  The covariance theorem declares the same count as the admissible QED pole envelope.  Direct substitution gives the three residuals displayed above, all strictly inside the predeclared envelope.  Thus no APF-side pole-route gate remains open.  The conclusion is completion inside the APF envelope, not zero residual.
+\end{{proof}}
+
+\begin{{corollary}}[QED running is downstream external-ledger transport]
+Numerical QED running is not part of the APF pole-completion claim.  A running comparison must first declare
+\[
+\mathcal L_{{\rm QED}}
+=\{S_{{\rm run}},\mu,L,\alpha(\mu_0),\mathcal T,\mathcal M,\mathcal C,\Sigma_{{\rm QED}}\}.
+\]
+Only after this ledger is fixed independently of the charged-lepton residual vector may one evaluate
+\[
+\Phi_{{\ell},i}^{{S_{{\rm run}}}}(\mu)
+=
+U_{{\rm QED}}^{{S_{{\rm pole}}\to S_{{\rm run}}}}
+(\mathcal L_{{\rm QED}};\Phi_\ell^{{\rm v43}})_i\,
+\Phi_{{\ell},i}^{{\rm v43}}.
+\]
+Consequently v46 closes the pole route while leaving numerical QED-running export open until an external constants and covariance ledger is imported.
+\end{{corollary}}
+
+\paragraph{{No-smuggling exclusions.}}
+The following are inadmissible: reconstructing \(T_\ell\) by inverting the pole masses; introducing free factors \((r_e,r_\mu,r_\tau)\); choosing the QED scale, loop order, threshold schedule, matching convention, or covariance after seeing the residuals; or calling the residual zero because it is small.  The claim is explicitly envelope completion.
+
+\paragraph{{Final v46 claim ladder.}}
+\[
+\boxed{{
+\ell:
+[P_{{\rm pole\ completion}}^{{\rm APF\ envelope}}]
++
+[P_{{\rm QED\ route\ typed}}]
+/
+\mathcal L_{{\rm QED}}\ {\rm external\ for\ numeric\ running}.
+}}
+\]
+Not claimed:
+\[
+\boxed{{
+[P_{{\rm QED\ running\ final}}],\quad
+[P_{{\rm physical\ final}}],\quad
+\Delta_\ell=0.
+}}
+\]

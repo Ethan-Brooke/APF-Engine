@@ -1,0 +1,4 @@
+object,value_GeV,role,registry_action
+v63 fixed-order scale-translation witness,172.564754410708,superseded witness; not final registry value,quarantine as historical witness
+v67 R-evolution numeric evaluator,172.716805649486,current top registry value in direct-MSR codomain,promote as top closeout value
+v61/v67 pole branch,174.016604383647,pole branch knockout,retain as blocked branch

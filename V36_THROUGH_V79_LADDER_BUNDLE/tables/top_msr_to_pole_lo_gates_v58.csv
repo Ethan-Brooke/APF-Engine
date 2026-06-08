@@ -1,0 +1,7 @@
+gate,status,detail
+G1,closed for witness,"codomain declared as LO pole/MC-proxy audit, not final pole or direct mass"
+G2,closed for witness,transport map supplied: one-loop MSR(R*) -> pole relation using C_F alpha_s/pi shift
+G3,closed for witness,"external ledger freezes alpha_s(MZ), MZ, n_f, beta0, C_F, PDG direct audit value"
+G4,closed for witness,"covariance includes PDG direct uncertainty, alpha_s propagation, and declared LO truncation scale"
+G5,closed,"PDG top mass is audit-only; it is not used to choose R*, alpha_s, beta0, C_F, or the conversion formula"
+G6,closed for witness,"residual assigned to PDG audit, alpha_s covariance, truncation, MC/pole ambiguity, and higher-loop conversion channels"

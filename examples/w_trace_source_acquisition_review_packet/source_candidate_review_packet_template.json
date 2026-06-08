@@ -1,0 +1,12 @@
+{
+  "packet_id": "template_packet_no_real_source",
+  "reviewer_or_process": "UNREVIEWED",
+  "review_decision": "TEMPLATE_ONLY_DO_NOT_IMPORT",
+  "review_notes_digest": "sha256:<review_notes_digest>",
+  "evidence_bundle_digest": "sha256:<evidence_bundle_digest>",
+  "worksheet_sections_completed": [],
+  "preimport_steps_attested": [],
+  "forbidden_input_audit_passed": false,
+  "template_only": true,
+  "physical_export_requested": false
+}

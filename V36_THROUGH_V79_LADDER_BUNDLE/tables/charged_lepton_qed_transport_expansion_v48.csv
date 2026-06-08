@@ -1,0 +1,7 @@
+layer,formula_or_value,numeric_value,v48_status,claim_boundary
+L0_pole_identity,Phi_l^v43,"[0.5110026357885311, 105.658243985342, 1776.9168320084111]",evaluated,APF pole completion only
+L1_self_scale_factor,1/(1+alpha/pi),0.997682563522362,evaluated_numeric_witness,not final full running
+L1_self_scale_shift_percent,100*(1/(1+alpha/pi)-1),-0.23174364776380463,evaluated,universal shift; not target-fit
+L2_order_scale_percent,100*(alpha/pi)^2,0.0005395490263244674,bounded_scale_only,coefficient ledger not imported
+L3_order_scale_percent,100*(alpha/pi)^3,1.2532749802341106e-06,bounded_scale_only,coefficient ledger not imported
+full_running_operator,U_QED^{pole->S_run}(L_QED)=exp(sum_{n=1}^L K_n(L_QED)(alpha/pi)^n),symbolic,typed_not_final,requires external L>=2 coefficients/thresholds/covariance

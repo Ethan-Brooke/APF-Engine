@@ -1,0 +1,154 @@
+{
+  "status": "EW_TRACE_SECTOR_CLOSURE_PASS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "status_declared",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sin2_exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "cos2_exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sin_cos_partition",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "tan2_exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "gprime_over_g",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "g_components_partition",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w_trace_positive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "dizet_transport_positive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "dizet_residual_mev",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pull_positive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "export_candidate_within_two_sigma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "delta_r_ledger_closes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "external_mz_positive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wz_bridge_ratio",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sw2_bridge_definition",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "bridge_distinct_from_trace_angle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "claim_table_nonempty",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "closure_table_has_open_boundary",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "closure_table_has_export_candidate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "coupling_table_has_gprime_over_g",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no_physical_final_claim",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "mz_marked_external",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "safe_claims_present",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "data": {
+    "status": "P_ew_trace_sector_closure",
+    "version": "v22_0",
+    "apf_version": "22.0.0",
+    "pass_status": "EW_TRACE_SECTOR_CLOSURE_PASS",
+    "sin2_theta_trace": 0.23076923076923078,
+    "cos2_theta_trace": 0.7692307692307693,
+    "tan2_theta_trace": 0.3,
+    "gprime_over_g_trace": 0.5477225575051661,
+    "m_w_trace_gev": 80.362164334,
+    "m_w_dizet_apf_input_gev": 80.35734107757808,
+    "dizet_minus_apf_mev": -4.823256421914834,
+    "abs_dizet_apf_mev": 4.823256421914834,
+    "sigma_input_plus_theory_mev": 4.424866188882492,
+    "pull_input_plus_theory": 1.0900344137034699,
+    "delta_r_dizet_apf_input": 0.036501785659414865,
+    "delta_r_ledger_sum": 0.036501785659414865,
+    "delta_r_ledger_residual": 0.0,
+    "m_z_external_gev": 91.1876,
+    "wz_ratio_bridge": 0.8812839062986634,
+    "sw2_onshell_bridge": 0.22333867649896866,
+    "pdg_msbar_sin2z_context": 0.23129,
+    "pdg_onshell_sw2_context": 0.22348,
+    "trace_to_msbar_sin2_offset": -0.0005207692307692136,
+    "bridge_to_onshell_offset": -0.00014132350103135405,
+    "closed_claim": "EW trace sector closes at mixing/coupling-ratio/W-export-candidate level.",
+    "open_boundary": "Full APF-native EW loop derivation and MZ physical export remain downstream."
+  }
+}

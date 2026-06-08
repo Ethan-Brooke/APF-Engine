@@ -1,0 +1,10 @@
+ledger_item,content,v52_status,gate_or_guard
+codomain,"S_light=MSbar(2GeV), n_f low-energy convention declared",closed_v52,G1 codomain typed
+source_vector,"T_uds^APF=(T_u,T_d,T_s)",partial,"T_d,T_s inherited; T_u source theorem required"
+chiral_lattice_map,U_chi-lat(T_uds; L_chi-lat)->m_uds^MSbar(2GeV),typed_v52,G2 map form closed but evaluator not supplied
+lattice_scale_setting,"a, scale observable, continuum extrapolation",external_required,cannot be selected from APF residuals
+chiral_fit,"SU(2)/SU(3) chiral ansatz, pion/kaon inputs, extrapolation domain",external_required,must be frozen before comparison
+EM_isospin,QED and m_u != m_d correction convention,external_required,cannot be tuned per component
+renormalization_matching,"Z_m and conversion to MSbar(2GeV), loop/order/action details",external_required,low-energy QCD/lattice ledger
+covariance,"joint covariance among u,d,s, ratios, lattice systematics, truncation",external_required,"residuals assigned, not absorbed"
+no_target_inversion,forbid solving T_u or U_chi-lat from PDG masses,closed_v52,G5 no smuggling

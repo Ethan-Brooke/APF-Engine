@@ -1,0 +1,163 @@
+{
+  "stamp": "GLOBAL_TRACE_TO_SCHEME_CLOSURE_REGISTRY_PASS",
+  "version": "v55",
+  "sector_count": 6,
+  "sectors": [
+    {
+      "sector": "EW/W",
+      "trace_anchor": "sin^2 theta_W=3/13; M_W^TRACE=80.362164334 GeV",
+      "codomain": "on-shell EW / DIZET-row same-input transport",
+      "highest_closed_status": "P_export_candidate",
+      "route_family": "electroweak on-shell",
+      "closed_layers": "G1-G6 export gate; same-input transport route; row/covariance admission candidate",
+      "boundary_or_next_gate": "EW covariance/finalization review; DIZET row protocol publication hardening",
+      "may_claim": "EW/W on-shell export candidate",
+      "must_not_claim": "physical-final W closure; zero residual; all EW observables final",
+      "recommended_next_version": "v56",
+      "priority": "1"
+    },
+    {
+      "sector": "charged leptons",
+      "trace_anchor": "T_l^APF=diag(1/3,3,1) T_d^APF; Phi_l^v43 pole vector",
+      "codomain": "pole QED with full-running ledger boundary",
+      "highest_closed_status": "P_pole_completion_APF_envelope_CODATA2022_plus_QED_boundary",
+      "route_family": "QED pole plus external running ledger",
+      "closed_layers": "source vector; residual operator; coefficients; scalar normalization; CODATA ledger; pole envelope; LO QED witness; full-running boundary",
+      "boundary_or_next_gate": "full multi-loop QED coefficient/threshold/matching/covariance ledger required for running-final",
+      "may_claim": "charged-lepton pole-codomain APF completion under envelope and external-ledger boundary",
+      "must_not_claim": "QED-running final; physical-final; exact equality; residual-free fit",
+      "recommended_next_version": "defer unless external full QED ledger is intentionally imported",
+      "priority": "5"
+    },
+    {
+      "sector": "charm",
+      "trace_anchor": "m_c^TRACE=0.680091224926 GeV; Phi_c=sqrt(7/2)m_c^TRACE=1.272334177712 GeV",
+      "codomain": "self-scale MSbar m_c(m_c)",
+      "highest_closed_status": "P_export_candidate_MSBAR_self_scale_QCD_ledger",
+      "route_family": "heavy-QCD self-scale MSbar",
+      "closed_layers": "Schur-count normalization; self-scale codomain; same-codomain PDG audit; shared QCD ledger discipline",
+      "boundary_or_next_gate": "full alpha_s/threshold/correlation covariance publication review",
+      "may_claim": "charm self-scale MSbar export candidate",
+      "must_not_claim": "physical-final charm; pole mass; zero residual; full QCD covariance final",
+      "recommended_next_version": "v57 shared heavy-QCD covariance finalization",
+      "priority": "3"
+    },
+    {
+      "sector": "bottom",
+      "trace_anchor": "m_b^TRACE=4.177490455927 GeV",
+      "codomain": "self-scale MSbar m_b(m_b)",
+      "highest_closed_status": "P_export_candidate_MSBAR_self_scale_QCD_ledger",
+      "route_family": "heavy-QCD self-scale MSbar",
+      "closed_layers": "trace anchor; self-scale codomain; same-codomain PDG audit; shared QCD ledger discipline",
+      "boundary_or_next_gate": "full alpha_s/threshold/correlation covariance publication review",
+      "may_claim": "bottom self-scale MSbar export candidate",
+      "must_not_claim": "physical-final bottom; pole mass; zero residual; full QCD covariance final",
+      "recommended_next_version": "v57 shared heavy-QCD covariance finalization",
+      "priority": "3"
+    },
+    {
+      "sector": "top",
+      "trace_anchor": "m_t^TRACE=168.1690557938 GeV; R_star=85.8572226983853 GeV",
+      "codomain": "MSR mass at R_star",
+      "highest_closed_status": "P_export_candidate_MSR_Rstar_QCD_ledger",
+      "route_family": "heavy-QCD MSR scale-selected",
+      "closed_layers": "native APF MSR scale selector; codomain admission; shared heavy-QCD ledger discipline",
+      "boundary_or_next_gate": "MSR-to-pole/MC/MSbar conversion ledger required before direct top comparison",
+      "may_claim": "top MSR(R_star) export candidate",
+      "must_not_claim": "top pole mass; MC mass; direct PDG top closure; physical-final top",
+      "recommended_next_version": "v57 or dedicated MSR conversion theorem",
+      "priority": "4"
+    },
+    {
+      "sector": "light quarks",
+      "trace_anchor": "T_uds^APF=(1.153209852399677,3.870916422334003,87.14328163365137) MeV",
+      "codomain": "MSbar(2 GeV) light masses through chiral/lattice evaluator",
+      "highest_closed_status": "P_source_pretransport_complete_external_chilat_required",
+      "route_family": "low-energy chiral/lattice QCD",
+      "closed_layers": "T_u source; T_d/T_s source; full T_uds; identity knockout; universal scalar knockout; APF-side boundary",
+      "boundary_or_next_gate": "external source-independent chiral/lattice evaluator and joint covariance required",
+      "may_claim": "light-quark APF source/pretransport completion at chiral-lattice boundary",
+      "must_not_claim": "light-quark export candidate; MSbar(2 GeV) numeric prediction; physical-final u,d,s",
+      "recommended_next_version": "external chiral/lattice evaluator import only if desired",
+      "priority": "6"
+    }
+  ],
+  "claim_ladder": [
+    {
+      "status": "P_trace",
+      "meaning": "APF trace anchor exists in internal trace scheme",
+      "claim_boundary": "internal APF object only; no physical codomain claim"
+    },
+    {
+      "status": "P_source",
+      "meaning": "APF source vector/source theorem closed",
+      "claim_boundary": "source-side object may feed a route but is not export"
+    },
+    {
+      "status": "P_route",
+      "meaning": "transport route form typed without target reuse",
+      "claim_boundary": "route structure exists; numeric export may still require constants/covariance"
+    },
+    {
+      "status": "P_export_candidate",
+      "meaning": "codomain, route, constants boundary, no-smuggling, and residual channels admitted",
+      "claim_boundary": "same-codomain comparison permitted; not physical-final"
+    },
+    {
+      "status": "P_pole_completion",
+      "meaning": "pole-codomain branch complete within declared APF envelope",
+      "claim_boundary": "pole-level completion; downstream running remains external"
+    },
+    {
+      "status": "P_external_ledger_boundary",
+      "meaning": "APF side complete and named external ledger is required",
+      "claim_boundary": "do not promote until external evaluator is supplied"
+    },
+    {
+      "status": "P_physical_final",
+      "meaning": "all transport, covariance, scheme, and residual channels closed",
+      "claim_boundary": "not assigned to any sector in v55"
+    }
+  ],
+  "route_gates": [
+    {
+      "gate": "G1",
+      "object": "codomain declaration",
+      "status": "closed/typed for every registry entry"
+    },
+    {
+      "gate": "G2",
+      "object": "transport route object",
+      "status": "closed for EW/W, top, charged leptons, charm, bottom; boundary-typed for light quarks"
+    },
+    {
+      "gate": "G3",
+      "object": "constants ledger",
+      "status": "typed for all; external full ledgers open for QED running, heavy-QCD final, chiral/lattice"
+    },
+    {
+      "gate": "G4",
+      "object": "covariance protocol",
+      "status": "admitted for charged-lepton pole; typed/open for EW and QCD final layers"
+    },
+    {
+      "gate": "G5",
+      "object": "no-smuggling audit",
+      "status": "closed as a required registry invariant"
+    },
+    {
+      "gate": "G6",
+      "object": "residual channel assignment",
+      "status": "closed/typed for every registry row; final residual closure not claimed"
+    }
+  ],
+  "next_recommended": "APF_W_TRACE_TO_ONSHELL_EW_COVARIANCE_CLOSURE",
+  "not_claimed": [
+    "P_physical_final",
+    "global physical finality",
+    "zero residuals",
+    "top pole/MC closure",
+    "QED running final",
+    "light quark numeric export"
+  ]
+}

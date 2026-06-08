@@ -1,0 +1,54 @@
+
+% APF v73 -- RunDec-Compatible QCD Evaluator Implementation
+% Generated 2026-05-10
+\section{RunDec-Compatible QCD Evaluator Implementation}
+\label{sec:v73-rundec-compatible-evaluator}
+
+\subsection{Purpose}
+The v72 source ledger identified RunDec/CRunDec as the authoritative external evaluator family for full QCD running, decoupling, threshold matching, and mass conversion. This module implements the local evaluator boundary: an executable leading-order scaffold, a RunDec-compatible adapter interface, self-tests, and fail-closed behavior for full multi-loop evaluation when no validated RunDec-compatible engine is present.
+
+\subsection{Executable LO scaffold}
+The internal scaffold reproduces the v71 source-clean one-loop fixed-flavour running evaluator:
+\[
+\alpha_s(\mu_1)=\frac{\alpha_s(\mu_0)}{1+\alpha_s(\mu_0)\beta_0\ln(\mu_1/\mu_0)/(2\pi)},
+\qquad
+\beta_0=11-\frac{2n_f}{3},
+\]
+\[
+ m(\mu_1)=m(\mu_0)\left(\frac{\alpha_s(\mu_1)}{\alpha_s(\mu_0)}\right)^{4/\beta_0}.
+\]
+The runnable script is \texttt{scripts/rundec\_compatible\_qcd\_evaluator\_v73.py}. It gives
+\[
+\boxed{m_c^{\rm LO}(3\,{\rm GeV})=1.070790477803\,{\rm GeV},\qquad \alpha_s^{\rm LO}(3\,{\rm GeV})=0.265307067708.}
+\]
+\[
+\boxed{m_b^{\rm LO}(10\,{\rm GeV})=3.737911682909\,{\rm GeV},\qquad \alpha_s^{\rm LO}(10\,{\rm GeV})=0.180200450083.}
+\]
+The self-test mode verifies exact reproduction of the v71 LO baseline.
+
+\subsection{RunDec-compatible adapter}
+The full evaluator path is externalized behind a declared interface. If \texttt{RUNDEC\_CMD} is set, the script sends a JSON payload containing the charm and bottom cases and requires a JSON return with charm and bottom outputs, loop order, threshold schedule, covariance metadata, and a validation identifier. The validation identifier must refer to a published RunDec/CRunDec example or an equivalent local benchmark.
+
+\subsection{Fail-closed theorem}
+\begin{theorem}[RunDec-compatible implementation boundary]
+The charm--bottom evaluator is locally executable at leading order and interface-complete for a RunDec-compatible full evaluator. In the absence of a validated \texttt{RUNDEC\_CMD} adapter or explicitly vendored coefficient tables, the full multi-loop QCD route must return
+\[
+\boxed{\texttt{FULL\_QCD\_EVALUATOR\_FAIL\_CLOSED}}.
+\]
+Consequently v73 closes
+\[
+ c,b:[P_{\rm LO\ scaffold\ executable}]+[P_{\rm RunDec\ adapter\ interface}]
+ \not\Rightarrow [P_{\rm full\ QCD\ numeric}],
+\]
+where the barred implication means that full-QCD numeric closure is explicitly not assigned.
+\end{theorem}
+
+\subsection{No-smuggling rule}
+No destination-scale target masses are used. No thresholds, scales, or coefficients are selected by residual minimization. The adapter cannot promote itself unless it declares its loop order, threshold schedule, covariance channels, and validation benchmark. This keeps RunDec from becoming a hidden residual-fitting oracle.
+
+\subsection{Status}
+The v73 status is
+\[
+\boxed{c,b:[P_{\rm LO\ scaffold\ executable}]+[P_{\rm RunDec\ adapter\ interface}]/[P_{\rm full\ evaluator\ requires\ adapter\ or\ vendored\ coefficients}].}
+\]
+It does not claim \([P_{\rm physical\ final}]\), full multi-loop QCD final values, pole masses, or zero residuals.

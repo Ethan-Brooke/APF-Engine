@@ -1,0 +1,7 @@
+forbidden_action,why_forbidden,v59_enforcement
+choose R_star to hit PDG top mass,R_star is APF-derived before comparison,R_star listed as APF source; PDG comparator audit-only
+fit alpha_s(MZ) to top residual,alpha_s is external QCD world-average input,alpha_s ledger value frozen; uncertainty propagated
+select loop order by best agreement,loop order must be declared before audit,"L is an evaluator input, not an optimizer"
+tune threshold matching to reduce residual,threshold convention belongs to QCD ledger,matching convention source-bound
+declare MC mass equal to pole/MSR mass,MC mass is a generator parameter/phenomenological boundary,MC branch marked audit boundary only
+hide residual inside APF trace anchor,trace anchor is frozen before export,residual channels listed separately

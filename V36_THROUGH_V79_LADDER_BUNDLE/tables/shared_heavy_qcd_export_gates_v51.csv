@@ -1,0 +1,7 @@
+gate,v51_status,witness,boundary_or_guard
+G1_CODOMAIN_DECLARED,pass,"c,b: self-scale MSbar; t: MSR(R_star)",no cross-codomain comparison
+G2_TRANSPORT_MAP,pass,c: sqrt(7/2); b: identity self-scale; t: native R_star MSR admission,no inverse target solve
+G3_CONSTANTS_LEDGER,pass_for_route; required_for_full_QCD,APF counts and trace anchors closed; QCD alpha_s/loop/threshold ledger typed,external constants not fit from residuals
+G4_COVARIANCE_PROTOCOL,pass_boundary,"same-codomain c,b audit sigma recorded; top conversion covariance boundary named",full covariance matrix required for physical_final
+G5_NO_SMUGGLING_AUDIT,pass,forbidden inputs table closed,target masses excluded from route construction
+G6_RESIDUAL_CHANNELS,pass,residuals assigned to same-codomain audit or conversion-boundary channels,residuals not absorbed into trace anchors

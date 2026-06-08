@@ -1,0 +1,47 @@
+
+\section{v76: QCD Coefficient Table Vendoring and Fixed-Flavour Four-Loop Evaluator}
+
+This module upgrades the charm--bottom QCD evaluator from the v73 LO scaffold to a source-vendored fixed-flavour four-loop running evaluator.  It is deliberately narrower than full RunDec parity: no threshold crossing is performed in the closed v76 route.  The closed routes are
+\[
+ m_c^{\overline{\rm MS}}(m_c)\to m_c^{\overline{\rm MS}}(3\,{\rm GeV}),
+ \qquad
+ m_b^{\overline{\rm MS}}(m_b)\to m_b^{\overline{\rm MS}}(10\,{\rm GeV}),
+\]
+with fixed active flavours \(n_f=4\) and \(n_f=5\), respectively.
+
+\paragraph{Vendored source layer.}
+The coefficient table \texttt{qcd\_coefficient\_table\_v76.json} vendors the four-loop fixed-flavour \(\alpha_s\) running coefficients and the RunDec-style mass-running functions
+\[
+ {m(\mu)\over m(\mu_0)}={c_{n_f}(\alpha_s(\mu)/\pi)\over c_{n_f}(\alpha_s(\mu_0)/\pi)}.
+\]
+The table records the source family as Chetyrkin--Kuehn--Steinhauser RunDec, Herren--Steinhauser RunDec/CRunDec v3, and the four-loop QCD beta-function lineage.
+
+\paragraph{Numerical results.}
+Using the APF self-scale inputs
+\[
+ m_c(m_c)=1.272334177712\, {\rm GeV},\qquad \alpha_s(m_c)=0.38,
+\]
+\[
+ m_b(m_b)=4.177490455927\, {\rm GeV},\qquad \alpha_s(m_b)=0.223,
+\]
+v76 obtains
+\[
+ \boxed{m_c^{\rm v76}(3\,{\rm GeV})=0.992321292393\,{\rm GeV}},
+ \qquad
+ \boxed{\alpha_s^{\rm v76}(3\,{\rm GeV})=0.250671393527},
+\]
+\[
+ \boxed{m_b^{\rm v76}(10\,{\rm GeV})=3.637640144573\,{\rm GeV}},
+ \qquad
+ \boxed{\alpha_s^{\rm v76}(10\,{\rm GeV})=0.177208097457}.
+\]
+
+\paragraph{Claim status.}
+\[
+ \boxed{c,b:[P_{\rm 4loop\ fixed\text{-}n_f\ evaluator\ closed}]}
+\]
+while
+\[
+ \boxed{[P_{\rm full\ RunDec\ threshold\ parity}]\ \text{is still not claimed}.}
+\]
+The remaining full-RunDec step is threshold/matching validation against a real RunDec/CRunDec adapter or published benchmark examples.  v76 is therefore a real evaluator closure, but not a full physical-final mass claim.

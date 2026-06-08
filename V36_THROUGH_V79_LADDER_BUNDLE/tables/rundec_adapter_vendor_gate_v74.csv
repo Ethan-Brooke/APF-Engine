@@ -1,0 +1,4 @@
+gate,status,required_for_promotion,no_smuggling_guard
+RUNDEC_CMD adapter,not present in package,"validated JSON output with c,b, loop_order, thresholds, covariance, validation_id",no_target_reuse=true; forbidden target keys rejected
+coefficient vendoring,template only,"beta,gamma_m,zeta_g,zeta_m,OS/MSbar coefficients with sources and examples",source_manifest required; target reuse keys rejected
+full evaluator,fail-closed,adapter accepted or coefficient table accepted and implemented,comparison targets audit-only

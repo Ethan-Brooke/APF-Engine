@@ -1,0 +1,79 @@
+
+\section{Post-Evaluator Global Registry Refresh (v68)}
+\label{sec:v68-post-evaluator-registry}
+
+\paragraph{Purpose.}
+The v67 top evaluator materially changed the registry state.  The earlier v63 value was a fixed-order MSR scale-translation witness; v67 replaced it with an actual numerical MSR $R$-evolution evaluator.  This module refreshes the global trace-to-scheme claim ladder so that the manuscript cannot accidentally preserve the superseded witness as the final top registry value.
+
+\begin{center}
+\fbox{\parbox{0.94\linewidth}{
+\textbf{v68 closeout.}  The current top registry value is
+\[
+  \boxed{m_t^{\rm MSR}(M_W^{\rm TRACE}/2\pi)=172.716805649486\,\mathrm{GeV}}.
+\]
+The old v63 fixed-order value
+\[
+  172.564754410708\,\mathrm{GeV}
+\]
+is retained only as a historical witness, not the registry value.  The pole branch remains blocked:
+\[
+  m_t^{\rm pole,4\ell}=174.016604383647\,\mathrm{GeV}.
+\]
+No sector is assigned $[P_{\rm physical\ final}]$.
+}}
+\end{center}
+
+\subsection{Claim ladder}
+The allowed statuses are:
+\[
+[P_{\rm trace}],\quad
+[P_{\rm source/pretransport}],\quad
+[P_{\rm export\ candidate}],\quad
+[P_{\rm covariance\ admitted}],\quad
+[P_{\rm codomain\ completion}],\quad
+[P_{\rm external\ ledger\ boundary}],\quad
+[P_{\rm physical\ final}].
+\]
+The final status remains reserved:
+\[
+  \boxed{[P_{\rm physical\ final}]\ \text{is assigned to no sector in v68.}}
+\]
+
+\subsection{Sector registry}
+\begin{center}
+\begin{tabular}{p{0.15\linewidth} p{0.35\linewidth} p{0.38\linewidth}}
+\hline
+Sector & v68 status & Boundary \\
+\hline
+$W$ / EW & $[P_{\rm on\text{-}shell\ EW\ completion}]^{\rm PDG2025+CMS2026}$ & No unauthorized PDG+CMS combined average; no physical-final claim. \\
+charged leptons & $[P_{\rm pole\ completion}]^{\rm APF\ envelope,CODATA2022}+[P_{\rm QED\ boundary}]$ & Full QED running final requires scheme, loop, threshold, and covariance ledger. \\
+charm & $[P_{\overline{\rm MS}(m_c)\ \rm covariance\ admitted}]^{\rm PDG2025,90CL}$ & No pole/final transport claim. \\
+bottom & $[P_{\overline{\rm MS}(m_b)\ \rm covariance\ admitted}]^{\rm PDG2025,90CL}$ & No pole/final transport claim. \\
+top & $[P_{\rm direct\text{-}MSR\ R\text{-}evolution\ numeric\ evaluator\ closed}]$ & Pole branch blocked; no MC equality. \\
+light quarks & $[P_{\rm source/pretransport}]/[\mathcal L_{\chi\mathrm{lat}}\ \rm required]$ & Needs external chiral/lattice evaluator. \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Top registry correction}
+The top route is now controlled by three separate entries:
+\[
+\begin{array}{lll}
+\text{v63 fixed-order witness} & 172.564754410708\,\mathrm{GeV} & \text{historical witness only},\\
+\text{v67 MSR $R$-evolution result} & 172.716805649486\,\mathrm{GeV} & \text{current registry value},\\
+\text{v61/v67 pole branch} & 174.016604383647\,\mathrm{GeV} & \text{blocked branch}.
+\end{array}
+\]
+The direct/MC audit residual for the current MSR-codomain value is
+\[
+  \Delta_t=0.156805649486\,\mathrm{GeV},
+  \qquad z=0.505824675761.
+\]
+This comparison remains audit-only: it does not identify the MC mass with a pole mass and does not assign a physical-final label.
+
+\subsection{No-smuggling controls retained}
+The registry forbids inverse target solving, identity transport across codomains, using QED/QCD evolution as residual-fitting knobs, treating direct top mass as exact pole mass, and exporting light quarks without a source-independent chiral/lattice evaluator.
+
+\begin{center}
+\fbox{\texttt{POST\_EVALUATOR\_GLOBAL\_REGISTRY\_REFRESH\_PASS}}
+\end{center}

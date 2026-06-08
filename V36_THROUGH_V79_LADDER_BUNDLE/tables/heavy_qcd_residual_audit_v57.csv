@@ -1,0 +1,3 @@
+sector,codomain,apf_value_GeV,external_value_GeV,quoted_error_90CL_GeV,delta_GeV,delta_MeV,percent_delta,ratio_to_quoted_90CL,gaussian_equiv_sigma_GeV,gaussian_equiv_z,inside_quoted_90CL
+charm,MSbar m_c(m_c),1.272334177712,1.273000000000,0.004600000000,-0.000665822288,-0.665822288,-0.052303400471,-0.144743975652,0.002796601427,-0.238082653331,True
+bottom,MSbar m_b(m_b),4.177490455927,4.183000000000,0.007000000000,-0.005509544073,-5.509544073,-0.131712743796,-0.787077724714,0.004255697823,-1.294627650189,True

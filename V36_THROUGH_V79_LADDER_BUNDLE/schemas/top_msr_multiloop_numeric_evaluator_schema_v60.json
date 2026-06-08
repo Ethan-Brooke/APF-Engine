@@ -1,0 +1,45 @@
+{
+  "schema_name": "APF_TOP_MSR_MULTILOOP_NUMERIC_EVALUATOR_SCHEMA_v60",
+  "status": "executable fail-closed evaluator implemented",
+  "source_object": {
+    "m_t_MSR_Rstar_GeV": 168.1690557938,
+    "Rstar_GeV": 85.8572226983853
+  },
+  "inputs": [
+    "coefficient_json",
+    "loop_order",
+    "alpha_s(MZ)",
+    "MZ",
+    "nf",
+    "audit_target_optional"
+  ],
+  "coefficient_normalization": "Delta m = R * sum_n c_n (alpha_s(R)/pi)^n",
+  "implemented_closed_loop_orders": [
+    1
+  ],
+  "fail_closed_loop_orders_pending_coefficients": [
+    2,
+    3,
+    4
+  ],
+  "outputs": [
+    "m_pole_witness_GeV",
+    "delta_m_GeV",
+    "alpha_s_Rstar",
+    "audit_residual_GeV_optional",
+    "fail_closed_missing_coefficients"
+  ],
+  "no_smuggling_rules": [
+    "audit_target is never used in calculation",
+    "missing coefficients cannot be inferred from residual",
+    "loop order cannot be selected by best agreement",
+    "MC equality forbidden"
+  ],
+  "next_required_ingestion": [
+    "c2,c3,c4 in declared MSR normalization",
+    "gamma_R coefficients",
+    "beta_2..beta_4 or RunDec-compatible alpha_s running",
+    "OS-MSbar coefficients d_i",
+    "threshold decoupling zeta_i"
+  ]
+}

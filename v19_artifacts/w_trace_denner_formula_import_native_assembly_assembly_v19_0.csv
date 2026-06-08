@@ -1,0 +1,5 @@
+row_id,contribution_class,numeric_value,source,admission_status,included_in_partial_native,included_in_target_closure
+A_DELTA_ALPHA,native_input_row,0.05907386039640014,F_DELTA_ALPHA_RUNNING,ADMITTED,True,True
+A_RHO_LEAD,native_analytic_row,-0.03245296961530258,F_RHO_LEADING_TOP,ADMITTED,True,True
+A_DIZET_REM_TARGET,target_benchmark_row,0.011667933872161376,DIZET internal DRREM row,TARGET_ONLY,False,True
+A_RHO_RESUM_CROSS_TARGET,target_benchmark_row,-0.0017870389938440742,DIZET rho-cross minus leading-rho branch,TARGET_ONLY,False,True

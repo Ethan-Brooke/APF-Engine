@@ -1,0 +1,111 @@
+\section{Sufficiency of G1--G6 (No-G7-Exists)}
+\label{sec:g1-g6-sufficiency}
+
+The necessity derivation of \S\ref{sec:g1-g6-necessity-derivation} establishes that each of $G_1$--$G_6$ is required by $A_1$. This section establishes the converse: closing all six gates in their appropriate (numerical or structural) interpretation \emph{suffices} for admissible export. There is no missing seventh gate $G_7$.
+
+The proof proceeds by structural exhaustion. We enumerate the structural surfaces of the trace-to-scheme operation --- the moments where a structural distinction must be enforced under $A_1$ --- and show $G_1$--$G_6$ cover each surface, with no surface uncovered and no surface doubly covered. We then enumerate eleven candidate $G_7$s and show each reduces to one of $G_1$--$G_6$ or is a precondition on the operation rather than a gate of it.
+
+\subsection{Structural surfaces of the trace-to-scheme operation}
+\label{subsec:operation-surfaces}
+
+The trace-to-scheme operation is a function from one element of one interface to a comparison in another interface, parameterized by external constants and uncertainty distributions. We claim its structural surfaces are exactly the following six.
+
+\begin{description}
+\item[(i) Inter-category jump.] Which scheme category $\mathcal{S}_i$ is the export's target? The trace category $\mathcal{T}$ and any physical-scheme category are distinct interfaces; the moment of jump must specify which. \emph{Covered by $G_1$.}
+\item[(ii) Value transfer.] How does $T \in \mathfrak{D}_T$ produce $\tau(T) \in \mathfrak{D}_{\mathcal{S}_i}$? The map structure is a structural surface independent of which scheme is targeted. \emph{Covered by $G_2$.}
+\item[(iii) Input declaration.] What external content (constants, scales, conventions) does $\tau$ consume? Each such input is paid by an external interface's ledger; the operation must declare which inputs it relies on. \emph{Covered by $G_3$.}
+\item[(iv) Uncertainty propagation.] How do the spreads on $T$ and on the constants $\{c_i\}$ produce a spread on $\tau(T)$? The transported value is not a point but a distribution; the spread is a structural surface. \emph{Covered by $G_4$.}
+\item[(v) Input/output role-separation.] Which content is input to the operation and which is output? The target observable $M_{\mathcal{S}}$ must be on the output side, not the input side. \emph{Covered by $G_5$.}
+\item[(vi) Post-comparison residual handling.] What becomes of $\rho = \tau(T) - M_{\mathcal{S}}$? The residual is a real distinction in $\mathfrak{D}_{\mathcal{S}}$ and must have a paying ledger by $A_1$. \emph{Covered by $G_6$.}
+\end{description}
+
+Each of $G_1$--$G_6$ covers exactly one surface; no surface is doubly covered; no surface is uncovered.
+
+\subsection{Candidate G7 reductions}
+\label{subsec:G7-candidates}
+
+A seventh gate $G_7$ would correspond to a structural moment of the operation not in (i)--(vi). We enumerate eleven candidates and show each reduces.
+
+\begin{enumerate}
+\item \textbf{Source object well-definedness.} Does $T$ need to be well-defined for the export to be admissible? Yes, but this is a precondition on the input to the operation (closure of the trace category under projective trace, $A_1$-derivable status), not a structural moment of the operation itself. \emph{Reducible to: pre-export trace-side closure.}
+
+\item \textbf{Target object well-definedness.} Does $M_{\mathcal{S}}$ need to be well-defined? Yes; specifying the codomain category implies specifying the form $M_{\mathcal{S}}$ takes within it. \emph{Reducible to $G_1$.}
+
+\item \textbf{Measurement reproducibility.} Does $M_{\mathcal{S}}$ need to be a reproducible measurement? Yes, but this is paid by the external interface (PDG, Planck, etc.) at its own cost-budget --- not by APF's export operation. \emph{Reducible to external-interface accounting, captured by $G_3$ as constants-ledger provenance.}
+
+\item \textbf{Transport map invertibility / functional well-definedness.} Does $\tau$ need to be a well-defined function? Yes, but $G_2$'s ``non-inverse map or identity admission'' clause implies $\tau$ is well-defined as a function. \emph{Reducible to $G_2$.}
+
+\item \textbf{Comparison metric.} What comparison are we making? The form of the comparison (equality, inequality, confidence-interval overlap) matters. But $\rho = \tau(T) - M_{\mathcal{S}}$ is the comparison object, and its channel-assignment under $G_6$ determines the comparison's content. \emph{Reducible to $G_6$.}
+
+\item \textbf{Time-stamp / version of measurement.} As measurements update, do exports need to track which version they're against? This is a versioning concern, and tracking versions is part of the constants ledger's provenance discipline. \emph{Reducible to $G_3$ + $G_4$ (publication-version tracking on external constants).}
+
+\item \textbf{Cross-route consistency.} If multiple routes target the same observable, must they agree? Yes structurally, but cross-route consistency is a meta-claim about the framework's self-consistency, not a gate on a single export operation. Different routes mustn't smuggle through each other --- this is the framework-level reading of $G_5$. \emph{Reducible to $G_5$ at the meta-route level.}
+
+\item \textbf{Reproducibility of transport.} Does $\tau$ need to be reproducible (same input $\Rightarrow$ same output)? Functions are reproducible by definition; if $\tau$ is well-defined ($G_2$), reproducibility follows. \emph{Reducible to $G_2$.}
+
+\item \textbf{Domain-of-definition specification.} Does $\tau$'s domain need to be specified? Yes, but $G_1$ (codomain) and $G_2$ (transport map) together specify the map's full signature. \emph{Reducible to $G_1$ + $G_2$.}
+
+\item \textbf{Scheme-specific convention agreement.} Does the framework need to agree on which $\overline{\rm MS}$ convention (with or without color factors, with which renormalization-group-equation conventions) is used? Yes, but this is part of $G_1$ (codomain declared, including its conventions) plus $G_3$ (constants/conventions ledger). \emph{Reducible to $G_1$ + $G_3$.}
+
+\item \textbf{Circular-dependency check.} Could the export use $T$ to derive a constant $c_j$ that's then used in $\tau(T)$ as input? Yes, a sneaky form of smuggling. The natural reading of $G_5$ extends to ``no input is itself derived from the target,'' which forbids this circular construction. \emph{Reducible to $G_5$ extended to circular inputs.}
+\end{enumerate}
+
+Each candidate $G_7$ either reduces to one of $G_1$--$G_6$ or is a precondition on the operation rather than a gate of it. We have not identified a structural moment of the trace-to-scheme operation outside the six listed in \S\ref{subsec:operation-surfaces}.
+
+\subsection{Sufficiency lemma}
+\label{subsec:sufficiency-lemma}
+
+\begin{lemma}[Sufficiency of $G_1$--$G_6$]
+\label{lem:sufficiency}
+If a trace-to-scheme route closes all of $G_1$--$G_6$ in their appropriate (numerical or structural) interpretation, the export is admissible. There is no missing seventh gate.
+\end{lemma}
+
+\begin{proof}
+By the structural-surface enumeration of \S\ref{subsec:operation-surfaces} and the candidate-$G_7$ reductions of \S\ref{subsec:G7-candidates}, the structural surfaces of the trace-to-scheme operation are exactly the six moments (i)--(vi). Closing all six gates closes every structural surface; no surface remains where a distinction's cost is unaccounted for. By $A_1$, every distinction in the operation's content has a paying ledger; therefore the export is admissible. $\square$
+\end{proof}
+
+\subsection{Minimality corollary}
+\label{subsec:minimality-corollary}
+
+\begin{corollary}[Minimality]
+\label{cor:minimality}
+The gate set $G_1$--$G_6$ is minimal: no proper subset suffices for admissible export.
+\end{corollary}
+
+\begin{proof}
+Each gate is independently necessary by Lemmas~\ref{lem:G1}--\ref{lem:G6} of v35.2. We exhibit witnesses where each gate is specifically violated while the other five close.
+
+\begin{itemize}
+\item $G_1$-fail: any export comparing trace value to ``the measurement'' without naming the scheme.
+\item $G_2$-fail: any inverse-fit transport (v18.0 numeric projection over the tensor scaffold; quarantined).
+\item $G_3$-fail: any export that uses external constants without declaration.
+\item $G_4$-fail: any export reporting zero $\sigma$ on the transported value when inputs have positive $\sigma$.
+\item $G_5$-fail: v18.0 W-route (target consumed); v27 charged-lepton three-mode reconstruction (parameters consumed); v32 light-quark uniform scaling (PDG values consumed). All three quarantined.
+\item $G_6$-fail: $H_0$ Route-V (residual unassignable to any channel; falsifying state).
+\end{itemize}
+
+Each gate has a witness; removing any gate from the set leaves a structural surface uncovered. The six-gate set is minimal. $\square$
+\end{proof}
+
+\subsection{Joint statement}
+\label{subsec:joint-statement}
+
+Combining v35.2 necessity (Lemmas~\ref{lem:G1}--\ref{lem:G6}), v35.3 sufficiency (Lemma~\ref{lem:sufficiency}), and minimality (Corollary~\ref{cor:minimality}):
+
+\begin{theorem}[Trace-to-Scheme Export, Necessary-and-Sufficient]
+\label{thm:export-necessary-sufficient}
+A trace-to-scheme route admits physical export if and only if the six gates $G_1$--$G_6$ all close in their appropriate (numerical or structural) interpretation. The gate set is minimal: no proper subset suffices.
+\end{theorem}
+
+This is the export theorem in its complete form: necessary (v35.2), sufficient (v35.3), minimal (Corollary~\ref{cor:minimality}). The framework's audit-first character is now structurally bound at the deepest level --- $A_1$ requires exactly $G_1$--$G_6$, and the gates cover exactly the operation's structural surfaces.
+
+\subsection{Honest concession on the proof method}
+\label{subsec:concession}
+
+The sufficiency proof depends on an \emph{enumeration assumption}: the six structural surfaces of \S\ref{subsec:operation-surfaces} are claimed to exhaust the structural moments of the trace-to-scheme operation. The candidate-$G_7$ reductions support this enumeration but do not prove it. This is structurally weaker than v35.2's per-gate necessity proofs, which are deductive from $A_1$.
+
+If a future analysis identifies a structural moment of the operation not in the six-surface list, the framework would acquire a $G_7$ and the gate set would extend. The eleven candidate-$G_7$ reductions are evidence that no such moment is presently visible, not a proof that none exists.
+
+The framework's claim is therefore: \emph{$G_1$--$G_6$ exhaust the structural surfaces of the trace-to-scheme operation as currently understood, and we have not been able to construct a candidate $G_7$ that does not reduce to one of the six existing gates or to a precondition on the operation.} If a sharper enumeration argument or a categorical proof from $A_1$ is found in future work, the sufficiency claim would graduate from exhaustion-by-enumeration to deduction-from-foundations, putting it on the same footing as the necessity proofs.
+
+\paragraph{What's open after this lemma.} Two specific theorem programs remain. First, an exhaustion-by-deduction argument that derives the six-surface list from $A_1$ + the categorical structure directly (without enumeration), which would close the enumeration assumption. Second, the route-status determination uniqueness lemma --- that each gate-availability pattern leads to exactly one named status --- remains conjectural pending separate proof.

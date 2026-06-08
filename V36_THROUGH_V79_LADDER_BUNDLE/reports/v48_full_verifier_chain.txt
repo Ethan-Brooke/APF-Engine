@@ -1,0 +1,39 @@
+=== scripts/check_trace_to_scheme_export_v35.py ===
+Total checks: 42/42
+TRACE_TO_SCHEME_EXPORT_THEOREM_PASS
+=== scripts/check_top_msr_scale_selection_v37.py ===
+Total checks: 85/85
+TOP_MSR_SCALE_SELECTION_THEOREM_PASS
+=== scripts/check_charged_lepton_residual_operator_v38.py ===
+Total checks: 122/122
+CHARGED_LEPTON_RESIDUAL_OPERATOR_FORM_PASS
+=== scripts/check_charged_lepton_coefficient_closure_v39.py ===
+Total checks: 156/156
+CHARGED_LEPTON_COEFFICIENT_CLOSURE_PASS
+=== scripts/check_charged_lepton_trace_vector_source_gate_v40.py ===
+Total checks: 188/188
+CHARGED_LEPTON_TRACE_VECTOR_SOURCE_GATE_PASS
+=== scripts/check_charged_lepton_trace_vector_closure_v41.py ===
+Total checks: 152/152
+CHARGED_LEPTON_TRACE_VECTOR_CLOSURE_PASS
+=== scripts/check_charged_lepton_qed_residual_witness_v42.py ===
+Total checks: 134/134
+CHARGED_LEPTON_QED_RESIDUAL_SHAPE_WITNESS_PASS
+=== scripts/check_charged_lepton_qed_scalar_normalization_v43.py ===
+Total checks: 163/163
+CHARGED_LEPTON_QED_SCALAR_NORMALIZATION_COUNT_SOURCE_PASS
+=== scripts/check_charged_lepton_qed_covariance_running_codomain_v44.py ===
+Total checks: 156/156
+CHARGED_LEPTON_QED_COVARIANCE_RUNNING_CODOMAIN_PASS
+=== scripts/check_charged_lepton_qed_running_transport_v45.py ===
+Total checks: 131/131
+CHARGED_LEPTON_QED_RUNNING_TRANSPORT_THEOREM_PASS
+=== scripts/check_charged_lepton_pole_completion_qed_ledger_v46.py ===
+Total checks: 171/171
+CHARGED_LEPTON_POLE_COMPLETION_AND_QED_LEDGER_THEOREM_PASS
+=== scripts/check_charged_lepton_codata_ledger_lo_qed_transport_v47.py ===
+Total checks: 158/158
+CHARGED_LEPTON_CODATA_LEDGER_AND_LO_QED_TRANSPORT_PASS
+=== scripts/check_charged_lepton_full_qed_running_ledger_covariance_v48.py ===
+Total checks: 154/154
+CHARGED_LEPTON_FULL_QED_RUNNING_LEDGER_AND_COVARIANCE_EVALUATION_PASS

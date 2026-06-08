@@ -1,0 +1,9 @@
+gate,status,meaning
+TOP_TRACE_ANCHOR,CLOSED,APF top trace value preserved
+DIRECT_MC_POLE_EXPORT,KNOCKED_OUT,Trace is far below direct/MC-like top anchor; no direct pole identification
+SELF_SCALE_MSBAR_EXPORT,KNOCKED_OUT,Trace lies well above ordinary self-scale MSbar context
+EW_DELTA_RHO_SUBSTITUTION,KNOCKED_OUT,Substituting trace as physical top in W/EW transport is disallowed
+EXTERNAL_MSR_CODOMAIN,CLOSED,One-loop external MSR relation admits trace at R*=85.86 GeV
+R_STAR_SELECTION,EXTERNAL_ONLY,"R* is inferred using external pole context, not APF-derived"
+NO_SMUGGLING_PHYSICAL_EXPORT,BLOCKED,No native top-trace to MSR-scale theorem
+TOP_SECTOR_CLOSEOUT,CLOSED_TERMINAL,"Finished as external-scheme codomain closeout, not physical final"

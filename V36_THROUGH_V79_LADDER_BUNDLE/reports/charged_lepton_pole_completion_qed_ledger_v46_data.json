@@ -1,0 +1,100 @@
+{
+  "status": "CHARGED_LEPTON_POLE_COMPLETION_AND_QED_LEDGER_THEOREM_PASS",
+  "package": "APF_v46_CHARGED_LEPTON_POLE_COMPLETION_AND_QED_LEDGER_THEOREM",
+  "source_from_v43": {
+    "Phi_l_v43_MeV": [
+      0.5110026357885311,
+      105.658243985342,
+      1776.9168320084111
+    ],
+    "pole_reference_MeV": [
+      0.51099895,
+      105.6583755,
+      1776.93
+    ],
+    "absolute_residual_MeV": [
+      3.6857885311603056e-06,
+      -0.00013151465800831375,
+      -0.01316799158894355
+    ],
+    "relative_residual_percent": [
+      0.0007212908228403025,
+      -0.00012447158815943914,
+      -0.0007410529164876247
+    ],
+    "D0": 5063,
+    "D0_formula": "K_SM*(K_SM+K_c+K_b+N_gen)=61*(61+16+3+3)",
+    "epsilon_QED_APF": "1/5063",
+    "epsilon_percent": 0.019751135690302193,
+    "residual_over_envelope": [
+      0.03651895436040451,
+      0.006301996508512404,
+      0.03751950916176844
+    ],
+    "max_abs_residual_percent": 0.0007410529164876247,
+    "max_residual_over_envelope": 0.03751950916176844,
+    "all_inside_envelope": true
+  },
+  "completion_theorem": {
+    "codomain": "charged-lepton pole codomain",
+    "completion_status": "P_pole_completion^APF_envelope",
+    "completion_meaning": "no APF-side source/operator/coefficient/scalar/covariance gate remains open for pole-codomain export candidate; residual is admitted inside predeclared APF envelope",
+    "completion_not_meaning": "not exact zero residual, not final QED running masses, not free target fitting"
+  },
+  "qed_ledger_boundary": {
+    "running_route_status": "P_QED_route_typed",
+    "numeric_running_status": "open_until_external_ledger_import",
+    "ledger_required": [
+      "S_run",
+      "mu",
+      "loop_order_L",
+      "alpha_input_and_scale",
+      "threshold_schedule_T",
+      "matching_convention_M",
+      "conversion_convention_C",
+      "Sigma_QED"
+    ],
+    "forbidden_use": "external QED ledger may not be selected by minimizing the charged-lepton residual vector"
+  },
+  "gate_status": {
+    "G1_CODOMAIN_DECLARED": "pass pole completed; running typed but numeric running codomain not evaluated",
+    "G2_TRANSPORT_MAP": "pass for pole completion via Phi_l^v43; QED route form already typed by v45",
+    "G3_CONSTANTS_LEDGER": "pass APF pole layer; external constants ledger required for numeric running",
+    "G4_COVARIANCE": "pass pole envelope: max residual/envelope < 1",
+    "G5_NO_SMUGGLING": "pass no inverse masses, no target-selected scale, no free component factors",
+    "G6_RESIDUAL_CHANNELS": "pass pole residual admitted to APF envelope; running residuals reserved for RG/matching/truncation/constants/covariance channels"
+  },
+  "promotion": {
+    "before": "charged leptons: P_running_route_form^QED + P_constants_ledger_required / numeric_QED_running_open",
+    "after": "charged leptons: P_pole_completion^APF_envelope + P_QED_route_typed / numeric_running_ledger_external",
+    "not_claimed": [
+      "P_QED_running_final",
+      "P_physical_final",
+      "exact equality to pole masses",
+      "zero residual",
+      "numeric running masses",
+      "target-selected constants ledger",
+      "free generation factors"
+    ]
+  },
+  "forbidden_inputs_not_used": [
+    "m_e_to_define_trace_vector",
+    "m_mu_to_define_trace_vector",
+    "m_tau_to_define_trace_vector",
+    "inverse_reconstruction_of_T_l",
+    "free_generation_factors_r_e_r_mu_r_tau",
+    "least_squares_pole_fit",
+    "target_selected_QED_scale",
+    "target_selected_loop_order",
+    "target_selected_threshold_schedule",
+    "target_fitted_covariance_envelope"
+  ],
+  "still_open": {
+    "numeric_QED_running_export": "requires external constants/covariance ledger before evaluation",
+    "QED_running_values": "not evaluated in v46",
+    "physical_final": "not claimed",
+    "publication_review": "recommended audit of count-source uniqueness for 1/28, 3/584, and 1/5063"
+  },
+  "next_theorem": "APF_CHARGED_LEPTON_EXTERNAL_QED_LEDGER_IMPORT_AND_NUMERIC_RUNNING_EVALUATION",
+  "checks_total": 171
+}

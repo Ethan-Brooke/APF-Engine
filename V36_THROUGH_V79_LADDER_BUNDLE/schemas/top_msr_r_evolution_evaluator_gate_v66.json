@@ -1,0 +1,34 @@
+{
+  "schema_id": "top_msr_r_evolution_evaluator_gate_v66",
+  "stamp": "TOP_MSR_R_EVOLUTION_EVALUATOR_GATE_PASS",
+  "input_object": {
+    "name": "m_t^MSR(R_star)",
+    "value_GeV": 168.1690557938,
+    "R_star_GeV": 85.857222698385
+  },
+  "target_codomain": {
+    "name": "m_t^MSR(R_EW)",
+    "R_EW_definition": "M_W^TRACE/(2*pi)",
+    "R_EW_GeV": 12.79003569131931
+  },
+  "closed_witness": {
+    "method": "fixed_order_scale_translation_using_v61_coefficients",
+    "value_GeV": 172.564754410708,
+    "status": "retained_witness_not_full_R_evolution"
+  },
+  "blocked_branch": {
+    "method": "four_loop_pole_conversion",
+    "value_GeV": 174.016604383647,
+    "status": "pole_branch_blocked"
+  },
+  "full_r_evolution_requirements": [
+    "gamma_R coefficient table through chosen loop order",
+    "beta function coefficients and alpha_s running convention",
+    "threshold/decoupling convention for n_f",
+    "integration algorithm and tolerance",
+    "covariance propagation for alpha_s and coefficients",
+    "no target residual tuning"
+  ],
+  "fail_closed": true,
+  "physical_final_assigned": false
+}

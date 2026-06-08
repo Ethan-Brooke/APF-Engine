@@ -1,0 +1,31 @@
+{
+  "attestation_version": "w_trace_release_attestation_v1",
+  "export_lock_acknowledged": true,
+  "immutable_manifest": {
+    "component_sum_certificate_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "counterterm_convention_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "covariance_certificate_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "final_export_readiness_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "release_packet_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "review_packet_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "row_bundle_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "session_log_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "session_replay_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "source_candidate_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "uncertainty_certificate_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "immutable_manifest_digest": "ac1319ecd536b7a5c41336b2d189ad1bf74139e684235e962488f91094c2cf26",
+  "immutable_manifest_digest_algorithm": "sha256",
+  "operator_runbook_version": "w_trace_release_runbook_v1",
+  "physical_export_requested": false,
+  "release_packet_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "release_packet_digest_algorithm": "sha256",
+  "release_packet_validator_version": "w_trace_release_packet_validator_v1",
+  "signature_payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "signature_scheme": "minisign",
+  "signature_value_or_bundle_ref": "TEMPLATE_SIGNATURE_NOT_REAL",
+  "signed_at_utc": "TEMPLATE_TIMESTAMP_NOT_REAL",
+  "signer_identity": "TEMPLATE_SIGNER_NOT_REAL",
+  "template_only": true
+}

@@ -1,0 +1,30 @@
+{
+  "response": {
+    "covariance": "synthetic-none",
+    "loop_order": 0,
+    "matching_convention": "synthetic-protocol-self-test-only",
+    "no_target_reuse": true,
+    "physics_promotable": false,
+    "protocol_self_test_only": true,
+    "results": {
+      "b": {
+        "alpha_target": 0.222777,
+        "mass_target_GeV": 4.173312965471073,
+        "nf": 5,
+        "start_scale_GeV": 4.177490455927,
+        "target_scale_GeV": 10.0
+      },
+      "c": {
+        "alpha_target": 0.37962,
+        "mass_target_GeV": 1.271061843534288,
+        "nf": 4,
+        "start_scale_GeV": 1.272334177712,
+        "target_scale_GeV": 3.0
+      }
+    },
+    "schema": "APF_RunDec_Adapter_Response_v1",
+    "threshold_schedule": "synthetic-none",
+    "validation_id": "SYNTHETIC_PROTOCOL_SELF_TEST_DO_NOT_USE_FOR_PHYSICS"
+  },
+  "status": "ADAPTER_RESPONSE_ACCEPTED_FOR_REVIEW"
+}

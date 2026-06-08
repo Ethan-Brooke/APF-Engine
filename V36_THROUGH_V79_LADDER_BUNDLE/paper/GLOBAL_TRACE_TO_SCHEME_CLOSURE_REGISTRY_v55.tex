@@ -1,0 +1,63 @@
+% APF v55 -- Global Trace-to-Scheme Closure Registry
+\section{Global Trace-to-Scheme Closure Registry}
+\label{sec:global-trace-to-scheme-registry-v55}
+
+\paragraph{Purpose.}
+Versions v35--v54 closed many sector-specific route objects.  Version v55 does
+not introduce a new numerical prediction.  It supplies the global registry that
+prevents status drift: every sector is assigned a highest closed claim, a
+codomain, an allowed statement, and a forbidden overclaim.
+
+\begin{definition}[v55 claim ladder]
+The registry uses the ordered claim ladder
+\[
+[P_{\rm trace}],\ [P_{\rm source}],\ [P_{\rm route}],\
+[P_{\rm export\ candidate}],\ [P_{\rm pole\ completion}],\
+[P_{\rm external\ ledger\ boundary}],\ [P_{\rm physical\ final}].
+\]
+A sector may be described only at or below its registered status.
+\end{definition}
+
+\begin{theorem}[Global registry theorem]
+At v55 the trace-to-scheme program has the following registry:
+\[
+\begin{array}{lll}
+\text{EW/W} &:& [P_{\rm export\ candidate}],\\
+\text{charged leptons} &:& [P_{\rm pole\ completion}^{\rm APF\ envelope,CODATA2022}]
++[P_{\rm QED\ boundary}],\\
+\text{charm} &:& [P_{\rm export\ candidate}^{\overline{\rm MS}(m_c)}],\\
+\text{bottom} &:& [P_{\rm export\ candidate}^{\overline{\rm MS}(m_b)}],\\
+\text{top} &:& [P_{\rm export\ candidate}^{\rm MSR(R_\star)}],\\
+\text{light quarks} &:& [P_{\rm source/pretransport}]/[\mathcal L_{\chi{\rm lat}}\ {
+m required}].
+\end{array}
+\]
+No sector is registered as \([P_{\rm physical\ final}]\) in v55.
+\end{theorem}
+
+\paragraph{Export discipline.}
+The six export gates remain global invariants:
+\[
+G1\text{ codomain},\quad G2\text{ transport},\quad
+G3\text{ constants ledger},\quad G4\text{ covariance},\quad
+G5\text{ no-smuggling},\quad G6\text{ residual channels}.
+\]
+A sector can move upward only by closing the first open gate listed in the
+registry; it cannot be promoted by numerical resemblance alone.
+
+\paragraph{Next route.}
+The registry selects the next high-value push as the W/EW covariance closure:
+\[
+\boxed{\texttt{APF\_W\_TRACE\_TO\_ONSHELL\_EW\_COVARIANCE\_CLOSURE}}.
+\]
+The reason is structural: W/EW is already an export candidate, and its remaining
+obstruction is a covariance/row-admission review rather than a new source vector
+or chiral/lattice evaluator.
+
+\paragraph{Non-claims.}
+The registry explicitly forbids the following v55 overclaims: physical-final
+fermion masses, residual-free equality, top pole/MC closure, QED-running final,
+light-quark \(\overline{\rm MS}(2\,{\rm GeV})\) numerical export, and global
+SM-sector finality.
+
+% verifier literal: APF_W_TRACE_TO_ONSHELL_EW_COVARIANCE_CLOSURE

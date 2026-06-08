@@ -1,0 +1,5 @@
+TRACE_TO_SCHEME_MANUSCRIPT_INTEGRATION_FAIL
+Total checks: 17/19
+FAILED:
+ - pass_stamp
+ - historical_top_v63_absent_as_active

@@ -1,0 +1,7 @@
+gate,name,v56_status,w_detail
+G1,codomain declared,closed,on-shell W mass M_W; no MSbar/MSR/pole ambiguity for gauge boson mass comparison at this layer
+G2,transport map supplied,closed/inherited,v35 same-input on-shell EW/DIZET-row route object retained; v56 audits final M_W trace value only
+G3,constants ledger,closed for audit ledgers,PDG 2025 and CMS 2026 external ledgers are frozen separately; no unauthorized combination
+G4,covariance protocol,closed for on-shell completion audit,residuals evaluated in each ledger covariance/sigma; both lie inside one sigma
+G5,no-smuggling audit,closed,"external M_W values are comparison-only; not used to define M_W^TRACE, route, or covariance selector"
+G6,residual channels assigned,closed,"residuals assigned to experimental ledger/covariance and inherited on-shell EW transport, not hidden in trace value"

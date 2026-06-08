@@ -1,0 +1,7 @@
+gate,status_after_v46,evidence,remaining_boundary
+G1_CODOMAIN_DECLARED,pass_pole_codomain_completed_running_codomain_typed,pole references are compared only in declared pole codomain; running codomain is separately typed,numeric running codomain needs external ledger
+G2_TRANSPORT_MAP,pass_for_pole_completion,Phi_l^v43 map is source vector times APF operator/count normalization,U_QED numeric kernel not evaluated
+G3_CONSTANTS_LEDGER,pass_for_APF_pole_layer_external_required_for_running,D0=5063 and APF counts on-ledger; QED external ledger itemized,"alpha, scale, loop order, thresholds, matching, convention still external"
+G4_COVARIANCE,pass_pole_envelope,max residual/envelope = 0.037519509162 < 1,numeric Sigma_QED not imported
+G5_NO_SMUGGLING,pass_strengthened,"no inverse lepton mass use; no r_e,r_mu,r_tau; no target-selected QED route",future running comparison must preserve same rule
+G6_RESIDUAL_CHANNELS,pass_pole_residual_admitted,remaining sub-1e-3 percent residuals assigned to APF QED envelope/pole convention boundary,running residual channels remain RG/matching/truncation/constants/covariance

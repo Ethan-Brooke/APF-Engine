@@ -1,0 +1,72 @@
+{
+  "package": "APF_v39_CHARGED_LEPTON_COEFFICIENT_CLOSURE_THEOREM",
+  "status": "CHARGED_LEPTON_COEFFICIENT_CLOSURE_PASS",
+  "theorem": "APF charged-lepton coefficient closure from capacity-color modulation",
+  "claim": "The residual operator coefficients close as alpha=0.5 log(N_c), beta=-0.5 log(N_c); for N_c=3, R_l=diag(1/3,3,1). Physical charged-lepton export is not claimed.",
+  "inputs": {
+    "N_c": 3,
+    "generation_ladder": [
+      0,
+      1,
+      2
+    ],
+    "H1": [
+      -1,
+      0,
+      1
+    ],
+    "H2": [
+      1,
+      -2,
+      1
+    ],
+    "nu_l": 0.4082482904638631
+  },
+  "derived": {
+    "g_l": [
+      0.3333333333333333,
+      3,
+      1
+    ],
+    "log_g_l": [
+      -1.0986122886681098,
+      1.0986122886681098,
+      0.0
+    ],
+    "alpha": 0.5493061443340549,
+    "beta": -0.5493061443340549,
+    "R_l_diag": [
+      0.3333333333333333,
+      3,
+      1
+    ],
+    "route_form": "O_l^S = Z_l^S * (1/sqrt(6)) * diag(1/3,3,1) * T_l"
+  },
+  "forbidden_inputs_not_used": [
+    "m_e_pole",
+    "m_mu_pole",
+    "m_tau_pole",
+    "running_charged_lepton_masses",
+    "PDG_or_world_average_charged_lepton_masses",
+    "least_squares_fit_to_target_vector"
+  ],
+  "gate_status": {
+    "G1_CODOMAIN_DECLARED": "partial: pole/running QED codomain must be selected for final comparison",
+    "G2_TRANSPORT_MAP": "advanced: operator form and coefficients derived",
+    "G3_CONSTANTS_LEDGER": "partial: internal generation/color ledger closed; QED constants deferred",
+    "G4_COVARIANCE": "formal: covariance expression inherited; numeric trace/scheme covariance deferred",
+    "G5_NO_SMUGGLING": "pass for coefficient layer: no charged-lepton targets used",
+    "G6_RESIDUAL_CHANNELS": "pass as route obstruction: trace vector and QED scheme channels named"
+  },
+  "promotion": {
+    "before": "charged leptons: P_route^operator_form / coefficient closure open",
+    "after": "charged leptons: P_route^coefficient_closed / trace vector and QED scheme export open",
+    "not_claimed": [
+      "P_export_candidate",
+      "P_physical_final",
+      "numeric e/mu/tau mass export"
+    ]
+  },
+  "next_theorem": "APF_CHARGED_LEPTON_TRACE_VECTOR_AND_QED_SCHEME_EXPORT_THEOREM",
+  "checks_total": 156
+}
