@@ -21,6 +21,11 @@ This REMOVES the cited dictionary premise from the ep* bridge at the substrate l
 YM bridge still needs separately is the substrate identification (that the Wilson lattice gauge
 transfer-matrix Hamiltonian energy IS this admissibility energy n*eps) -- a distinct, narrower
 claim than the cost=energy dictionary, which is now derived here.
+
+CROSS-REF (v24.3.243): the cost-kind dichotomy check_T_ledger_rent_excluded
+[P] (operational_completeness.py) -- every booked cost is a transition
+commitment (a standing level) or a per-activation charge; no standing-rent
+term exists (Paper 0 row 9). This module's identity prices the null transition at zero -- one of the dichotomy's two carriers.
 """
 from __future__ import annotations
 from apf.apf_utils import check as _check, _result as _full_result

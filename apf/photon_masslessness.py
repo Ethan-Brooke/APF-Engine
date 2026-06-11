@@ -8,6 +8,11 @@ massless because the abelian sector is additive (Delta=0, the L_irr countermodel
 fully reversible, locks no record), so it commits no permanent capacity, so by
 cost=energy it carries no rest-energy floor. Mass <=> a locked record at the scale;
 masslessness <=> no record. One dichotomy, read from both ends.
+
+CROSS-REF (v24.3.243): the cost-kind dichotomy check_T_ledger_rent_excluded
+[P] (operational_completeness.py) -- every booked cost is a transition
+commitment (a standing level) or a per-activation charge; no standing-rent
+term exists (Paper 0 row 9). Mass = a locked record's standing cost (a deposit, booked once); masslessness = no record. The record-state axis's cost-side completeness clause.
 """
 
 from apf.apf_utils import check as _check, _result as _full_result

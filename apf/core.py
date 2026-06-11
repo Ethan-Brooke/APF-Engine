@@ -1006,6 +1006,13 @@ def check_L_cost():
 
     STATUS: [P]. One import: Brouwer invariance of domain (1911).
     Dependencies: A1, L_epsilon*, L_loc, L_nc, T_M, T3.
+    
+
+    CROSS-REF (v24.3.243): L_cost fixes the unique realignment functional
+    C(E) = n*eps; the cost-kind dichotomy check_T_ledger_rent_excluded [P]
+    (operational_completeness.py) is its completeness companion -- the
+    ledger books transition commitments and per-activation charges only,
+    no standing rent (Paper 0 row 9).
     """
 
     # ================================================================

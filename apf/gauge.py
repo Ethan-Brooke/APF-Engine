@@ -1631,6 +1631,13 @@ def check_T_theta_QCD():
       theta has cost but NO capacity gain. Net: inadmissible.
 
     EXPERIMENTAL: |theta_QCD| < 1e-10 (neutron EDM bound).
+
+    CROSS-REF (v24.3.243): the cost comparison in Steps 2-4 compares STANDING
+    LEVELS at fixed C = 61, not rates -- "maintaining theta = theta_0 costs
+    >= epsilon" is a standing committed-capacity level booked at the record's
+    formation; theta = 0 is the zero-deposit symmetry default (no record, no
+    commitment). Per the cost-kind dichotomy check_T_ledger_rent_excluded [P]
+    (operational_completeness.py): no standing-rent term exists.
     """
     from fractions import Fraction
 

@@ -60,6 +60,11 @@ Dependencies
 - apf.unification         (ACC, acc_SM, pi_T, acc_quantum)
 - apf.fractional_reading  (the parent [P] numerical identity)
 - apf.apf_utils           (_result, check)
+
+CROSS-REF (v24.3.243): the cost-kind dichotomy check_T_ledger_rent_excluded
+[P] (operational_completeness.py) -- every booked cost is a transition
+commitment (a standing level) or a per-activation charge; no standing-rent
+term exists (Paper 0 row 9). Lambda = the standing global record: a level the ledger holds, not an expenditure the universe keeps making.
 """
 
 import math as _math

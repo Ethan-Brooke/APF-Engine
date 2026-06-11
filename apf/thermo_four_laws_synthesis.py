@@ -50,6 +50,11 @@ SCOPE / non-claims:
     synthesis lives on the derivation axis.
   * Does NOT grade the constitutive cost-energy = action bridge (stays [P_structural], the
     four-input declaration, tested by prediction).
+
+CROSS-REF (v24.3.243): the cost-kind dichotomy check_T_ledger_rent_excluded
+[P] (operational_completeness.py) -- every booked cost is a transition
+commitment (a standing level) or a per-activation charge; no standing-rent
+term exists (Paper 0 row 9). The four laws are level statements (state functions, exchange rates); the dichotomy is why none of them meters time.
 """
 from __future__ import annotations
 from apf.apf_utils import check as _check, _result as _full_result
