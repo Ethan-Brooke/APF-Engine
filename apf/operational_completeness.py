@@ -82,7 +82,8 @@ over the adopted-with-falsifier structural conditions MD/BW, and check_P4_IMP ca
 canonically adopted basis, adopted commitments as named dependencies' is what the tag
 has always meant in this bank. Conditions: (1) the clause narrowed to REMOVALS (row 6's
 actual license); (2) the closure identity scoped to the record-support-closed class
-(the >= 3-interface fusion fork stays named-not-decided); (3) the MD support condition
+(the >= 3-interface fusion fork at that time named-not-decided; DISSOLVED 2026-06-10,
+fourth check below); (3) the MD support condition
 restated as a DERIVATION (FD3 + MD + row 7b), not a new identification; (4) LICENSE-
 CLASS GUARD: this precedent extends ONLY to interface-ontology rows audited as fair
 readings of canonical definitional text (what P_Gamma contains, what T(d) covers,
@@ -92,8 +93,38 @@ canonization -- the named blocked route is w proportional to g^2 -> sin^2 theta_
 [P], which the campaign fences forbid. First clean same-day-row consumption at [P] in
 the bank's history; precedent deliberately established, guard attached. Composed
 ledger-level B3<-: qualitative (floor > 0 iff record) [P]; quantitative closure
-identity [P] on the support-closed class; X8 fork open; spectrum export
-[P_structural] by design and untouched.
+identity [P] on the support-closed class; spectrum export [P_structural] by design
+and untouched.
+
+THE FUSION-SCOPE DISSOLUTION (T_fusion_scope_dissolved, fourth check, 2026-06-10):
+the X8 fork -- does a record pin its members' footprints at interfaces where the
+record is not billed? -- is a NAME COLLISION, not an open decision. The all-bits and
+billing-scope "arms" are ONE operator semantics applied to TWO pinned-fact classes:
+the all-bits floor is the billing-scope floor of the class that pins the record AND
+(world-globally -- the 2026-06-10 cold audit's correction; the record-local form is
+FALSE at |U| = 4) every held cross-billed fact's members' foreign holdings. Which
+pin-set deserves the name "the record class" is settled by canonical text: row 7b's
+line-level instance (a Gamma-billed correlation is a correlation among the
+Gamma-aspects of its members -- Paper 0 v6.2.27, verbatim) + FD1/FD3 (the only
+cross-interface objects in the bookkeeping are the multiply-billed correlations).
+The record class pins the record FACT; E_rest(record) is the billing-scope value;
+the all-bits value is the correct floor of the larger pinned class. The closure
+identity, stated per-interface (where the first law lives: dE = dQ + dW at any
+interface), is single-valued at EVERY interface count -- the fork's three-interface
+threshold was an artifact of the disjoint-cover model. Third instance of one
+disease, same cure: V2a (state space), W5 (activation predicate), X8 (class
+definition) -- per-interface honesty each time. GRADE [P] (landed
+[P_structural] v24.3.233 per the principal's two-step ruling; PROMOTED v24.3.234 by
+the dedicated fresh-context audit, PROMOTE-WITH-CONDITIONS, conditions applied: the
+Paper 0 ~2981 landing-paragraph sentence named as part of the row-7b consumption --
+"the only cross-interface objects in the bookkeeping are the multiply-billed
+correlations" closes the class-naming analytically; world-global form preserved;
+license-class guard restated, dictionary rows do not inherit; the all-bits floor
+stays a correct floor of its own class). The composed E_rest quantitative identity
+now carries [P] at every interface count for record-fact classes, named-dependent
+on rows 6/7a/7b; E_rest is a LEDGER quantity -- the spectrum export stays fenced.
+Reference: 'Reference - The Fusion-Scope Fork Dissolved - One Semantics, Two
+Classes (2026-06-10).md'.
 
 SCOPE / HONEST NON-CLAIMS.
   * L_operational_completeness grade: see the check (set after the 2026-06-09 cold audit
@@ -401,11 +432,16 @@ def check_L_local_removability():
     corollary (floor > 0 iff the class holds a record) are fusion-fork-INSENSITIVE at
     every interface count (removability pins nothing; both fork arms agree on whose
     bits fuse for the removed distinction). The quantitative closure identity
-    floor == total_energy(record) is certified [P] on the RECORD-SUPPORT-CLOSED class
-    (every record member's footprint support inside the record's billing set -- all
-    two-interface worlds, the witnessed domain); at >= 3 interfaces with foreign
-    footprints it is the all-bits arm of the X8 fusion fork, NAMED, NOT DECIDED --
-    the unrestricted formula does not carry [P]. The corollary is the
+    floor == total_energy(record) is certified [P] where the pinned set covers all
+    cross-billed support (condition confessed per the 2026-06-10 cold audit: on a
+    world with an unpinned cross-billed line the formula reads a different class --
+    394/2592 cells of the two-interface scan domain sit off the condition; this
+    check's mixed-world witness satisfies it). The >= 3-interface X8 fusion fork is
+    DISSOLVED (2026-06-10, T_fusion_scope_dissolved [P], promoted v24.3.234): one semantics,
+    two pinned-fact classes -- the record class pins the record FACT (row 7b), so
+    the record-fact closure identity is per-interface and single-valued at every
+    interface count, and the all-bits value is the floor of the larger class that
+    also pins held cross-billed facts' members' foreign holdings (world-global). The corollary is the
     LEDGER-level B3<- of the access-partition chain (gapped record class <-> record);
     the spectrum export stays behind OS2/ML + T_no_physical_time_flow_overclaim.
     Dependencies: A1, L_nc, L_loc, L_irr.
@@ -488,15 +524,18 @@ def check_L_local_removability():
             "backward = the clause [P] + L3; billing-locus = Paper 0 row 7b. The iff and the "
             "qualitative floor>0-iff-record corollary are fusion-fork-insensitive at every "
             "interface count; the quantitative closure identity is [P] on the record-support-"
-            "closed class (the witnessed domain), with the >= 3-interface fusion fork named, "
-            "not decided. The spectrum export (ledger floor <-> Hamiltonian gap) stays behind "
+            "closed class (the witnessed domain); the >= 3-interface fusion fork is DISSOLVED "
+            "(2026-06-10, T_fusion_scope_dissolved: one semantics, two classes; E_rest(record) "
+            "is the record-fact / billing-scope value). The spectrum export (ledger floor <-> "
+            "Hamiltonian gap) stays behind "
             "OS2/ML + T_no_physical_time_flow_overclaim by design; no EW quantity moves."
         ),
         key_result=(
             "Recoverable iff Delta_cross = 0 (no joint line billed at >= 2 interfaces) -- [P], "
             "fork-insensitive. Record-class floor == locked-closure energy [P] on the support-"
             "closed class; record-free class floor = 0. The ledger-level converse (gapped <-> "
-            "record) derived; spectrum export separately fenced."
+            "record) derived; X8 fork dissolved 2026-06-10 (T_fusion_scope_dissolved); "
+            "spectrum export separately fenced."
         ),
         dependencies=["A1", "L_nc", "L_loc", "L_irr", "Paper0_row7b_defense_billing_locus"],
         cross_refs=["L_operational_completeness", "T_photon_massless_from_reversibility",
@@ -678,10 +717,13 @@ def check_L_recoverability_is_orbit_reachability():
     distinctions are partitions of S_Gamma), MD prices each maintained
     Gamma-distinction at >= mu* > 0, and the standalone footprint line IS that cost
     by Moebius construction. Scope: two-interface worlds, |U| = 3 certification with
-    size-free arguments (L_irr-parity evidentiary shape). NON-CLAIMS: the fusion-scope
-    fork at >= 3 interfaces (does a record pin its members' foreign footprints?) is
-    NAMED, NOT DECIDED -- this check is restricted to two-interface worlds and
-    commits to neither arm; the spectrum export stays behind OS2/ML +
+    size-free arguments (L_irr-parity evidentiary shape). SCOPE NOTE: the fusion-scope
+    fork at >= 3 interfaces (does a record pin its members' foreign footprints?),
+    named-not-decided at this check's landing, was DISSOLVED on 2026-06-10
+    (T_fusion_scope_dissolved [P], promoted v24.3.234: one semantics, two pinned-fact classes;
+    E_rest(record) is the record-fact / billing-scope value) -- this check remains
+    restricted to two-interface worlds, where the two pin-sets coincide and the
+    question never arises; the spectrum export stays behind OS2/ML +
     T_no_physical_time_flow_overclaim; no EW quantity moves. Reference:
     'Reference - The Translation Named - Recoverability and P_Gamma-Orbit
     Reachability (2026-06-09).md' (v0.2, audited REDUCES-WITH-CORRECTIONS, applied).
@@ -910,9 +952,10 @@ def check_L_recoverability_is_orbit_reachability():
             "(field 5). The text consumptions are Paper 0 v6.2.27 loads-table rows 6/7a/7b "
             "(landed by the 2026-06-09 principal ruling) + the full-scope MD support condition, "
             "DERIVED from FD3 + MD + row 7b (field 6 -- the translation-gate audit's central "
-            "find). GRADE [P] per the 2026-06-09 [P]-promotion audit. NON-CLAIMS: the >= 3 "
-            "interface fusion-scope fork (record pinning of foreign footprints) is named, not "
-            "decided; the spectrum export stays behind OS2/ML + "
+            "find). GRADE [P] per the 2026-06-09 [P]-promotion audit. SCOPE NOTE: the >= 3 "
+            "interface fusion-scope fork, named at landing, was DISSOLVED 2026-06-10 "
+            "(T_fusion_scope_dissolved); this check stays restricted to two-interface worlds, "
+            "where the pin-sets coincide. NON-CLAIMS: the spectrum export stays behind OS2/ML + "
             "T_no_physical_time_flow_overclaim; no EW quantity moves."
         ),
         key_result=(
@@ -932,15 +975,425 @@ def check_L_recoverability_is_orbit_reachability():
             "translation": "5 steps: 3 theorems (fields 3-5) + rows 6/7a/7b (Paper 0 v6.2.27) + MD support condition",
             "countermodel": "W5 fully-held false lock 10 vs 4; divergence localized to one cell",
             "capstone": "324 MD-admitted worlds x 8 record classes, 0 mismatches",
-            "fork_open": "fusion scope at >= 3 interfaces: named, not decided (X8 of the reference witness)",
+            "fork_resolved": "fusion scope at >= 3 interfaces: DISSOLVED 2026-06-10 (T_fusion_scope_dissolved -- one semantics, two classes)",
             "reference": "Reference - The Translation Named - Recoverability and P_Gamma-Orbit Reachability (2026-06-09).md",
         },
     )
+
+# ---------------------------------------------------------------------------
+# The fusion-scope dissolution: fusion scope as an explicit parameter
+# ---------------------------------------------------------------------------
+class _ScopedWorld:
+    """_RefinedWorld generalized: universe a parameter, per-interface activation,
+    full-scope MD guard, and the cross-billed FUSION SCOPE explicit.
+    scope='all_bits': a cross-billed line fuses ALL bits of its members (the
+    v24.3.230 default; reproduces the subset model's freeze behavior -- field 2
+    of the fourth check); scope='billing': it fuses its members' bits at the
+    line's BILLING interfaces only (the record-FACT reading: Paper 0 row 7b's
+    line-level instance)."""
+
+    def __init__(self, tables, scope, universe):
+        assert scope in ("all_bits", "billing")
+        self.scope = scope
+        self.universe = frozenset(universe)
+        self.j = {g: _moebius(E, self.universe) for g, E in tables.items()}
+        self.bits = [(d, g) for d in sorted(self.universe) for g in sorted(self.j)
+                     if self.j[g].get(frozenset({d}), 0) != 0]
+        for g in self.j:
+            for T, v in self.j[g].items():
+                if v != 0 and len(T) >= 2:
+                    for d in T:
+                        if self.j[g].get(frozenset({d}), 0) == 0:
+                            raise ValueError("MD support violation")
+        parent = {b: b for b in self.bits}
+        def find(x):
+            while parent[x] != x:
+                x = parent[x]
+            return x
+        def union(a, b):
+            ra, rb = find(a), find(b)
+            if ra != rb:
+                parent[ra] = rb
+        for g in self.j:
+            for T, v in self.j[g].items():
+                if v != 0 and len(T) >= 2 and len(self._owners(T)) >= 2:
+                    owners = set(self._owners(T))
+                    if self.scope == "all_bits":
+                        tb = [bb for bb in self.bits if bb[0] in T]
+                    else:
+                        tb = [bb for bb in self.bits
+                              if bb[0] in T and bb[1] in owners]
+                    for x in tb[1:]:
+                        union(tb[0], x)
+        cls = {}
+        for b in self.bits:
+            cls.setdefault(find(b), []).append(b)
+        self.classes = list(cls.values())
+
+    def _owners(self, T):
+        return [g for g in self.j if self.j[g].get(T, 0) != 0]
+
+    def _line_active(self, state, g, T):
+        owners = self._owners(T)
+        known = set(self.bits)
+        if len(owners) >= 2:
+            gs = self.j if self.scope == "all_bits" else owners
+            return all(state.get((d, gg), True) for d in T for gg in gs
+                       if (d, gg) in known)
+        return all(state.get((d, g), False) for d in T)
+
+    def energy(self, g, state):
+        e = sum(self.j[g].get(frozenset({d}), 0)
+                for (d, gg) in self.bits if gg == g and state[(d, gg)])
+        for T, v in self.j[g].items():
+            if v != 0 and len(T) >= 2 and self._line_active(state, g, T):
+                e += v
+        return e
+
+    def total(self, state):
+        return sum(self.energy(g, state) for g in self.j)
+
+    def admissible(self, state):
+        return all(self.energy(g, state) <= _CAP for g in self.j)
+
+    def reach(self, frozen_bits):
+        full = {b: True for b in self.bits}
+        s0 = tuple(sorted(full.items()))
+        seen, frontier = {s0}, [s0]
+        while frontier:
+            cur = dict(frontier.pop())
+            for cl in self.classes:
+                if any(b in frozen_bits for b in cl) or not cur[cl[0]]:
+                    continue
+                t = dict(cur)
+                for b in cl:
+                    t[b] = False
+                diffs = [g for g in self.j
+                         if self.energy(g, t) != self.energy(g, cur)]
+                if len(diffs) <= 1 and self.admissible(t):
+                    nxt = tuple(sorted(t.items()))
+                    if nxt not in seen:
+                        seen.add(nxt)
+                        frontier.append(nxt)
+        return seen
+
+    def floor(self, frozen_bits):
+        return min(self.total(dict(st)) for st in self.reach(frozen_bits))
+
+    def per_interface_floors(self, frozen_bits):
+        reach = [dict(st) for st in self.reach(frozen_bits)]
+        mins = {g: min(self.energy(g, st) for st in reach) for g in self.j}
+        attained = any(all(self.energy(g, st) == mins[g] for g in self.j)
+                       for st in reach)
+        return mins, attained
+
+    def record_class(self, member_bit):
+        for cl in self.classes:
+            if member_bit in cl:
+                return frozenset(cl)
+        raise ValueError("bit not found")
+
+
+def _wg_foreign_pins(w):
+    """world-global foreign pins: every held cross-billed fact's members'
+    single-billed foreign footprint bits (the 2026-06-10 audit's widening)."""
+    pins = set()
+    for g in w.j:
+        for T, v in w.j[g].items():
+            if v != 0 and len(T) >= 2 and len(w._owners(T)) >= 2:
+                owners = set(w._owners(T))
+                for d in T:
+                    for (dd, gg) in w.bits:
+                        if dd == d and gg not in owners:
+                            pins.add((dd, gg))
+    return frozenset(pins)
+
+
+def check_T_fusion_scope_dissolved():
+    """T_fusion_scope_dissolved: the X8 fusion-scope fork (Paper 3 supp red-team H5)
+    is a NAME COLLISION, not an open decision -- one operator semantics, two
+    pinned-fact classes.
+
+    THE DISSOLUTION. The "all-bits arm" (the banked subset formula's default at
+    >= 3 interfaces) and the "billing-scope arm" never disagreed about dynamics:
+    they are the SAME per-interface-activation operator model handed two different
+    pin-sets. The all-bits floor is the billing-scope floor of the class pinning
+    the record AND -- world-globally, per the 2026-06-10 cold audit's correction --
+    every held cross-billed fact's members' foreign holdings (field 4 executes the
+    audit's |U| = 4 counterexample: the record-LOCAL form gives 16 against the
+    all-bits 17; the |U| = 3 suite is structurally blind to it, since any second
+    cross-billed line at three distinctions shares a member and welds in). Which
+    pin-set deserves the name "the record class" is settled by canonical text:
+    Paper 0 v6.2.27 row 7b's line-level instance (a Gamma-billed correlation is a
+    correlation among the Gamma-aspects of its members -- verbatim) + FD1/FD3 (the
+    only cross-interface objects in the bookkeeping are the multiply-billed
+    correlations). The record class pins the record FACT; E_rest(record) is the
+    billing-scope value; the all-bits value is the correct floor of the larger
+    pinned class. Per-interface (where the first law lives), the closure identity
+    is single-valued at EVERY interface count: at any interface the record does
+    not bill, the record fact reads no bit and contributes zero to the floor
+    (field 3) -- the fork's three-interface threshold was an artifact of the
+    disjoint-cover model, and "uninvolved third interface" is cover-relative
+    (interfaces overlap and nest, Paper 0 ~2234).
+
+    Witness fields:
+      1. ONE SEMANTICS, TWO CLASSES (canonical 3-interface probe): all-bits floor
+         11 == billing floor with the foreign bit EXPLICITLY pinned; record-fact
+         class floors at 10. The arms differ by pin-set, not dynamics.
+      2. BANK == ALL-BITS at >= 3 interfaces: the subset model's reachable floor
+         equals the all-bits class floor on the probe (11) and the |U| = 4 world
+         (17) -- the banked formula was computing the larger class's floor.
+      3. PER-INTERFACE FLOORS + SIMULTANEOUS ATTAINMENT: floor_S = 5, floor_E = 5,
+         floor_G = 0 == the no-record G-floor; one reachable state attains every
+         per-interface floor at once (monotone removals); cover-sum == sum of
+         per-interface floors == 10.
+      4. WORLD-GLOBAL IDENTITY (the audit's |U| = 4 spectator counterexample,
+         executed): member-disjoint spectator record (c,d)@S,E with d
+         foreign-footprinted at G -- all-bits 17; record-local augmented pins 16
+         (the record-local identity FALSE); world-global pins 17 == all-bits ==
+         bank.
+      5. SUPPORT-CLOSURE SCAN (3 interfaces, deterministic family, 32 worlds):
+         on every world-level support-closed world (8) billing == all-bits ==
+         bank; on every open world (24) bank == all-bits == billing + the
+         single-billed foreign footprints of held cross-billed facts' members --
+         the excess is EXACTLY the unbilled pins, nothing else.
+      6. UNWELDED CONTROL (4 interfaces, bit-disjoint under billing scope;
+         member-shared, so all-bits welds -- the member-disjoint case is field 4):
+         a second record sharing NO bit with the pinned one -- scopes agree anyway; L_irr's locality block on the second
+         record's OWN class carries its commitments, weld or no weld.
+      7. ZERO-LINES EXHIBIT: stripping the foreign footprint changes no S- and no
+         E-energy and leaves the record line active -- the all-bits pin is
+         supported by zero ledger lines at the record's own interfaces (the W5
+         false-lock evidentiary shape).
+
+    GRADE [P] (2026-06-10 dedicated fresh-context [P]-promotion audit:
+    PROMOTE-WITH-CONDITIONS, conditions applied at v24.3.234; landed
+    [P_structural] at v24.3.233 per the principal's two-step ruling; both audit
+    verdicts appended to the reference note). The class-naming step (record
+    class == record-fact pin-set) is consumed from row 7b's line-level instance
+    PLUS the rows' landing paragraph -- Paper 0 v6.2.27 ~2981, named per the
+    audit's condition 1: "the only cross-interface objects in the bookkeeping
+    are the multiply-billed correlations" -- the sentence that closes "pinning
+    the record pins nothing else" ANALYTICALLY, leaving the foreign pin no
+    possible binder except the unenforced binding FD2/V2a convicts -- plus
+    FD1/FD3. Fair-reading shape of check_L_epsilon_star; coin =
+    interface-ontology row-consumption, inside the v24.3.232 license-class
+    guard. LICENSE-CLASS GUARD (restated per condition 3): this promotion
+    extends the interface-ontology row-consumption precedent and NOTHING else
+    -- a "coupling = enforcement amplitude (w ~ g^2)" dictionary row landed
+    today would NOT collect sin^2 theta_W = 3/13 at [P] tomorrow;
+    physical-observable dictionary rows do not inherit, regardless of
+    canonization. COMPOSED CONSEQUENCE (now carried, [P]): for every record and
+    its record-fact class, at every interface count -- per-interface, the
+    minimum of E_Gamma over the class equals the record's locked commitment in
+    Gamma's own ledger (joint line + pinned support footprints at Gamma, clean
+    spectators stripped); zero at every Gamma the record does not bill; one
+    reachable state attains every per-interface floor simultaneously;
+    E_rest(record) over any declared disjoint cover = the sum of per-interface
+    floors. E_rest is a LEDGER quantity. NON-CLAIMS:
+    the spectrum export stays behind OS2/ML + T_no_physical_time_flow_overclaim;
+    the cover-sum is not deprecated (it is the sum of per-interface floors over a
+    declared disjoint cover); the all-bits floor is not "wrong" (it answers a
+    different question); no EW quantity moves. Reference: 'Reference - The
+    Fusion-Scope Fork Dissolved - One Semantics, Two Classes (2026-06-10).md'
+    (v0.2, cold-audit verdict operative).
+    Dependencies: A1, MD, L_nc, L_loc, L_irr, rows 6/7a/7b.
+    """
+    U3 = frozenset({0, 1, 2})
+    U4 = frozenset({0, 1, 2, 3})
+
+    def _t(universe, fp, joints):
+        E = {}
+        for S in _all_states(universe):
+            e = sum(fp.get(d, F(0)) for d in S)
+            for T, v in joints.items():
+                if T <= S:
+                    e += v
+            E[S] = e
+        return E
+
+    # canonical 3-interface probe (the X8 world of the 2026-06-09 witness)
+    probe = {"S": _t(U3, {0: F(2), 1: F(1)}, {frozenset({0, 1}): F(2)}),
+             "E": _t(U3, {0: F(1), 1: F(2)}, {frozenset({0, 1}): F(2)}),
+             "G": _t(U3, {0: F(1)}, {})}
+
+    # 1. one semantics, two classes
+    ra = _ScopedWorld(probe, "all_bits", U3)
+    rb = _ScopedWorld(probe, "billing", U3)
+    rec_a = ra.record_class((0, "S"))
+    rec_b = rb.record_class((0, "S"))
+    _check((0, "G") in rec_a and (0, "G") not in rec_b,
+           "field 1: the foreign bit is fused into the all-bits class only")
+    fa, fb = ra.floor(rec_a), rb.floor(rec_b)
+    fb_aug = rb.floor(rec_b | {(0, "G")})
+    _check(fa == fb_aug == F(11) and fb == F(10),
+           "field 1: all-bits floor == billing floor with the foreign bit "
+           f"explicitly pinned ({fa} == {fb_aug}); record-fact class floor {fb} "
+           "-- pin-set difference, not dynamics")
+
+    # 2. bank == all-bits at >= 3 interfaces
+    bank3 = _LedgerWorld(probe, _CAP, U3)
+    _check(bank3.reachable_floor(frozenset(U3), frozenset({0, 1})) == fa == F(11),
+           "field 2: the banked subset formula computes the all-bits class's floor "
+           "at 3 interfaces (11)")
+
+    # 3. per-interface floors + simultaneous attainment + cover-sum
+    mins, attained = rb.per_interface_floors(rec_b)
+    mins_free, _unused = rb.per_interface_floors(frozenset())
+    _check(mins["S"] == F(5) and mins["E"] == F(5) and mins["G"] == F(0)
+           and mins_free["G"] == F(0),
+           "field 3: per-interface floors S=5, E=5, G=0 == no-record G-floor -- "
+           "the record contributes zero to the uninvolved ledger")
+    _check(attained and sum(mins.values()) == fb == F(10),
+           "field 3: one reachable state attains every per-interface floor; "
+           "cover-sum == sum of per-interface floors == 10")
+
+    # 4. the audit's |U|=4 spectator counterexample: world-global identity
+    spect = {"S": _t(U4, {0: F(2), 1: F(1), 2: F(1), 3: F(1)},
+                     {frozenset({0, 1}): F(2), frozenset({2, 3}): F(1)}),
+             "E": _t(U4, {0: F(1), 1: F(2), 2: F(1), 3: F(1)},
+                     {frozenset({0, 1}): F(2), frozenset({2, 3}): F(1)}),
+             "G": _t(U4, {3: F(1)}, {})}
+    sa = _ScopedWorld(spect, "all_bits", U4)
+    sb = _ScopedWorld(spect, "billing", U4)
+    fa4 = sa.floor(sa.record_class((0, "S")))
+    rec4 = sb.record_class((0, "S"))
+    rl4 = sb.floor(rec4 | {(d, g) for (d, g) in sb.bits
+                           if d in (0, 1) and g not in ("S", "E")})
+    wg4 = sb.floor(rec4 | _wg_foreign_pins(sb))
+    bank4 = _LedgerWorld(spect, _CAP, U4)
+    bf4 = bank4.reachable_floor(frozenset(U4), frozenset({0, 1}))
+    _check(fa4 == bf4 == F(17) and rl4 == F(16) and wg4 == F(17),
+           f"field 4: |U|=4 spectator world -- all-bits {fa4} == bank {bf4}; "
+           f"record-local pins {rl4} (the record-local identity FALSE); "
+           f"world-global pins {wg4} == all-bits (the identity is true on the "
+           "WORLD, not the record)")
+
+    # 5. world-level support-closure scan
+    closed = opened = bad = 0
+    for aG in (F(0), F(1)):
+        for bG in (F(0), F(1)):
+            for cS in (F(0), F(1)):
+                for cE in (F(0), F(1)):
+                    for cG in (F(0), F(1)):
+                        w = {"S": _t(U3, {0: F(1), 1: F(1), 2: cS},
+                                     {frozenset({0, 1}): F(1)}),
+                             "E": _t(U3, {0: F(1), 1: F(1), 2: cE},
+                                     {frozenset({0, 1}): F(1)}),
+                             "G": _t(U3, {0: aG, 1: bG, 2: cG}, {})}
+                        bank = _LedgerWorld(w, _CAP, U3)
+                        wa = _ScopedWorld(w, "all_bits", U3)
+                        wb = _ScopedWorld(w, "billing", U3)
+                        bf = bank.reachable_floor(frozenset(U3), frozenset({0, 1}))
+                        fa_ = wa.floor(wa.record_class((0, "S")))
+                        fb_ = wb.floor(wb.record_class((0, "S")))
+                        foreign = aG + bG
+                        if foreign == 0:
+                            closed += 1
+                            if not (bf == fa_ == fb_):
+                                bad += 1
+                        else:
+                            opened += 1
+                            if not (bf == fa_ == fb_ + foreign):
+                                bad += 1
+    _check(closed == 8 and opened == 24 and bad == 0,
+           f"field 5: support-closure scan -- {closed} closed worlds agree three "
+           f"ways; {opened} open worlds: bank == all-bits == billing + foreign "
+           f"footprints exactly ({bad} violations)")
+
+    # 6. unwelded control (4 interfaces)
+    ctl = {"S": _t(U3, {0: F(2), 1: F(1)}, {frozenset({0, 1}): F(2)}),
+           "E": _t(U3, {0: F(1), 1: F(2)}, {frozenset({0, 1}): F(2)}),
+           "G": _t(U3, {0: F(1), 2: F(1)}, {frozenset({0, 2}): F(1)}),
+           "H": _t(U3, {0: F(1), 2: F(1)}, {frozenset({0, 2}): F(1)})}
+    ca = _ScopedWorld(ctl, "all_bits", U3)
+    cb = _ScopedWorld(ctl, "billing", U3)
+    _check((0, "G") not in cb.record_class((0, "S")),
+           "field 6: billing scope -- the second record's class shares no bit "
+           "with the pinned one (unwelded)")
+    _check(ca.floor(ca.record_class((0, "S"))) == cb.floor(cb.record_class((0, "S"))),
+           "field 6: floors agree anyway -- L_irr's locality block on the second "
+           "record's OWN class carries its commitments; the weld is incidental")
+
+    # 7. zero-lines exhibit
+    full = {b: True for b in rb.bits}
+    stripped = dict(full)
+    stripped[(0, "G")] = False
+    _check(rb.energy("S", full) == rb.energy("S", stripped)
+           and rb.energy("E", full) == rb.energy("E", stripped),
+           "field 7: stripping the foreign footprint changes no record-interface "
+           "energy")
+    _check(rb._line_active(stripped, "S", frozenset({0, 1}))
+           and rb._line_active(stripped, "E", frozenset({0, 1}))
+           and rb.admissible(stripped),
+           "field 7: the record fact stays held; the all-bits pin is supported by "
+           "zero ledger lines at the record's interfaces")
+
+    return _full_result(
+        name="T_fusion_scope_dissolved: the X8 fork is one semantics on two pinned-fact classes; E_rest(record) is the record-fact (billing-scope) value",
+        tier=3,
+        epistemic="P",
+        summary=(
+            "The fusion-scope fork (Paper 3 supp red-team H5; the named non-claim of the "
+            "v24.3.231/232 translation landing) dissolves: the all-bits and billing-scope "
+            "arms are ONE per-interface-activation operator semantics handed two different "
+            "pin-sets. All-bits floor == billing-scope floor of the class pinning the record "
+            "and (world-globally -- the 2026-06-10 audit's correction, record-local form "
+            "FALSE at |U|=4: 17 vs 16) every held cross-billed fact's members' foreign "
+            "holdings; exhibited directly (foreign bit explicitly pinned reproduces 11) and "
+            "the banked subset formula shown to compute the all-bits class's floor at >= 3 "
+            "interfaces. The record class pins the record FACT -- row 7b verbatim (a "
+            "Gamma-billed correlation is a correlation among the Gamma-aspects of its "
+            "members) + FD1/FD3 (the only cross-interface objects in the bookkeeping are "
+            "the multiply-billed correlations) -- so E_rest(record) is the billing-scope "
+            "value, and per-interface (where the first law lives) the closure identity is "
+            "single-valued at every interface count: the record contributes zero to any "
+            "ledger it does not bill; one reachable state attains every per-interface floor "
+            "at once; the cover-sum is their sum; the all-bits excess is exactly the "
+            "single-billed foreign footprints (32-world scan, 0 violations); a cross-billed "
+            "foreign commitment is carried by L_irr's own lock under either scope (unwelded "
+            "4-interface control). Third instance of one disease, same cure: V2a (state "
+            "space), W5 (activation predicate), X8 (class definition). GRADE [P] per the "
+            "2026-06-10 dedicated fresh-context promotion audit (PROMOTE-WITH-CONDITIONS, "
+            "applied at v24.3.234): the class-naming closes analytically via row 7b + "
+            "Paper 0 ~2981 (the only cross-interface objects are the multiply-billed "
+            "correlations); interface-ontology coin; license-class guard restated -- "
+            "dictionary rows do not inherit, sin^2 theta_W stays [P_structural]. The "
+            "spectrum export stays fenced; the "
+            "cover-sum stays a legitimate declared-cover tool; no EW quantity moves."
+        ),
+        key_result=(
+            "X8 fork dissolved: one semantics, two classes (11 == 11 with the pin made "
+            "explicit; record-fact floor 10). Record class pins the record fact (row 7b); "
+            "E_rest(record) = billing-scope value; per-interface closure identity "
+            "single-valued at every interface count; all-bits = floor of the larger "
+            "world-global pinned class (|U|=4: 17/16/17). [P]"
+        ),
+        dependencies=["A1", "MD", "L_nc", "L_loc", "L_irr",
+                      "L_local_removability",
+                      "L_recoverability_is_orbit_reachability",
+                      "Paper0_row6_operational_completeness",
+                      "Paper0_row7a_threat_totality",
+                      "Paper0_row7b_defense_billing_locus"],
+        cross_refs=["L_operational_completeness", "L_local_removability",
+                    "L_recoverability_is_orbit_reachability",
+                    "T_ledger_reversibility_is_L_irr_lock",
+                    "T_photon_massless_from_reversibility"],
+        artifacts={
+            "dissolution": "one semantics, two pinned-fact classes; the arms differ by pin-set",
+            "world_global": "all-bits == billing + world-global foreign pins (record-local FALSE at |U|=4: 17 vs 16)",
+            "per_interface": "closure identity per-interface, single-valued at every interface count; cover-sum = sum of floors",
+            "bank_default": "the banked subset formula computes the all-bits (larger) class's floor at >= 3 interfaces",
+            "reference": "Reference - The Fusion-Scope Fork Dissolved - One Semantics, Two Classes (2026-06-10).md",
+        },
+    )
+
 
 _CHECKS = {
     "L_operational_completeness": check_L_operational_completeness,
     "L_local_removability": check_L_local_removability,
     "L_recoverability_is_orbit_reachability": check_L_recoverability_is_orbit_reachability,
+    "T_fusion_scope_dissolved": check_T_fusion_scope_dissolved,
 }
 
 
