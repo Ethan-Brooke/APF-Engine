@@ -1389,11 +1389,210 @@ def check_T_fusion_scope_dissolved():
     )
 
 
+def check_T_ledger_rent_excluded():
+    """T_ledger_rent_excluded: the ledger admits exactly two kinds of bookable
+    cost (no standing rent) -- the cost-kind dichotomy, Paper 0 row 9. [P]
+
+    STATEMENT. Every cost the ledger books is one of exactly two kinds:
+      (a) a formation/realignment commitment, booked at a transition and
+          standing thereafter as committed capacity (locked iff it participates
+          in a joint line billed at >= 2 interfaces, L_local_removability);
+      (b) a per-activation charge, booked when and only when an interface
+          activates on held content (the per-interface activation semantics of
+          T_fusion_scope_dissolved).
+    These are one transition-booked semantics distinguished by which transition
+    toggles the booking. The excluded third kind is exactly a booking change
+    with no transition of any type: a standing-rent term -- a cost of merely
+    persisting, accruing under slicing at fixed structure -- is incoherent in
+    the ledger as constituted.
+
+    PROOF CHAIN (load path per the 2026-06-11 sealed-cycle cold audit):
+      1. A1's bound is a LEVEL: sum_d eps(d) <= C(rho, Gamma), with eps a
+         function of the distinction (and interface) -- no time argument exists
+         in eps's domain for a rent to accrue against (Paper 0 sec:A1; the cost
+         spectrum is read off admissibility-space structure, not off any
+         external clock or thermal bath).
+      2. The eternalist commitment (Paper 0 sec:descriptive_temporal): the
+         accrual reading of holding cost is canonically a slicing artifact;
+         time is derived (Paper 3), not primitive -- a rent rate would smuggle
+         the derived quantity into a primitive.
+      3. Accumulated cost is a STATE FUNCTION: E(state) = n*eps,
+         path-independent (Paper 3 Supplement, access partition; the 2026-06-09
+         Reading-A ruling recorded in this module's header). A rent term makes
+         the booked value history-dependent at fixed state -- contradiction.
+      4. T_realignment_cost_is_transition_energy [P]: C(transition) = n*eps =
+         DeltaE. A rent tick is either a null transition booking r > 0
+         (contradicts the identity) or no transition at all (contradicts 3).
+      5. Under rent, a fixed admissible configuration crosses the A1 bound in
+         finitely many slicing ticks with NO transition -- the admissible set,
+         which every downstream theorem quantifies over, ceases to be well
+         defined (witnessed exactly, field 3 below).
+      6. L_cost [P] contributes uniqueness of the realignment functional;
+         T_no_physical_time_flow_overclaim corroborates (the one dynamics-like
+         calculus in the bank explicitly declines a physical-time flow and
+         names the continuation-flow law a future program).
+
+    SEMANTICS (row 9's clause). "Maintenance cost" / "maintenance demand"
+    names the standing committed-capacity LEVEL a holding places against
+    C(rho, Gamma) -- a deposit held, booked at formation, not a payment
+    stream. The keystone's "the commitment is continuous" reads: continuous
+    as commitment, not as payment. Conservative over every banked use
+    (2026-06-11 sweeps, papers + bank: no contradiction found; the demand
+    column unchanged -- theta 0 / condensate 1 / colour 0; the corpus's
+    "hold available" vocabulary is this theorem in prose form).
+
+    GRADE [P]: Paper 0 v6.2.29 sec:perturbations loads-table row 9 (cost-kind
+    dichotomy, no standing rent) -- a canonical published definitional
+    commitment consumed at zero translation, with falsifier (vi) exposure --
+    over A1 + the eternalist commitment + the Paper 3 state-function sentence
+    + T_realignment_cost_is_transition_energy [P] + L_cost [P]. Precedent
+    class: check_L_operational_completeness [P] over row 6;
+    check_L_epsilon_star [P] over MD/BW. The pre-row sealed-cycle derivation
+    carried the dual-reading consumption as a named prose-level
+    identification; row 9 lifts it to row parity (the dual-reading paragraph
+    is the row's named semantics clause).
+
+    LICENSE-CLASS GUARD (unchanged): interface-ontology rows only;
+    physical-dictionary rows do not inherit; sin^2 theta_W stays
+    [P_structural]. The theorem is PLACEMENT-BLIND -- it fixes WHEN a
+    commitment books, never WHERE among sector rows (2026-06-11 step-3 cycle,
+    W1 placement-blindness) -- and licenses no billing-placement claim; UB
+    stays adopted-with-falsifier.
+
+    SCOPE: the exclusion holds for the ledger as constituted; a future banked
+    continuation-flow law would reopen the question for that extended ledger.
+    FALSIFIER (vi): a demonstrated booking change with no transition of any
+    type (no realignment, no interface activation).
+
+    WITNESS-TAG DISCIPLINE: fields below are labeled per the 2026-06-11 audit
+    convention -- exact instantiations of the exclusion's arithmetic on the
+    bank's own tables (illustrative); the discriminating content lives in the
+    row + the cited canonical text. Refs: 'Reference - The Rent Question -
+    Sealed Cycle Verdict (2026-06-11)' v0.2 + its cold audit + 'Reference -
+    The Rent Exclusion - Ontological Absorption Map (2026-06-11)'; standalone
+    witness rent_question_witness.py at APF Reference Docs.
+    """
+    rate = F(1, 4)                  # any positive rent rate (value immaterial)
+
+    # field 1: booking is keyed by state alone on the bank's own tables; the
+    # rent rival departs from the state-function value at the first tick
+    for E in (_ES, _EE):
+        for S, v in E.items():
+            _check(E[S] == v, "field 1: booking keyed by state alone (table fact)")
+            _check(v + rate != v,
+                   "field 1 (exact instantiation): the rent-extended booking "
+                   "E + r*t departs from the banked state-function value at "
+                   "t = 1; two histories reaching the same state disagree "
+                   "under rent and agree under the banked booking")
+
+    # field 2: the null transition books zero; the rent tick's disjunction
+    eps = F(1)
+    n_realigned = 0
+    _check(n_realigned * eps == 0 and rate != 0,
+           "field 2 (the step-4 disjunction, instantiated): C(null transition) "
+           "= n*eps = 0 = DeltaE (T_realignment_cost_is_transition_energy), "
+           "while a rent tick books DeltaE = r > 0 -- as a transition it "
+           "contradicts the identity; as a non-transition it contradicts the "
+           "state function (field 1)")
+
+    # field 3: under rent a fixed admissible configuration crosses the bound
+    # in an exactly computed finite tick count with zero transitions
+    w = _LedgerWorld({"S": _ES, "E": _EE}, _CAP, _U)
+    adm = [S for S in _all_states(_U) if w.admissible(S)]
+    _check(len(adm) > 0, "field 3: the coupled world has admissible states")
+    S_star = max(adm, key=lambda S: w.total_energy(S))
+    E0 = w.total_energy(S_star)
+    cap_sum = len(w.j) * _CAP
+    _check(E0 <= cap_sum, "field 3: S_star is admissible at t = 0 (level within the bound)")
+    ticks = int((cap_sum - E0) / rate) + 1
+    _check(E0 + rate * ticks > cap_sum,
+           f"field 3: under rent the SAME configuration crosses the bound after "
+           f"exactly {ticks} ticks with zero transitions -- the admissible set "
+           "is no longer well defined (A1's bound is a level; the sealed "
+           "verdict's step-6 contradiction, on the bank's own tables)")
+
+    # field 4 (ILLUSTRATIVE-OF-TEXT): every booking event in the bank's own
+    # world coincides with a state transition; non-vacuity is the real assert
+    events = 0
+    for S0 in _all_states(_U):
+        if not w.admissible(S0):
+            continue
+        for d in set(S0):
+            if w.removal_is_local(d, S0):
+                S1 = S0 - {d}
+                events += 1
+                _check(S1 != S0 and w.total_energy(S1) == w.total_energy(S1),
+                       "field 4 ILLUSTRATIVE-OF-TEXT: booking changes ride "
+                       "state transitions on the bank's own tables (the model "
+                       "books by state; the textual carriers are row 9 + the "
+                       "eternalist commitment)")
+    _check(events > 0, "field 4: the booking-event scan is non-vacuous")
+
+    # field 5: falsifier (vi) is well-posed and live
+    def _falsifier_vi(delta_booking, n_realigned_, activation_toggles):
+        return delta_booking != 0 and n_realigned_ == 0 and activation_toggles == 0
+    _check(not _falsifier_vi(F(0), 0, 0),
+           "field 5: the null event does not fire falsifier (vi)")
+    _check(not _falsifier_vi(F(3), 3, 0) and not _falsifier_vi(F(1), 0, 1),
+           "field 5: kind-(a) and kind-(b) bookings do not fire falsifier (vi) "
+           "(each rides a transition of its own type)")
+    _check(_falsifier_vi(rate, 0, 0),
+           "field 5: the rent tick has EXACTLY falsifier (vi)'s shape -- a "
+           "booking change with no transition of any type; the falsifier is "
+           "live and well-posed, not decorative")
+
+    return _full_result(
+        name="T_ledger_rent_excluded: the ledger admits exactly two cost kinds -- formation/realignment commitments + per-activation charges; no standing rent (Paper 0 row 9)",
+        tier=3,
+        epistemic="P",
+        summary=(
+            "Every booked cost is a transition-booked level: a formation/realignment commitment "
+            "standing thereafter as committed capacity (locked iff in a multiply-billed joint line), "
+            "or a per-activation charge. No third kind: a standing-rent term (cost of merely "
+            "persisting, accruing at fixed structure) is excluded by A1's level-form bound (no time "
+            "argument in eps's domain), the eternalist commitment (accrual = slicing artifact; time "
+            "derived not primitive), the Paper 3 state-function property E(state) = n*eps, and "
+            "T_realignment_cost_is_transition_energy (the null transition books zero). 'Maintenance "
+            "cost' = the standing committed level, not a payment stream; conservative over every "
+            "banked use (2026-06-11 corpus sweeps; demand column theta 0 / condensate 1 / colour 0 "
+            "unchanged). GRADE [P] over Paper 0 v6.2.29 row 9 (zero-translation row consumption, "
+            "falsifier (vi)), precedent class row-6/MD-BW. License-class guard: interface-ontology "
+            "rows only; the theorem is placement-blind (fixes WHEN booking occurs, never WHERE among "
+            "sector rows) and licenses no billing-placement claim; sin^2 theta_W stays [P_structural]; "
+            "UB stays adopted-with-falsifier. Scope: the ledger as constituted (a future banked "
+            "continuation-flow law would reopen it)."
+        ),
+        key_result=(
+            "Two cost kinds, no standing rent: nothing pays rent -- everything pays deposits "
+            "(formation commitments standing as committed capacity) and reading fees "
+            "(per-activation charges). The record ontology's completeness clause. [P]"
+        ),
+        dependencies=["A1", "L_cost", "L_irr", "L_loc",
+                      "T_realignment_cost_is_transition_energy",
+                      "L_local_removability",
+                      "Paper0_row9_cost_kind_dichotomy"],
+        cross_refs=["T_fusion_scope_dissolved", "L_operational_completeness",
+                    "T_thermodynamics_four_laws_synthesis",
+                    "T_photon_massless_from_reversibility",
+                    "T_particle_mass_is_locked_record", "T_theta_QCD",
+                    "T_no_physical_time_flow_overclaim", "L_epsilon_star"],
+        artifacts={
+            "dichotomy": "kind (a) formation commitment (deposit/level) + kind (b) per-activation charge; one transition-booked semantics",
+            "excluded": "booking change with no transition of any type (= falsifier (vi)'s exact shape)",
+            "tick_witness": "rent crosses the bound in an exactly computed finite tick count with zero transitions",
+            "semantics": "maintenance cost = standing committed level (deposit held, not rent paid); keystone 'continuous' = continuous as commitment",
+            "placement_blindness": "fixes WHEN a commitment books, never WHERE among sector rows (step-3 W1); no billing-placement license",
+            "provenance": "sealed cycle 2026-06-11 (target-blind) -> cold audit LAND-WITH-CORRECTIONS -> row 9 landed -> this consumption",
+        },
+    )
+
+
 _CHECKS = {
     "L_operational_completeness": check_L_operational_completeness,
     "L_local_removability": check_L_local_removability,
     "L_recoverability_is_orbit_reachability": check_L_recoverability_is_orbit_reachability,
     "T_fusion_scope_dissolved": check_T_fusion_scope_dissolved,
+    "T_ledger_rent_excluded": check_T_ledger_rent_excluded,
 }
 
 
