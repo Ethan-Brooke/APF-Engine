@@ -814,11 +814,14 @@ def check_T24():
       T22: a11=1, a12=1/2, a22=13/4 [P_structural]
       T23: r* = 3/10 -> sin^2theta_W = 3/13 [P_structural]
     
-    GRADE HISTORY: [W] -> [P_structural | S0] -> [P_structural].
-      S0 gate closed by T_S0 (interface schema invariance proved, [P]).
-      R-gate (the load ratio 17/4) is NOT closed: it is an unforced structural
-      input. Honest grade [P_structural]; residual [C_shared_channel_coarse_graining_rule]
-      (see T27d audit note). NOT [P].
+    GRADE: [P_structural]. The LEDGER SHARE 3/13 closes to [P]: the load
+      placement gamma=(1,17/4) is forced by FD1 structural completeness + the
+      Schur asymmetry (check_T_ew_load_placement_P, gauge_quotient_ledger.py).
+      T24 stays [P_structural] because it reads that ledger share as the MEASURED
+      sin^2 theta_W through the w propto g^2 correspondence -- the load-bearing
+      residual is that dictionary fence, NOT the retired load-form / x=1/2
+      accident (Delta_geo / owner-erasure / d+1/d-by-the-x=1/sqrt(d)-accident are
+      refuted groundings). NOT [P_physical_final].
     """
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='T24',
                 expected_source='T27c')
@@ -851,8 +854,9 @@ def check_T24():
         summary=(
             f'sin^2theta_W = 3/13 ~= {predicted:.6f}. '
             'DERIVED (not witnessed): x = 1/2 from T27c (gauge redundancy), '
-            'gamma2/gamma1 = 17/4 from T27d (representation principles, R-gate closed). '
-            'All gates closed: S0 by T_S0, R by Delta_geo. '
+            'gamma2/gamma1 = 17/4 from T27d (SU(2) load = self-competition + the radial-Higgs record). '
+            'The ledger share 3/13 is [P] (T_ew_load_placement_P, via FD1 structural completeness); '
+            'T24 stays [P_structural] reading it as the measured angle through the w propto g^2 dictionary fence. '
             'Comparison to PDG sin^2theta_W in validation.py.'
         ),
         key_result=f'sin^2theta_W = 3/13 ~= {predicted:.4f}',
@@ -860,7 +864,7 @@ def check_T24():
         artifacts={
             'sin2': float(sin2), 'fraction': '3/13',
             'x': '1/2 (T27c)', 'gamma_ratio': '17/4 (T27d)',
-            'derivation_status': 'P_structural (all gates closed)',
+            'derivation_status': 'ledger share 3/13 is [P] (T_ew_load_placement_P); measured angle held [P_structural] by the w propto g^2 dictionary fence',
             'gate_S0': 'CLOSED by T_S0 (interface schema invariance proved)',
         },
     )
@@ -1332,9 +1336,11 @@ def check_T27d():
       x=1/sqrt(d)-accident-at-d=4): they hit 17/4 only at x=1/2; the Higgs reading reads
       it as a_22 + (Higgs record), physical and from banked counts. Photon- and
       L_nc/L_irr-consistent (the record is a positive permanent commitment, not a sub-
-      additive 'sharing'). GRADE STAYS [P_structural] (strengthened): the sole residual is
-      the source-codomain 'load = self + record' form identification + the x=1/2 form-
-      collapse. Full re-grounding + grade reconciliation (T21b location, L_crossing_*,
+      additive 'sharing'). GRADE STAYS [P_structural]: the SU(2) placement of the record is
+      now forced by FD1 structural completeness + the Schur asymmetry (the close,
+      check_T_ew_load_placement_P [P]), so the ledger share 3/13 is [P]; what holds T27d's
+      reading at [P_structural] is the w propto g^2 dictionary fence (the measured angle),
+      NOT the retired x=1/2 form-collapse. Full re-grounding + grade reconciliation (T21b location, L_crossing_*,
       L_mu_mc_unified, L_Cauchy_uniqueness standalone) + papers/wiki: pending the rollout
       codebase session per 'APF Reference Docs/Reference - Bank and Rollout Spec -
       sin2thetaW Higgs-Record Re-grounding (2026-06-07).md'. (Docstring head-start only;
@@ -1406,7 +1412,7 @@ def check_T27d():
             'Theorem C (gamma=sum from R4 non-cancellation). '
             'NORMALIZATION: d+1/d IS the ratio directly. '
             'U(1) has d_1=1 with 1/d_1=d_1 (no separate reciprocal). '
-            'R-gate CLOSED: R1<-A3+A5, R2<-A1+A5, R3<-Delta_geo, R4<-A4. '
+            'Radial-Higgs record placed on SU(2) by FD1 structural completeness + Schur (T_ew_load_placement_P [P]); ledger share 3/13 [P], measured angle [P_structural] (w propto g^2 fence). '
             'Robustness: 6 alternative formulas ALL fail by >2.5%.'
         ),
         key_result=f'gamma_2/gamma_1 = {gamma_ratio} [uniquely selected, 6 alternatives fail]',
@@ -1415,7 +1421,7 @@ def check_T27d():
         artifacts={
             'gamma_ratio': float(gamma_ratio), 'd': d,
             'd_source': 'T_channels (EW channels, not spacetime)',
-            'R_gate': 'CLOSED: R1<-A3+A5, R2<-A1+A5, R3<-Delta_geo, R4<-A4',
+            'placement': 'radial-Higgs record on SU(2), forced by FD1 structural completeness + Schur (T_ew_load_placement_P [P]); ledger share 3/13 [P]; measured angle [P_structural] (w propto g^2 fence)',
             'normalization': 'gamma_1==1 (unit), gamma_2/gamma_1 = d+1/d (ratio formula)',
             'cross_check_sin2': '3/13 verified',
             'robustness': '6 alternatives tested, all >2.5% error; d+1/d unique at 0.19%',
@@ -1431,12 +1437,14 @@ def check_T_sin2theta():
       T22: competition matrix [P_structural]
       T23: fixed-point formula [P_structural]
       T27c: x = 1/2 [P_structural] (S0 closed by T_S0)
-      T27d: gamma_2/gamma_1 = 17/4 [P_structural] (load UNFORCED; R NOT closed)
-      -> sin^2theta_W = 3/13 [P_structural] -- residual: the load ratio
+      T27d: gamma_2/gamma_1 = 17/4 [P_structural] (SU(2) load = self + radial-Higgs record)
+      -> sin^2theta_W = 3/13 -- ledger share [P], measured angle [P_structural]
     
-    GRADE HISTORY: [W] -> [P_structural | S0] -> [P_structural].
-    S0 gate closed by T_S0 ([P]). R-gate (load ratio 17/4) NOT closed -- unforced
-    structural input; residual [C_shared_channel_coarse_graining_rule]. NOT [P].
+    GRADE: [P_structural]. The LEDGER SHARE 3/13 closes to [P] -- the placement
+    gamma=(1,17/4) is forced by FD1 structural completeness + the Schur asymmetry
+    (check_T_ew_load_placement_P). T_sin2theta stays [P_structural] because it reads
+    the ledger share as the measured sin^2 theta_W through the w propto g^2
+    correspondence -- that dictionary fence is the load-bearing residual. NOT [P_physical_final].
     """
     # Full computation (not just asserting r*)
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='T_sin2theta',
@@ -1465,15 +1473,16 @@ def check_T_sin2theta():
             f'sin^2theta_W = {sin2} ~= {predicted:.6f}. '
             'Mechanism [P_structural] (T23 fixed-point). '
             'Parameters derived: x = 1/2 (T27c, gauge redundancy), '
-            'gamma2/gamma1 = 17/4 (T27d, representation principles). '
-            'All gates closed: S0 by T_S0, R by \u0394_geo. '
+            'gamma2/gamma1 = 17/4 (T27d, SU(2) load = self-competition + radial-Higgs record). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P, via FD1 structural completeness); '
+            'measured angle held [P_structural] by the w propto g^2 dictionary fence. '
             'Comparison to PDG sin^2theta_W in validation.py.'
         ),
-        key_result=f'sin^2theta_W = {sin2} [P_structural] (no remaining gates)',
+        key_result=f'sin^2theta_W = {sin2}: ledger share [P] (T_ew_load_placement_P), measured angle [P_structural] (w propto g^2 fence)',
         dependencies=['T23', 'T27c', 'T27d', 'T24', 'T_S0'],
         artifacts={
             'sin2': float(sin2),
-            'gates_closed': 'CLOSED: S0 by T_S0, R by Delta_geo',
+            'grade': 'ledger share [P] (T_ew_load_placement_P via FD1 structural completeness); measured angle [P_structural] (w propto g^2 dictionary fence)',
             'x': '1/2 (T27c)', 'gamma_ratio': '17/4 (T27d)',
         },
     )

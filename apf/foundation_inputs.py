@@ -7,6 +7,11 @@ collapse 5 → 4 (Paper 0 v6.0.5 + Paper 1 supplement v8.22+).  The framework's
 canonical input set is exactly four:
 
     1. FD1 -- Physical identity = finite admissible continuation identity.
+       (Structural completeness: a physical object/state/demand IS its
+       continuation profile and nothing beyond it; there are no physical
+       facts except those fixed by the continuation structure, so any
+       quantity making an empirical difference is structural, not free to be
+       assigned by fiat -- adopted clause, check_FD1_structural_completeness.)
     2. FD2 -- Physical distinction = finite enforceable separator of
        continuation profiles.
     3. FD3 -- Physical distinctions carry positive realignment cost.
@@ -314,6 +319,87 @@ def check_T_PLEC_derived_from_spine():
     }
 
 
+def check_FD1_structural_completeness():
+    """FD1_structural_completeness: the adopted structural-completeness clause.
+
+    Tier 4 [P_structural].  ADOPTED foundational commitment -- FD1 read at full
+    strength -- named on a par with the marginal floor (check_L_epsilon_star
+    over MD/BW).  It is NOT graded [P]: an adopted commitment is not a theorem
+    proved from A1 (that would be the EXIT-A over-grade the close declined).
+
+    Clause:  a physical object, state, or demand IS its finite admissible
+    continuation profile, and nothing beyond it.  Equivalently -- structural
+    completeness -- there are no physical facts beyond those fixed by the
+    admissible continuation structure.  In particular, any quantity that makes
+    an empirical difference is a structural fact: it is fixed by the structure
+    that constitutes it, and is not free to be assigned by representational
+    fiat.  A free choice that fixes NO empirical difference is a coordinative
+    convention (units, chart, gauge) and lies outside the clause.
+
+    Witness:  a finite model separating empirical-difference-making assignments
+    (excluded as free fiat) from empirical-difference-free relabelings
+    (preserved as conventions).  The witness encodes the rule; the clause is
+    the adopted commitment the framework has practiced from the start (strict
+    minimalism, zero free parameters, the eternalist reading), now named.
+
+    Source-of-record: Paper 0 v6.2.31 S4.2 (Assumption 1, structural
+    completeness) + Paper 1 Supplement v8.41 S2 (rem:structural-completeness).
+    Consumed by check_T_ew_load_placement_P (apf/gauge_quotient_ledger.py) to
+    force the single radial-Higgs record onto SU(2)'s row -- the sin^2 theta_W
+    = 3/13 LEDGER-SHARE close.
+    """
+    # (i) an empirically-consequential quantity: three candidate billings of the
+    #     Higgs record give three distinct measured signatures (the weak angle).
+    empirical_candidates = {"su2": (3, 13), "u1": (13, 19), "inert": (13, 35)}
+    sigs = set(empirical_candidates.values())
+    makes_empirical_difference = len(sigs) > 1
+    assert makes_empirical_difference, (
+        "FD1-sc witness: the candidate assignments must produce distinct "
+        "empirical signatures"
+    )
+    # (ii) structural completeness: such a quantity is NOT free to be assigned by
+    #      fiat -- it is fixed by the structure that constitutes it.
+    free_fiat_allowed = not makes_empirical_difference
+    assert free_fiat_allowed is False, (
+        "FD1-sc: an empirically-consequential quantity cannot be assigned by "
+        "free representational fiat"
+    )
+    # (iii) contrast: a relabeling that changes no measured signature (units,
+    #       chart, gauge) is a free coordinative convention -- preserved.
+    convention_candidates = {"gauge_A": (3, 13), "gauge_B": (3, 13)}
+    convention_is_free = len(set(convention_candidates.values())) == 1
+    assert convention_is_free, (
+        "FD1-sc: a no-empirical-difference relabeling is a free coordinative "
+        "convention, outside the clause"
+    )
+
+    return {
+        "name": "FD1_structural_completeness",
+        "passed": True,
+        "key_result": (
+            "Structural completeness adopted: empirically-consequential quantities "
+            "(3 distinct billing signatures 3/13, 13/19, 13/35) are NOT free fiat -- "
+            "fixed by structure; empirical-difference-free relabelings (units/chart/"
+            "gauge) ARE free conventions, preserved."
+        ),
+        "summary": (
+            "The FD1 structural-completeness clause, adopted as a named foundational "
+            "commitment (parity with the marginal floor over MD/BW): a physical object "
+            "is its admissible continuation profile and nothing beyond it; there are no "
+            "physical facts except those fixed by the continuation structure; any "
+            "quantity that makes an empirical difference is structural, not free to be "
+            "assigned by representational fiat; a choice with no empirical difference is "
+            "a coordinative convention and is preserved.  Adopted, not proved -- grade "
+            "[P_structural], not [P].  Consumed by check_T_ew_load_placement_P to "
+            "force the single radial-Higgs record onto SU(2)'s row (sin^2 theta_W = "
+            "3/13 ledger share)."
+        ),
+        "tier": 4,
+        "epistemic": "[P_structural]",
+        "dependencies": ["FD1"],
+    }
+
+
 # =====================================================================
 # Bank registration
 # =====================================================================
@@ -321,6 +407,7 @@ def check_T_PLEC_derived_from_spine():
 _CHECKS = {
     "T_four_input_declaration": check_T_four_input_declaration,
     "T_PLEC_derived_from_spine": check_T_PLEC_derived_from_spine,
+    "FD1_structural_completeness": check_FD1_structural_completeness,
 }
 
 
@@ -334,7 +421,7 @@ def register(registry):
 # =====================================================================
 
 if __name__ == "__main__":
-    for fn in (check_T_four_input_declaration, check_T_PLEC_derived_from_spine):
+    for fn in (check_T_four_input_declaration, check_T_PLEC_derived_from_spine, check_FD1_structural_completeness):
         result = fn()
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")

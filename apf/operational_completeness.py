@@ -1587,12 +1587,263 @@ def check_T_ledger_rent_excluded():
     )
 
 
+def check_T_transition_log_residue_readable():
+    """T_transition_log_residue_readable: the ledger's transition log is
+    observable at exactly residue grade -- the pin-indexed booked configuration
+    plus its locked closure -- under Paper 0 row 10 (observer-reading). [P]
+
+    STATEMENT. The ledger basis grants observable status to the state-borne
+    residue of its own transition log:
+      (1) every commitment booking is transition-toggled and materialized as a
+          standing-level change -- the booking IS the event's residue (row 9,
+          T_ledger_rent_excluded [P]);
+      (2) the residue is pin-indexed by construction -- the configuration
+          space is the product of per-interface holding bits (d, Gamma), so
+          WHICH distinction stands is the state, not a meta-fact about it
+          (refined product space, L_recoverability_is_orbit_reachability [P]);
+      (3) the residue is evaluable at its billing interfaces: row 10
+          (observer-reading, Paper 0 v6.2.30) -- every fact constituted wholly
+          by FD1-triple content held at Gamma is evaluable at Gamma; an
+          enacted operation's outcome is the post-state, itself held content;
+          row 8 types the evaluation (interface-internal), row 6 +
+          L_local_removability supply the per-distinction operator inventory
+          the reading turns into probes;
+      (4) the locked part of the residue is unerasable by any local operation
+          (L_irr [P]) -- the readable log cannot be silently rewritten.
+
+    FENCES (the grant's exact extent, all asserted below): reading caps at
+    state residue -- two histories composing to the same configuration are
+    log-indistinguishable (row 9's state-function discipline, the canonical
+    name for the basis's silence); activation-only (kind (b)) events leave no
+    standing level and sit outside the residue-readable log; counterfactual
+    (unenacted) profiles are not granted; the unit-level holding assignment h
+    is NOT residue -- placements are separated only THROUGH enacted
+    transitions' differential pin-death, never by inspecting h.
+
+    CONSEQUENCE (the two-placement fork's YES branch, executed in field 3):
+    under the same pool-addressed withdrawal, ALIGNED and BORROWED placements
+    leave different pin-indexed residues -- the first enacted withdrawal's
+    record separates what no L-definable observable could (the 2026-06-12
+    two-placement enrichment's under-determination) -- while anonymized
+    (pin-name-stripped) survivor counts coincide across classes under the
+    mirror pairing: the separation is carried by pin identity exactly as the
+    M1 retype said. JOIN SPLIT (the adjudication audit's M2): the row grain
+    pin x pool takes its PIN coordinate from this theorem and its POOL
+    coordinate from the enactment (the experiment's own address) -- no
+    canonical row delivers the pool coordinate, and this check licenses no
+    billing-placement claim.
+
+    GRADE [P]: Paper 0 v6.2.30 loads-table row 10 (observer-reading: reading
+    totality over held content, the converse completion of storage-totality)
+    consumed at zero translation, with falsifier (vii) exposure -- over
+    T_ledger_rent_excluded [P] + L_recoverability_is_orbit_reachability [P] +
+    L_local_removability [P] + L_irr [P]. Precedent class:
+    check_T_ledger_rent_excluded [P] over row 9; check_L_operational_completeness
+    [P] over row 6. Landed row-first per the principal's 2026-06-12 ruling
+    (option 2 of the L2-observability adjudication): the row is the naming.
+
+    LICENSE-CLASS GUARD: interface-ontology rows only; physical-dictionary
+    rows do not inherit; sin^2 theta_W stays [P_structural]. The theorem is
+    billing-placement-blind: it grants reading of residue, never placement of
+    bills among sector rows; UB stays adopted-with-falsifier; the
+    threat-localization readings stay unadopted.
+
+    FALSIFIERS: (vii) a maintained interface with a fact constituted wholly by
+    its own held FD1-triple content that is demonstrably unevaluable at that
+    interface (kills row 10, and with it this consumption); a verified
+    configuration whose billed quantities differ while its full pin-indexed
+    residue is identical under every enacted transition (billing reading
+    something residue-invisible breaks step 3); row 9's falsifier (vi)
+    inherited (a booking change with no transition).
+
+    PROVENANCE: 'Reference - The L2-Observability Adjudication (2026-06-12).md'
+    v0.2 (canonical pass; cold audit REDUCES 1H+3M+5m, corrections in-body;
+    OR named) -> principal ruling 2026-06-12 (OR landed as Paper 0 row 10,
+    v6.2.30) -> this consumption. Upstream: the two-placement enrichment +
+    enforcement-reading executable cycles (both 2026-06-12, sealed, audited).
+
+    WITNESS-TAG DISCIPLINE: fields 1-2 are exact instantiations on the bank's
+    own tables (illustrative of the canonical clauses); field 3 is the
+    condensed two-placement model from two_placement_enrichment_witness.py;
+    the discriminating content lives in row 10 + the cited canonical text.
+    """
+    # field 1 (row 9, residue materialization): on the bank's own coupled
+    # world, every available (local) removal is a transition whose residue is
+    # a strict standing-level change at the billing interface
+    w = _LedgerWorld({"S": _ES, "E": _EE}, _CAP, _U)
+    moves = 0
+    for S0 in _all_states(_U):
+        if not w.admissible(S0):
+            continue
+        for d in set(S0):
+            if w.removal_is_local(d, S0):
+                S1 = S0 - {d}
+                moves += 1
+                _check(S1 != S0, "field 1: the enacted removal leaves a configuration residue")
+                _check(w.total_energy(S1) < w.total_energy(S0),
+                       "field 1: the unbooking is materialized as a strict "
+                       "standing-level change (MD support: footprints positive)")
+    _check(moves > 0, "field 1: the removal scan is non-vacuous")
+
+    # field 2 (refined product space, pin-indexing): the residue identifies
+    # WHICH distinction died -- distinct removals leave distinct configurations
+    S_full = frozenset(_U)
+    posts = {d: S_full - {d} for d in _U}
+    for d1 in _U:
+        for d2 in _U:
+            if d1 != d2:
+                _check(posts[d1] != posts[d2],
+                       "field 2: pin-indexed residue -- the post-configuration "
+                       "separates which distinction was unbooked (the state IS "
+                       "the booked-bit product, no anonymized level beneath)")
+
+    # field 3 (row 10 consumed; the two-placement separation): condensed
+    # arena from the 2026-06-12 two-placement enrichment witness
+    POOL_OF = {"a1": "A", "a2": "A", "b1": "B", "b2": "B"}
+    POOL_UNITS = {"A": ("a1", "a2"), "B": ("b1", "b2")}
+    PINS = ("p1", "p2", "p3")
+    PLACEMENTS = {
+        "ALIGNED/p3@A":  {"p1": "a1", "p2": "b1", "p3": "a2"},
+        "ALIGNED/p3@B":  {"p1": "a1", "p2": "b1", "p3": "b2"},
+        "BORROWED/p1>B": {"p1": "b1", "p2": "b2", "p3": "a1"},
+        "BORROWED/p2>A": {"p1": "a1", "p2": "a2", "p3": "b1"},
+    }
+
+    def withdraw(h, units_gone):
+        # enact withdrawals in sequence; same-pool re-assignment is a booked
+        # transition; a pin with no free same-pool unit dies (is unbooked)
+        h = dict(h)
+        gone = set()
+        for u in units_gone:
+            gone.add(u)
+            victim = next((p for p in PINS if h.get(p) == u), None)
+            if victim is not None:
+                pool = POOL_OF[u]
+                free = [x for x in POOL_UNITS[pool]
+                        if x not in gone and x not in h.values()]
+                if free:
+                    h[victim] = free[0]      # booked re-assignment transition
+                else:
+                    del h[victim]            # the pin dies -- unbooked
+        return frozenset(h.keys())           # the pin-indexed residue
+
+    # (3a) the same pool-addressed enactment leaves class-separating residue
+    res_aligned = withdraw(PLACEMENTS["ALIGNED/p3@A"], ("b1",))
+    res_borrow = withdraw(PLACEMENTS["BORROWED/p1>B"], ("b1",))
+    _check(res_aligned == frozenset({"p1", "p2", "p3"}),
+           "field 3a: ALIGNED survives the pool-B withdrawal intact "
+           "(same-pool re-assignment, a booked transition)")
+    _check(res_borrow == frozenset({"p2", "p3"}),
+           "field 3a: under BORROWED the same enactment kills p1 -- an "
+           "A-constituted pin dead by a B-pool withdrawal, the borrow exposed")
+    _check(res_aligned != res_borrow,
+           "field 3a: the first enacted withdrawal's residue separates the "
+           "placements -- readable under row 10, pin-indexed per field 2")
+
+    # (3b) pin-identified withdrawal profiles are class-disjoint while
+    # anonymized survivor counts coincide under the mirror pairing -- the
+    # separation is carried by pin identity (M1), not by counts
+    def profile(name):
+        return tuple(sorted((u, tuple(sorted(withdraw(PLACEMENTS[name], (u,)))))
+                            for u in ("a1", "a2", "b1", "b2")))
+
+    def counts(name):
+        return tuple(sorted((u, len(withdraw(PLACEMENTS[name], (u,))))
+                            for u in ("a1", "a2", "b1", "b2")))
+
+    profs = {n: profile(n) for n in PLACEMENTS}
+    for nA in ("ALIGNED/p3@A", "ALIGNED/p3@B"):
+        for nB in ("BORROWED/p1>B", "BORROWED/p2>A"):
+            _check(profs[nA] != profs[nB],
+                   "field 3b: pin-identified profiles are class-disjoint")
+    # mirror pairing: pool-relabel A<->B (a_i <-> b_i) maps the count profile
+    swap = {"a1": "b1", "a2": "b2", "b1": "a1", "b2": "a2"}
+    def counts_swapped(name):
+        return tuple(sorted((swap[u], c) for (u, c) in counts(name)))
+    _check(counts_swapped("ALIGNED/p3@A") == counts("BORROWED/p2>A") or
+           counts("ALIGNED/p3@A") == counts("BORROWED/p2>A"),
+           "field 3b: anonymized survivor counts coincide across classes under "
+           "the mirror pairing -- bare counts do not separate (the witness's "
+           "masking fact, condensed)")
+
+    # field 4 (the fences): (i) residue cap -- two enactment orders composing
+    # to the same withdrawn set leave the same residue (state function; the
+    # sequence-level log is NOT granted)
+    for name in PLACEMENTS:
+        _check(withdraw(PLACEMENTS[name], ("b1", "b2")) ==
+               withdraw(PLACEMENTS[name], ("b2", "b1")),
+               "field 4i: order-composed histories are log-indistinguishable "
+               "at fixed residue (row 9 state-function cap)")
+    # (ii) h is not residue: pre-enactment, every placement holds the same
+    # pin-indexed configuration -- the reading right adds nothing unenacted
+    pre = {n: frozenset(PLACEMENTS[n].keys()) for n in PLACEMENTS}
+    _check(len(set(pre.values())) == 1,
+           "field 4ii: pre-enactment residues are placement-identical -- the "
+           "holding assignment h is invisible to the granted reading; "
+           "separation exists only THROUGH enacted transitions")
+    # (iii) activation-only events: a kind-(b) charge with zero commitment
+    # change leaves the residue untouched -- outside the readable log
+    _check(withdraw(PLACEMENTS["ALIGNED/p3@A"], ()) ==
+           frozenset({"p1", "p2", "p3"}),
+           "field 4iii: the null/activation-only event leaves no residue -- "
+           "the readable log carries commitment bookings only")
+
+    # field 5: falsifier (vii) is well-posed and live
+    def _falsifier_vii(held_wholly_constituted, evaluable_at_interface):
+        return held_wholly_constituted and not evaluable_at_interface
+    _check(not _falsifier_vii(True, True),
+           "field 5: row 10's grant does not fire falsifier (vii)")
+    _check(not _falsifier_vii(False, False),
+           "field 5: a fact not wholly held at Gamma is outside the row's "
+           "scope (row 8 contrapositive) and does not fire (vii)")
+    _check(_falsifier_vii(True, False),
+           "field 5: a held-but-unevaluable fact has EXACTLY falsifier "
+           "(vii)'s shape -- the falsifier is live and well-posed")
+
+    return _full_result(
+        name="T_transition_log_residue_readable: the ledger's transition log is observable at residue grade -- pin-indexed booked configuration + locked closure (Paper 0 row 10, observer-reading)",
+        tier=3,
+        epistemic="P",
+        summary=(
+            "The ledger basis grants observable status to the state-borne residue of its own "
+            "transition log: commitment bookings are transition-toggled and residue-materialized "
+            "(row 9 [P]); the residue is pin-indexed because the configuration space IS the product "
+            "of per-interface holding bits (refined product space [P]); under Paper 0 v6.2.30 row 10 "
+            "(observer-reading -- held content is evaluable content; an enacted operation's outcome "
+            "is the post-state) the residue is evaluable at its billing interfaces; the locked part "
+            "is unerasable (L_irr [P]). Fences asserted: residue cap (order-composed histories "
+            "indistinguishable), h-invisibility (pre-enactment placements identical; separation only "
+            "through enacted pin-death), activation-only events outside the log. Consequence "
+            "executed: the two-placement ALIGNED/BORROWED fork separates at the first enacted "
+            "pool-addressed withdrawal (pin-identified profiles class-disjoint; mirrored anonymized "
+            "counts coincide). GRADE [P] over row 10 (zero-translation row consumption, falsifier "
+            "(vii)), precedent class row-9/row-6. Billing-placement-blind: pin coordinate granted, "
+            "pool coordinate enactment-supplied; no sector-row placement license; sin^2 theta_W "
+            "stays [P_structural]."
+        ),
+        dependencies=["T_ledger_rent_excluded", "L_recoverability_is_orbit_reachability",
+                      "L_local_removability", "L_irr",
+                      "Paper0_row10_observer_reading"],
+        cross_refs=["L_operational_completeness", "T_fusion_scope_dissolved",
+                    "L_epsilon_star"],
+        artifacts={
+            "verdict": "YES at residue grade -- the basis was never blind, only silent; the silence = the state-function discipline",
+            "or_landing": "OR landed as Paper 0 v6.2.30 row 10 per principal ruling 2026-06-12 (option 2: the row is the naming)",
+            "join_split": "row grain pin x pool: PIN coordinate basis-granted (this theorem), POOL coordinate enactment-supplied (M2)",
+            "separation": "ALIGNED survives the b1 withdrawal intact; BORROWED loses p1 -- A-constituted pin dead by B-pool enactment",
+            "fences": "residue cap; activation-only events excluded; counterfactuals not granted; h not readable",
+            "provenance": "two-placement enrichment + enforcement-reading cycles -> L2-observability adjudication v0.2 + cold audit REDUCES -> row 10 -> this consumption",
+        },
+    )
+
+
 _CHECKS = {
     "L_operational_completeness": check_L_operational_completeness,
     "L_local_removability": check_L_local_removability,
     "L_recoverability_is_orbit_reachability": check_L_recoverability_is_orbit_reachability,
     "T_fusion_scope_dissolved": check_T_fusion_scope_dissolved,
     "T_ledger_rent_excluded": check_T_ledger_rent_excluded,
+    "T_transition_log_residue_readable": check_T_transition_log_residue_readable,
 }
 
 

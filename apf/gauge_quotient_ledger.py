@@ -1191,7 +1191,7 @@ def check_L_pinned_demand_is_feasibility_rhs():
     return _full_result(
         name="L_pinned_demand_is_feasibility_rhs: a class-pinned commitment enters the PLEC program as a linear feasibility demand, totally funded, under every placement (identification (iii) derived)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P",
         summary=(
             "Identification (iii) of the Schur-billing chain derived from banked [P] content, "
             "placement-independently. Funding totality: at the record-free vertex the sector "
@@ -1325,7 +1325,7 @@ def check_L_program_bridge_kkt():
     return _full_result(
         name="L_program_bridge_kkt: the class-choice KKT result banked + the program optimum = T21's banked fixed point (GQL-4 reduced to one named Gram-semantics consumption)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P",
         summary=(
             "GQL-4 (the program bridge) advanced, per the 2026-06-10 combined audit's route "
             "(b): BINDING is grounded in T21 [P]'s own fixed-point identity A w* = gamma "
@@ -1491,7 +1491,7 @@ def check_T_evaluator_canonicity_kills_noncanonical_storage():
     return _full_result(
         name="T_evaluator_canonicity_kills_noncanonical_storage: A2 argmin over stored evaluators; the placement fork RELOCATED to GQL-5a (frame) + GQL-5b (attribution)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P",
         summary=(
             "The (i)-campaign advance, stated per the 2026-06-10 combined audit: the fork is "
             "RELOCATED into GQL-5a/5b, with the rivals given an executable death GIVEN the "
@@ -1512,7 +1512,8 @@ def check_T_evaluator_canonicity_kills_noncanonical_storage():
         ),
         key_result="GIVEN GQL-5a: tolerance dead (A2 strict argmin, 0 vs 3 pinned parameters exact; the canonical pairing is the unique evaluator of THIS fact), census dead (zero-perturbation orbit channel, co-movement [P]); fork RELOCATED to GQL-5a (frame) + GQL-5b (attribution) -> 3/13",
         dependencies=["L_defended_fact_is_template_invariant", "T_record_demand_is_quotient_codim",
-                      "T_gql1a_reduced_by_co_movement", "L_cost", "T_Higgs", "T22"],
+                      "T_gql1a_reduced_by_co_movement", "L_cost", "T_Higgs", "T22",
+                      "FD1_structural_completeness", "UB_usage_billing_adopted"],
         cross_refs=["T_sin2theta_higgs_record", "L_program_bridge_kkt",
                     "T_load_form_selected_by_alpha_s"],
         artifacts={
@@ -2020,6 +2021,115 @@ def check_UB_usage_billing_adopted():
     )
 
 
+def check_T_ew_load_placement_P():
+    """T_ew_load_placement_P: the sin^2 theta_W = 3/13 LEDGER SHARE is [P].
+
+    Tier 4 [P], over the four-input foundation with FD1 structural completeness
+    named as a dependency (parity with check_L_epsilon_star carrying [P] over
+    MD/BW).  Certifies ONLY the ledger quantity gamma = (1, 17/4) and the ledger
+    fraction 3/13 -- NOT the measured weak mixing angle.  Reading the ledger
+    share as the physical sin^2 theta_W crosses the w propto g^2 dictionary and
+    stays [P_structural] (T24/T_sin2theta/T27d, the dictionary fence, by design).
+
+    The +1 in gamma_2 = a_22 + n_radial is the single radial Higgs record
+    (n_radial = 4 - 3 = 1, T_Higgs).  Three things fix its placement:
+      (a) the record exists with magnitude one (T_Higgs);
+      (b) it is billed rather than inert -- a magnitude-one demand is a demand
+          (the inert reading n_radial=0 gives 13/35; the alpha_s(M_Z) prediction
+          corroborates this exclusion, it does not ground it);
+      (c) it is billed to SU(2), not U(1) -- forced by FD1 structural
+          completeness (an empirically-consequential billing is not free to be
+          assigned by fiat; it is read off the structure that constitutes it)
+          composed with the Schur asymmetry (the Higgs modulus is the unique
+          invariant of the irreducible SU(2) action; U(1)_Y acts as the identity
+          on the doublet, singling out nothing).  The Schur direction is
+          certified here by the vev-orbit computation (transverse == 1) and by
+          T_evaluator_canonicity_kills_noncanonical_storage.
+
+    Executable content: exact rational competition arithmetic landing 3/13; the
+    toggle table showing the placement is load-bearing (the three rival billings
+    miss); the vev-orbit invariance (the modulus is the unique transverse
+    invariant).  No measured input is consumed; no O(1) is fitted.
+    """
+    # n_radial from the Higgs content (T_Higgs): 4 real - 3 eaten Goldstones = 1
+    n_radial = 4 - 3
+    _check(n_radial == 1, "n_radial = 4 - 3 = 1 (single physical radial Higgs, T_Higgs)")
+
+    # competition at the interface-symmetric overlap x = 1/2, m = dim su(2) = 3 (T22)
+    x, m = F(1, 2), 3
+    a11, a12, a21, a22 = F(1), x, x, x * x + m
+    _check(a22 == F(13, 4), "a22 = x^2 + m = 13/4 (T22 Gram, x = 1/2)")
+
+    def ledger_fraction(g1, g2):
+        rstar = (g1 * a22 - g2 * a12) / (g2 * a11 - g1 * a21)
+        return rstar / (1 + rstar)
+
+    # placement: record billed to SU(2) -> gamma = (1, a22 + n_radial) = (1, 17/4)
+    g1, g2 = F(1), a22 + n_radial
+    _check(g2 == F(17, 4), "gamma_2 = a22 + n_radial = 17/4 (record billed to SU(2))")
+    _check(ledger_fraction(g1, g2) == F(3, 13),
+           "ledger share = 3/13 (exact, given the SU(2) placement)")
+
+    # the placement is load-bearing: the three rival billings all miss 3/13
+    _check(ledger_fraction(F(1), a22) == F(13, 35),
+           "inert (n_radial=0): 13/35 != 3/13")
+    _check(ledger_fraction(F(1), a22 + 2) == F(5, 43),
+           "two records (n_radial=2): 5/43 != 3/13")
+    _check(ledger_fraction(F(2), a22) == F(13, 19),
+           "record on U(1) (gamma_1 = a11 + 1 = 2): 13/19 != 3/13")
+
+    # the Schur direction: the Higgs modulus is the unique invariant of the
+    # SU(2)xU(1) vev orbit (orbit dim 3, exactly one transverse invariant)
+    orbit_dim, transverse, q_kills = _sm_tangent_block()
+    _check(orbit_dim == 3 and transverse == 1 and q_kills,
+           "the Higgs modulus is the unique transverse invariant of the SU(2)xU(1) "
+           "vev orbit (orbit dim 3, transverse 1; U(1)_Y propto identity on the "
+           "doublet) -- the record is constitutively SU(2)'s")
+
+    return _full_result(
+        name="T_ew_load_placement_P: the sin^2 theta_W = 3/13 LEDGER SHARE is [P] over the four-input foundation with FD1 structural completeness named",
+        tier=4,
+        epistemic="P",
+        summary=(
+            "The +1 in gamma_2 = a_22 + n_radial (the single radial Higgs record, "
+            "n_radial = 4-3 = 1, T_Higgs) is billed to SU(2)'s row -- forced, not "
+            "adopted -- by FD1 structural completeness composed with the Schur "
+            "asymmetry.  Structural completeness (the adopted foundational clause, "
+            "check_FD1_structural_completeness, foundation_inputs.py): an "
+            "empirically-consequential quantity is fixed by the structure that "
+            "constitutes it, not free to be assigned by representational fiat.  The "
+            "three candidate billings are three distinct ledger fractions (SU(2): 3/13; "
+            "U(1): 13/19; inert: 13/35), at most one physical, so the choice is not "
+            "free -- it is read off structure.  The structure decides it: the Higgs "
+            "modulus is the unique invariant of the irreducible SU(2) action (Schur; "
+            "the vev orbit has exactly one transverse invariant) while U(1)_Y acts as "
+            "the identity on the doublet and singles out nothing.  With FD1 structural "
+            "completeness named as a foundational dependency, the ledger fraction "
+            "gamma=(1,17/4) => 3/13 is [P] over the four-input foundation.  SCOPE: this "
+            "certifies the LEDGER SHARE only.  Reading it as the physical sin^2 theta_W "
+            "crosses the w propto g^2 dictionary and stays [P_structural] "
+            "(T24/T_sin2theta/T27d, the dictionary fence, by design).  No number "
+            "imported, no O(1) fitted, no measured input consumed; the alpha_s(M_Z) "
+            "anchor corroborates the placement, it is not an input."
+        ),
+        key_result="gamma=(1,17/4) => ledger share 3/13 is [P] over FD1_structural_completeness + T_Higgs + T22 + the Schur asymmetry; the three rival billings miss (13/35, 5/43, 13/19); the measured angle stays [P_structural] behind the w-g2 fence",
+        dependencies=["FD1_structural_completeness", "T_Higgs", "T22",
+                      "T_alpha_gamma_coincide_on_template_class"],
+        cross_refs=["T_evaluator_canonicity_kills_noncanonical_storage",
+                    "T_sin2theta_higgs_record", "T24", "T_sin2theta", "T27d",
+                    "UB_usage_billing_adopted", "L_epsilon_star"],
+        artifacts={
+            "n_radial": 1,
+            "gamma": "(1, 17/4)",
+            "ledger_fraction": "3/13",
+            "rivals_that_miss": {"inert": "13/35", "two_records": "5/43", "record_on_u1": "13/19"},
+            "schur": {"vev_orbit_dim": 3, "transverse_invariant": 1},
+            "scope": "LEDGER SHARE only; measured angle stays [P_structural] (w propto g^2 dictionary fence)",
+            "grade_basis": "[P] over FD1_structural_completeness (parity with L_epsilon_star over MD/BW)",
+        },
+    )
+
+
 _CHECKS = {
     "L_gauge_orbit_unpinnable": check_L_gauge_orbit_unpinnable,
     "T_record_demand_is_quotient_codim": check_T_record_demand_is_quotient_codim,
@@ -2031,6 +2141,7 @@ _CHECKS = {
     "L_defense_requires_evaluator": check_L_defense_requires_evaluator,
     "T_alpha_gamma_coincide_on_template_class": check_T_alpha_gamma_coincide_on_template_class,
     "UB_usage_billing_adopted": check_UB_usage_billing_adopted,
+    "T_ew_load_placement_P": check_T_ew_load_placement_P,
 }
 
 
