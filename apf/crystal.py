@@ -124,68 +124,34 @@ __all__ = [
 # §1  Module-include presets and prelude bootstrap
 # =============================================================================
 
-MODULE_PRESETS: dict[str, tuple[str, ...]] = {
-    "CORE": (
-        "apf.core",
-        "apf.gauge",
-        "apf.generations",
-        "apf.spacetime",
-        "apf.gravity",
-        "apf.plec",
-        "apf.unification",
-        "apf.unification_three_levels",
-        "apf.cosmology",
-    ),
-    "EXTENDED": (
-        "apf.core",
-        "apf.gauge",
-        "apf.generations",
-        "apf.spacetime",
-        "apf.gravity",
-        "apf.plec",
-        "apf.unification",
-        "apf.unification_three_levels",
-        "apf.cosmology",
-        "apf.supplements",
-        "apf.majorana",
-        "apf.internalization",
-        "apf.internalization_geo",
-        "apf.extensions",
-        "apf.validation",
-        "apf.standalone.L_Cauchy_uniqueness",
-        "apf.standalone.L_CKM_resolution_limit",
-        "apf.standalone.phase1_seesaw_closure",
-        "apf.standalone.phase5_theorem_R_audit",
-    ),
-    "FULL": (
-        "apf.core",
-        "apf.gauge",
-        "apf.generations",
-        "apf.spacetime",
-        "apf.gravity",
-        "apf.plec",
-        "apf.unification",
-        "apf.unification_three_levels",
-        "apf.cosmology",
-        "apf.supplements",
-        "apf.majorana",
-        "apf.internalization",
-        "apf.internalization_geo",
-        "apf.extensions",
-        "apf.validation",
-        "apf.standalone.L_Cauchy_uniqueness",
-        "apf.standalone.L_CKM_resolution_limit",
-        "apf.standalone.phase1_seesaw_closure",
-        "apf.standalone.phase5_theorem_R_audit",
-        "apf.red_team",
-        "apf.session_v63c",
-        "apf.session_qg",
-        "apf.session_nnlo",
-        "apf.session_delta_pmns",
-        "apf.session_cosmo_update",
-        "apf.session_phase2_confrontation",
-    ),
-}
+from apf._module_manifest import modules_of_type as _modules_of_type
+
+
+def _build_presets() -> dict[str, tuple[str, ...]]:
+    """Module-include presets, DERIVED from the manifest's MODULE_TYPES
+    classification (single source of truth) instead of hand-maintained here, so
+    new modules slot into the right view automatically as the bank scales.
+
+      CORE     = spine                              (the A1->SM->gravity derivation core;
+                                                      the picture Paper 20 argues about)
+      EXTENDED = spine + sector + extension         (+ quantitative closures and extensions)
+      FULL     = everything loaded                  (+ engineering, infra, standalone)
+
+    Plus single-layer views for the typed cross-section analysis (Paper 20 v4.0):
+      SPINE / SECTOR (spine+sector) / EXTENSION (spine+extension) / ENGINEERING (spine+engineering).
+    """
+    return {
+        "CORE":        _modules_of_type("spine"),
+        "EXTENDED":    _modules_of_type("spine", "sector", "extension"),
+        "FULL":        _modules_of_type("spine", "sector", "extension", "engineering", "infra", "standalone"),
+        "SPINE":       _modules_of_type("spine"),
+        "SECTOR":      _modules_of_type("spine", "sector"),
+        "EXTENSION":   _modules_of_type("spine", "extension"),
+        "ENGINEERING": _modules_of_type("spine", "engineering"),
+    }
+
+
+MODULE_PRESETS: dict[str, tuple[str, ...]] = _build_presets()
 
 # Modules whose checks populate the DAG cache (must run before any
 # check that depends on dag_get / acc_SM-style bootstrap). Mirrors

@@ -733,6 +733,32 @@ def lambda_qcd_confinement_transport() -> CodomainTransport:
 # Registry
 # ---------------------------------------------------------------------
 
+def sin2theta_w_ledger_to_measured_transport() -> CodomainTransport:
+    return CodomainTransport(
+        name='sin2theta_w_ledger_to_measured',
+        source_codomain='APF ledger share: gamma=(1,17/4) => sin^2theta_W = 3/13 [P] over FD1 structural completeness + T_Higgs + T22 + the Schur asymmetry (check_T_ew_load_placement_P, gauge_quotient_ledger.py)',
+        target_codomain='physical / effective measured weak mixing angle (PDG effective leptonic ~0.23148)',
+        transport_map_name='w_propto_g2_dictionary_ledger_share_to_measured_angle',
+        status=TRANSPORT_PARTIAL,
+        certificate=TransportCertificate(
+            scheme=_slot('scheme', SLOT_CLOSED, 'source is the ledger share 3/13 [P]; target is the measured/effective weak mixing angle'),
+            scale_rule=_slot('scale_rule', SLOT_EXTERNAL, 'effective-leptonic / M_Z continuation; standard, comparison only'),
+            loop_order_or_regularization=_slot('loop_order_or_regularization', SLOT_EXTERNAL, 'standard EW running to the effective angle (3/13 + 4/5063 = 0.231559); comparison only'),
+            coupling_provenance=_slot('coupling_provenance', SLOT_CLOSED, 'ledger share 3/13 APF-derived [P] over FD1 structural completeness; ZERO measured coupling consumed (alpha_s only corroborates)'),
+            threshold_rule=_slot('threshold_rule', SLOT_EXTERNAL, 'SM thresholds in the comparison continuation'),
+            subtraction_rule=_slot('subtraction_rule', SLOT_EXTERNAL, 'MSbar / effective-scheme; standard'),
+            finite_part_rule=_slot('finite_part_rule', SLOT_PARTIAL, 'THE DICTIONARY FENCE: the w-propto-g^2 correspondence (coupling = enforcement amplitude) carries the ledger share to a physical coupling ratio; reserved at [P_structural] by design -- the deliberately open slot'),
+            anomalous_dimension_rule=_slot('anomalous_dimension_rule', SLOT_EXTERNAL, 'gauge beta coefficients in the comparison running'),
+            uncertainty_pushforward=_slot('uncertainty_pushforward', SLOT_CLOSED, 'effective continuation 3/13 + 4/5063 = 0.231559 vs PDG 0.23154(6), 0.008%'),
+        ),
+        forbidden_inputs=frozenset({
+            'target_sin2theta_measured', 'observed_weak_angle_as_input', 'target_fitted_load_ratio',
+        }),
+        notes='The dictionary-fence transport: the ledger share 3/13 is [P] (check_T_ew_load_placement_P, over FD1 structural completeness; the sin^2theta_W close 2026-06-12); reading it as the physical angle crosses the w-propto-g^2 correspondence, reserved at [P_structural] by design. status PARTIAL = export-locked by the fence, not by a missing derivation -- the first transport that is SOURCE-CLOSED but TARGET-RESERVED on purpose.',
+        codomain_type=CODOMAIN_NUMERICAL,
+    )
+
+
 ALL_TRANSPORT_FACTORIES: Tuple[Callable[[], CodomainTransport], ...] = (
     w_on_shell_transport,
     bottom_msbar_transport,
@@ -750,6 +776,7 @@ ALL_TRANSPORT_FACTORIES: Tuple[Callable[[], CodomainTransport], ...] = (
     delta_alpha_leptonic_transport,
     delta_alpha_hadronic_transport,
     lambda_qcd_confinement_transport,
+    sin2theta_w_ledger_to_measured_transport,
 )
 
 
@@ -800,7 +827,7 @@ def check_T_codomain_transport_schema_declared():
 def check_T_codomain_transport_instances_registered():
     """All 10 known open-frontier transports are registered and instantiable."""
     transports = all_transports()
-    assert len(transports) == 16
+    assert len(transports) == 17
     names = {t.name for t in transports}
     expected = {
         'w_on_shell', 'bottom_msbar', 'top_msbar_or_pole', 'light_quark_msbar',
@@ -808,6 +835,7 @@ def check_T_codomain_transport_instances_registered():
         'desi_dark_energy_w_2', 'dune_juno_neutrino_hierarchy', 'muon_g_minus_2',
         'inv_alpha_cross', 'alpha_s_m_z', 'ew_vev_v_h',
         'delta_alpha_leptonic', 'delta_alpha_hadronic', 'lambda_qcd_confinement',
+        'sin2theta_w_ledger_to_measured',
     }
     assert names == expected, f'missing or extra transports: {names ^ expected}'
     return {
@@ -919,6 +947,7 @@ def check_T_codomain_transport_status_classification():
         'delta_alpha_leptonic': TRANSPORT_CLOSED,      # hadronic export-candidate, first-principles ~0%
         'delta_alpha_hadronic': TRANSPORT_PARTIAL,     # pQCD slice 75.6% [P] + NP bulk external by design
         'lambda_qcd_confinement': TRANSPORT_PARTIAL,   # structure rides the Planck anchor; precise value [P+alpha_s/tool]
+        'sin2theta_w_ledger_to_measured': TRANSPORT_PARTIAL,  # source-closed (3/13 [P]); target reserved by the w-propto-g^2 dictionary fence (the sin2theta_W close)
     }
     actual = {}
     for t in transports:
