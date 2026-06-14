@@ -1,8 +1,0 @@
-channel,definition,status
-trace_vector_T_l,numeric APF charged-lepton trace vector from trace-sector generation algebra,open
-QED_running,running/pole QED transport conventions and constants,deferred
-scheme_choice,choice among pole/running codomains and associated Z_l^S,deferred
-trace_vector_covariance,covariance on APF trace vector T_l,deferred
-operator_covariance,coefficient/operator covariance; integer/log(N_c) layer closed,closed_for_coefficients
-APF_route_residual,post-route residual after declared trace and QED channels,deferred_named_channel
-no_smuggling_audit,electron/muon/tau targets excluded from coefficient derivation,pass_for_coefficients

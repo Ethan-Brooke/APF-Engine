@@ -1,7 +1,0 @@
-gate_id,status,passed,evidence,no_smuggling_note
-SELF_SCALE_TARGET_CONTRACT,CLOSED,True,"The export target is m_b(m_b)_MSbar, a short-distance running mass evaluated at its own scale.",The target definition is imported as a codomain contract only; the PDG value is not used to compute APF_TRACE.
-POLE_CODOMAIN_KNOCKOUT,CLOSED,True,"APF_TRACE differs from the pole context by -10.042 sigma, rejecting a pole-mass reading.","Pole context is a negative-control comparison, not a fit input."
-SHORT_DISTANCE_NEIGHBORHOOD,CLOSED,True,APF_TRACE is -5.510 MeV from the PDG MSbar self-scale anchor.,The closeness validates the codomain admission but does not define it by target fitting.
-NO_TARGET_CONSUMPTION,CLOSED,True,The APF value is computed from top TRACE anchor and bottom/top trace ratio; m_b^PDG is comparison only.,"No inverse fit, pole conversion, lattice/sum-rule average, or target mass enters the trace formula."
-SELF_SCALE_IDENTITY_BRANCH,CLOSED_FOR_EXPORT_CANDIDATE,True,"For the specific self-scale object m_b(m_b), no running from a different scale is needed once the codomain is admitted.",This does not authorize exports to m_b(mu != m_b) or pole/threshold schemes.
-TRACE_COVARIANCE_BOUNDARY,CLOSED_AS_ZERO_INTERNAL_SIGMA_CURRENT_BANK,True,The current trace bank treats the bottom TRACE anchor as locally exact; comparison uncertainty is carried separately.,A future APF trace-covariance theorem may broaden this uncertainty; this module does not hide that boundary.

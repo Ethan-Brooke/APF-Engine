@@ -1,7 +1,0 @@
-gate,status,meaning
-TRACE_ANCHOR_IMPORTED,PASS,APF charm trace anchor imported from up-family trace vector
-PDG_MSBAR_SELF_SCALE_CONTRACT,PASS,PDG target is m_c(mu=m_c) in MSbar scheme
-POLE_BRANCH_REJECTED,PASS,Charm pole mass is not the APF trace codomain
-DIRECT_MSBAR_EXPORT_REJECTED,PASS,APF trace differs from PDG self-scale MSbar by about 593 MeV
-NO_TARGET_FIT,PASS,PDG charm mass is used only for comparison not input
-EXPORT_CANDIDATE,FAIL,No APF trace-to-MSbar normalization/transport map closes the gap

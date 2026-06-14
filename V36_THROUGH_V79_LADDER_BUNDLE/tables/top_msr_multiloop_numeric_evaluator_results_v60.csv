@@ -1,5 +1,0 @@
-route,loop_order,status,m_MSR_Rstar_GeV,Rstar_GeV,alpha_s_Rstar,delta_m_GeV,m_pole_witness_GeV,audit_target_GeV,audit_residual_GeV,claim
-MSR(Rstar)->pole,1,evaluated,168.169055793800,85.857222698385,0.119032308653252,4.337410801564,172.506466595364,172.560000000000,-0.053533404636,P_pole_LO_numeric_witness
-MSR(Rstar)->pole,2,fail-closed,168.169055793800,85.857222698385,requires coefficients,blocked,blocked,audit-only not input,blocked,P_evaluator_refuses_unsourced_coefficients
-MSR(Rstar)->pole,3,fail-closed,168.169055793800,85.857222698385,requires coefficients,blocked,blocked,audit-only not input,blocked,P_evaluator_refuses_unsourced_coefficients
-MSR(Rstar)->pole,4,fail-closed,168.169055793800,85.857222698385,requires coefficients,blocked,blocked,audit-only not input,blocked,P_evaluator_refuses_unsourced_coefficients

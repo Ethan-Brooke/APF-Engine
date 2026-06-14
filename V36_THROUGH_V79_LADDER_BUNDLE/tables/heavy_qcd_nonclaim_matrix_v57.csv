@@ -1,7 +1,0 @@
-claim,v57_status,reason
-heavy-QCD physical finality,not claimed,"full perturbative coefficient, threshold, correlation, and scheme-conversion covariance ledger remains external"
-zero residual for charm or bottom,not claimed,v57 admits nonzero residuals inside declared PDG 90% CL ledgers
-top pole/MC mass prediction,not claimed,APF object is MSR(R_star); pole/MC comparison requires external conversion
-direct top comparison to PDG listings,forbidden,"codomain mismatch: PDG lists direct and cross-section/pole-style top masses, not m_t^MSR(R_star)"
-"using PDG c,b masses as inputs",forbidden,"PDG values are comparison-only, not used in APF trace/normalization construction"
-full alpha_s covariance final,not claimed,"alpha_s values are ledgered, but full covariance propagation is not evaluated here"

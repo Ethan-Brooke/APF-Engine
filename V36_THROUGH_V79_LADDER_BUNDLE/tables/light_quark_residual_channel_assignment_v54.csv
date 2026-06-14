@@ -1,8 +1,0 @@
-channel,v54_status,diagnostic_max_percent,assignment
-source,closed,0.000000000000000,T_uds source vector fixed; no APF source gap remains
-identity_codomain_mismatch,knockout,46.610654981496445,identity route cannot be exported
-scalar_codomain_mismatch,knockout,42.693826152538072,universal scalar route cannot be exported
-chiral_lattice_evaluator,external_required,,main remaining transport evaluator
-EM_isospin,external_required,,needed to separate u and d physical current masses
-renormalization_matching,external_required,,needed for MSbar(2GeV)
-joint_covariance,external_required,,needed before export candidate audit

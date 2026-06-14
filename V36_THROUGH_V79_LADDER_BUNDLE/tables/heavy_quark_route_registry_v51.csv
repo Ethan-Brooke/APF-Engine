@@ -1,4 +1,0 @@
-sector,APF_anchor,codomain,route_object,same_codomain_external_audit,v51_status,not_claimed
-charm,Phi_c_v50=1.272334177712253 GeV from sqrt(7/2) mc_TRACE,MSbar mc(mc),Schur-count normalization + self-scale MSbar admission,yes: PDG2025 mc(mc),P_export_candidate_MSBAR_self_scale_QCD_ledger_v51,physical_final; zero_residual; pole_mass
-bottom,mb_TRACE=4.177490455927000 GeV,MSbar mb(mb),identity self-scale MSbar admission + heavy-QCD covariance ledger,yes: PDG2025 mb(mb),P_export_candidate_MSBAR_self_scale_QCD_ledger_v51,physical_final; zero_residual; pole_mass
-top,mt_TRACE=168.1690557938000 GeV; R_star=85.8572226983853 GeV,MSR at R_star,native APF scale selector + identity MSR codomain admission,no: PDG direct/pole/MC masses are not MSR(R_star),P_export_candidate_MSR_Rstar_QCD_ledger_v51,pole; MC; MSbar; physical_final

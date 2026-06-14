@@ -1,5 +1,0 @@
-frontier_id,closed_object,remaining_object,why_it_matters,next_acquisition_step
-FRONTIER_SCALAR,A0/B0/C0/D0 finite substrate,none at scalar level,integrals are available for coefficient maps,keep as dependency
-FRONTIER_TENSOR,B1/B00 tensor primitives and slot schema,full C/D tensor coefficient maps,vertex/box families require higher tensor assembly,extend tensor reduction only when source formulas demand it
-FRONTIER_RELATIONS,"OS mass, weak-angle, charge, field, vertex, box relation imports",numeric diagram-family evaluators,relations alone do not produce finite rows,import reviewed coefficient formulae family by family
-FRONTIER_NATIVE_ROWS,Delta-alpha and leading-rho rows,finite/counterterm families,dominant scaffold closed; finite target remains,start with self-energy finite coefficients

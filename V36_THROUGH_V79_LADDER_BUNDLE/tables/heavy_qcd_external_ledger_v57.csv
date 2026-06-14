@@ -1,4 +1,0 @@
-sector,apf_object,codomain,apf_value_GeV,external_ledger,external_value_GeV,quoted_error_90CL_GeV,sigma_equiv_GeV,alpha_s_at_scale,alpha_s_error,ledger_status
-charm,Phi_c^v50=sqrt(7/2) m_c^TRACE,MSbar self-scale m_c(m_c),1.272334177712,PDG_2025_c_quark_listing,1.273000000000,0.004600000000,0.002796601427,0.380000000000,0.030000000000,external comparison only; not input to APF normalization
-bottom,Phi_b^v51=m_b^TRACE,MSbar self-scale m_b(m_b),4.177490455927,PDG_2025_b_quark_listing,4.183000000000,0.007000000000,0.004255697823,0.223000000000,0.008000000000,external comparison only; not input to APF trace anchor
-top,m_t^TRACE as MSR(R_star) export object,MSR mass at R_star; not PDG direct/MC/pole codomain,168.169055793800,none_same_codomain_in_PDG2025,,,,requires external MSR transport ledger,,boundary: same-codomain external audit unavailable until MSR conversion ledger supplied

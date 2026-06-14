@@ -1,7 +1,0 @@
-gate,pole_status_after_v44,running_status_after_v45,boundary
-G1_CODOMAIN_DECLARED,pass,pass_declared_scheme_scale_required,numeric values require declared S_run and mu
-G2_TRANSPORT_MAP,pass,P_route_form_closed_symbolic,numeric evaluation requires L_QED
-G3_CONSTANTS_LEDGER,APF count ledger pass,schema_closed_external_values_open,"alpha, thresholds, loop order, matching convention open"
-G4_COVARIANCE,APF envelope pass,protocol_typed_numeric_covariance_open,Sigma_QED and trace covariance needed
-G5_NO_SMUGGLING,pass,pass_strengthened,"forbids target-selected mu, loop order, convention, r_i"
-G6_RESIDUAL_CHANNELS,pass,typed_channels_closed,RG/matching/threshold/truncation/constants_covariance/trace_covariance/APF_residual

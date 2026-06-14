@@ -1,9 +1,0 @@
-quantity,value,unit,status,meaning
-H1,"diag(-1,0,1)",dimensionless,closed_basis,endpoint skew generator
-H2,"diag(1,-2,1)",dimensionless,closed_basis,middle-versus-endpoint curvature generator
-eta0_witness,0,dimensionless,determinant_preserving_choice,no global scalar normalization spent
-eta1_witness,1/28,dimensionless,count_witness,1/(K_c+K_b+N_gen N_c)
-eta2_witness,3/584,dimensionless,count_witness,K_b/((N_c^2-1)(K_SM+N_gen N_H))
-Z_l_witness,exp((1/28)H1+(3/584)H2),dimensionless,residual_shape_witness,APF-count diagonal residual shape
-P_l_witness_GeV,"(0.000510901716931,0.105637377342972,1.776565905410953)",GeV,witness_output,v41 pole-LO vector after residual-shape witness
-forbidden_inverse_coefficients,"(zeta0=0.000197992153924,zeta1=0.035721597433705,zeta2=0.005136604341552)",dimensionless,diagnostic_only_forbidden_as_source,obtained only by consuming pole targets

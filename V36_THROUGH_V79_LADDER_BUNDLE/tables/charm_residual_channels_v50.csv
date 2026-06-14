@@ -1,6 +1,0 @@
-channel,status,description
-Schur_count_normalization,closed,sqrt(7/2) from (K_SM+K_c)/(K_c+K_b+N_gen)
-self_scale_MSbar_codomain,closed,target codomain mc(mu=mc) declared
-PDG_ledger_audit,closed_for_comparison,external value used only after route construction
-QCD_covariance,admitted_boundary,full alpha_s/threshold/correlation protocol remains publication-review layer
-physical_final,not_claimed,export-candidate is not final physical prediction

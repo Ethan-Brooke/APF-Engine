@@ -1,9 +1,0 @@
-forbidden_input,reason,status
-m_e_target_to_choose_U_QED,inverse target reuse,forbidden
-m_mu_target_to_choose_U_QED,inverse target reuse,forbidden
-m_tau_target_to_choose_U_QED,inverse target reuse,forbidden
-target_selected_mu,scale chosen from residuals,forbidden
-target_selected_loop_order,loop order chosen because it improves fit,forbidden
-target_selected_threshold_schedule,threshold convention chosen from residuals,forbidden
-free_generation_factors_r_e_r_mu_r_tau,duplicates residual operator and fits vector,forbidden
-least_squares_QED_running_fit,not a route morphism,forbidden

@@ -1,7 +1,0 @@
-component,sigma_GeV,status
-PDG direct audit uncertainty,0.310000000000,external audit only
-alpha_s(MZ) parametric uncertainty,0.061581215203,computed by +/- 0.0009
-c4 coefficient numerical uncertainty,0.000293527185,from 0.017 alpha_s^4 source uncertainty
-pole renormalon ambiguity floor,0.110000000000,external theory floor
-five-loop and beyond estimate,0.300000000000,external theory floor
-combined envelope,0.449435570715,quadrature

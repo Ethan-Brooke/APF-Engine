@@ -1,7 +1,0 @@
-gate,status,evidence
-NO_TARGET_CONSUMPTION,PASS,"External PDG/lattice/DIZET values are used only for codomain comparison or transport validation, not to generate trace anchors."
-CODOMAIN_SEPARATION,PASS,"Trace, OS, MSbar, MSR, pole, MC, lepton pole, and light-quark 2GeV lanes are separated."
-EXPORT_ONLY_WITH_ROUTE,PASS,"Only W and bottom are promoted to export-candidate status; unresolved branches remain bounded."
-NEGATIVE_CONTROLS_RETAINED,PASS,"Top direct/pole/MC, charm MSbar, charged-lepton pole, and light-quark direct routes are recorded as knockouts."
-NO_FITTED_RESIDUAL_PROMOTION,PASS,"Normalization candidates and target-fit reconstructions are not treated as proofs or exports."
-MASTER_SECTION_DOES_NOT_UPGRADE_BRANCHES,PASS,"v34 consolidates prior closures without promoting unresolved sectors beyond their banked status."

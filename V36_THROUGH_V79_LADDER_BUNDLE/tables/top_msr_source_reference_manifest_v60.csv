@@ -1,5 +1,0 @@
-source_id,role,reference,used_in_v60
-MSR2018,"MSR mass definition, R-dependence, R-evolution, renormalon boundary","Hoang et al., The MSR Mass and the O(Lambda_QCD) Renormalon Sum Rule, arXiv:1704.01580 / JHEP 2018",source boundary and coefficient-family manifest
-RunDec3,running/decoupling machinery for alpha_s and quark masses,RunDec/CRunDec version 3 literature,coefficient-family manifest and future ingestion requirement
-Marquard2015/2016,four-loop OS/MSbar heavy-quark mass relation,"Marquard, Smirnov, Smirnov, Steinhauser four-loop mass relations",OS/MSbar branch coefficient-family manifest
-PDG2025,audit-only top direct/MC-proxy comparator and alpha_s anchor inherited from v58,PDG 2025 QCD/top listings,"audit and covariance, never coefficient fitting"

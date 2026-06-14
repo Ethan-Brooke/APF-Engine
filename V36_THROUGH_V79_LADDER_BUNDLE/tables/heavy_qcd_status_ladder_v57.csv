@@ -1,4 +1,0 @@
-sector,previous_status,v57_status,claim,nonclaim
-charm,P_export_candidate_MSBAR_self_scale_QCD_ledger,P_MSBAR_self_scale_covariance_admitted_PDG2025_CL90,charm self-scale MSbar export candidate with PDG 2025 90% CL covariance admitted,physical-final charm; pole mass; zero residual; full perturbative QCD final
-bottom,P_export_candidate_MSBAR_self_scale_QCD_ledger,P_MSBAR_self_scale_covariance_admitted_PDG2025_CL90,bottom self-scale MSbar export candidate with PDG 2025 90% CL covariance admitted,physical-final bottom; pole mass; zero residual; full perturbative QCD final
-top,P_export_candidate_MSR_Rstar_QCD_ledger,P_MSR_Rstar_boundary_same_codomain_required,top MSR(R_star) export object remains valid and separated from PDG direct/pole/MC codomains,top pole/MC/MSbar comparison; physical-final top; direct PDG audit without conversion ledger

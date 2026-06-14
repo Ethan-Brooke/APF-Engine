@@ -1,8 +1,0 @@
-{
-  "stamp": "TOP_MSR_MULTILOOP_NUMERIC_EVALUATOR_FAIL_CLOSED",
-  "requested_loop_order": 2,
-  "missing_coefficients": [
-    "c2"
-  ],
-  "reason": "explicit sourced coefficients are required; target masses may not be used to infer them"
-}

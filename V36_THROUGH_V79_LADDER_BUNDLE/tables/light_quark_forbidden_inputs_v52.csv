@@ -1,9 +1,0 @@
-forbidden_input,reason,v52_audit
-PDG m_u(2GeV) to define T_u,direct inverse source construction,blocked
-"PDG m_d(2GeV) or m_s(2GeV) to rescale T_d,T_s",component-wise target fitting,blocked
-"least-squares diagonal U_chi-lat from u,d,s targets",three-knob residual erasure,blocked
-lattice scale a chosen after APF residuals are known,external ledger fit knob,blocked
-chiral ansatz selected by best APF agreement,post-hoc model selection,blocked
-EM/isospin corrections chosen independently per quark,hidden generation residual fitter,blocked
-quoting PDG ratios as APF derivation of source vector,external target reuse,blocked
-"using charm/bottom heavy-quark route to infer u,d,s without low-energy QCD map",cross-regime codomain smuggling,blocked

@@ -1,8 +1,0 @@
-status,meaning,claim_boundary
-P_trace,APF trace anchor exists in internal trace scheme,internal APF object only; no physical codomain claim
-P_source,APF source vector/source theorem closed,source-side object may feed a route but is not export
-P_route,transport route form typed without target reuse,route structure exists; numeric export may still require constants/covariance
-P_export_candidate,"codomain, route, constants boundary, no-smuggling, and residual channels admitted",same-codomain comparison permitted; not physical-final
-P_pole_completion,pole-codomain branch complete within declared APF envelope,pole-level completion; downstream running remains external
-P_external_ledger_boundary,APF side complete and named external ledger is required,do not promote until external evaluator is supplied
-P_physical_final,"all transport, covariance, scheme, and residual channels closed",not assigned to any sector in v55

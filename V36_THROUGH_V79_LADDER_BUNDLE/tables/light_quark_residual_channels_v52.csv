@@ -1,9 +1,0 @@
-channel,status,description
-source_T_u,open,APF-native up first-generation trace source required
-source_T_d_T_s,partial_closed,"down-family d,s trace components inherited as source anchors only"
-identity_transport,knockout,"d,s identity route misses MSbar(2GeV); u blocked by missing source"
-chiral_lattice_transport,typed_open,external low-energy lattice/chiral evaluator required
-EM_isospin_corrections,typed_open,needed for u/d split and light-quark ratios
-MSbar_2GeV_matching,typed_open,Z_m and renormalization/matching convention required
-covariance,typed_open,joint covariance matrix required before export candidate
-physical_export,not_claimed,"v52 is a gate/obstruction theorem, not a numeric light-quark export"

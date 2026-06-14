@@ -1,3 +1,0 @@
-ledger,observable,codomain,value_GeV,sigma_GeV,status,source_note
-PDG_2025_world_average,M_W,on-shell W mass,80.3692000000,0.0133000000,external audit ledger; not input to APF trace,PDG 2025 W-boson listing/world average
-CMS_2026_Nature,M_W,on-shell W mass from W->mu nu likelihood measurement,80.3602000000,0.0099000000,external audit ledger; not input to APF trace,CMS Collaboration Nature 2026 high-precision measurement

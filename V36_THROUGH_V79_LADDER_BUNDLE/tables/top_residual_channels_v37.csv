@@ -1,8 +1,0 @@
-channel,meaning,status
-MSR_to_pole_or_MC_or_MSbar,conversion from typed MSR codomain to another top mass scheme,deferred
-alpha_s,strong-coupling dependence in any downstream conversion,deferred
-threshold_matching,heavy-flavor threshold and matching convention dependence,deferred
-perturbative_truncation,finite-loop/order uncertainty in scheme conversion,deferred
-electroweak_correction,non-QCD correction beyond scalar weak-Higgs scale skew,deferred
-experimental_scheme,measurement definition and extraction protocol,deferred
-APF_route_residual,residual after all declared route channels are evaluated,deferred_named_channel

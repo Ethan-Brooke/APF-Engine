@@ -1,5 +1,0 @@
-test,expected,observed,meaning
-LO coefficients present,PASS,PASS,LO witness is executable
-request loop_order=2 with LO-only coefficients,FAIL_CLOSED,FAIL_CLOSED,no hidden c2 inference
-audit target supplied,not used in calculation,not used in evaluator; residual only reported after calculation,no inverse target reuse
-physical-final claim,forbidden,forbidden,no overclaim

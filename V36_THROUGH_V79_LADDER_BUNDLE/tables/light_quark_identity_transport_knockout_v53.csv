@@ -1,4 +1,0 @@
-component,APF_trace_identity_MeV,PDG2025_MSbar_2GeV_MeV,target_over_trace,absolute_residual_MeV,relative_residual_percent,diagnostic_status
-u,1.153209852399677,2.160000000000000,1.873032905073891,-1.006790147600323,-46.610654981496445,identity transport fails; chiral/lattice transport required
-d,3.870916422334003,4.700000000000000,1.214182763772020,-0.829083577665997,-17.640076120553129,identity transport fails; chiral/lattice transport required
-s,87.143281633651370,93.500000000000000,1.072945593133297,-6.356718366348630,-6.798629268822064,identity transport fails; chiral/lattice transport required

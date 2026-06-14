@@ -1,7 +1,0 @@
-channel,sigma_GeV,note
-direct_reference_sigma_audit_only,0.310000000000000,not equality claim
-alpha_s_MZ_plusminus_0.0009,0.043440042639361,input variation
-gamma3_coefficient_uncertainty_naive,0.000414978437647,quoted coefficient uncertainty
-integration_tolerance_N5000_vs_N2500,0.000000000000085,quadrature check
-perturbative_truncation_proxy_abs_3loop_minus_4loop,0.018036289597433,loop convergence proxy
-combined_quadrature,0.313548269416458,audit envelope

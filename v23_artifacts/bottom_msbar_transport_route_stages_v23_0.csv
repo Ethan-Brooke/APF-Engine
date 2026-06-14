@@ -1,8 +1,0 @@
-stage_id,status,input_object,output_object,consumes_target_observable,required_for_export,note
-B_TRACE_ANCHOR,CLOSED,APF trace-ratio theorem,m_b^APF_TRACE,False,True,Banked trace value; no bottom target observable consumed.
-B_MSBAR_TARGET_CONTRACT,CLOSED,PDG target definition,mbar_b(mbar_b)_MSbar comparison codomain,False,True,Defines the comparison target; not an input to the trace derivation.
-B_SHORT_DISTANCE_VALIDATION,CLOSED,m_b^APF_TRACE and PDG MSbar anchor,few-MeV validation residual,False,False,Validation comparison only; does not prove codomain identity.
-B_POLE_KNOCKOUT,CLOSED,PDG pole-mass context,not-pole-like certificate,False,False,"TRACE value is far from pole-mass context, supporting short-distance interpretation."
-B_QCD_RUNNING_MAP,OPEN,APF_TRACE codomain,MSbar running mass at self scale,False,True,Requires identity theorem or evaluated QCD running/threshold map.
-B_ALPHA_S_THRESHOLD_LEDGER,OPEN,"alpha_s, thresholds, correlations",uncertainty/covariance payload,False,True,"Needed for physical export, not needed for validation."
-B_PHYSICAL_EXPORT,BLOCKED,all prior stages,m_b^APF->MSbar(m_b),False,True,Blocked until route map and covariance are evaluated.

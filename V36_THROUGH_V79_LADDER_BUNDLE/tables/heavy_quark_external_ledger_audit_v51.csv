@@ -1,4 +1,0 @@
-sector,codomain,APF_value_GeV,external_reference,external_value_GeV,external_uncertainty_GeV,absolute_residual_GeV,relative_residual_percent,sigma_units,audit_status
-charm,MSbar mc(mc),1.272334177712253,PDG 2025 quark summary/listing,1.273000000000000,0.004600000000000,-0.000665822287747,-0.052303400451447,-0.144743975597157,inside_same_codomain_uncertainty
-bottom,MSbar mb(mb),4.177490455927000,PDG 2025 quark summary/listing,4.183000000000000,0.007000000000000,-0.005509544073000,-0.131712743796318,-0.787077724714282,inside_same_codomain_uncertainty
-top,MSR mt(R_star),168.169055793799998,"PDG 2025 top summary gives direct/pole/cross-section masses, not MSR(R_star)",,,,,,no_same_codomain_audit_until_conversion_ledger

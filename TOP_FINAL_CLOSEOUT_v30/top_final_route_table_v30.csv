@@ -1,6 +1,0 @@
-route,status,anchor_or_value_GeV,residual_GeV,pull_sigma,comment
-direct/MC-like,KNOCKED_OUT,172.52,-4.350944206200012,-13.184679412727307,Direct top mass is MC/pole-like and not APF trace codomain
-pole context,KNOCKED_OUT,172.5,-4.330944206200002,,Pole identification would smuggle external scheme
-self-scale MSbar,KNOCKED_OUT,162.69,5.479055793800001,,Trace too high for ordinary mbar_t(mbar_t) lane
-MSR R=80 GeV,NEAR_PASS_EXTERNAL,168.4265198207666,-0.257464026966602,,Trace is near high-scale MSR short-distance mass
-MSR R*,CLOSED_EXTERNAL,168.16905579380003,2.842170943040401e-14,,R* chosen from external pole context

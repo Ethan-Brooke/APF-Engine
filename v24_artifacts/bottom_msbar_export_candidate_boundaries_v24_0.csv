@@ -1,5 +1,0 @@
-claim_id,status,safe_language,forbidden_language
-BOTTOM_EXPORT_CANDIDATE,SAFE,The APF bottom trace anchor is admitted as an MSbar self-scale export candidate.,APF has produced a final physical bottom-mass derivation.
-SELF_SCALE_ONLY,SAFE,No QCD running is required for the self-scale candidate m_b(m_b); running is required for other scales.,The same value may be used at any renormalization scale.
-NO_TARGET_FIT,SAFE,PDG/lattice/sum-rule masses validate the candidate but do not enter the trace computation.,The few-MeV residual proves the identity theorem by itself.
-PUBLICATION_BOUNDARY,SAFE,The remaining boundary is publication review of the trace-to-MSbar codomain admission.,No further reviewer scrutiny is needed.

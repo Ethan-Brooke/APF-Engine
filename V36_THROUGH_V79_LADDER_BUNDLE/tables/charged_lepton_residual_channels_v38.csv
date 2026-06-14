@@ -1,8 +1,0 @@
-channel,definition,status
-coefficient_closure,APF-native derivation of alpha and beta from generation-interface data,open
-QED_running,pole-to-running or running-to-pole QED transport if non-pole codomain selected,deferred_until_codomain
-scheme_choice,pole versus running charged-lepton mass codomain declaration,deferred_until_codomain
-trace_vector_covariance,covariance of internal charged-lepton trace vector,deferred_until_trace_vector_export
-operator_covariance,covariance propagation through alpha beta and R_l,formal_only
-APF_route_residual,residual after native coefficient closure and QED transport,deferred
-no_smuggling_audit,exclusion of e mu tau target masses from coefficient derivation,pass_for_form

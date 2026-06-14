@@ -1,8 +1,0 @@
-status,definition
-[P_trace],"APF-side trace anchor exists, no scheme export"
-[P_source/pretransport],APF source vector complete but external transport evaluator missing
-[P_export_candidate],"Codomain, route, ledger, covariance plan, no-smuggling gates satisfied; not yet completion"
-[P_covariance_admitted],Residual is inside declared same-codomain external uncertainty/covariance envelope
-[P_codomain_completion],"Sector complete in a declared codomain, with boundary and nonclaims explicit"
-[P_external_ledger_boundary],Further promotion requires external evaluator/coefficients/conventions
-[P_physical_final],Reserved; not assigned by v68

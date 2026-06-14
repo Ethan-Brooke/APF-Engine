@@ -1,7 +1,0 @@
-sector,trace_object,codomain,route_status,physical_export_status,first_failed_gate_or_boundary
-EW/W,sin^2thetaW=3/13; MW_TRACE=80.362164334 GeV,on-shell EW via DIZET,reviewed same-input transport + admitted row covariance,P_export_candidate,publication review of DIZET row admission protocol
-bottom,mb_TRACE=4.177490455927 GeV,self-scale MSbar mb(mb),codomain admitted,P_export_candidate,publication review of bottom trace MSbar codomain admission
-charged leptons,"T_l^APF=diag(1/3,3,1) T_d^APF; pole LO=(1/sqrt6)T_l",pole/running QED,v41 pole-LO export candidate plus v43 APF-count scalar-normalized residual witness; not physical final,P_export_candidate^pole_v43 + P_covariance_admitted^APF_envelope / QED_running_open,APF_CHARGED_LEPTON_QED_RUNNING_TRANSPORT_THEOREM
-top,mt_TRACE=168.1690557938 GeV,MSR at R_star=85.86 GeV,native APF scale selector + identity MSR codomain admission,P_export_candidate,downstream MSR-to-pole/MC/MSbar residual transport remains separate
-charm,mc_TRACE=0.680091224926 GeV,self-scale MSbar mc(mc),route knockout,not exported,APF_CHARM_TRACE_TO_MSBAR_NORMALIZATION_OR_TRANSPORT_MAP
-light quarks,"(u,d,s)_TRACE",MSbar(2 GeV) / chiral lattice,low-energy QCD obstruction,not exported,APF_LIGHT_QUARK_TRACE_TO_MSBAR_2GEV_CHIRAL_LATTICE_TRANSPORT_MAP

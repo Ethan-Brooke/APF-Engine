@@ -1,2 +1,0 @@
-sector,trace_anchor,route,value,status,blocked_route,residual
-top,m_t^APF-TRACE = m_t^MSR(R*) = 168.169055793800 GeV,"MSR(R*) -> MSR(R_EW), R_EW=M_W^TRACE/(2*pi)",172.564754410708 GeV,P_direct-MSR-completion_EW-resolution; pole/MC equality not claimed,pole/MC final under 4-loop pole conversion,4.754410708 MeV vs audit-only direct reference

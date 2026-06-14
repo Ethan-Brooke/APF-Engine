@@ -1,7 +1,0 @@
-boundary,closed,rule,checked_by
-B1_codomain_before_comparison,yes,Every APF output must declare the physical scheme before audit.,G1/v35/v64/v65
-B2_external_sources_frozen,yes_for_registry,All external ledgers named before evaluator use.,source_manifest_v65
-B3_evaluator_fail_closed,yes_for_registry,Evaluator must fail closed if coefficients/scheme/covariance are missing.,evaluator_registry_v65
-B4_no_physical_final_global,yes,No sector is assigned P_physical_final in v65.,registry/verifier
-B5_no_residual_fitters,yes,QED/QCD/electroweak transport cannot be selected to reduce APF residuals.,no_smuggling_matrix
-B6_post_v65_work_is_external,yes,"Future work is implementation of external evaluators, not APF trace-source derivation.",closeout theorem

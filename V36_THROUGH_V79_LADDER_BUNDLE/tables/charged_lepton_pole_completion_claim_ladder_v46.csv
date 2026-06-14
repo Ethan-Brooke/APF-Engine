@@ -1,7 +1,0 @@
-layer,status_after_v46,claim,not_claimed_boundary
-source_trace_vector,P_source_closed,"T_l^APF=diag(1/3,3,1)T_d^APF admitted from source-side trace theorem",not inverse reconstructed from lepton masses
-operator_and_coefficients,P_operator_closed,"R_l=diag(1/3,3,1) and QED witness exponents fixed by APF count sources",not free per-generation residual fit
-scalar_normalization,P_scalar_count_source,eta0=1/5063 from D0=61(61+16+3+3),not target-selected common rescaling
-pole_covariance,P_pole_completion_APF_envelope,all residuals lie inside epsilon_QED^APF=1/5063 envelope,not exact zero-residual equality
-qed_running_route,P_route_typed_external_ledger_required,U_QED route form typed as downstream RG/matching transport,not numeric running export without constants ledger
-physical_final,not_claimed,no APF-side pole gate remains in this branch,final QED/running/scheme values require declared external ledger

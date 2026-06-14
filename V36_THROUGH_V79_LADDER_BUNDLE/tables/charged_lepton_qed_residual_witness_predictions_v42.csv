@@ -1,4 +1,0 @@
-lepton,Phi_pole_LO_MeV_v41,Z_witness_factor,Phi_witness_MeV_v42,diagnostic_pole_reference_MeV,absolute_residual_MeV,relative_residual_percent,residual_status
-e,0.526765003982,0.969885457593039,0.510901716931,0.510998950,-0.000097233069,-0.019028037,common_scalar_offset_not_fitted
-mu,106.728287257048,0.989778624373040,105.637377342972,105.658375500,-0.020998157028,-0.019873632,common_scalar_offset_not_fitted
-tau,1705.453337061343,1.041697164504157,1776.565905410953,1776.930000000,-0.364094589047,-0.020490092,common_scalar_offset_not_fitted

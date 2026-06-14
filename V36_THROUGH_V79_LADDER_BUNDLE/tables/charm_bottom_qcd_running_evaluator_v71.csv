@@ -1,3 +1,0 @@
-quark,m_apf_selfscale_GeV,selfscale_scheme,alpha_s_selfscale,nf,target_mu_GeV,alpha_s_target_LO,mass_target_LO_GeV,mass_target_LO_sigma_GeV,status
-c,1.272334177712,MSbar(mu=m_c),0.380000000000,4,3.000000000000,0.265307067708,1.070790477803,0.012471289434,LO_QCD_running_evaluator_closed
-b,4.177490455927,MSbar(mu=m_b),0.223000000000,5,10.000000000000,0.180200450083,3.737911682909,0.013957196361,LO_QCD_running_evaluator_closed

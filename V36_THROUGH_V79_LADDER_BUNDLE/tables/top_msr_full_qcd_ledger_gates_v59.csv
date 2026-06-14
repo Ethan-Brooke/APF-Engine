@@ -1,9 +1,0 @@
-gate,v59_status,criterion
-L1 source object,closed,m_t^MSR(R_star) and R_star inherited from APF v37/v58
-L2 branch codomains,closed,"pole, MSbar, MC-proxy, and cross-section branches separately typed"
-L3 external constants,closed as ledger,"alpha_s(MZ), sigma_alpha_s, MZ, nf, color factors named; higher coefficients sourced"
-L4 coefficient families,closed as manifest,"beta, gamma_m, MSR, R-evolution, OS-MSbar, decoupling families named and source-bound"
-L5 evaluator schema,closed,machine-readable evaluator schema specifies required inputs and outputs
-L6 no-smuggling,closed,"target masses cannot set coefficients, alpha_s, R_star, order, thresholds, or scheme"
-L7 covariance,closed as ledger,"alpha_s, truncation, threshold, renormalon, MC, and collider channels enumerated"
-L8 numeric finality,blocked by design,full numeric final requires coefficient ingestion/evaluator implementation; not claimed

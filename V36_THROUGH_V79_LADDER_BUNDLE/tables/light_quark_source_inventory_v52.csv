@@ -1,7 +1,0 @@
-source_object,value,units,status,meaning,export_use
-T_d^APF[1],0.003870916422334,GeV,banked_v41_down_family_trace,down-family first-generation trace component; not a physical MSbar(2GeV) mass,source input only; no identity export
-T_d^APF[2],0.087143281633652,GeV,banked_v41_down_family_trace,down-family second-generation trace component; not a physical MSbar(2GeV) mass,source input only; no identity export
-T_d^APF[3],4.177490455927100,GeV,banked_v41/v51_bottom_trace,bottom self-scale trace/codomain anchor; heavy not light,"heavy-QCD ledger only, not part of uds vector"
-T_u^APF[1],,GeV,not_banked_v52,up-family first-generation trace source needed for u-quark transport,required before any u export candidate
-T_c^APF,0.680091224926000,GeV,banked_v50_charm_trace,heavy charm trace anchor; does not determine u without an APF up-family source theorem,cannot be inverted or extrapolated into u target
-T_t^APF,168.169055793800000,GeV,banked_v37_top_trace,heavy top trace anchor; does not determine u without an APF up-family source theorem,cannot be used with target masses to fit u

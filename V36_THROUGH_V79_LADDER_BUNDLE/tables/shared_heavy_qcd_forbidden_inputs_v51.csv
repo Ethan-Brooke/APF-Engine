@@ -1,9 +1,0 @@
-forbidden_input,reason,v51_audit
-PDG charm mass to choose sqrt(7/2),would inverse-fit charm normalization,not_used
-PDG bottom mass to edit mb_TRACE,would alter trace anchor,not_used
-direct top mass to choose R_star,would consume target to set MSR scale,not_used
-pole/MC top mass as same-codomain audit,wrong codomain without conversion ledger,blocked
-"alpha_s tuned to minimize c,b,t residuals",would turn QCD ledger into fit knob,blocked
-thresholds chosen independently per residual,would violate shared ledger,blocked
-loop order selected after seeing residuals,would be post-hoc publication bias,blocked
-scheme conversion coefficients adjusted by hand,would hide transport failure,blocked

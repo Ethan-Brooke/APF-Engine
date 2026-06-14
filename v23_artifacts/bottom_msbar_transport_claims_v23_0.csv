@@ -1,6 +1,0 @@
-claim_id,status,safe_language,forbidden_language
-BOTTOM_VALIDATION_NEIGHBORHOOD,SAFE,APF bottom TRACE lies within a few MeV of the PDG MSbar self-scale anchor.,APF has already proved the physical MSbar mass.
-BOTTOM_SHORT_DISTANCE,SAFE,"The pole-mass knockout supports treating APF_TRACE as short-distance-like, not pole-like.",APF_TRACE is identical to MSbar by definition.
-BOTTOM_ROUTE_CONTRACT,SAFE,The bottom route has a closed target contract and an explicit transport/covariance obligation.,No transport theorem is needed.
-BOTTOM_EXPORT_STATUS,SAFE,m_b^{APF->MSbar}(m_b) remains an export candidate only after the codomain identity or QCD map is evaluated.,This module exports final physical bottom mass.
-NEXT_WORK,SAFE,Next work is the QCD running/threshold/correlation ledger or a codomain-identity theorem.,Move to light quarks before resolving bottom transport.

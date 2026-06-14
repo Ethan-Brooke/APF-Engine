@@ -1,7 +1,0 @@
-class,source,authors,identifier,role,status
-active,RunDec/CRunDec v3,Herren & Steinhauser,arXiv:1703.03751 / CPC 224 (2018) 333-345,running/decoupling alpha_s and quark masses; five-loop beta; four-loop decoupling; heavy-quark mass conversions,required
-lineage,Original RunDec,"Chetyrkin, Kühn & Steinhauser",hep-ph/0004189,formula collection for running/decoupling alpha_s and quark masses,supporting
-lineage,CRunDec,Schmidt & Steinhauser,arXiv:1201.6149,C++ implementation lineage for RunDec routines,supporting
-coefficient,Five-loop beta function,"Baikov, Chetyrkin & Kühn",arXiv:1606.08659,five-loop QCD beta function coefficient source,required for L=5
-coefficient,Four-loop mass relation,"Marquard, Smirnov, Smirnov & Steinhauser",arXiv:1502.01030,four-loop on-shell/MSbar heavy-quark mass relation,required for scheme conversions
-coefficient,Four-loop MSbar/on-shell general SU(N),Marquard et al.,arXiv:1606.06754,general color-factor detailed four-loop mass relation,supporting/validation

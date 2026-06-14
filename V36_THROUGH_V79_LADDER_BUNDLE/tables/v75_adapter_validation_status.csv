@@ -1,5 +1,0 @@
-item,status,meaning
-synthetic protocol self-test,accepted for harness only,validator can parse/validate correct response schema
-real RUNDEC_CMD adapter,not present unless environment supplies RUNDEC_CMD,full evaluator remains fail-closed
-physics promotion,blocked absent real adapter,synthetic output is never physics-promotable
-forbidden target reuse,rejected,target masses cannot appear as inputs/calibration

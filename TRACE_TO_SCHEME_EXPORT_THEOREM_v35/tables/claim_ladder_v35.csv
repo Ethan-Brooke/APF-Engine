@@ -1,7 +1,0 @@
-status,meaning,allowed_claim
-P_trace,APF local trace value/vector closed,trace anchor exists
-P_route,codomain and route declared,can discuss transport path
-P_validation,external comparison valid but not full export,supports trace anchor
-P_export_candidate,route/covariance/no-smuggling gates passed,physical-scheme export candidate
-P_physical_final,publication-reviewed full route and native/external protocol accepted,final physical prediction claim
-P_obstruction,named transport gate fails,trace meaningful; physical export blocked

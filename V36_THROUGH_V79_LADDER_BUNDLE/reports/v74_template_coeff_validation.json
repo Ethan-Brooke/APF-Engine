@@ -1,8 +1,0 @@
-{
-  "failures": [
-    "missing_source_manifest",
-    "missing_validation_examples",
-    "missing_no_target_reuse_declaration"
-  ],
-  "status": "COEFFICIENT_TABLE_FAIL_CLOSED"
-}

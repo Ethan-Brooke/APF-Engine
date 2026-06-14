@@ -1,4 +1,0 @@
-branch_id,route,status,required_for_mb_mb_export,required_for_other_scales,note
-SELF_SCALE_MSBAR_BRANCH,m_b^APF_TRACE -> m_b^APF->MSbar(m_b),CLOSED_EXPORT_CANDIDATE,True,False,Closed at export-candidate level by short-distance codomain admission; not physical-final.
-RUNNING_TO_OTHER_MU_BRANCH,m_b^APF->MSbar(m_b) -> m_b^APF->MSbar(mu),OPEN_QCD_TRANSPORT_REQUIRED,False,True,"Requires QCD anomalous dimension, alpha_s running, thresholds, and covariance."
-POLE_BRANCH,m_b^APF_TRACE -> M_b^pole,REJECTED_FOR_TRACE_CODOMAIN,False,False,Pole interpretation is knocked out by the large pole residual and renormalon-sensitive scheme.

@@ -1,6 +1,0 @@
-version,theorem_program,sector,purpose,priority
-v56,APF_W_TRACE_TO_ONSHELL_EW_COVARIANCE_CLOSURE,EW/W,push export candidate toward completion by hardening same-input DIZET row and covariance admission,highest
-v57,APF_HEAVY_QCD_FINAL_COVARIANCE_LEDGER,charm/bottom/top,"shared alpha_s, threshold, scheme-correlation, and conversion-ledger finalization",high
-v58,APF_TOP_MSR_TO_EXTERNAL_SCHEME_CONVERSION_BOUNDARY,top,MSR(R_star) to pole/MC/MSbar conversion ledger; no direct PDG comparison before this,medium
-v59,APF_LIGHT_QUARK_EXTERNAL_CHIRAL_LATTICE_EVALUATOR_IMPORT,u/d/s,only if a source-independent lattice/chiral evaluator ledger is intentionally imported,defer
-v60,APF_GLOBAL_PHYSICAL_FINAL_CLAIM_AUDIT,all,only after v56/v57 and any chosen external ledgers are closed,defer

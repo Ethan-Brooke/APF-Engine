@@ -1,4 +1,0 @@
-component,APF_trace_identity_MeV,PDG2025_MSbar_2GeV_MeV,absolute_residual_MeV,relative_residual_percent,diagnostic_status
-u,,2.16,,,blocked: T_u source not banked
-d,3.870916422334000,4.700000000000000,-0.829083577666000,-17.640076120553196,identity transport fails; chiral/lattice transport required
-s,87.143281633651995,93.500000000000000,-6.356718366348005,-6.798629268821395,identity transport fails; chiral/lattice transport required

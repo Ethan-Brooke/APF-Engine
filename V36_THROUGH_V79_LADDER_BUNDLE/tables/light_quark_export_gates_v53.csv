@@ -1,8 +1,0 @@
-gate,v53_status,witness,remaining_boundary
-G1_CODOMAIN_DECLARED,pass,MSbar(2 GeV) light-quark codomain declared,none
-G2_TRANSPORT_MAP,schema_pass_not_evaluator,U_chi-lat typed; identity and universal scalar knocked out,numeric evaluator still required
-G3_CONSTANTS_LEDGER,typed_required,"lattice scale, action, Z_m, alpha_s, thresholds, EM/isospin, chiral fit listed",external ledger not supplied
-G4_COVARIANCE_PROTOCOL,typed_required,"joint u,d,s covariance channels listed",numeric covariance matrix not supplied
-G5_NO_SMUGGLING_AUDIT,pass,"PDG u,d,s masses forbidden as source/scalar/transport inputs",no inverse T_u or fitted chiral map
-G6_RESIDUAL_CHANNELS,pass_boundary,identity/scalar residuals assigned to missing chiral/lattice transport,no residual absorption into trace anchors
-SOURCE_VECTOR,pass,"T_u imported; T_d,T_s inherited; full T_uds source vector closed",source closed but not export
