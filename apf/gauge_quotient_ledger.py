@@ -1591,7 +1591,7 @@ def check_L_defense_requires_evaluator():
     executably in block (A2) via the 7a non-disturbance argument;
     (5) the w-g2 dictionary, fenced by design. Riding on x = 1/2 and
     m = 3 at [P]. This check derives 5a-1 in BOTH obligation shapes and
-    prices the rest honestly. alpha_s (0.0%) corroborates.
+    prices the rest honestly. alpha_s (0.11 sigma) corroborates.
     sin^2 theta_W unmoved at [P_structural].
     """
     # -- (A) defense => evaluator, exhaustive, BOTH obligation shapes -------
@@ -1907,7 +1907,7 @@ def check_UB_usage_billing_adopted():
     THE FALSIFIER SURFACE (live, stated for falsification not decoration):
       (F-a) FORWARD alpha_s (THE live falsifier, conjunction-scoped): UB's
             placement gives gamma = (1, 17/4) and the banked forward
-            prediction alpha_s(M_Z) = 0.1179 (0.0% today; record-out 13/35
+            prediction alpha_s(M_Z) = 0.11790 (0.11 sigma today; record-out 13/35
             lands 77% off, two-records 5/43 negative). A future
             world-average alpha_s pulling > 3 sigma falsifies UB's
             placement GIVEN the banked chain (horizon counts, one-loop
@@ -1990,7 +1990,7 @@ def check_UB_usage_billing_adopted():
             "whose structure constitutes its canonical evaluator. NOT derived: nine audits "
             "established every route relocates it; the surviving constructions provably "
             "coincide on the Delta = 1 class. FALSIFIER SURFACE, honestly priced: (F-a) THE "
-            "live falsifier -- forward alpha_s = 0.1179 (0.0%; rivals 77% off / negative; > 3 "
+            "live falsifier -- forward alpha_s = 0.11790 (0.11 sigma; rivals 77% off / negative; > 3 "
             "sigma pull falsifies UB's placement given the banked chain); (F-b) Meissner "
             "polarity-RETRODICTION; (F-c) consistency bench; (F-d) structural (a second S1-S3 "
             "construction diverging from alpha = gamma reopens the fork). CASCADE AS RULED, "

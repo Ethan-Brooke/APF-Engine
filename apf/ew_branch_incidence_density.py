@@ -146,7 +146,7 @@ def check_T_ew_branch_incidence_density_geometry_P():
               "(A2 canonical stiffness + unit incidence drive). [P_structural], tree value, "
               "unreduced-Planck convention; not all-orders physical-final."),
         tier=4,
-        epistemic='P',
+        epistemic='P_structural',
         summary=("Branch cone(dq) incidence density 12/7 (denominator 7 = K3 additivity over "
                  "disjoint supports; numerator 12 = gauge-symmetric incidences). Lift WITNESSED "
                  "by banked E_rec: uniform-mode stiffness = E_rec per-node diagonal K_ii "

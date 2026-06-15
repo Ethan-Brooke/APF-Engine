@@ -35,8 +35,8 @@ THE PREDICTION -- alpha_s(M_Z) from zero measured coupling.
 With three derived capacity facts -- the crossing coupling (C_total/6)ln(d_eff), the weak mixing angle
 sin^2theta_W = 3/13 (Paper 18), and the abelian capacity count 1/alpha_Y(M_cross) = C_total -- the
 running distance is pinned and alpha_s(M_Z) is forced:
-    alpha_s(M_Z) = 0.11790   (measured 0.1179; 0.00%), with 1/alpha_2(M_Z) = 29.586 (measured 29.59).
-No measured coupling enters anywhere. The 0.00% match is the validation of the rank-1 capacity-count
+    alpha_s(M_Z) = 0.11790   (measured 0.1180; 0.11 sigma), with 1/alpha_2(M_Z) = 29.586 (measured 29.58).
+No measured coupling enters anywhere. The 0.11-sigma consistency is the validation of the rank-1 capacity-count
 step, exactly as the 25.6 ppm match validated the non-abelian crossing coupling (L_crossing_entropy).
 Crucially this is FORWARD: 1/alpha_Y = C_total is stated from the rank-1 structure, independent of
 alpha_s, and alpha_s comes out as the prediction -- not the circular relabeling (deriving 61 FROM
@@ -51,7 +51,7 @@ absolute Planck magnitude (dimensional, irreducible by dimensional analysis). L_
 
 [P_structural] -- a newly proposed structural principle (rank-1 abelian resolution = capacity count),
 at the same grade and rigor level as L_coupling_capacity_id, validated by the zero-input alpha_s
-prediction to 0.00%. No measured coupling consumed. Supersedes the v24.3.191 m=0 no-go.
+prediction consistent to 0.11 sigma. No measured coupling consumed. Supersedes the v24.3.191 m=0 no-go.
 """
 from __future__ import annotations
 
@@ -115,10 +115,10 @@ def check_T_abelian_coupling_fixed_by_rank1_capacity_count_P():
 
     # the forward prediction: alpha_s from zero measured coupling
     alpha_s, inv_a2, t = _alpha_s_forward()
-    check(abs(alpha_s - 0.1179) / 0.1179 < 2e-3,
-          f"PREDICTION (zero measured input): alpha_s(M_Z) = {alpha_s:.5f} vs measured 0.1179 (0.00%)")
-    check(abs(inv_a2 - 29.59) < 0.1,
-          f"1/alpha_2(M_Z) = {inv_a2:.3f} vs measured 29.59 (forward, consistent)")
+    check(abs(alpha_s - 0.1180) / 0.1180 < 2e-3,
+          f"PREDICTION (zero measured input): alpha_s(M_Z) = {alpha_s:.5f} vs measured 0.1180 (0.11 sigma)")
+    check(abs(inv_a2 - 29.58) < 0.1,
+          f"1/alpha_2(M_Z) = {inv_a2:.3f} vs measured 29.58 (forward, consistent)")
 
     # honest flags
     check(EXPORT_FLAGS["Export_abelian_uses_measured_coupling_P"] == 0,
@@ -134,7 +134,7 @@ def check_T_abelian_coupling_fixed_by_rank1_capacity_count_P():
               "by the m=0 rank-1 collapse -- 1/alpha_Y(M_cross) = S_dS/sigma = C_total = 61 (the abelian "
               "single mode counts capacity CHANNELS rather than resolving sigma-entropy per mode as the "
               "non-abelian rank-2 sectors do). With the derived crossing coupling and sin^2theta_W=3/13 "
-              "this PREDICTS alpha_s(M_Z) = 0.1179 to 0.00% from zero measured coupling. The gauge "
+              "this PREDICTS alpha_s(M_Z) = 0.11790, consistent with the PDG-2024 world average 0.1180(9) to 0.11 sigma, from zero measured coupling. The gauge "
               "sector closes to one input (Planck magnitude). Supersedes the v24.3.191 m=0 no-go "
               "[P]: gauge exhaustiveness closed v24.3.215 (L_reading_profile_blind); inherits only the T20 "
               "coupling-information correspondence, shared with the non-abelian 1/alpha_cross=47.02 [P]"),
@@ -153,17 +153,17 @@ def check_T_abelian_coupling_fixed_by_rank1_capacity_count_P():
             "second entropy scale, so it respects L_sigma_intensive; it is the same level of structural "
             "argument as L_coupling_capacity_id (banked [P]). With the derived crossing coupling and the "
             "derived sin^2theta_W=3/13, 1/alpha_Y=C_total pins the running distance and predicts "
-            "alpha_s(M_Z)=0.11790 (measured 0.1179, 0.00%) and 1/alpha_2(M_Z)=29.586 -- FORWARD, with no "
+            "alpha_s(M_Z)=0.11790 (measured 0.1180, 0.11 sigma) and 1/alpha_2(M_Z)=29.586 -- FORWARD, with no "
             "measured coupling anywhere (alpha_s is the output, not the input, so this is not the "
-            "circular relabeling the earlier reading refused). The 0.00% match validates the rank-1 step "
-            "as the 25.6 ppm match validated the non-abelian crossing. GRADE [P] v24.3.215 (the no-third-reading exhaustiveness is now closed): every numerical input below is banked [P], and the assembly exhaustiveness step is closed by L_reading_profile_blind. The couplings at M_cross read the de Sitter horizon S_dS (L_crossing_entropy [P]); sigma=S_dS/C_total is the unique intensive quantum (L_sigma_intensive [P]); rank-2 sectors read S_dS smeared as B*sigma=S_dS/6 via the fixed-point Fisher equilibrium (L_coupling_capacity_id [P]); the abelian competition Gram A is rank-1 (det A=m=0, exact), and a rank-1 Gram is a single collective mode (L_singlet_Gram [P]) with no fixed point / no equilibrium to distribute over modes, so the only reading of S_dS at the unique quantum sigma is the bare count S_dS/sigma=C_total=61. The rank-1 count-reading is the structural COMPLEMENT of L_coupling_capacity_id's rank-2 sigma-reading, not a new principle; the one composition assumption is that the two readings (modes*sigma vs S_dS/sigma) are exhaustive, forced by elimination since sigma is the unique intensive scale. The one open inference -- that the rank-1 structure resolves the WHOLE horizon S_dS (full support), not a fraction -- is structurally proved by T_gauge_reading_dichotomy [P] and L_abelian_no_ledger_channel_structure [P] (the abelian's rank-1 Gram and complement-tiling beta single out no ledger channel). The dichotomy's no-third-reading EXHAUSTIVENESS (that running and uniform are the only gauge readings) is now CLOSED by L_reading_profile_blind [P]: an additive resolved-distinction reading over the uniform-measure ledger is trace-only, so the non-uniform diag(Y) cannot enter and a gauge coupling's resolution indicator has exactly two admissible traces. So the grade is [P], at the same parity as L_coupling_capacity_id (the shared T20 correspondence), validated by the alpha_s prediction to 0.00%. CONSEQUENCE: every gauge coupling "
+            "circular relabeling the earlier reading refused). The 0.11-sigma consistency validates the rank-1 step "
+            "as the 25.6 ppm match validated the non-abelian crossing. GRADE [P] v24.3.215 (the no-third-reading exhaustiveness is now closed): every numerical input below is banked [P], and the assembly exhaustiveness step is closed by L_reading_profile_blind. The couplings at M_cross read the de Sitter horizon S_dS (L_crossing_entropy [P]); sigma=S_dS/C_total is the unique intensive quantum (L_sigma_intensive [P]); rank-2 sectors read S_dS smeared as B*sigma=S_dS/6 via the fixed-point Fisher equilibrium (L_coupling_capacity_id [P]); the abelian competition Gram A is rank-1 (det A=m=0, exact), and a rank-1 Gram is a single collective mode (L_singlet_Gram [P]) with no fixed point / no equilibrium to distribute over modes, so the only reading of S_dS at the unique quantum sigma is the bare count S_dS/sigma=C_total=61. The rank-1 count-reading is the structural COMPLEMENT of L_coupling_capacity_id's rank-2 sigma-reading, not a new principle; the one composition assumption is that the two readings (modes*sigma vs S_dS/sigma) are exhaustive, forced by elimination since sigma is the unique intensive scale. The one open inference -- that the rank-1 structure resolves the WHOLE horizon S_dS (full support), not a fraction -- is structurally proved by T_gauge_reading_dichotomy [P] and L_abelian_no_ledger_channel_structure [P] (the abelian's rank-1 Gram and complement-tiling beta single out no ledger channel). The dichotomy's no-third-reading EXHAUSTIVENESS (that running and uniform are the only gauge readings) is now CLOSED by L_reading_profile_blind [P]: an additive resolved-distinction reading over the uniform-measure ledger is trace-only, so the non-uniform diag(Y) cannot enter and a gauge coupling's resolution indicator has exactly two admissible traces. So the grade is [P], at the same parity as L_coupling_capacity_id (the shared T20 correspondence), validated by the alpha_s prediction (0.11 sigma). CONSEQUENCE: every gauge coupling "
             "is a capacity output; the residual dimensionless input is eliminated; the framework's "
             "parameter count drops to ONE (the Planck magnitude); L_alpha_em's 'one free parameter + two "
             "predictions' becomes 'zero free parameters + three predictions'."
         ),
         key_result=(
             "1/alpha_Y(M_cross) = S_dS/sigma = C_total = 61 (rank-1 abelian counts capacity channels). "
-            "Predicts alpha_s(M_Z)=0.1179 to 0.00% from zero measured coupling. Gauge sector closes to "
+            "Predicts alpha_s(M_Z)=0.11790, consistent with PDG-2024 0.1180(9) to 0.11 sigma, from zero measured coupling. Gauge sector closes to "
             "ONE input (Planck magnitude). Supersedes the v24.3.191 m=0 no-go."
         ),
         dependencies=['L_AF_capacity', 'L_crossing_entropy', 'L_coupling_capacity_id',
@@ -174,10 +174,10 @@ def check_T_abelian_coupling_fixed_by_rank1_capacity_count_P():
             rank1="U(1) m=0 -> competition matrix rank 1 (single undifferentiated mode)",
             non_abelian="rank 2 resolves entropy: 1/alpha_cross = (C_total/6)ln(d_eff) = S_dS/6 = 47.02",
             abelian="rank 1 counts capacity: 1/alpha_Y = S_dS/sigma = C_total = 61 (channel count)",
-            prediction=f"alpha_s(M_Z) = {_alpha_s_forward()[0]:.5f} (measured 0.1179, 0.00%, zero input)",
+            prediction=f"alpha_s(M_Z) = {_alpha_s_forward()[0]:.5f} (measured 0.1180, 0.11 sigma, zero input)",
             consequence="gauge sector closes to ONE input (Planck magnitude); alpha_s a prediction",
             supersedes="v24.3.191 m=0 no-go (m=0 fixes the coupling, not leaves it free)",
-            rigor="structural argument at the L_coupling_capacity_id level; validated by the 0.00% alpha_s prediction",
+            rigor="structural argument at the L_coupling_capacity_id level; validated by the alpha_s prediction (0.11 sigma)",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

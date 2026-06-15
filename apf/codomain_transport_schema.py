@@ -603,7 +603,7 @@ def alpha_s_m_z_transport() -> CodomainTransport:
     return CodomainTransport(
         name='alpha_s_m_z',
         source_codomain='APF forward prediction from the two derived couplings (1/alpha_cross=47.02 [P], 1/alpha_Y=61 [P]) + sin^2theta_W=3/13 [P]',
-        target_codomain='physical alpha_s(M_Z) MSbar (PDG 0.1179)',
+        target_codomain='physical alpha_s(M_Z) MSbar (PDG-2024 0.1180)',
         transport_map_name='capacity_couplings_plus_3_13_RG_to_alpha_s_M_Z',
         status=TRANSPORT_CLOSED,
         certificate=TransportCertificate(
@@ -615,7 +615,7 @@ def alpha_s_m_z_transport() -> CodomainTransport:
             subtraction_rule=_slot('subtraction_rule', SLOT_CLOSED, 'MSbar'),
             finite_part_rule=_slot('finite_part_rule', SLOT_CLOSED, 'forward prediction, fully determined'),
             anomalous_dimension_rule=_slot('anomalous_dimension_rule', SLOT_EXTERNAL, 'QCD beta function'),
-            uncertainty_pushforward=_slot('uncertainty_pushforward', SLOT_CLOSED, '0.00% vs PDG 0.1179 (forward, world-average precision)'),
+            uncertainty_pushforward=_slot('uncertainty_pushforward', SLOT_CLOSED, '0.11 sigma vs PDG-2024 0.1180 (forward, well within world-average precision)'),
         ),
         forbidden_inputs=frozenset({
             'target_alpha_s_measured', 'observed_alpha_s_M_Z_as_input', 'target_fitted_coupling',
@@ -942,7 +942,7 @@ def check_T_codomain_transport_status_classification():
         'dune_juno_neutrino_hierarchy': TRANSPORT_WAITING,
         'muon_g_minus_2': TRANSPORT_UPSTREAM,
         'inv_alpha_cross': TRANSPORT_CLOSED,           # gauge export-candidate, 25.6 ppm
-        'alpha_s_m_z': TRANSPORT_CLOSED,               # gauge export-candidate, 0.00% forward from zero measured coupling
+        'alpha_s_m_z': TRANSPORT_CLOSED,               # gauge export-candidate, 0.11 sigma forward (vs PDG-2024) from zero measured coupling
         'ew_vev_v_h': TRANSPORT_CLOSED,                # imported-one-route via the one Planck anchor, -0.003%
         'delta_alpha_leptonic': TRANSPORT_CLOSED,      # hadronic export-candidate, first-principles ~0%
         'delta_alpha_hadronic': TRANSPORT_PARTIAL,     # pQCD slice 75.6% [P] + NP bulk external by design

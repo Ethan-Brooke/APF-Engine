@@ -116,7 +116,7 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
             "this fixes the abelian RUNNING RATE against capacity; it does NOT fix the absolute U(1) "
             "hypercharge COUPLING, which remains the gauge sector's one residual dimensionless input. "
             "The numerical observation 1/alpha_Y(M_cross) approx C_total = 61 (which, with the derived "
-            "crossing coupling and sin^2theta_W = 3/13, would predict alpha_s(M_Z) to 0.00% and close "
+            "crossing coupling and sin^2theta_W = 3/13, would predict alpha_s(M_Z) to 0.11 sigma (vs PDG-2024) and close "
             "that input) is back-solved from the measured alpha_s and is NOT a capacity output -- held "
             "[C] in the gauge-closure research note, not banked here. No measured coupling consumed."
         ),
@@ -133,7 +133,7 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
             independence="abelian 6|b_Y| increases with n, non-abelian decrease; coincide only at n=3",
             tiling="6(|b_3|+|b_2|+|b_Y|) = 42+19+41 = 102 = d_eff (non-abelian pair = C_total=61)",
             scope="running RATE fixed; absolute hypercharge coupling NOT fixed (residual input)",
-            held_conjecture="1/alpha_Y(M_cross)=C_total -> alpha_s to 0.00%; [C], data-back-solved, not derived",
+            held_conjecture="1/alpha_Y(M_cross)=C_total -> alpha_s to 0.11 sigma (vs PDG-2024); [C], data-back-solved, not derived",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

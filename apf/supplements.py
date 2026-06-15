@@ -8628,7 +8628,7 @@ def check_L_alpha_em():
 
     Experimental input: α_s(M_Z) = 0.1179 (one measurement, one output).
 
-    Numerical result: 1/α_em(M_Z) = 128.21  (experiment: 127.951, error 0.20%).
+    Numerical result: 1/α_em(M_Z) = 128.21  (experiment: PDG-2024 127.930, error 0.22%).
 
     DERIVATION (5 steps):
 
@@ -8750,7 +8750,7 @@ def check_L_alpha_em():
     # Step 4: EW relation α_em = α₂ × sin²θ_W  →  1/α_em = (13/3) × 1/α₂
     inv_sin2 = float(Fraction(13, 3))   # 1 / sin²θ_W = 13/3
     inv_alpha_em_MZ = inv_alpha_2 * inv_sin2
-    exp_inv_alpha_em = 127.951
+    exp_inv_alpha_em = 127.930
     err_pct = abs(inv_alpha_em_MZ - exp_inv_alpha_em) / exp_inv_alpha_em * 100
     # ── Mirror symmetry verification ──────────────────────────────────────
     # Recomputing 1/α_s via the L_alpha_s formula using the above 1/α₂:
@@ -8790,7 +8790,7 @@ def check_L_alpha_em():
             '|b₂|/|b₃|=C_mat/C_vac [L_beta_capacity] + '
             'one experimental input: α_s(M_Z)=0.1179. '
             f'Result: 1/α_em(M_Z) = {inv_alpha_em_MZ:.4f} '
-            f'(experiment 127.951, error {err_pct:.2f}%). '
+            f'(experiment 127.930, error {err_pct:.2f}%). '
             'Key step: M_cross cancels when taking ratio of beta functions '
             '(|b₂|/|b₃| = 19/42 exactly, no free scale). '
             'MIRROR of L_alpha_s: same 2-constraint system, opposite input/output. '

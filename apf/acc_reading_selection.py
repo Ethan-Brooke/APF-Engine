@@ -323,7 +323,7 @@ def check_T_gauge_reading_dichotomy():
             "ledger, and reading |b_Y| running modes at sigma each is itself a fixed-point Fisher-"
             "equilibrium construction unavailable to rank-1. The two admissible gauge readings (running "
             "47.02, uniform 61) are distinct; their EXHAUSTIVENESS (no third functional form) is the open entailment, not proved. "
-            "GRADE [P_structural], validated by the alpha_s(M_Z)=0.1179 prediction (0.00%) at L_coupling_capacity_id parity: composed from L_equip + L_sigma_intensive + L_coupling_capacity_id + "
+            "GRADE [P_structural], validated by the alpha_s(M_Z)=0.11790 prediction (0.11 sigma vs PDG-2024 0.1180(9)) at L_coupling_capacity_id parity: composed from L_equip + L_sigma_intensive + L_coupling_capacity_id + "
             "L_crossing_entropy + L_beta_capacity (all [P]) and the elementary permutation-invariance "
             "lemma, with the rank-1 no-fixed-point fact banked. This closes the abelian "
             "support-uniqueness residual that held T_abelian_coupling_fixed_by_rank1_capacity_count at "
@@ -751,7 +751,7 @@ def check_T_gauge_value_chain_is_P():
     SCOPE. This certifies the VALUE CHAIN is [P] -- the quantitative reading rule that sits ABOVE the
     constitutive floor. It does NOT derive the constitutive correspondence that 1/alpha reads the
     cost-ledger at all; that is the operational reading of FD3 under FD1-FD2 (the four-input declaration,
-    T_four_input_declaration [P_structural]), tested by the alpha_s (0.00%) and crossing (25.6 ppm)
+    T_four_input_declaration [P_structural]), tested by the alpha_s (0.11 sigma) and crossing (25.6 ppm)
     predictions, not re-derived here. Given that floor, every quantitative link is [P], so the per-mode
     resolution being sigma (not some delta != sigma) is forced by L_sigma_intensive's uniqueness, and the
     values follow. The prediction-validation attaches to the floor, not to a free quantitative parameter --
@@ -808,7 +808,7 @@ def check_T_gauge_value_chain_is_P():
             "dichotomy [P], closed this cycle via profile-blindness). GRADE [P]: a composition of bank-[P] links "
             "plus exact arithmetic, at the same grade as its links. SCOPE: certifies the VALUE CHAIN, not the "
             "constitutive correspondence that 1/alpha reads the ledger -- that is the operational reading of FD3 "
-            "under FD1-FD2 (T_four_input_declaration [P_structural]), tested by the alpha_s (0.00%) / crossing "
+            "under FD1-FD2 (T_four_input_declaration [P_structural]), tested by the alpha_s (0.11 sigma) / crossing "
             "(25.6 ppm) predictions. The prediction-validation attaches to that floor; there is no free "
             "quantitative parameter above it. No measured target consumed."
         ),

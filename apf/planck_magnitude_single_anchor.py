@@ -206,8 +206,10 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
     fermions -- is certified to ride the ONE Planck anchor; the framework sits at its one-input
     theoretical minimum (the magnitude itself un-derivable, the no-go of
     T_planck_magnitude_single_dimensional_anchor). The lone remaining un-collapsed ratio is
-    M_cross / M_Pl -- the same quantity as the sin^2theta_W -> [P] gate, likely the neutrino-seesaw
-    scale M_R -- named as the honest open frontier, not claimed.
+    M_cross / M_Pl -- the same quantity as the sin^2theta_W -> [P] gate (the crossing scale M_cross)
+    -- named as the honest open frontier, not claimed. (NB: M_cross is distinct from the banked
+    LOW-scale seesaw M_R = [31, 60, 174] GeV of majorana.py; no high-scale seesaw identification
+    is claimed here.)
 
     [P_structural]; no measured target consumed.
 
@@ -251,7 +253,7 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
               "is no exception, dissolving the 'top mass is a new scale' loophole; Lambda_QCD rides "
               "the same anchor by dimensional transmutation (v24.3.188). Every SM mass scale rides "
               "the ONE Planck anchor -- the one-input theoretical minimum. Lone open ratio: "
-              "M_cross/M_Pl (the sin^2theta_W->[P] gate; likely neutrino-seesaw M_R)"),
+              "M_cross/M_Pl (the sin^2theta_W->[P] gate; the crossing scale)"),
         tier=4,
         epistemic='P_structural',
         summary=(
@@ -266,8 +268,9 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
             "Lambda_QCD, charged fermions) is certified to ride the ONE Planck anchor, and the "
             "framework sits at its one-input theoretical minimum -- the magnitude itself un-derivable "
             "by the no-go of T_planck_magnitude_single_dimensional_anchor. The lone remaining "
-            "un-collapsed ratio is M_cross/M_Pl, the same quantity as the sin^2theta_W->[P] gate and "
-            "likely the neutrino-seesaw scale M_R, named here as the honest open frontier."
+            "un-collapsed ratio is M_cross/M_Pl, the same quantity as the sin^2theta_W->[P] gate, "
+            "named here as the honest open frontier (distinct from the banked low-scale seesaw "
+            "M_R=[31,60,174] GeV of majorana.py; no high-scale seesaw identification is claimed)."
         ),
         key_result=(
             "Fermion + strong sectors add NO dimensional anchor beyond M_Pl: m_f = y_f*v_H "
@@ -283,7 +286,7 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
             top_mass="m_t = y_t * v_H/sqrt(2), y_t=0.991 -> ~172.5 GeV (not a new scale)",
             strong="Lambda_QCD rides the anchor by dimensional transmutation (v24.3.188)",
             all_sm_scales="EW vev + Lambda + Lambda_QCD + charged fermions ride ONE anchor",
-            lone_open_ratio="M_cross/M_Pl (sin^2theta_W->[P] gate; likely neutrino-seesaw M_R)",
+            lone_open_ratio="M_cross/M_Pl (sin^2theta_W->[P] gate; the crossing scale)",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

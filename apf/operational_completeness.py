@@ -68,7 +68,7 @@ applied) decomposed it into five steps: three are theorems executed in the third
 check below (action-locality derived; removals-only WLOG; cross-interface composition
 dissolved into the product), and two are consumptions of canonical Paper 0 text.
 THE PRINCIPAL LANDED THE PAYMENT (2026-06-09 land-all-three ruling): Paper 0 v6.2.27
-sec:perturbations loads table now carries row 6 (operational completeness,
+sec:perturbations prose now carries row 6 (operational completeness,
 removals-only), row 7a (threat-totality), and row 7b (defense-billing locus), plus
 falsifier (iv). The license basis of this module's clause thereby upgrades from
 countermodel-prose sandwich to canonical-definition citation with named published
@@ -78,7 +78,7 @@ THE [P]-PROMOTION (2026-06-09, dedicated fresh-context grade audit; verdict appe
 to the translation-gate reference note): PROMOTE all three checks to [P], conditions
 applied in this version. Controlling precedent: check_L_epsilon_star carries bare [P]
 over the adopted-with-falsifier structural conditions MD/BW, and check_P4_IMP carries
-[P] over zero-translation loads-table row consumption -- '[P] = proved within the
+[P] over zero-translation sec:perturbations row consumption -- '[P] = proved within the
 canonically adopted basis, adopted commitments as named dependencies' is what the tag
 has always meant in this bank. Conditions: (1) the clause narrowed to REMOVALS (row 6's
 actual license); (2) the closure identity scoped to the record-support-closed class
@@ -286,12 +286,12 @@ def check_L_operational_completeness():
          the clause does NOT overshoot L_loc).
 
     GRADE [P] (2026-06-09 [P]-promotion audit): lower bound = Paper 0 v6.2.27
-    sec:perturbations loads-table row 6 (operational completeness, removals-only) --
+    sec:perturbations row 6 (operational completeness, removals-only) --
     a canonical published definitional commitment consumed at zero translation, with
     falsifier (iv) exposure; the availability reading is internal to the row's landed
     text ("consumed as a lower bound on availability"). Upper bound = L_loc [P] +
     L_irr [P] (check-4 simultaneity). Precedent class: check_L_epsilon_star [P] over
-    the adopted structural conditions MD/BW; check_P4_IMP [P] over loads-table row 1.
+    the adopted structural conditions MD/BW; check_P4_IMP [P] over sec:perturbations row 1.
     The countermodel sandwich (CM1/CM2 executable bodies) is retained as
     corroboration, no longer the license. Scope: removals of Gamma-billed lines
     within global admissibility; additions/general modifications not claimed.
@@ -949,7 +949,7 @@ def check_L_recoverability_is_orbit_reachability():
             "(field 2). Three translation steps are theorems: action-locality (unfused flips "
             "bill home-only, fused flips bill >= 2 -- falsifier (iii)'s object, field 3), "
             "removals-only WLOG (field 4), cross-interface composition via the product "
-            "(field 5). The text consumptions are Paper 0 v6.2.27 loads-table rows 6/7a/7b "
+            "(field 5). The text consumptions are Paper 0 v6.2.27 sec:perturbations rows 6/7a/7b "
             "(landed by the 2026-06-09 principal ruling) + the full-scope MD support condition, "
             "DERIVED from FD3 + MD + row 7b (field 6 -- the translation-gate audit's central "
             "find). GRADE [P] per the 2026-06-09 [P]-promotion audit. SCOPE NOTE: the >= 3 "
@@ -1441,7 +1441,7 @@ def check_T_ledger_rent_excluded():
     column unchanged -- theta 0 / condensate 1 / colour 0; the corpus's
     "hold available" vocabulary is this theorem in prose form).
 
-    GRADE [P]: Paper 0 v6.2.29 sec:perturbations loads-table row 9 (cost-kind
+    GRADE [P]: Paper 0 v6.2.29 sec:perturbations row 9 (cost-kind
     dichotomy, no standing rent) -- a canonical published definitional
     commitment consumed at zero translation, with falsifier (vi) exposure --
     over A1 + the eternalist commitment + the Paper 3 state-function sentence
@@ -1633,7 +1633,7 @@ def check_T_transition_log_residue_readable():
     canonical row delivers the pool coordinate, and this check licenses no
     billing-placement claim.
 
-    GRADE [P]: Paper 0 v6.2.30 loads-table row 10 (observer-reading: reading
+    GRADE [P]: Paper 0 v6.2.30 sec:perturbations row 10 (observer-reading: reading
     totality over held content, the converse completion of storage-totality)
     consumed at zero translation, with falsifier (vii) exposure -- over
     T_ledger_rent_excluded [P] + L_recoverability_is_orbit_reachability [P] +

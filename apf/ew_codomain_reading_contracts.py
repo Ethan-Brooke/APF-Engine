@@ -175,7 +175,7 @@ DOMAIN_ABELIAN = CodomainReadingContract(
             "the temptation, mid-session, to DERIVE the abelian coupling as 60.75 via the record"),
         ForbiddenSwap(
             "census-as-physical-without-C",
-            "the census 61 is [P]; its identification WITH the physical crossing coupling is held [C] (data-back-solved); the alpha_s=0.00% headline depends on it",
+            "the census 61 is [P]; its identification WITH the physical crossing coupling is held [C] (data-back-solved); the alpha_s 0.11-sigma headline depends on it",
             "grading alpha_s(M_Z)=0.1179 as a clean [P] prediction without the [C] running-boundary caveat"),
     }),
     home_value_check=lambda: _val_61_census() and _val_60_75_record(),

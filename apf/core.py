@@ -4842,7 +4842,7 @@ def check_T_no_IJC_no_noncommutativity():
     return _result(
         name='T_no_IJC_no_noncommutativity: spectator-countermodel falsification test [P_structural]',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural',
         summary=(
             'Spectator countermodel: V = M_d1 (+) M_d2 (+) Pi with Pi inert. '
             'A1 + MD + A2 + BW all PASS. Pair {d1, d2} in branch (Sep) of the '
@@ -5020,7 +5020,7 @@ def check_T_IJC_dichotomy():
     return _result(
         name='T_IJC_dichotomy: the IJC Dichotomy Theorem on test interfaces [P_structural]',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural',
         summary=(
             'Theorem 1 of the IJC reference doc: for any pair {d1, d2} of '
             'jointly meaningful distinctions at an interface, exactly one of '
@@ -5144,7 +5144,7 @@ def check_L_MD_extension():
     return _result(
         name='L_MD_extension: MD extends to threat-defense acts (Route A) [P_structural]',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural',
         summary=(
             'Lemma 1 of the IJC reference doc: any nonempty perturbation '
             'class T admitting a minimal defense act delta_T has cost '
@@ -5304,7 +5304,7 @@ def check_L_threat_substrate_realization():
     return _result(
         name='L_threat_substrate_realization: branch-(IJC) ⇒ W_{12} ⊄ M_d1 (+) M_d2 [P_structural]',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural',
         summary=(
             'Lemma 2 of the IJC reference doc: under sharp admissibility at a '
             'finite-capacity interface satisfying A1+MD+A2+BW, if a pair '
