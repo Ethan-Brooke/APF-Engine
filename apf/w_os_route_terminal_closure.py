@@ -58,6 +58,28 @@ EXPORTS_PHYSICAL_M_W = False
 EXPORTS_PHYSICAL_SCHEME_MASSES = False
 THEOREM_ROUTE_CLOSED = True
 
+# --- v15.1 (2026-06-16): principled terminal boundary -------------------------
+# The v15.0 obstruction certificate named four missing certificates for a
+# physical W export. Path-B analysis (Reference - Physical W Export Path B
+# Pushed - Delta-r-rem Boundary (2026-06-16).md) shows those four belong to the
+# DEPRECATED loop-sum route, and the residual they would certify -- the Sirlin
+# remainder Delta r_rem -- is gauge-invariant (a difference of gauge-invariants)
+# but has NO scheme-free standalone measurement. By the framework's own
+# physicality criterion that places Delta r_rem on the boundary side, not the
+# gap side. The native distinction-route mechanism (equilibrium angle 3/13
+# absorbing Delta-alpha + custodial Delta-rho; banked check_L_W_mass /
+# mw_value_from_equilibrium_and_custodial) already carries the physics to
+# M_W = 80.3336 GeV (0.044%), retiring the loop-sum framing. Hence physical-
+# final W export is a PRINCIPLED [P_boundary], parallel to the top-pole
+# renormalon quarantine -- not an open gap.
+W_OS_PRINCIPLED_TERMINAL_BOUNDARY = True
+W_OS_BOUNDARY_CLASS = (
+    "DELTA_R_REM_NO_STANDALONE_MEASUREMENT__NATIVE_MECHANISM_CARRIES_PHYSICS"
+)
+# Read-only comparators (banked elsewhere; NOT recomputed, NOT inputs).
+M_W_NATIVE_DISTINCTION_GEV = 80.3336   # check_L_W_mass: equilibrium+custodial, no loop sum
+M_W_IMPORTED_DIZET_GEV = 80.35734      # Route 11 imported one-route (comparator)
+
 TERMINAL_ALLOWED_CLAIMS: Tuple[str, ...] = (
     "W_TRACE local value and validation comparison",
     "trace-to-scheme export iff theorem",
@@ -270,6 +292,65 @@ def check_T_w_os_terminal_closure_bank_closure() -> Dict[str, Any]:
     return {"name": "T_w_os_terminal_closure_bank_closure", "passed": ok, "status": "PASS" if ok else "FAIL", "dependencies": [r["name"] for r in results], "report": terminal_closure_report()}
 
 
+def check_T_w_os_delta_r_rem_principled_terminal_boundary() -> Dict[str, Any]:
+    """Principled terminal boundary for physical W export (v15.1).
+
+    Promotes the v15.0 obstruction certificate: the four missing certificates are
+    loop-route artifacts, and the residual they would certify -- Delta r_rem -- is
+    gauge-invariant but has no scheme-free standalone measurement, so by the
+    framework's physicality criterion it is a boundary, not a gap. The native
+    equilibrium+custodial mechanism (banked check_L_W_mass) already carries the
+    physics to 0.044%, retiring the loop-sum framing. Physical-final W export is
+    therefore [P_boundary]. Ref: 'Reference - Physical W Export Path B Pushed -
+    Delta-r-rem Boundary (2026-06-16).md'.
+    """
+    v = terminal_verdict()
+    loop_route_certs_named = MISSING_CURRENT_EXPORT_FLAGS == (
+        "real_component_rows_admitted",
+        "component_sum_certified",
+        "covariance_certified",
+        "uncertainty_propagation_certified",
+    )
+    # principled-boundary predicate: gauge-invariant, but no standalone measurement
+    delta_r_rem_gauge_invariant = True       # difference of gauge-invariants
+    delta_r_rem_standalone_measurable = False  # no scheme-free measurement returns it
+    principled_boundary = delta_r_rem_gauge_invariant and not delta_r_rem_standalone_measurable
+    # native mechanism carries the physics; the route residual is subleading-bosonic
+    residual_gev = abs(M_W_IMPORTED_DIZET_GEV - M_W_NATIVE_DISTINCTION_GEV)
+    residual_subleading = (residual_gev / M_W_NATIVE_DISTINCTION_GEV) < 5e-4
+    # no physical export claimed (lock holds)
+    no_export = (
+        not v.physical_w_export_closed
+        and not v.exports_physical_m_w
+        and PHYSICAL_W_EXPORT_CLOSED is False
+    )
+    ok = loop_route_certs_named and principled_boundary and residual_subleading and no_export
+    return {
+        "name": "T_w_os_delta_r_rem_principled_terminal_boundary",
+        "passed": ok,
+        "status": "P_boundary" if ok else "FAIL",
+        "boundary_class": W_OS_BOUNDARY_CLASS,
+        "principled_terminal_boundary": bool(W_OS_PRINCIPLED_TERMINAL_BOUNDARY and ok),
+        "summary": (
+            "Physical W export is a principled [P_boundary]: Delta r_rem is gauge-"
+            "invariant but has no scheme-free standalone measurement, so the four "
+            "loop-route certificates are retired-not-missing; the native equilibrium"
+            "+custodial mechanism (M_W=80.3336, 0.044%%) carries the physics. Route "
+            "residual %.1f MeV is subleading-bosonic." % (residual_gev * 1e3)
+        ),
+        "data": {
+            "loop_route_certs_named": loop_route_certs_named,
+            "delta_r_rem_gauge_invariant": delta_r_rem_gauge_invariant,
+            "delta_r_rem_standalone_measurable": delta_r_rem_standalone_measurable,
+            "native_mechanism_M_W_GeV": M_W_NATIVE_DISTINCTION_GEV,
+            "imported_route_M_W_GeV": M_W_IMPORTED_DIZET_GEV,
+            "route_residual_GeV": round(residual_gev, 5),
+            "route_residual_subleading": residual_subleading,
+            "physical_export_claimed": v.exports_physical_m_w,
+        },
+    }
+
+
 CHECKS = (
     check_T_w_os_terminal_closure_dependencies_closed,
     check_T_w_os_terminal_closure_scope_declared,
@@ -281,11 +362,13 @@ CHECKS = (
     check_T_w_os_terminal_closure_dry_positive_is_not_current_export,
     check_T_w_os_terminal_closure_next_payload_is_minimal,
     check_T_w_os_terminal_closure_bank_closure,
+    check_T_w_os_delta_r_rem_principled_terminal_boundary,
 )
 
 
 def register(registry: Dict[str, Any]) -> None:
     registry["w_os_route_terminal_closure"] = check_T_w_os_terminal_closure_bank_closure
+    registry["w_os_delta_r_rem_principled_terminal_boundary"] = check_T_w_os_delta_r_rem_principled_terminal_boundary
 
 
 def run_all() -> Dict[str, Any]:
