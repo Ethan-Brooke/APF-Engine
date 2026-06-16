@@ -1,205 +1,154 @@
 # APF Orientation Guide — Claude Projects
 
-*This guide is written for an AI assistant (Claude) being set up to help with Admissibility Physics Framework research via Claude Projects.*
+*This guide is for an AI assistant being set up to help with Admissibility Physics Framework research through Claude Projects. It explains how to load the repository into a project, what you are working with, and the few rules that will bite you if you skip them.*
 
 ---
 
-## How to Load This Repository Into Claude Projects
+## Loading the repository into a Claude Project
 
-1. Go to claude.ai → Projects → New Project
-2. Name it "APF Research" (or similar)
-3. Upload all files in this repository to the project knowledge base:
-   - All `.py` files from `apf/`
-   - All `.tex` files from `papers/`
-   - This guide, `README.md`, and `SETUP.md`
-4. Optionally add session transcripts from past work (helps Claude maintain continuity across sessions)
+1. Go to claude.ai → Projects → New Project, and name it "APF Research" (or similar).
+2. Add the repository files to the project knowledge base. The high-value set is the `apf/` package, this guide, `README.md`, `SETUP.md`, and `CORE_PACKAGE_README.md` (the tight model-spine subset, for a limited file-count budget).
+3. Optionally add recent session transcripts. They help maintain continuity across conversations.
 
-Once loaded, Claude can search and reference these files in every conversation within the project.
+Once loaded, the assistant can search and reference these files in every conversation in the project. The codebase itself is the specification; the papers are prose guides to reading it.
 
 ---
 
-## What You Are Working With
+## What you are working with
 
-You are assisting with the **Admissibility Physics Framework (APF)**, a single-axiom derivation of quantum mechanics and the Standard Model authored by E.S. Brooke (Ethan). The central claim is that Hilbert space structure, the Born rule, gauge group SU(3)×SU(2)×U(1), fermion content, and 47+ quantitative predictions all follow from one axiom:
+You are assisting with the **Admissibility Physics Framework (APF)**, a single-primitive derivation of the quantum formalism and the Standard Model. The central claim is that complex Hilbert space, the Born rule, the gauge group SU(3) × SU(2) × U(1), the fermion content, and a few dozen quantitative predictions all follow from one primitive:
 
-> **A1:** Any physical distinction that can be maintained must be maintainable by a process with finite operational cost.
+> **A1:** At every causally connected region, the total enforcement cost of maintaining physical distinctions is bounded above by a finite capacity.
 
-This is not speculative — it is a formal mathematics program. Every result is either:
-- **[P] Proved** — derivable from A1 + two regularity inputs (MD, BW)
-- **[C] Conjecture** — stated precisely, not yet proved
-- **[RT] Red-team** — adversarial self-test that must pass to confirm no circular reasoning
+Three regularity conditions complete it, packaged as the **Principle of Least Enforcement Cost (PLEC)**: a positive cost floor (MD), argmin selection over the admissible set (A2), and a non-degenerate cost spectrum (BW). From these the framework forces the gauge group, three generations of 45 fermions, the rigid capacity ledger C_total = 61, sin²θ_W = 3/13 as a source value, Ω_Λ = 42/61, and the rest of the constants map — with zero free dimensionless parameters and one dimensional anchor (the Planck magnitude).
 
-The Python codebase (349 check functions) is the machine-verifiable companion to the papers. Every theorem in the LaTeX has a corresponding `check_` function.
+The Python codebase is the machine-verifiable companion. As of v24.3.249 it carries **3,745 bank-registered theorems across 422 typed modules**, every load-bearing claim traced to a named `check_` function, with exact rational arithmetic in the core.
 
 ---
 
-## The File Map You Need to Know
+## The single source of truth
 
-### Papers (read these first for context)
-| File | What it is |
-|---|---|
-| `papers/paper1/main.tex` | Paper 1: derives Hilbert space + quantum mechanics from A1 |
-| `papers/paper1/supplement.tex` | 71-page formal supplement with all proofs |
-| `papers/paper2/main.tex` | Paper 2: derives Standard Model gauge content + cosmology |
-| `papers/paper2/supplement.tex` | Paper 2 proofs |
-| `papers/paper13/main.tex` | TLS Concordance: precision prediction comparison |
-
-### Code (the verification backbone)
-| File | What it contains |
-|---|---|
-| `apf/core.py` | 48 checks — Paper 1 core. Start here. |
-| `apf/bank.py` | Theorem registry. `run_all()` runs everything. |
-| `apf/apf_utils.py` | Constants, utilities, DAG. Import from here. |
-| `apf/gauge.py` | Gauge sector (sin²θ_W, α_s, M_W, gauge group derivation) |
-| `apf/generations__8_.py` | Mass matrix, CKM, PMNS, neutrino masses (largest module) |
-| `apf/cosmology.py` | Ω_Λ, Ω_m, η_B, CMB observables |
-| `apf/gravity.py` | Einstein equations, black hole thermodynamics, inflation |
-| `apf/majorana.py` | Seesaw mechanism, M_R spectrum |
-| `apf/red_team.py` | 19 adversarial checks — look here for known weak points |
-| `apf/supplements.py` | Extended lemma collection (73 checks) |
-| `apf/validation.py` | Full prediction catalog with experimental comparisons |
+For working instructions — file locations, conventions, working rules, the live bank state, and the startup/signoff procedures — the canonical file is `__APF Library/CLAUDE.md` on the project Drive. Read it at the start of any APF session. This guide orients a fresh assistant; `CLAUDE.md` governs the work. If anything here and there ever disagree, `CLAUDE.md` wins.
 
 ---
 
-## The Conceptual Architecture (Read This Before Diving Into Files)
+## Where the codebase lives, and the one rule that bites
 
-### The Single Axiom
-A1 says: enforcement capacity is finite. An "enforcement" is any physical process that maintains a distinction (a measurement, a constraint, a physical boundary). If you had infinite capacity you could maintain anything — but capacity is finite, so only certain distinctions are maintainable.
+On 2026-06-08 the codebase moved off Google Drive into a git repository. The science did not change; where the code lives, and how you save your work, did.
 
-From this: the set of maintainable states must have structure. APF derives what that structure must be.
-
-### The Five Layers
-
-**Layer 0 — Admissibility Geometry**  
-The foundational lemmas: `L_epsilon_star` (minimum enforcement cost), `L_NZ` (no-zero cost), `L_loc` (locality), `L_nc` (noncommutativity forced), `L_cost` (cost function uniqueness via Cauchy 1821), `L_irr` (irreducibility).
-
-**Layer I — Quantum Mechanics**  
-`T2`: enforcement geometry forces ℂ-Hilbert space (not ℝ or ℍ).  
-`T3`: noncommutativity of enforcement operators → quantum uncertainty.  
-`T_Born`: the Born rule is the unique enforcement-invariant probability assignment.  
-`T_Tsirelson`: Bell-inequality bound follows from enforcement budget constraints.
-
-**Layer II — Standard Model**  
-`Theorem_R`: three carrier requirements R1 (ternary/complex), R2 (chiral), R3 (abelian grading).  
-`L_gauge_template_uniqueness`: scans all 17 compact simple Lie algebras; only SU(3)×SU(2)×U(1) template survives.  
-`T_gauge`: cost optimization forces N_c = 3.  
-`T_field`: exactly 45 fermions with correct representations.  
-`L_count`: total enforcement cost C = 61 (rigid — changing any factor destroys all predictions).
-
-**Layer III — Mass and Mixing**  
-`L_Gram`, `T27c`: x = 1/2 (single-channel overlap).  
-`L_multiplicative_amplitude`: x^q suppression from independence (replaces FN mechanism).  
-`L_mass_from_capacity`: 11 quark/lepton masses from 2 anchors.  
-`T_CKM`, `T_PMNS`: mixing matrices from capacity geometry.
-
-**Layer IV — Cosmology**  
-`L_equip` (horizon equipartition) → density fractions.  
-`L_dark_budget` → Ω_DM, Ω_Λ, Ω_b.  
-`L_equation_of_state` → w₀ = −1 exact.
-
-### Key Design Decisions
-- **D-quotient**: the space of maintained distinctions is a quotient construction. This is a *definitional commitment*, not a no-hidden-variables axiom.
-- **κ = 2**: the enforcement multiplier κ = 2 is the framework's most important single number. `check_T_kappa()` derives it. If you find a gap here, it matters.
-- **C_total = 61**: the total enforcement cost is rigid. Adding or removing any Standard Model sector changes C and destroys the prediction chain.
-- **Import discipline**: every theorem is labelled [P] (proved from A1) or notes its imports explicitly. The goal is zero imports. As of v6.7, one conjecture [C] remains.
+- **Live tree (edit here):** `Dev/apf-codebase` on the principal machine — git repo, remote `Ethan-Brooke/APF-Engine`, branch `main`.
+- **Frozen mirror (never edit):** the Drive copy under `__APF Library/Codebase/`. It is archival, read-only.
+- **The rule:** run every `git` operation — add, commit, push — in a **native shell on the principal machine**, never through a sandbox mount. The sandbox bridge corrupts `.git/index`, and the remote is unreachable from inside a sandbox. A session may edit files and stage a commit message; the actual `git add && git commit && git push` runs natively. **The commit is the archive** — there is no separate zip-snapshot step for code.
 
 ---
 
-## How Ethan Works (Working Style Notes)
+## The code architecture
 
-Understanding the author's working style helps you assist effectively:
+Every result is a `check_` function returning a dict with at least a name, a status, its dependencies, and a one-line summary. Core checks use `fractions.Fraction` — exact rational arithmetic, no floating-point "close enough." Modules register their checks at import; `apf/_module_manifest.py` is the canonical module index and the source of the expected registry size; `verify_all.py` runs everything and prints the scorecard.
 
-**Directive and terse.** Approves or declines with single words ("proceed," "thoughts?"). Don't pad responses with summaries of what you're about to do — just do it.
-
-**Audit before fixing.** Before implementing any change to a proof or theorem, Ethan wants an honest gap assessment. "Here is what is missing / weak / circular" before "here is my fix."
-
-**Red-team framing.** Treat every theorem claim with a hostile reviewer mindset. Ask: is this circular? Does it import anything unacknowledged? Would this survive a peer review attack?
-
-**Exact arithmetic.** All theorem checks use `fractions.Fraction` for exact rational arithmetic. Floating-point "close enough" is not acceptable for core results.
-
-**LaTeX compile discipline.** Three sequential `pdflatex` passes. Check `grep -E "^!"` for errors. Check `grep "Rerun\|undefined"` for convergence. Use `str_replace` not `sed` for LaTeX edits.
-
-**Phase-gated work.** Large restructuring is broken into named phases with explicit checkpoints. Don't splice restructuring into ongoing work.
-
-**No version references in documents.** Papers present as current work, not "version X."
-
----
-
-## Suggested First Tasks When Starting a Session
-
-### If continuing existing work:
-1. Ask Ethan what the current task is
-2. Check relevant files for current state before proposing anything
-3. Run relevant checks to confirm current passing state
-
-### If doing a fresh audit:
 ```
-Read apf/red_team.py and list any [RT] checks that are currently flagged 
-as weak or have documented caveats. Then check apf/bank.py for any 
-theorems not yet labelled [P].
+apf/                    the theorem bank — one module per result; registers at import
+apf/_module_manifest.py the canonical module index + MODULE_TYPES taxonomy
+scripts/                utilities and orchestration
+standalone/             standalone lemma modules
+examples/               worked examples
+verify_all.py           runs the full bank and prints the scorecard
 ```
 
-### If asked to add a theorem:
-1. Draft the statement and proof in plain English first
-2. Identify all imports (what does the proof assume beyond A1+MD+BW?)
-3. Write the `check_` function with exact arithmetic
-4. Add it to `bank.py` registry
-5. Run `verify_all.py` to confirm no regressions
-
-### If asked to edit a LaTeX file:
-1. Read the relevant section first with the `view` tool
-2. Grep for the exact string before using `str_replace`
-3. Compile with three pdflatex passes
-4. Check compile log for errors and undefined references
+Theorems are `T_…`, lemmas are `L_…`. Every claim carries an epistemic grade: `[P]` (proved from A1), `[P_structural]` (proved up to a named structural reading), `[P+tool]`/`[P+lattice]` (proved but consuming an external import), `[C]` (conjecture). Read the grade before the result.
 
 ---
 
-## The Things Most Likely to Go Wrong
+## How Ethan works
 
-**Circular imports.** The most dangerous bug pattern. If a theorem in Paper 1 imports a result that depends on Paper 2, that's a series-level circularity. Always trace the full dependency chain.
+**Directive and terse.** Approves or redirects in a few words. Don't pad responses with previews of what you are about to do — do it, then show the result.
 
-**Wayfinding vs. content gaps.** Many reviewer complaints are reading-experience failures — the proof exists but is unreachable. Before concluding something is missing, check whether it exists but is buried.
+**Audit before fixing.** Before changing a proof or theorem, give an honest gap assessment first — what is missing, weak, or circular — then the fix.
 
-**κ = 2 derivation.** The most important single result to stress-test. `check_T_kappa()` in `core.py`. Read the full derivation before touching anything upstream.
+**Red-team posture.** Treat every claim as a hostile reviewer would. Is it circular? Does it import anything unacknowledged? Would it survive review?
 
-**DESI dynamical DE tension.** As of v6.7, the DESI DR2 data shows 2.8–4.2σ preference for evolving dark energy (w ≠ −1). APF predicts w₀ = −1 exactly. This is a live tension — watch `L_DESI_DR2_confrontation` in `supplements.py`.
+**Exact arithmetic.** Core checks use `fractions.Fraction`. Floating-point "close enough" is not acceptable for load-bearing results.
 
-**m_c at 2.6%.** The charm quark mass error is irreducible (Schur structural limit). Don't try to "fix" this — it's been verified that no 5 NNLO routes close the gap further.
+**Compile discipline.** For LaTeX, run the passes needed for cross-references to settle and check the log for errors and undefined references. Apply edits directly, then show the compiled result — no long "here is what I changed" recaps.
 
----
-
-## Vocabulary Reference
-
-| Term | Meaning |
-|---|---|
-| A1 | The single axiom: finite enforcement capacity |
-| MD | Enforcement isotropy (regularity input) |
-| BW | Budget-window richness (regularity input) |
-| [P] | Proved from A1+MD+BW |
-| [C] | Conjecture — stated precisely, not yet proved |
-| [RT] | Red-team adversarial check |
-| C_total | Total enforcement cost = 61 (rigid) |
-| x = 1/2 | Single-channel Gram overlap (derived) |
-| κ = 2 | Enforcement multiplier (derived in T_kappa) |
-| FN mechanism | Froggatt-Nielsen — replaced by L_multiplicative_amplitude |
-| D-quotient | Space of maintained distinctions (definitional) |
-| Theorem_R | Carrier requirements R1/R2/R3 → gauge group |
-| L_gauge_template_uniqueness | Proves SU(N_c)×SU(2)×U(1) is unique template |
-| T_field | Derives 45 fermions with correct representations |
-| L_count | C = 45+4+12 = 61 (rigid) |
-| M_R | Right-handed neutrino mass spectrum [31, 61, 177] GeV |
-| σ | Admissibility scalar field (BSM prediction) |
+**No version references in body prose.** Papers and docs present as current work, not "version X." Version history lives in changelogs and title blocks.
 
 ---
 
-## What APF Does Not Claim
+## Suggested first tasks
 
-- It does not claim to be a theory of everything in the string-theory sense
-- It does not claim to derive the dynamics (Lagrangian) from A1 alone — this is Papers 3–4
-- It does not identify the dark matter particle (T12 derives existence + properties)
-- It does not claim the κ = 2 derivation is unassailable — this is acknowledged as the most important stress test
-- It does not claim Papers 2–7 are complete — they are in various stages of development
+**Continuing existing work.** Ask what the current task is, read the relevant files for their current state before proposing anything, and run the relevant checks to confirm the passing baseline.
+
+**A fresh audit.** Read the adversarial checks and list any flagged as weak or carrying caveats, then look for any claim still graded `[C]` and any `[P_structural]` seam that has drifted toward over-grading.
+
+**Adding a theorem.** Draft the statement and proof in plain English; identify every import beyond A1+MD+BW; write the `check_` function with exact arithmetic; register it; run `verify_all.py` and confirm the expected count moved by exactly one with no regressions.
 
 ---
 
-*Last updated to reflect APF v6.7 (349 checks, 312 theorems in bank).*
+## The things most likely to go wrong
+
+**Circular imports.** The most dangerous pattern. A Paper-1 result that depends on a Paper-2 result is a series-level circularity. Trace the full dependency chain.
+
+**Wayfinding versus content gaps.** Many "missing" results exist but are buried. Before concluding something is absent, check whether it is merely unreachable.
+
+**Over-grading a structural seam.** `[P_structural]` means closure on the present axioms with a named residual. The measured weak mixing angle is the canonical example — the source value 3/13 is `[P]`, the measured/effective angle stays `[P_structural]` behind the w ∝ g² dictionary. Don't quietly promote it.
+
+**Editing the wrong copy.** Edit the live git tree, not the frozen Drive mirror. And don't run git through a sandbox mount.
+
+---
+
+## What APF does not claim
+
+It does not claim to be a theory of everything in the string-theory sense. It does not derive Lagrangian dynamics from A1 alone. It does not identify the dark-matter particle (existence and properties, yes; identity, no). And it does not pretend the absolute Planck magnitude is derived — that is the one dimensional anchor, open by design. The open seams are stated, not hidden.
+
+<!-- FOOTER:start -->
+---
+
+## About the APF series
+
+The Admissibility Physics Framework is a constraint-first derivation of the Standard Model and cosmological structure from a single primitive — finite enforcement capacity. The corpus runs from the foundational papers through the gauge sector, the quantum formalism, Lorentzian spacetime and the Einstein field equations, the cosmological constant, the electroweak and dark sectors, and the lattice Yang–Mills program. Each paper's main text and Technical Supplement is deposited separately on Zenodo and collected in the **[admissibility_physics](https://zenodo.org/communities/admissibility_physics)** community. The engine in this repository is the machine-verifiable companion to all of it (v24.3.249 — 3,745 bank-registered theorems across 422 typed modules, 48 quantitative predictions).
+
+| # | Title | Concept DOI |
+|---|---|---|
+| Engine | Admissibility Physics — Unified Theorem Bank & Verification Engine | [10.5281/zenodo.18529115](https://doi.org/10.5281/zenodo.18529115) |
+| 0 | What Physics Permits: A Constraint-First Framework for Physics | [10.5281/zenodo.18439523](https://doi.org/10.5281/zenodo.18439523) |
+| 1 | The Enforceability of Distinction | [10.5281/zenodo.18439200](https://doi.org/10.5281/zenodo.18439200) |
+| 2 | Finite Admissibility and the Failure of Global Description | [10.5281/zenodo.18439274](https://doi.org/10.5281/zenodo.18439274) |
+| 3 | Entropy, Time, and Accumulated Cost | [10.5281/zenodo.18439363](https://doi.org/10.5281/zenodo.18439363) |
+| 4 | Admissibility Constraints and Structural Saturation | [10.5281/zenodo.18439397](https://doi.org/10.5281/zenodo.18439397) |
+| 5 | Quantum Structure from Finite Enforceability | [10.5281/zenodo.18439433](https://doi.org/10.5281/zenodo.18439433) |
+| 6 | Dynamics and Geometry as Optimal Admissible Reallocation | [10.5281/zenodo.18439445](https://doi.org/10.5281/zenodo.18439445) |
+| 7 | A Minimal Quantum of Action from Finite Admissibility | [10.5281/zenodo.18439513](https://doi.org/10.5281/zenodo.18439513) |
+| 8 | The Admissibility-Capacity Ledger | [10.5281/zenodo.19721384](https://doi.org/10.5281/zenodo.19721384) |
+| 9 | The Geometric Substrate as Cost Structure of Comparison Continuations | [10.5281/zenodo.20041675](https://doi.org/10.5281/zenodo.20041675) |
+| 10 | The Calculus of Finite Continuability | [10.5281/zenodo.20041680](https://doi.org/10.5281/zenodo.20041680) |
+| 11 | Forced Universality from Capacity-Bounded Admissibility | [10.5281/zenodo.20684198](https://doi.org/10.5281/zenodo.20684198) |
+| 13 | The Minimal Admissibility Core | [10.5281/zenodo.18361446](https://doi.org/10.5281/zenodo.18361446) |
+| 16 | Markov Breakdown and the Hard Problems | [10.5281/zenodo.20684207](https://doi.org/10.5281/zenodo.20684207) |
+| 18 | The Electroweak Sector as a Capacity Equilibrium | [10.5281/zenodo.20684209](https://doi.org/10.5281/zenodo.20684209) |
+| 20 | The Enforcement Crystal | [10.5281/zenodo.18531732](https://doi.org/10.5281/zenodo.18531732) |
+| 21 | APF Engine — Unified Theorem Bank and Verification Engine | [10.5281/zenodo.18529115](https://doi.org/10.5281/zenodo.18529115) |
+| 24 | The Recruitment-Radius Extension — Foundations | [10.5281/zenodo.20684211](https://doi.org/10.5281/zenodo.20684211) |
+| 28 | Absolute Mass Scales from Electroweak Capacity Saturation | [10.5281/zenodo.20684215](https://doi.org/10.5281/zenodo.20684215) |
+| 29 | Plaquette Representation Dominance and Confinement | [10.5281/zenodo.20684218](https://doi.org/10.5281/zenodo.20684218) |
+| 30 | A Tube Mechanism for the Lattice Mass Gap | [10.5281/zenodo.20684220](https://doi.org/10.5281/zenodo.20684220) |
+| 31 | Osterwalder–Schrader Structure of Lattice Yang–Mills | [10.5281/zenodo.20684222](https://doi.org/10.5281/zenodo.20684222) |
+| 33 | Trace-to-Scheme Export Architecture | [10.5281/zenodo.20684224](https://doi.org/10.5281/zenodo.20684224) |
+| 35 | The Dark Sector as a Two-Role Capacity Decomposition | [10.5281/zenodo.20684228](https://doi.org/10.5281/zenodo.20684228) |
+| 40 | Between Symmetry and the Void — The Thermodynamics of Finite Distinction | [10.5281/zenodo.20684235](https://doi.org/10.5281/zenodo.20684235) |
+| 41 | The Horizon as a Continuation Ledger | [10.5281/zenodo.20684241](https://doi.org/10.5281/zenodo.20684241) |
+| 42 | The Weak Mixing Angle Is Not Free | [10.5281/zenodo.20684245](https://doi.org/10.5281/zenodo.20684245) |
+
+Concept DOIs always resolve to the latest version. Technical Supplements are deposited as linked records — `isSupplementTo` the main paper, `isDocumentedBy` the companion repository.
+
+## Author
+
+Ethan Brooke — Independent Researcher, San Anselmo, California, USA.
+
+- ORCID: [0009-0001-2261-4682](https://orcid.org/0009-0001-2261-4682)
+- LinkedIn: [linkedin.com/in/ethanbrooke](https://www.linkedin.com/in/ethanbrooke/)
+- GitHub: [github.com/Ethan-Brooke](https://github.com/Ethan-Brooke)
+- Contact: brooke.ethan@gmail.com
+
+License: CC-BY-4.0.
+<!-- FOOTER:end -->
