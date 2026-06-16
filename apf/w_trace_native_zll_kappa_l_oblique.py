@@ -232,14 +232,25 @@ def check_L_w_trace_native_kappa_l_proper_vertex_open_C() -> Dict[str, Any]:
             f"vertex (LEP Yellow Report 'Precision Calculations for the Z Resonance', "
             f"CERN 95-03 = arXiv:hep-ph/9709229; or Akhundov-Bardin-Riemann "
             f"NPB276(1986)1), to be transcribed onto the rung-1 generic-vertex "
-            f"substrate. Native kappa_l stays OPEN; DIZET stays publishable."
+            f"substrate. Native kappa_l stays OPEN; DIZET stays publishable. "
+            f"VERTEX-SLOT FLAG (Gate-4 cross-route, residual note 2026-06-11): when the "
+            f"slot is filled at assembly-consistency grade (banked BSY Eq-175 composition), "
+            f"the native cross-route OVERSHOOTS every kappa_l comparator by >=4.5x the "
+            f"candidate spacing (1.036808 vs 27/26, spacing 1.65e-3), ~10x at physical "
+            f"masses, with ~95% of the overshoot sitting in THIS unbenchmarked vertex slot. "
+            f"So the loop side is not yet decidable; the discriminating instrument is a "
+            f"kappa_l-side two-loop close, preceded by benchmarking the one-loop Delta "
+            f"kappa_l against a published value."
         ),
         key_result=(
             f"proper Zll vertex remainder = {d['remainder']:.6f} OPEN (needs "
-            f"hep-ph/9709229). [C]"
+            f"hep-ph/9709229); slot fills at assembly-consistency grade only -- "
+            f"overshoots, ~95% of overshoot here, UNBENCHMARKED. [C]"
         ),
         dependencies=["T_w_trace_native_kappa_l_oblique_assembly"],
         artifacts={"remainder": round(d["remainder"], 9),
+                   "vertex_slot_benchmarked": False,
+                   "cross_route_overshoot_factor_min": 4.5,
                    "export_flags": dict(EXPORT_FLAGS)},
     )
 

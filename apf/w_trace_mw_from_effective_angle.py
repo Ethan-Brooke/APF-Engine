@@ -18,11 +18,11 @@ vs measured M_W = 80.369 GeV  ->  ~27 MeV.
 
 Epistemic status -- the THREE open gates that block [P] (chased one by one)
 -------------------------------------------------------------------------
-1. kappa_l is only ~59% native. The leading custodial term Xi_rho*Delta rho is
-   [P] (v24.3.67), the remainder Delta kappa_rem = 0.0151 (non-custodial vertex/
-   box + Delta-alpha) is [C]. Here the full banked kappa_l (partly external) is
-   used -> the M_W value inherits [C]. NEXT GATE: native kappa_l from the v24.3.99
-   self-energy toolkit + the Z->ll vertex form factor.
+1. kappa_l is ~63% native (two rungs of one ladder: custodial-only Xi_rho*Delta rho
+   = 59% [P] v24.3.67; + native gamma-Z oblique = 63% [P_structural] v24.3.102). The
+   remainder Delta kappa_rem = 0.0136 (proper Zll vertex + light-fermion + Delta-alpha)
+   is [C]. Here the full banked kappa_l (partly external) is used -> the M_W value
+   inherits [C]. NEXT GATE: the proper Zll vertex onto the v24.3.99 self-energy toolkit.
 2. 3/13 is a *candidate* for the physical sin^2 theta_eff, not yet [P] -- it awaits
    the effective-mixing-angle transport-ledger evaluator (codomain question).
 3. M_Z is an external scale anchor. The GeV value of M_W is NOT zero-parameter;
@@ -132,7 +132,7 @@ def check_T_w_trace_mw_from_3_13_dimensionless_P() -> Dict[str, Any]:
 
 def check_C_w_trace_mw_from_3_13_open_gates_C() -> Dict[str, Any]:
     """C: the three open gates blocking [P] for the 3/13 -> M_W chain [C]."""
-    cov = 0.59  # kappa_l native coverage fraction (v24.3.67 leading custodial = 59%)
+    cov = 0.63  # kappa_l native coverage (v24.3.102 oblique rung = custodial 59% + gamma-Z; remainder 0.0136)
     check(EXPORT_FLAGS["Export_MW_dimensionless_ratio_P"] == 0,
           "M_W/M_Z stays [C] until native kappa_l + 3/13-effective close")
     check(0.0 < cov < 1.0, "kappa_l must be partially-but-not-fully native")
@@ -142,10 +142,11 @@ def check_C_w_trace_mw_from_3_13_open_gates_C() -> Dict[str, Any]:
         tier=4, epistemic="C",
         summary=(
             "Three named gates stand between this chain and a [P] M_W/M_Z: "
-            "(1) kappa_l is ~59% native (leading custodial Xi_rho*Delta rho [P], "
-            "remainder Delta kappa_rem = 0.0151 [C]); the next step is a native "
-            "kappa_l from the v24.3.99 self-energy toolkit + the Z->ll vertex form "
-            "factor. (2) 3/13 is a candidate for the physical sin^2 theta_eff, "
+            "(1) kappa_l is ~63% native -- two rungs of one ladder: custodial-only "
+            "Xi_rho*Delta rho = 59% [P], + native gamma-Z oblique = 63% [P_structural] "
+            "(v24.3.102); remainder Delta kappa_rem = 0.0136 (proper Zll vertex + "
+            "light-fermion + Delta alpha) [C]; the next step is the proper Zll vertex "
+            "onto the v24.3.99 self-energy toolkit. (2) 3/13 is a candidate for the physical sin^2 theta_eff, "
             "awaiting the effective-mixing transport-ledger evaluator (codomain "
             "question). (3) M_Z is an external scale anchor -- the absolute-scale / "
             "sigma-derivation problem -- which caps the absolute M_W at scale-anchored "

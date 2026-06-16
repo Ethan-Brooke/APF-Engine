@@ -74,7 +74,7 @@ DIAGNOSTIC_COMPARATORS: Dict[str, Dict[str, float]] = {
     "CMS_2024": {
         "value": 0.23151,
         "uncertainty": 2.0e-4,
-        "z": 0.127,
+        "z": 0.25,  # corrigendum 2026-06-15: (0.2315593-0.23151)/2.0e-4 = 0.25, not 0.127
     },
 }
 
@@ -133,7 +133,7 @@ _NOTES = (
     "four EW record channels per LATEST-44 four-channel theorem. Denominator "
     "5063 = 61*(61+16+3+3) is the APF count-ledger denominator. Bodek-Seo-Yang "
     "reanalysis residual z = -0.003 (tightest agreement); HC/PDG z = 0.32; "
-    "LEP/SLD z = 0.18; CMS z = 0.127 -- all comparators diagnostic-only. "
+    "LEP/SLD z = 0.18; CMS z = 0.25 -- all comparators diagnostic-only. "
     "kappa_l form-factor target 1.0368 declared. Three sin^2 theta codomains "
     "kept typed-distinct: source 3/13, four-channel 0.2316, on-shell mass-ratio "
     "0.2233. Status: [P_imported_physical_one_route_closure] preserved at "

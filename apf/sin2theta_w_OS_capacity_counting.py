@@ -30,9 +30,20 @@ Composed with Paper 18's sin^2 theta_eff^l = 3/13 [P_structural]:
     kappa_l = (3/13) / (2/9) = 27/26
     Delta kappa_l = 1/26 = 1/(2*13)
 
-Numerical evidence: kappa_l = 27/26 matches DFGRU (arXiv:1906.08815v2)
-all-orders SM parametric fit `tab:sfit` to 3.2e-5 in kappa_l (below DFGRU's
-~2e-5 parametric-fit noise floor).
+Numerical evidence (two scales). 27/26 = 1.0384615 is the raw SOURCE-angle
+ratio (3/13)/(2/9) -- an arithmetic fact, scheme-independent. Against the
+DFGRU reference (arXiv:1906.08815v2, M_W-last-input scheme, 2012-2019 vintage,
+reference M_W = 80.385 GeV) it matches the all-orders SM parametric fit
+`tab:sfit` to 3.2e-5 in kappa_l -- but that is a WITHIN-SCHEME comparison
+(the reference's own M_W sensitivity is ~4e-5 per 16 MeV, an estimate that is
+UNAUDITED). The cross-SCHEME spread is ~2.4e-3 (the G_mu-coherent SM point
+sits at kappa_l ~ 1.0360), ~75x the within-scheme residual; there is no unique
+all-orders SM kappa_l at the 3e-5 level. Current data select the framework's
+lifted/physical ratio ~1.0368 (the M_W_TRACE chain), not 27/26: nine
+eff x M_W combinations all fall below 27/26 (+0.9 sigma PDG24 average M_W to
++4.5 sigma fit-correlated). So 27/26 is the source-angle ratio, the lifted
+ratio is ~1.0368, and the gap between them is real structure, not noise --
+TWO OBJECTS (see 'Reference - The Residual Found ... 4-5063 Grounding', 2026-06-11).
 
 Structural derivation (post-SSB physical-mode counting + carrier-side counts)
 ----------------------------------------------------------------------------
@@ -441,21 +452,41 @@ def check_T_kappa_l_composed_with_paper_18_P() -> Dict[str, Any]:
     delta = DELTA_KAPPA_L_CAPACITY_EQUILIBRIUM
     composed_ok = (kappa == Fraction(27, 26) and delta == Fraction(1, 26))
     factorization_ok = delta == Fraction(1, 2*13)  # 1/26 = 1/(2*13)
-    # DFGRU 1906.08815 SM all-orders kappa_l at reference inputs ≈ 1.038430;
-    # 27/26 = 1.038461538... matches to 3.2e-5 (below DFGRU ~2e-5 parametric noise).
+    # DFGRU 1906.08815 SM all-orders kappa_l at reference inputs ≈ 1.038430,
+    # in the M_W-last-input scheme, 2012-2019 vintage (reference M_W = 80.385 GeV).
+    # 27/26 = 1.038461538... is the raw SOURCE-angle ratio (3/13)/(2/9), an arithmetic
+    # scheme-free fact; it matches the DFGRU reference to 3.2e-5 WITHIN THAT SCHEME
+    # (the reference's own M_W sensitivity ~4e-5 per 16 MeV is UNAUDITED). The cross-
+    # scheme spread is ~2.4e-3 (G_mu-coherent point ~1.0360); current data select the
+    # framework's lifted/physical ratio ~1.0368 (M_W_TRACE chain), not 27/26. Caveat,
+    # not retraction -- TWO OBJECTS (residual note 2026-06-11). numerical_match below
+    # certifies only the within-scheme arithmetic agreement (grade unchanged).
     DFGRU_REFERENCE_KAPPA_L = 1.038430
-    numerical_match = abs(float(kappa) - DFGRU_REFERENCE_KAPPA_L) < 5e-5
+    DFGRU_SCHEME = "M_W-last-input (DFGRU 1906.08815), 2012-2019 vintage, ref M_W=80.385 GeV"
+    LIFTED_PHYSICAL_KAPPA_L = 1.0368   # framework M_W_TRACE chain; current-data-selected
+    CROSS_SCHEME_SPREAD = 2.4e-3       # to the G_mu-coherent SM point (~1.0360)
+    MW_VINTAGE_SENSITIVITY_PER_16MEV = 4e-5  # within-scheme; UNAUDITED estimate
+    numerical_match = abs(float(kappa) - DFGRU_REFERENCE_KAPPA_L) < 5e-5  # within-scheme only
     ok = composed_ok and factorization_ok and numerical_match
     return _result(
         name="T_kappa_l_composed_with_paper_18: kappa_l = (3/13)/(2/9) = 27/26 [P_attractor_structural | GH_OS_codomain + Paper-18 composition]",
         tier=4,
         epistemic="P_attractor_structural_GH_OS_codomain_composed",
-        summary=(f"kappa_l = {kappa} = 1/(2*13) factorization: Delta kappa_l = {delta} = "
-                 f"1/(2*13); DFGRU SM all-orders reference kappa_l ≈ {DFGRU_REFERENCE_KAPPA_L}, "
-                 f"residual = {float(kappa) - DFGRU_REFERENCE_KAPPA_L:+.2e} (within DFGRU's ~2e-5 parametric noise)."),
+        summary=(f"kappa_l = {kappa} = 27/26 is the raw source-angle ratio (3/13)/(2/9); "
+                 f"Delta kappa_l = {delta} = 1/(2*13). Within the DFGRU scheme ({DFGRU_SCHEME}) "
+                 f"it matches the all-orders SM fit to {float(kappa) - DFGRU_REFERENCE_KAPPA_L:+.2e} "
+                 f"(within-scheme; ~4e-5 per 16 MeV M_W sensitivity, UNAUDITED). Cross-scheme "
+                 f"spread ~{CROSS_SCHEME_SPREAD}; current data select the lifted/physical ratio "
+                 f"~{LIFTED_PHYSICAL_KAPPA_L}, not 27/26 (caveat, not retraction -- TWO OBJECTS, "
+                 f"residual note 2026-06-11)."),
         artifacts={"kappa_l": str(kappa), "delta_kappa_l": str(delta),
               "dfgru_reference": DFGRU_REFERENCE_KAPPA_L,
-              "residual": float(kappa) - DFGRU_REFERENCE_KAPPA_L},
+              "dfgru_scheme": DFGRU_SCHEME,
+              "lifted_physical_kappa_l": LIFTED_PHYSICAL_KAPPA_L,
+              "within_scheme_residual": float(kappa) - DFGRU_REFERENCE_KAPPA_L,
+              "cross_scheme_spread": CROSS_SCHEME_SPREAD,
+              "mw_vintage_sensitivity_per_16MeV": MW_VINTAGE_SENSITIVITY_PER_16MEV,
+              "mw_vintage_sensitivity_audited": False},
     )
 
 
