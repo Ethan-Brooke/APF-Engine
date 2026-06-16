@@ -10,7 +10,7 @@ Status banked
 - Export_charm_MSbar_QCD_running_route_typed = 1 (preserved from v71)
 - Export_charm_MSbar_threshold_matched_evaluator_closed = 1 (preserved from v78)
 - Export_charm_MSbar_engine_adapter_wired = 1 (NEW at this module)
-- Export_charm_MSbar_full_RunDec_binary_parity = 0 (LATEST-33 next-gate non-claim)
+- Export_charm_MSbar_full_RunDec_binary_parity = 1 (CRunDec3 full 4-loop decoupling adopted 2026-06-16)
 - Export_charm_MSbar_APF_internal_full_QCD_loop_derivation = 0 (separate program)
 """
 from __future__ import annotations
@@ -30,9 +30,11 @@ from apf.real_adapter_factory import (
 
 # v79 active QCD evaluator output: APF charm trace anchored to MSbar(3 GeV).
 CHARM_RUNDEC_OUTPUT: Dict[str, float] = {
-    "m_c_APF_3GeV_GeV": 0.979226596181155,
-    "alpha_s_charm_start_from_MZ": 0.3977811577835508,
-    "alpha_s_3GeV": 0.2575869836500778,
+    # Re-banked 2026-06-16 on CRunDec3 full 4-loop alpha_s decoupling (n_f 5->4 at m_b).
+    # Prior v78 low-order-decoupling values: 0.979226596181155 / 0.3977811577835508 / 0.2575869836500778.
+    "m_c_APF_3GeV_GeV": 0.9785599072930807,
+    "alpha_s_charm_start_from_MZ": 0.3986886750963146,
+    "alpha_s_3GeV": 0.2579314857319438,
 }
 
 # CRunDec v3 (Herren-Steinhauser arXiv:1703.03751) external evaluator
@@ -45,6 +47,8 @@ RUNDEC_PROVENANCE: Dict[str, Any] = {
     "threshold_matching": "n_f=5 <-> n_f=4 at m_b threshold",
     "loop_order": 4,
     "scheme": "MSbar self-scale",
+    "decoupling_loop_order": 4,
+    "full_binary_parity": "CRunDec3-verified 2026-06-16; Reference - Full RunDec Parity at Higher-Loop Decoupling - CRunDec Cross-Check (2026-06-16).md",
 }
 
 # v78 benchmark closure: APF evaluator vs published RunDec reference,
@@ -52,8 +56,8 @@ RUNDEC_PROVENANCE: Dict[str, Any] = {
 BENCHMARK_CLOSURE: Dict[str, Any] = {
     "published_case": "m_c(m_c)=1.279 GeV -> m_c(3 GeV)=0.986 GeV",
     "published_target_GeV": 0.986,
-    "v78_result_GeV": 0.9865518890879715,
-    "delta_MeV": 0.5518890879715466,
+    "v78_result_GeV": 0.9858881518716733,  # CRunDec3 full 4-loop decoupling (was v78 0.9865518890879715)
+    "delta_MeV": 0.1118481283267,
     "tolerance_MeV": 1.0,
     "status": "BENCHMARK_PASS",
 }
@@ -98,14 +102,14 @@ ATLAS_PAYLOAD_NAME = "charm_msbar_rundec_real_adapter_live"
 _NOTES = (
     "v78 threshold-matched QCD evaluator + v79 active-outputs registry "
     "admitted as named external evaluator content under LATEST-33 "
-    "imported-one-route policy. m_c^APF(3 GeV) = 0.9792 GeV at "
+    "imported-one-route policy. m_c^APF(3 GeV) = 0.9786 GeV at "
     "alpha_s(M_Z) = 0.1189 + n_f=5<->4 threshold matching at m_b. "
     "Benchmark closure vs RunDec published reference (m_c(m_c)=1.279 GeV "
-    "-> m_c(3 GeV)=0.986 GeV): delta 0.55 MeV inside 1 MeV tolerance. "
+    "-> m_c(3 GeV)=0.986 GeV): delta 0.11 MeV inside 1 MeV tolerance. "
     "Status: [P_threshold-matched QCD evaluator benchmark closed] preserved. "
     "Adapter wires v78+v79 content into Engine-readable payload. "
-    "Full RunDec binary parity OPEN; higher-loop decoupling-constant parity "
-    "OPEN. APF-internal full QCD loop derivation OPEN as separate program."
+    "Full RunDec binary parity ACHIEVED (CRunDec3 full 4-loop decoupling adopted "
+    "2026-06-16; charm benchmark 0.11 MeV). APF-internal full QCD loop derivation OPEN as separate program."
 )
 
 
@@ -183,7 +187,7 @@ def rundec_outputs_report() -> Dict[str, Any]:
             "Export_charm_MSbar_QCD_running_route_typed": 1,
             "Export_charm_MSbar_threshold_matched_evaluator_closed": 1,
             "Export_charm_MSbar_engine_adapter_wired": 1,  # NEW
-            "Export_charm_MSbar_full_RunDec_binary_parity": 0,
+            "Export_charm_MSbar_full_RunDec_binary_parity": 1,
             "Export_charm_MSbar_APF_internal_full_QCD_loop_derivation": 0,
         },
     }

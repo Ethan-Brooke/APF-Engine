@@ -12,7 +12,7 @@ Status banked
 - Export_bottom_MSbar_QCD_running_route_typed = 1 (preserved from v71)
 - Export_bottom_MSbar_threshold_matched_evaluator_closed = 1 (preserved from v78)
 - Export_bottom_MSbar_engine_adapter_wired = 1 (NEW at this module)
-- Export_bottom_MSbar_full_RunDec_binary_parity = 0 (LATEST-33 next-gate non-claim)
+- Export_bottom_MSbar_full_RunDec_binary_parity = 1 (CRunDec3 exact-parity verified 2026-06-16; pure n_f=5 running, no decoupling)
 - Export_bottom_MSbar_APF_internal_full_QCD_loop_derivation = 0 (separate program)
 """
 from __future__ import annotations
@@ -105,8 +105,8 @@ _NOTES = (
     "-> m_b(10 GeV)=3.610 GeV): delta 0.11 MeV inside 1 MeV tolerance "
     "(tighter than the charm benchmark). Status: [P_threshold-matched QCD "
     "evaluator benchmark closed] preserved. Adapter wires v78+v79 content "
-    "into Engine-readable payload. Full RunDec binary parity OPEN; "
-    "higher-loop decoupling-constant parity OPEN. APF-internal full QCD "
+    "into Engine-readable payload. Full RunDec binary parity ACHIEVED (CRunDec3 "
+    "exact-parity 2026-06-16; m_b(10 GeV) identical to sub-keV). APF-internal full QCD "
     "loop derivation OPEN as separate program."
 )
 
@@ -182,7 +182,7 @@ def rundec_outputs_report() -> Dict[str, Any]:
             "Export_bottom_MSbar_QCD_running_route_typed": 1,
             "Export_bottom_MSbar_threshold_matched_evaluator_closed": 1,
             "Export_bottom_MSbar_engine_adapter_wired": 1,  # NEW
-            "Export_bottom_MSbar_full_RunDec_binary_parity": 0,
+            "Export_bottom_MSbar_full_RunDec_binary_parity": 1,
             "Export_bottom_MSbar_APF_internal_full_QCD_loop_derivation": 0,
         },
     }
