@@ -58,13 +58,14 @@ RESIDUAL_DIAGNOSTIC: Dict[str, Any] = {
     "pdg_direct_uncertainty_GeV": 0.31,
     "apf_residual_GeV": +0.157,
     "z_direct": 0.506,
-    "combined_envelope_GeV": 0.314,
+    "combined_envelope_GeV": 0.317,
     "envelope_components": {
         "sigma_alpha_s": 0.0434,
         "sigma_gamma_3": 0.0004,
-        "sigma_truncation": 0.018,
+        "sigma_truncation": 0.0498,  # sourced last-term (was 0.018 unsourced); see
+        # APF Reference Docs/Reference - Top MSR R-Evolution Coefficient Sourcing and sigma_trunc (2026-06-16).md
     },
-    "z_combined": 0.500,
+    "z_combined": 0.495,
     "status": "INSIDE_COMBINED_ENVELOPE",
 }
 
@@ -117,7 +118,7 @@ _NOTES = (
     "m_t^MSR(R_*) = 168.169 GeV at v37 APF-native scale R_* = 85.86 GeV; "
     "4-loop R-evolution to R_EW = M_W^TRACE/(2*pi) = 12.79 GeV gives "
     "m_t^MSR(R_EW) = 172.7168 GeV. Residual vs PDG direct top 172.56 +/- 0.31 GeV "
-    "is +0.157 GeV (z = 0.506 direct; z = 0.500 over combined envelope 0.314 GeV "
+    "is +0.157 GeV (z = 0.506 direct; z = 0.495 over combined envelope 0.317 GeV "
     "including alpha_s + gamma_3 + truncation channels). Loop convergence "
     "L1->L4 ladder banked. v61 pole branch quarantined under coefficient-ingested "
     "4-loop (174.017 GeV at z=4.70 vs PDG; rejected). Status: "
