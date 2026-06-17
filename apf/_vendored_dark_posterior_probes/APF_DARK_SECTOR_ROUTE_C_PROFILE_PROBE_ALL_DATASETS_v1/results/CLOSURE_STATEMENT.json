@@ -1,0 +1,108 @@
+{
+  "pack": "APF_DARK_SECTOR_ROUTE_C_PROFILE_PROBE_ALL_DATASETS_v1",
+  "latest_n": "LATEST-81",
+  "session_marker": "2026-05-14 EVENING+ (post-Phase-4-vocab-refactor signoff)",
+  "bundle_position": "120 -> 121 packs",
+  "headline": "Route-C profile-probe APF2 vs free (w0, wa) 4-of-4 ACCEPT at 95% across cross-SN grid (native / PantheonPlus / Union3 / DESY5).",
+  "test_type": "Profile-probe via 3x3 grid of (w0, wa) offsets per dataset; chi^2 minimum across the 9-point grid is the profile-best comparator. Harder than LATEST-80's V4 systematic-perturbation grid; closer to a profile likelihood (still discrete grid, not full MCMC).",
+  "threshold_2dof_95": 5.991,
+  "profile_probe_grid_rule": {
+    "w_offsets": [0.1, 0.0, -0.1],
+    "wa_offsets": [0.25, 0.0, -0.25],
+    "grid_size_per_dataset": 9,
+    "center": "LATEST-75 hardened free w0wa best per dataset"
+  },
+  "datasets": {
+    "desi_cmb_native": {
+      "public_label": "BAO+CMB no-SN/native",
+      "apf2_chi2": 10979.849566,
+      "profile_best_chi2": 10979.92,
+      "profile_best_tag": "profile_wm0p777957_wam0p781370",
+      "profile_best_w": -0.777957,
+      "profile_best_wa": -0.781370,
+      "delta_chi2_apf2_minus_profile_best": -0.07043399999929534,
+      "accept_95": true,
+      "mode": "profile_probe",
+      "sn_likelihood": "none",
+      "notes": "APF2 slightly better than discrete-grid profile-best by 0.07 chi^2 units"
+    },
+    "desi_cmb_pantheonplus": {
+      "public_label": "BAO+CMB+PantheonPlus",
+      "apf2_chi2": 12383.356621,
+      "profile_best_chi2": 12382.513,
+      "profile_best_tag": "profile_wm0p836018_wam0p598088",
+      "profile_best_w": -0.836018,
+      "profile_best_wa": -0.598088,
+      "delta_chi2_apf2_minus_profile_best": 0.8436209999999846,
+      "accept_95": true,
+      "mode": "profile_probe",
+      "sn_likelihood": "sn.pantheonplus",
+      "notes": "APF2 within 1 chi^2 unit of profile-best"
+    },
+    "desi_cmb_union3": {
+      "public_label": "BAO+CMB+Union3",
+      "apf2_chi2": 11003.797525,
+      "profile_best_chi2": 11000.051,
+      "profile_best_tag": "profile_wm0p736_wam0p810",
+      "profile_best_w": -0.73596,
+      "profile_best_wa": -0.809651,
+      "delta_chi2_apf2_minus_profile_best": 3.7465250000004744,
+      "accept_95": true,
+      "mode": "profile_probe",
+      "sn_likelihood": "sn.union3",
+      "notes": "Widest profile gap in the grid; still inside 95%"
+    },
+    "desi_cmb_desy5": {
+      "public_label": "BAO+CMB+DESY5",
+      "apf2_chi2": null,
+      "profile_best_chi2": null,
+      "delta_chi2_apf2_minus_profile_or_free": 4.335,
+      "accept_95": true,
+      "mode": "preserved_LATEST62",
+      "sn_likelihood": "sn.desy5",
+      "notes": "DESY5 source bank not in v5 evidence-only zip; LATEST-62 free-fit comparator preserved (Route-C DESY5 full bank)"
+    }
+  },
+  "summary": {
+    "accept_count": 4,
+    "total_datasets": 4,
+    "accept_at_95": "4 of 4",
+    "worst_delta_chi2_full_grid": 4.335,
+    "worst_delta_chi2_profile_probe_subset": 3.7465250000004744,
+    "datasets_with_apf2_better_than_or_equal_to_profile_best": 1,
+    "datasets_with_apf2_within_1_chi2_of_profile_best": 2
+  },
+  "exports_promoted": {
+    "Export_dark_RouteC_all_dataset_profile_probe_complete": 1,
+    "Export_dark_RouteC_profile_likelihood_global_P_candidate": 1
+  },
+  "exports_preserved_non_claims": {
+    "Export_dark_robust_empirical_P": 0,
+    "Export_dark_RouteC_MCMC_posterior_P": 0,
+    "Export_APF2_coefficients_refit": 0,
+    "Export_collaboration_NERSC_reproduction": 0,
+    "Export_dark_full_growth_likelihood_P": 0
+  },
+  "named_blockers_for_robust_P": [
+    "Gate 3: DESI full-shape exact runtime (environmentally blocked at LATEST-74)",
+    "Gate 4: Full-growth likelihood / covariance / fiducial / AP rescaling (partial at LATEST-68)",
+    "MCMC posterior on (w0, wa, nuisance) marginalized over full Planck likelihood",
+    "Collaboration NERSC reproduction"
+  ],
+  "upstream_evidence_provenance": {
+    "evidence_dir": "__APF Library/Evidence/",
+    "zips": [
+      "APF_ROUTE_C_PROFILE_PROBE_EXTEND_VENV_RERUN_RESULTS_20260514_144250.zip",
+      "APF_ROUTE_C_PROFILE_PROBE_PANTHEONPLUS_DATA_REPAIR_RESULTS_20260514_215757.zip",
+      "APF_ROUTE_C_PROFILE_PROBE_PANTHEONPLUS_REPAIR_RESULTS_20260514_220614.zip"
+    ],
+    "result_pack": "Pack 3 (22:06 UTC) — both native and PantheonPlus 9/9 grid runs complete"
+  },
+  "upstream_pack_chain": [
+    "LATEST-62 (2026-05-12): APF2 first-order DESY5 ACCEPT at 95% (free CPL profile, delta = +4.335)",
+    "LATEST-74 (2026-05-12): APF2 cross-SN audit 4-of-4 ACCEPT at 95% (polish-bestfit)",
+    "LATEST-75 (2026-05-12): APF2 hardened polish 3-of-3 ACCEPT at 95% on cross-SN",
+    "LATEST-80 (2026-05-14): APF2 V4 systematic-perturbation grid 30/30 ACCEPT at 95% AND 68%",
+    "LATEST-81 (this pack): APF2 profile-probe 4-of-4 ACCEPT at 95% via 3x3 grid per dataset"
+  ]
+}

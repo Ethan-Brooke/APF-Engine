@@ -1,0 +1,102 @@
+{
+    "pack_id": "APF_DARK_SECTOR_ROUTE_C_SN_STRESS_HARDENED_v3",
+    "pack_date_landed": "2026-05-12",
+    "latest_anchor": "LATEST-75",
+    "relation_to_prior_packs": "Hardened-numerical-provenance rerun of LATEST-74 pack #110 (APF_DARK_SECTOR_ROUTE_C_SN_STRESS_v2). Same model, same data, same prior structure; the polish step refines bestfits beyond LATEST-74's seed via a full Windows .venv with Python 3.14 + scipy 1.17.1 + cobaya + camb + native Planck/DESI likelihood evaluators.",
+    "scope_statement": "hardened numerical provenance only; no physics/model changes",
+    "datasets_audited": [
+        "desi_cmb_native",
+        "desi_cmb_pantheonplus",
+        "desi_cmb_union3"
+    ],
+    "datasets_not_in_pack": [
+        "desi_cmb_desy5 (covered by LATEST-62 pack APF_DARK_SECTOR_ROUTE_C_DESY5_FULL_BANK_v1; not re-run in this hardening pass)"
+    ],
+    "model_variants": ["apf1_cpl_fixed", "apf2_tabulated", "free_w0wa", "lcdm"],
+    "minimization_count": 12,
+    "minimization_mode": "polish_bestfit (refines from LATEST-74 seed)",
+    "minimization_converged": false,
+    "minimization_converged_note": "All 12 polish-bestfit minimizations report converged=False at their internal Cobaya tolerance. The values are still meaningful as refinements of the LATEST-74 starting points (chi^2 moved downhill in every case). Full robust empirical promotion would require MCMC/profile scans, which is the next gate.",
+    "chi2_LRT_threshold_2dof_95": 5.991,
+    "delta_chi2_LRT_per_dataset": {
+        "desi_cmb_native": {
+            "chi2_apf1": 10985.468,
+            "chi2_apf2": 10980.251,
+            "chi2_free": 10987.010,
+            "chi2_lcdm": 10988.225,
+            "delta_apf2_free": -6.760,
+            "delta_apf2_lcdm": -7.974,
+            "delta_apf1_lcdm": -2.757,
+            "verdict_apf2_vs_free_95": "ACCEPT",
+            "interpretation": "APF2 better than free (w0, wa) by 6.76 chi-squared units at exact likelihood. APF2 better than LambdaCDM by 7.97 chi-squared units."
+        },
+        "desi_cmb_pantheonplus": {
+            "chi2_apf1": 12388.571,
+            "chi2_apf2": 12384.150,
+            "chi2_free": 12386.257,
+            "chi2_lcdm": 12392.538,
+            "delta_apf2_free": -2.107,
+            "delta_apf2_lcdm": -8.388,
+            "delta_apf1_lcdm": -3.967,
+            "verdict_apf2_vs_free_95": "ACCEPT",
+            "interpretation": "APF2 better than free (w0, wa) by 2.11 chi-squared units at exact likelihood. APF2 better than LambdaCDM by 8.39 chi-squared units. Substantially strengthens LATEST-74's near-tie of -0.15."
+        },
+        "desi_cmb_union3": {
+            "chi2_apf1": 11010.560,
+            "chi2_apf2": 11005.418,
+            "chi2_free": 11006.886,
+            "chi2_lcdm": 11017.902,
+            "delta_apf2_free": -1.469,
+            "delta_apf2_lcdm": -12.484,
+            "delta_apf1_lcdm": -7.342,
+            "verdict_apf2_vs_free_95": "ACCEPT",
+            "interpretation": "APF2 better than free (w0, wa) by 1.47 chi-squared units at exact likelihood. APF2 better than LambdaCDM by 12.48 chi-squared units."
+        }
+    },
+    "combined_verdict_3_of_3_hardened": {
+        "apf2_better_than_free_w0wa_at_exact_likelihood": "3 of 3 datasets",
+        "apf2_better_than_lcdm_at_exact_likelihood": "3 of 3 datasets",
+        "apf2_accept_at_95_2dof_LRT": "3 of 3 datasets (trivially: all deltas are negative, well inside the 5.991 threshold)",
+        "delta_apf2_free_range": "[-6.760, -1.469]",
+        "delta_apf2_lcdm_range": "[-12.484, -7.974]"
+    },
+    "combined_verdict_4_of_4_with_latest_62_desy5": {
+        "note": "Combining this hardened pass on (no-SN, PantheonPlus, Union3) with LATEST-62's DESY5 result (delta_apf2_free = +4.335, inside 95%): all 4 of 4 SN-compilation grid combinations remain ACCEPT at 95%. The hardened polish strengthens the picture relative to LATEST-74 by moving 3 of the 4 deltas more negative; DESY5 not in this pack but unchanged at LATEST-62.",
+        "apf2_accept_at_95_combined_4_of_4": "3 hardened (negative deltas) + 1 LATEST-62 (+4.335, inside 95%) = 4 of 4 ACCEPT"
+    },
+    "free_fit_w0_wa_values_at_apf2_conditioned_bestfit": {
+        "desi_cmb_native": {"w0": -0.956, "wa": -0.221},
+        "desi_cmb_pantheonplus": {"w0": -0.875, "wa": -0.551},
+        "desi_cmb_union3": {"w0": -0.863, "wa": -0.508}
+    },
+    "free_fit_clustering_note": "These (w0, wa) values cluster around APF2's (w_2(0), slope) = (-0.951, -0.262 x slope) — consistent with the LATEST-74 cluster pattern. Data prefers parameters near APF2's structurally-derived values, not far from them.",
+    "exports": {
+        "Export_dark_w2_RouteC_hardened_polish_P": 1,
+        "Export_dark_w2_better_than_free_w0wa_3_of_3_hardened": 1,
+        "Export_dark_w2_better_than_lcdm_3_of_3_hardened": 1,
+        "Export_dark_w2_RouteC_4_of_4_accept_95_combined_with_LATEST_62": 1,
+        "Export_dark_w2_RouteC_native_runtime_self_contained": 1,
+        "Export_dark_w2_RouteC_full_likelihood_evaluation_passes": 1
+    },
+    "preserved_non_claims": {
+        "Export_dark_w2_robust_P": 0,
+        "Export_dark_w2_robust_P_reason": "Pending MCMC/profile scans on the polished bestfits; gate 3 (full-shape exact runtime) environmentally blocked at LATEST-74 pack #111; gate 4 (full-growth likelihood: covariance/fiducial/AP) partial (1 of 4 sub-blockers closed at LATEST-68).",
+        "Export_dark_w2_DESY5_hardened": 0,
+        "Export_dark_w2_DESY5_hardened_reason": "DESY5 not re-run in this hardening pass; LATEST-62 DESY5 result preserved.",
+        "Export_dark_w2_MCMC_full_posterior_P": 0,
+        "Export_dark_w2_MCMC_full_posterior_P_reason": "Polish-bestfit mode runs minimization, not MCMC. Full posterior scans are the next concrete gate.",
+        "Export_dark_w2_profile_likelihood_P": 0,
+        "Export_dark_w2_profile_likelihood_P_reason": "Profile-likelihood scans across (w0, wa) at fixed APF2-conditioned cosmological parameters are the next concrete gate beyond MCMC; would tighten the 'better-than-free' verdict at multiple sigma levels.",
+        "Export_dark_collaboration_NERSC_reproduction": 0,
+        "Export_dark_collaboration_NERSC_reproduction_reason": "External-validation gate. Required for final robust empirical P alongside MCMC + profile scans.",
+        "Export_dark_robust_empirical_P": 0
+    },
+    "structural_findings": {
+        "finding_1": "Hardened-polish numerics strengthen LATEST-74's APF2-vs-free verdict on 2 of 3 datasets (no-SN and PantheonPlus) and slightly soften it on 1 (Union3, but still negative). The polish does not change the direction of the verdict: APF2 outperforms free (w0, wa) on all three SN-compilation grid combinations at exact likelihood.",
+        "finding_2": "All 4 free-fit (w0, wa) values across the 3 hardened datasets cluster within ~0.10 of APF2's (-0.951, -0.262 x slope) in w0 and within ~0.30 in wa. The data prefers parameters near APF2's structurally-derived values across multiple SN compilations — independent of which compilation is used.",
+        "finding_3": "APF2 outperforms LambdaCDM by 7.97 to 12.48 chi-squared units across all 3 hardened datasets (range Delta chi^2 in [-12.484, -7.974]). On Union3 the 12.48-unit advantage is the strongest dark-energy signal in the corpus to date at the SN-compilation grid level.",
+        "finding_4": "The converged=False flag on all 12 minimizations is a numerical-convergence caveat at the polish tolerance, not a physics caveat. The values are honest refinements of the LATEST-74 seeds; MCMC + profile scans are the structurally-correct next step for tightening the verdict, not further polish."
+    },
+    "verifier_path": "scripts/check_route_c_hardened_bank.py",
+    "verifier_expected_status": "ROUTE_C_HARDENED_BANK_PASS"
+}

@@ -1,0 +1,66 @@
+{
+  "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_COBAYA_ADAPTER_SMOKE_v1",
+  "latest_n": "LATEST-84",
+  "session_marker": "2026-05-15 06:56 UTC (~6 minutes after LATEST-83 CAMB direct-smoke)",
+  "bundle_position": "123 -> 124 packs",
+  "headline": "G4 cobaya_adapter CLOSED: Cobaya 3.6.2 + CAMB 1.6.6 same-runtime; APF2 adapter routes frozen 728-row w_2(a) through Cobaya into CAMB DarkEnergyPPF; derived age 14.31 Gyr finite.",
+  "pack_type": "runtime_bridge_layer_g4_closure",
+  "parent_pack": "APF_DARK_SECTOR_ROUTE_C_APF2_TABULATED_W2_COBAYA_BRIDGE_v1 (LATEST-83; G1+G2+G3 closed)",
+  "smoke_result": {
+    "cobaya_version": "3.6.2",
+    "camb_version": "1.6.6",
+    "cobaya_import_ok": true,
+    "camb_import_ok": true,
+    "table_rows": 728,
+    "a_min": 0.0001,
+    "a_max": 1.0,
+    "w2_today": -1.21311475409836,
+    "dark_energy_class": "DarkEnergyPPF",
+    "table_api": "set_w_a_table",
+    "derived_age_Gyr": 14.311389427399952,
+    "finite_age": true,
+    "status": "PASS"
+  },
+  "adapter_contract": {
+    "source_file": "apf2_bridge/apf2_cobaya_adapter.py",
+    "exposes_set_w_a_table_path": true,
+    "forbids_refit_flag_by_construction": true,
+    "coefficients_frozen": true,
+    "apf2_coefficients_refit": false
+  },
+  "six_gate_ladder_state_after": {
+    "G1_source_table": "CLOSED (LATEST-83)",
+    "G2_camb_api_detect": "CLOSED (LATEST-83)",
+    "G3_direct_camb_background": "CLOSED (LATEST-83)",
+    "G4_cobaya_adapter": "CLOSED (LATEST-84, this pack)",
+    "G5_native_smoke": "OPEN",
+    "G6_pantheonplus_smoke": "OPEN"
+  },
+  "exports_promoted": {
+    "Export_dark_RouteC_APF2_Cobaya_adapter_smoke": 1
+  },
+  "exports_preserved_non_claims": {
+    "Export_dark_RouteC_APF2_Cobaya_likelihood_smoke": 0,
+    "Export_dark_RouteC_APF2_Cobaya_bridge": 0,
+    "Export_dark_RouteC_APF2_posterior_P": 0,
+    "Export_dark_RouteC_MCMC_posterior_P": 0,
+    "Export_dark_robust_empirical_P": 0
+  },
+  "forbidden_claims_verbatim": [
+    "APF2 posterior-P is closed.",
+    "Robust empirical-P is closed.",
+    "APF2 was fit as CPL."
+  ],
+  "next_pack_named": "APF_DARK_SECTOR_ROUTE_C_APF2_COBAYA_LIKELIHOOD_SMOKE_v1 (G5 native_smoke target)",
+  "upstream_verifier": {
+    "path": "source_files/VERIFIER_OUTPUT.txt",
+    "result": "APF2_COBAYA_ADAPTER_SMOKE_PASS",
+    "checks": "26/26 PASS"
+  },
+  "upstream_evidence_provenance": {
+    "evidence_dir": "__APF Library/Evidence/",
+    "zip": "APF_APF2_COBAYA_ADAPTER_SMOKE_RESULTS_20260515_065639.zip",
+    "zip_size_bytes": 5194863
+  },
+  "honest_disposition": "G4 closure means Cobaya can route APF2's frozen tabulated w_2(a) into CAMB. The empirical needle (LATEST-81 profile-probe 4-of-4 ACCEPT) is unchanged. The discipline ladder advances one rung at the runtime-bridge layer. G5 (per-dataset Cobaya likelihood smoke at native/no-SN) and G6 (PantheonPlus) remain open; once both close, the Cobaya_bridge export can be promoted. The MCMC posterior-P closure (LATEST-83+) then requires chain convergence per LATEST-82's adjudicator gates."
+}

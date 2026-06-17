@@ -1,0 +1,65 @@
+{
+  "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_COBAYA_LIKELIHOOD_SMOKE_v1",
+  "latest_n": "LATEST-85",
+  "session_marker": "2026-05-15 07:04 UTC (~8 minutes after LATEST-84 Cobaya adapter smoke)",
+  "bundle_position": "124 -> 125 packs",
+  "headline": "Cobaya external-likelihood smoke PASS: Cobaya 3.6.2 instantiates a model with external smoke-likelihood routing through APF2 adapter + CAMB; finite logpost = -4.848e-4; external_likelihood_call_count = 1; smoke_likelihood_is_physical = false (explicit, this is NOT DESI/Planck/Pantheon).",
+  "pack_type": "runtime_bridge_layer_external_likelihood_smoke",
+  "parent_pack": "APF_DARK_SECTOR_ROUTE_C_APF2_COBAYA_ADAPTER_SMOKE_BANK_v1 (LATEST-84 BANK; G4 closed)",
+  "smoke_result": {
+    "status": "PASS",
+    "cobaya_version": "3.6.2",
+    "camb_version": "1.6.6",
+    "cobaya_model_instantiated": true,
+    "logpost": -0.00048481687748234986,
+    "logprior": 0.0,
+    "loglikes": [-0.00048481687748234986],
+    "external_likelihood_call_count": 1,
+    "table_rows": 728,
+    "a_min": 0.0001,
+    "a_max": 1.0,
+    "w2_today": -1.21311475409836,
+    "dark_energy_class": "DarkEnergyPPF",
+    "table_api": "set_w_a_table",
+    "derived_age_Gyr": 14.311389427399952,
+    "finite_age": true,
+    "coefficients_frozen": true,
+    "apf2_coefficients_refit": false,
+    "smoke_likelihood_is_physical": false
+  },
+  "six_gate_ladder_state_after": {
+    "G1_source_table": "CLOSED (LATEST-83)",
+    "G2_camb_api_detect": "CLOSED (LATEST-83)",
+    "G3_direct_camb_background": "CLOSED (LATEST-83)",
+    "G4_cobaya_adapter": "CLOSED (LATEST-84)",
+    "G4_5_cobaya_external_likelihood": "CLOSED (LATEST-85, this pack)",
+    "G5_native_smoke_physical_likelihood": "OPEN",
+    "G6_pantheonplus_smoke": "OPEN"
+  },
+  "exports_promoted": {
+    "Export_dark_RouteC_APF2_Cobaya_likelihood_smoke": 1
+  },
+  "exports_preserved_non_claims": {
+    "Export_dark_RouteC_APF2_Cobaya_bridge": 0,
+    "Export_dark_RouteC_APF2_posterior_P": 0,
+    "Export_dark_RouteC_MCMC_posterior_P": 0,
+    "Export_dark_robust_empirical_P": 0
+  },
+  "forbidden_claims_verbatim": [
+    "Do not claim DESI/Planck likelihood closure.",
+    "Do not claim APF2 posterior-P.",
+    "Do not claim robust empirical-P.",
+    "Do not claim the smoke likelihood is a physical likelihood."
+  ],
+  "discipline_distinction": {
+    "what_this_passes": "Cobaya model instantiation + external smoke-likelihood evaluation returning finite logpost. Demonstrates the full Cobaya machinery operating end-to-end on the APF2 adapter, not just loading it.",
+    "what_this_does_not_pass": "Physical likelihood evaluation against DESI/Planck/Pantheon data. The smoke_likelihood_is_physical = false flag is explicit.",
+    "next_rung": "G5 native_smoke_physical_likelihood — Cobaya evaluates a physical likelihood (BAO+CMB no-SN) on APF2_fixed_w2 model. Named in manifest: APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_v1."
+  },
+  "upstream_evidence_provenance": {
+    "evidence_dir": "__APF Library/Evidence/",
+    "zip": "APF_APF2_COBAYA_LIKELIHOOD_SMOKE_RESULTS_20260515_070439.zip",
+    "zip_size_bytes": 5243443
+  },
+  "honest_disposition": "G4.5 closure means Cobaya can evaluate a (toy) external likelihood through APF2 + CAMB. The discipline distinction smoke-vs-physical is preserved at the result-JSON level. Empirical needle unchanged from LATEST-81. The runtime-bridge ladder advances one rung; the next rung is a per-dataset physical-likelihood smoke at native/no-SN."
+}

@@ -1,0 +1,48 @@
+{
+  "pack_id": "APF_FULL_GROWTH_APF2_EXACT_RUNTIME_ATTEMPT_v19",
+  "pack_version": "v19",
+  "latest_tag": "LATEST-74",
+  "date": "2026-05-12",
+  "scope": "DESI full-shape exact-runtime APF2 evaluation gate (gate 3 of 4 empirical promotion gates) \u2014 LAUNCHED but environmentally blocked",
+  "status": "LAUNCHED-BLOCKED",
+  "verifier_output": "APF_FULL_GROWTH_APF2_EXACT_RUNTIME_ATTEMPT_V17_PASS",
+  "configs_built": 12,
+  "configs_dataset_grid": [
+    "DESY5 \u00d7 {Planck plik / NPIPE CamSpec / 2020 hillipop / BBN-only} \u00d7 {with, without ACT lensing}",
+    "PantheonPlus \u00d7 {Planck plik / NPIPE CamSpec / 2020 hillipop / BBN-only} \u00d7 {with, without ACT lensing}",
+    "Union3 \u00d7 {Planck plik / NPIPE CamSpec / 2020 hillipop / BBN-only} \u00d7 {with, without ACT lensing}"
+  ],
+  "what_succeeded": [
+    "APF2 exact config builder: 12 Cobaya YAMLs generated for tabulated w_2(a) against DESI full-shape VAC",
+    "VAC import: DESI DR1 full-shape covariance and bestfits ingested via LATEST-68 v14",
+    "Bundle-local apf import path fix (v17)",
+    "PowerShell datasets argument fix (v17)",
+    "V16 log-provenance runtime-obstruction handling (v17)",
+    "Empty bindings path argument fix (v19)",
+    "External runtime blocker guard (v19)"
+  ],
+  "what_blocked_runtime": [
+    "desi_y1_cosmo_bindings local path or installed package not available in execution environment",
+    "Planck likelihood stack as referenced by selected YAMLs not loaded",
+    "Cobaya/CAMB environment present but DESI full-shape bindings absent"
+  ],
+  "physics_changes": 0,
+  "exports": {
+    "Export_exact_runtime_attempt_package": 1,
+    "Export_APF2_exact_config_builder": 1,
+    "Export_full_growth_DESI_VAC_import_required": 1,
+    "Export_APF2_full_shape_likelihood_P": 0,
+    "CPL_surrogate_rejected_for_P": 1,
+    "Guard_external_runtime_blocker": 1,
+    "Fix_empty_bindings_path_argument": 1
+  },
+  "next_action": "Run the v19 PowerShell script in an environment with DESI full-shape bindings (desi_y1_cosmo_bindings) + Planck likelihood code available. Configs are ready; runtime is the only remaining requirement. Blocker is environmental, NOT an APF derivation failure.",
+  "honest_claim_language": {
+    "allowed": "The exact APF2 full-shape runtime gate has been launched: official VAC YAMLs are converted into tabulated-w APF2 Cobaya configs, and the runner can execute them if the DESI full-shape likelihood bindings are locally available.",
+    "allowed_if_blocked": "The exact full-shape run is blocked by missing external DESI likelihood code or Planck likelihood dependencies; the blocker is environmental/external, not an APF derivation failure.",
+    "forbidden": [
+      "APF2 full-growth P is closed from VAC covmats or CPL projections alone.",
+      "The APF2 non-CPL model is equivalent to a CPL surrogate."
+    ]
+  }
+}

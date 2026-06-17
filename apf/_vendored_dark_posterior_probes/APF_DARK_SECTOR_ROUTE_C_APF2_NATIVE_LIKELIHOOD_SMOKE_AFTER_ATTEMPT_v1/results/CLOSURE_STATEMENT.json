@@ -1,0 +1,175 @@
+{
+  "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_AFTER_ATTEMPT_v1",
+  "latest_label": "LATEST-87",
+  "pack_type": "runtime_attempt_status_after_failure",
+  "parent_pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_v1",
+  "predecessor_label": "LATEST-86",
+  "headline": "Five APF2 native physical-likelihood smoke runtime attempts (v1 + repair v1 + repair v2 + repair v3 + repair v4) all ended at EXCEPTION before APF2 monkeypatch could fire; the gate progression A\u2192B\u2192C\u2192A reveals tau as central friction (canonical CAMB name is tau_reio; either keep tau in extra_args under the canonical name, or route tau as a sampled/input parameter through planck_2018_lowl.EE which actually consumes it); G5 of six-gate ladder remains OPEN.",
+  "attempts": [
+    {
+      "attempt_id": 1,
+      "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_v1",
+      "result_zip": "APF_APF2_NATIVE_LIKELIHOOD_SMOKE_RESULTS_20260515_071410.zip",
+      "status": "EXCEPTION",
+      "error": "LoggedError(\"Could not find anything to use input parameter(s) {'tau', 'logA'}.\")",
+      "apf2_injection_count_total": 0,
+      "cobaya_import_ok": true,
+      "camb_import_ok": true,
+      "patched_set_cosmology": true,
+      "patched_set_dark_energy": true,
+      "gate_class": "unused_fixed_input_parameters",
+      "diagnosis": "Cobaya dependency graph rejected fixed input parameters {'tau','logA'} before APF2 CAMB injection could occur."
+    },
+    {
+      "attempt_id": 2,
+      "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_v1",
+      "result_zip": "APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_RESULTS_20260515_071839.zip",
+      "status": "EXCEPTION",
+      "error": "LoggedError(\"Could not find anything to use input parameter(s) {'tau', 'nnu', 'mnu'}.\")",
+      "apf2_injection_count_total": 0,
+      "cobaya_import_ok": true,
+      "camb_import_ok": true,
+      "patched_set_cosmology": true,
+      "patched_set_dark_energy": true,
+      "parameterization": "fixed_logA_to_As_lambda_plus_fixed_tau_mnu_nnu",
+      "repair_basis": "Cobaya rejected unused tau/logA in v1; this uses logA -> As lambda as in working control MCMC.",
+      "gate_class": "unused_fixed_input_parameters",
+      "diagnosis": "Repair removed logA from unused set via logA->As lambda; Cobaya then rejected {'tau','nnu','mnu'} for the same structural reason."
+    },
+    {
+      "attempt_id": 3,
+      "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_v2",
+      "result_zip": "APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V2_RESULTS_20260515_072236.zip",
+      "status": "EXCEPTION",
+      "error": "LoggedError(\"The following expected sampled parameters (or their aliases) were not found : {'A_planck': ['calPlanck'], 'amp_143x217': [], 'amp_217': [], 'n_217': [], 'calEE': [], 'calTE': [], 'n_143x217': [], 'amp_143': [], 'n_143': []}\")",
+      "apf2_injection_count_total": 0,
+      "cobaya_import_ok": true,
+      "camb_import_ok": true,
+      "patched_set_cosmology": true,
+      "patched_set_dark_energy": true,
+      "parameterization": "fixed_logA_to_As_lambda; tau_mnu_nnu_moved_to_CAMB_extra_args_not_params",
+      "camb_extra_args_keys": [
+        "dark_energy_model",
+        "mnu",
+        "nnu",
+        "tau"
+      ],
+      "repair_basis": "v1 rejected tau/mnu/nnu as unused graph inputs; v2 removes them from params and supplies fixed constants through CAMB extra_args/defaults.",
+      "gate_class": "missing_planck_nuisance_calibration_parameters",
+      "diagnosis": "v2 cleared the unused-fixed-input gate by moving tau/nnu/mnu to extra_args; Cobaya now rejects at the next gate \u2014 Planck likelihoods (NPIPE highl CamSpec + TE/EE calibration) expect sampled nuisance parameters {A_planck/calPlanck, amp_143x217, amp_217, n_217, calEE, calTE, n_143x217, amp_143, n_143} that are not declared in the params block."
+    },
+    {
+      "attempt_id": 4,
+      "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_v3",
+      "result_zip": "APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V3_RESULTS_20260515_072613.zip",
+      "status": "EXCEPTION",
+      "error": "LoggedError('Some of the parameters passed to CAMB were not recognized: Unrecognized parameter: tau')",
+      "apf2_injection_count_total": 0,
+      "cobaya_import_ok": true,
+      "camb_import_ok": true,
+      "patched_set_cosmology": true,
+      "patched_set_dark_energy": true,
+      "parameterization": "fixed_logA_to_As_lambda; tau_mnu_nnu_in_CAMB_extra_args; fixed_planck_camspec_nuisance_params_added",
+      "fixed_planck_nuisance_keys": [
+        "A_planck",
+        "amp_143",
+        "amp_143x217",
+        "amp_217",
+        "calEE",
+        "calTE",
+        "n_143",
+        "n_143x217",
+        "n_217"
+      ],
+      "repair_basis": "v2 rejected missing Planck/CamSpec nuisance inputs; v3 adds fixed one-point nuisance values while keeping APF2 coefficients frozen.",
+      "gate_class": "camb_unrecognized_parameter_name",
+      "diagnosis": "v3 cleared the missing-Planck-nuisance gate by adding fixed values for A_planck/amp_143/etc.; Cobaya Model now builds and reaches logposterior({}); CAMB then rejects 'tau' as an unrecognized parameter name (CAMB expects 'tau_reio' in extra_args, not 'tau'). This is the first attempt to reach Cobaya's compute path \u2014 but CAMB's set_params() validation fires before set_dark_energy() executes, so the APF2 monkeypatch still does not fire."
+    },
+    {
+      "attempt_id": 5,
+      "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_v4",
+      "result_zip": "APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V4_RESULTS_20260515_073503.zip",
+      "status": "EXCEPTION",
+      "error": "LoggedError(\"Could not find anything to use input parameter(s) {'tau'}.\")",
+      "apf2_injection_count_total": 0,
+      "cobaya_import_ok": true,
+      "camb_import_ok": true,
+      "patched_set_cosmology": true,
+      "patched_set_dark_energy": true,
+      "parameterization": "fixed_logA_to_As_lambda; active_tau_one_point_input; mnu_nnu_in_CAMB_extra_args; fixed_planck_camspec_nuisance_params",
+      "active_input_params": [
+        "tau"
+      ],
+      "camb_extra_args_keys": [
+        "dark_energy_model",
+        "mnu",
+        "nnu"
+      ],
+      "repair_basis": "v3 passed tau through CAMB extra_args and CAMB rejected it; v4 routes tau as an active one-point Cobaya input while keeping mnu/nnu in CAMB extra_args and APF2 coefficients frozen.",
+      "gate_class": "unused_fixed_input_parameters (circling back to Gate A)",
+      "diagnosis": "v4 moved tau back to Cobaya params as a one-point input to clear v3's CAMB-side rejection. Cobaya now rejects tau again as unused: no theory or likelihood module consumes 'tau' under the apf2_w2_tabulated parameterization (CAMB consumes 'tau_reio' not 'tau'; planck_2018_lowl.EE would consume 'tau' but its dependency-graph node is not wired through the current YAML). This is Gate A circling back: the route 'tau -> params' fails for the same reason as attempts 1+2. The structural fix is to use canonical CAMB name 'tau_reio' in extra_args (closing both gates simultaneously)."
+    }
+  ],
+  "native_stack_initialized": true,
+  "native_stack": [
+    "bao.desi_dr2",
+    "planck_2018_lowl.TT",
+    "planck_2018_lowl.EE",
+    "planck_NPIPE_highl_CamSpec.TTTEEE",
+    "planck_2018_lensing.native"
+  ],
+  "structural_gate_class_progression": [
+    "unused_fixed_input_parameters (attempts 1+2)",
+    "missing_planck_nuisance_calibration_parameters (attempt 3)",
+    "camb_unrecognized_parameter_name (attempt 4)",
+    "unused_fixed_input_parameters (attempt 5, Gate A circles back)"
+  ],
+  "structural_gate_named_next": "tau_canonical_name_routing",
+  "structural_gate_description": "Five attempts confirm that tau is the central friction. CAMB rejects 'tau' in extra_args (Gate C, attempt 4) because the canonical CAMB API name is 'tau_reio'. Cobaya rejects 'tau' as a one-point input parameter (Gate A repeated, attempt 5) because no consuming theory/likelihood is wired through the current YAML. The structural fix is either (i) use 'tau_reio' as the canonical name in extra_args, OR (ii) route tau through planck_2018_lowl.EE (which actually consumes the reionization optical depth via its likelihood input list) and ensure the dependency graph connects.",
+  "exports": {
+    "Export_dark_RouteC_APF2_native_likelihood_smoke": 0,
+    "Export_dark_RouteC_APF2_native_likelihood_smoke_after_attempt_status_audit": 1,
+    "Export_dark_RouteC_APF2_Cobaya_likelihood_smoke": 1,
+    "Export_dark_RouteC_APF2_Cobaya_adapter_smoke": 1,
+    "Export_dark_RouteC_APF2_direct_CAMB_smoke": 1,
+    "Export_dark_RouteC_APF2_tabulated_w2_source_table": 1,
+    "Export_dark_RouteC_APF2_Cobaya_bridge": 0,
+    "Export_dark_RouteC_APF2_posterior_P": 0,
+    "Export_dark_RouteC_MCMC_posterior_P": 0,
+    "Export_dark_robust_empirical_P": 0
+  },
+  "guardrails": {
+    "coefficients_frozen": true,
+    "apf2_coefficients_refit": false,
+    "smoke_not_posterior": true,
+    "monkeypatch_never_fired": true,
+    "launch_vs_result_discipline_preserved": true,
+    "smoke_vs_physical_discipline_preserved": true
+  },
+  "six_gate_ladder_state": {
+    "G1_source_table": "CLOSED (LATEST-83)",
+    "G2_camb_api_detect": "CLOSED (LATEST-83)",
+    "G3_direct_camb_background": "CLOSED (LATEST-83)",
+    "G4_cobaya_adapter": "CLOSED (LATEST-84)",
+    "G4_5_cobaya_external_likelihood": "CLOSED (LATEST-85)",
+    "G5_native_smoke_physical_likelihood": "OPEN \u2014 LATEST-86 launch + LATEST-87 five runtime attempts all EXCEPTION at Cobaya/CAMB parameter validation (Gate A\u2192B\u2192C\u2192A progression centered on tau routing); attempt 4 reached Cobaya Model.logposterior() but CAMB rejected 'tau' name; attempt 5 circled back to Gate A by moving tau to params",
+    "G6_pantheonplus_smoke": "OPEN"
+  },
+  "forbidden_claims": [
+    "Do not claim G5 closure.",
+    "Do not claim APF2 native physical-likelihood smoke PASS.",
+    "Do not claim APF2 posterior-P.",
+    "Do not claim robust empirical-P.",
+    "Do not claim the monkeypatch fired."
+  ],
+  "next_pack_named": "APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_TAU_CANONICAL_ROUTING_v5",
+  "empirical_needle_unchanged": "LATEST-81 4-of-4 profile-probe ACCEPT at 95% remains the strongest cross-SN reading.",
+  "provenance": {
+    "attempt_1_result_zip_banked_to": "__APF Library/Evidence/APF_APF2_NATIVE_LIKELIHOOD_SMOKE_RESULTS_20260515_071410.zip",
+    "attempt_2_repair_result_zip_banked_to": "__APF Library/Evidence/APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_RESULTS_20260515_071839.zip",
+    "attempt_3_repair_v2_result_zip_banked_to": "__APF Library/Evidence/APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V2_RESULTS_20260515_072236.zip",
+    "attempt_4_repair_v3_result_zip_banked_to": "__APF Library/Evidence/APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V3_RESULTS_20260515_072613.zip",
+    "launch_pack_zip_banked_to": "__APF Library/Evidence/APF_DARK_SECTOR_ROUTE_C_APF2_NATIVE_LIKELIHOOD_SMOKE_v1.zip",
+    "attempt_5_repair_v4_result_zip_banked_to": "__APF Library/Evidence/APF_APF2_NATIVE_LIKELIHOOD_SMOKE_REPAIR_V4_RESULTS_20260515_073503.zip"
+  }
+}

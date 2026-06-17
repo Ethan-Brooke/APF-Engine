@@ -1,0 +1,85 @@
+{
+  "pack": "APF_DARK_SECTOR_ROUTE_C_APF2_TABULATED_W2_COBAYA_BRIDGE_v1",
+  "latest_n": "LATEST-83",
+  "session_marker": "2026-05-15 06:50 UTC (8.5 hours after LATEST-82 MCMC launch pack)",
+  "bundle_position": "122 -> 123 packs",
+  "headline": "APF2 frozen tabulated w_2(a) source table (728 rows) banked; CAMB 1.6.6 DarkEnergyPPF direct-smoke PASS (derived age 14.31 Gyr finite); G1+G2+G3 of the six-gate ladder closed by the smoke result; Cobaya adapter + per-dataset smokes (G4-G6) remain open.",
+  "pack_type": "bridge_launch_with_camb_direct_smoke_pass",
+  "parent_packs": [
+    "APF_DARK_SECTOR_ROUTE_C_PROFILE_PROBE_ALL_DATASETS_v1 (LATEST-81; empirical anchor)",
+    "APF_DARK_SECTOR_ROUTE_C_MCMC_POSTERIOR_LAUNCH_v1 (LATEST-82; control runtime + adjudicator)"
+  ],
+  "frozen_w2_law": {
+    "formula": "w_2(a) = -1 + 3/61 - (16/61) a - (21/8) a (a - 1/3) (1 - a)",
+    "coefficients_frozen": true,
+    "coefficients_refit": false,
+    "cpl_surrogate_allowed_as_apf2": false,
+    "structural_origin": "LATEST-62 endpoint-uniqueness + barycentric-pivot + capacity-response-ratio derivation"
+  },
+  "source_table": {
+    "path": "tables/apf2_w2_table.csv",
+    "rows": 728,
+    "a_min": 0.0001,
+    "a_max": 1.0,
+    "a_monotone_increasing": true,
+    "w2_at_a_1": -1.21311475409836,
+    "w2_anchor_at_a_1_exact": "-74/61",
+    "constant_coefficient_exact": "-58/61",
+    "linear_coefficient_exact": "-16/61",
+    "cubic_coefficient_exact": "-21/8"
+  },
+  "camb_direct_smoke": {
+    "camb_version": "1.6.6",
+    "dark_energy_class_used": "DarkEnergyPPF",
+    "has_set_w_a_table": true,
+    "derived_age_Gyr": 14.311389427399952,
+    "finite_age": true,
+    "status": "PASS"
+  },
+  "six_gate_ladder": {
+    "G1_source_table": "CLOSED (exact frozen coefficients + dense 728-row monotone-a table)",
+    "G2_camb_api_detect": "CLOSED (DarkEnergyPPF.has_set_w_a_table == true)",
+    "G3_direct_camb_background": "CLOSED (derived age 14.31 Gyr finite; smoke status PASS)",
+    "G4_cobaya_adapter": "OPEN (next pack named APF_DARK_SECTOR_ROUTE_C_APF2_W2_COBAYA_ADAPTER_SMOKE_v1)",
+    "G5_native_smoke": "OPEN",
+    "G6_pantheonplus_smoke": "OPEN"
+  },
+  "exports_promoted": {
+    "Export_dark_RouteC_APF2_tabulated_w2_source_table": 1,
+    "Export_dark_RouteC_APF2_direct_CAMB_smoke": 1
+  },
+  "exports_preserved_non_claims": {
+    "Export_dark_RouteC_APF2_Cobaya_bridge": 0,
+    "Export_dark_RouteC_APF2_posterior_P": 0,
+    "Export_dark_RouteC_MCMC_posterior_P": 0,
+    "Export_dark_robust_empirical_P": 0,
+    "Export_APF2_full_shape_likelihood_P": 0,
+    "Export_collaboration_NERSC_reproduction": 0
+  },
+  "forbidden_claims_verbatim": [
+    "Do not claim APF2 MCMC posterior P from this pack.",
+    "Do not claim robust empirical P from this pack.",
+    "Do not use a fitted CPL surrogate and call it APF2 fixed-w2.",
+    "Do not change the APF2 coefficients during runtime hardening."
+  ],
+  "upstream_verifier": {
+    "path": "source_files/VERIFIER_OUTPUT.txt",
+    "result": "APF2_TABULATED_W2_COBAYA_BRIDGE_PASS",
+    "checks": "30/30 PASS"
+  },
+  "upstream_evidence_provenance": {
+    "evidence_dir": "__APF Library/Evidence/",
+    "zip": "APF_APF2_TABULATED_W2_CAMB_SMOKE_RESULTS_20260515_065010.zip",
+    "zip_size_bytes": 2586503
+  },
+  "upstream_pack_chain": [
+    "LATEST-62 (2026-05-12): APF2 first-order DESY5 ACCEPT at 95%",
+    "LATEST-74 (2026-05-12): APF2 cross-SN audit 4-of-4 ACCEPT at 95% (polish-bestfit)",
+    "LATEST-75 (2026-05-12): APF2 hardened polish 3-of-3 ACCEPT at 95%",
+    "LATEST-80 (2026-05-14): APF2 V4 systematic-perturbation grid 30/30 ACCEPT",
+    "LATEST-81 (2026-05-14 EVENING+): APF2 profile-probe 4-of-4 ACCEPT at 95%",
+    "LATEST-82 (2026-05-14 22:12 UTC): MCMC posterior gate launch infrastructure",
+    "LATEST-83 (2026-05-15 06:50 UTC): APF2 tabulated-w2 CAMB direct-smoke bridge"
+  ],
+  "honest_disposition": "This pack advances the runtime-bridge layer at gate 3 (DESI full-shape exact runtime, environmentally blocked at LATEST-74). APF2's structurally-derived w_2(a) now demonstrably injects into the standard cosmological-likelihood code without refit, which is the load-bearing prerequisite. The empirical substance is unchanged from LATEST-81; the discipline ladder advances by one rung at the bridge layer."
+}

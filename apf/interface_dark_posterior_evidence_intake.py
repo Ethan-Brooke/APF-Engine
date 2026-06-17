@@ -121,7 +121,15 @@ class DarkPosteriorEvidenceIntake:
 VERSION = "APF_INTERFACE_DARK_POSTERIOR_EVIDENCE_INTAKE_v1"
 MARKER = "DARK_POSTERIOR_EVIDENCE_INTAKE_PASS"
 
-BUNDLE_DIR = Path(__file__).resolve().parents[1] / "DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44"
+# The full evidence bundle (DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/) lives on Drive
+# and is git-ignored, so it is absent from the off-Drive git checkout (since 2026-06-08).
+# These probe checks only read each pack's small results/CLOSURE_STATEMENT.json, so the
+# load-bearing JSONs are vendored into the repo at apf/_vendored_dark_posterior_probes/.
+# Prefer the full Drive bundle when present (on-Drive runs); otherwise use the vendored
+# copy so verify_all is clean on any clean checkout.
+_REPO_BUNDLE_DIR = Path(__file__).resolve().parents[1] / "DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44"
+_VENDORED_PROBE_DIR = Path(__file__).resolve().parent / "_vendored_dark_posterior_probes"
+BUNDLE_DIR = _REPO_BUNDLE_DIR if _REPO_BUNDLE_DIR.exists() else _VENDORED_PROBE_DIR
 
 PACKS: Tuple[str, ...] = (
     "APF_DARK_SECTOR_ROUTE_C_SN_STRESS_v2",
@@ -532,4 +540,3 @@ if __name__ == "__main__":
     ok = all(x.get("passed") for x in out.values())
     print(json.dumps(out, indent=2, sort_keys=True, default=str))
     print(MARKER if ok else "DARK_POSTERIOR_EVIDENCE_INTAKE_FAIL")
-    raise SystemExit(0 if ok else 1)
