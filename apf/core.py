@@ -3747,46 +3747,47 @@ def check_L_Pi():
     check(omega_joint_actual != omega_diag_sum,
           "E_{d1,d2} not in A_diag (cost mismatch) => F_Pi not in A_diag")
 
-    # --- Step 4: F_Pi is self-adjoint ---
-    # OR2: E_{d1,d2}^* = E_{d1,d2} (joint generator is primitive, OR2 applies).
-    # T_adj: E_d1^* = E_d1, E_d2^* = E_d2.
-    # F_Pi^* = (E_{d1,d2} - E_d1 - E_d2)^* = E_{d1,d2} - E_d1 - E_d2 = F_Pi.
-    # Represent in the 3-sector model: M_d1=e1, M_d2=e2, Pi=e3.
-    # E_{d1,d2} must activate both sectors AND draw on Pi.
-    # Minimal self-adjoint operator doing this: sigma_x/2 shifted to the Pi<->sector coupling.
-    # Use: E_{d1,d2} = E_d1 + E_d2 + F_Pi where F_Pi = [[0,0,1],[0,0,0],[1,0,0]]/sqrt(2) (scaled)
-    # For the self-adjointness check use the exact definition.
-
+    # --- Step 4: F_Pi is self-adjoint and OFF-DIAGONAL ---
+    # OR2: E_{d1,d2}^* = E_{d1,d2} (joint generator primitive).  T_adj: E_d^* = E_d.
+    # F_Pi^* = (E_{d1,d2} - E_d1 - E_d2)^* = F_Pi.
+    # 3-sector model: M_d1=e1, M_d2=e2, Pi=e3.  By Lemma 2 the joint generator
+    # E_{d1,d2} engages the pool Pi OUTSIDE M_d1 (+) M_d2, so F_Pi COUPLES both
+    # individual sectors to Pi (off-diagonal blocks).  F_Pi is NOT diagonal: a
+    # diagonal F_Pi would commute with E_d1 and could not make A noncommutative --
+    # that is the whole content of check_T_alg_FPi.  Faithful self-adjoint form
+    # (couples e1<->Pi and e2<->Pi symmetrically):
     Ed1 = _mat([[1,0,0],[0,0,0],[0,0,0]])
     Ed2 = _mat([[0,0,0],[0,1,0],[0,0,0]])
-    # F_Pi: self-adjoint, acts on Pi (e3), maps to M_d1 sector (e1).
-    # Simplest non-trivial self-adjoint off-diagonal: symmetric coupling e1<->e3.
     F_Pi_scale = float(Delta / C)
-    F_Pi = _mscale(F_Pi_scale, _mat([[0,0,1],[0,0,0],[1,0,0]]))
+    F_Pi = _mscale(F_Pi_scale, _mat([[0,0,1],[0,0,1],[1,1,0]]))
 
     check(_aclose(F_Pi, _dag(F_Pi)), "F_Pi is self-adjoint (F_Pi^* = F_Pi)")
     check(_fnorm(F_Pi) > 0, "F_Pi is nonzero")
 
-    # --- Step 5: F_Pi acts nontrivially on Pi, vanishes on M_d1+M_d2 ---
-    v_sector = [1, 0, 0]   # vector in M_d1 (flat)
+    # --- Step 5: F_Pi has NO within-sector action but COUPLES M_d1+M_d2 to Pi ---
+    # Corrigendum (2026-06-17): earlier code mis-stated this as "F_Pi annihilates
+    # M_d1+M_d2" and stored a DIAGONAL diag(0,0,alpha).  That form commutes with
+    # E_d1 and FALSIFIES the noncommutativity L_Pi exists to establish (a
+    # self-adjoint operator annihilating M_d1 necessarily commutes with E_d1).
+    # Correct property: the within-sector block vanishes (no within-sector cost --
+    # that is E_d1, E_d2), while F_Pi couples the sectors to the joint pool Pi.
     v_pi = [0, 0, 1]       # vector in Pi (flat)
-    zero3v = [0, 0, 0]
+    # (a) no within-sector action: P F_Pi P = 0 where P = E_d1 + E_d2
+    P_sectors = _madd(Ed1, Ed2)
+    within = _mm(_mm(P_sectors, F_Pi), P_sectors)
+    check(_aclose(within, _zeros(3, 3)),
+          "F_Pi has zero within-sector block (no within-sector cost; that is E_d1,E_d2)")
+    # (b) F_Pi engages the pool sector Pi (Lemma 2)
+    _fpi_on_pi = _mv(F_Pi, v_pi)
+    check(sum(abs(x)**2 for x in _fpi_on_pi)**0.5 > 0, "F_Pi engages the pool sector Pi (acts on e3)")
+    # (c) load-bearing: F_Pi couples the sectors to Pi -> does NOT commute with E_d
+    check(_fnorm(_msub(_mm(Ed1, F_Pi), _mm(F_Pi, Ed1))) > 0,
+          "[E_d1, F_Pi] != 0 (F_Pi couples M_d1 to Pi -- off-diagonal, load-bearing)")
+    check(_fnorm(_msub(_mm(Ed2, F_Pi), _mm(F_Pi, Ed2))) > 0,
+          "[E_d2, F_Pi] != 0 (F_Pi couples M_d2 to Pi)")
 
-    # Correct construction: F_Pi vanishes on M_d1+M_d2, acts on Pi.
-    # A self-adjoint operator with F_Pi|_{M_d1+M_d2}=0 and F_Pi|_Pi != 0:
-    # F_Pi = diag(0,0,alpha) maps e3->alpha*e3, vanishes on e1,e2. Self-adjoint.
-    F_Pi_correct = _mscale(F_Pi_scale, _mat([[0,0,0],[0,0,0],[0,0,1]]))
-
-    check(_aclose(F_Pi_correct, _dag(F_Pi_correct)), "F_Pi (corrected) is self-adjoint")
-    Fp_on_sector12 = _mv(F_Pi_correct, v_sector)
-    Fp_on_pi_correct = _mv(F_Pi_correct, v_pi)
-    check(_aclose(Fp_on_sector12, zero3v),
-          "F_Pi vanishes on M_d1+M_d2 sector (Step 5 elimination)")
-    check(_fnorm(F_Pi_correct) > 0,
-          "F_Pi acts nontrivially on Pi (Step 5)")
-
-    # Store for T_alg check
-    dag_put('F_Pi', F_Pi_correct)
+    # Store the LOAD-BEARING off-diagonal F_Pi for the T_alg check.
+    dag_put('F_Pi', F_Pi)
     dag_put('Ed1_LPi', Ed1)
     dag_put('Ed2_LPi', Ed2)
     dag_put('Delta_LPi', float(Delta / C))
@@ -3803,8 +3804,9 @@ def check_L_Pi():
             'but Delta > 0 means eps({d1,d2}) > eps(d1)+eps(d2). Contradiction. '
             'Therefore F_Pi := E_{d1,d2} - E_d1 - E_d2 is nonzero, off-diagonal, and '
             'self-adjoint (by OR2 applied to joint generator + T_adj linearity).  By '
-            'Lemma 2 (L_threat_substrate_realization), F_Pi vanishes on M_d1+M_d2 but '
-            'acts nontrivially on the active-pool sector Pi.  This is the generator '
+            'Lemma 2 (L_threat_substrate_realization), F_Pi has no within-sector '
+            'action but COUPLES M_d1+M_d2 to the active-pool sector Pi (off-diagonal), '
+            'so [E_d, F_Pi] != 0.  This is the generator '
             'that makes A noncommutative (check_T_alg_FPi).  Phase 19e refactor: IJC '
             'premise made explicit; epistemic tag promoted [P] → [P+IJC]; (Sep) parallel '
             'witness in check_T_no_IJC_no_noncommutativity (Phase 19a).'
@@ -3818,8 +3820,9 @@ def check_L_Pi():
             'omega_diag_sum': str(omega_diag_sum),
             'omega_joint_actual': str(omega_joint_actual),
             'F_Pi_self_adjoint': True,
-            'F_Pi_vanishes_on_sectors': True,
-            'F_Pi_nonzero_on_Pi': True,
+            'F_Pi_within_sector_block_zero': True,
+            'F_Pi_offdiagonal_couples_to_Pi': True,
+            'F_Pi_noncommutes_with_E_d': True,
         },
     )
 
@@ -3856,7 +3859,7 @@ def check_T_alg_FPi():
         # Fallback: reconstruct
         Ed1 = _mat([[1,0,0],[0,0,0],[0,0,0]])
         Ed2 = _mat([[0,0,0],[0,1,0],[0,0,0]])
-        F_Pi = _mscale(0.2, _mat([[0,0,0],[0,0,0],[0,0,1]]))
+        F_Pi = _mscale(0.2, _mat([[0,0,1],[0,0,1],[1,1,0]]))  # off-diagonal (load-bearing), matches L_Pi
 
     # --- Direct commutator computation in 3-sector model ---
     # v in Pi = e3 = [0,0,1] (flat)
@@ -3877,10 +3880,16 @@ def check_T_alg_FPi():
     comm_on_v = [Ed1_F_Pi_v[i] - F_Pi_Ed1_v[i] for i in range(3)]
     comm_norm_on_v = sum(abs(x)**2 for x in comm_on_v)**0.5
 
-    # For our diagonal F_Pi = diag(0,0,scale), E_d1 projects onto e1.
-    # F_Pi(e3) = scale*e3, E_d1(scale*e3) = 0. So commutator on e3 is 0.
-    # We need F_Pi that couples Pi to M_d1 sector. Use off-diagonal version:
-    F_Pi_od = _mscale(0.2, _mat([[0,0,1],[0,0,0],[1,0,0]]))   # symmetric e1<->e3
+    # CORRIGENDUM GUARD (2026-06-17): the STORED F_Pi is now the load-bearing
+    # off-diagonal operator, so [E_d1, F_Pi] != 0 already holds on Pi with the
+    # stored form.  (Previously the DAG stored a diagonal diag(0,0,a) for which
+    # this commutator is 0, and noncommutativity was shown only with a locally
+    # rebuilt form; that storage bug is fixed in check_L_Pi.)
+    check(comm_norm_on_v > 1e-9,
+          "[E_d1, F_Pi](v_Pi) != 0 using the STORED F_Pi (off-diagonal, load-bearing)")
+
+    # Cross-check with the minimal single-sector off-diagonal form e1<->e3:
+    F_Pi_od = _mscale(0.2, _mat([[0,0,1],[0,0,0],[1,0,0]]))   # e1<->e3
     check(_aclose(F_Pi_od, _dag(F_Pi_od)), "Off-diagonal F_Pi is self-adjoint")
 
     F_Pi_od_v = _mv(F_Pi_od, v_pi)           # = [0.2, 0, 0]  (maps e3 -> 0.2*e1)
