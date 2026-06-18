@@ -8953,6 +8953,289 @@ def check_L_Tomita_finite():
     )
 
 
+def check_T_interface_modular_period():
+    """T_interface_modular_period: The Interface's Modular Period T0 = 2pi/(beta eps*) [P].
+
+    The off-saturation interface Gibbs state (kappa=2 binary modes,
+    rho = e^{-beta H}/Z, H = -eps* n, beta = eps*/ln d_eff) has a type
+    III_lambda modular structure with lambda = e^{-beta eps*} (L_algebra_type
+    [P]). That classification records ONE number, lambda. Its modular flow
+    sigma_t(A) = rho^{it} A rho^{-it} (L_Tomita_finite [P]) carries a SECOND,
+    independent invariant the bank does not record: it is PERIODIC, with
+    primitive period
+
+        T0 = 2*pi / |ln lambda| = 2*pi / (beta eps*) ~= 29.06.
+
+    Every eigenvalue ratio of rho is a power of the single lambda, so the flow
+    returns to the identity exactly when t*|ln lambda| in 2*pi*Z; the lambda^1
+    ratio is present at every interface size, so T0 is PRIMITIVE (no shorter
+    sub-multiple) and N-INDEPENDENT (the same T0 at one mode and at an
+    interface of many modes).
+
+    SCOPE (narrowed; cold-audited 2026-06-18):
+      - FINITE-EXACT [P], the new fact: the periodicity sigma_{T0} = id with
+        sigma_{T0/2} != id, primitive and N-independent.
+      - SUPPORTING, not headline: the asymptotic ratio set S(M) = {lambda^n} u {0}
+        is already in the modular-triple witness; the factor property (a matrix
+        algebra is always a factor) is textbook.
+      - LIMIT-ONLY [P_structural]: reading T0 as the Connes T-invariant
+        T(M) = (2*pi/|ln lambda|)Z is the Araki-Woods/Connes limit statement,
+        the same standing L_algebra_type already carries. At finite N the
+        algebra is type I, where every modular time is inner; the finite-exact
+        fact is the periodicity, not its T-invariant reading.
+      - No physical-time claim: T0 is the period of the Tomita modular
+        automorphism (T_no_physical_time_flow_overclaim respected); "clock
+        period" names the invariant, not physical time.
+
+    Witness: interface_factor_connes_invariants_witness.py (18/18).
+    """
+    import numpy as np
+    import math as _m
+
+    d_eff     = 102                                              # L_self_exclusion [P]
+    eps_star  = 1.0                                              # T_epsilon [P], normalized
+    beta_phys = eps_star / _m.log(d_eff)                         # L_beta_temp [P]
+    lambda_val = _m.exp(-beta_phys * eps_star)
+    abs_ln = abs(_m.log(lambda_val))                            # = beta_phys*eps_star
+    T0 = 2 * _m.pi / abs_ln
+
+    check(0 < lambda_val < 1,
+          f"Powers parameter lambda = e^(-beta eps*) = {lambda_val:.6f} in (0,1)")
+    check(abs(T0 - 2 * _m.pi / (beta_phys * eps_star)) < 1e-12,
+          f"T0 = 2pi/(beta eps*) = {T0:.4f}")
+    check(abs(T0 - 29.0596) < 1e-3, f"T0 ~= 29.06 (value {T0:.4f})")
+
+    def site():
+        H = np.diag([0.0, -eps_star])
+        w = np.exp(-beta_phys * np.diag(H))
+        rho = np.diag(w / w.sum())
+        n = np.diag([0.0, 1.0])
+        return rho, n
+
+    def build(N):
+        rho1, _n = site()
+        R = rho1.copy()
+        for _ in range(N - 1):
+            R = np.kron(R, rho1)
+        return R
+
+    def sigma(rho, A, t):
+        w, U = np.linalg.eigh(rho)
+        rit  = (U * (w ** (1j * t)))  @ U.conj().T
+        rmit = (U * (w ** (-1j * t))) @ U.conj().T
+        return rit @ A @ rmit
+
+    # primitivity source: smallest non-zero modular frequency = |ln lambda|
+    rho1, _n = site()
+    p = np.sort(np.diag(rho1).real)
+    check(abs(abs(_m.log(p[1] / p[0])) - abs_ln) < 1e-12,
+          "smallest modular frequency = |ln lambda| -> period primitive")
+
+    # the SAME T0 is the primitive period at every interface size N (N-independent)
+    rng = np.random.RandomState(7)
+    for N in (1, 2, 3):
+        d = 2 ** N
+        rho = build(N)
+        A = rng.randn(d, d) + 1j * rng.randn(d, d)
+        check(np.allclose(sigma(rho, A, T0), A, atol=1e-9),
+              f"N={N}: sigma_(T0)(A) = A  (modular flow periodic, period T0)")
+        check(not np.allclose(sigma(rho, A, T0 / 2), A, atol=1e-6),
+              f"N={N}: sigma_(T0/2)(A) != A  (T0 primitive, not a sub-multiple)")
+
+    return _result(
+        name='T_interface_modular_period: The Interface Modular Period T0 = 2pi/(beta eps*) [P]',
+        tier=4, epistemic='P',
+        summary=(
+            'The off-saturation interface Gibbs state has a type III_lambda '
+            'modular flow (L_algebra_type, L_Tomita_finite) whose primitive '
+            'period is a new, finite-exact invariant the bank did not record: '
+            f'T0 = 2pi/|ln lambda| = 2pi/(beta eps*) = {T0:.4f}, '
+            f'lambda = e^(-beta eps*) = {lambda_val:.6f}. Verified sigma_(T0)=id, '
+            'sigma_(T0/2)!=id at interfaces of N=1,2,3 modes to 1e-9; primitive '
+            '(lambda^1 ratio present at every size) and N-independent. '
+            'The S(M)={lambda^n}u{0} ratio set and the factor property are '
+            'supporting (already on file / textbook); the Connes T-invariant '
+            'reading T(M)=(2pi/|ln lambda|)Z is the limit statement [P_structural]. '
+            'No physical-time claim (Tomita automorphism period).'
+        ),
+        key_result=(
+            f'Interface modular period T0 = 2pi/(beta eps*) = {T0:.4f}, '
+            f'primitive and N-independent. [P]'
+        ),
+        dependencies=['L_algebra_type', 'L_Tomita_finite', 'L_beta_temp',
+                      'L_count', 'L_self_exclusion'],
+        artifacts={
+            'modular_period_T0': round(T0, 4),
+            'lambda':            round(lambda_val, 6),
+            'primitive':         'lambda^1 ratio present at every N',
+            'N_independent':     True,
+            'limit_reading':     'Connes T-invariant T(M)=(2pi/|ln lambda|)Z [P_structural]',
+            'witness':           'interface_factor_connes_invariants_witness.py (18/18)',
+        },
+    )
+
+
+def check_T_number_u1_is_interface_modular_flow():
+    """T_number_u1_is_interface_modular_flow: The Number-Phase U(1) IS the Interface's Modular Flow [P].
+
+    On the off-saturation interface, the number-phase U(1)
+        alpha_theta(A) = e^{i theta N} A e^{-i theta N},   N = sum_i n_i,
+    coincides EXACTLY, on every local operator, with the modular flow
+    reparametrized by the interface temperature:
+        alpha_theta = sigma_{theta/(beta eps*)}.
+    (Per site rho^{is} = phase * e^{i s beta eps* n}; the phases cancel under
+    conjugation.) One full U(1) turn theta:0->2pi is exactly one modular period
+    T0 (T0 * beta eps* = 2*pi). So the interface's gauge circle and its modular
+    (thermal) clock are the SAME one-parameter group: the number-phase U(1) is
+    the interface's thermal time, NOT a distinct outer automorphism. This
+    answers, in the negative, the from-above arc's question of whether the
+    neutral number-phase U(1) is distinct from the modular flow.
+
+    SCOPE (narrowed; cold-audited 2026-06-18):
+      - FINITE-EXACT [P]: the coincidence alpha_theta = sigma_{theta/(beta eps*)},
+        KMS-invariance phi(alpha_theta(A)) = phi(A), the GNS implementation
+        U_theta Omega = Omega, the genuine 2pi-periodic U(1) (N integer-valued),
+        and the clock match T0*(beta eps*) = 2*pi.
+      - LIMIT-ONLY [P_structural]: the reading "outer for theta not in 2pi Z,
+        hence the number-phase U(1) is the modular flow and not a distinct outer
+        automorphism" (Connes T-invariant of R_lambda; same standing as
+        L_algebra_type).
+      - NOT CLAIMED -- a condensate no-go. phi o alpha_theta = phi is automatic
+        modular invariance and does NOT establish absence of spontaneous
+        breaking; SSB hinges on factor-vs-center (extremality of phi /
+        triviality of the GNS centre) on the III_lambda factor, which is NOT
+        constructed. The condensate question stays open at that hinge.
+        CONDITIONAL COROLLARY (cross-ref, NOT a banked no-go): IF that
+        factor-ness holds (Araki-Woods III_lambda, a [P_structural] import on
+        the native lambda -- same standing as L_algebra_type), THEN Takesaki
+        uniqueness of the modular-KMS state on a factor composes with the
+        coincidence above to give NO number-phase condensate on the M_2-ITPFI
+        interface algebra (Fock-ODLRO out of scope). This stays CONDITIONAL on
+         the un-constructed factor-ness. TWO 2026-06-18 build attempts were both
+         cold-audit REDUCED: (i) the import route (factor-ness cited, not built);
+         (ii) the native clustering/tail route (product state -> exact clustering
+         -> trivial tail -> factor), which REPRODUCES Araki-Woods rather than
+         reducing it (centre-subset-tail is the imported machinery, not an
+         elementary 0-1 law). So factor-vs-center reads as a PERMANENT [P_structural]
+         import (a structural feature, like the EW measured-angle fence), and this
+         conditional corollary is the ceiling -- not a standalone banked no-go. See
+         'Reference - The III_lambda Interface Factor ... v0.1/v0.2 (2026-06-18)' +
+         iii_lambda_factor_condensate_nogo_witness.py (42/42) +
+         interface_factor_native_witness.py (23/23).
+      - No physical-time claim (T_no_physical_time_flow_overclaim respected).
+
+    Witness: number_u1_on_interface_factor_witness.py (21/21, finite-exact).
+    """
+    import numpy as np
+    import math as _m
+
+    d_eff     = 102
+    eps_star  = 1.0
+    beta_phys = eps_star / _m.log(d_eff)
+    abs_ln = beta_phys * eps_star                               # = |ln lambda|
+    T0 = 2 * _m.pi / abs_ln
+
+    def site():
+        H = np.diag([0.0, -eps_star])
+        w = np.exp(-beta_phys * np.diag(H))
+        rho = np.diag(w / w.sum())
+        n = np.diag([0.0, 1.0])
+        return rho, n
+
+    def build(N):
+        rho1, n1 = site()
+        R = rho1.copy()
+        for _ in range(N - 1):
+            R = np.kron(R, rho1)
+        I2 = np.eye(2)
+        Ntot = np.zeros((2 ** N, 2 ** N))
+        for i in range(N):
+            ops = [I2] * N
+            ops[i] = n1
+            M = ops[0]
+            for o in ops[1:]:
+                M = np.kron(M, o)
+            Ntot = Ntot + M
+        return R, Ntot
+
+    def U_of(Ntot, th):
+        return np.diag(np.exp(1j * th * np.diag(Ntot)))
+
+    def alpha(Ntot, A, th):
+        U = U_of(Ntot, th)
+        return U @ A @ U.conj().T
+
+    def sigma(rho, A, t):
+        w, U = np.linalg.eigh(rho)
+        rit  = (U * (w ** (1j * t)))  @ U.conj().T
+        rmit = (U * (w ** (-1j * t))) @ U.conj().T
+        return rit @ A @ rmit
+
+    check(abs(T0 * abs_ln - 2 * _m.pi) < 1e-12,
+          "(v) T0*(beta eps*) = 2pi: one modular period = one U(1) turn")
+
+    rng = np.random.RandomState(11)
+    for N in (1, 2, 3):
+        d = 2 ** N
+        rho, Ntot = build(N)
+        A = rng.randn(d, d) + 1j * rng.randn(d, d)
+        phi = lambda X: np.trace(rho @ X)
+        # (i) coincidence: number-phase U(1) IS the modular flow (reparametrized)
+        check(all(np.allclose(alpha(Ntot, A, th), sigma(rho, A, th / abs_ln), atol=1e-9)
+                  for th in (0.4, 1.3, 2.5, 5.0)),
+              f"N={N}: (i) alpha_theta = sigma_(theta/(beta eps*))")
+        # (ii) preserves the KMS state
+        check(all(abs(phi(alpha(Ntot, A, th)) - phi(A)) < 1e-10 for th in (0.4, 1.3, 2.5)),
+              f"N={N}: (ii) phi(alpha_theta(A)) = phi(A)")
+        # (iii) GNS-implemented, fixes Omega = rho^{1/2}
+        Omega = np.diag(np.sqrt(np.diag(rho)))
+        check(all(np.allclose(U_of(Ntot, th) @ Omega @ U_of(Ntot, -th), Omega, atol=1e-12)
+                  for th in (0.4, 1.3)),
+              f"N={N}: (iii) U_theta Omega = Omega")
+        # (iv) genuine 2pi-periodic U(1): N integer-valued
+        check(np.allclose(alpha(Ntot, A, 2 * _m.pi), A, atol=1e-9),
+              f"N={N}: (iv) alpha_2pi = id (N integer-valued)")
+        check(not np.allclose(alpha(Ntot, A, _m.pi), A, atol=1e-6),
+              f"N={N}: (iv) alpha_theta != id for theta in (0,2pi)")
+        # integer spectrum of the global number operator
+        check(np.allclose(np.sort(np.unique(np.round(np.diag(Ntot), 6))), np.arange(N + 1)),
+              f"N={N}: N has integer spectrum 0..{N}")
+
+    return _result(
+        name='T_number_u1_is_interface_modular_flow: The Number-Phase U(1) IS the Modular Flow [P]',
+        tier=4, epistemic='P',
+        summary=(
+            'On the off-saturation interface the number-phase U(1) '
+            'alpha_theta = Ad(e^{i theta N}) coincides per-site exactly with the '
+            'modular flow sigma_{theta/(beta eps*)} (one U(1) turn = one modular '
+            f'period T0 = {T0:.4f}); verified to 1e-9 at N=1,2,3 with KMS-invariance, '
+            'GNS implementation U_theta Omega=Omega, and integer N-spectrum. '
+            'So the interface gauge circle and its thermal clock are one group: '
+            'the number-phase U(1) is the modular flow, NOT a distinct outer '
+            'automorphism (limit/Connes reading [P_structural]). '
+            'NOT claimed: any condensate no-go -- phi o alpha_theta=phi is automatic '
+            'modular invariance; spontaneous breaking hinges on factor-vs-center '
+            'on the (un-constructed) III_lambda factor, which stays open.'
+        ),
+        key_result=(
+            'Number-phase U(1) alpha_theta = sigma_{theta/(beta eps*)}: the '
+            'interface gauge circle IS its modular (thermal) clock, not a '
+            'distinct outer automorphism. [P] (finite-exact); outer reading [P_structural].'
+        ),
+        dependencies=['L_algebra_type', 'L_Tomita_finite', 'T_interface_modular_period',
+                      'L_KMS_trace_state'],
+        artifacts={
+            'coincidence':       'alpha_theta = sigma_{theta/(beta eps*)}',
+            'clock_match':       'one U(1) turn = one modular period T0',
+            'modular_period_T0': round(T0, 4),
+            'condensate_no_go':  'NOT claimed unconditionally (factor-vs-center open on un-built III_lambda factor)',
+            'conditional_condensate_nogo': 'IF factor-ness (Araki-Woods [P_structural]) THEN no number-phase condensate; cross-ref, cold-audit REDUCED 2026-06-18 (imported not constructed)',
+            'outer_reading':     '[P_structural] (Connes T-invariant)',
+            'witness':           'number_u1_on_interface_factor_witness.py (21/21)',
+        },
+    )
+
+
 def check_L_Wedderburn_constructive():
     """L_Wedderburn_constructive: Finite C*-Algebra = ⊕M_n by Construction [P].
 
@@ -9285,6 +9568,9 @@ _CHECKS = {    'T_spin_statistics': check_T_spin_statistics,
     'L_Wedderburn_constructive': check_L_Wedderburn_constructive,
     # v6.7 — Phase 6: NCG status
     'L_NCG_status':           check_L_NCG_status,
+    # v24.3.254 NEW -- interface modular structure (2026-06-18 survivors)
+    'T_interface_modular_period':            check_T_interface_modular_period,
+    'T_number_u1_is_interface_modular_flow': check_T_number_u1_is_interface_modular_flow,
 }
 
 
