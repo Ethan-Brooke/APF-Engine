@@ -196,7 +196,14 @@ def _safe_status_from_result(result: Any) -> Tuple[bool, str, str]:
     return False, type(result).__name__, ""
 
 
-def probe_module(module_name: str, *, max_checks: int = 40) -> APFModuleProbe:
+def probe_module(module_name: str, *, max_checks: int = 40, force_full: bool = False) -> APFModuleProbe:
+    """Probe a module's checks for import/pass status and per-check status strings.
+
+    By default, modules in FAST_IMPORT_ONLY_PROBES short-circuit to an import-only
+    probe for verify_all speed. Callers that need each check's status string for
+    fragment introspection (e.g. the EW counterterm/uncertainty evidence intake)
+    must pass force_full=True to bypass that shortcut.
+    """
     try:
         mod = importlib.import_module(module_name)
     except Exception as exc:
@@ -210,7 +217,7 @@ def probe_module(module_name: str, *, max_checks: int = 40) -> APFModuleProbe:
             errors=(f"import failed: {exc!r}",),
         )
 
-    if module_name in FAST_IMPORT_ONLY_PROBES:
+    if module_name in FAST_IMPORT_ONLY_PROBES and not force_full:
         return APFModuleProbe(
             module_name=module_name,
             import_ok=True,

@@ -151,7 +151,9 @@ def _req(key: str, description: str, satisfied_by: Sequence[str], criteria: str)
 
 
 def _probe_many(module_names: Iterable[str]) -> Tuple[APFModuleProbe, ...]:
-    return tuple(probe_module(name) for name in module_names)
+    # force_full=True bypasses FAST_IMPORT_ONLY_PROBES so each module's per-check
+    # status strings are produced; the fragment-coverage logic below scans them.
+    return tuple(probe_module(name, force_full=True) for name in module_names)
 
 
 def _status_text(probes: Iterable[APFModuleProbe]) -> str:
