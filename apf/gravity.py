@@ -1496,8 +1496,14 @@ def check_T_graviton():
 def check_L_Weinberg_Witten():
     """L_Weinberg_Witten: No Massless Charged Higher-Spin Particles [P].
 
-    v4.3.7 NEW. v5.3.5: de-imported; WW constraints derived from Lorentz
-    representation theory (Delta_signature [P]) + gauge structure (T_gauge [P]).
+    v4.3.7 NEW. v5.3.5: de-imported. v24.3 (2026-06-19) provenance fix: the WW
+    constraints follow from the representation theory of the Lorentz group plus
+    the gauge structure (T_gauge [P]). Delta_signature [P] derives the Lorentzian
+    SIGNATURE, which fixes the group to SO(1,3); the SO(1,3) representation theory
+    itself (little-group/helicity classification) is standard mathematics applied
+    on top -- a [P]-consistent math import in the same sense as the Lovelock
+    classification in T8 and HKM/Malament in Delta_signature, NOT itself derived
+    by Delta_signature.
 
     STATEMENT:
     (a) A massless particle with |helicity| > 1/2 cannot carry a
@@ -1508,7 +1514,10 @@ def check_L_Weinberg_Witten():
     DERIVATION OF THE WW CONSTRAINTS FROM FIRST PRINCIPLES:
 
     The WW constraints follow from the representation theory of the Lorentz
-    group (SO(1,3)), which is fully derived in Delta_signature [P].
+    group (SO(1,3)). Delta_signature [P] derives the Lorentzian signature that
+    fixes the group to SO(1,3); the representation theory itself is standard
+    mathematics applied on top (a [P]-consistent math import, like Lovelock in
+    T8), not derived by Delta_signature.
 
     Massless particles are classified by their little group ISO(2) ≅ E(2),
     the stabilizer of a null momentum p^μ = (E, 0, 0, E). The irreducible
@@ -1562,7 +1571,7 @@ def check_L_Weinberg_Witten():
       - No massless charged spin-2 → gravity couples universally [T9_grav P]
       - Non-localizability of gravitational energy → equivalence principle [T9_grav P]
 
-    STATUS: [P]. WW constraints derived from Delta_signature [P] (Lorentz reps)
+    STATUS: [P]. Lorentzian signature from Delta_signature [P]; SO(1,3) rep theory a [P]-consistent math import (not derived by Delta_signature)
     + particle properties from T_gauge [P] + T9_grav [P]. v5.3.5 de-import.
     """
     # ================================================================
@@ -1586,7 +1595,7 @@ def check_L_Weinberg_Witten():
     ]
 
     # ── WW constraint (a): massless |h| > 1/2 → no Lorentz-cov J^μ ──
-    # Derived from Lorentz rep theory (Delta_signature [P]):
+    # From Lorentz rep theory (signature from Delta_signature [P]; rep theory = [P]-consistent math import):
     # helicity-h state can only couple to J^μ (spin-1) when |h| ≤ 1/2
     WW_bound_J   = 0.5   # spin-1 current: max |h| for Lorentz-cov J^μ
     WW_bound_T   = 1.0   # spin-2 stress: max |h| for Lorentz-cov T^μν

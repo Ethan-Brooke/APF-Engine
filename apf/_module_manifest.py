@@ -253,6 +253,9 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.validation",
     "apf.w_os_route_terminal_closure",
     "apf.pi_gammagamma_2l_moment_native",  # v24.3.253 - native master-route 2-loop photon-VP reproduces Kallen-Sabry M(0)=82/81 [P]
+    "apf.s_parameter_native",  # v24.3.255 - native EW oblique S (3 checks, scope-fenced reproductions): fermion-loop |S|=N_c/6pi + Higgs dS/dln(m_H^2)=1/12pi + oblique curvature 1/30 moment, all answer-free [P_S_oblique_native_reproduction]
+    "apf.w_trace_native_bfm_photon_vp",  # v24.3.257 - native BFM photon VP: gauge-invariant bosonic charge-running |b|=7 answer-free from DDW vertices (route-strengthening of the banked Denner-import -7)
+    "apf.s_parameter_pure_gauge_constant_native",  # v24.3.259 - gauge-invariant pure-gauge bosonic S constant -16.352 NATIVE [P] reproduction (BFM self-energies from DDW vertices via uniform projector; supersedes the same-session .258 [P+tool] import staging)
     "apf.w_trace_acfw_candidate_preflight",
     "apf.w_trace_acfw_delta_r_extraction_attempt",
     "apf.w_trace_admitted_row_covariance_bridge",
@@ -550,7 +553,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3751  # v24.3.253 (+1 native two-loop photon-VP Kallen-Sabry M(0)=82/81 reproduction [P], apf/pi_gammagamma_2l_moment_native.py) | v24.3.252 (+1 hadronic-VP threshold quantum-number-forced [P_structural], Path B) | v24.3.251 (+1 W-OS Delta-r-rem principled terminal boundary, Path B) | v24.3.250 (+1 charged-lepton QED multi-loop coefficient ledger, MvR hep-ph/9912391) | v24.3.248 (sin2thetaW close -> Interface Engine: +5 [P_structural] in NEW apf/interface_engine_close_primitives.py (codomain-mismatch discriminator / Schur placement / claim-kind taxonomy / rerun-gate template / activation-toggle) + 1 EXPECTED-neutral CodomainTransport instance sin2theta_w_ledger_to_measured in codomain_transport_schema.py; EXPECTED 3740->3745; prior: v24.3.247 (2026-06-12 sin^2theta_W=3/13 LEDGER-SHARE close to [P]: +2 checks (FD1_structural_completeness [P_structural], foundation_inputs.py; T_ew_load_placement_P [P], gauge_quotient_ledger.py) + 3 regrades [P_structural]->[P] (T_evaluator_canonicity_kills_noncanonical_storage, L_pinned_demand_is_feasibility_rhs, L_program_bridge_kkt); EXPECTED 3738->3740; FD1 strengthened with structural completeness (Paper 0 v6.2.31 + Paper 1 supp v8.41); measured angle stays [P_structural] (w-g2 fence); prior: v24.3.246 (2026-06-12 row-10 observer-reading consumption; prior: v24.3.245 (2026-06-12 fibration-census pass; prior: v24.3.244 (2026-06-11 THE MODULE PASS: +8 from NEW apf.ym_quotient_ledger per the principal banking ruling, closing the 
+EXPECTED_REGISTRY_SIZE: int = 3757  # v24.3.259 (native [P] gauge-invariant pure-gauge bosonic S constant -16.352, apf/s_parameter_pure_gauge_constant_native.py check_T_S_pure_gauge_constant_native_P [P_S_pure_gauge_constant_native_reproduction]: BFM self-energies AA/AZ/ZZ derived from DDW vertices via one uniform transverse projector, gates cross-check only; SUPERSEDES the same-session .258 [P+tool] import check, net +0)
 
 
 # Full module list for verify_all enumeration order. Order matters for
@@ -666,6 +669,9 @@ MODULE_TYPES: dict[str, str] = {
     'apf.up_family_trace': 'sector',
     'apf.w_os_route_terminal_closure': 'sector',
     'apf.pi_gammagamma_2l_moment_native': 'extension',
+    'apf.s_parameter_native': 'extension',
+    'apf.w_trace_native_bfm_photon_vp': 'extension',
+    'apf.s_parameter_pure_gauge_constant_native': 'extension',
     'apf.w_trace_BSY_one_loop_kappa_l_native_validator': 'sector',
     'apf.w_trace_acfw_candidate_preflight': 'sector',
     'apf.w_trace_acfw_delta_r_extraction_attempt': 'sector',
