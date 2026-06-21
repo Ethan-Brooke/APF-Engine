@@ -95,7 +95,7 @@ EXPORT_FLAGS = {
     "Export_S_fermion_loop_native_reproduction_P": 1,
     "Export_S_higgs_logarithm_native_P": 1,
     "Export_oblique_curvature_moment_native_P": 1,
-    "Export_S_pure_gauge_constant_native_P": 0,      # OPEN (reference/scheme)
+    "Export_S_pure_gauge_constant_native_P": 1,      # NATIVE (apf.s_parameter_pure_gauge_constant_native, v24.3.259; reference/scheme)
     "Export_g2_HVP_NP_value_native_P": 0,            # genuinely outside (held [C])
     "Export_literal_BPRS_W_Y_P": 0,                  # curvature is the W/Y *kind*, not literal
     "Export_A1_derivation_P": 0,                     # scope-fenced reproduction
@@ -187,8 +187,9 @@ def check_T_S_higgs_logarithm_native_P():
     # negative control B: the bare single (φ3,h) block is UV-divergent (pole ≠ 0)
     check(sp.simplify(peH) != 0, "control: bare single-block S is UV-divergent (do not bank it)")
 
-    check(EXPORT_FLAGS["Export_S_pure_gauge_constant_native_P"] == 0,
-          "the m_H-independent pure-gauge constant is OPEN (reference/scheme)")
+    check(EXPORT_FLAGS["Export_S_pure_gauge_constant_native_P"] == 1,
+          "the m_H-independent pure-gauge constant is NATIVE "
+          "(apf.s_parameter_pure_gauge_constant_native, v24.3.259; largely reference/scheme)")
     check(EXPORT_FLAGS["target_consumed"] == 0, "no target consumed")
     return _result(
         name=("T_S_higgs_logarithm_native: the Higgs contribution to S, "
@@ -276,8 +277,8 @@ def check_T_oblique_curvature_moment_native_P():
 
 EXPORT_FLAGS_PROFILE = {
     "Export_S_higgs_mH_profile_Ptool": 1,        # the m_H-DEPENDENT profile (shape)
-    "Export_S_higgs_finite_G_native_P": 0,        # finite 𝒢 is IMPORTED, not native
-    "Export_S_pure_gauge_constant_native_P": 0,    # m_H-INDEPENDENT constant still OPEN
+    "Export_S_higgs_finite_G_native_P": 1,        # finite 𝒢 now NATIVE (apf.s_higgs_finite_profile_native, v24.3.260)
+    "Export_S_pure_gauge_constant_native_P": 1,    # m_H-INDEPENDENT constant NATIVE (v24.3.259)
     "Export_A1_derivation_P": 0,
     "target_consumed": 0,
 }
@@ -291,10 +292,13 @@ def check_T_S_higgs_mH_dependent_profile_Ptool():
     asymptotic slope dS_H/d ln(m_H^2) -> 1/(12pi) (cross-checks
     check_T_S_higgs_logarithm_native). Photon/gammaZ pieces carry NO m_H dependence
     (sigma_AA_bos, A_AZ depend only on M_W) and cancel in the subtraction, so the
-    profile is the ZZ higgs-brace alone. SCOPE FENCE: [P+tool], NOT native answer-free
-    -- the finite G needs imported gauge-boson-mass vertex algebra unavailable in the
-    gaugeless-limit native route. Does NOT cover the m_H-INDEPENDENT pure-gauge constant
-    (still OPEN). No measured S target consumed. Cold-audited SOUND."""
+    profile is the ZZ higgs-brace alone. The finite G is now ALSO reproduced
+    ANSWER-FREE natively (apf.s_higgs_finite_profile_native, v24.3.260, via the BFM
+    Higgs diagrams D1(Z,h)+D2(h,G0) through the two-mass native reducer with the
+    relative sign forced by an executed i-count); this GLOO reproduction is retained
+    as the magnitude cross-check. The m_H-INDEPENDENT pure-gauge constant is also
+    native (apf.s_parameter_pure_gauge_constant_native). No measured S target
+    consumed. Cold-audited SOUND."""
     import mpmath as mp
     mp.mp.dps = 60
     MZ2 = mp.mpf("91.1876")**2
@@ -335,10 +339,13 @@ def check_T_S_higgs_mH_dependent_profile_Ptool():
     check(abs(float(finiteG) - (-0.02678)) < 1e-3, f"finite-G ~ -0.0268; got {float(finiteG)}")
     check(abs(float(finiteG/SH)) > 0.15, "finite-G is order-one (~20%) at the physical point")
 
-    check(EXPORT_FLAGS_PROFILE["Export_S_higgs_finite_G_native_P"] == 0,
-          "finite G is imported (Denner/GLOO), NOT native — must stay 0")
-    check(EXPORT_FLAGS_PROFILE["Export_S_pure_gauge_constant_native_P"] == 0,
-          "the m_H-independent pure-gauge constant is still OPEN — must stay 0")
+    check(EXPORT_FLAGS_PROFILE["Export_S_higgs_finite_G_native_P"] == 1,
+          "finite G is now NATIVE (apf.s_higgs_finite_profile_native, "
+          "check_T_S_higgs_finite_profile_native_P, v24.3.260); this GLOO "
+          "reproduction is retained as the magnitude cross-check")
+    check(EXPORT_FLAGS_PROFILE["Export_S_pure_gauge_constant_native_P"] == 1,
+          "the m_H-independent pure-gauge constant is NATIVE "
+          "(apf.s_parameter_pure_gauge_constant_native, v24.3.259)")
     check(EXPORT_FLAGS_PROFILE["target_consumed"] == 0, "no S target consumed")
     return _result(
         name=("T_S_higgs_mH_dependent_profile_Ptool: the m_H-dependent bosonic Higgs "
@@ -356,10 +363,11 @@ def check_T_S_higgs_mH_dependent_profile_Ptool():
             "profile is consistent with the answer-free native coefficient. The finite "
             "G is order-one at the physical point (~20% of S_H at m_H=125.25 GeV), not "
             "negligible. Photon/gammaZ self-energies carry no m_H dependence and cancel "
-            "in the subtraction (the profile is the ZZ higgs-brace alone). SCOPE FENCE: "
-            "[P+tool], NOT native -- the finite G requires imported gauge-boson-mass "
-            "vertex algebra absent from the gaugeless-limit native route; the leading-log "
-            "stays native [P]. The m_H-INDEPENDENT pure-gauge constant remains OPEN. "
+            "in the subtraction (the profile is the ZZ higgs-brace alone). The finite G is now ALSO native "
+            "(apf.s_higgs_finite_profile_native, v24.3.260; relative sign forced by an "
+            "executed i-count calibrated to the native Goldstone/W-phi-mixed anchors) -- "
+            "this GLOO reproduction is the cross-check. The m_H-INDEPENDENT pure-gauge "
+            "constant is also native (apf.s_parameter_pure_gauge_constant_native). "
             "Cold-audited SOUND (gate independently reproduced at 1/12pi, not 1/6pi or "
             "1/24pi; grade verified honest)."
         ),

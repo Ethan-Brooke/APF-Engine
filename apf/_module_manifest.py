@@ -256,6 +256,7 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.s_parameter_native",  # v24.3.255 - native EW oblique S (3 checks, scope-fenced reproductions): fermion-loop |S|=N_c/6pi + Higgs dS/dln(m_H^2)=1/12pi + oblique curvature 1/30 moment, all answer-free [P_S_oblique_native_reproduction]
     "apf.w_trace_native_bfm_photon_vp",  # v24.3.257 - native BFM photon VP: gauge-invariant bosonic charge-running |b|=7 answer-free from DDW vertices (route-strengthening of the banked Denner-import -7)
     "apf.s_parameter_pure_gauge_constant_native",  # v24.3.259 - gauge-invariant pure-gauge bosonic S constant -16.352 NATIVE [P] reproduction (BFM self-energies from DDW vertices via uniform projector; supersedes the same-session .258 [P+tool] import staging)
+    "apf.s_higgs_finite_profile_native",  # v24.3.260 - native m_H-dependent finite Higgs profile of S (the last [P+tool] piece): D1(Z,h)+D2(h,G0) via two-mass native reducer; relative sign FORCED by executed i-count calibrated to native Goldstone(+1)/W-phi-mixed(-1) anchors (GLOO-independent); slope->+1/12pi, profile -0.13699 [P_S_higgs_finite_profile_native_reproduction]
     "apf.w_trace_acfw_candidate_preflight",
     "apf.w_trace_acfw_delta_r_extraction_attempt",
     "apf.w_trace_admitted_row_covariance_bridge",
@@ -553,7 +554,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3757  # v24.3.259 (native [P] gauge-invariant pure-gauge bosonic S constant -16.352, apf/s_parameter_pure_gauge_constant_native.py check_T_S_pure_gauge_constant_native_P [P_S_pure_gauge_constant_native_reproduction]: BFM self-energies AA/AZ/ZZ derived from DDW vertices via one uniform transverse projector, gates cross-check only; SUPERSEDES the same-session .258 [P+tool] import check, net +0)
+EXPECTED_REGISTRY_SIZE: int = 3758  # v24.3.260 (native [P] gauge-invariant pure-gauge bosonic S constant -16.352, apf/s_parameter_pure_gauge_constant_native.py check_T_S_pure_gauge_constant_native_P [P_S_pure_gauge_constant_native_reproduction]: BFM self-energies AA/AZ/ZZ derived from DDW vertices via one uniform transverse projector, gates cross-check only; SUPERSEDES the same-session .258 [P+tool] import check, net +0). v24.3.260 +1: native m_H-dependent finite Higgs profile of S (apf/s_higgs_finite_profile_native.py check_T_S_higgs_finite_profile_native_P [P_S_higgs_finite_profile_native_reproduction]); closes the last [P+tool] piece of the EW oblique S; relative D1:D2 sign forced by an executed i-count calibrated to the native Goldstone(+1)/W-phi-mixed(-1) bubble anchors (GLOO-independent)
 
 
 # Full module list for verify_all enumeration order. Order matters for
@@ -672,6 +673,7 @@ MODULE_TYPES: dict[str, str] = {
     'apf.s_parameter_native': 'extension',
     'apf.w_trace_native_bfm_photon_vp': 'extension',
     'apf.s_parameter_pure_gauge_constant_native': 'extension',
+    'apf.s_higgs_finite_profile_native': 'extension',
     'apf.w_trace_BSY_one_loop_kappa_l_native_validator': 'sector',
     'apf.w_trace_acfw_candidate_preflight': 'sector',
     'apf.w_trace_acfw_delta_r_extraction_attempt': 'sector',
