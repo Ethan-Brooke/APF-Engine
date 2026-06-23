@@ -850,7 +850,22 @@ def check_T24():
     return _result(
         name='T24: sin^2theta_W = 3/13',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             f'sin^2theta_W = 3/13 ~= {predicted:.6f}. '
             'DERIVED (not witnessed): x = 1/2 from T27c (gauge redundancy), '
@@ -1403,7 +1418,22 @@ def check_T27d():
     return _result(
         name='T27d: gamma_2/gamma_1 = d + 1/d',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             f'gamma_2/gamma_1 = d + 1/d = {d} + 1/{d} = {gamma_ratio} '
             f'with d = {d} EW channels (from T_channels, NOT spacetime dims). '
@@ -1468,7 +1498,22 @@ def check_T_sin2theta():
     return _result(
         name='T_sin2theta: Weinberg Angle',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             f'sin^2theta_W = {sin2} ~= {predicted:.6f}. '
             'Mechanism [P_structural] (T23 fixed-point). '
@@ -9154,7 +9199,22 @@ def check_L_crossing_self_energy():
         check(cand != w2_sol, f"excluded ON TYPE: {label} is a competition INPUT, not the enforced allocation w2*=5/4")
     return _result(
         name='L_crossing_self_energy: xi = w2* = 5/4 (up-G00 H-tilde crossing weight = SU(2)_L equilibrium capacity)',
-        tier=3, epistemic='P_structural',
+        tier=3, epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             'The depletion weight xi in the up-G00 H-tilde crossing self-energy is the SU(2)_L-sector '
             'equilibrium capacity w2* = 5/4 (T22: sector 2 = SU(2); T21b weak-mixing fixed point). The up-type Yukawa '
@@ -9233,7 +9293,22 @@ def check_L_crossing_depletion_capacity_measure():
 
     return _result(
         name='L_crossing_depletion_capacity_measure: (1 - c_Hu^2 w2*) exact via additive capacity conservation [form P; value P_structural]',
-        tier=3, epistemic='P_structural',
+        tier=3, epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             'The up-G00 H-tilde crossing depletion factor (1 - c_Hu^2 * w2*) = 251/256 is EXACT, not '
             'leading-order. Measure-theoretic: depletion = c_Hu^2 * <Sigma|Sigma> with <Sigma|Sigma> = w2* a '
@@ -9315,7 +9390,22 @@ def check_T_sin2theta_higgs_record():
     return _result(
         name='T_sin2theta_higgs_record: sin^2 theta_W = 3/13 from the radial-Higgs record',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
+        leading_log_exact_at_crossing=True,
+        two_loop_angle_gap_pct=0.032,
+        two_loop_angle_gap_bounded=True,
+        scale_fenced=True,
+        leading_log_note=(
+            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
+            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
+            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
+            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
+            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
+            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
+            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
+            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
+            'gate, not from leading-log.'
+        ),
         summary=(
             'The electroweak load gamma = (1, 17/4) read as gamma_i = self-competition a_ii + the '
             'record sector i locks: gamma_1 = a_11 = 1 (U(1)_em massless, no record; photon theorem); '
@@ -9407,7 +9497,7 @@ def check_T_load_form_selected_by_alpha_s():
         name=("T_load_form_selected_by_alpha_s: the EW load-form fork is empirically settled by "
               "the forward alpha_s(M_Z) prediction"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "3/13 alone does not separate the load-form readings of gamma_2, but the forward "
             "alpha_s(M_Z) prediction from the banked horizon counts (1/alpha_cross=47.02, "

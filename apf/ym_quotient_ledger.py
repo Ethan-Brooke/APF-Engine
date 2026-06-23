@@ -172,7 +172,7 @@ def check_L_ym_orbit_unpinnable():
     return _full_result(
         name="L_ym_orbit_unpinnable: orbit directions carry no pinnable record content (YM finite model, exhaustive)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "On the Q8 single-loop gauge model, an exhaustive scan of all 256 separators shows "
             "the covariant ones are exactly the 32 class functions and every orbit-mate separator "
@@ -245,7 +245,7 @@ def check_T_ym_record_demand_is_pinned_count():
     return _full_result(
         name="T_ym_record_demand_is_pinned_count: demand = quotient-pinned count, controls executed (YM finite model)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "On the Q8 model the presence fact pins exactly 1 distinction against the full "
             "admissible space (2-cell invariant partition); the tautology control (restricted "
@@ -309,7 +309,7 @@ def check_T_ym_demand_count_resolution_independent():
     return _full_result(
         name="T_ym_demand_count_resolution_independent: pinned count stable under refinement (YM finite model)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "Subdividing the Q8 loop into two links: the coarse map is surjective (uniform fibers, "
             "exhibited), the pulled-back presence fact is invariant under both fine gauge "
@@ -379,7 +379,7 @@ def check_T_ub_consistency_three_record_states():
     return _full_result(
         name="T_ub_consistency_three_record_states: loads vs maintenance-demand column, no mismatch",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "The banked sector loads against the maintenance-demand column (0, 1, 0): U(1) carries "
             "no record term (r_1 = 0, photon no-record); SU(2) carries exactly the condensate's "
@@ -462,7 +462,7 @@ def check_T_routing_parallel_interface_conditional():
     return _full_result(
         name="T_routing_parallel_interface_conditional: T22's dressed form == routing-parallel interface, given the internal block",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "Conditional on T22's internal-block premise (m = 3 internal sector-2 edges at unit "
             "contribution), the dressed Gram (1, 1/2, 13/4) FORCES the routing-parallel interface: "
@@ -686,7 +686,7 @@ def check_T_sector_granularity_below_billing_type():
     return _full_result(
         name="T_sector_granularity_below_billing_type: billing loci are interface-typed; sector bills are constitutive",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "The canonical billing vocabulary types every billing locus at interface granularity "
             "(row 7b; the Paper 3 TS coincidence sentence); transformation-typing cannot supply "

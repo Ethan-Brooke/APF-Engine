@@ -122,7 +122,7 @@ def check_T_ew_bosonic_enforcement_reservoir_theorem_P():
               "(7-8); gives d_eff^(-8) [P_structural_under_reservoir_reading; reading not proven "
               "forced; prefactor + exact v_H still blocked]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             "Reservoir theorem (the v24.3.178-named revival), banked under the reservoir reading. "
             "The EW floor is the ABSOLUTE root-measure of the pre-branch static bosonic enforcement "

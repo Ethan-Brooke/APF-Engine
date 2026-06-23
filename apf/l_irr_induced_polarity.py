@@ -184,13 +184,13 @@ def check_T_L_irr_polarity_well_defined() -> Dict:
     if issues:
         return _fail(
             "check_T_L_irr_polarity_well_defined",
-            status="P_structural",
+            status="P_structural_reading",
             summary="L_irr-induced polarity construction failed well-definedness check",
             data={"issues": issues},
         )
     return _ok(
         "check_T_L_irr_polarity_well_defined",
-        status="P_structural",
+        status="P_structural_reading",
         summary="L_irr-induced polarity is well-defined on the substrate's partial order of class-transition histories",
         data={
             "alignments": list(sub.distinctions.keys()),
@@ -213,7 +213,7 @@ def check_T_L_irr_polarity_involution() -> Dict:
         if (D_star_star.plus_side, D_star_star.minus_side) != (D.plus_side, D.minus_side):
             return _fail(
                 "check_T_L_irr_polarity_involution",
-                status="P_structural",
+                status="P_structural_reading",
                 summary=f"Involution failed at alignment {align}",
                 data={"alignment": align,
                       "D": (D.plus_side, D.minus_side),
@@ -221,7 +221,7 @@ def check_T_L_irr_polarity_involution() -> Dict:
             )
     return _ok(
         "check_T_L_irr_polarity_involution",
-        status="P_structural",
+        status="P_structural_reading",
         summary="*-algebra axiom (i) involution: (D*)* = D for every distinction at every alignment",
         data={"alignments_tested": list(sub.distinctions.keys()),
               "axiom": "(D*)* = D",
@@ -258,7 +258,7 @@ def check_T_L_irr_polarity_antimultiplicative() -> Dict:
         abs(ba_star.cost - a_star_b_star.cost) > 1e-12):
         return _fail(
             "check_T_L_irr_polarity_antimultiplicative",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Antimultiplicativity (ba)* = a* b* failed",
             data={
                 "(ba)*": (ba_star.domain.name, ba_star.codomain.name, ba_star.cost),
@@ -269,7 +269,7 @@ def check_T_L_irr_polarity_antimultiplicative() -> Dict:
 
     return _ok(
         "check_T_L_irr_polarity_antimultiplicative",
-        status="P_structural",
+        status="P_structural_reading",
         summary="*-algebra axiom (ii) antimultiplicativity: (ba)* = a*b* on substrate-side continuations",
         data={
             "axiom": "(ba)* = a* b*",
@@ -376,7 +376,7 @@ def check_T_L_irr_polarity_star_axioms_i_ii() -> Dict:
     if not all_consistent:
         return _fail(
             "check_T_L_irr_polarity_star_axioms_i_ii",
-            status="P_structural",
+            status="P_structural_reading",
             summary="One or more predecessor checks failed",
             data={"predecessors": [c["name"] for c in [c1, c2, c3, c4]
                                    if not c["consistent"]]},
@@ -384,7 +384,7 @@ def check_T_L_irr_polarity_star_axioms_i_ii() -> Dict:
 
     return _ok(
         "check_T_L_irr_polarity_star_axioms_i_ii",
-        status="P_structural",
+        status="P_structural_reading",
         summary=(
             "L_irr-induced polarity supplies substrate-side *-algebra axioms (i) involution "
             "and (ii) antimultiplicativity on the partial fibration's morphism algebra. "

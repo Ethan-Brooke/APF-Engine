@@ -237,7 +237,7 @@ def check_T_w_trace_native_zll_R2_counterterm_pieces_P() -> Dict[str, Any]:
               "(delta_Z2_Z, delta_Z2_gamma, delta_Z_AZ, delta_Z_e, delta_Z1_Z) "
               "exposed as standalone callables for R2 v2 renormalized-vertex assembly"),
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_partial",
         summary=(
             f"Wrapper module over the banked v24.3.99 Denner OS scheme. Exposes "
             f"four self-energy-derived counterterms (delta_Z2_Z = {dZ2Z:.6e}, "

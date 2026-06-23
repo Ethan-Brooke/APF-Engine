@@ -129,7 +129,7 @@ def check_T_confinement_scale_rides_single_anchor_P():
               "Closes the single-anchor theorem's open [C] corollary: the framework has EXACTLY ONE "
               "dimensional anchor. EW closed for real [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "Closes the single-anchor theorem (v24.3.187) open [C] corollary, using machinery already "
             "banked. L_alpha_s ([P+alpha_EM]) fixes alpha_s(M_Z) from capacity structure (Route A "

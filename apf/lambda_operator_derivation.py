@@ -414,7 +414,7 @@ def check_T_Lambda_vacuum_projector_operator_identity():
         name='T_Lambda_vacuum_projector_operator_identity — '
              'β-sweep operator identity from 1 (ground) to C/d (max-mix)',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             f"Operator-level β-sweep at model (K=3, d_eff=4, C_vac=2) "
             f"confirms: at β = 100 (low T, ground state), "

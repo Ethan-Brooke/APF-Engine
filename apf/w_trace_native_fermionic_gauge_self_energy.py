@@ -221,7 +221,7 @@ def check_T_w_trace_native_fermionic_gauge_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_fermionic_gauge_scope_partial: "
              "fermionic gauge-boson self-energy poles done; full Delta r CT + finite/timelike + delta_VB OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The fermionic gauge-boson self-energy p^2-pole coefficients (AA/AZ/ZZ/WW) are "
             "now native, assembled from the SM gauge charges + Denner's chiral couplings "

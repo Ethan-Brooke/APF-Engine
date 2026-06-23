@@ -251,7 +251,7 @@ def check_T_w_trace_pv_timelike_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_timelike_subgate_partial: "
              "timelike two-point branch done; assembly toward Re Pi(M^2) OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native two-point PV functions now extend to the timelike / "
             "above-threshold branch (Re B0/B1/B11/B00 via principal value + the "

@@ -188,7 +188,7 @@ def check_T_w_trace_pv_d0_general_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_d0_general_subgate_partial: "
              "general-momentum spacelike D0 native; Dij + threshold OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native scalar substrate is now complete at general (spacelike) "
             "momenta for all four Passarino-Veltman scalars A0/B0/C0/D0 (with a "

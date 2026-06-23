@@ -393,7 +393,7 @@ def check_T_w_trace_pv_ewwgr_bare_subgate_partial_P() -> Dict[str, Any]:
               "3-pt Zff/γff proper-vertex form factors native (renormalized 3-pt piece "
               "per EWWGR Eqs 166/167, NOT including external fermion wavefunction "
               "renormalization); full vertex composition + kappa_l OPEN [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The EWWGR section 6 Zff and γff proper-vertex 3-pt form factors -- "
             "F_V^Zf, F_A^Zf, F_Zν, F_V^γf, F_A^γf, plus the channel-specific "

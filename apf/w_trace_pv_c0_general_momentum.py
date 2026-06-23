@@ -199,7 +199,7 @@ def check_T_w_trace_pv_c0_general_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_c0_general_subgate_partial: "
              "general-momentum spacelike C0 native; Cij + threshold OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native scalar substrate is extended from zero-momentum-only C0 to "
             "general-momentum spacelike C0 (with a domain quarantine for "

@@ -622,7 +622,7 @@ def check_T_master_equation_form():
 
     return _result(
         name='T_master_equation_form: Linear-Quadratic + First-Order-Relaxation Form',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'The master equation dN/dt = ∫ K(x) μ(x,t)^2 / (2 τ_rec(x) ℏ ω_typ(x)) dx '
             'with ∂_t μ = -μ/τ_rec - ∂_t φ_eq has linear-quadratic + first-order-'
@@ -770,7 +770,7 @@ def check_T_three_regimes_tau_rec():
 
     return _result(
         name='T_three_regimes_tau_rec: Three Regimes for τ_rec',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'The master equation\'s 1/τ_rec factor has three regime-dependent '
             'readings: (a) lossy classical: literal dissipation timescale (plasma '
@@ -933,7 +933,7 @@ def check_T_substrate_anchor_entangled_state():
 
     return _result(
         name='T_substrate_anchor_entangled_state: Substrate-Anchor Combined State Is IJC',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'The substrate-anchor combined state |Ψ⟩ = Σ c_n |φ_eq[|n⟩]⟩ ⊗ |n⟩ '
             'is an Irreducible Joint Constraint structure (Paper 5 vocabulary) '
@@ -1086,7 +1086,7 @@ def check_T_cross_branch_matrix_element_form():
 
     return _result(
         name='T_cross_branch_matrix_element_form: Cross-Branch Matrix Elements Are the Quantum Mismatch',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'In the substrate-anchor entangled state, the within-branch mismatch is '
             'identically zero (M_mm = 0); the mismatch field\'s quantum analog '
@@ -1236,7 +1236,7 @@ def check_T_sixteen_case_unification_structural():
 
     return _result(
         name='T_sixteen_case_unification_structural: Sixteen Radiation Cases Reduce to Master Equation',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'Sixteen previously-disjoint radiation phenomena reduce to the '
             'recruitment-radius master equation (or its quantum extension) '
@@ -1359,7 +1359,7 @@ def check_T_DCE_Q_dependence_prediction():
 
     return _result(
         name='T_DCE_Q_dependence_prediction: DCE Photon-Production Rate Scales as 1/Q',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'In the high-Q DCE regime, the recruitment-radius master equation '
             'predicts photon production rate dN/dt ∝ (v/c)² ω_d / Q, contrasting '
@@ -1488,7 +1488,7 @@ def check_T_purcell_DCE_consistency():
 
     return _result(
         name='T_purcell_DCE_consistency: Purcell Factor and DCE Q-Dependence Share One Mechanism',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'The Purcell factor F_P = 3 Q λ³ / (4π² V) and the DCE 1/Q scaling '
             'both arise from the same cavity-modified-substrate mechanism: '

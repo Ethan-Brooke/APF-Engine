@@ -78,10 +78,10 @@ def check_G_DIL_ledger_transport_to_unitary_dilation():
     agrees = all(abs(complex(U[i][j]) - complex(V[i][j])) <= TOL
                  for i in range(3) for j in range(2))
     if not (ok_v and ok_u and agrees):
-        return _fail("check_G_DIL_ledger_transport_to_unitary_dilation", status="P_structural",
+        return _fail("check_G_DIL_ledger_transport_to_unitary_dilation", status="P_structural_reading",
                      summary="Isometry-to-unitary dilation witness failed",
                      data={"err_v": err_v, "err_u": err_u, "agrees": agrees})
-    return _ok("check_G_DIL_ledger_transport_to_unitary_dilation", status="P_structural",
+    return _ok("check_G_DIL_ledger_transport_to_unitary_dilation", status="P_structural_reading",
                summary=("Any rank+pairing-preserving ledger transport (isometry V, V^dag V = I) "
                         "extends to a unitary U on an enlarged finite space agreeing with V on the "
                         "admissible input sector (Stinespring/basis completion). Witness C^2->C^3, U=I_3."),
@@ -100,10 +100,10 @@ def check_G_NONPROD_backreaction_nonproduct():
     P_fixed_product = P1_M2 * P1_M2      # fixed-M independent marginals -> 0.0625
     nonfactor = abs(P_cond_11 - P_fixed_product) > TOL
     if not nonfactor:
-        return _fail("check_G_NONPROD_backreaction_nonproduct", status="P_structural",
+        return _fail("check_G_NONPROD_backreaction_nonproduct", status="P_structural_reading",
                      summary="Non-product history witness failed",
                      data={"P_cond": P_cond_11, "P_fixed": P_fixed_product})
-    return _ok("check_G_NONPROD_backreaction_nonproduct", status="P_structural",
+    return _ok("check_G_NONPROD_backreaction_nonproduct", status="P_structural_reading",
                summary=("If emission probability depends on a horizon-ledger state that backreacts "
                         "(M_{n+1}=M_n-omega_n), the joint radiation history does not factor into "
                         "independent one-emission marginals. Witness: P_cond(1,1)=0.125 != "
@@ -127,9 +127,9 @@ def check_G_FACT_typed_factorization_schema():
     S = _mul(Phi, _mul(R, _mul(K, _mul(B, _mul(G, A)))))
     well_typed = (len(S) == 2 and len(S[0]) == 2)
     if not well_typed:
-        return _fail("check_G_FACT_typed_factorization_schema", status="P_structural",
+        return _fail("check_G_FACT_typed_factorization_schema", status="P_structural_reading",
                      summary="Typed factorization schema witness failed", data={"shape": (len(S), len(S[0]))})
-    return _ok("check_G_FACT_typed_factorization_schema", status="P_structural",
+    return _ok("check_G_FACT_typed_factorization_schema", status="P_structural_reading",
                summary=("A typed amplitude map decomposes into role-labeled operators "
                         "S = Phi.R.K.B.G.A (thermal/filter/backreaction/scramble/reconstruct/phase) "
                         "by well-typed composition. BOOKKEEPING theorem only: it does NOT derive the "
@@ -149,9 +149,9 @@ def check_G_UNIT_amplitude_unitarity():
     S = [[h, h], [h, -h]]                 # Hadamard unitary
     ok_i, err = _is_ident(_mul(_dag(S), S))
     if not ok_i:
-        return _fail("check_G_UNIT_amplitude_unitarity", status="P_structural",
+        return _fail("check_G_UNIT_amplitude_unitarity", status="P_structural_reading",
                      summary="Amplitude unitarity witness failed", data={"err": err})
-    return _ok("check_G_UNIT_amplitude_unitarity", status="P_structural",
+    return _ok("check_G_UNIT_amplitude_unitarity", status="P_structural_reading",
                summary=("On the APF physical/enforceable sector the amplitude matrix satisfies "
                         "sum_alpha A*_{alpha beta} A_{alpha gamma} = delta_{beta gamma}, i.e. "
                         "S^dag S = I. Witness: Hadamard, err=%.2e." % err),
@@ -171,9 +171,9 @@ def check_G_GREY_ROLE_beamsplitter():
         _, err = _is_ident(_mul(_dag(U), U))
         worst = max(worst, err)
     if worst > 1e-9:
-        return _fail("check_G_GREY_ROLE_beamsplitter", status="P_structural",
+        return _fail("check_G_GREY_ROLE_beamsplitter", status="P_structural_reading",
                      summary="Beam-splitter unitary embedding failed", data={"worst_err": worst})
-    return _ok("check_G_GREY_ROLE_beamsplitter", status="P_structural",
+    return _ok("check_G_GREY_ROLE_beamsplitter", status="P_structural_reading",
                summary=("A greybody transmission factor G in [0,1] embeds in a unitary beam-splitter "
                         "(transmitted + reflected channels); norm is preserved when both channels are "
                         "kept. Erasure appears ONLY if the reflected/complement channel is discarded. "
@@ -206,10 +206,10 @@ def check_G_DEC_CRIT_rank_gram_preserving():
         for j in range(2):
             gram_err = max(gram_err, abs(dot(src[i], src[j]) - dot(img[i], img[j])))
     if not (rank_pres and gram_err <= TOL):
-        return _fail("check_G_DEC_CRIT_rank_gram_preserving", status="P_structural",
+        return _fail("check_G_DEC_CRIT_rank_gram_preserving", status="P_structural_reading",
                      summary="Decoder admissibility witness failed",
                      data={"rank_preserved": rank_pres, "gram_err": gram_err})
-    return _ok("check_G_DEC_CRIT_rank_gram_preserving", status="P_structural",
+    return _ok("check_G_DEC_CRIT_rank_gram_preserving", status="P_structural_reading",
                summary=("Decoder admissibility CRITERION (not a construction): a horizon->radiation "
                         "decoder is APF-admissible iff it preserves rank, continuation-separation "
                         "pairing, the four record roles, and has no hidden-remnant dependence. Witness: "
@@ -228,9 +228,9 @@ def check_G_END_UNIT_endpoint_isometry():
     Phi = _ident(2)                       # minimal endpoint after ledger export
     ok_i, err = _is_ident(_mul(_dag(Phi), Phi))
     if not ok_i:
-        return _fail("check_G_END_UNIT_endpoint_isometry", status="P_structural",
+        return _fail("check_G_END_UNIT_endpoint_isometry", status="P_structural_reading",
                      summary="Endpoint isometry witness failed", data={"err": err})
-    return _ok("check_G_END_UNIT_endpoint_isometry", status="P_structural",
+    return _ok("check_G_END_UNIT_endpoint_isometry", status="P_structural_reading",
                summary=("Any endpoint operation Phi_end on the APF physical sector must preserve the "
                         "continuation-separation pairing: Phi_end^dag Phi_end = I (or a declared "
                         "isometry into a larger final codomain), else two enforceable distinctions "
@@ -338,10 +338,10 @@ def check_G_import_certify_contract_guards():
     flux_ok = all(abs((1.0 - G) + G - 1.0) < TOL and 0.0 <= G <= 1.0 for G in (0.0, 0.3, 1.0))
     ok = contracts_not_apf and guards_clean and numerics_stay_C and isl_conditional and flux_ok
     if not ok:
-        return _fail("check_G_import_certify_contract_guards", status="P_structural",
+        return _fail("check_G_import_certify_contract_guards", status="P_structural_reading",
                      summary="Import-certify contract/guard discipline failed",
                      data={"guards_clean": guards_clean, "numerics_stay_C": numerics_stay_C})
-    return _ok("check_G_import_certify_contract_guards", status="P_structural",
+    return _ok("check_G_import_certify_contract_guards", status="P_structural_reading",
                summary=("E3 import-certify discipline: greybody + decoder are typed contracts "
                         "(derived_from_APF=False) with no-promotion guards all 0; numeric greybody "
                         "table + decoder map stay [C] until externally imported and integrity-passed; "
@@ -500,10 +500,10 @@ def check_T_parameter_matching_harness():
     }
     ok = toy_pass and phys_pass and all(guards.values())
     if not ok:
-        return _fail("check_T_parameter_matching_harness", status="P_structural",
+        return _fail("check_T_parameter_matching_harness", status="P_structural_reading",
                      summary="Parameter-matching harness / no-laundering guard failed",
                      data={"toy_grade": toy_grade, "phys_grade": phys_grade, "guards": guards})
-    return _ok("check_T_parameter_matching_harness", status="P_structural",
+    return _ok("check_T_parameter_matching_harness", status="P_structural_reading",
                summary=("M1-M6 parameter-matching harness: a toy tuple passing M1-M6 grades "
                         "[P_toy_parameter_matching_harness]; a physical_imported tuple is held "
                         "[C_evaluated_physical_Theta_H] until provenance-certified imports are supplied, "

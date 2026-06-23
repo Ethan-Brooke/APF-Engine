@@ -141,7 +141,7 @@ def check_T_planck_magnitude_single_dimensional_anchor_P():
               "confinement scale is a second apparent anchor, conjectured to collapse to the first "
               "via dimensional transmutation [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "The gravity sector's missing item, characterized at its honest maximum. The absolute "
             "Planck magnitude is the framework's single dimensional anchor. (1) NO-GO: a theory whose "
@@ -255,7 +255,7 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
               "the ONE Planck anchor -- the one-input theoretical minimum. Lone open ratio: "
               "M_cross/M_Pl (the sin^2theta_W->[P] gate; the crossing scale)"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "Completes the single-anchor scale-web over matter. Charged-fermion masses are "
             "m_f = y_f * v_H with y_f a dimensionless Yukawa, so m_f/M_Pl is rescaling-invariant "

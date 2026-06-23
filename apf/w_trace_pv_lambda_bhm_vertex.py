@@ -292,7 +292,7 @@ def check_T_w_trace_pv_lambda_bhm_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name=("T_w_trace_pv_lambda_bhm_subgate_partial: "
               "BHM Lambda_2, Lambda_3 closed forms native; C-toolkit route + Zll vertex OPEN [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The BHM Z-vertex scalar functions Lambda_2(s, M^2) and "
             "Lambda_3(s, M^2) (EWWGR L6062 / hep-ph/9709229) are now native "

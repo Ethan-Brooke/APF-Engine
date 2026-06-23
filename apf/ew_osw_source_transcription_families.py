@@ -107,7 +107,7 @@ def check_T_ew_osw_source_families_kernels_present_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_source_families_kernels_present: "
              "six OS-W source-transcription coefficient kernels present + guarded [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             f"All {N_FAMILIES} OS-W finite-remainder source-transcription kernels "
             f"(W-transverse, gamma-Z mixing, Z-transverse, vertex/box, gamma-gamma "
@@ -191,7 +191,7 @@ def check_T_ew_osw_source_families_coefficient_maps_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_source_families_coefficient_maps: "
              "each kernel implements its documented Delta r coefficient map [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "Each of the six kernels reproduces its documented Delta r coefficient "
             "slot under placeholder unit inputs: W-transverse difference+custodial; "
@@ -253,7 +253,7 @@ def check_T_ew_osw_source_families_fail_closed_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_source_families_fail_closed: "
              "every source-transcription kernel fails closed without certification [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "Each kernel fails closed: gamma-gamma, vertex/box, and the counterterm "
             "slice raise (SourceCertificationRequired / SourceValueRequired) without "
@@ -287,7 +287,7 @@ def check_T_ew_osw_source_families_forbidden_input_guard_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_source_families_forbidden_input_guard: "
              "every kernel rejects all 7 forbidden inputs [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             f"The no-smuggling surface holds: each of the {N_FAMILIES} kernels' "
             f"guard_forbidden_inputs rejects every one of the 7 forbidden "

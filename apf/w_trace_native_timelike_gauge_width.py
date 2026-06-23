@@ -218,7 +218,7 @@ def check_T_w_trace_native_timelike_gauge_width_scope_partial_P() -> Dict[str, A
     return _result(
         name="T_w_trace_native_timelike_gauge_width_scope_partial: "
              "timelike absorptive parts / decay widths done; finite Re Pi(M^2) + delta_VB + Delta r assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The absorptive (Im) parts of the timelike gauge-boson self-energies "
             "Sigma^{WW}_T(M_W^2)/Sigma^{ZZ}_T(M_Z^2) are now native, evaluated via the banked "

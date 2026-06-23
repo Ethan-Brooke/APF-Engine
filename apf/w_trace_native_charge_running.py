@@ -316,7 +316,7 @@ def check_T_w_trace_native_charge_running_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_charge_running_scope_partial: "
              "gauge-invariant charge running done; Pi_WW/Pi_ZZ + delta_VB + Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The gauge-invariant one-loop running of the electric charge is now native: "
             "the bosonic -7 (= -3 photon SE + -4 gamma-Z mixing) and the fermionic "

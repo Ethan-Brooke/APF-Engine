@@ -103,7 +103,7 @@ def check_T_ew_floor_measure_is_continuation_sum_root_P():
               "object [P_structural, conditional on the root-measure identification]; sqrt(N_c) "
               "carrier and Planck anchor remain genuinely absent from the bank"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "Audit finding: the missing static-trace-measure theorem is not monolithic. Its 1/pi "
             "clause already has a banked home. v_floor = M_Pl sqrt(N_c) sqrt[(4pi)^(-D/2)] "

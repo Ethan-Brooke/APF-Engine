@@ -218,7 +218,7 @@ def check_T_ew_codomain_reading_schema_declared():
     assert n_swaps >= n, "each domain must forbid at least one swap"
     return {
         'name': 'T_ew_codomain_reading_schema_declared',
-        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural',
+        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural_instrument',
         'domain_count': n, 'forbidden_swap_count': n_swaps,
         'key_result': ('4 EW codomain-reading contracts (weak-mixing / absolute-scale / abelian / GH-OS) '
                        f'declared with {n_swaps} forbidden swaps, distinct sibling codomains, each swap '
@@ -238,7 +238,7 @@ def check_T_ew_codomain_reading_home_values_from_capacity():
     assert _val_61_census() and _val_60_75_record() and _val_vH_over_MPl()
     return {
         'name': 'T_ew_codomain_reading_home_values_from_capacity',
-        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural',
+        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural_instrument',
         'home_values': {'sin2_eff': '3/13', 'sin2_OS': '2/9', 'kappa_l': '27/26',
                         'abelian_census': '61', 'abelian_record': '60.75',
                         'vH_over_MPl': 'sqrt(N_c)/(4pi)*102^-8*(12/7)'},
@@ -305,7 +305,7 @@ def check_T_ew_codomain_reading_anchors_banked():
             checked.append((key, grade))
     return {
         'name': 'T_ew_codomain_reading_anchors_banked',
-        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural',
+        'passed': True, 'status': 'PASS', 'tier': 4, 'epistemic': 'P_structural_instrument',
         'anchors_verified': len(checked),
         'registry_size_seen': len(reg),
         'key_result': (f'{len(checked)} banked anchors back the 4 EW codomain contracts at their claimed '

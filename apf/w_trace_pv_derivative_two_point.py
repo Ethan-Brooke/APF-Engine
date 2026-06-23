@@ -161,7 +161,7 @@ def check_T_w_trace_pv_derivative_two_point_subgate_partial_P() -> Dict[str, Any
     return _result(
         name="T_w_trace_pv_derivative_two_point_subgate_partial: "
              "native B0'/B1' present; self-energy assembly + 3-/4-point OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native OS-W toolkit gains the two-point momentum derivatives "
             "B0', B1' needed for on-shell wave-function/mass renormalization, on "

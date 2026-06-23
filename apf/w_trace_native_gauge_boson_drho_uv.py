@@ -240,7 +240,7 @@ def check_T_w_trace_native_drho_uv_scope_partial_P() -> Dict[str, Any]:
         name="T_w_trace_native_drho_uv_scope_partial: "
              "W/Z self-energy UV-pole structure + fermionic Delta rho finiteness done; "
              "finite Delta rho_bos + Re Pi(M^2) + delta_VB + Stage-4 OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The k^2=0 UV-pole structure of Denner's Sigma^{WW}_T / Sigma^{ZZ}_T is now "
             "native, with the fermionic custodial Delta rho proven UV-finite (validating "

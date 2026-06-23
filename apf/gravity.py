@@ -1867,7 +1867,7 @@ def check_T_v_global_accumulation_from_type_II_resolutions():
 
     return _result(
         name='T_v_global_accumulation_from_type_II_resolutions',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'Each staged Type II resolution deposits its kappa_int payment '
             'through the Interface-Sector Bridge into V_global. Cumulative '

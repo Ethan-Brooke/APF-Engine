@@ -417,7 +417,7 @@ def check_T_w_trace_pv_d_rank123_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_d_rank123_subgate_partial: "
              "rank-1/2/3 four-point native; rank-4 box + assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native four-point (box) tensor reduction is complete through rank 3 "
             "(D1/D2/D3; D00/Dij; D00k/Dijk), built on the general-momentum box D0 + "

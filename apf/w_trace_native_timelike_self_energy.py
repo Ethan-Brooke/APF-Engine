@@ -228,7 +228,7 @@ def check_T_w_trace_native_timelike_self_energy_scope_partial_P() -> Dict[str, A
     return _result(
         name="T_w_trace_native_timelike_self_energy_scope_partial: "
              "leptonic-alpha timelike anchor done; on-shell Re Pi_WW/ZZ + Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "Stage 2's timelike validation anchor is closed: the native fermionic "
             "photon VP, evaluated at p^2 = M_Z^2 through the timelike two-point "

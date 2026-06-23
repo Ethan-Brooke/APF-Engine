@@ -208,7 +208,7 @@ def check_T_w_trace_native_fermion_sum_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_fermion_sum_scope_partial: "
              "fermion-sum self-energy assembly done; bosonic + Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The full SM fermionic transverse self-energies are now assembled "
             "natively and OS-renormalized, with the total proven mu-independent and "

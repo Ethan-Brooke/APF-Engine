@@ -437,7 +437,7 @@ def check_T_sin2theta_eff_kappa_l_remainder_mt_normalization_split_P():
     return _result(
         name="T_sin2theta_eff_kappa_l_remainder_mt_normalization_split: "
              "remainder = m_t-normalization gap + genuine residual [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             f"Delta kappa_rem = {r['delta_kappa_rem_total']:.6f} splits, using the "
             f"framework's own custodial Delta rho formula at m_t=163 vs the PDG "

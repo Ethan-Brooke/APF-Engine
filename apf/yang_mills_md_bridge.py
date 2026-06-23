@@ -131,7 +131,7 @@ def check_T_ym_gap_positivity_from_MD():
               "YM trilogy [P_structural] + the cited OS2/Def-3 (Margolus-Levitin) dictionary. "
               "Positivity from foundations; value (log(27/4)) from the lattice. Continuum antecedent "
               "OPEN; NOT the Clay theorem [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "The ep* bridge, banked at the honest conditional level. L_epsilon_star [P] proves the "
             "Minimum-Distinction realignment floor eps_min(Gamma) > 0 ('zero isolated from the "
@@ -344,7 +344,7 @@ def check_T_ym_meaningful_spectrum_is_singlet_gapped():
               "IR spectrum is what carries the gap and is floored >= eps_min; the non-singlet GLUON soft-mode loophole "
               "(Route 3) is CLOSED by banked confinement. Conditional on continuum capacity-saturation (= non-trivial "
               "continuum existence). [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "Ties the ep* bridge to the already-banked confinement theorem and closes the Route-3 soft-mode loophole. "
             "T_confinement [P] (AF + finite capacity + MD) excludes non-singlet states at IR saturation, so the "
@@ -461,7 +461,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
               "cost=energy [P] + T_confinement [P] the unscreened commitment is a singlet-spectrum gap >= Delta_min "
               "> 0. Corrects the prior 'agnostic relative to {A1,MD,PLEC}' verdict (which omitted record locking). "
               "Residual narrows from confining-vs-conformal to continuum existence [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "The symmetry/geometry/record-locking closure of the confining-vs-conformal question. Non-abelian "
             "composition is superadditive (L_nc [P], Delta>0); the abelian case is additive (Delta=0), which is why "

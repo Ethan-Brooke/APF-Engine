@@ -117,7 +117,7 @@ def check_T_ew_sqrtNc_carrier_forced_by_color_triplet_trace_P():
               "change -> EXCLUDED. CLOSES the last prefactor clause; floor fully forced modulo the "
               "absolute Planck magnitude (route-b). No-go preserved inversion-only [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             "The last open prefactor clause, closed under the principal's inversion-only ruling on "
             "the y_t no-go. The y_t-free floor's sqrt(N_c) = a_Y/sqrt(b) (y_t cancels; both carry "

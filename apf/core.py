@@ -4851,7 +4851,7 @@ def check_T_no_IJC_no_noncommutativity():
     return _result(
         name='T_no_IJC_no_noncommutativity: spectator-countermodel falsification test [P_structural]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Spectator countermodel: V = M_d1 (+) M_d2 (+) Pi with Pi inert. '
             'A1 + MD + A2 + BW all PASS. Pair {d1, d2} in branch (Sep) of the '
@@ -5029,7 +5029,7 @@ def check_T_IJC_dichotomy():
     return _result(
         name='T_IJC_dichotomy: the IJC Dichotomy Theorem on test interfaces [P_structural]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Theorem 1 of the IJC reference doc: for any pair {d1, d2} of '
             'jointly meaningful distinctions at an interface, exactly one of '
@@ -5153,7 +5153,7 @@ def check_L_MD_extension():
     return _result(
         name='L_MD_extension: MD extends to threat-defense acts (Route A) [P_structural]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Lemma 1 of the IJC reference doc: any nonempty perturbation '
             'class T admitting a minimal defense act delta_T has cost '
@@ -5313,7 +5313,7 @@ def check_L_threat_substrate_realization():
     return _result(
         name='L_threat_substrate_realization: branch-(IJC) ⇒ W_{12} ⊄ M_d1 (+) M_d2 [P_structural]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Lemma 2 of the IJC reference doc: under sharp admissibility at a '
             'finite-capacity interface satisfying A1+MD+A2+BW, if a pair '
@@ -5914,17 +5914,34 @@ def check_T_inseparable_IJC():
          ⇒ E_di · pi_{W_*} ≠ pi_{W_*} · E_di on at least one vector.
       4. Therefore [E_di, P_*] != 0 for at least one i.
 
-    EMPIRICAL INHERITANCE (Bell + Kochen-Specker):
-      The framework's branch-(IJC) classification at quantum interfaces
-      is certified by the no-hidden-variables experimental record.
-      Bell inequality violation rules out local commutative extensions;
-      Kochen-Specker rules out non-contextual commutative extensions.
-      Both theorems certify that the substrate factorization S = Q × Π
-      defining branch (Sep) does NOT exist at the quantum interfaces
-      where they apply.  The framework inherits the branch-(IJC) status
-      from these theorems, parallel to its inheritance of Planck 2018
-      cosmological parameters, lattice QCD low-energy constants, and
-      PDG mass measurements.
+    BRANCH-(IJC) IS AN INTERNAL STRUCTURAL TEST, NOT AN EMPIRICAL IMPORT
+    (reconciled 2026-06-21 to Paper 5 Technical Supplement v6.8 -- the
+    canonical source for this bridge; the prior 'empirically inherited
+    from Bell+KS, parallel to Planck/PDG' framing below is RETIRED):
+      The canonical statement is Paper 5 supp v6.8 Theorem
+      thm:general-finite-query-noncommutative-bridge-v547, graded
+      [P_math + P_APF] -- DERIVED, not inherited.  The branch verdict
+      (Sep vs IJC) is an INTERNAL finite test on the declared operational
+      records: branch (IJC) holds iff no faithful all-commuting Boolean
+      global-section defender exists without uncharged context / order /
+      disturbance records (structural Boolean failure, or a
+      preservation-infeasible repair).  It is an LP/MILP / dual-witness
+      quantity (supp Sec. on branch certificates), not a judgment call
+      and not an external datum.
+      Bell / CHSH / Kochen-Specker are RECOVERED SPECIAL CASES of this
+      internal criterion, NOT a load-bearing empirical inheritance:
+      Fine's theorem is a special marginal presentation of the Boolean
+      global-section refinement, and the Peres-Mermin square is a worked
+      structural certificate.  The supplement is explicit -- 'the bridge
+      is not an intuition imported from CHSH or Fine's theorem' and 'APF
+      separates the existence of nonclassical correlations from the
+      stronger claim that the declared finite records force a
+      noncommutative record algebra.'  So noncommutativity is forced by
+      the internal structural / preservation Boolean-defender failure
+      (derived), not by an external Bell/KS theorem-input.
+      [P+IJC] DOWNSTREAM TAGS therefore read 'proved given the internal
+      structural-IJC branch verdict' (the supplement's P_APF given the
+      IJC branch), NOT 'proved given an empirical Bell/KS input.'
 
     PROOF STRUCTURE (paired witnesses):
       BRANCH (Sep) WITNESS — auditor's countermodel:

@@ -82,7 +82,7 @@ def check_T_photon_massless_from_reversibility():
               "permanent capacity, and (cost=energy) carries no rest-energy floor. The structural DUAL of the "
               "record-locking gap (non-abelian Delta>0 -> locked -> gapped; abelian Delta=0 -> reversible -> "
               "massless). Mass <=> a locked record; masslessness <=> no record [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "The abelian mirror of the confinement closure. L_nc [P] splits composition by symmetry type "
             "(non-abelian Delta>0, abelian Delta=0); L_irr's own countermodel makes Delta=0 fully reversible, "
@@ -157,7 +157,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
               "intrinsic arrow; the radiation arrow (retarded not advanced) is the absorber's L_irr record-lock -- "
               "the same mechanism as the thermodynamic arrow and confinement, acting at the absorbing matter, not "
               "in the field. The APF form of Wheeler-Feynman/Einstein-Ritz [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "Resolves the standard puzzle -- Maxwell is T-symmetric yet radiation has an arrow -- in the framework's "
             "own terms. The photon's U(1) is additive/reversible/arrowless (Paper 2 R2); the arrow lives at the "
@@ -217,7 +217,7 @@ def check_T_gauge_force_character_from_record_state():
         from apf.gauge import check_T_Higgs; hg=check_T_Higgs(); hg_ok=bool(hg.get("passed"))
     except Exception:
         hg_ok=True
-    _check(ph.get("epistemic")=="P_structural" and ph.get("passed"),
+    _check(ph.get("epistemic","").startswith("P_structural") and ph.get("passed"),
            "no-record case: photon massless -> massless pole -> Coulomb 1/r -> infinite range -> 2 polarizations")
     _check(hg_ok,
            "condensate-record case: SSB (T_Higgs, 3 Goldstones eaten) -> massive pole -> Yukawa e^{-mr}/r -> finite "
@@ -236,7 +236,7 @@ def check_T_gauge_force_character_from_record_state():
               "polarization count read off its RECORD STATE -- no record (photon: massless, Coulomb 1/r, 2 pol), "
               "condensate record (W/Z: massive, Yukawa, 3 pol = eaten Goldstone), unscreened colour record (gluon: "
               "confined, linear). One axis organizes the whole gauge phenomenology [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "The organizing principle of the gauge sector. The static potential is the propagator's Fourier "
             "transform, so the force law's shape is the propagator pole, which is the record state. No record "
@@ -313,7 +313,7 @@ def check_T_charge_quantization_from_ledger_discreteness():
               "DISCRETE capacity ledger (compactness = ledger discreteness, L_epsilon_star), the values are the "
               "anomaly-free assignment (L_anomaly_free [P]), and the quantum is e/N_c = e/3 from the colour triplet. "
               "The abelian-sector analogue of mass-from-record [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "Why electric charge is quantized, in the framework's terms. A free U(1) allows continuous charges; in "
             "APF the U(1)_Y is the abelian grading of a discrete capacity ledger (Theorem_R R3 + L_epsilon_star), so "
@@ -373,7 +373,7 @@ def check_T_sm_gauge_group_is_record_state_enumeration():
            "SU(3): unscreened COLOUR record -> confined, gapped (T_confinement)")
     _check(hg.get("passed"),
            "SU(2)_L: CONDENSATE record -> broken, massive W/Z, 3 polarizations (T_Higgs: 3 Goldstones eaten)")
-    _check(ph.get("epistemic")=="P_structural" and ph.get("passed"),
+    _check(ph.get("epistemic","").startswith("P_structural") and ph.get("passed"),
            "U(1)_em: NO record -> unbroken, massless photon, 2 polarizations (T_photon_massless_from_reversibility)")
     _check(True,
            "CAPSTONE: the SM gauge group realizes three distinct record states -- locked-unscreened (SU(3)), "
@@ -385,7 +385,7 @@ def check_T_sm_gauge_group_is_record_state_enumeration():
         name=("T_sm_gauge_group_is_record_state_enumeration: the three SM gauge factors realize three distinct "
               "record states -- SU(3) unscreened colour record (confined), SU(2)_L condensate record (massive), "
               "U(1)_em no record (massless). The capstone tying the record-state axis to Theorem_R [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_exhaustive",
         summary=(
             "The capstone of the record-state axis. The SM gauge group, derived independently (Theorem_R), places "
             "each of its three factors in a different record state: SU(3) holds an unscreened colour record and "
@@ -456,7 +456,7 @@ def check_T_gravity_on_record_state_axis():
         pass
     _check(gr.get("epistemic")=="P" and gr.get("passed"),
            "graviton: massless spin-2 by diffeomorphism invariance (T_graviton [P]) -- geometric reversibility = no record")
-    _check(ph.get("epistemic")=="P_structural" and ph.get("passed"),
+    _check(ph.get("epistemic","").startswith("P_structural") and ph.get("passed"),
            "the no-record/massless reading: reversibility -> massless (T_photon_massless_from_reversibility), shared seat")
     _check(OmegaL == Fraction(42,61),
            "global record: Omega_Lambda = dim V_global / dim V_61 = 42/61 (T11) -- the standing global record (V_global load)")
@@ -476,7 +476,7 @@ def check_T_gravity_on_record_state_axis():
               "GLOBAL interface; and that interface (V_global) is the record-LEDGER where every other sector's "
               "record-locking is deposited, with Lambda=42/61 the standing global record. The fourth-force seat "
               "[P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "Gravity completes the record-state axis. EM and gravity are the two massless long-range forces, both at "
             "the no-record seat: massless <=> reversibility <=> no record. The photon's reversibility is the local "
@@ -544,9 +544,9 @@ def check_T_particle_mass_is_locked_record():
         see_ok=True
     _check(hg.get("passed"),
            "gauge bosons + condensate: T_Higgs [P] -- the electroweak condensate is the record; W/Z mass = eaten Goldstone")
-    _check(ph.get("epistemic")=="P_structural" and ph.get("passed"),
+    _check(ph.get("epistemic","").startswith("P_structural") and ph.get("passed"),
            "massless limit: photon -- no record (T_photon_massless_from_reversibility)")
-    _check(gr.get("epistemic")=="P_structural" and gr.get("passed"),
+    _check(gr.get("epistemic","").startswith("P_structural") and gr.get("passed"),
            "massless limit: graviton -- no record at the global interface (T_gravity_on_record_state_axis)")
     _check(see_ok,
            "near-recordless fermion: the neutrino -- seesaw-suppressed residue (L_seesaw_type_I), nu_R a gauge singlet, purely chiral")
@@ -562,7 +562,7 @@ def check_T_particle_mass_is_locked_record():
               "(mass = lock strength), the neutrino the near-recordless fermion (seesaw-suppressed). Masslessness <=> "
               "no record (photon, graviton). Extends the record-state axis from the four forces to all matter "
               "[P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "Extends mass-is-a-record from the gauge bosons to all matter. All Standard-Model mass comes from one "
             "record -- the electroweak condensate. The W and Z carry it directly (the eaten Goldstone, T_Higgs); a "
@@ -654,7 +654,7 @@ def check_T_visible_mass_is_color_record():
               "unscreened colour record (~Lambda_QCD), ~99% of the nucleon mass -- not the Higgs. The YM gap IS the "
               "foundation for visible mass; the fundamental fermion masses are a SEPARATE record (the electroweak "
               "condensate, v_H ~10^3 above). Both ride the one Planck anchor [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_reading",
         summary=(
             "The strategic map of where mass comes from, in record terms. There are two mass records: the colour "
             "record (the Yang-Mills gap, ~Lambda_QCD) and the condensate record (the electroweak vev v_H, ~10^3 "

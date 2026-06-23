@@ -352,7 +352,7 @@ def check_T_interface_site_finite_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_interface_site_finite_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Finite APF interface site is well-formed.",
             data=tests,
         )
@@ -373,7 +373,7 @@ def check_T_representation_presheaf_defined_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_representation_presheaf_defined_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Representation assignment over the APF interface site is defined and typed.",
             data=tests,
             dependencies=["check_T_interface_site_finite_P"],
@@ -397,7 +397,7 @@ def check_T_restriction_maps_defined_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_restriction_maps_defined_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Restriction maps for local representations are typed and audit-classified.",
             data=tests,
             dependencies=["check_T_representation_presheaf_defined_P"],

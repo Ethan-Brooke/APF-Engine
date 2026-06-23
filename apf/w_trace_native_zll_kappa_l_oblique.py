@@ -135,7 +135,7 @@ def check_T_w_trace_native_kappa_l_gammaZ_mixing_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_kappa_l_gammaZ_mixing: "
              "native gamma-Z-mixing contribution to kappa_l [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             f"The gamma-Z-mixing contribution to the leptonic effective-angle form "
             f"factor, Dkappa_gammaZ = (c/s) Re[Sigma^gZ(M_Z^2)/M_Z^2] = {gz:.6f}, "
@@ -192,7 +192,7 @@ def check_T_w_trace_native_kappa_l_oblique_assembly_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_kappa_l_oblique_assembly: "
              "oblique kappa_l = custodial + gamma-Z = 63% of target [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             f"Oblique Delta kappa_l = custodial (banked {d['custodial_banked']:.6f}) "
             f"+ native gamma-Z ({d['gammaZ_native']:.6f}) = {d['oblique_total']:.6f} "

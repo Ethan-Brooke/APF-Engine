@@ -1647,7 +1647,7 @@ def check_T_partition_rigidity_coverage_v69():
         name='T_partition_rigidity_coverage_v69 — '
              'every registered partition has a registered rigidity theorem',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "Structural coverage check supporting the "
             "T_capacity_redistribution_unification meta-theorem. "

@@ -222,7 +222,7 @@ def check_T_w_trace_native_bosonic_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_bosonic_scope_partial: "
              "bosonic self-energies native + pole-validated; finite Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "Denner's reviewed bosonic Sigma^AA_T / Sigma^ZZ_T / Sigma^W_T (App.B) "
             "are now native functions on the PV toolkit, validated by the banked "

@@ -191,7 +191,7 @@ def check_T_obstruction_dynamics_operations_defined_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_obstruction_dynamics_operations_defined_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Finite obstruction dynamics operations are defined on obstruction objects.",
             data={"operation_count": len(Operation), "example_count": len(ex), "all_typed": True},
         )

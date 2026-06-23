@@ -153,7 +153,7 @@ def check_T_globalization_map_defined_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_globalization_map_defined_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Globalization/restriction map from global APF structures to local descent classes is defined.",
             data={"tests": tests, "map": f},
         )
@@ -171,7 +171,7 @@ def check_T_obstruction_map_defined_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_obstruction_map_defined_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Obstruction map from local descent classes to obstruction objects is defined.",
             data={"tests": tests, "obstructions": {k: v.names() for k, v in obs.items()}},
             dependencies=["check_T_globalization_map_defined_P"],

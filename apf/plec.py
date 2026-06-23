@@ -572,7 +572,7 @@ def check_T_trivial_alignment_is_Type_II():
 
     return _result(
         name='T_trivial_alignment_is_Type_II',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'The trivial alignment (a, empty) is a Type II configuration of '
             'the realignment-cost functional under any nontrivial symmetry '
@@ -674,7 +674,7 @@ def check_T_type_II_resolution_under_L_irr():
 
     return _result(
         name='T_type_II_resolution_under_L_irr',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'L_irr-accumulated record-locking adds an asymmetric correction '
             'to a symmetric Type II cost functional, breaking its symmetry '
@@ -819,7 +819,7 @@ def check_T_cosmogenic_lattice_ordering():
 
     return _result(
         name='T_cosmogenic_lattice_ordering',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'Cosmogenic ordering is partially ordered by Phi_c-monotonic '
             'phase staging in the (61, 102) lattice. Any realized cosmic '
@@ -1010,7 +1010,7 @@ def check_T_omega_gamma_max_symmetry_group():
 
     return _result(
         name='T_omega_gamma_max_symmetry_group',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'At the trivial alignment (a, empty), the maximal symmetry '
             'group of Omega_Gamma is G_max = S_61 x [SU(3) x SU(2) x '

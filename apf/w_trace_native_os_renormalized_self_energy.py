@@ -222,7 +222,7 @@ def check_T_w_trace_native_os_renorm_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_os_renorm_scope_partial: "
              "mu-independent OS-renormalized self-energy done; Delta r_rem assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The OS-renormalized transverse self-energy Sigma_hat(p^2) is native and "
             "proven mu-independent (per fermion loop), OS conditions "

@@ -167,7 +167,7 @@ def check_pi_T_essentiality():
     return _result(
         name='pi_T_essentiality — Thermodynamic projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "At a thermodynamic interface, pi_T(acc) = ACC = K * ln(d_eff) "
             "is the unique admissible projection satisfying Khinchin "
@@ -257,7 +257,7 @@ def check_pi_G_essentiality():
     return _result(
         name='pi_G_essentiality — Gravitational projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             f"At a horizon interface of area A = {A} (4*ell_P^2 units), "
             f"pi_G(acc) = A / (4 ell_P^2) = K = {g_val} nats is the "
@@ -351,7 +351,7 @@ def check_pi_Q_essentiality():
     return _result(
         name='pi_Q_essentiality — Quantum projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             f"At a finite-dim quantum interface of dimension d = {d}, "
             f"pi_Q(acc) = N = d_eff^K = {q_val} is the unique admissible "
@@ -442,7 +442,7 @@ def check_pi_F_essentiality():
     return _result(
         name='pi_F_essentiality — Gauge/field projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             f"At the SM gauge-template interface, pi_F(acc_SM) = K = {f_val} "
             f"is the unique admissible integer-valued projection satisfying "
@@ -546,7 +546,7 @@ def check_pi_C_essentiality():
     return _result(
         name='pi_C_essentiality — Cosmological projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             f"At the SM cosmological-partition interface, pi_C(acc_SM) = "
             f"{{Omega_b: {_CANON_OMEGA_B}/{_CANON_K_SM_INT}, "
@@ -647,7 +647,7 @@ def check_pi_A_essentiality():
     return _result(
         name='pi_A_essentiality — Action projection is unique',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             f"At an action/spectral-triple interface (canonical quantum "
             f"d = {d}), pi_A(acc, beta, H) = sum_g exp(-beta H(g)) is the "
@@ -744,7 +744,7 @@ def check_T_projection_essentiality():
     return _result(
         name='T_projection_essentiality — All six regime projections are unique',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "The six regime projections of the Admissibility-Capacity "
             "Ledger — pi_T (thermodynamic, ACC), pi_G (gravitational, "

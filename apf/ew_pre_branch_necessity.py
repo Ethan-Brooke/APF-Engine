@@ -126,7 +126,7 @@ def check_T_ew_pre_branch_necessity_P():
               "d_eff^(-C_boson/2)=102^-8 [P_structural, modulo identifications A+B]; upgrades "
               "v24.3.179 + v24.3.182"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "Closes the exponent by exclusion with the correctly-stated hypothesis (v24.3.182's "
             "residual was against 'y_t-free alone', which is too weak). Given the banked floor "

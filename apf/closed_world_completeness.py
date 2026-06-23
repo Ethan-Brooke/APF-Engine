@@ -242,7 +242,7 @@ def check_T_no_phantom_record_quotient():
         "name": "T_no_phantom_record_quotient",
         "passed": True,
         "tier": 3,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "key_result": (
             "Finite witness A = R[x]/(x^3) has operational radical "
             "(x^2) of dim 1; quotient A/R is 2-dim and information-"
@@ -342,7 +342,7 @@ def check_T_operational_radical_equals_jacobson():
         "name": "T_operational_radical_equals_jacobson",
         "passed": True,
         "tier": 3,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "key_result": (
             f"On A = R[x]/(x^3) under stable-simple completeness "
             f"(unique pi: A -> R), r_op = Jac(A) = (x) and the "
@@ -1137,7 +1137,7 @@ def check_T_capacity_only_distinct_from_structural_ijc():
         "name": "T_capacity_only_distinct_from_structural_ijc",
         "passed": True,
         "tier": 4,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "key_result": (
             "Witness interface is SepStr + IJCAdm (structurally "
             "classical, locally APF-inadmissible due to cost "
@@ -1230,7 +1230,7 @@ def check_T_gate_certified_hilbert_born_pipeline():
         "name": "T_gate_certified_hilbert_born_pipeline",
         "passed": True,
         "tier": 4,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "key_result": (
             f"All four gates (positivity / reciprocity / radical / "
             f"composite) PASS on the 3-dim canonical witness; "
@@ -1318,7 +1318,7 @@ def check_T_closed_world_completeness_derives_three_gates():
         "name": "T_closed_world_completeness_derives_three_gates",
         "passed": True,
         "tier": 4,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "key_result": (
             "All three reviewer-flagged regime gates (reciprocal "
             "calibration, stable simple-record completeness, APF-"

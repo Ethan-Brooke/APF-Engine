@@ -395,7 +395,7 @@ def check_T_w_trace_pv_timelike_c0_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_timelike_c0_subgate_partial: "
              "timelike scalar C0 native; timelike Cij + Lambda + kappa_l OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native scalar three-point C0 now extends to the timelike / "
             "above-threshold branch (principal-value Re + absorptive Im via the "

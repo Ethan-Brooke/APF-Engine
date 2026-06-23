@@ -350,7 +350,7 @@ def check_T_w_trace_native_vertex_ff_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_vertex_ff_subgate_partial: "
              "generic vertex FF layer native; Zll Lambda_V/S + kappa_l OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native generic vertex form-factor layer (Denner App. C / haba3: "
             "V_a, V_b^+-, on the Denner-convention three-point wrapper) is in place "

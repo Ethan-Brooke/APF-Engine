@@ -401,7 +401,7 @@ def check_T_Lambda_coefficient_degeneracy_audit():
         name='T_Lambda_coefficient_degeneracy_audit — '
              'degeneracy dissolved by the two-factor form',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             f"The Lambda coefficient is not one of ~{len(within_001)} numerical "
             f"near-coincidences: it is forced by FORM. The bare scale factors exactly, "
@@ -609,7 +609,7 @@ def check_T_Lambda_operator_model_verification():
         name='T_Lambda_operator_model_verification — '
              'Operator trace identity C_vac/d_eff at model interfaces',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             f"Operator-level identity tr(P_vac_at_slot_1) / "
             f"dim H_micro = C_vac * d_eff^(K-1) / d_eff^K = C_vac / "
@@ -1092,7 +1092,7 @@ def check_T_ew_lambda_unified_suppression():
               "(C_boson=16) at amplitude/half-power (Born root), density reads the full ledger "
               "(C_total=61) at probability/full-power [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "Unifies the two hierarchies. v_H^2/M_Pl^2 = pref_EW^2*exp(-S_bos), S_bos=C_boson*sigma="
             "16*ln(102); rho_Lambda/M_Pl^4 = (C_vacuum/d_eff)*exp(-S_dS), S_dS=C_total*sigma="

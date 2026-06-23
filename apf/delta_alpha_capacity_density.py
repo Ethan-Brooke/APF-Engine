@@ -109,7 +109,7 @@ def check_T_delta_alpha_capacity_counted_distinction_density_P():
               "native structure, one external scale (the confinement threshold). NP residual VALUE "
               "held [C] [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "APF-native reformulation: Delta-alpha = (alpha/3pi) sum_f N_c^f Q_f^2 [ln(M_Z^2/m_f^2) "
             "- 5/3], the accumulation of the capacity-counted distinction density R = N_c*sum Q^2 "
@@ -214,7 +214,7 @@ def check_T_dalpha_had_threshold_quantum_number_forced_P():
               "residual is size-bounded [P_structural] and equals a QCD condensate [P+tool] "
               "[P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "The hadronic vacuum polarization admits only J^PC=1^{--} intermediate states; single-pi "
             "(0^{-+}) is C-forbidden, so the lightest qualifying hadronic distinction is the pi+pi- "

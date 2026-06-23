@@ -252,7 +252,7 @@ def check_T_w_trace_native_uv_pole_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_uv_pole_scope_partial: "
              "UV-pole layer (Prereq B) established; bosonic poles + counterterm cancellation OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "Prerequisite B of the native OS-W evaluator is in place: the PV toolkit "
             "now carries exact UV-pole coefficients (A0/B0/B1/B11/B00), validated "

@@ -114,7 +114,7 @@ def check_T_w_trace_mw_from_3_13_dimensionless_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_mw_from_3_13_dimensionless: "
              "M_W/M_Z is the dimensionless content; GeV value is M_Z-anchored [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             f"The only quantity 3/13 can ever fix at [P] is the DIMENSIONLESS ratio "
             f"M_W/M_Z = sqrt(1 - s^2_OS) = {ratio:.6f}. Converting to a GeV value "

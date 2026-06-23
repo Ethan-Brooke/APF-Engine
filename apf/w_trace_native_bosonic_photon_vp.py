@@ -293,7 +293,7 @@ def check_T_w_trace_native_bosonic_photon_vp_scope_partial_P() -> Dict[str, Any]
     return _result(
         name="T_w_trace_native_bosonic_photon_vp_scope_partial: "
              "bosonic Sigma^AA_T complete; gauge-invariant -7 (gamma-Z mixing) + Pi_WW/Pi_ZZ + delta_VB OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The complete bosonic transverse photon self-energy Sigma^{AA}_T (W gauge + "
             "seagull + Goldstone + FP ghost, 't Hooft-Feynman gauge) is now native, "

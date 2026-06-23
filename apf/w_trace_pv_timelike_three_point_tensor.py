@@ -339,7 +339,7 @@ def check_T_w_trace_pv_timelike_c1_c2_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name=("T_w_trace_pv_timelike_c1_c2_subgate_partial: "
               "timelike rank-1 (C1,C2) native; rank-2 + Lambda + kappa_l OPEN [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native three-point rank-1 tensor coefficients (C1, C2) extend to "
             "the timelike branch (1D-reduced Feynman integral with the closed-form "

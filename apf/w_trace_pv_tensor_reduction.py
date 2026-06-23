@@ -314,7 +314,7 @@ def check_T_w_trace_pv_twopoint_tensor_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_twopoint_tensor_subgate_partial: "
              "two-point tensors native; 3-/4-point + map + assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The OPEN G2F_TENSOR_REDUCTION gate now has its complete TWO-POINT "
             "tensor basis (B1, B00, B11) APF-owned and self-validated. The 3-point "

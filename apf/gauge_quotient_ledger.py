@@ -1684,7 +1684,7 @@ def check_L_defense_requires_evaluator():
     return _full_result(
         name="L_defense_requires_evaluator: defense embodies a held evaluator (GQL-5a-1 derived); GQL-5b + GQL-4n consolidated into GQL-5u (usage-billing, one identification)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(
             "GQL-5a-1 DERIVED in BOTH obligation shapes, exhaustively: two-sided (fact-"
             "variable) defense against a bidirectionally covering threat forces fiber "
@@ -1832,7 +1832,7 @@ def check_T_alpha_gamma_coincide_on_template_class():
     return _full_result(
         name="T_usage_measure_unique_on_template_class: alpha == gamma on the Delta = 1 template class (the usage measure is unique up to the S1-S3 spec)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(
             "The two surviving usage-measure constructions COINCIDE on the Delta = 1 carrier "
             "class -- the alpha-vs-gamma fork is closed; uniqueness-up-to-spec NOT proved (a "
@@ -1980,7 +1980,7 @@ def check_UB_usage_billing_adopted():
     return _full_result(
         name="UB_usage_billing_adopted: capacity draws follow structure-usage -- adopted-with-falsifier per the principal's 2026-06-10 ruling (MD/BW precedent)",
         tier=3,
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
         summary=(
             "UB ADOPTED-WITH-FALSIFIER (principal ruling 2026-06-10; MD/BW precedent), named "
             "SEVERALLY per the tenth adoption audit: (UB-r) routing-as-billing semantics (the "

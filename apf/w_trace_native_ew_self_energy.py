@@ -223,7 +223,7 @@ def check_T_w_trace_native_self_energy_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_self_energy_scope_partial: "
              "fermionic p^2=0 self-energies + transversality done; full Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "Stage 2 of the native OS-W evaluator now has the full fermionic "
             "transverse self-energies at p^2=0, built slot-by-slot from SM couplings "

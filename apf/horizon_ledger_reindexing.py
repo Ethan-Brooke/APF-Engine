@@ -113,11 +113,11 @@ def check_T_horizon_reindexing():
     paradox_is_codomain_error = (pre["codomain"] != post["codomain"])
     ok = bulk_ext_inadmissible and codomain_changed and distinction_preserved and paradox_is_codomain_error
     if not ok:
-        return _fail("check_T_horizon_reindexing", status="P_structural",
+        return _fail("check_T_horizon_reindexing", status="P_structural_reading",
                      summary="Horizon reindexing codomain-change structure failed",
                      data={"codomain_changed": codomain_changed})
     return _ok(
-        "check_T_horizon_reindexing", status="P_structural",
+        "check_T_horizon_reindexing", status="P_structural_reading",
         summary=("Horizon closure changes the admissibility codomain of bulk-local "
                  "distinctions: Adm_bulk -> Adm_dH (boundary continuation constraints). "
                  "The distinction is reindexed, not destroyed; the information paradox is "
@@ -148,11 +148,11 @@ def check_L_four_commitment_independence():
     no_implication = (len(set(single_failure_obstructions)) == len(single_failure_obstructions))
     ok = four_distinct_nfs and all_others_independent and no_implication and N_COMMIT == 4
     if not ok:
-        return _fail("check_L_four_commitment_independence", status="P_structural",
+        return _fail("check_L_four_commitment_independence", status="P_structural_reading",
                      summary="Four-commitment independence failed",
                      data={"four_distinct_nfs": four_distinct_nfs})
     return _ok(
-        "check_L_four_commitment_independence", status="P_structural",
+        "check_L_four_commitment_independence", status="P_structural_reading",
         summary=("The four commitments (localization, exterior distinguishability, "
                  "interior exclusion, ledger reversibility) are independent: each fails "
                  "while the other three remain satisfiable, giving four distinct "
@@ -176,11 +176,11 @@ def check_T_four_commitment_record_cost():
     sharp = (eps_hor_min == N_COMMIT * EPS_P)
     ok = additive_lower_bound and no_lower_cost and sharp and N_COMMIT == 4
     if not ok:
-        return _fail("check_T_four_commitment_record_cost", status="P_structural",
+        return _fail("check_T_four_commitment_record_cost", status="P_structural_reading",
                      summary="Four-commitment record-cost derivation failed",
                      data={"eps_hor_min": eps_hor_min})
     return _ok(
-        "check_T_four_commitment_record_cost", status="P_structural",
+        "check_T_four_commitment_record_cost", status="P_structural_reading",
         summary=("One closed exterior horizon record costs eps_hor^min = N_commit * eps_P "
                  "= 4 * eps_P (additive by independence; sharp; no lower-cost encoding). "
                  "Hence the coefficient has the structural FORM 1/N_commit. UNCONDITIONAL."),
@@ -483,10 +483,10 @@ def check_L_no_bounded_remnant():
     remnant_insufficient = all(x > 0 for x in deficits)
     ok = deficit_unbounded and remnant_insufficient
     if not ok:
-        return _fail("check_L_no_bounded_remnant", status="P_structural",
+        return _fail("check_L_no_bounded_remnant", status="P_structural_reading",
                      summary="No-bounded-remnant argument failed", data={"deficits": deficits})
     return _ok(
-        "check_L_no_bounded_remnant", status="P_structural",
+        "check_L_no_bounded_remnant", status="P_structural_reading",
         summary=("A bounded-area remnant (N_R <= A_R/4 l_P^2) cannot carry the ledger of "
                  "an arbitrarily large hole; the deficit grows without bound and the only "
                  "escape (unbounded hidden degeneracy) violates finite enforceability (A1). "
@@ -603,11 +603,11 @@ def check_T_microtransport_sufficiency():
     m1_m2_sufficient = True  # rank + pairing preservation => ledger preserved (def.)
     ok = m3_translates_all_four and m4_composable and m1_m2_sufficient
     if not ok:
-        return _fail("check_T_microtransport_sufficiency", status="P_structural",
+        return _fail("check_T_microtransport_sufficiency", status="P_structural_reading",
                      summary="Microtransport sufficiency theorem failed",
                      data={"m3": m3_translates_all_four, "m4": m4_composable})
     return _ok(
-        "check_T_microtransport_sufficiency", status="P_structural",
+        "check_T_microtransport_sufficiency", status="P_structural_reading",
         summary=("If evaporation supplies maps satisfying M1 (rank preservation), M2 "
                  "(pairing preservation), M3 (four-role translation), M4 (stepwise "
                  "composability), then it is information-preserving at the ledger level. "

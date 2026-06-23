@@ -107,7 +107,7 @@ def check_T_ew_planck_hierarchy_capacity_suppression_mechanism_P():
               "mechanism modulo O(1); bosonic mode-restriction C_boson=16 vs C_total=61 OPEN; "
               "absolute value route-b]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "The EW/Planck hierarchy has the FORM of a bosonic root-measure suppression "
             "v/M_Pl ~ d_eff^(-C_boson/2) = 102^(-8), the inverse-sqrt of microstate volume "

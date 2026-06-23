@@ -272,7 +272,7 @@ def check_T_w_trace_pv_timelike_cij_rank2_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name=("T_w_trace_pv_timelike_cij_rank2_subgate_partial: "
               "timelike rank-2 Cij native; Lambda + kappa_l OPEN [P_structural]"),
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native three-point rank-2 tensor coefficients (C00, C11, C12, C22) "
             "now extend to the timelike branch via the closed-form inner K and "

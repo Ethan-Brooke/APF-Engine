@@ -198,7 +198,7 @@ def check_T_ew_osw_harness_contract_wellformed_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_harness_contract_wellformed: "
              "OS-W reviewed-formula evaluator harness contract well-formed [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             f"Scheme card complete (on-shell, Denner/Sirlin counterterm + tadpole, "
             f"finite-part inherited from the banked PV substrate). "
@@ -230,7 +230,7 @@ def check_T_ew_osw_harness_fails_closed_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_harness_fails_closed: "
              "evaluator refuses a value until source-certified import lands [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             f"evaluate_delta_r_rem() returns value_evaluated=False with "
             f"{r['pending_source_certified']} families pending source-certified "
@@ -264,7 +264,7 @@ def check_T_ew_osw_harness_no_substrate_duplication_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_harness_no_substrate_duplication: "
              "delegates to banked PV substrate + kernels, no duplication [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "The harness delegates the finite PV scalar substrate to the banked "
             "apf.w_trace_pv_scalar_integral_substrate (a0_fin/b0_fin present) and "

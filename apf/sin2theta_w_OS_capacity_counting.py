@@ -506,7 +506,7 @@ def check_T_canonical_unique_under_OSR_enumeration_P() -> Dict[str, Any]:
     return _result(
         name="T_canonical_unique_under_OSR_enumeration: 1 of 6561 candidates passes OSR1-OSR7, capacity (7,2,9) [P_structural]",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(f"Enumerated 3^8 = {actual_size} candidate (counted, side) assignments; "
                  f"{survivor_count} survives OSR1-OSR7 filter; survivor capacity = {surv_caps.pop() if surv_caps else None}."),
         artifacts={"candidate_space_size": actual_size, "survivor_count": survivor_count,
@@ -534,7 +534,7 @@ def check_T_OSR_premise_implications_mechanized_P() -> Dict[str, Any]:
     return _result(
         name="T_OSR_premise_implications_mechanized: all 6 OSR rules verify as logical implications [P_structural]",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(f"OSR rule -> premise-implication mechanized; all 6 verify: {all_verify}. "
                  f"Audit finding banked: v5's P0-P11 sufficient for OSR1, OSR2, OSR3, OSR5; "
                  f"INSUFFICIENT for OSR4, OSR7 — closed with P12 (Higgs SU(2)-doublet), "
@@ -557,7 +557,7 @@ def check_T_lyapunov_V_unique_global_minimum_P() -> Dict[str, Any]:
     return _result(
         name="T_lyapunov_V_unique_global_minimum: V := # numeric premises violated; unique V=0 at canonical [P_structural]",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(f"V=0 count = {canonical_count} (of 6561); unique global minimum: {ok}. "
                  f"Energy histogram: {dict(sorted(energy_hist.items()))}"),
         artifacts={"V_zero_count": canonical_count, "energy_histogram": dict(sorted(energy_hist.items()))},
@@ -607,7 +607,7 @@ def check_T_lyapunov_k2_swap_strict_descent_P() -> Dict[str, Any]:
     return _result(
         name="T_lyapunov_k2_swap_strict_descent: k=2 swap greedy descent on V reaches canonical from all 6561 starts [P_structural]",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(f"All 6561 starting candidates reach canonical under k=2-field-swap descent: {all_reach}. "
                  f"Discrete analog of Paper 18's continuous Lotka-Volterra Lyapunov function "
                  f"(strict descent on V proves global convergence to unique minimum)."),

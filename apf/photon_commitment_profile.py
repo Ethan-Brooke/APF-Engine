@@ -108,7 +108,7 @@ def check_T_ledger_reversibility_is_L_irr_lock():
     return _full_result(
         name="Ledger reversibility is the L_irr permanent-ledger-lock (photon slot-4 keystone)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
         summary=(
             "The fourth horizon-record commitment C_4 ('ledger reversibility') is identified with the "
             "L_irr permanent-ledger-entry: a closed exterior horizon record locks a permanent, locally-"

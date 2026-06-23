@@ -124,7 +124,7 @@ def check_T_ew_prefactor_invariance_no_go_P():
               "[P_structural no-go]; absolute v_H blocked; reduces to a missing static "
               "trace-measure invariance theorem"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "No-go: the O(1) prefactor eta = sqrt(g) rho/(mu sqrt(C_boson)) has three "
             "INDEPENDENT carriers under the current stack -- color g=N_c (strip -> x1/sqrt3, "

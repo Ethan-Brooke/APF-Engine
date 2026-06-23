@@ -177,7 +177,7 @@ def check_R_SU_Nc_neq_3_killed():
     return _result(
         name='R_SU_Nc_neq_3 — Alternative SU(N_c) for N_c =/= 3 KILLED',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Rival gauge group SU(N_c), N_c =/= 3, is dominated by the '
             'v6.9 derivation of N_c = 3 via Theorem_R (R1 non-abelian '
@@ -299,7 +299,7 @@ def check_R_Ngen_neq_3_killed():
     return _result(
         name='R_Ngen_neq_3 — Alternative N_gen =/= 3 KILLED',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Rival generation count N_gen =/= 3 is killed by T7. '
             'C_EW = kappa * channels = 2 * 4 = 8 is the electroweak '
@@ -454,7 +454,7 @@ def check_R_extra_axiom_NT_killed():
     return _result(
         name='R_extra_axiom_NT — Rival with extra axiom beyond A1 + PLEC KILLED',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Rival framework with a non-trivial extra axiom beyond A1 '
             'plus the four PLEC components (A1, MD, A2, BW) is killed by '
@@ -566,7 +566,7 @@ def check_R_Born_axiomatic_killed():
     return _result(
         name='R_Born_axiomatic — Rival that axiomatizes the Born rule KILLED',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Rival framework that postulates the Born rule '
             'P(a_n) = |<a_n|psi>|^2 as a primitive axiom is strictly '
@@ -640,7 +640,7 @@ def check_T_killed_rivals_v0():
     return _result(
         name='T_killed_rivals_v0 — All four structural rivals killed in v6.9',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Composed kill: the four rival physical-theory architectures '
             'locked in Phase 14b §14b.0 v0 (R_SU_Nc_neq_3, R_Ngen_neq_3, '

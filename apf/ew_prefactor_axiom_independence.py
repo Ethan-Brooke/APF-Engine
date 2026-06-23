@@ -115,7 +115,7 @@ def check_T_ew_prefactor_axiom_independence_P():
               "(246.21 / 142.15 / 426.45 / 49.11 GeV, all admissible); closing it requires a NEW "
               "structural axiom, not a derivation [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "Model-theoretic independence (capstone of the prefactor line; stronger than the "
             "factor-level no-go v24.3.177). With C, d_eff, the root-measure d_eff^(-C/2), and "

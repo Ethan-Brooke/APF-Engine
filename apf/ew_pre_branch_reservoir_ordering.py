@@ -114,7 +114,7 @@ def check_T_ew_pre_branch_reservoir_ordering_P():
               "Strengthens v24.3.179 with the forcing mechanism [P_structural; conditional on the "
               "y_t-free-floor = pre-gauge-SSB identification]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             "The forcing mechanism v24.3.179 lacked. v_H = M_Pl . Omega_bos^(-1/2) . (12/7), with the "
             "root-measure evaluated PRE-branch and the 12/7 lift POST-branch. WHY gluons are in the "

@@ -190,7 +190,7 @@ def check_T_w_trace_native_drho_top_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_drho_top_scope_partial: "
              "native Delta rho_top gate passed; full Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "This rung establishes that the native PV substrate reproduces the "
             "leading custodial Delta rho_top (the p^2=0 fermionic piece) from genuine "

@@ -15,13 +15,41 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
   [P]               Proved from PLEC's four constitutive features (A1, MD,
                     A2, BW) acting at any admissible interface.  No
                     regime-specific structural premises beyond PLEC.
-  [P_structural]    Structural-meta result.  Either (i) certifies a property
-                    of the framework's own premises (independence, exhaustion,
-                    consistency), (ii) certifies a graph-theoretic property
-                    of the bank (e.g., crystal walker, path attribution), or
-                    (iii) is a tier-4 meta-theorem about the framework's
-                    architecture rather than physics.  Examples: the four
-                    Phase 19a-d IJC dichotomy bank checks; check_T_crystal_*.
+  [P_structural_*]  Structural-meta result, proved up to a NAMED premise.  The
+                    grade was split (2026-06-22) after a corpus audit found the
+                    bare [P_structural] doing six distinct jobs; the premise's
+                    KIND is now in the tag.  The "structural" stem is preserved
+                    so substring/startswith consumers (photon_commitment_profile,
+                    ew_codomain_reading_contracts) keep working.  Six sub-grades:
+                      P_structural_seam        external COMPLETION-theorem import:
+                          finite->infinite (operator algebra), the emergent-field
+                          w prop g^2 dictionary, or NP/transmutation.  The genuine
+                          completion-seam core (Paper 44).  (~16)
+                      P_structural_partial     native continuum-PERTURBATIVE
+                          machinery (w_trace self-energy / PV reduction), pending
+                          scheme-export assembly.  Counts as seam ONLY under the
+                          "loops are math" reading -- kept distinct so the bank
+                          stays agnostic; the seam claim lives in Paper 44 prose.
+                          (~35)
+                      P_structural_exhaustive  uniqueness among FINITE
+                          alternatives: rival elimination, projection
+                          essentiality, OSR enumeration, census.  (~26)
+                      P_structural_instrument  classical FINITE MATH imported to
+                          analyze/verify the bank: crystal graph metrics
+                          (Brandes/Menger/Tarjan), OSW harnesses, YM finite-model
+                          ports, export guards.  (~26)
+                      P_structural_reading     physics derivation up to an adopted
+                          INTERNAL reading/premise (record-state, IJC, PLEC,
+                          MD-bridge, categorical ACC stack, evaporation/horizon
+                          readings) -- not an external import at all.  (~89)
+                      P_structural_convention  unit/scale convention; O(1)
+                          prefactor (Planck magnitude).  (~8)
+                    Source-of-record: APF Reference Docs/Reference - Corpus Audit
+                    of the Completion Seam (2026-06-22).md + the CONTINUATION
+                    grade-split note.  Pure relabel: no math, no count change,
+                    EXPECTED unchanged.  The IJC dichotomy checks are now
+                    P_structural_reading; check_T_crystal_* are
+                    P_structural_instrument.
   [P+lattice]       Proved from PLEC + lattice-QCD numerical input.  Used
                     where the framework's structural derivation reduces a
                     physical observable to a lattice-QCD computation.  The

@@ -9116,9 +9116,16 @@ def check_T_number_u1_is_interface_modular_flow():
          (ii) the native clustering/tail route (product state -> exact clustering
          -> trivial tail -> factor), which REPRODUCES Araki-Woods rather than
          reducing it (centre-subset-tail is the imported machinery, not an
-         elementary 0-1 law). So factor-vs-center reads as a PERMANENT [P_structural]
-         import (a structural feature, like the EW measured-angle fence), and this
-         conditional corollary is the ceiling -- not a standalone banked no-go. See
+         elementary 0-1 law). UPDATE (v24.3.264/.266): factor-vs-center is now NATIVE [P_structural]
+         -- the centre-subset-tail inclusion is supplied from the relative commutant of
+         a FINITE matrix leg (check_T_interface_algebra_is_factor_native_P,
+         apf/interface_factor_native.py), a different derivation needing no clustering /
+         asymptotic abelianness (it DOES import the vN tensor commutation theorem, admitted
+         standard-math tier -- hence [P_structural], per the 2026-06-21 cold audit), so the
+         two 2026-06-18 reductions are CLEARED. The conditional corollary is therefore now a
+         NATIVE [P_structural] no-go: factoriality [P_structural] + the coincidence above +
+         Takesaki uniqueness => no number-phase condensate on the
+         M_2-ITPFI interface algebra (the III_lambda TYPE stays [P_structural]). See
          'Reference - The III_lambda Interface Factor ... v0.1/v0.2 (2026-06-18)' +
          iii_lambda_factor_condensate_nogo_witness.py (42/42) +
          interface_factor_native_witness.py (23/23).
@@ -10428,7 +10435,7 @@ def check_L_mu_mc_unified():
 
     return _result(
         name='L_mu_mc_unified: m_u/m_c from Gram Crossing Geometry [value P_structural]',
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             f'Gram crossing route: eu[0]/eu[1] = {ratio_cross:.4f} '
             f'(PDG: {exp_mu_mc} ± {exp_sigma}, {nsigma_pdg:.1f}σ). '

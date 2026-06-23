@@ -101,7 +101,7 @@ def check_T_ew_planck_anchor_forced_by_gravity_consistency_P():
               "incompatible Planck scale and is EXCLUDED. Closes the Planck clause; sqrt(N_c) carrier "
               "remains the one open axis [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_convention',
         summary=(
             "First of the two genuinely-absent prefactor clauses (v24.3.181) to close, via the test "
             "the independence proof skipped: v24.3.180 proved independence from {A1,A2,K3} but never "

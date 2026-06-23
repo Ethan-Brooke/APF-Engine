@@ -269,7 +269,7 @@ def check_T_delta_alpha_total_decomposition_P() -> Dict[str, Any]:
     return _result(
         name="T_delta_alpha_total_decomposition: "
              "Delta alpha(M_Z) = lep + had + top [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_seam",
         summary=(
             f"Delta alpha(M_Z) = {total:.6f} = leptonic {r['da_lep_one_loop']:.6f} "
             f"({r['lep_fraction_of_total']*100:.1f}%, first-principles) + hadronic "

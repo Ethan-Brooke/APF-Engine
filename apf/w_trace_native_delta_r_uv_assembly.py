@@ -216,7 +216,7 @@ def check_T_w_trace_native_delta_r_assembly_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_delta_r_assembly_scope_partial: "
              "Delta r UV-finite + delta_VB native; finite Re Sigma(M^2) value [C] -> Delta r_rem OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "Denner's native Delta r is now assembled at the structural + divergence level: "
             "the full UV cancellation closes (all native self-energy poles), delta_VB is "

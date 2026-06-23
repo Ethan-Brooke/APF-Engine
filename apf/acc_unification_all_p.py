@@ -309,7 +309,7 @@ def check_T_ACC_base_record_functor_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_ACC_base_record_functor_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="ACC provides the common base record functor (K,d_eff).",
             data={"tests": tests, "claim": "ACC is base, not total structure"},
         )
@@ -353,7 +353,7 @@ def check_T_generated_ACC_category_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_generated_ACC_category_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="The generated APF/ACC bank-facing category is strict.",
             data=tests,
         )
@@ -369,7 +369,7 @@ def check_T_regime_structures_fibered_over_ACC_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_regime_structures_fibered_over_ACC_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Regime carrier structures are fibers over the ACC base.",
             data={"tests": tests, "witnesses": list(WITNESSES)},
             dependencies=["check_T_ACC_base_record_functor_P"],
@@ -391,7 +391,7 @@ def check_T_fibered_ACC_category_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_fibered_ACC_category_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="The resolved/fibered ACC category satisfies identity and composition laws.",
             data={"id_tests": id_tests, "composition": tests["composition"]},
             dependencies=["check_T_regime_structures_fibered_over_ACC_P"],
@@ -430,7 +430,7 @@ def check_T_free_vector_space_linearization_P() -> Dict:
     if all(tests.values()):
         return _ok(
             "check_T_free_vector_space_linearization_P",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Free-vector-space linearization preserves identities and composition.",
             data=tests,
         )

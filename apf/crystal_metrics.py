@@ -334,7 +334,7 @@ def check_T_crystal_centrality_v69():
     return _result(
         name='T_crystal_centrality_v69 — Brandes BC well-defined on v6.9 dual view',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'Brandes (2001) betweenness centrality is computable, '
             'deterministic, normalized to [0, 1], and produces a '
@@ -748,7 +748,7 @@ def check_T_crystal_path_attribution_v69():
             'to T_sin2theta well-defined on v6.9 dual view'
         ),
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'On the v6.9 Enforcement Crystal under the CORE preset, the '
             'depth-filtered DAG admits a well-defined path-count from '
@@ -1182,7 +1182,7 @@ def check_T_crystal_path_attribution_scc_v69():
             'share table to T_sin2theta well-defined on v6.9 dual view'
         ),
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'On the v6.9 Enforcement Crystal under the CORE preset, the '
             'Tarjan SCC condensation of the bank graph admits a well-'
@@ -1516,7 +1516,7 @@ def check_T_crystal_cascade_v69():
             'well-defined on v6.9 dual view'
         ),
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'On the v6.9 Enforcement Crystal under the CORE preset, the '
             'depth-filtered DAG admits a well-defined cascade-failure '
@@ -1812,7 +1812,7 @@ def check_T_crystal_convergence_v69():
             'well-defined on v6.9 dual view'
         ),
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'On the v6.9 Enforcement Crystal under the CORE preset, the '
             'depth-filtered DAG admits a well-defined convergence-cluster '
@@ -2357,7 +2357,7 @@ def check_T_crystal_min_cut_v69():
             'well-defined on v6.9 dual view'
         ),
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'On the v6.9 Enforcement Crystal under the CORE preset, the '
             'depth-filtered DAG admits a well-defined Menger '

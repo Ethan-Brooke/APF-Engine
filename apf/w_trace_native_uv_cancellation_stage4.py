@@ -234,7 +234,7 @@ def check_T_w_trace_native_uv_cancel_scope_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_native_uv_cancel_scope_partial: "
              "bosonic OS UV-cancellation done; fermionic WW/ZZ + full Delta r CT + finite/timelike OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The bosonic-sector (and full-photon) Stage-4 UV cancellation is native: the "
             "self-energy poles are linear in p^2 (renormalizable) and the OS mass + field "

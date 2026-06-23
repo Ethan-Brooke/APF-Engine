@@ -124,7 +124,7 @@ def check_T_ew_osw_numerical_assembly_present_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_numerical_assembly_present: "
              "OS-W numerical assembly kernel present with expected interface [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "The fail-closed numerical assembly kernel (apf.ew_osw_numerical_assembly_kernel) "
             "exposes assemble_delta_r_one_loop / compute_delta_r_rem / solve_mw_from_delta_r, "
@@ -194,7 +194,7 @@ def check_T_ew_osw_numerical_assembly_slot_algebra_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_numerical_assembly_slot_algebra: "
              "assembly slot algebra == sum of the six banked family maps [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             f"Under synthetic placeholder inputs the assembly's five slots "
             f"(gamma-gamma, W-transverse, Z-transverse, gamma-Z, vertex/box) match "
@@ -243,7 +243,7 @@ def check_T_ew_osw_numerical_assembly_fail_closed_P() -> Dict[str, Any]:
     return _result(
         name="T_ew_osw_numerical_assembly_fail_closed: "
              "assembly fails closed without certification / on invalid kinematics [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "The assembly fails closed: an uncertified component raises "
             "SourceCertificationRequired, a missing slot raises InvalidAssemblyInput, "
@@ -285,7 +285,7 @@ def check_T_ew_osw_numerical_assembly_forbidden_input_guard_P() -> Dict[str, Any
     return _result(
         name="T_ew_osw_numerical_assembly_forbidden_input_guard: "
              "nested-key guard rejects all 9 forbidden inputs [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_instrument",
         summary=(
             "The no-smuggling surface holds and is stronger than the families': "
             "the recursive guard rejects all 9 forbidden inputs at the top level "

@@ -121,7 +121,7 @@ def check_T_ew_static_well_factorization_principle_P():
               "with the fermions for a color-singlet Higgs -- so C_boson=16 is REJECTED at "
               "current depth; revival needs the named bosonic-enforcement-reservoir theorem"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             "BANKED: the static-well factorization principle. For a local normalized root-measure "
             "/ Hessian determinant on an order-parameter well, det(H_X (+) H_Xbar) = det(H_X) "

@@ -477,7 +477,7 @@ def check_T_acc_reading_selection():
               "Omega_Lambda = 42/61 [P]. [P_structural] overall -- the single open instance is the "
               "EW-floor type clause"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             "One capacity ledger -- C_total = 61 slots at per-slot degeneracy d_eff = 102 -- read four "
             "ways. The Reading-Selection Rule: a resolving structure reads the ACC scalar fixed by its "

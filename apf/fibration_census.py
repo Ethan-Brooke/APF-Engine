@@ -144,7 +144,7 @@ def check_T_b_pin_threat_empty():
     return _full_result(
         name="T_b_pin_threat_empty: the B-pin's row-7a threat set is empty at saturation (THREAT-EMPTY)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(
             "P_Gamma is admissibility-closed by canonical definition (endpoint filter); T_proton [P] "
             "excludes the B-altered endpoint at the saturated census; so the B-pin's threat set is "
@@ -239,7 +239,7 @@ def check_T_saturation_fibration_census():
     return _full_result(
         name="T_saturation_fibration_census: the census labels by admissible crossing (two kinds of fiber labels)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(
             "Every banked census label classified: Q FIBER gauge-rigid (generator-route; "
             "operator-inventory premise named, GQL-1a genre); B FIBER saturation-locked -- the only "
@@ -340,7 +340,7 @@ def check_T_record_term_pincer():
     return _full_result(
         name="T_record_term_pincer: the lone gamma record-term is unique by two conditions (threat + constitution)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_exhaustive",
         summary=(
             "A gamma record-term requires jointly: (a) a non-empty admissible threat set against a "
             "held value (this session's probe/census verdicts) and (b) GW-1's record-level "

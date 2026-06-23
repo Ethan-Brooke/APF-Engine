@@ -788,7 +788,7 @@ def check_T_crystal_v69_consistent():
         passed=True,
         name="T_crystal_v69_consistent: Crystal walker ↔ bank coherence",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             f"Walker built {n_full}-node full view + {post_R.n_nodes}-node "
             f"post-R view from bank.REGISTRY (size {n_bank}) under "

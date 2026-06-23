@@ -91,7 +91,7 @@ def check_T_saturation_alignment_is_Type_V():
     if not type_V:
         return _fail(
             "check_T_saturation_alignment_is_Type_V",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Saturation alignment fails Type V characterization",
             data={"saturation_at_ceiling": saturation_at_ceiling,
                   "load_at_ceiling": load_at_ceiling,
@@ -102,7 +102,7 @@ def check_T_saturation_alignment_is_Type_V():
                   "expected_load": expected_load})
     return _ok(
         "check_T_saturation_alignment_is_Type_V",
-        status="P_structural",
+        status="P_structural_reading",
         summary=("Saturation alignment at horizon interface is a Type V realignment-cost "
                  "configuration: area at A_init (ceiling reached); local V_global at dim-V_global "
                  "cap; eps_min paid per realignment; zero initial radiation entropy. "
@@ -138,14 +138,14 @@ def check_T_evaporation_inverse_channel_flow():
     if not direction_forced:
         return _fail(
             "check_T_evaporation_inverse_channel_flow",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Inverse channel-flow direction not forced",
             data={"monotonic_release": monotonic_release,
                   "area_monotonic": area_monotonic,
                   "load_tracks_area": load_tracks_area})
     return _ok(
         "check_T_evaporation_inverse_channel_flow",
-        status="P_structural",
+        status="P_structural_reading",
         summary=("At Type V saturation alignment, the L_irr-compatible substrate-side "
                  "response is the inverse channel-flow: V_global -> vacuum face -> content face. "
                  "Direction forced by holographic ceiling: load tracks area monotonically."),
@@ -185,12 +185,12 @@ def check_T_v_global_release_from_evaporation():
     if not bh_unitarity:
         return _fail(
             "check_T_v_global_release_from_evaporation",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Cumulative kappa_int release theorem failed",
             data={"monotone": monotone, "cumulative_balance": cumulative_balance})
     return _ok(
         "check_T_v_global_release_from_evaporation",
-        status="P_structural",
+        status="P_structural_reading",
         summary=("Cumulative kappa_int release theorem: |V_global,local|_deposit = "
                  "|V_global,local|_release + S_radiation over the Page-time course. "
                  "Release monotonic in horizon area. Structural form of BH unitarity "
@@ -217,7 +217,7 @@ def check_T_evaporation_lattice_ordering():
     post_page = [p for p in sub.phases if p.phase_class == "post_page"]
     has_classes = len(pre_page) > 0 and len(page) == 1 and len(post_page) > 0
     if not page:
-        return _fail("check_T_evaporation_lattice_ordering", status="P_structural",
+        return _fail("check_T_evaporation_lattice_ordering", status="P_structural_reading",
                      summary="No Page phase found")
     page_phase = page[0]
     initial_area = sub.phases[0].area
@@ -234,13 +234,13 @@ def check_T_evaporation_lattice_ordering():
     if not all_ok:
         return _fail(
             "check_T_evaporation_lattice_ordering",
-            status="P_structural",
+            status="P_structural_reading",
             summary="Evaporation lattice ordering failed",
             data={"has_classes": has_classes, "at_half": at_half,
                   "pre_rises": pre_rises, "post_falls": post_falls, "area_mono": area_mono})
     return _ok(
         "check_T_evaporation_lattice_ordering",
-        status="P_structural",
+        status="P_structural_reading",
         summary=("Evaporation course is partially ordered by horizon-area-monotonic phase "
                  "staging with Page time at half-evaporation as structural turnover. "
                  "Page time structurally derived from equipartition argument, not free parameter."),

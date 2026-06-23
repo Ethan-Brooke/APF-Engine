@@ -235,7 +235,7 @@ def check_T_cmb_fm_finite_multipliers():
     return {
         'name': 'T_cmb_fm_finite_multipliers',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': finite and in_bounds,
         'key_result': f'{len(r.m_ell)} multipliers finite={finite} in [0,2]={in_bounds}',
     }
@@ -248,7 +248,7 @@ def check_T_cmb_fm_nonneg_reference():
     return {
         'name': 'T_cmb_fm_nonneg_reference',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': nonneg,
         'key_result': f'a_ell min={float(r.a_ell.min()):.4g} max={float(r.a_ell.max()):.4g}',
     }
@@ -261,7 +261,7 @@ def check_T_cmb_fm_large_angle_reduction():
     return {
         'name': 'T_cmb_fm_large_angle_reduction',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': reduced,
         'key_result': f'S_proj/S_std = {r.ratio:.6g} (reduced={reduced})',
     }
@@ -275,7 +275,7 @@ def check_T_cmb_fm_quadrupole_suppression():
     return {
         'name': 'T_cmb_fm_quadrupole_suppression',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': suppressed,
         'key_result': f'm_2 = {m2:.4f} (target < 0.5; suppressed={suppressed})',
     }
@@ -291,7 +291,7 @@ def check_T_cmb_fm_high_ell_preservation():
     return {
         'name': 'T_cmb_fm_high_ell_preservation',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': preserved,
         'key_result': f'max |m_ell - 1| for ell>=20: {float(deviations.max()):.4f} (preserved={preserved})',
     }
@@ -317,7 +317,7 @@ def check_T_cmb_fm_legendre_recurrence():
     return {
         'name': 'T_cmb_fm_legendre_recurrence',
         'tier': 4,
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': passes,
         'key_result': f'max |Bonnet residual| at x=0.3: {max_err:.3e} (tol=1e-12)',
     }

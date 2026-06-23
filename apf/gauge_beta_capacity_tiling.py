@@ -101,7 +101,7 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
               "6(|b_3|+|b_2|+|b_Y|) = 42+19+41 = 102. Extends L_beta_capacity to the abelian sector. "
               "Fixes the running RATE, not the absolute coupling [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "Closes the gauge sector's beta-to-capacity map. L_beta_capacity matched the two "
             "non-abelian betas to the ledger as N_gen=3-forcing conditions (6|b_3|=C_vacuum=42, "
@@ -225,7 +225,7 @@ def check_T_capacity_coupling_is_leading_log_P():
               "loop (inverted from ordinary QFT). Explains WHY one-loop is the principled comparison; "
               "does NOT derive M_cross or close the angle [P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "Establishes that the capacity reading of a gauge coupling is a leading-log object. "
             "Leg 1 (banked): the framework's gauge betas are the SM one-loop betas and tile the "

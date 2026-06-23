@@ -199,7 +199,7 @@ def check_T_w_trace_native_bosonic_scalar_vp_scope_partial_P() -> Dict[str, Any]
     return _result(
         name="T_w_trace_native_bosonic_scalar_vp_scope_partial: "
              "Goldstone piece of bosonic Pi_gamma_gamma done; W gauge loop + ghost OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The first bosonic piece of the photon self-energy -- the charged "
             "Goldstone (scalar-QED) loop -- is built and validated three ways "

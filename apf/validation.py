@@ -359,7 +359,7 @@ def check_T_concordance():
         'predicted': str(results['inflation']['n_s']['pred']),
         'observed': str(n_s_obs),
         'error_pct': results['inflation']['n_s']['error_pct'],
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_instrument',
     })
 
     scorecard.append({
@@ -367,7 +367,7 @@ def check_T_concordance():
         'predicted': str(results['inflation']['r']['pred']),
         'observed': f'< {r_obs_upper}',
         'error_pct': 0,  # consistent
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_instrument',
     })
 
     # Baryogenesis
@@ -385,7 +385,7 @@ def check_T_concordance():
         'predicted': str(results['BBN']['Y_p']['pred']),
         'observed': str(Y_p_obs),
         'error_pct': results['BBN']['Y_p']['error_pct'],
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_instrument',
     })
 
     scorecard.append({
@@ -393,7 +393,7 @@ def check_T_concordance():
         'predicted': results['BBN']['D/H']['pred'],
         'observed': results['BBN']['D/H']['obs'],
         'error_pct': results['BBN']['D/H']['error_pct'],
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_instrument',
     })
 
     # Reheating

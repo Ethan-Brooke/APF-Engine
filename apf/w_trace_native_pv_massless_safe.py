@@ -276,7 +276,7 @@ def check_T_w_trace_native_pv_massless_safe_subgate_partial_P() -> Dict[str, Any
     return _result(
         name="T_w_trace_native_pv_massless_safe_subgate_partial: "
              "massless-safe B0 done; tensor limits + assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native two-point B0 now has clean analytic massless / degenerate "
             "branches (exactly-massless lines, zero momentum, the scaleless point, "

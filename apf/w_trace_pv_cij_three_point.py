@@ -253,7 +253,7 @@ def check_T_w_trace_pv_c_tensor_subgate_partial_P() -> Dict[str, Any]:
     return _result(
         name="T_w_trace_pv_c_tensor_subgate_partial: "
              "three-point tensors (rank 1+2) native; 4-point + assembly OPEN [P_structural]",
-        tier=4, epistemic="P_structural",
+        tier=4, epistemic="P_structural_partial",
         summary=(
             "The native three-point tensor basis is complete through rank 2 "
             "(C1,C2,C00,C11,C12,C22), built on the general-momentum C0 + banked "

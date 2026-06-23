@@ -160,7 +160,7 @@ def check_T_a_mu_hvp_capacity_counted_distinction_density_P():
               "and claims no new physics. Closes RP-mu 'upstream' as source-codomain reading delivered "
               "[P_structural]"),
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_seam',
         summary=(
             "The source-codomain reading for muon g-2 (RP-mu, 'upstream'), delivered without "
             "manufacturing a resolution. The SM a_mu = QED (dominant, determined) + EW (small, "
