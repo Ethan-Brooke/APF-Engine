@@ -56,17 +56,21 @@ class EvaporationTestSubstrate:
         if self.phases:
             return
         a_step = A_INIT / self.n_phases
-        page_idx = self.n_phases // 2
+        cap_step = DIM_V_GLOBAL_CEILING / self.n_phases   # V_global capacity released per phase
+        C0 = float(DIM_V_GLOBAL_CEILING)                  # total releasable V_global capacity
         for i in range(self.n_phases + 1):
             area = A_INIT - i * a_step
             local_load = DIM_V_GLOBAL_CEILING * (area / A_INIT)
-            if i <= page_idx:
-                s_rad = i * (DIM_V_GLOBAL_CEILING / self.n_phases)
-            else:
-                s_rad = (self.n_phases - i) * (DIM_V_GLOBAL_CEILING / self.n_phases)
-            if i < page_idx:
+            # Cumulative-balance / capacity conservation: C_rad(i) + C_BH(i) = C0.
+            c_rad = i * cap_step          # V_global capacity already radiated
+            c_bh = C0 - c_rad             # V_global capacity still bound at the horizon
+            # The radiation entropy is bounded by the smaller subsystem. The Page turnover is
+            # FORCED by the finite reservoir -- s_rad = min(C_rad, C_BH) is maximal exactly where
+            # C_rad = C_BH -- not posited. The Page phase EMERGES as that crossing, not a hardcode.
+            s_rad = min(c_rad, c_bh)
+            if c_rad < c_bh - 1e-12:
                 pc = "pre_page"
-            elif i == page_idx:
+            elif abs(c_rad - c_bh) <= 1e-12:
                 pc = "page"
             else:
                 pc = "post_page"

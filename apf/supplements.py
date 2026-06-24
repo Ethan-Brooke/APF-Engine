@@ -5040,6 +5040,27 @@ def check_L_algebra_type():
 
     STATUS: [P] for type I claim (Wedderburn's theorem applied to finite algebra).
     [P_structural] for type III limit (thermodynamic/infinite-tensor-product limit).
+
+    HONEST GRADING -- the membership/outerness criterion (hostile probe 2026-06-23).
+      The [P_structural] on the TYPE is CORRECT and stands -- it is NOT a mis-charge
+      (contrast factoriality, which crossed to native [P] in v24.3.271 via the corner
+      argument; interface_factor_native). The native engine supplies the type's INPUT
+      DATA at [P]: lambda (the per-site ratio) and the modular period
+      T0 = 2pi/|ln lambda| (T_interface_modular_period). What it does NOT supply
+      natively is the classification bridge 'this value/period => type III_lambda' --
+      the Araki-Woods 1968 / Connes 1973 theorem. The irreducible import is the
+      OUTERNESS of the modular flow sigma_t for t not in T0*Z (equivalently
+      S(M) = {lambda^n} u {0}). This is the ANTI-corner: factoriality was an
+      IS-membership fact (an element IS in M_{>=k}) -- finite-cut-witnessable, hence
+      native; the type is a NON-membership-in-the-limit fact (Delta^{it} is NOT in M,
+      in the limit), which every finite cut actively CONTRADICTS (at finite N the
+      algebra is type I and sigma_t is INNER for all t). One can reconstruct
+      membership from finite data but cannot certify an absence from finite data, so
+      the type has no finite-cut handle and the import is genuine. Confirmed by a
+      fresh-context hostile probe + literature (~0.9); residual ~0.1 = whether Powers'
+      concrete 1967 R_lambda argument shortcuts outerness (still a tail/ratio-set
+      argument, not a finite corner). Ref: 'Reference - The Type Is the Anti-Corner --
+      Outerness Is the Genuine Import, Not Finite-Cut-Witnessable (2026-06-23).md'.
     """
     import math as _m
 
@@ -8983,6 +9004,12 @@ def check_T_interface_modular_period():
         the same standing L_algebra_type already carries. At finite N the
         algebra is type I, where every modular time is inner; the finite-exact
         fact is the periodicity, not its T-invariant reading.
+        CONFIRMED 2026-06-23 (hostile probe + literature, ~0.9): the T-invariant
+        reading IS the OUTERNESS of sigma_t off T0*Z -- the anti-corner to the
+        factoriality corner argument, NOT finite-cut-witnessable; the [P_structural]
+        is correct and stands. The banked T0 (finite periodicity) is strictly WEAKER
+        than the type: every finite type-I cut has it, none is III_lambda. Ref:
+        'Reference - The Type Is the Anti-Corner ... (2026-06-23).md'.
       - No physical-time claim: T0 is the period of the Tomita modular
         automorphism (T_no_physical_time_flow_overclaim respected); "clock
         period" names the invariant, not physical time.
