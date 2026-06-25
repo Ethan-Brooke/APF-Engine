@@ -10754,7 +10754,7 @@ def check_L_DPI_finite():
 
 def check_L_Einstein_from_entanglement():
     """L_Einstein_from_entanglement: Linearized Einstein Equations from
-    Entanglement First Law [P].
+    Entanglement First Law [P_structural_seam].
 
     v5.3.4 NEW.  Phase 4: quantum gravity V.1 (part 1 of 3).
 
@@ -10834,8 +10834,23 @@ def check_L_Einstein_from_entanglement():
     - Check that the Raychaudhuri equation is consistent with area theorem
     - Verify both routes give the same number of independent equations
 
-    STATUS: [P]. All inputs from [P] theorems. Jacobson (1995) argument
-    structure, but all premises derived internally.
+    STATUS: [P_structural_seam]. The construction follows Jacobson (1995):
+    the Raychaudhuri equation is invoked as a standard differential-geometry
+    identity and the null energy condition enters as a HARDCODED TEST INPUT
+    (R_munu_kk = 8*pi*G*0.1), not as an A1-derived result. APF does not
+    natively supply the null-null positivity (the MD=>NEC route walls ~0.93:
+    MD gives a positive SCALAR, the NEC needs the null-null rho+p; APF's own
+    de Sitter vacuum sits at w=-1, saturating the NEC), nor the covariant
+    null-null carrier the focusing step requires (Face 1, non-native by
+    theorem). The named inputs (T_Bek, L_beta_temp, L_KMS, L_irr) are [P];
+    the continuum geometric machinery that assembles them into the field
+    equation is the import -- a continuum-completion seam (Paper 44). A
+    candidate entropic-interpretation opening (read rho+p as a
+    distinction-loss rate) is recorded in the 2026-06-24 distinction-loss note
+    but does NOT currently reduce the import: its carrier inherits the same
+    MD=>NEC type gap and is not built. The independent [P] derivation of the
+    Einstein equations is the geometric route (L_lovelock_internal + T9_grav,
+    both [P]); this thermodynamic route is a cross-check at seam grade.
     """
     import math
 
@@ -10945,20 +10960,25 @@ def check_L_Einstein_from_entanglement():
 
     return _result(
         name='L_Einstein_from_entanglement: Linearized GR from δQ = TdS',
-        tier=5, epistemic='P',
+        tier=5, epistemic='P_structural_seam',
         summary=(
-            f'Linearized Einstein equations derived from entanglement first law '
-            f'(Jacobson route) using ONLY [P] inputs: T_Bek (area law), '
-            f'L_beta_temp (Unruh T), L_KMS (equilibrium), L_irr (second law). '
-            f'Clausius δQ=TdS verified on Schwarzschild (error < 10⁻¹⁰). '
-            f'Both routes (geometric + entanglement) give {n_independent} '
-            f'independent equations. Λ fixed by T_concordance. '
-            f'CLOSES the quantum → classical bridge for gravity.'
+            f'Linearized Einstein equations via the entanglement first law '
+            f'(Jacobson 1995 route). Named inputs T_Bek (area law), L_beta_temp '
+            f'(Unruh T), L_KMS (equilibrium), L_irr (second law) are [P]; the '
+            f'Raychaudhuri identity and the NEC (hardcoded test input) are '
+            f'imported continuum machinery, not A1-derived -- a '
+            f'continuum-completion seam. Clausius δQ=TdS verified on '
+            f'Schwarzschild (error < 10⁻¹⁰). Both routes (geometric [P] + '
+            f'entanglement seam) give {n_independent} independent equations. '
+            f'Λ fixed by T_concordance. The independent [P] derivation is the '
+            f'geometric route (L_lovelock_internal + T9_grav).'
         ),
         key_result=(
-            f'Einstein equations from δQ = TdS (all inputs [P]). '
-            f'Second derivation consistent with L_lovelock_internal. '
-            f'Quantum → classical bridge CLOSED. [P]'
+            f'Einstein equations from δQ = TdS (Jacobson route). Raychaudhuri + '
+            f'NEC imported (not A1-derived) -> [P_structural_seam]; the '
+            f'geometric route (L_lovelock_internal + T9_grav) is the '
+            f'independent [P] derivation. Quantum->classical bridge consistent '
+            f'across routes.'
         ),
         dependencies=[
             'T_Bek',             # S = A/(4G_N)
@@ -10980,7 +11000,13 @@ def check_L_Einstein_from_entanglement():
             },
             'clausius_error': '< 1e-10 (Schwarzschild witness)',
             'n_independent_eqs': n_independent,
-            'inputs_all_P': True,
+            'named_inputs_all_P': True,  # T_Bek/L_beta_temp/L_KMS/L_irr are [P]
+            'inputs_all_P': True,  # retained: the NAMED dependency theorems are [P]
+            'import_seam': ('Raychaudhuri (Jacobson 1995) + NEC (hardcoded test '
+                            'input); covariant null-null carrier non-native (Face 1); '
+                            'MD=>NEC walls ~0.93; distinction-loss opening does not '
+                            'reduce the import'),
+            'independent_P_route': 'geometric (L_lovelock_internal + T9_grav)',
             'Omega_Lambda': round(Omega_Lambda, 4),
             'significance': (
                 'Two independent routes to Einstein equations converge. '
@@ -11265,7 +11291,7 @@ def check_L_QG_consistency():
       T9_grav [P] → Einstein field equations with source
 
     ROUTE 2 — THERMODYNAMIC (entanglement):
-      L_Einstein_from_entanglement [P] → δQ = TdS gives same G_μν
+      L_Einstein_from_entanglement [P_structural_seam] → δQ = TdS gives same G_μν
       T_Bek [P] → S = A/(4G_N) as area law
 
     ROUTE 3 — QUANTUM (capacity dynamics):
@@ -13888,7 +13914,7 @@ def check_L_full_quantum_theory():
     - Locus density → scale factor (T_concordance)
 
     Einstein's equations are satisfied by the emergent metric
-    (T9_grav [P], L_Einstein_from_entanglement [P]), not imposed
+    (T9_grav [P], L_Einstein_from_entanglement [P_structural_seam]), not imposed
     as a constraint. Gravitons are excitations of the capacity
     (L_graviton_capacity_excitation [P]).
 
