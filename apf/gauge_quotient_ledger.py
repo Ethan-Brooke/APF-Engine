@@ -140,7 +140,34 @@ demonstrably uses structure outside the FD1 triple). The day that row
 lands, the v24.3.236/237 executables carry everything else and the GQL-1
 chain reads at [P] per the audited cascade.
 
-Reference: 'Reference - The Quotient Demand Ledger (2026-06-10).md'. Pure
+    2026-06-25 (handler note, regrade-free; no check added/removed):
+    GQL-1b leg (ii') evaluation-equivariance is DISCHARGED -- it is NOT an
+    independent open gap. The action-fixed exogenous-chart escape from the
+    co-movement flicker reduces to whether an action-fixed slot exists at
+    all, which is (i') action-totality; the chart dichotomy (structural ->
+    co-moves -> flickers; exogenous -> detectable -> excluded) closes
+    WITHOUT pricing the chart with kappa, so the 2026-06-10 billing-route
+    circularity is dodged. NET: the GQL-1b residual is (i') ALONE, not
+    (i')+(ii'). The GRADE/grounding of (i') itself is under principal
+    review: RESOLVED 2026-06-25. The 'no-smuggling discipline = (i')'
+    reading was WITHDRAWN as a category error (lossless-minimality is a
+    meta-level input-declaration discipline, not an object-level claim
+    about interface content). The content-exhaustiveness leg = closed-world
+    completeness [P] (no hidden reservoir; capacity-closure = record-closure
+    since a record IS a cost-bearing distinction, Assumptions 2/3) for the
+    carried case; the passive/representational-chart case is foreclosed by
+    structural completeness = Assumption 1 AT FULL STRENGTH (Paper 0 2347),
+    a FOUNDATIONAL clause -- now [P] under the canonical [P] convention
+    (bank.py legend; FD1_structural_completeness regraded [P] v24.3.274).
+    The value-supplier is named per the guardrail: Theorem_R [P] (gauge =
+    the structure's automorphisms) + Schur. So GQL-1's banked [P] (these
+    checks, already epistemic='P' via the 2026-06-10 row-consumption route)
+    is now cleanly justified, resting on a [P] (not adopted) dependency.
+    GQL-3 (a_22 layer-disjointness) on T_record_demand is the separate
+    remaining reading. See 'Reference - Canonical [P] vs [P_structural]
+    Definition (2026-06-25)' + 'Reference - Route B ... (2026-06-25)'.
+
+    Reference: 'Reference - The Quotient Demand Ledger (2026-06-10).md'. Pure
 arithmetic (fractions + itertools); no scipy; the module always loads.
 """
 from __future__ import annotations

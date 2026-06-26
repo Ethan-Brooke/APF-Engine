@@ -62,6 +62,7 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.aps",
     "apf.artifact_to_route_payload_adapter",
     "apf.base_fiber_allocation",
+    "apf.gauge_invariant_record",
     "apf.bottom_msbar_export_candidate",
     "apf.bottom_msbar_rundec_real_adapter",
     "apf.bottom_msbar_transport",
@@ -559,7 +560,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3763  # v24.3.270 +1: native tail-center-triviality lemma F1 (apf/tail_center_trivial_native.py check_L_tail_center_trivial_native [P]); Z(M) cap tail = C.1 native (N4 + centrality pass-through + cyclicity; no separating/AW/commutation theorem); the NATIVE HALF of factoriality, collapses residual import to X5 (Z subset tail); factoriality/III_lambda TYPE stay [P_structural]. | v24.3.267 +1: native scalar-on-Omega lemma (apf/itpfi_tail_scalar_native.py check_L_itpfi_tail_acts_scalar_on_omega_native [P]); import-free core of tail-triviality (ampliation + product-GNS factorization + cyclicity; no Araki-Woods, no commutation theorem); full tail-triviality/factoriality/III_lambda TYPE stay [P_structural] (Omega-separating = AW import). | v24.3.260 (native [P] gauge-invariant pure-gauge bosonic S constant -16.352, apf/s_parameter_pure_gauge_constant_native.py check_T_S_pure_gauge_constant_native_P [P_S_pure_gauge_constant_native_reproduction]: BFM self-energies AA/AZ/ZZ derived from DDW vertices via one uniform transverse projector, gates cross-check only; SUPERSEDES the same-session .258 [P+tool] import check, net +0). v24.3.260 +1: native m_H-dependent finite Higgs profile of S (apf/s_higgs_finite_profile_native.py check_T_S_higgs_finite_profile_native_P [P_S_higgs_finite_profile_native_reproduction]); closes the last [P+tool] piece of the EW oblique S; relative D1:D2 sign forced by an executed i-count calibrated to the native Goldstone(+1)/W-phi-mixed(-1) bubble anchors (GLOO-independent) | v24.3.263 +1: native bosonic Peskin-Takeuchi U (apf/u_parameter_native.py check_T_U_parameter_native_P [P_U_parameter_native_reproduction]); UV-finite by exact custodial pole cancellation K2(Sigma_11)=K2(Sigma_33)=43/(6s^2)=SU(2) bosonic beta (answer-free, comparator-free), U=-0.203 mu-independent (reference/scheme), no pinch deficit | v24.3.262 +1: native Peskin-Takeuchi T fermionic leg (apf/t_parameter_native.py check_T_T_parameter_fermionic_native_P [P_T_parameter_fermionic_native_reproduction]); alpha*T = native fermionic Delta rho, degenerate-limit gate; bosonic leg [C].
+EXPECTED_REGISTRY_SIZE: int = 3766  # v24.3.278 count-neutral: meson record check strengthened with the colour-factor corollary (record pi_s is the -C_F dipole eigenstate); v24.3.277 baryon (gauge_invariant_record)
 
 
 # Full module list for verify_all enumeration order. Order matters for

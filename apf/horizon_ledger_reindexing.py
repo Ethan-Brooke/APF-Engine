@@ -467,6 +467,14 @@ def check_T_horizon_arealaw_microstate_consistency():
     banked_value = 282.123
 
     # Identity 1: the area-quarter equals the COUNT Omega (both ~10^122), NOT 282.
+    # NOTE (definitional, not an independent confirmation): this equality is true BY
+    # CONSTRUCTION. Lambda*G := 3*pi/Omega (T10), so
+    #   area_quarter_log = log(3*pi) - (log(3*pi) - omega_log) = omega_log
+    # identically -- the log(3*pi) cancels and the test re-derives Omega from Omega
+    # (it gives 0 for ANY constant in place of 3*pi). It certifies internal consistency
+    # and the correct SLOT (A/4 is the count, not the entropy); it does NOT independently
+    # confirm "area = count" (there is no separate geometric area input to compare).
+    # Flagged by the Face-2 one-log-displacement cold audit, 2026-06-25.
     area_equals_count = abs(area_quarter_log - omega_log) < 1e-9
     # Identity 2: the de Sitter ENTROPY is the logarithm of the area-quarter (= ln Omega).
     s_microstate = omega_log

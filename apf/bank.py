@@ -12,9 +12,28 @@ Module loading order respects the dependency DAG:
        → session_nnlo → session_delta_pmns → session_cosmo_update
 
 EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
-  [P]               Proved from PLEC's four constitutive features (A1, MD,
-                    A2, BW) acting at any admissible interface.  No
-                    regime-specific structural premises beyond PLEC.
+  [P]               Proved from the FOUR FOUNDATIONAL ASSUMPTIONS of Paper 0
+                    + standard imported mathematics, by ANY valid argument.
+                    The four: Assumption 1 (physical identity is finite
+                    admissible continuation identity, INCLUDING its
+                    full-strength reading -- structural completeness, "a
+                    physical object is its continuation profile and nothing
+                    beyond it"); Assumption 2 (cost-bearing distinction);
+                    Assumption 3 (structural commitment); finiteness.  What
+                    the argument RESTS ON sets the grade; proof METHOD
+                    (symbolic / executable witness / enumeration) does not.
+                    PLEC's {A1, MD, A2, BW}, FD1, and closed-world
+                    completeness are FORCED from this base (Book I), so
+                    resting on them is resting on the base.  GUARDRAIL:
+                    structural completeness excludes free FIAT but does NOT
+                    supply a missing VALUE; a result that USES it is [P]
+                    only when the base-resting theorem supplying the value
+                    is named (e.g. GQL-1: Theorem_R + Schur).  (Pre-
+                    2026-06-25 this legend keyed [P] to PLEC's four only;
+                    that narrow reading mis-graded results resting on
+                    Assumption-1 structural completeness as [P_structural].
+                    See "Reference - Canonical [P] vs [P_structural]
+                    Definition (2026-06-25)".)
   [P_structural_*]  Structural-meta result, proved up to a NAMED premise.  The
                     grade was split (2026-06-22) after a corpus audit found the
                     bare [P_structural] doing six distinct jobs; the premise's

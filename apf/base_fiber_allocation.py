@@ -63,6 +63,7 @@ class StructureRequirement:
     requires_operator_norm: bool = False
     requires_external_evaluator: bool = False
     requires_scheme_convention: bool = False
+    requires_frame_identification: bool = False
     requires_only_cost_capacity_continuation: bool = False
     note: str = ""
 
@@ -115,6 +116,13 @@ SUBSTRATE_PRIMITIVES: Tuple[SubstratePrimitive, ...] = (
         "external_scheme_evaluator",
         False,
         "No external scheme evaluator is substrate-side primitive.",
+    ),
+    SubstratePrimitive(
+        "across_interface_frame_identification",
+        False,
+        "No across-interface frame-identification (iso A_1 ~= A_2 / the connection) is a "
+        "substrate primitive; loc_commut (Paper 2 supp v3.6) gives a B-orthogonal direct "
+        "sum V = S_G1 (+) S_G2 (+) W with the across-interface arrow absent.",
     ),
 )
 
@@ -178,6 +186,13 @@ STRUCTURES: Tuple[StructureRequirement, ...] = (
         requires_scheme_convention=False,
         note="Not classified as flat-master-algebra content; substrate derivability remains a separate theorem program.",
     ),
+    StructureRequirement(
+        "across_interface_gauge_connection",
+        requires_frame_identification=True,
+        note=("The gauge potential A_mu: fixing it requires choosing an across-interface "
+              "frame-identification (iso A_1 ~= A_2), convention data absent from the substrate "
+              "(loc_commut: B-orthogonal direct sum, across-interface arrow absent)."),
+    ),
 )
 
 
@@ -201,6 +216,8 @@ def missing_for(req: StructureRequirement) -> Tuple[str, ...]:
         missing.append("external_scheme_evaluator")
     if req.requires_scheme_convention:
         missing.append("scheme_convention_data")
+    if req.requires_frame_identification and not inv.get("across_interface_frame_identification", False):
+        missing.append("across_interface_frame_identification")
     return tuple(missing)
 
 
@@ -465,6 +482,92 @@ def check_T_base_fiber_allocation_theorem_P() -> Dict:
     )
 
 
+def check_T_gauge_connection_is_gauge_variant_convention_P() -> Dict:
+    """The 'no B' allocation (narrow form): the across-interface gauge connection A_mu is
+    gauge-VARIANT convention and allocates fiber-local -- the same column as the C*-norm
+    and the scheme-evaluator -- NOT substrate-global.
+
+    Grounding (not stipulation): fixing A_mu requires an across-interface frame-identification
+    (a choice of iso A_1 ~= A_2). The substrate carries NO such primitive --
+    SUBSTRATE_PRIMITIVES registers 'across_interface_frame_identification' present=False -- an
+    ADOPTED structural premise from loc_commut (Paper 2 supp v3.6: a B-orthogonal direct sum
+    with the across-interface arrow absent), NOT separately bank-registered (the
+    [P_structural_reading] grade rests on exactly this adopted reading). So the fiber-local
+    verdict reads a registered substrate ABSENCE, and this check FAILS if a future theorem
+    ever supplies a canonical across-interface arrow (closes gauge_fiber_automorphism_program)
+    -- the right falsifier.
+
+    SCOPE -- what this does NOT claim. It classifies ONLY the gauge-VARIANT object
+    (A_mu / the colour frame) as convention. It does NOT claim the gauge-INVARIANT residue
+    is carried here, and it does NOT close the connection's derivation program. The surviving
+    gauge-invariant residue (physical Wilson-loop spectrum VALUE, glueball/gap VALUES,
+    continuum existence) is NOT exported by this check; it stays fenced to the
+    ledger->Hamiltonian export (yang_mills_md_bridge) + the open
+    gauge_fiber_automorphism_program. 'No B' applies to the frame-choice only.
+
+    GRADE [P_structural_reading]: one adopted internal reading -- 'admissible quantity =
+    substrate-global per the banked allocation criterion; the across-interface frame-choice =
+    convention'. It forces nothing (not [P]).
+    """
+    alloc = all_allocations()
+    conn = alloc["across_interface_gauge_connection"]
+    inv = substrate_inventory()
+
+    # (a) connection allocates fiber-local, resting on the substrate-absence requirement
+    connection_fiber_local = (
+        conn.verdict == "fiber_local"
+        and "across_interface_frame_identification" in conn.requirements
+    )
+    # (b) that absence is a REGISTERED substrate primitive (present=False), not a free flag;
+    #     fails if a future arrow-supplying theorem flips it present=True
+    frame_identification_absent = (inv.get("across_interface_frame_identification", True) is False)
+    # (c) the connection is NOT among the substrate-global structures
+    substrate_global_names = {name for name, v in alloc.items() if v.verdict == "substrate_global"}
+    connection_not_substrate_global = "across_interface_gauge_connection" not in substrate_global_names
+    # (d) the gauge-INVARIANT residue is NOT exported here -- stays fenced to the separate program
+    residue_fenced_separate = (
+        alloc["gauge_fiber_automorphism_program"].verdict == "separate_program_not_flat_algebra"
+    )
+
+    ok = (connection_fiber_local and frame_identification_absent
+          and connection_not_substrate_global and residue_fenced_separate)
+    data = {
+        "connection_verdict": conn.verdict,
+        "connection_requirements": list(conn.requirements),
+        "frame_identification_substrate_present": inv.get("across_interface_frame_identification", None),
+        "connection_not_substrate_global": connection_not_substrate_global,
+        "gauge_invariant_residue_exported_here": False,
+        "residue_fenced_to": [
+            alloc["gauge_fiber_automorphism_program"].verdict,
+            "yang_mills_md_bridge ledger->Hamiltonian export (open)",
+        ],
+        "reading_adopted": "admissible = substrate-global; across-interface frame-choice = convention",
+        "scope": "classifies the gauge-VARIANT A_mu/frame as convention; does NOT carry or close the gauge-invariant residue.",
+    }
+    if ok:
+        return _ok(
+            "check_T_gauge_connection_is_gauge_variant_convention_P",
+            status="P_structural_reading",
+            summary=("The across-interface gauge connection A_mu is gauge-variant convention and "
+                     "allocates fiber-local (same column as the C*-norm), resting on the banked "
+                     "substrate absence of an across-interface frame-identification (loc_commut). "
+                     "'No B' for the frame-choice only; the gauge-invariant residue (Wilson value, "
+                     "continuum) is NOT carried here and stays fenced to the separate open program."),
+            data=data,
+            dependencies=[
+                "check_T_cross_interface_algebraic_impossibility_ceiling_P",
+                "check_T_gauge_program_kept_separate_P",
+                "check_T_fiber_local_negative_cases_P",
+            ],
+        )
+    return _fail(
+        "check_T_gauge_connection_is_gauge_variant_convention_P",
+        status="FAIL",
+        summary="The gauge-variant-convention allocation did not hold (connection not fiber-local on a banked absence, or residue fence failed).",
+        data=data,
+    )
+
+
 CHECKS = {
     "check_T_cross_interface_algebraic_impossibility_ceiling_P": check_T_cross_interface_algebraic_impossibility_ceiling_P,
     "check_T_base_fiber_allocation_criterion_P": check_T_base_fiber_allocation_criterion_P,
@@ -475,6 +578,7 @@ CHECKS = {
     "check_T_ACC_unification_not_flat_algebra_P": check_T_ACC_unification_not_flat_algebra_P,
     "check_T_representation_locality_theorem_P": check_T_representation_locality_theorem_P,
     "check_T_base_fiber_allocation_theorem_P": check_T_base_fiber_allocation_theorem_P,
+    "check_T_gauge_connection_is_gauge_variant_convention_P": check_T_gauge_connection_is_gauge_variant_convention_P,
 }
 
 

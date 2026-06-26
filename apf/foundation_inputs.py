@@ -36,7 +36,8 @@ This module provides two bank-registered checks witnessing the foundation:
     FD2; A2 = argmin from cost-as-infimum + no-waste under saturation; BW =
     cost-spectrum non-degeneracy from MD via the Lemma BW reduction.
 
-Each check is bank-registered with epistemic tag [P_structural], tier 4.
+Checks here are tier 4; FD1_structural_completeness is [P] (Assumption 1 at
+full strength, per the canonical [P] convention), the other two [P_structural].
 
 Source-of-record: Paper 0 v6.0.5 §3.1 (4-input declaration) + Paper 1
 Supplement v8.22+ §1 ("Inputs, in one place") + Paper 10 v1.12 §3.5
@@ -322,10 +323,20 @@ def check_T_PLEC_derived_from_spine():
 def check_FD1_structural_completeness():
     """FD1_structural_completeness: the adopted structural-completeness clause.
 
-    Tier 4 [P_structural].  ADOPTED foundational commitment -- FD1 read at full
-    strength -- named on a par with the marginal floor (check_L_epsilon_star
-    over MD/BW).  It is NOT graded [P]: an adopted commitment is not a theorem
-    proved from A1 (that would be the EXIT-A over-grade the close declined).
+    Tier 4 [P].  Structural completeness is Assumption 1 READ AT FULL STRENGTH
+    (Paper 0 v6.2.32 line 2347: "not a fifth assumption bolted onto the first
+    three; it is the first one read at full strength"), hence a FOUNDATIONAL
+    assumption, not an adopted reading beyond the base.  Under the canonical
+    [P]/[P_structural] convention (bank.py legend; "Reference - Canonical [P]
+    vs [P_structural] Definition (2026-06-25)"), [P] = derived from the four
+    foundational assumptions + standard math, adopted FOUNDATIONAL clauses
+    included -- so this is [P].  A base-change in what [P] certifies
+    (derivable-from-base), NOT a claim FD1 was secretly a theorem of the
+    finiteness axiom; the prior [P_structural] used the narrow "from A1
+    alone" reading the canonical convention retires.  GUARDRAIL (this clause
+    is a NEGATIVE-EXISTENTIAL): it excludes free fiat; it does not supply a
+    missing value.  A consumer that USES it is [P] only when it also names the
+    base-resting theorem supplying the value (e.g. GQL-1: Theorem_R + Schur).
 
     Clause:  a physical object, state, or demand IS its finite admissible
     continuation profile, and nothing beyond it.  Equivalently -- structural
@@ -389,13 +400,13 @@ def check_FD1_structural_completeness():
             "physical facts except those fixed by the continuation structure; any "
             "quantity that makes an empirical difference is structural, not free to be "
             "assigned by representational fiat; a choice with no empirical difference is "
-            "a coordinative convention and is preserved.  Adopted, not proved -- grade "
-            "[P_structural], not [P].  Consumed by check_T_ew_load_placement_P to "
+            "a coordinative convention and is preserved.  Foundational (Assumption 1 at full strength) -- grade [P] "
+            "under the canonical base.  Consumed by check_T_ew_load_placement_P to "
             "force the single radial-Higgs record onto SU(2)'s row (sin^2 theta_W = "
             "3/13 ledger share)."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "[P]",
         "dependencies": ["FD1"],
     }
 
