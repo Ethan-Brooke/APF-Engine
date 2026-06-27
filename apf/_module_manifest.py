@@ -80,6 +80,7 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.claim_dispatcher_multi_engine",  # v24.3.33 - Tier 3 multi-engine claim dispatcher (Session 4); 3 bank checks
     "apf.claim_to_interface_graph_compiler",
     "apf.class_transition",
+    "apf.symmetry_contextuality_independence",  # symmetry-degeneracy _|_ Boolean-defender contextuality (cosmogenesis-route refutation, +1)
     "apf.closed_world_completeness",
     "apf.cmb_finite_mode_covariance",
     "apf.codomain_transport_schema",
@@ -560,7 +561,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3766  # v24.3.278 count-neutral: meson record check strengthened with the colour-factor corollary (record pi_s is the -C_F dipole eigenstate); v24.3.277 baryon (gauge_invariant_record)
+EXPECTED_REGISTRY_SIZE: int = 3767  # +1 symmetry_contextuality_independence (separation theorem)
 
 
 # Full module list for verify_all enumeration order. Order matters for
@@ -824,6 +825,7 @@ MODULE_TYPES: dict[str, str] = {
     # --- extension (25) ---
     'apf.admissible_representation_stack': 'extension',
     'apf.class_transition': 'extension',
+    'apf.symmetry_contextuality_independence': 'extension',
     'apf.closed_world_completeness': 'extension',
     'apf.continuability_preservation_resolution': 'extension',
     'apf.continuation_sum_measure': 'extension',

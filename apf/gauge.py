@@ -419,6 +419,12 @@ def check_T_confinement():
     physical QCD, or as the open no-IR-fixed-point premise for the continuum-
     existence question. The [P] grade attaches to the mechanism class (the
     conditional), not to "saturation occurs".
+
+    For the MATTER-FREE case the conformal alternative IS excluded: see
+    check_T_ym_conformal_phase_excluded_by_record_locking [P_structural]
+    (yang_mills_md_bridge.py), which closes the saturation-vs-IR-fixed-point
+    fork through the record-locking layer. This limitation predates that
+    closure and is scoped to T_confinement's own {A1,MD,PLEC,L_epsilon*} reading.
     """
     from fractions import Fraction
 
@@ -1109,8 +1115,8 @@ def check_T_field():
         '1':  {'dim': 1,  'T': Fraction(0),    'A': Fraction(0)},
         '3':  {'dim': 3,  'T': Fraction(1,2),  'A': Fraction(1,2)},
         '3b': {'dim': 3,  'T': Fraction(1,2),  'A': Fraction(-1,2)},
-        '6':  {'dim': 6,  'T': Fraction(5,2),  'A': Fraction(5,2)},
-        '6b': {'dim': 6,  'T': Fraction(5,2),  'A': Fraction(-5,2)},
+        '6':  {'dim': 6,  'T': Fraction(5,2),  'A': Fraction(7,2)},  # A(6)=N+4=7 in A(3)=1 units
+        '6b': {'dim': 6,  'T': Fraction(5,2),  'A': Fraction(-7,2)},
         '8':  {'dim': 8,  'T': Fraction(3),    'A': Fraction(0)},
         '10': {'dim': 10, 'T': Fraction(15,2), 'A': Fraction(15,2)},
         '15': {'dim': 15, 'T': Fraction(10),   'A': Fraction(10)},

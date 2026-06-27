@@ -5914,34 +5914,37 @@ def check_T_inseparable_IJC():
          ⇒ E_di · pi_{W_*} ≠ pi_{W_*} · E_di on at least one vector.
       4. Therefore [E_di, P_*] != 0 for at least one i.
 
-    BRANCH-(IJC) IS AN INTERNAL STRUCTURAL TEST, NOT AN EMPIRICAL IMPORT
-    (reconciled 2026-06-21 to Paper 5 Technical Supplement v6.8 -- the
-    canonical source for this bridge; the prior 'empirically inherited
-    from Bell+KS, parallel to Planck/PDG' framing below is RETIRED):
-      The canonical statement is Paper 5 supp v6.8 Theorem
+    THE BRIDGE IS DERIVED; THE OCCUPANCY IS THE QAC (settled, twice
+    cold-audited 2026-06-26; see 'Reference - The IJC Keystone - Bridge
+    Derived, Occupancy Is the QAC').  The 2026-06-21 reconciliation that
+    flatly called the branch verdict 'not an external datum / derived not
+    inherited' OVER-REACHED on the occupancy half and is corrected here:
+      BRIDGE (inseparable-IJC => noncommutative record algebra): DERIVED,
+      internal.  Canonical source Paper 5 supp v6.8 Theorem
       thm:general-finite-query-noncommutative-bridge-v547, graded
-      [P_math + P_APF] -- DERIVED, not inherited.  The branch verdict
-      (Sep vs IJC) is an INTERNAL finite test on the declared operational
-      records: branch (IJC) holds iff no faithful all-commuting Boolean
-      global-section defender exists without uncharged context / order /
-      disturbance records (structural Boolean failure, or a
-      preservation-infeasible repair).  It is an LP/MILP / dual-witness
-      quantity (supp Sec. on branch certificates), not a judgment call
-      and not an external datum.
-      Bell / CHSH / Kochen-Specker are RECOVERED SPECIAL CASES of this
-      internal criterion, NOT a load-bearing empirical inheritance:
-      Fine's theorem is a special marginal presentation of the Boolean
-      global-section refinement, and the Peres-Mermin square is a worked
-      structural certificate.  The supplement is explicit -- 'the bridge
-      is not an intuition imported from CHSH or Fine's theorem' and 'APF
-      separates the existence of nonclassical correlations from the
-      stronger claim that the declared finite records force a
-      noncommutative record algebra.'  So noncommutativity is forced by
-      the internal structural / preservation Boolean-defender failure
-      (derived), not by an external Bell/KS theorem-input.
-      [P+IJC] DOWNSTREAM TAGS therefore read 'proved given the internal
-      structural-IJC branch verdict' (the supplement's P_APF given the
-      IJC branch), NOT 'proved given an empirical Bell/KS input.'
+      [P_math + P_APF].  Given an interface's DECLARED finite records,
+      branch (IJC) holds iff no faithful all-commuting Boolean global-
+      section defender exists -- an internal LP/MILP / dual-witness
+      quantity.  Bell / CHSH / Fine / Kochen-Specker are RECOVERED special
+      cases of this internal criterion, NOT imported ('the bridge is not
+      an intuition imported from CHSH or Fine's theorem').
+      OCCUPANCY (that a PHYSICAL interface IS in branch (IJC)): NOT
+      derived.  It is the Quantum Admissibility Condition (QAC, Paper 5
+      supp v6.8 Def QAC): some physical interface presents two co-available,
+      record-incompatible distinction families.  This is an INDEPENDENTLY-
+      WITNESSED per-interface input -- read off the records (the measured
+      correlation table lying outside the Boole polytope) -- the framework's
+      single irreducible empirical contact.  A1 admits BOTH branches (Sep
+      interfaces exist), so occupancy is NOT an A1 consequence and the
+      marginal table IS an external datum.
+      NOT supplied by cosmogenesis: Paper 37's 'IJC-side of the trivial
+      alignment' is a whole-substrate maximal-symmetry / empty-distinction-
+      family descriptor on which the Boolean-defender dichotomy is
+      UNDEFINED; cosmogenic-IJC is NOT the Boolean-defender IJC (cold-audit
+      REFUTE 2026-06-26).
+      [P+IJC] DOWNSTREAM TAGS therefore read 'proved given the QAC (IJC)
+      occupancy at the interface' -- the bridge derived internally, the
+      occupancy independently witnessed.
 
     PROOF STRUCTURE (paired witnesses):
       BRANCH (Sep) WITNESS — auditor's countermodel:
