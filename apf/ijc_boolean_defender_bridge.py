@@ -359,7 +359,7 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
             "noncommutativity [P_structural, staged Phase 21 Task B]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": [
             "T_branch_taxonomy_inclusions",
             "T_quantum_admissibility_condition",

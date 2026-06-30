@@ -204,7 +204,21 @@ def feasbool(scn: Scenario) -> Dict:
             raise ValueError(
                 f"context {ctx}: empirical probabilities sum to {tot} != 1; "
                 f"the table must be complete (list zeros explicitly)")
-    sections = global_sections(scn)
+    # Exclusivity-aware pruning (scales the engine past 2^n enumeration).
+    # Under the completeness contract (each context's listed probabilities sum to
+    # 1), the total weight on sections mapping to any zero-probability or unlisted
+    # outcome is forced to 0; such sections cannot carry positive weight in any
+    # feasible distribution. So restrict the LP columns to the sections that, in
+    # every context, map to a POSITIVE-probability listed outcome. This is exactly
+    # the Boole-polytope feasibility (equivalent LP), but collapses 2^n columns to
+    # the exclusivity-respecting set -- letting feasbool decide large
+    # state-independent KS scenarios (e.g. the Yu-Oh 13-ray set) that full
+    # enumeration cannot reach.
+    sections = [
+        s for s in global_sections(scn)
+        if all(emp[ctx].get(tuple(s[m] for m in ctx), Fraction(0)) > 0
+               for ctx in scn.contexts)
+    ]
     nsec = len(sections)
 
     rows: List[List[Fraction]] = []
@@ -214,11 +228,13 @@ def feasbool(scn: Scenario) -> Dict:
     rows.append([Fraction(1)] * nsec)
     rhs.append(Fraction(1))
 
-    # marginal constraints
+    # marginal constraints (positive-probability listed outcomes; zero-prob rows
+    # are vacuous after pruning and skipped)
     for ctx in scn.contexts:
         tbl = emp[ctx]
-        # include every outcome-tuple that appears in the empirical table
         for o, p in tbl.items():
+            if Fraction(p) == 0:
+                continue
             row = []
             for s in sections:
                 s_on_ctx = tuple(s[m] for m in ctx)
@@ -518,7 +534,7 @@ def check_T_feasbool_general_contextuality() -> Dict:
             "[P_structural, staged Phase 21 Task B]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": [
             "T_ijc_boolean_defender_bridge",
             "T_branch_taxonomy_inclusions",
@@ -691,7 +707,7 @@ def check_T_ijc_constructive_noncommutator():
             "staged Phase 21 Task B]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": [
             "T_feasbool_general_contextuality",
             "T_ijc_boolean_defender_bridge",
@@ -869,7 +885,7 @@ def check_T_feasbool_branch_taxonomy_four_verdicts():
             "/ preservation-infeasible / structural-IJC) [P_structural]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": ["T_feasbool_general_contextuality"],
         "failures": failures,
         "key_result": (
@@ -1049,7 +1065,7 @@ def check_T_ks_parity_contextuality_scalable():
             "polynomial time, past enumeration [P_structural]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": ["T_feasbool_general_contextuality"],
         "failures": failures,
         "key_result": (

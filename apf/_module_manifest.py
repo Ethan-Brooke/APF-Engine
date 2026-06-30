@@ -208,7 +208,7 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.quantum_admissibility",
     "apf.ijc_boolean_defender_bridge",  # v24.3.287 Phase 21 Task B: (2,2,2) Boolean-defender bridge engine; 1 bank check
     "apf.ijc_feasbool_engine",  # v24.3.287 Phase 21 Task B: general exact Boole-polytope FeasBool engine; 1 bank check
-    "apf.interface_contextuality_adapter",  # v24.3.291: wires the Sep/IJC engine into the IE atlas as the CONTEXTUALITY axis; 1 bank check
+    "apf.interface_contextuality_adapter",  # v24.3.291: wires the Sep/IJC engine into the IE atlas as the CONTEXTUALITY axis; v24.3.292: +general-scenario routing; 2 bank checks
     "apf.quantum_operator_derivation",
     "apf.recruitment",
     "apf.red_team",
@@ -564,7 +564,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3776  # +1 v24.3.291 IE contextuality-axis adapter (interface_contextuality_adapter); +1 v24.3.290 GF(2) parity scalable; +1 v24.3.289 four-verdict taxonomy; +1 v24.3.288 constructive-noncommutator; +2 v24.3.287 Phase 21 Task B
+EXPECTED_REGISTRY_SIZE: int = 3782  # +1 v24.3.297 contextual branch verdict is threshold-robust (quantum_admissibility: magic-square contextuality gap delta*=1/6 > stipulated 0.1; verdict independent of the distortion threshold on [0,1/6)); +1 v24.3.296 chiral-condensate FLAVOUR-density interface is state-independently contextual (gauge_invariant_record: Yu-Oh on the N_f=3 flavour qutrit -> IE IJCStr; single-density m=1, non-abelian, gauge-invariant -- contrast colour multi-pair); +1 v24.3.295 gauge-invariant colour STATE-INDEPENDENT KS COLORING obstruction (SU(2) pentaquark M4 hosts the Mermin-Peres magic square, empty support, IJCStr for every state; exact over Q[i]); +1 v24.3.294 gauge-invariant colour STATE-INDEPENDENT contextuality (Yu-Oh 13-ray on the tetraquark M3, IJCStr on the maximally-mixed gauge-invariant state) + feasbool exclusivity-pruning scales the engine; +1 v24.3.293 gauge-invariant colour interface IS contextual (gauge_invariant_record: tetraquark M3 KCBS -> IE IJCStr, supersedes the IJC_str razor-block); +1 v24.3.292 IE general-scenario routing; +1 v24.3.291 IE contextuality-axis adapter; +1 v24.3.290 GF(2) parity scalable; +1 v24.3.289 four-verdict taxonomy; +1 v24.3.288 constructive-noncommutator; +2 v24.3.287 Phase 21 Task B
 
 
 # Full module list for verify_all enumeration order. Order matters for

@@ -416,6 +416,151 @@ def check_T_Born_trace_rule():
     }
 
 
+
+
+# =====================================================================
+# Section 5b: threshold-robustness of the branch verdict at a
+#             state-independently contextual interface
+# =====================================================================
+
+def check_T_contextual_branch_verdict_threshold_robust():
+    """The branch (IJC) verdict at a state-independently contextual interface is
+    INDEPENDENT of the (stipulated) distortion threshold.
+
+    Tier 4 [P_structural_instrument]. The Boolean-defender feasibility set
+    (kappa_Bool, Definition 778) is gated by a distortion threshold whose value
+    (default 0.1 in `kappa_Bool`) is stipulated, not derived. This check shows
+    the stipulation is immaterial at a state-independently contextual interface,
+    because the minimal distortion any classical (noncontextual) defender incurs
+    in preserving the records is bounded below by a strictly positive
+    CONTEXTUALITY GAP delta* > threshold.
+
+    Witness: the Mermin-Peres magic square. The six contexts demand row-parities
+    +1 and column-parities -1; the product of all six demanded parities is -1,
+    while every deterministic {+-1} assignment yields product +1 over the six
+    induced parities. Hence every assignment violates an ODD number (>= 1) of the
+    six contexts, so every classical mixture violates >= 1/6 of them on average;
+    and 1/6 is ACHIEVED (the 96 assignments that violate exactly one context
+    cover all six, so their symmetric mixture violates each context exactly 1/6).
+    Therefore
+
+        delta* (magic square) = 1/6  exactly.
+
+    No classical defender preserves the records to within any distortion
+    threshold tau < 1/6, so kappa_Bool = +inf throughout tau in [0, 1/6) and the
+    branch (IJC) verdict does not move with the threshold. The stipulated 0.1
+    lies in [0, 1/6), so the magic-square verdict -- and the pentaquark M_4
+    colour interface that realizes it gauge-invariantly
+    (check_T_gauge_invariant_colour_KS_coloring_obstruction) -- is robust to it.
+
+    MD reinforcement: the minimal achievable classical-defender distortion is
+    1/6 -- a strictly positive GAP below which nothing is realizable. The
+    achievable average-context distortions are [1/6, 5/6] (the convex hull of
+    the per-assignment violation fractions), but (0, 1/6) is empty: there is no near-faithful classical defender. MD's
+    positive cost floor mu* > 0 is what makes the obstruction a genuine
+    non-infinitesimal floor rather than an arbitrarily-small distortion; an
+    "approximately classical" defender (distortion in (0, 1/6)) does not exist at
+    a structurally contextual interface.
+
+    SCOPE: this removes the threshold-dependence of the branch verdict AT a
+    state-independently contextual interface; it does NOT force occupancy (that
+    the world REALIZES such an interface) -- that residual is gauge-borne for
+    colour, not discharged here. IJC_adm/occupancy stays the empirical QAC at the
+    realization step.
+    """
+    from fractions import Fraction as F
+    from itertools import product as _product
+    from apf.ijc_feasbool_engine import (
+        feasbool, global_section_support_nonempty,
+        scenario_mermin_peres_magic_square, scenario_to_dict,
+    )
+    from apf.interface_contextuality_adapter import route_contextuality
+
+    failures = []
+
+    # --- exact contextuality gap delta* of the magic square ---
+    rows = [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
+    cols = [(0, 3, 6), (1, 4, 7), (2, 5, 8)]
+    contexts = [(r, +1) for r in rows] + [(c, -1) for c in cols]
+
+    def n_violated(a):
+        return sum(1 for (ctx, par) in contexts
+                   if a[ctx[0]] * a[ctx[1]] * a[ctx[2]] != par)
+
+    assigns = list(_product((1, -1), repeat=9))
+    viol = [n_violated(a) for a in assigns]
+    all_odd = all(v % 2 == 1 for v in viol)          # parity contradiction
+    min_single = min(viol)                            # = 1 (best classical model)
+    singles = [frozenset(i for i, (ctx, par) in enumerate(contexts)
+                         if a[ctx[0]] * a[ctx[1]] * a[ctx[2]] != par)
+               for a in assigns if n_violated(a) == 1]
+    covered = set().union(*singles) if singles else set()
+    achievable_uniform = (covered == set(range(6)))   # symmetric mixture hits 1/6
+
+    delta_star = F(min_single, 6)                      # = 1/6
+    if not (all_odd and min_single == 1 and achievable_uniform and delta_star == F(1, 6)):
+        failures.append(
+            "magic-square gap not exactly 1/6: all_odd=%s min=%s covered=%s"
+            % (all_odd, min_single, sorted(covered)))
+
+    # --- the stipulated threshold lies inside the robust interval ---
+    stipulated_threshold = F(1, 10)  # the kappa_Bool default 0.1
+    if not (stipulated_threshold < delta_star):
+        failures.append("stipulated threshold 0.1 should lie below the gap 1/6")
+
+    # --- the IJC verdict holds and is threshold-independent on [0, delta*) ---
+    scn = scenario_mermin_peres_magic_square()
+    fb = feasbool(scn)
+    sup_empty = global_section_support_nonempty(scn)["witness_section"] is None
+    pipe = route_contextuality("magic_square_threshold_robust",
+                               scenario=scenario_to_dict(scn))
+    if fb["branch"] != "IJCStr" or pipe.export_global_P or not sup_empty:
+        failures.append("magic square should be IJCStr with empty support")
+
+    passed = not failures
+    return {
+        "name": (
+            "T_contextual_branch_verdict_threshold_robust: the branch (IJC) "
+            "verdict at a state-independently contextual interface is independent "
+            "of the stipulated distortion threshold (contextuality gap delta* = "
+            "1/6 for the magic square; 0.1 lies in [0, 1/6)) [P_structural_instrument]"
+        ),
+        "passed": passed,
+        "epistemic": "P_structural_instrument",
+        "dependencies": [
+            "T_kappa_Bool_minimum",
+            "T_capacity_lower_bound_certificate",
+            "check_T_gauge_invariant_colour_KS_coloring_obstruction",
+        ],
+        "failures": failures,
+        "key_result": (
+            "Every classical defender of the Mermin-Peres magic square violates "
+            ">= 1 of 6 parity contexts (the product of demanded parities is -1, "
+            "every assignment gives +1), and the symmetric mixture of the 96 "
+            "single-violators (covering all six contexts) achieves exactly 1/6, "
+            "so the contextuality gap delta* = 1/6. No Boolean defender preserves "
+            "the records to within any threshold tau < 1/6, so the IJC verdict is "
+            "threshold-independent on [0, 1/6); the stipulated 0.1 is immaterial."
+        ),
+        "summary": (
+            "The distortion threshold in kappa_Bool is stipulated, not derived, "
+            "but immaterial at a state-independently contextual interface: the "
+            "minimal classical-defender distortion is a strictly positive "
+            "contextuality gap (delta* = 1/6 exactly for the magic square), so no "
+            "Boolean defender is admissible for any tau < delta* and the branch "
+            "(IJC) verdict does not depend on the threshold. The minimal "
+            "achievable classical-defender distortion is delta* (a gap above 0), "
+            "so no near-faithful defender exists in (0, delta*) -- no "
+            "approximately-classical defender at a structurally contextual "
+            "interface. This removes the threshold "
+            "loophole from the branch verdict; it does NOT force occupancy "
+            "(realization of such an interface is gauge-borne for colour, not "
+            "derived here -- IJC_adm stays the empirical QAC at the realization "
+            "step)."
+        ),
+    }
+
+
 # =====================================================================
 # Bank registration
 # =====================================================================
@@ -425,6 +570,7 @@ _CHECKS = {
     "T_capacity_lower_bound_certificate":check_T_capacity_lower_bound_certificate,
     "T_field_selection_complex":         check_T_field_selection_complex,
     "T_Born_trace_rule":                 check_T_Born_trace_rule,
+    "T_contextual_branch_verdict_threshold_robust": check_T_contextual_branch_verdict_threshold_robust,
 }
 
 
@@ -443,6 +589,7 @@ if __name__ == "__main__":
         check_T_capacity_lower_bound_certificate,
         check_T_field_selection_complex,
         check_T_Born_trace_rule,
+        check_T_contextual_branch_verdict_threshold_robust,
     ):
         result = fn()
         status = "PASS" if result.get("passed") else "FAIL"

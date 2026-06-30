@@ -140,7 +140,7 @@ def check_T_interface_contextuality_adapter():
             "dispatch; SepStr=global-P export / IJCStr=named obstruction) [P_structural]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": [
             "T_feasbool_general_contextuality",
             "T_ks_parity_contextuality_scalable",
@@ -236,7 +236,7 @@ def check_T_interface_contextuality_general_scenario():
             "named obstruction), bucketed under CONTEXTUALITY [P_structural]"
         ),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_instrument",
         "dependencies": [
             "T_interface_contextuality_adapter",
             "T_feasbool_general_contextuality",
