@@ -103,11 +103,11 @@ B3, B2, BY = 7.0, 19.0 / 6.0, 41.0 / 6.0
 B_RUN = B3 + B2       # = C_total/6 (non-abelian running modes, tile the ledger)
 
 EXPORT_FLAGS = dict(
-    Export_rank_field_selector_P=1,
-    Export_gauge_reading_dichotomy_closed_P=1,                  # CLOSED to [P] v24.3.215: profile-blindness (additive reading is trace-only) + finite trace inventory
-    Export_support_uniqueness_proved=1,                        # PROVED v24.3.215: a gauge coupling's complete data = group (Theorem_R) + matter content (T_field); both shown [P] to miss the ledger
+    Export_rank_field_selector_P=0,                            # 2026-06-27: rank-clause MECHANISM holds, but the support-uniqueness it delivers is [P_structural_reading], not [P]
+    Export_gauge_reading_dichotomy_closed_P=0,                  # NOT closed (2026-06-27): the no-third-reading exhaustiveness is OPEN; 5 routes all relocate to an adopted reading
+    Export_support_uniqueness_proved=0,                        # NOT proved (2026-06-27): the full-support reading (1/alpha_Y=61, not the charged 45) is adopted, alpha_s-corroborated (0.11 sigma), not derived
     Export_abelian_structures_miss_ledger_proved=1,            # PROVED sub-fact: rank-1 Gram + beta tile the 41-complement
-    Export_structure_list_exhaustiveness_open=0,               # CLOSED v24.3.215: the structure list IS group + matter content (definition of a gauge coupling); both miss the ledger [P]
+    Export_structure_list_exhaustiveness_open=1,               # OPEN (2026-06-27): the charge-indicator [Y!=0] (count 45) survives every banked filter -- trace-only kills weights, not the support choice
     Export_reading_is_information_correspondence=1,            # the single inherited premise: 1/alpha = additive distinction-count (T20 [P]); shared with the non-abelian 1/alpha_cross=47.02 [P]
     Export_two_field_completeness_from_T_ACC_unification=1,     # by enumeration
     Export_two_field_completeness_by_closure_theorem=0,        # general ACC still enumeration
@@ -179,9 +179,10 @@ def check_L_abelian_no_ledger_channel_structure():
     #     NOT prove that, so it proves the SUB-FACT, not 1/alpha_Y = 61.
     check(EXPORT_FLAGS["Export_abelian_structures_miss_ledger_proved"] == 1,
           "PROVED SUB-FACT: the abelian's rank-1 Gram + complement-tiling beta single out no ledger channel")
-    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 0,
-          "CLOSED v24.3.215: this lemma's proved sub-fact (rank-1 Gram + complement-tiling beta single out no ledger channel) "
-          "composes with L_reading_profile_blind [P] (an additive reading is trace-only) to force the uniform reading; 1/alpha_Y = 61 is [P]")
+    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 1,
+          "OPEN (2026-06-27): the proved sub-fact (rank-1 Gram + complement-tiling beta single out no ledger channel) does NOT "
+          "force the uniform reading -- L_reading_profile_blind is trace-only and so kills non-uniform WEIGHTS, not the SUPPORT "
+          "choice; the charge-indicator [Y!=0] (count 45) survives. 1/alpha_Y = 61 is [P_structural_reading], alpha_s-corroborated")
 
     return _result(
         name=("L_abelian_no_ledger_channel_structure: the rank-1 abelian U(1) has NO structure that "
@@ -194,7 +195,7 @@ def check_L_abelian_no_ledger_channel_structure():
               "dichotomy premise, replacing the broad T20 exhaustiveness with the abelian's proved "
               "structural minimality"),
         tier=3,
-        epistemic='P',
+        epistemic='P_structural_reading',
         summary=(
             "The gauge reading dichotomy formerly cited, as a premise, that a gauge coupling's only "
             "channel-distinguishing structure is its RG flow (the T20-level exhaustiveness). This lemma "
@@ -215,7 +216,8 @@ def check_L_abelian_no_ledger_channel_structure():
         ),
         key_result=(
             "The rank-1 abelian distinguishes no ledger channel (group rank-1 -> none; beta tiles the "
-            "41 complement, not the ledger), so the uniform full count is forced: 1/alpha_Y = 61. [P]."
+            "41 complement, not the ledger). This is the proved SUB-FACT; it does not by itself force 1/alpha_Y=61, "
+            "since the charge-indicator [Y!=0] (count 45) survives the trace-only filter. 1/alpha_Y=61 is [P_structural_reading]."
         ),
         dependencies=['L_singlet_Gram', 'T_gauge_beta_capacity_tiling_abelian', 'L_equip',
                       'L_sigma_intensive', 'L_crossing_entropy'],
@@ -278,13 +280,14 @@ def check_T_gauge_reading_dichotomy():
     check(abs(inv_alpha_cross - C_total) > 1.0,
           "dichotomy: the two admissible gauge readings are distinct (running 47.02 vs uniform 61)")
 
-    check(EXPORT_FLAGS["Export_gauge_reading_dichotomy_closed_P"] == 1,
-          "[P] v24.3.215: the no-third-reading exhaustiveness is CLOSED. L_reading_profile_blind [P] shows an additive "
-          "resolved-distinction reading over the uniform-measure ledger is trace-only, so the 2026-05-31 3-dim span "
-          "{uniform, diag(Y), diag(Y^2)} collapses to its trace content {61, 0, 10} -- the non-uniform diag(Y) cannot "
-          "enter the reading. A gauge coupling's resolution indicator then has exactly two admissible traces: the full "
-          "count C_total (no fixed point) or the fixed-point running sub-count B (rank-2). The only inherited premise is "
-          "the T20 coupling-information correspondence (additivity), shared with the non-abelian 1/alpha_cross=47.02 [P]")
+    check(EXPORT_FLAGS["Export_gauge_reading_dichotomy_closed_P"] == 0,
+          "[P_structural_reading] (2026-06-27): the no-third-reading exhaustiveness is OPEN. L_reading_profile_blind shows an "
+          "additive reading is trace-only -- which kills the non-uniform WEIGHT directions diag(Y), diag(Y^2) (defeating the "
+          "2026-05-31 reading-space-span worry) -- but it does NOT fix the {0,1} SUPPORT: the charge-indicator [Y!=0] is a "
+          "trace-45 indicator that passes the trace-only filter, so 45 survives alongside 61. Five closure routes "
+          "(S_61/structure-list, degree<=2, horizon-saturation, interface-number, count-indicator obstruction) all relocate "
+          "to the adopted reading 'the rank-1 count uses capacity, not its own hypercharge support'. 1/alpha_Y=61 is "
+          "[P_structural_reading], corroborated by alpha_s(M_Z)=0.1179 at 0.11 sigma (the charged-45 reading gives 0.49, absurd)")
     check(EXPORT_FLAGS["target_consumed"] == 0, "no measured target consumed")
 
     return _result(
@@ -301,7 +304,7 @@ def check_T_gauge_reading_dichotomy():
               "equilibrium that rank-1 lacks. This CLOSES the abelian support-uniqueness residual: the "
               "rank-1 abelian is forced to 1/alpha_Y = S_dS/sigma = C_total = 61 [P]: profile-blindness (L_reading_profile_blind) retires the reading-space-span obstruction; the only inherited premise is the T20 coupling-information correspondence, shared with the non-abelian 47.02 [P]"),
         tier=4,
-        epistemic='P',
+        epistemic='P_structural_reading',
         summary=(
             "The count-selection theorem for gauge structures -- the close of the abelian "
             "support-uniqueness residual. A gauge coupling-inverse is the resolved information per "
@@ -333,9 +336,9 @@ def check_T_gauge_reading_dichotomy():
             "non-claim."
         ),
         key_result=(
-            "A gauge coupling has exactly two horizon readings -- running sub-count B (fixed point) or "
-            "uniform full count C_total (none) -- no third. Rank-1 abelian forced to S_dS/sigma = 61. "
-            "Profile-blindness closes the exhaustiveness; inherits only the T20 correspondence. [P]."
+            "A gauge coupling reads either a running sub-count B (fixed point) or the uniform full count "
+            "C_total (none); the no-THIRD-reading exhaustiveness is OPEN (the charge-indicator [Y!=0]=45 survives "
+            "the trace-only filter). Rank-1 abelian reading 1/alpha_Y=61 is [P_structural_reading], alpha_s-corroborated (0.11 sigma)."
         ),
         dependencies=['L_equip', 'L_sigma_intensive', 'L_coupling_capacity_id', 'L_crossing_entropy',
                       'L_beta_capacity', 'L_singlet_Gram', 'L_abelian_no_ledger_channel_structure',
@@ -382,8 +385,8 @@ def check_T_rank_field_selector():
           "the two readings are distinct (47.02 vs 61): rank selects different ACC scalars")
 
     # support-uniqueness is NOT closed to [P]: the structure-list exhaustiveness is the open entailment.
-    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 0,
-          "rank-1 whole-horizon support is [P] v24.3.215: the exhaustiveness is closed by L_reading_profile_blind + the finite trace inventory")
+    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 1,
+          "rank-1 whole-horizon support is [P_structural_reading] (2026-06-27): the exhaustiveness is OPEN (trace-only kills weights, not the [Y!=0] support); alpha_s-corroborated")
     check(EXPORT_FLAGS["Export_two_field_completeness_from_T_ACC_unification"] == 1,
           "two-field structure inherited from T_ACC_unification [P]")
     check(EXPORT_FLAGS["measured_target_consumed"] == 0, "no measured target consumed")
@@ -393,10 +396,10 @@ def check_T_rank_field_selector():
               "ACC scalars it reads. Rank-2 (det A = m > 0) has a UV fixed point whose Fisher "
               "equilibrium reads S_dS smeared as B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id [P]); "
               "rank-1 (m = 0) is a single collective mode (L_singlet_Gram [P]) that reads the bare count "
-              "S_dS/sigma = C_total = 61. The rank-1 whole-horizon support is forced by "
-              "T_gauge_reading_dichotomy; the selector is [P] v24.3.215 (the gauge exhaustiveness is closed by L_reading_profile_blind)"),
+              "S_dS/sigma = C_total = 61. The rank-1 whole-horizon support is ARGUED by "
+              "T_gauge_reading_dichotomy; the selector is [P_structural_reading] (2026-06-27: the support-exhaustiveness is open, alpha_s-corroborated, not closed)"),
         tier=4,
-        epistemic='P',
+        epistemic='P_structural_reading',
         summary=(
             "The rank clause of the Reading-Selection Rule. The Admissibility-Capacity record carries "
             "exactly two scalars -- the bare slot count K = 61 and the degeneracy-smeared count S_dS = "
@@ -415,8 +418,8 @@ def check_T_rank_field_selector():
         ),
         key_result=(
             "Competition rank selects the ACC scalar: rank-2 -> smeared (S_dS/6 = 47.02), "
-            "rank-1 -> bare count (S_dS/sigma = 61). [P] v24.3.215 (support-uniqueness closed by "
-            "T_gauge_reading_dichotomy + L_reading_profile_blind)."
+            "rank-1 -> bare count (S_dS/sigma = 61). [P_structural_reading] (2026-06-27): the rank MECHANISM is [P], "
+            "but the support-uniqueness it delivers is an adopted reading, alpha_s-corroborated, not derived."
         ),
         dependencies=['T_ACC_unification', 'L_sigma_intensive', 'L_coupling_capacity_id',
                       'L_singlet_Gram', 'L_crossing_entropy', 'T_gauge_reading_dichotomy'],
@@ -461,8 +464,8 @@ def check_T_acc_reading_selection():
           "instances 1 and 2 read the SAME S_dS: 47.02*6 = S_dS = 61*sigma")
 
     # honest non-claims: the gauge arm is closed; one type instance remains open.
-    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 0,
-          "gauge arm CLOSED to [P] v24.3.215 (L_reading_profile_blind + trace inventory); the single remaining open instance is the EW-floor TYPE clause")
+    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 1,
+          "gauge arm is [P_structural_reading] (2026-06-27): the abelian support-exhaustiveness is OPEN (adopted, alpha_s-corroborated); the EW-floor TYPE clause is also open")
     check(EXPORT_FLAGS["Export_ew_floor_mode_restriction_banked"] == 1,
           "EW-floor 61->16 mode-restriction banked [P_structural] (.179/.184); residual = the suppression form")
     check(EXPORT_FLAGS["target_consumed"] == 0, "no measured target consumed")
@@ -585,8 +588,8 @@ def check_T_abelian_matter_enters_via_trace():
     # The conditional factorization: under a uniform reading, the only surviving Y-datum is Tr Y^2.
     # (diag(Y) -> 0, diag(Y^2) -> scalar). This IS the workplan's asserted factorization, now derived
     # as a projection -- CONDITIONAL on the invariant-reading premise (the dS arm, NOT closed here).
-    check(EXPORT_FLAGS["Export_gauge_reading_dichotomy_closed_P"] == 1,
-          "v24.3.215: the reading-dichotomy exhaustiveness is now CLOSED (L_reading_profile_blind [P]); this check's trace factorization composes into that close. Rank arm at [P].")
+    check(EXPORT_FLAGS["Export_gauge_reading_dichotomy_closed_P"] == 0,
+          "2026-06-27: the reading-dichotomy exhaustiveness is OPEN (L_reading_profile_blind is trace-only -- kills weight profiles, not the [Y!=0] support). This check's trace factorization (Y enters via traces) is [P] and stands, but does NOT close the support choice. Rank arm at [P_structural_reading].")
 
     return _result(
         name="T_abelian_matter_enters_via_trace: hypercharge enters the abelian ledger reading only via traces [P]",
@@ -710,17 +713,19 @@ def check_L_reading_profile_blind():
             "the T20 coupling-information correspondence supplies. Composed with the finite trace inventory "
             "(full count 61 with no fixed point; running sub-count B = C_total/6 via the rank-2 fixed-point "
             "Fisher equilibrium, L_coupling_capacity_id [P]; |b_Y| tiles the complement 6|b_Y|=41=d_eff-"
-            "C_total, so it is not a ledger sub-count), this closes T_gauge_reading_dichotomy: the reading "
-            "is a trace, a gauge coupling's resolution indicator has exactly two admissible traces, and "
-            "there is no third reading. GRADE [P]: channel-independence, uniform sigma, anomaly freedom, "
-            "and the complement-tiling are all [P]; the only inherited premise is that the reading is an "
-            "additive distinction-count (the T20 correspondence), which the non-abelian crossing value "
-            "1/alpha_cross = 47.02 [P] already rests on at identical parity. No measured target is consumed."
+            "C_total, so it is not a ledger sub-count), this DEFEATS the reading-space-SPAN obstruction: the reading "
+            "is a trace, so the non-uniform WEIGHT directions diag(Y), diag(Y^2) cannot enter as independent axes. "
+            "GRADE [P] for THAT fact (trace-only): channel-independence, uniform sigma, anomaly freedom, and the "
+            "complement-tiling are all [P]; the inherited premise is additivity (T20), shared with 1/alpha_cross = 47.02 [P]. "
+            "SCOPE (2026-06-27): trace-only does NOT close the support/no-third-reading exhaustiveness -- the {0,1} "
+            "charge-indicator [Y!=0] (Tr = 45) passes the trace filter, so 45 survives alongside 61. So this lemma "
+            "voids the profile-SPAN worry but leaves the SUPPORT choice open; 1/alpha_Y = 61 is [P_structural_reading]. No measured target is consumed."
         ),
         key_result=(
             "An additive information reading over a uniform-measure ledger of independent channels depends "
-            "on a gauge structure only through Tr(w); the 3-dim abelian span collapses to {61,0,10}, the "
-            "reading-space-span obstruction is void, and the two-form exhaustiveness closes. [P]."
+            "on a gauge structure only through Tr(w); the 3-dim abelian span collapses to {61,0,10} and the "
+            "reading-space-span obstruction is void [P]. This does NOT close the support exhaustiveness: the "
+            "charge-indicator [Y!=0] (Tr=45) also passes the trace filter, so the no-third-reading question stays open."
         ),
         dependencies=['T_field', 'L_sigma_intensive', 'L_self_exclusion', 'L_cost',
                       'T_realignment_cost_is_transition_energy', 'T20', 'L_equip',
@@ -762,18 +767,24 @@ def check_T_gauge_value_chain_is_P():
     from apf.supplements import check_L_sigma_intensive, check_L_coupling_capacity_id
     from apf.generations import check_L_beta_capacity
 
-    links = {
+    p_links = {
         'L_self_exclusion': check_L_self_exclusion,
         'L_sigma_intensive': check_L_sigma_intensive,
         'L_beta_capacity': check_L_beta_capacity,
         'L_coupling_capacity_id': check_L_coupling_capacity_id,
-        'T_gauge_reading_dichotomy': check_T_gauge_reading_dichotomy,
     }
-    for nm, fn in links.items():
-        r = fn()
+    for nm, lfn in p_links.items():
+        r = lfn()
         ep = str(r.get('epistemic', '')).strip('[]')
         check(bool(r.get('passed')) and ep == 'P',
               f"link {nm} is bank-[P] (epistemic={r.get('epistemic')!r}, passed={r.get('passed')!r})")
+    # 2026-06-27: the abelian-support link is [P_structural_reading], not [P]. The crossing value
+    # 47.02 is a [P] composition of the four [P] links above; the abelian value 61 inherits the
+    # OPEN support-uniqueness (adopted reading, alpha_s-corroborated 0.11 sigma).
+    r = check_T_gauge_reading_dichotomy()
+    ep = str(r.get('epistemic', '')).strip('[]')
+    check(bool(r.get('passed')) and ep == 'P_structural_reading',
+          f"abelian-support link T_gauge_reading_dichotomy is [P_structural_reading] (epistemic={r.get('epistemic')!r}, passed={r.get('passed')!r})")
 
     # the arithmetic chain -- all from the [P] links above
     check((C_total - 1) + 42 == d_eff,
@@ -796,7 +807,7 @@ def check_T_gauge_value_chain_is_P():
               "B*sigma = 47.02 (L_coupling_capacity_id), S_dS/sigma = 61 (T_gauge_reading_dichotomy). No fitted "
               "scale enters; the values are [P] outputs of [P] inputs, given the upstream constitutive cost-ledger "
               "reading (the four-input floor, tested by prediction, not re-derived here)"),
-        tier=4, epistemic='P',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             "The capstone of the gauge-rank close: the quantitative reading rule above the constitutive floor is "
             "[P]. Five bank-[P] links compose to the gauge values with no fitted scale: the per-slot degeneracy "
@@ -805,8 +816,8 @@ def check_T_gauge_value_chain_is_P():
             "be sigma, not some delta != sigma); the running-mode count B = |b3|+|b2| = C_total/6 (L_beta_capacity "
             "[P]); the rank-2 crossing reading 1/alpha_cross = B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id "
             "[P]); and the rank-1 abelian full count 1/alpha_Y = S_dS/sigma = C_total = 61 (T_gauge_reading_"
-            "dichotomy [P], closed this cycle via profile-blindness). GRADE [P]: a composition of bank-[P] links "
-            "plus exact arithmetic, at the same grade as its links. SCOPE: certifies the VALUE CHAIN, not the "
+            "dichotomy [P_structural_reading], support-uniqueness OPEN). GRADE [P_structural_reading]: the crossing arm "
+            "47.02 is a [P] composition, but the abelian arm 61 inherits the open support-uniqueness (alpha_s-corroborated, 0.11 sigma). SCOPE: certifies the VALUE CHAIN, not the "
             "constitutive correspondence that 1/alpha reads the ledger -- that is the operational reading of FD3 "
             "under FD1-FD2 (T_four_input_declaration [P_structural]), tested by the alpha_s (0.11 sigma) / crossing "
             "(25.6 ppm) predictions. The prediction-validation attaches to that floor; there is no free "

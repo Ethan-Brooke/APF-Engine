@@ -69,6 +69,11 @@ class AxisKind(str, Enum):
     """Engine-axis enum for the IE family (v24.3.32+)."""
     ROUTE = "ROUTE"          # Route Adjudication Engine (existing IE)
     CODOMAIN = "CODOMAIN"    # Codomain Selection Engine (new at v24.3.31)
+    CONTEXTUALITY = "CONTEXTUALITY"  # Sep/IJC FeasBool engine (v24.3.291): a
+    #   correlation-table interface either EXPORTS a global section (SepStr =
+    #   classical hidden-variable model = a global P) or hits a NAMED OBSTRUCTION
+    #   (IJCStr = a Bell/noncontextuality inequality). Bucketed dynamically by
+    #   axis.value in summarize(); the CODOMAIN-specific branches do not apply.
 
 
 class AtlasInputKind(str, Enum):
@@ -299,6 +304,59 @@ def _compile_codomain_input(
     return route, cert, graph, frontier
 
 
+def _compile_contextuality_input(inp: AtlasInput):
+    """v24.3.291: CONTEXTUALITY-axis dispatch -> the Sep/IJC FeasBool engine.
+
+    payload carries either
+      {'contextuality_kind': 'chsh_correlators', 'E': [E00,E01,E10,E11]}  (rationals
+      as str/int), routed through the Boole-polytope LP, or
+      {'contextuality_kind': 'parity', 'n_obs': int,
+       'contexts': [[obs_indices, parity_bit], ...]}, routed through the GF(2)
+      parity decider.
+    SepStr / consistent -> a global hidden-variable section is EXPORTED
+    (export_global_P=True); IJCStr / inconsistent -> a NAMED OBSTRUCTION (the
+    Bell/noncontextuality inequality or GF(2) parity certificate).
+    """
+    from fractions import Fraction
+    pl = dict(inp.payload or {})
+    kind = pl.get("contextuality_kind")
+    if kind == "chsh_correlators":
+        from apf.ijc_feasbool_engine import _chsh_correlator_scenario, feasbool
+        E = tuple(Fraction(str(x)) for x in pl["E"])
+        sep = feasbool(_chsh_correlator_scenario(E))["branch"] == "SepStr"
+        route = "CONTEXTUALITY_SEP_IJC"
+        obs_tag = "IJC_boole_fine_separator"
+    elif kind == "parity":
+        from apf.ijc_feasbool_engine import ks_parity_decide
+        ctx = [(set(vs), int(b)) for vs, b in pl["contexts"]]
+        sep = ks_parity_decide(int(pl["n_obs"]), ctx)["consistent"]
+        route = "CONTEXTUALITY_PARITY_KS"
+        obs_tag = "KS_gf2_parity_0eq1"
+    elif kind == "scenario":
+        # v24.3.292: the GENERAL engine -- an arbitrary finite marginal scenario
+        # (any measurements / outcomes / context hypergraph / behaviour table)
+        # routed through the exact Boole-polytope LP. SepStr -> a faithful global
+        # hidden-variable section EXISTS (export); IJCStr -> the Farkas dual is a
+        # generalized Bell/noncontextuality inequality (the named obstruction).
+        from apf.ijc_feasbool_engine import scenario_from_dict, feasbool
+        sep = feasbool(scenario_from_dict(pl))["branch"] == "SepStr"
+        route = "CONTEXTUALITY_SEP_IJC_SCENARIO"
+        obs_tag = "IJC_boole_farkas_separator"
+    else:
+        raise ValueError(f"Unsupported contextuality payload kind: {kind!r}")
+    cert = {
+        "solver_status": "GLOBAL_SECTION_EXPORTED" if sep else "IJC_OBSTRUCTION",
+        "export_global_P": sep,
+        "obstruction": () if sep else (obs_tag,),
+        "critical_fields": () if sep else ("global_section",),
+    }
+    graph = {"missing_or_blocked_edges": [], "axis": "CONTEXTUALITY",
+             "engine": "feasbool_sep_ijc"}
+    frontier = {"critical_fields": list(cert["critical_fields"]),
+                "packet_status": "EXPORT" if sep else "OBSTRUCTED"}
+    return route, cert, graph, frontier
+
+
 def summarize_input(inp: AtlasInput) -> AtlasRouteSummary:
     """v24.3.32: axis-aware dispatch.
 
@@ -308,6 +366,8 @@ def summarize_input(inp: AtlasInput) -> AtlasRouteSummary:
     """
     if inp.axis == AxisKind.CODOMAIN:
         route, cert, graph, frontier = _compile_codomain_input(inp)
+    elif inp.axis == AxisKind.CONTEXTUALITY:
+        route, cert, graph, frontier = _compile_contextuality_input(inp)
     elif inp.kind == AtlasInputKind.CLAIM:
         route, cert, graph, frontier = _compile_claim_input(inp)
     else:

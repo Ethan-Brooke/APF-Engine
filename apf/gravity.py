@@ -507,8 +507,14 @@ def check_T_deSitter_entropy():
 
     Step 2 [T_field, P]:
       The capacity ledger has C_total = 61 distinguishable types.
-      These are independent degrees of freedom (tensor product structure).
-      Each type is a "site" in the counting.
+      Each type is an independent "site" in the counting, so the
+      configuration COUNT is the combinatorial product of per-type option
+      counts (Omega = prod_i d_i). "Tensor product structure" here is this
+      combinatorial product of independent distinguishable slots (T_field) —
+      a microstate COUNT, not a claim about a quantum entanglement structure.
+      (The maximally-mixed state realizing this count is the trace state of
+      L_KMS_trace_state [P]; cf. L_RT_capacity for the marginal-entropy
+      reading and its caveat.)
 
     Step 3 [L_count + T11, P]:
       Each type i has accessible states at the horizon:

@@ -1027,7 +1027,7 @@ def check_L_HKM_causal_geometry():
 def check_L_Malament_uniqueness():
     r"""L_Malament_uniqueness: Conformal Geometry Uniquely Fixed [P].
 
-    STATEMENT: The causal order derived from L_irr [P], combined with
+    STATEMENT: The causal order derived from L_irr [P+occupancy], combined with
     volume normalization from the APF capacity budget (A1), uniquely
     determines the FULL metric g_μν (not just the conformal class).
 

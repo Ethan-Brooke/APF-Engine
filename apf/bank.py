@@ -89,6 +89,18 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     Source-of-record: APF Reference Docs/Reference - IJC
                     Dichotomy Theorem and the Quantum-Interface Bridge
                     (2026-04-26).md.
+  [P+occupancy]     Proved from PLEC + the occupancy input at the interface
+                    (2026-06-29): the joint-vs-sum cost residual Delta = E_12 -
+                    E_1 - E_2 has its FORM fixed by L_cost (cost=count: Delta =
+                    eps * (# irreducibly-joint distinctions)), but its SIGN is a
+                    per-interface input -- Delta>0 iff the interface carries an
+                    irreducibly-joint distinction (a correlation not reducible to
+                    either marginal). A1 admits both Delta=0 (reversible) and
+                    Delta>0, so theorems whose conclusions presuppose Delta>0 carry
+                    this tag honestly. It is the SAME occupancy bit that branch (IJC)
+                    names on the quantum axis ([P+IJC]); L_irr (the arrow of time)
+                    and the IJC bridge (quantum non-commutativity) share it. (L_nc,
+                    the sum-vs-budget non-closure lemma, supplies no Delta.)
   [C]               Conjecture.  Not yet proved; flagged for follow-up.
   [C, parked]       Conjecture deliberately parked pending further work
                     (e.g., subspace-level witnesses for I1/I3/I4 in
@@ -570,7 +582,10 @@ v5.2.4 CHANGELOG:
     S(A) = k·ln(d_eff) = (k/61)·S_dS for any subregion of k types.
     APF version of Ryu-Takayanagi formula for uniform boundary density.
     Special cases: S(vacuum) = Ω_Λ·S_dS, S(matter) = Ω_m·S_dS.
-    Product state structure (L_TN_product_state) → zero mutual info → exact additivity.
+    Zero mutual info from the maximally-mixed saturation state (L_equip + L_KMS_trace_state;
+    I/d^n = ⊗ I/d) → exact additivity. The count identity S(A)=(k/61)·S_dS is [P]; the
+    holographic/entanglement reading of it is [P_structural_reading] (the dS state is mixed,
+    so S(ρ_A) is marginal mixedness, across-cut entanglement = 0).
 
   L_MERA_generation [P_structural]:
     3-level FN hierarchy (q_B=7,4,0) = 3-level MERA ansatz.

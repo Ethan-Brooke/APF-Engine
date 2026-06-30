@@ -16,7 +16,7 @@ lemmas, composed by exact identity:
   First law (energy) .............. T_realignment_cost_  energy = accumulated cost = n*eps;
                                     is_transition_energy  cost = energy through the eps quantum.
                                                           [P]
-  Second law (the arrow) .......... L_irr [P]            a record is a cross-interface
+  Second law (the arrow) .......... L_irr [P+occupancy]            a record is a cross-interface
                                                           correlation, locally irreversible;
                                                           the count is non-decreasing.
   Third law (the floor) ........... L_singularity_       S_min = sigma > 0; no a->0, the
@@ -115,8 +115,8 @@ def check_T_thermodynamics_four_laws_synthesis():
 
     for label, fn in {**spine, **laws}.items():
         r = fn()
-        _check(r.get("epistemic") == "P" and r.get("passed"),
-               f"constituent {label}: banked [P] and passing")
+        _check(r.get("epistemic") in ("P", "P+occupancy") and r.get("passed"),
+               f"constituent {label}: banked [P]/[P+occupancy] and passing")
 
     # --- composing identities, witnessed (natural units eps = 1) ---
     eps = 1.0

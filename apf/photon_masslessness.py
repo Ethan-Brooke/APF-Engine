@@ -1,7 +1,7 @@
 """Photon masslessness as the abelian dual of record locking (APF v24.3.204).
 
 The Yang-Mills record-locking result (yang_mills_md_bridge.py) reads non-abelian
-confinement as: superadditive commitment (L_nc, Delta>0) made permanent (L_irr) =
+confinement as: superadditive commitment (Delta>0: the non-factorizable colour record, by cost=count + the gauge-invariant-record theorem) made permanent (L_irr) =
 a locked record, whose carrying cost (cost=energy) is the mass gap. This module
 banks the abelian DUAL: the unbroken abelian gauge boson (the photon) is exactly
 massless because the abelian sector is additive (Delta=0, the L_irr countermodel:
@@ -27,8 +27,12 @@ def check_T_photon_massless_from_reversibility():
     THEOREM. An unbroken abelian (U(1)) gauge sector has an exactly massless gauge boson.
 
     PROOF (the abelian mirror of the confinement closure):
-      1. [L_nc, P]  composition splits by symmetry type: non-abelian is superadditive (Delta>0),
-         abelian is additive (Delta=0). The photon's U(1) is the additive case.
+      1. [L_cost + record theorem, P_structural]  cost=count (L_cost) fixes Delta as the cost of the
+         irreducibly-joint distinctions the joint carries; the symmetry-type split of its SIGN is forced by
+         the gauge-invariant-record theorem (gauge_invariant_record.py): the abelian U(1) record is
+         factorizable (a product record) => no irreducibly-joint distinction => Delta=0 (additive); the
+         non-abelian colour record is the non-factorizable entangled singlet => Delta>0. (L_nc, sum-vs-budget,
+         supplies no Delta.) The photon's U(1) is the additive case.
       2. [L_irr countermodel, P]  L_irr's own countermodel fixes the dictionary: 'Additive world
          (Delta=0): correlations cost zero ... all capacity is locally recoverable. Fully reversible.'
          So Delta=0 => no locally-unrecoverable commitment => NO locked record.
@@ -49,19 +53,22 @@ def check_T_photon_massless_from_reversibility():
     FALSIFIER. APF predicts EXACTLY zero mass for the unbroken U(1)_em photon. Any nonzero photon mass
     (current bound m_gamma < ~1e-18 eV) would falsify the additive-abelian (Delta=0, reversible) reading.
 
-    GRADE [P_structural]: composes L_nc [P] + the L_irr countermodel [P] + cost=energy [P], with the
+    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + the L_irr [P+occupancy] countermodel + cost=energy [P], with the
     reversibility<=>masslessness identification carrying the structural grade -- the exact dual of the
     gapless<=>net-reversible identification in the confinement closure. NOT a claim that masslessness
     needs SSB to explain (it is the unbroken case); the massive-gauge-boson cases are the SSB record.
     """
-    from apf.core import check_L_nc, check_L_irr
+    from apf.core import check_L_irr, check_L_cost
     from apf.cost_energy_identity import check_T_realignment_cost_is_transition_energy
-    lnc = check_L_nc(); lir = check_L_irr()
+    lir = check_L_irr(); lcost = check_L_cost()
     ce = check_T_realignment_cost_is_transition_energy()
-    _check(lnc.get("epistemic") == "P" and lnc.get("passed"),
-           "step 1: L_nc [P] -- abelian composition is additive (Delta=0); non-abelian is superadditive (Delta>0)")
-    _check(lir.get("epistemic") == "P" and lir.get("passed"),
-           "step 2: L_irr [P] countermodel -- Delta=0 => fully reversible => no locked record")
+    _check(lcost.get("epistemic") == "P" and lcost.get("passed"),
+           "step 1: L_cost [P] -- cost=count fixes Delta = eps*(#irreducibly-joint distinctions); the abelian U(1) "
+           "record is factorizable (product) => no irreducibly-joint distinction => Delta=0 (additive). The split's "
+           "sign is forced by the gauge-invariant-record theorem (gauge_invariant_record.py) + cost=count, NOT by "
+           "L_nc (sum-vs-budget, supplies no Delta).")
+    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
+           "step 2: L_irr [P+occupancy] countermodel -- Delta=0 => fully reversible => no locked record")
     _check(ce.get("epistemic") == "P" and ce.get("passed"),
            "step 3: cost=energy [P] -- a permanent commitment Delta is a permanent energy >= Delta; Delta=0 => no rest-energy floor")
     _check(True,
@@ -84,7 +91,7 @@ def check_T_photon_massless_from_reversibility():
               "massless). Mass <=> a locked record; masslessness <=> no record [P_structural]"),
         tier=4, epistemic="P_structural_reading",
         summary=(
-            "The abelian mirror of the confinement closure. L_nc [P] splits composition by symmetry type "
+            "The abelian mirror of the confinement closure. cost=count (L_cost) + the gauge-invariant-record theorem split composition by symmetry type "
             "(non-abelian Delta>0, abelian Delta=0); L_irr's own countermodel makes Delta=0 fully reversible, "
             "locking no record; cost=energy [P] then gives the unbroken abelian gauge boson no rest-energy floor "
             "-- exactly massless. This is the APF-language form of 'an unbroken gauge symmetry forbids a "
@@ -98,7 +105,7 @@ def check_T_photon_massless_from_reversibility():
         key_result=("unbroken abelian (photon): Delta=0 -> reversible -> no record -> exactly massless [P_structural]; "
                     "dual of the YM gap. mass <=> locked record (Higgs/condensate); masslessness <=> no record. "
                     "Falsifier: nonzero photon mass."),
-        dependencies=["L_nc", "L_irr", "T_realignment_cost_is_transition_energy"],
+        dependencies=["L_cost", "L_irr", "T_realignment_cost_is_transition_energy"],
         cross_refs=["T_ym_conformal_phase_excluded_by_record_locking", "L_irr_uniform", "Theorem_R", "T_Higgs",
                     "L_alpha_em"],
         artifacts={
@@ -122,7 +129,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
     incoming ones. If the field is symmetric, where is the asymmetry?
 
     THE ANSWER (not in the photon -- in the records at the endpoints):
-      1. [Paper 2 R2 / L_nc abelian, P]  the photon's U(1) is additive (Delta=0), reversible, intrinsically
+      1. [Paper 2 R2 / L_cost abelian factorizable record, P]  the photon's U(1) is additive (Delta=0), reversible, intrinsically
          arrowless. The field equations stay exactly T-symmetric; nothing here modifies Maxwell.
       2. [L_irr, P]  absorption commits a locally-unrecoverable record at the absorbing matter: the absorber's
          state changes in a way no local act can undo.
@@ -132,17 +139,18 @@ def check_T_radiation_arrow_is_absorber_record_lock():
          Einstein-Ritz point and Wheeler-Feynman absorber theory, sharpened to one mechanism: the same L_irr
          record-lock that orients time everywhere and gaps Yang-Mills, here acting at the absorber.
 
-    GRADE [P_structural]: composes the reversible-EM result (Paper 2 R2 / L_nc) + L_irr [P] + L_irr_uniform [P].
+    GRADE [P_structural]: composes the reversible-EM result (Paper 2 R2 / L_cost factorizable record) + L_irr [P+occupancy] + L_irr_uniform [P].
     The physics (radiation asymmetry is thermodynamic, in the absorber) is standard; the APF content is the
     UNIFICATION -- radiation arrow, thermodynamic arrow, measurement record-lock, and confinement are one L_irr
     mechanism, not four. NOT a modification of Maxwell; the field stays T-symmetric.
     """
-    from apf.core import check_L_irr, check_L_irr_uniform, check_L_nc
-    lir=check_L_irr(); liru=check_L_irr_uniform(); lnc=check_L_nc()
-    _check(lnc.get("epistemic")=="P" and lnc.get("passed"),
-           "step 1: photon U(1) additive (Delta=0), reversible, arrowless -- Maxwell stays T-symmetric (Paper 2 R2)")
-    _check(lir.get("epistemic")=="P" and lir.get("passed"),
-           "step 2: L_irr [P] -- absorption commits a locally-unrecoverable record at the absorber")
+    from apf.core import check_L_irr, check_L_irr_uniform, check_L_cost
+    lir=check_L_irr(); liru=check_L_irr_uniform(); lcost=check_L_cost()
+    _check(lcost.get("epistemic")=="P" and lcost.get("passed"),
+           "step 1: L_cost [P] -- the abelian U(1) record is factorizable => Delta=0 (additive), reversible, arrowless; "
+           "Maxwell stays T-symmetric (Paper 2 R2). (Split forced by the record theorem + cost=count, not L_nc.)")
+    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
+           "step 2: L_irr [P+occupancy] -- absorption commits a locally-unrecoverable record at the absorber")
     _check(liru.get("epistemic")=="P" and liru.get("passed"),
            "step 3: L_irr_uniform [P] -- the gauge sector inherits irreversibility at record-committing interfaces")
     _check(True,
@@ -161,7 +169,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
         summary=(
             "Resolves the standard puzzle -- Maxwell is T-symmetric yet radiation has an arrow -- in the framework's "
             "own terms. The photon's U(1) is additive/reversible/arrowless (Paper 2 R2); the arrow lives at the "
-            "endpoints, where absorption commits a locally-unrecoverable record (L_irr [P]) and the gauge sector "
+            "endpoints, where absorption commits a locally-unrecoverable record (L_irr [P+occupancy]) and the gauge sector "
             "inherits irreversibility at record-committing interfaces (L_irr_uniform [P]). So the radiation arrow is "
             "the absorber's, not the field's. The APF content is the unification: the radiation arrow, the "
             "thermodynamic arrow, the measurement record-lock, and confinement are one L_irr mechanism. Standard "
@@ -169,7 +177,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
         ),
         key_result=("radiation arrow = absorber's L_irr record-lock, not the photon's (field stays T-symmetric); one "
                     "L_irr mechanism with the thermodynamic arrow + confinement. [P_structural]"),
-        dependencies=["L_nc","L_irr","L_irr_uniform"],
+        dependencies=["L_cost","L_irr","L_irr_uniform"],
         cross_refs=["T_photon_massless_from_reversibility","T_ym_conformal_phase_excluded_by_record_locking","Theorem_R"],
         artifacts={"field":"T-symmetric (Maxwell unchanged)","arrow":"absorber's L_irr record-lock at absorption",
                    "unification":"radiation arrow = thermodynamic arrow = measurement lock = confinement (one L_irr)",
@@ -197,7 +205,7 @@ def check_T_gauge_force_character_from_record_state():
         the longitudinal polarization. Polarization count = 2 + (records eaten).
 
       COLOUR RECORD (Delta>0, unscreened, matter-free non-abelian -- the gluon):
-        superadditive commitment locked (L_nc + L_irr) with no reversible channel to net it out
+        superadditive commitment locked (Delta>0 by the record theorem + cost=count, made permanent by L_irr) with no reversible channel to net it out
         (T_ym_conformal_phase_excluded_by_record_locking) -> confined, linear potential sigma*r, no free
         asymptotic gauge states.
 
@@ -252,7 +260,7 @@ def check_T_gauge_force_character_from_record_state():
                     "(massless/Coulomb/2-pol); condensate -> W/Z (massive/Yukawa/3-pol); colour -> gluon "
                     "(confined/linear). [P_structural]"),
         dependencies=["T_photon_massless_from_reversibility","T_Higgs","T_ym_conformal_phase_excluded_by_record_locking"],
-        cross_refs=["L_nc","L_irr","T_realignment_cost_is_transition_energy"],
+        cross_refs=["L_cost","L_irr","T_realignment_cost_is_transition_energy"],
         artifacts={"no_record":"photon: massless, Coulomb 1/r, infinite range, 2 transverse pol",
                    "condensate_record":"W/Z + Meissner photon: massive, Yukawa e^{-mr}/r, finite range, 3 pol (eaten Goldstone)",
                    "colour_record":"gluon: confined, linear sigma*r, no free states",
@@ -345,7 +353,7 @@ def check_T_sm_gauge_group_is_record_state_enumeration():
     its record state. The Standard Model's gauge group, derived independently (Theorem_R: SU(3) x SU(2) x
     U(1)), turns out to place each of its three factors in a DIFFERENT record state:
 
-      SU(3)_c  -- non-abelian, unscreened in the IR -> an unscreened COLOUR record (L_nc + L_irr, no matter
+      SU(3)_c  -- non-abelian, unscreened in the IR -> an unscreened COLOUR record (the non-factorizable colour record + L_irr, no matter
                   to net it out) -> confined, gapped (T_confinement; T_ym_conformal_phase_excluded_by_record_locking).
       SU(2)_L  -- non-abelian, but BROKEN by the Higgs condensate before it can confine -> a CONDENSATE record
                   (T_Higgs: 3 Goldstones eaten) -> massive W/Z, Yukawa, 3 polarizations.

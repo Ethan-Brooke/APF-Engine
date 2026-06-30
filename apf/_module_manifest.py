@@ -206,6 +206,9 @@ BANK_REGISTRY_MODULES: tuple[str, ...] = (
     "apf.phase_14d3_completions",
     "apf.plec",
     "apf.quantum_admissibility",
+    "apf.ijc_boolean_defender_bridge",  # v24.3.287 Phase 21 Task B: (2,2,2) Boolean-defender bridge engine; 1 bank check
+    "apf.ijc_feasbool_engine",  # v24.3.287 Phase 21 Task B: general exact Boole-polytope FeasBool engine; 1 bank check
+    "apf.interface_contextuality_adapter",  # v24.3.291: wires the Sep/IJC engine into the IE atlas as the CONTEXTUALITY axis; 1 bank check
     "apf.quantum_operator_derivation",
     "apf.recruitment",
     "apf.red_team",
@@ -561,7 +564,7 @@ KNOWN_REGISTER_ANOMALIES: tuple[str, ...] = (
 # (first-class spine/sector/extension/engineering/infra/standalone classification of all 422
 # loaded modules) + modules_of_type(); crystal.py MODULE_PRESETS now DERIVE from it
 # (CORE=spine, EXTENDED=+sector+extension, FULL=all, plus typed single-layer views).
-EXPECTED_REGISTRY_SIZE: int = 3767  # +1 symmetry_contextuality_independence (separation theorem)
+EXPECTED_REGISTRY_SIZE: int = 3776  # +1 v24.3.291 IE contextuality-axis adapter (interface_contextuality_adapter); +1 v24.3.290 GF(2) parity scalable; +1 v24.3.289 four-verdict taxonomy; +1 v24.3.288 constructive-noncommutator; +2 v24.3.287 Phase 21 Task B
 
 
 # Full module list for verify_all enumeration order. Order matters for

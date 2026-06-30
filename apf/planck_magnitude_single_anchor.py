@@ -205,11 +205,18 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
     So every SM mass scale -- the EW vev, the cosmological constant, Lambda_QCD, and the charged
     fermions -- is certified to ride the ONE Planck anchor; the framework sits at its one-input
     theoretical minimum (the magnitude itself un-derivable, the no-go of
-    T_planck_magnitude_single_dimensional_anchor). The lone remaining un-collapsed ratio is
-    M_cross / M_Pl -- the same quantity as the sin^2theta_W -> [P] gate (the crossing scale M_cross)
-    -- named as the honest open frontier, not claimed. (NB: M_cross is distinct from the banked
-    LOW-scale seesaw M_R = [31, 60, 174] GeV of majorana.py; no high-scale seesaw identification
-    is claimed here.)
+    T_planck_magnitude_single_dimensional_anchor). The lone remaining un-collapsed ratio is M_cross / M_Pl, and its open content is the DIMENSIONAL
+    hierarchy, equivalently v_H / M_Pl. The crossing scale RELATIVE to M_Z is NOT open: it is
+    zero-input [P] (1/alpha_Y(M_cross) = C_total = 61, the rank-1 capacity count, forward-predicts
+    alpha_s(M_Z) = 0.1179 at 0.11 sigma and t = ln(M_cross/M_Z) with no measured coupling --
+    T_abelian_coupling_fixed_by_rank1_capacity_count_P -- [P_structural], v24.3.215: forward-PREDICTED and corroborated at 0.11 sigma, but the rank-1 no-third-reading exhaustiveness is open, NOT clean [P]; a grade contradiction with the check's epistemic field is owed to the principal). So M_cross/M_Pl =
+    (zero-input M_cross/M_Z [P]) x (M_Z/v_H [P]) x (v_H/M_Pl), and the only open piece is the
+    absolute hierarchy v_H/M_Pl -- the same open frontier Paper 44 sec.10 names. (The earlier
+    'sin^2theta_W -> [P] gate' parenthetical is superseded for alpha_s and the crossing-to-M_Z
+    scale, which are forward-derived; the MEASURED running weak angle stays [P_structural] behind
+    the w-prop-g^2 observable dictionary, a separate fence -- NOT this ratio. NB: M_cross is
+    distinct from the banked LOW-scale seesaw M_R = [31, 60, 174] GeV of majorana.py; no
+    high-scale seesaw identification is claimed here.)
 
     [P_structural]; no measured target consumed.
 
@@ -286,7 +293,7 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
             top_mass="m_t = y_t * v_H/sqrt(2), y_t=0.991 -> ~172.5 GeV (not a new scale)",
             strong="Lambda_QCD rides the anchor by dimensional transmutation (v24.3.188)",
             all_sm_scales="EW vev + Lambda + Lambda_QCD + charged fermions ride ONE anchor",
-            lone_open_ratio="M_cross/M_Pl (sin^2theta_W->[P] gate; the crossing scale)",
+            lone_open_ratio="M_cross/M_Pl = (zero-input M_cross/M_Z [P], abelian count) x (v_H/M_Pl); open content = the dimensional hierarchy v_H/M_Pl",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

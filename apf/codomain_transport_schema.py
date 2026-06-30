@@ -602,7 +602,7 @@ def inv_alpha_cross_transport() -> CodomainTransport:
 def alpha_s_m_z_transport() -> CodomainTransport:
     return CodomainTransport(
         name='alpha_s_m_z',
-        source_codomain='APF forward prediction from the two derived couplings (1/alpha_cross=47.02 [P], 1/alpha_Y=61 [P]) + sin^2theta_W=3/13 [P]',
+        source_codomain='APF forward prediction from the two derived couplings (1/alpha_cross=47.02 [P], 1/alpha_Y=61 [P_structural_reading, alpha_s-corroborated]) + sin^2theta_W=3/13 [P]',
         target_codomain='physical alpha_s(M_Z) MSbar (PDG-2024 0.1180)',
         transport_map_name='capacity_couplings_plus_3_13_RG_to_alpha_s_M_Z',
         status=TRANSPORT_CLOSED,

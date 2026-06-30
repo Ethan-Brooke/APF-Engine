@@ -5,15 +5,9 @@ Phase 22b (2026-04-28): codebase landing of Paper 5 Supplement v5.1's
 quantum-structure theorems of Paper 5 made executable as small finite
 witnesses.
 
-Six bank-registered checks span the Paper 5 v5.1 spine:
-
-  * check_T_branch_taxonomy_inclusions -- Lemmas 4.5/4.6 (lines 1053, 1065)
-    of Paper 5 v5.1 supplement. Confirms the inclusions
-        SepAdm  =>  SepStr      (APF-admissible Sep implies structural Sep)
-        IJCStr  =>  IJCAdm      (structural IJC implies APF-admissible IJC)
-    on a finite witness, plus the strict separation
-        SepStr  =/=>  SepAdm    (structural Sep can fail capacity)
-    via a high-cost commuting-defender example.
+Four bank-registered checks span the Paper 5 v5.1 spine
+(the branch-taxonomy and QAC roots were relocated into apf.core, the
+spine module that hosts the rest of the IJC sector):
 
   * check_T_kappa_Bool_minimum -- Lemma 1036. On any finite Boolean-defender
     lattice with cost function eps : D -> [0, inf], the infimum
@@ -26,13 +20,6 @@ Six bank-registered checks span the Paper 5 v5.1 spine:
     APF-admissible Boolean defender exists for this query family).
     Witness: defender minimum 12 against capacity 10 -> certificate fires
     and the query family is correctly classified as IJCPres.
-
-  * check_T_quantum_admissibility_condition -- Theorem 1518: at a
-    record-complete coherent interface, branch (IJC) produces a
-    QAC witness -- coherent continuations whose Boolean record-locking
-    incurs strictly positive preservation distortion. Witness: two-state
-    coherent interface with continuations |+>, |-> and computational
-    record basis {|0>, |1>}; record-locking gives distortion 1/2 > 0.
 
   * check_T_field_selection_complex -- Theorem 2907 + Lemma 2856.
     Composite-Continuation Tomography parameter-counting defects
@@ -63,162 +50,12 @@ from typing import FrozenSet, Tuple, Dict, List
 # Section 4: Branch taxonomy (SepStr, SepAdm, IJCStr, IJCAdm, IJCPres)
 # =====================================================================
 
-@dataclass(frozen=True)
-class CommutingDefender:
-    """A commuting-extension defender (Definition 4.1, Paper 5 v5.1 supp)."""
-    name: str
-    realignment_cost: float
-    commutes: bool   # whether the defender commutes with all queries in Q
 
 
-@dataclass(frozen=True)
-class QueryInterface:
-    """A finite robust query interface (Definition 3.1)."""
-    name: str
-    queries: Tuple[str, ...]
-    candidate_defenders: Tuple[CommutingDefender, ...]
-    capacity: float
-
-    def has_structural_commuting_defender(self) -> bool:
-        """SepStr: at least one candidate commutes (regardless of cost)."""
-        return any(d.commutes for d in self.candidate_defenders)
-
-    def has_apf_admissible_commuting_defender(self) -> bool:
-        """SepAdm: some candidate commutes AND has cost <= capacity."""
-        return any(
-            d.commutes and d.realignment_cost <= self.capacity
-            for d in self.candidate_defenders
-        )
-
-    def is_structural_IJC(self) -> bool:
-        return not self.has_structural_commuting_defender()
-
-    def is_apf_admissible_IJC(self) -> bool:
-        return not self.has_apf_admissible_commuting_defender()
 
 
-def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
-    """Construct the four canonical witness interfaces for the taxonomy."""
-    # Witness 1: classical bit pair -- both Sep branches hold
-    classical_bit_pair = QueryInterface(
-        name="classical_bit_pair",
-        queries=("X1", "X2"),
-        candidate_defenders=(
-            CommutingDefender("D_diag", realignment_cost=2.0, commutes=True),
-            CommutingDefender("D_offdiag", realignment_cost=4.0, commutes=False),
-        ),
-        capacity=10.0,
-    )
-
-    # Witness 2: capacity-limited Sep -- SepStr holds, SepAdm fails
-    capacity_limited_sep = QueryInterface(
-        name="capacity_limited_sep",
-        queries=("Q1", "Q2"),
-        candidate_defenders=(
-            CommutingDefender("D_expensive", realignment_cost=100.0, commutes=True),
-            CommutingDefender("D_cheap_noncomm", realignment_cost=1.0, commutes=False),
-        ),
-        capacity=10.0,
-    )
-
-    # Witness 3: structural IJC interface (no commuting defender at all)
-    structural_ijc = QueryInterface(
-        name="structural_ijc",
-        queries=("A", "B"),
-        candidate_defenders=(
-            CommutingDefender("D_a", realignment_cost=3.0, commutes=False),
-            CommutingDefender("D_b", realignment_cost=5.0, commutes=False),
-        ),
-        capacity=20.0,
-    )
-
-    # Witness 4: degenerate (no defenders at all -- vacuous IJCStr)
-    no_defenders = QueryInterface(
-        name="no_candidates",
-        queries=("U",),
-        candidate_defenders=(),
-        capacity=10.0,
-    )
-
-    return {
-        "classical_bit_pair": classical_bit_pair,
-        "capacity_limited_sep": capacity_limited_sep,
-        "structural_ijc": structural_ijc,
-        "no_defenders": no_defenders,
-    }
 
 
-def check_T_branch_taxonomy_inclusions():
-    """T_branch_taxonomy_inclusions: SepAdm => SepStr; IJCStr => IJCAdm.
-
-    Tier 4 [P_regime]. Paper 5 Supplement v5.1 Lemmas 4.5 + 4.6 (lines 1053,
-    1065). The branch taxonomy split (v5.0+) separates structural
-    factorizability (SepStr/IJCStr) from APF-admissibility under a finite
-    capacity budget (SepAdm/IJCAdm). The two implications above are
-    forced; the two converses are NOT forced (capacity-limited Sep
-    witnesses SepStr without SepAdm).
-
-    Verifies on the four canonical witnesses:
-      (i)  SepAdm => SepStr (forward Lemma 4.5).
-      (ii) IJCStr => IJCAdm (forward Lemma 4.6).
-      (iii) SepStr =/=> SepAdm (capacity_limited_sep counterexample).
-      (iv) The two regimes are properly disjoint at each level.
-    """
-    witnesses = _branch_taxonomy_witnesses()
-
-    # (i) SepAdm => SepStr on every witness
-    for name, w in witnesses.items():
-        if w.has_apf_admissible_commuting_defender():
-            assert w.has_structural_commuting_defender(), (
-                f"{name}: SepAdm holds but SepStr does not"
-            )
-
-    # (ii) IJCStr => IJCAdm on every witness
-    for name, w in witnesses.items():
-        if w.is_structural_IJC():
-            assert w.is_apf_admissible_IJC(), (
-                f"{name}: IJCStr holds but IJCAdm does not"
-            )
-
-    # (iii) Strict separation: SepStr =/=> SepAdm
-    cls = witnesses["capacity_limited_sep"]
-    assert cls.has_structural_commuting_defender(), \
-        "capacity_limited_sep should be SepStr"
-    assert not cls.has_apf_admissible_commuting_defender(), \
-        "capacity_limited_sep should NOT be SepAdm (capacity blocks)"
-
-    # (iv) Disjointness within each level
-    for name, w in witnesses.items():
-        # Structural level: SepStr xor IJCStr
-        sep_str = w.has_structural_commuting_defender()
-        ijc_str = w.is_structural_IJC()
-        assert sep_str != ijc_str, f"{name}: SepStr/IJCStr not disjoint"
-        # Admissibility level: SepAdm xor IJCAdm
-        sep_adm = w.has_apf_admissible_commuting_defender()
-        ijc_adm = w.is_apf_admissible_IJC()
-        assert sep_adm != ijc_adm, f"{name}: SepAdm/IJCAdm not disjoint"
-
-    return {
-        "name": "T_branch_taxonomy_inclusions",
-        "passed": True,
-        "key_result": (
-            f"SepAdm=>SepStr and IJCStr=>IJCAdm verified on "
-            f"{len(witnesses)} witness interfaces; capacity_limited_sep "
-            "demonstrates SepStr =/=> SepAdm"
-        ),
-        "summary": (
-            "The branch-taxonomy inclusions of Paper 5 v5.1 (Lemmas 4.5, "
-            "4.6) hold on the canonical witnesses. SepAdm always implies "
-            "SepStr (an admissible defender is a fortiori a defender); "
-            "structural IJC always implies admissible IJC (no commuting "
-            "defender at all means no admissible commuting defender). "
-            "The reverse implications fail in general: a structural "
-            "commuting defender can exceed capacity (capacity-limited "
-            "SepStr witness), placing the interface in IJCAdm without "
-            "IJCStr. This is the v5.1 anti-smuggling check: capacity-"
-            "only failures are NOT mislabeled as standard quantumness."
-        ),
-    }
 
 
 # =====================================================================
@@ -373,128 +210,12 @@ def check_T_capacity_lower_bound_certificate():
 # Section 6: Quantum Admissibility Condition (QAC)
 # =====================================================================
 
-@dataclass(frozen=True)
-class CoherentInterface:
-    """A finite record-complete coherent interface (Definition 1511)."""
-    name: str
-    record_basis: Tuple[str, ...]
-    coherent_states: Tuple[Tuple[complex, ...], ...]   # superposition coefficients
-    is_ijc: bool
-
-    def boolean_record_locking_distortion(self) -> float:
-        """Distortion incurred when forcing each coherent state into the
-        nearest record class (i.e., projecting onto the record basis).
-
-        For an equally-weighted superposition over n record classes, the
-        Boolean record-locking projector retains 1/n of the original
-        coherence; preservation distortion = 1 - 1/n.
-        """
-        if not self.coherent_states:
-            return 0.0
-        # Witness: equal superposition |+> = (|0> + |1>)/sqrt(2) and
-        # |-> = (|0> - |1>)/sqrt(2) on a 2-level basis. Boolean record-
-        # locking annihilates the off-diagonal terms; preservation
-        # distortion of the original coherent pair = 1/2.
-        n = len(self.record_basis)
-        if n == 0:
-            return 0.0
-        return 1.0 - (1.0 / n)
 
 
-def _qac_witness_coherent_2level() -> CoherentInterface:
-    """Two-level coherent interface witness: |+>, |-> over basis {|0>, |1>}."""
-    return CoherentInterface(
-        name="two_level_coherent",
-        record_basis=("|0>", "|1>"),
-        coherent_states=(
-            (1.0/2**0.5, 1.0/2**0.5),     # |+>
-            (1.0/2**0.5, -1.0/2**0.5),    # |->
-        ),
-        is_ijc=True,   # branch (IJC) at this interface
-    )
 
 
-def _qac_witness_classical_2level() -> CoherentInterface:
-    """Classical baseline: same record basis, but record-eigenstate inputs."""
-    return CoherentInterface(
-        name="two_level_classical",
-        record_basis=("|0>", "|1>"),
-        coherent_states=(
-            (1.0, 0.0),
-            (0.0, 1.0),
-        ),
-        is_ijc=False,
-    )
 
 
-def check_T_quantum_admissibility_condition():
-    """T_quantum_admissibility_condition: branch (IJC) at a record-complete
-    coherent interface produces a QAC witness.
-
-    Tier 4 [P_regime]. Paper 5 Supplement v5.1 Theorem 1518 ("IJC produces
-    a QAC witness in record-complete coherent interfaces").
-
-    Verifies:
-      (i) On the coherent IJC witness, Boolean record-locking incurs
-          strictly positive preservation distortion -- the QAC is satisfied
-          (records and coherent continuations are operationally
-          incompatible, with positive distortion).
-      (ii) On the classical record-eigenstate witness, Boolean record-
-          locking incurs zero distortion -- the classical case correctly
-          fails QAC (no quantum structure forced).
-    """
-    coh = _qac_witness_coherent_2level()
-    cls = _qac_witness_classical_2level()
-
-    # (i) coherent IJC witness: distortion > 0
-    d_coh = coh.boolean_record_locking_distortion()
-    assert d_coh > 0.0, (
-        f"QAC witness for coherent IJC must have distortion > 0; got {d_coh}"
-    )
-    assert coh.is_ijc, "coherent witness must be in branch (IJC)"
-
-    # (ii) classical witness: distortion is 0 only when inputs are record
-    # eigenstates -- here the *generic* basis-projection distortion of the
-    # canonical projector is 1 - 1/n = 1/2 in the abstract, but on these
-    # specific record-eigenstate inputs the per-state distortion is 0.
-    # We check the classical baseline by inspecting the inputs themselves.
-    d_classical_per_input = 0.0
-    for state in cls.coherent_states:
-        # Distortion on record-eigenstate input is 0 (record-locking is
-        # the identity on basis states).
-        amp_max = max(abs(c) for c in state)
-        per_input = abs(1.0 - amp_max ** 2)
-        d_classical_per_input = max(d_classical_per_input, per_input)
-    assert d_classical_per_input < 1e-12, (
-        f"classical record-eigenstate inputs must have zero distortion; "
-        f"got {d_classical_per_input}"
-    )
-    assert not cls.is_ijc, "classical witness must NOT be in branch (IJC)"
-
-    return {
-        "name": "T_quantum_admissibility_condition",
-        "passed": True,
-        "key_result": (
-            f"Coherent IJC: preservation distortion = {d_coh} > 0 "
-            f"(QAC satisfied); classical inputs: "
-            f"per-state distortion = {d_classical_per_input} (QAC trivially "
-            "absent)"
-        ),
-        "summary": (
-            "Paper 5 v5.1 Theorem 1518 (IJC produces a QAC witness in "
-            "record-complete coherent interfaces): branch (IJC) plus "
-            "record-completeness plus coherent-continuation richness "
-            "produces a Quantum Admissibility Condition witness -- coherent "
-            "continuations whose Boolean record-locking incurs strictly "
-            "positive preservation distortion. The witness here is the "
-            "two-level coherent interface |+>, |-> on basis {|0>, |1>}: "
-            "Boolean record-locking annihilates the off-diagonal coherence "
-            "and produces preservation distortion 1/2 > 0. The classical "
-            "baseline on the same basis (inputs |0>, |1>) does not "
-            "satisfy QAC because the record-eigenstate inputs are already "
-            "record-locked."
-        ),
-    }
 
 
 # =====================================================================
@@ -700,10 +421,8 @@ def check_T_Born_trace_rule():
 # =====================================================================
 
 _CHECKS = {
-    "T_branch_taxonomy_inclusions":      check_T_branch_taxonomy_inclusions,
     "T_kappa_Bool_minimum":              check_T_kappa_Bool_minimum,
     "T_capacity_lower_bound_certificate":check_T_capacity_lower_bound_certificate,
-    "T_quantum_admissibility_condition": check_T_quantum_admissibility_condition,
     "T_field_selection_complex":         check_T_field_selection_complex,
     "T_Born_trace_rule":                 check_T_Born_trace_rule,
 }
@@ -720,10 +439,8 @@ def register(registry):
 
 if __name__ == "__main__":
     for fn in (
-        check_T_branch_taxonomy_inclusions,
         check_T_kappa_Bool_minimum,
         check_T_capacity_lower_bound_certificate,
-        check_T_quantum_admissibility_condition,
         check_T_field_selection_complex,
         check_T_Born_trace_rule,
     ):

@@ -463,6 +463,109 @@ def check_T_confinement():
     )
 
 
+def check_T_center_order_parameter_triality():
+    """T_center_order_parameter_triality: the Z_N (triality) order parameter grades
+    isolated-charge admissibility by N-ality [P].
+
+    REFINES T_confinement [P]. T_confinement is a BARE-charge statement (at IR
+    saturation every bare non-singlet is inadmissible). It is too coarse to be a
+    center order parameter: it would place the center-NEUTRAL adjoint in the
+    confined set, whereas an adjoint source is physically SCREENED (its asymptotic
+    string tension vanishes; <P_adj> != 0 even when <P_fund> = 0). The center
+    distinction is N-ality (triality), not singlet-vs-non-singlet.
+
+    STATEMENT (conditional on IR saturation, T_confinement's carried premise):
+      An isolated colour charge in irrep R can be dressed by gluons (adjoint quanta)
+      into an admissible overall colour-SINGLET composite -- i.e. is SCREENED, with
+      finite isolated free energy, <P_R> != 0 -- IFF its N-ality t(R) = 0. Charges
+      with t(R) != 0 (the center-charged reps: fundamental, antifund, diquark)
+      cannot be neutralised by gluons and stay confined (<P_R> = 0).
+
+    DERIVATION [P]:
+      (1) N-ality t(R) = (#boxes - #anti-boxes) mod N is ADDITIVE under tensor
+          product (standard rep theory).
+      (2) The adjoint (gluon) has t = 0; dressing a charge with any number of gluons
+          PRESERVES its N-ality (center-blindness of the gauge field).
+      (3) The singlet has t = 0; by (1)-(2) reaching a singlet from R forces
+          t(R) = 0 (necessity).
+      (4) SUFFICIENCY: the adjoint weights generate the ROOT lattice, which is
+          exactly the t = 0 sublattice of the weight lattice (index N). Hence for any
+          t(R) = 0 irrep, R* appears in some adjoint^k, so R (x) adjoint^k contains
+          the singlet. (8(x)8 = 27+10+10b+8+8+1 already contains the singlet and the
+          small t=0 irreps; every t=0 weight is an integer combination of roots.)
+      (5) DRESSED-COMPOSITE reading: admissibility is claimed for the overall
+          colour-singlet composite R (x) adjoint^k -> 1 (singlets survive saturation),
+          NOT for bare gluons. No clash with T_confinement's bare-adjoint exclusion.
+
+    SCOPE / WHAT THIS DOES NOT DO:
+      - Conditional on saturation exactly as T_confinement [P]; does NOT establish
+        that saturation occurs (confined vs IR-fixed-point/conformal stays open --
+        the same open dynamical question as the mass gap). Derives the order-parameter
+        STRUCTURE (the N-ality grading), not its non-vanishing as a dynamical fact.
+      - Does NOT derive the string tension sigma / Lambda_QCD (T_confinement's fence).
+      - The order parameter is expressed as ADMISSIBILITY, not as a colour-connection
+        holonomy; the across-interface colour connection stays the open
+        gauge_fiber_automorphism_program.
+
+    STATUS: [P]. Standard rep theory (N-ality additivity + root-lattice = t=0
+    sublattice) + T_confinement [P], conditional on saturation.
+    """
+    N = 3  # SU(3)
+    # N-ality (triality) by box count mod N; antibox = -1.
+    triality = {
+        'singlet': 0, 'fundamental': 1, 'antifund': 2,
+        'adjoint8': 0, 'diquark6': 2, 'meson': 0, 'baryon': 0, 'decuplet10': 0,
+    }
+    # (1) additivity mod N: fund (x) fund (x) fund -> baryon, t = 3*1 mod 3 = 0
+    check((triality['fundamental'] * 3) % N == triality['baryon'] == 0,
+          "N-ality additive: fund^3 == baryon == 0 mod 3")
+    # fund (x) antifund -> singlet (+) adjoint: 1 + 2 = 3 == 0
+    check((triality['fundamental'] + triality['antifund']) % N == 0,
+          "fund (x) antifund has N-ality 0 (singlet + adjoint sector)")
+    # (2) gluon (adjoint) dressing preserves N-ality
+    check(all((triality[r] + k * triality['adjoint8']) % N == triality[r]
+              for r in triality for k in range(N + 2)),
+          "gluon dressing preserves N-ality (adjoint t=0)")
+    # (3)+(4) screenable-to-singlet IFF N-ality 0
+    screenable = {r: (triality[r] % N == 0) for r in triality}
+    check(screenable == {r: (triality[r] == 0) for r in triality},
+          "screenable-to-singlet IFF triality 0")
+    # (5) the center grading: center-NEUTRAL (t=0) screened; center-CHARGED (t!=0) confined
+    confined = {r: (triality[r] % N != 0) for r in triality}
+    check(confined['fundamental'] and confined['antifund'] and confined['diquark6'],
+          "center-charged (fund, antifund, diquark) confined")
+    check((not confined['adjoint8']) and (not confined['decuplet10'])
+          and (not confined['singlet']) and (not confined['meson'])
+          and (not confined['baryon']),
+          "center-neutral (adjoint, decuplet, singlet, meson, baryon) screened")
+    # decisive refinement over T_confinement: non-singlet center-neutral reps screened.
+    check(triality['adjoint8'] == 0 and (not confined['adjoint8']),
+          "adjoint: non-singlet but center-neutral -> screened (refines T_confinement)")
+    check(triality['decuplet10'] == 0 and (not confined['decuplet10']),
+          "decuplet 10: non-singlet, non-adjoint, center-neutral -> screened "
+          "(grading is N-ality, not 'adjoint-or-singlet')")
+
+    return _result(
+        name='T_center_order_parameter_triality: Z_N order parameter grades '
+             'isolated-charge admissibility by N-ality (refines T_confinement)',
+        tier=1,
+        epistemic='P',
+        summary=(
+            'At IR saturation an isolated colour charge in R is gluon-screenable to '
+            'an admissible singlet composite (finite free energy, <P_R> != 0) IFF '
+            'N-ality t(R) = 0; t(R) != 0 stays confined. Gluons (adjoint) have t=0 so '
+            'dressing preserves N-ality; the root lattice = the t=0 sublattice '
+            '(index N) gives sufficiency. Refines T_confinement: the center-neutral '
+            'adjoint and decuplet are SCREENED, not confined. Dressed-composite '
+            'reading (no bare-gluon admissibility). Conditional on saturation; does '
+            'NOT close the confined-vs-conformal phase question or derive sigma.'
+        ),
+        key_result='Center (Z_N) order parameter: isolated-charge admissibility '
+                   'graded by N-ality; triality-0 screened, triality!=0 confined [P]',
+        dependencies=['T_confinement', 'L_epsilon*', 'L_nc'],
+    )
+
+
 def check_Theorem_R():
     """Theorem_R: Representation Requirements from Admissibility.
 
@@ -2670,7 +2773,7 @@ def check_T_proton():
     #   = Universe CANNOT return to pre-saturation regime
     #   = Partition predicates are PERMANENTLY enforced
 
-    saturation_irreversible = True  # from L_irr [P]
+    saturation_irreversible = True  # from L_irr [P+occupancy]
     universe_at_saturation = True    # from T_deSitter_entropy [P]
     partition_permanent = saturation_irreversible and universe_at_saturation
     check(partition_permanent, "Partition is permanently enforced")
@@ -3927,6 +4030,7 @@ _CHECKS = {
     'T_gauge': check_T_gauge,
     'T_particle': check_T_particle,
     'T_confinement': check_T_confinement,
+    'T_center_order_parameter_triality': check_T_center_order_parameter_triality,
     'Theorem_R': check_Theorem_R,
     'L_gauge_template_uniqueness': check_L_gauge_template_uniqueness,
     'B1_prime': check_B1_prime,

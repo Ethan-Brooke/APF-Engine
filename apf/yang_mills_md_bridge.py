@@ -377,21 +377,23 @@ def check_T_ym_meaningful_spectrum_is_singlet_gapped():
 def check_T_ym_conformal_phase_excluded_by_record_locking():
     """T_ym_conformal_phase_excluded_by_record_locking: for the matter-free non-abelian gauge substrate
     the conformal (gapless / IR-fixed-point) phase is EXCLUDED -- not agnostic -- because it is the
-    REVERSIBLE (Delta=0) phase, while L_nc [P] forces Delta>0 (non-closure) for non-abelian and L_irr [P]
+    REVERSIBLE (Delta=0) phase, while the gauge-invariant-record theorem (+ cost=count, L_cost) forces Delta>0 (the non-abelian colour record is the non-factorizable entangled singlet) and L_irr [P+occupancy]
     makes Delta>0 a PERMANENT record-locked (irreversible) commitment. Corrects the prior 'agnostic
     relative to {A1,MD,PLEC}' verdict, which omitted the record-locking layer [P_structural].
 
     THE CORRECTION. An earlier analysis (note 'Does Finite Capacity Force the Gap') concluded the
     confining-vs-conformal question was agnostic relative to {A1, MD, PLEC} -- the conformal phase
     looked capacity-consistent. That tested the gauge sector against {A1, MD, PLEC} ONLY and omitted the
-    banked irreversibility / record-locking layer (L_nc, L_irr, L_irr_uniform). With that layer the
+    banked irreversibility / record-locking layer (L_cost + record theorem, L_irr, L_irr_uniform). With that layer the
     conformal phase is NOT admissible for matter-free non-abelian gauge.
 
-    SYMMETRY (L_nc [P]). Non-abelian composition is non-closed / superadditive: a shared-interface
-    correlation commits Delta(S1,S2) > 0. The abelian case is additive, Delta=0 (which is why U(1)
-    electromagnetism is Coulomb / reversible / massless). The symmetry TYPE sets the sign.
+    SYMMETRY (L_cost + record theorem). cost=count (L_cost) fixes Delta as the cost of the irreducibly-joint
+    distinctions; the symmetry-type SIGN is forced by the gauge-invariant-record theorem
+    (gauge_invariant_record.py): the non-abelian colour record is the non-factorizable entangled singlet
+    => Delta(S1,S2) > 0; the abelian case is factorizable => Delta=0 (which is why U(1) electromagnetism is
+    Coulomb / reversible / massless). The symmetry TYPE sets the sign. (L_nc, sum-vs-budget, supplies no Delta.)
 
-    RECORD LOCKING (L_irr [P]). Delta>0 + L_loc => the cross-interface capacity is permanently committed
+    RECORD LOCKING (L_irr [P+occupancy]). Delta>0 + L_loc => the cross-interface capacity is permanently committed
     (locally unrecoverable) = an irreversible, record-locked distinction. L_irr's OWN countermodel is
     decisive: 'Additive world (Delta=0): correlations cost zero ... fully reversible.' So
         reversible  <=>  Delta=0  <=>  no record locking  <=>  gapless/Coulomb,
@@ -406,7 +408,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     MATTER AXIS (the N=4 / Banks-Zaks check). Non-abelian theories CAN be conformal (N=4 SYM; Banks-Zaks)
     -- but only WITH matter, which supplies Delta=0 reversible / screening channels that net out the Delta>0
     gauge commitment. MATTER-FREE pure Yang-Mills has NO Delta=0 channels (all channels are gluonic, hence
-    Delta>0 by L_nc, at every scale -- L_irr's permanence is independent of the magnitude / coupling).
+    Delta>0 by the record theorem + cost=count, at every scale -- L_irr's permanence is independent of the magnitude / coupling).
     Positive commitments do not cancel one another (capacity costs are non-negative); only Delta=0/screening
     channels could reduce the net, and there are none. So the matter-free net commitment is Delta>0,
     unscreened -> record-locked -> gapped. The conformal (net-reversible) phase requires Delta=0 channels
@@ -417,21 +419,23 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     is no longer the dynamical confining-vs-conformal fork; it narrows to CONTINUUM EXISTENCE (constructing
     the continuum measure / OS reconstruction), which record locking does not supply.
 
-    GRADE [P_structural]: composes L_nc [P] + L_irr [P] + L_irr_uniform [P] + cost=energy [P] +
+    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + L_irr [P+occupancy] + L_irr_uniform [P] + cost=energy [P] +
     T_confinement [P], with two structural identifications carrying the grade: (i) gapless/conformal <=>
     net-reversible (Delta=0, no record locking); (ii) matter-free non-abelian = all-Delta>0, no reversible
     channels to net out. NOT the full Clay theorem (continuum existence still open); does NOT fix the value
     (Delta >= log(27/4) stays the trilogy's).
     """
-    from apf.core import check_L_nc, check_L_irr, check_L_irr_uniform
+    from apf.core import check_L_irr, check_L_irr_uniform, check_L_cost
     from apf.cost_energy_identity import check_T_realignment_cost_is_transition_energy
     from apf.gauge import check_T_confinement
-    lnc=check_L_nc(); lir=check_L_irr(); liru=check_L_irr_uniform()
+    lir=check_L_irr(); liru=check_L_irr_uniform(); lcost=check_L_cost()
     ce=check_T_realignment_cost_is_transition_energy(); conf=check_T_confinement()
-    _check(lnc.get("epistemic")=="P" and lnc.get("passed"),
-           "symmetry: L_nc [P] -- non-abelian composition non-closed/superadditive, Delta>0 (abelian additive, Delta=0)")
-    _check(lir.get("epistemic")=="P" and lir.get("passed"),
-           "record locking: L_irr [P] -- Delta>0 => permanent (locally-unrecoverable) commitment; countermodel Delta=0 => fully reversible")
+    _check(lcost.get("epistemic")=="P" and lcost.get("passed"),
+           "symmetry: L_cost [P] -- cost=count fixes Delta=eps*(#irreducibly-joint distinctions); the non-abelian colour "
+           "record is the non-factorizable entangled singlet (gauge_invariant_record.py) => Delta>0, abelian factorizable "
+           "=> Delta=0. The split is forced by the record theorem + cost=count, NOT by L_nc (sum-vs-budget, no Delta).")
+    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
+           "record locking: L_irr [P+occupancy] -- Delta>0 => permanent (locally-unrecoverable) commitment; countermodel Delta=0 => fully reversible")
     _check(liru.get("epistemic")=="P" and liru.get("passed"),
            "geometry: L_irr_uniform [P] -- gauge distinctions must be recordable (yield distinct gravitational records)")
     _check(ce.get("epistemic")=="P" and ce.get("passed"),
@@ -439,8 +443,8 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     _check(conf.get("epistemic")=="P" and conf.get("passed"),
            "physical spectrum: T_confinement [P] -- unscreened commitment shows in the singlet spectrum")
     _check(True,
-           "CORRECTION: the LATER-14 'agnostic relative to {A1,MD,PLEC}' verdict OMITTED L_nc/L_irr. The "
-           "conformal phase is the Delta=0 reversible countermodel, which L_nc EXCLUDES for non-abelian.")
+           "CORRECTION: the LATER-14 'agnostic relative to {A1,MD,PLEC}' verdict OMITTED the record-locking layer. The "
+           "conformal phase is the Delta=0 reversible countermodel, which the record theorem + L_irr EXCLUDE for non-abelian.")
     _check(True,
            "MATTER AXIS: non-abelian theories are conformal only WITH matter (Delta=0 screening channels: "
            "N=4 SYM, Banks-Zaks). Matter-free pure YM has only Delta>0 gluonic channels; positive commitments "
@@ -456,7 +460,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     return _full_result(
         name=("T_ym_conformal_phase_excluded_by_record_locking: for matter-free non-abelian gauge the conformal "
               "(gapless/IR-fixed-point) phase is EXCLUDED, not agnostic -- it is the reversible (Delta=0) phase, "
-              "while L_nc [P] forces Delta>0 (non-closure) and L_irr [P] makes Delta>0 a permanent record-locked "
+              "while the gauge-invariant-record theorem (+ cost=count) forces Delta>0 and L_irr [P+occupancy] makes Delta>0 a permanent record-locked "
               "(irreversible) commitment with no matter-free Delta=0 channels to net it out. Composed with "
               "cost=energy [P] + T_confinement [P] the unscreened commitment is a singlet-spectrum gap >= Delta_min "
               "> 0. Corrects the prior 'agnostic relative to {A1,MD,PLEC}' verdict (which omitted record locking). "
@@ -464,8 +468,9 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
         tier=4, epistemic="P_structural_reading",
         summary=(
             "The symmetry/geometry/record-locking closure of the confining-vs-conformal question. Non-abelian "
-            "composition is superadditive (L_nc [P], Delta>0); the abelian case is additive (Delta=0), which is why "
-            "U(1) is Coulomb/reversible/massless. L_irr [P] turns Delta>0 into a permanent, locally-unrecoverable "
+            "composition is superadditive (L_cost + record theorem, Delta>0: the non-abelian colour record is the "
+            "non-factorizable entangled singlet); the abelian case is additive (Delta=0), which is why "
+            "U(1) is Coulomb/reversible/massless. L_irr [P+occupancy] turns Delta>0 into a permanent, locally-unrecoverable "
             "(record-locked, irreversible) commitment, and its own countermodel fixes the dictionary reversible<=>"
             "Delta=0<=>gapless, irreversible<=>Delta>0<=>gapped; L_irr_uniform [P] requires the gauge sector to be "
             "recordable. By cost=energy [P] a permanent Delta>0 commitment is a permanent energy >= Delta > 0, which "
@@ -479,17 +484,17 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
             "[P_structural]: two structural identifications carry it (gapless<=>net-reversible; matter-free=all-"
             "Delta>0). NOT the full Clay theorem; value stays log(27/4)."
         ),
-        key_result=("matter-free non-abelian: conformal phase EXCLUDED by record locking (L_nc Delta>0 + L_irr "
+        key_result=("matter-free non-abelian: conformal phase EXCLUDED by record locking (record-theorem Delta>0 + L_irr "
                     "permanence; no matter-free Delta=0 channels) -> confines/gapped. Corrects LATER-14 agnosticism; "
                     "residual narrows to continuum existence. [P_structural]. Not the full Clay theorem."),
-        dependencies=["L_nc","L_irr","L_irr_uniform","T_realignment_cost_is_transition_energy","T_confinement",
+        dependencies=["L_cost","L_irr","L_irr_uniform","T_realignment_cost_is_transition_energy","T_confinement",
                       "T_ym_meaningful_spectrum_is_singlet_gapped"],
         cross_refs=["L_loc","Theorem_R","L_col","T_ym_gap_positivity_from_MD","T_OS_structure_SU2"],
         artifacts={
             "dictionary": "reversible<=>Delta=0<=>gapless/Coulomb ; irreversible<=>Delta>0<=>record-locked/gapped",
-            "symmetry": "L_nc [P]: non-abelian Delta>0 ; abelian Delta=0",
+            "symmetry": "L_cost + record theorem: non-abelian Delta>0 ; abelian Delta=0",
             "matter_axis": "conformal non-abelian needs matter (Delta=0 screening: N=4, Banks-Zaks); matter-free has none",
-            "correction": "LATER-14 'agnostic re {A1,MD,PLEC}' omitted L_nc/L_irr; conformal phase EXCLUDED, not agnostic",
+            "correction": "LATER-14 'agnostic re {A1,MD,PLEC}' omitted the record-locking layer; conformal phase EXCLUDED, not agnostic",
             "residual": "narrows from confining-vs-conformal to CONTINUUM EXISTENCE (measure construction)",
             "non_claims": "not full Clay (existence open), value stays log(27/4)",
         },

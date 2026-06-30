@@ -35,6 +35,8 @@ in the LaTeX point here.  All arithmetic uses fractions.Fraction (exact).
 
 import math as _math
 from fractions import Fraction
+from dataclasses import dataclass
+from typing import Tuple, Dict
 
 from apf.apf_utils import (
     check, CheckFailure,
@@ -409,7 +411,7 @@ def check_L_epsilon_star():
 def check_L_irr():
     """L_irr: Irreversibility from Admissibility Physics.
 
-    CLAIM: A1 + L_nc + L_loc ==> A4 (irreversibility).
+    CLAIM: A1 + L_loc + L_cost (+ occupancy input) ==> A4 (irreversibility).
 
     MECHANISM (Option D — locality-based irreversibility):
         Irreversibility arises because cross-interface correlations
@@ -418,9 +420,19 @@ def check_L_irr():
 
     PROOF (4 steps):
 
-    Step 1 -- Superadditivity is generic [L_nc].
-        L_nc gives Delta(S1,S2) > 0: joint admissibility at a shared
-        interface exceeds the sum of individual costs.
+    Step 1 -- Superadditivity is the joint-distinction cost [L_cost + occupancy].
+        By L_cost (cost = count * epsilon), the joint-vs-sum residual is a
+        counting identity: Delta(S1,S2) = epsilon * (# irreducibly-joint
+        distinctions the joint carries - # reducible shared anchors). L_cost
+        fixes the FORM; it does not fix the sign. Delta > 0 IFF the shared
+        interface carries an irreducibly-joint distinction (a correlation not
+        reducible to either marginal) -- the OCCUPANCY input. A1 admits both
+        Delta = 0 (the additive/reversible countermodel below) and Delta > 0,
+        so occupancy is a per-interface input, not an A1 theorem. (L_nc, the
+        sum-vs-budget non-closure lemma E1+E2 > C, plays no role here: it never
+        compares joint vs sum and supplies no Delta.) This is the SAME
+        occupancy bit that branch (IJC) names on the quantum axis (L_Pi
+        [P+IJC]); the arrow of time and quantum non-commutativity share it.
 
     Step 2 -- Admissibility is factorized [L_loc].
         Admissibility distributes over multiple interfaces with
@@ -440,7 +452,7 @@ def check_L_irr():
         From S's perspective: capacity committed to S-E correlations
         is lost. The pre-interaction state is unrecoverable by any
         S-local operation. This is structural irreversibility:
-        not probabilistic, not by fiat, but forced by A1+L_nc+L_loc.
+        not probabilistic, not by fiat, but forced by A1 + L_loc + L_cost given occupancy (Delta>0).
 
     KEY DISTINCTION FROM OLD L_irr (v4.x):
         Old: "record-lock" -- removing distinction r from a state
@@ -463,7 +475,7 @@ def check_L_irr():
         Cross-interface correlation c commits capacity at BOTH
         interfaces; no operation at Gamma_S alone can free it.
 
-    COUNTERMODEL (necessity of L_nc):
+    COUNTERMODEL (the Delta=0 / occupancy-off world; shows Delta>0 is load-bearing):
         Additive world (Delta=0): correlations cost zero.
         No capacity committed to cross-interface terms.
         All capacity is locally recoverable. Fully reversible.
@@ -472,7 +484,7 @@ def check_L_irr():
         Single-interface world: observer has global access.
         All correlations are recoverable. Fully reversible.
 
-    STATUS: [P]. Dependencies: A1, L_nc, L_loc.
+    STATUS: [P+occupancy]. Dependencies: A1, L_loc, L_cost (occupancy: Delta>0 is a per-interface input; A1 admits the Delta=0 reversible world).
     """
     from itertools import combinations as _combinations
 
@@ -643,9 +655,10 @@ def check_L_irr():
     return _result(
         name='L_irr: Irreversibility from Admissibility Physics',
         tier=0,
-        epistemic='P',
+        epistemic='P+occupancy',
         summary=(
-            'A1 + L_nc + L_loc ==> A4. Mechanism: superadditivity (Delta>0) '
+            'A1 + L_loc + L_cost ==> A4, GIVEN occupancy (Delta>0). Mechanism: '
+            'the joint-distinction cost (Delta>0, L_cost form + occupancy input) '
             'commits capacity to cross-interface correlations. Locality (L_loc) '
             'prevents any single observer from recovering this capacity. '
             'Result: irreversibility under local observation. '
@@ -658,8 +671,8 @@ def check_L_irr():
             '(2) single-interface => fully reversible. '
             'Both L_nc and L_loc are necessary.'
         ),
-        key_result='A1 + L_nc + L_loc ==> A4 (irreversibility derived, not assumed)',
-        dependencies=['A1', 'L_nc', 'L_loc'],
+        key_result='A1 + L_loc + L_cost + occupancy(Delta>0) ==> A4 (irreversibility derived GIVEN the interface carries an irreducible correlation; A1 admits the Delta=0 reversible world)',
+        dependencies=['A1', 'L_loc', 'L_cost'],
         artifacts={
             'witness': {
                 'distinctions': '{s, e, c} (system, environment, correlation)',
@@ -675,9 +688,9 @@ def check_L_irr():
                 'additive': 'Delta=0 => no cross-interface cost => fully reversible',
                 'single_interface': 'global access => all capacity recoverable',
             },
-            'derivation_order': 'L_loc -> L_nc -> L_irr -> A4',
+            'derivation_order': 'L_loc + L_cost (+ occupancy input) -> L_irr -> A4',
             'proof_steps': [
-                '(1) L_nc -> Delta > 0 (superadditivity at shared interfaces)',
+                '(1) L_cost (cost=count) -> Delta = eps*(# irreducibly-joint distinctions); Delta>0 IFF the interface carries an irreducible correlation [occupancy input; A1 admits Delta=0, see countermodel]',
                 '(2) L_loc -> admissibility factorized (local observers only)',
                 '(3) Delta>0 + L_loc -> cross-interface capacity locally unrecoverable',
                 '(4) Locally unrecoverable capacity = irreversibility',
@@ -3812,8 +3825,9 @@ def check_L_Pi():
             'witness in check_T_no_IJC_no_noncommutativity (Phase 19a).'
         ),
         key_result='F_Pi = E_{d1,d2} - E_d1 - E_d2 is nonzero, off-diagonal, self-adjoint [P+IJC]',
-        dependencies=['L_Delta', 'T_adj', 'OR2', 'O4',
-                      'T_IJC_dichotomy', 'L_MD_extension', 'L_threat_substrate_realization'],
+        # Phase 21 graph rewire (2026-06-29): F_Pi != 0 is a downstream
+        # consequence of inseparable-IJC; its inline proof stays here.
+        dependencies=['T_inseparable_IJC', 'OR2', 'O4', 'T_adj', 'L_Delta'],
         artifacts={
             'C': str(C), 'eps1': str(eps1), 'eps2': str(eps2), 'Delta': str(Delta),
             'omega_F_Pi': str(omega_F_Pi),
@@ -5042,7 +5056,12 @@ def check_T_IJC_dichotomy():
             'separable interfaces; both are admissible under PLEC.'
         ),
         key_result='Dichotomy at substrate-perturbation level: (Sep) or (IJC), exhaustive and exclusive [P_structural]',
-        dependencies=['T_no_IJC_no_noncommutativity', 'L_Pi'],
+        # Phase 21 graph rewire (2026-06-29): coarse necessary condition;
+        # necessary-not-sufficient -- see T_inseparable_IJC for the sufficient
+        # (substrate-factorizability) criterion. Rooted on the branch classifier
+        # plus its in-CORE (Sep) parallel witness (T_no_IJC_no_noncommutativity),
+        # which physically grounds exhaustiveness and is not part of the SCC.
+        dependencies=['T_branch_taxonomy_inclusions', 'T_no_IJC_no_noncommutativity'],
         artifacts={
             'T_d1_sep': str(set(T_d1_sep)),
             'T_d2_sep': str(set(T_d2_sep)),
@@ -5166,7 +5185,8 @@ def check_L_MD_extension():
             'kappa(delta_T_excess) = Delta = 2 >= mu* = 1.'
         ),
         key_result='kappa(delta_T) >= mu* > 0 for any threat-class defender [P_structural]; Route A',
-        dependencies=['MD', 'L_epsilon_star', 'T_IJC_dichotomy'],
+        # Phase 21 graph rewire (2026-06-29): cite the bridge, not the island.
+        dependencies=['T_inseparable_IJC', 'MD', 'L_epsilon_star'],
         artifacts={
             'route': 'A (FD5 covers threat-defense directly)',
             'mu_star': str(mu_star),
@@ -5329,7 +5349,11 @@ def check_L_threat_substrate_realization():
             'a derived lemma.'
         ),
         key_result='Branch-(IJC) ⇒ W_{12} engages Pi_{12} disjoint from M_{d1} (+) M_{d2} [P_structural]',
-        dependencies=['T_IJC_dichotomy', 'L_MD_extension', 'L_Pi'],
+        # Phase 21 graph rewire (2026-06-29): the proof reconstructs the L_Pi
+        # F_Pi witness and invokes L_MD_extension's mu* floor, so it cites those
+        # lemmas (not their parents) through the bridge. Cycle-safe: neither
+        # L_Pi nor L_MD_extension reaches L_threat.
+        dependencies=['T_inseparable_IJC', 'L_Pi', 'L_MD_extension'],
         artifacts={
             'C': str(C),
             'eps1': str(eps1),
@@ -6142,6 +6166,33 @@ def check_T_inseparable_IJC():
           "IJC witness: admissibility algebra noncommutative — quantum-capable regime")
 
     # ============================================================
+    # PHASE 21 TASK B (staged): the ported Boolean-defender engine
+    # (apf.ijc_boolean_defender_bridge) CORROBORATES this bridge's
+    # structural-layer verdict -- it computes Boole-polytope (FeasBool)
+    # feasibility and the polytope-exclusion fact (no faithful all-
+    # commuting realization).  The inline 3-4-5 witness above remains the
+    # proof of record; [E_di, P_*] != 0 is established here, not by the
+    # engine.  These are consistency cross-checks, not a relocation of the
+    # proof into the engine.  (Engine staged, not bank-registered;
+    # consumed as functions, count-neutral.)
+    # ============================================================
+    from apf.ijc_boolean_defender_bridge import (
+        reproduce_inline_345_commutator,
+        bridge_noncommutativity,
+    )
+    _eng = reproduce_inline_345_commutator()
+    check(_eng['commutator_entry_13'] == comm_E_d1_pi[0][2]
+          and _eng['commutator_entry_31'] == comm_E_d1_pi[2][0],
+          'Task B: engine re-derives the 3-4-5 commutator matrix; consistent '
+          'with the inline [E_d1, pi_W*] = +-12/25 witness (cross-check)')
+    _br = bridge_noncommutativity((Fraction(1), Fraction(1), Fraction(1), Fraction(-1)))
+    check(_br['commuting_implies_local'] and _br['no_all_commuting_realization'],
+          'Task B: PR-box lies outside the Boole polytope (IJCStr); every '
+          'Boolean atom obeys the CHSH facets, so NO faithful all-commuting '
+          'realization exists ([a,b]!=0 then follows by the Paper 5 supp '
+          'bridge theorem)')
+
+    # ============================================================
     # Cross-witness consistency: dichotomy is exhaustive + exclusive
     # ============================================================
     # (Sep): commuting-extension defender exists; algebra commutative.
@@ -6201,8 +6252,16 @@ def check_T_inseparable_IJC():
             '{E_d1, E_d2, E_dPi} vanish (auditor countermodel correctly '
             'housed as classical regime). [P+IJC, Phase 21]'
         ),
-        dependencies=['T_IJC_dichotomy', 'T_no_IJC_no_noncommutativity',
-                      'L_Pi', 'T_alg_FPi', 'L_threat_substrate_realization'],
+        # Phase 21 graph rewire (2026-06-29): the bridge proof is self-contained
+        # inline (the rotated-codespace commutator above). These edges cite its
+        # PREMISE CLASSIFIERS -- which branch (T_branch_taxonomy_inclusions) and
+        # occupancy (T_quantum_admissibility_condition, a conditional-input edge:
+        # the bridge is proved CONDITIONAL on this interface being branch (IJC),
+        # which the QAC witnesses empirically -- it does NOT make the bridge
+        # derive occupancy). See @5917 wording.
+        dependencies=['T_branch_taxonomy_inclusions',
+                      'T_quantum_admissibility_condition',
+                      'T_no_IJC_no_noncommutativity'],
         artifacts={
             'sep_factorization': 'V = M_d1 ⊕ M_d2 ⊕ Π = span(e_1) ⊕ span(e_2) ⊕ span(e_3)',
             'sep_defender': 'P_Sep = E_d1 + E_d2 + E_dPi = I (block-diagonal)',
@@ -6213,6 +6272,13 @@ def check_T_inseparable_IJC():
             'theta_choice': '3-4-5 (cos²θ = 9/25, sin²θ = 16/25, cos·sin = 12/25)',
             'bridge_theorem_status': 'closed: inseparable IJC ⇒ noncommutativity',
             'empirical_inheritance': 'Bell (locality) + Kochen-Specker (non-contextuality)',
+            'phase_21_task_B_engine': (
+                'apf.ijc_boolean_defender_bridge: FeasBool Boole-polytope '
+                'feasibility corroborates the branch verdict + the no-all-'
+                'commuting-realization fact; [a,b]!=0 is the supplement '
+                'theorem; inline 3-4-5 witness re-derived as a cross-check '
+                '(staged; engine not yet bank-registered)'
+            ),
             'phase_21_refdoc': (
                 'Reference - Phase 21 Workplan - Inseparable IJC and '
                 'Empirical Inheritance from Bell + KS (2026-04-26).md'
@@ -6223,8 +6289,320 @@ def check_T_inseparable_IJC():
 
 
 # =====================================================================
+# IJC-sector premise roots (relocated into the spine 2026-06-29):
+# the Boolean branch taxonomy + the Quantum Admissibility Condition.
+# These are the Paper 5 supp v6.8 premise classifiers that
+# T_inseparable_IJC cites; co-located here with the rest of the
+# IJC sector so they are visible in the CORE (spine) crystal view.
+# =====================================================================
+
+@dataclass(frozen=True)
+class CommutingDefender:
+    """A commuting-extension defender (Definition 4.1, Paper 5 v5.1 supp)."""
+    name: str
+    realignment_cost: float
+    commutes: bool   # whether the defender commutes with all queries in Q
+
+@dataclass(frozen=True)
+class QueryInterface:
+    """A finite robust query interface (Definition 3.1)."""
+    name: str
+    queries: Tuple[str, ...]
+    candidate_defenders: Tuple[CommutingDefender, ...]
+    capacity: float
+
+    def has_structural_commuting_defender(self) -> bool:
+        """SepStr: at least one candidate commutes (regardless of cost)."""
+        return any(d.commutes for d in self.candidate_defenders)
+
+    def has_apf_admissible_commuting_defender(self) -> bool:
+        """SepAdm: some candidate commutes AND has cost <= capacity."""
+        return any(
+            d.commutes and d.realignment_cost <= self.capacity
+            for d in self.candidate_defenders
+        )
+
+    def is_structural_IJC(self) -> bool:
+        return not self.has_structural_commuting_defender()
+
+    def is_apf_admissible_IJC(self) -> bool:
+        return not self.has_apf_admissible_commuting_defender()
+
+def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
+    """Construct the four canonical witness interfaces for the taxonomy."""
+    # Witness 1: classical bit pair -- both Sep branches hold
+    classical_bit_pair = QueryInterface(
+        name="classical_bit_pair",
+        queries=("X1", "X2"),
+        candidate_defenders=(
+            CommutingDefender("D_diag", realignment_cost=2.0, commutes=True),
+            CommutingDefender("D_offdiag", realignment_cost=4.0, commutes=False),
+        ),
+        capacity=10.0,
+    )
+
+    # Witness 2: capacity-limited Sep -- SepStr holds, SepAdm fails
+    capacity_limited_sep = QueryInterface(
+        name="capacity_limited_sep",
+        queries=("Q1", "Q2"),
+        candidate_defenders=(
+            CommutingDefender("D_expensive", realignment_cost=100.0, commutes=True),
+            CommutingDefender("D_cheap_noncomm", realignment_cost=1.0, commutes=False),
+        ),
+        capacity=10.0,
+    )
+
+    # Witness 3: structural IJC interface (no commuting defender at all)
+    structural_ijc = QueryInterface(
+        name="structural_ijc",
+        queries=("A", "B"),
+        candidate_defenders=(
+            CommutingDefender("D_a", realignment_cost=3.0, commutes=False),
+            CommutingDefender("D_b", realignment_cost=5.0, commutes=False),
+        ),
+        capacity=20.0,
+    )
+
+    # Witness 4: degenerate (no defenders at all -- vacuous IJCStr)
+    no_defenders = QueryInterface(
+        name="no_candidates",
+        queries=("U",),
+        candidate_defenders=(),
+        capacity=10.0,
+    )
+
+    return {
+        "classical_bit_pair": classical_bit_pair,
+        "capacity_limited_sep": capacity_limited_sep,
+        "structural_ijc": structural_ijc,
+        "no_defenders": no_defenders,
+    }
+
+@dataclass(frozen=True)
+class CoherentInterface:
+    """A finite record-complete coherent interface (Definition 1511)."""
+    name: str
+    record_basis: Tuple[str, ...]
+    coherent_states: Tuple[Tuple[complex, ...], ...]   # superposition coefficients
+    is_ijc: bool
+
+    def boolean_record_locking_distortion(self) -> float:
+        """Distortion incurred when forcing each coherent state into the
+        nearest record class (i.e., projecting onto the record basis).
+
+        For an equally-weighted superposition over n record classes, the
+        Boolean record-locking projector retains 1/n of the original
+        coherence; preservation distortion = 1 - 1/n.
+        """
+        if not self.coherent_states:
+            return 0.0
+        # Witness: equal superposition |+> = (|0> + |1>)/sqrt(2) and
+        # |-> = (|0> - |1>)/sqrt(2) on a 2-level basis. Boolean record-
+        # locking annihilates the off-diagonal terms; preservation
+        # distortion of the original coherent pair = 1/2.
+        n = len(self.record_basis)
+        if n == 0:
+            return 0.0
+        return 1.0 - (1.0 / n)
+
+def _qac_witness_coherent_2level() -> CoherentInterface:
+    """Two-level coherent interface witness: |+>, |-> over basis {|0>, |1>}."""
+    return CoherentInterface(
+        name="two_level_coherent",
+        record_basis=("|0>", "|1>"),
+        coherent_states=(
+            (1.0/2**0.5, 1.0/2**0.5),     # |+>
+            (1.0/2**0.5, -1.0/2**0.5),    # |->
+        ),
+        is_ijc=True,   # branch (IJC) at this interface
+    )
+
+def _qac_witness_classical_2level() -> CoherentInterface:
+    """Classical baseline: same record basis, but record-eigenstate inputs."""
+    return CoherentInterface(
+        name="two_level_classical",
+        record_basis=("|0>", "|1>"),
+        coherent_states=(
+            (1.0, 0.0),
+            (0.0, 1.0),
+        ),
+        is_ijc=False,
+    )
+
+def check_T_branch_taxonomy_inclusions():
+    """T_branch_taxonomy_inclusions: SepAdm => SepStr; IJCStr => IJCAdm.
+
+    Tier 4 [P_regime]. Paper 5 Supplement v5.1 Lemmas 4.5 + 4.6 (lines 1053,
+    1065). The branch taxonomy split (v5.0+) separates structural
+    factorizability (SepStr/IJCStr) from APF-admissibility under a finite
+    capacity budget (SepAdm/IJCAdm). The two implications above are
+    forced; the two converses are NOT forced (capacity-limited Sep
+    witnesses SepStr without SepAdm).
+
+    Verifies on the four canonical witnesses:
+      (i)  SepAdm => SepStr (forward Lemma 4.5).
+      (ii) IJCStr => IJCAdm (forward Lemma 4.6).
+      (iii) SepStr =/=> SepAdm (capacity_limited_sep counterexample).
+      (iv) The two regimes are properly disjoint at each level.
+    """
+    witnesses = _branch_taxonomy_witnesses()
+
+    # (i) SepAdm => SepStr on every witness
+    for name, w in witnesses.items():
+        if w.has_apf_admissible_commuting_defender():
+            assert w.has_structural_commuting_defender(), (
+                f"{name}: SepAdm holds but SepStr does not"
+            )
+
+    # (ii) IJCStr => IJCAdm on every witness
+    for name, w in witnesses.items():
+        if w.is_structural_IJC():
+            assert w.is_apf_admissible_IJC(), (
+                f"{name}: IJCStr holds but IJCAdm does not"
+            )
+
+    # (iii) Strict separation: SepStr =/=> SepAdm
+    cls = witnesses["capacity_limited_sep"]
+    assert cls.has_structural_commuting_defender(), \
+        "capacity_limited_sep should be SepStr"
+    assert not cls.has_apf_admissible_commuting_defender(), \
+        "capacity_limited_sep should NOT be SepAdm (capacity blocks)"
+
+    # (iv) Disjointness within each level
+    for name, w in witnesses.items():
+        # Structural level: SepStr xor IJCStr
+        sep_str = w.has_structural_commuting_defender()
+        ijc_str = w.is_structural_IJC()
+        assert sep_str != ijc_str, f"{name}: SepStr/IJCStr not disjoint"
+        # Admissibility level: SepAdm xor IJCAdm
+        sep_adm = w.has_apf_admissible_commuting_defender()
+        ijc_adm = w.is_apf_admissible_IJC()
+        assert sep_adm != ijc_adm, f"{name}: SepAdm/IJCAdm not disjoint"
+
+    # PHASE 21 TASK B corroboration (staged): the SepStr/IJCStr verdict is
+    # no longer only a hand-set ``commutes`` flag -- it is computable from
+    # Boole-polytope feasibility.  Corroborate on the canonical (2,2,2)
+    # witnesses: a local behaviour is SepStr; the PR-box is IJCStr.
+    # (Engine staged, not bank-registered; corroboration, not a dependency.
+    # The full refactor making every abstract witness's commutes flag
+    # engine-computed is the remaining Task B step.)
+    from apf.ijc_boolean_defender_bridge import feasbool_structural as _feasbool
+    from fractions import Fraction as _F
+    assert _feasbool((_F(1), _F(1), _F(1), _F(1)))['branch'] == 'SepStr', \
+        'computed FeasBool: local behaviour should be SepStr'
+    assert _feasbool((_F(1), _F(1), _F(1), _F(-1)))['branch'] == 'IJCStr', \
+        'computed FeasBool: PR-box should be IJCStr'
+
+    return {
+        "name": "T_branch_taxonomy_inclusions",
+        "passed": True,
+        # Phase 21 graph rewire (2026-06-29): contract-normalized so the
+        # metadata/crystal layer reads this self-contained admissibility-branch
+        # classifier as a tagged root. epistemic matches the docstring grade.
+        "epistemic": "P_regime",
+        "dependencies": ["A1"],
+        "key_result": (
+            f"SepAdm=>SepStr and IJCStr=>IJCAdm verified on "
+            f"{len(witnesses)} witness interfaces; capacity_limited_sep "
+            "demonstrates SepStr =/=> SepAdm"
+        ),
+        "summary": (
+            "The branch-taxonomy inclusions of Paper 5 v5.1 (Lemmas 4.5, "
+            "4.6) hold on the canonical witnesses. SepAdm always implies "
+            "SepStr (an admissible defender is a fortiori a defender); "
+            "structural IJC always implies admissible IJC (no commuting "
+            "defender at all means no admissible commuting defender). "
+            "The reverse implications fail in general: a structural "
+            "commuting defender can exceed capacity (capacity-limited "
+            "SepStr witness), placing the interface in IJCAdm without "
+            "IJCStr. This is the v5.1 anti-smuggling check: capacity-"
+            "only failures are NOT mislabeled as standard quantumness."
+        ),
+    }
+
+def check_T_quantum_admissibility_condition():
+    """T_quantum_admissibility_condition: branch (IJC) at a record-complete
+    coherent interface produces a QAC witness.
+
+    Tier 4 [P_regime]. Paper 5 Supplement v5.1 Theorem 1518 ("IJC produces
+    a QAC witness in record-complete coherent interfaces").
+
+    Verifies:
+      (i) On the coherent IJC witness, Boolean record-locking incurs
+          strictly positive preservation distortion -- the QAC is satisfied
+          (records and coherent continuations are operationally
+          incompatible, with positive distortion).
+      (ii) On the classical record-eigenstate witness, Boolean record-
+          locking incurs zero distortion -- the classical case correctly
+          fails QAC (no quantum structure forced).
+    """
+    coh = _qac_witness_coherent_2level()
+    cls = _qac_witness_classical_2level()
+
+    # (i) coherent IJC witness: distortion > 0
+    d_coh = coh.boolean_record_locking_distortion()
+    assert d_coh > 0.0, (
+        f"QAC witness for coherent IJC must have distortion > 0; got {d_coh}"
+    )
+    assert coh.is_ijc, "coherent witness must be in branch (IJC)"
+
+    # (ii) classical witness: distortion is 0 only when inputs are record
+    # eigenstates -- here the *generic* basis-projection distortion of the
+    # canonical projector is 1 - 1/n = 1/2 in the abstract, but on these
+    # specific record-eigenstate inputs the per-state distortion is 0.
+    # We check the classical baseline by inspecting the inputs themselves.
+    d_classical_per_input = 0.0
+    for state in cls.coherent_states:
+        # Distortion on record-eigenstate input is 0 (record-locking is
+        # the identity on basis states).
+        amp_max = max(abs(c) for c in state)
+        per_input = abs(1.0 - amp_max ** 2)
+        d_classical_per_input = max(d_classical_per_input, per_input)
+    assert d_classical_per_input < 1e-12, (
+        f"classical record-eigenstate inputs must have zero distortion; "
+        f"got {d_classical_per_input}"
+    )
+    assert not cls.is_ijc, "classical witness must NOT be in branch (IJC)"
+
+    return {
+        "name": "T_quantum_admissibility_condition",
+        "passed": True,
+        # Phase 21 graph rewire (2026-06-29): contract-normalized to a tagged
+        # root. Occupancy (that a physical interface IS in branch IJC) is the
+        # QAC -- the framework's irreducible empirical contact, explicitly NOT
+        # an A1 consequence (A1 admits both branches); hence an empirical root
+        # with no upstream dependency, never rooted on A1.
+        "epistemic": "P_regime",
+        "dependencies": [],
+        "key_result": (
+            f"Coherent IJC: preservation distortion = {d_coh} > 0 "
+            f"(QAC satisfied); classical inputs: "
+            f"per-state distortion = {d_classical_per_input} (QAC trivially "
+            "absent)"
+        ),
+        "summary": (
+            "Paper 5 v5.1 Theorem 1518 (IJC produces a QAC witness in "
+            "record-complete coherent interfaces): branch (IJC) plus "
+            "record-completeness plus coherent-continuation richness "
+            "produces a Quantum Admissibility Condition witness -- coherent "
+            "continuations whose Boolean record-locking incurs strictly "
+            "positive preservation distortion. The witness here is the "
+            "two-level coherent interface |+>, |-> on basis {|0>, |1>}: "
+            "Boolean record-locking annihilates the off-diagonal coherence "
+            "and produces preservation distortion 1/2 > 0. The classical "
+            "baseline on the same basis (inputs |0>, |1>) does not "
+            "satisfy QAC because the record-eigenstate inputs are already "
+            "record-locked."
+        ),
+    }
+
+
+# =====================================================================
 
 _CHECKS = {
+    # IJC-sector premise roots (relocated from quantum_admissibility 2026-06-29)
+    'T_branch_taxonomy_inclusions':      check_T_branch_taxonomy_inclusions,
+    'T_quantum_admissibility_condition': check_T_quantum_admissibility_condition,
     # Axiom & sub-clauses
     'A1': check_A1,
     'M': check_M,

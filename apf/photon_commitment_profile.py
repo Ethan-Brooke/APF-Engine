@@ -23,7 +23,7 @@ itself L_irr's abelian countermodel), makes no permanent entry -> fails C_4.
 
 SCOPE / HONEST NON-CLAIMS.
   * Grade [P_structural]: the C_4 == L_irr identification carries the structural
-    grade (composes L_irr [P] + photon-masslessness [P_structural] + the
+    grade (composes L_irr [P+occupancy] + photon-masslessness [P_structural] + the
     horizon four-commitment basis [P_structural]). NOT [P].
   * This banks the SLOT-4 keystone only. The full profile (1,1,1,0) also needs
     the carrier triad (slots 1-3 = 1), which is the parallel-instance
@@ -69,8 +69,8 @@ def check_T_ledger_reversibility_is_L_irr_lock():
     indep = check_L_four_commitment_independence()
     cost = check_T_four_commitment_record_cost()
 
-    _check(lir.get("epistemic") == "P" and lir.get("passed"),
-           "L_irr [P]: a commitment made permanent is a locally-irreversible locked record")
+    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
+           "L_irr [P+occupancy]: a commitment made permanent is a locally-irreversible locked record")
     _check(pm.get("passed") and "structural" in str(pm.get("epistemic", "")).lower(),
            "T_photon_massless_from_reversibility [P_structural]: the photon is reversible (Delta=0) and locks no record")
     _check(cost.get("consistent") and cost.get("data", {}).get("N_commit") == 4,
@@ -120,7 +120,7 @@ def check_T_ledger_reversibility_is_L_irr_lock():
             "while a full record satisfies all four. Composed with the carrier triad (slots 1-3 = 1; the pending "
             "carrier->triad pin) this yields the photon capacity profile (1,1,1,0), C_gamma = 3 eps, nu = 3/4. "
             "GRADE [P_structural]: the C_4 == L_irr identification is a structural identification (not an A1 "
-            "reduction); composes L_irr [P] + photon-masslessness [P_structural] + the horizon four-commitment "
+            "reduction); composes L_irr [P+occupancy] + photon-masslessness [P_structural] + the horizon four-commitment "
             "basis [P_structural]. Scope: banks the slot-4 keystone; the full (1,1,1,0) composition awaits the "
             "carrier-triad pin in the live bank. The 3/4 is the photon's RECORD STATE / force character -- the missing "
             "C_4 is the rest mass / longitudinal polarization, hence the photon's masslessness -- NOT a coupling: the "

@@ -246,7 +246,7 @@ def check_T_spin_statistics():
 
     # B3: Microcausality from L_loc + L_irr
     # Fields must satisfy [phi(x), phi(y)]_pm = 0 for spacelike separation
-    microcausality_required = True  # from L_loc [P] + L_irr [P]
+    microcausality_required = True  # from L_loc [P] + L_irr [P+occupancy]
 
     # B4: The spin-statistics connection
     # kappa(J) = e^{2*pi*i*J} = rotation_2pi[J]
@@ -465,7 +465,7 @@ def check_T_CPT():
       Since CPT is exact: T must be violated by exactly the same phase.
       T violation = CP violation = pi/4.
 
-      This is CONSISTENT with L_irr [P]: irreversibility (the arrow
+      This is CONSISTENT with L_irr [P+occupancy]: irreversibility (the arrow
       of time) IS T violation. The framework derives both:
         - T violation amount: pi/4 (from holonomy geometry)
         - T violation existence: L_irr (from admissibility physics)
@@ -1005,7 +1005,7 @@ def check_T_second_law():
     # ================================================================
 
     # C1: L_irr -> irreversible commitment direction exists
-    irreversibility = True  # from L_irr [P]
+    irreversibility = True  # from L_irr [P+occupancy]
 
     # C2: S = committed capacity -> S increases in commitment direction
     S_increases_with_k = all(
@@ -1083,7 +1083,7 @@ def check_T_second_law():
             },
             'level_C': {
                 'statement': 'Arrow of time = direction of capacity commitment',
-                'source': 'L_irr [P]',
+                'source': 'L_irr [P+occupancy]',
                 'T_violation_phase': 'pi/4',
                 'T_asymmetry': 'maximal (sin(2phi) = 1)',
                 'not_boundary_condition': True,
@@ -3059,7 +3059,7 @@ def check_T_zeroth_law():
         epistemic='P',
         summary=(
             'Temperature T = epsilon/ln(d) equalizes at equilibrium. '
-            'Flow direction: capacity flows to higher beta (L_irr [P]). '
+            'Flow direction: capacity flows to higher beta (L_irr [P+occupancy]). '
             'Equalization: flow stops at beta_1 = beta_2. '
             'Zeroth law: transitivity of equality (logical). '
             f'Cosmological: T_univ = epsilon/ln(102) = {1.0/_math.log(102):.4f}*epsilon; '
@@ -3157,7 +3157,7 @@ def check_T_first_law():
         tier=5,
         epistemic='P',
         summary=(
-            'dE = dQ + dW: dQ = T*dS (heat, irreversible, L_irr [P]), '
+            'dE = dQ + dW: dQ = T*dS (heat, irreversible, L_irr [P+occupancy]), '
             'dW = dE - T*dS (work, reversible). '
             'Verified: pure heat (dW=0), pure work (dQ=0), mixed. '
             'Second-law consistent: heat hot->cold increases total S. '
@@ -4330,14 +4330,15 @@ def check_L_RT_capacity():
     """L_RT_capacity: Subregion Entropy = Type Fraction × S_dS [P].
 
     STATEMENT: For any boundary subregion A containing k of the C_total = 61
-    capacity types, the entanglement entropy is:
+    capacity types, the subregion MARGINAL entropy is:
 
         S(A) = k · ln(d_eff) = (k / C_total) · S_dS
 
     where S_dS = C_total · ln(d_eff) = 282.12 is the total de Sitter entropy
     (T_deSitter_entropy [P]).
 
-    This is the APF version of the Ryu-Takayanagi (RT) formula:
+    This realizes the FORM of the Ryu-Takayanagi (RT) relation at uniform
+    density:
 
         S(A) = Area(γ_A) / 4G
 
@@ -4345,12 +4346,33 @@ def check_L_RT_capacity():
     where "area" is measured in units of capacity types per horizon cell
     (d_eff states per type = ln(d_eff) entropy per type).
 
+    READING CAVEAT — marginal entropy, NOT literal entanglement [grade split].
+      The APF de Sitter boundary state is the GLOBALLY MAXIMALLY-MIXED trace
+      state ρ = I/d_eff^{C_total} (L_equip [P]; L_KMS_trace_state [P]). For a
+      mixed global state, S(ρ_A) is the MARGINAL (thermal/mixedness) entropy
+      of the reduced state, NOT an across-cut entanglement entropy. Indeed,
+      because ρ factorizes, the genuine across-cut entanglement (and even the
+      classical mutual information) is exactly ZERO. The RT FORM is realized
+      as a thermal/counting correspondence, which differs from textbook RT
+      (where the global state is PURE and S(ρ_A) measures entanglement). The
+      marginal-entropy identity S(A) = k·ln(d_eff) = (k/C_total)·S_dS is [P];
+      the holographic/"entanglement-entropy" READING of it is
+      [P_structural_reading]. (Earlier framing cited the existence-layer
+      product L_TN_product_state, κ=2, J_ij=0 — a layer/dimension mismatch
+      with the d_eff=102 record space; the correct, gap-free grounding is the
+      maximal mixedness of the saturation state.)
+
     PROOF:
 
-    Step 1 — Saturation state is a product state [L_TN_product_state P]:
-      ρ = ⊗_{i=1}^{61} (I_{d_eff}/d_eff). Each type i is maximally mixed
-      and uncorrelated from all other types (zero mutual information from
-      L_TN_product_state [P]).
+    Step 1 — Saturation state is the maximally-mixed trace state
+             [L_equip P; L_KMS_trace_state P]:
+      ρ = ⊗_{i=1}^{61} (I_{d_eff}/d_eff). The globally maximally-mixed state
+      factorizes by the elementary identity I/(d^n) = ⊗ (I/d), so each type i
+      is maximally mixed and has zero mutual information with the rest. This
+      grounding is gap-free and does not invoke the existence-layer product
+      (L_TN_product_state, which lives at κ=2, not the d_eff=102 record
+      space). Because the global state is mixed, S(ρ_A) below is a marginal
+      entropy, not an entanglement entropy (see READING CAVEAT).
 
     Step 2 — Subregion entropy for product state:
       For ρ = ρ_A ⊗ ρ_B (product state), the partial trace gives:
@@ -4379,8 +4401,15 @@ def check_L_RT_capacity():
       spatial gradients in admissibility density) would require a true
       minimal surface computation. The APF result is RT at uniform density.
 
-    STATUS: [P]. Steps 1-3 follow from existing [P] theorems with no new
-    mathematics. The RT identification (Step 3) uses L_equip + T_Bek [P].
+    STATUS: [P] for the marginal-entropy identity S(A) = (k/C_total)·S_dS
+    (correct math on the maximally-mixed saturation state; this is what the
+    downstream consumers — the Page curve, the QEC wedge — rely on). The
+    holographic/"entanglement-entropy" READING of S(A) is
+    [P_structural_reading], not [P] (the global state is mixed, so S(ρ_A) is
+    marginal mixedness, not entanglement; see READING CAVEAT). Steps follow
+    from existing [P] theorems with no new mathematics; the product grounding
+    is L_equip + L_KMS_trace_state (maximal mixedness), the area form uses
+    L_equip + T_Bek.
     """
     import math as _m
     from fractions import Fraction as _Frac
@@ -4433,35 +4462,42 @@ def check_L_RT_capacity():
           f"RT: Area(1 type)·S_dS/Area_total = {S_dS*area_per_type:.4f} = S_1 = {S_1:.4f}")
 
     return _result(
-        name='L_RT_capacity: Subregion Entropy = (k/61)·S_dS [P]',
+        name='L_RT_capacity: Subregion Marginal Entropy = (k/61)·S_dS [P]',
         tier=4,
         epistemic='P',
         summary=(
-            f'S(A) = k·ln({d_eff}) = (k/{C_total})·S_dS for k types in A. '
-            f'Proof: product state (L_TN_product_state [P]) → zero mutual info → '
-            f'partial trace gives k-type trace state → S = k·S_1. '
-            f'RT identification: k types ↔ Area(γ_A)/4G by L_equip uniform density. '
-            f'Special cases: S(vacuum)={S_vac:.2f} = Ω_Λ·S_dS, '
-            f'S(matter)={S_mat:.2f} = Ω_m·S_dS. '
-            f'Difference from full RT: APF boundary uniform (no minimal surface search). '
-            f'Established math: Ryu-Takayanagi (2006), Hubeny-Rangamani-Takayanagi (2007).'
+            f'S(A) = k·ln({d_eff}) = (k/{C_total})·S_dS for k types in A — the '
+            f'MARGINAL entropy of the maximally-mixed saturation state '
+            f'ρ = I/d_eff^{C_total} (L_equip [P], L_KMS_trace_state [P]). The '
+            f'maximally-mixed state factorizes (I/d^n = ⊗ I/d) → zero mutual '
+            f'info → partial trace gives a k-type trace state → S = k·S_1 [P]. '
+            f'This realizes the RT FORM at uniform density (k types ↔ '
+            f'Area(γ_A)/4G), but S(ρ_A) here is marginal mixedness, NOT a '
+            f'literal entanglement entropy — the global state is mixed and the '
+            f'genuine across-cut entanglement is ZERO; the holographic reading '
+            f'is [P_structural_reading]. Special cases: S(vacuum)={S_vac:.2f} = '
+            f'Ω_Λ·S_dS, S(matter)={S_mat:.2f} = Ω_m·S_dS.'
         ),
         key_result=(
-            f'S(A) = (k/61)·S_dS = k·{S_1:.4f}. '
-            f'RT formula exact for uniform boundary. S_vac=Ω_Λ·S_dS, S_mat=Ω_m·S_dS. [P]'
+            f'S(A) = (k/61)·S_dS = k·{S_1:.4f} (marginal entropy of the '
+            f'maximally-mixed state) [P]; realizes the RT FORM at uniform '
+            f'boundary [P_structural_reading]. S_vac=Ω_Λ·S_dS, S_mat=Ω_m·S_dS.'
         ),
         dependencies=[
             'L_equip', 'L_count', 'T11', 'T_Bek',
-            'L_TN_product_state', 'L_self_exclusion', 'T_deSitter_entropy',
+            'L_KMS_trace_state', 'L_self_exclusion', 'T_deSitter_entropy',
         ],
         artifacts={
-            'formula': 'S(A) = k·ln(d_eff) = (k/61)·S_dS',
-            'RT_identification': 'Area(γ_A)/4G ↔ k·ln(102)',
+            'formula': 'S(A) = k·ln(d_eff) = (k/61)·S_dS (marginal entropy)',
+            'RT_form_identification': 'Area(γ_A)/4G ↔ k·ln(102) (uniform density)',
             'uniform_density_condition': 'L_equip: equal area per type',
+            'genuine_across_cut_entanglement': 0,
+            'reading_grade': 'identity [P]; entanglement/holographic reading [P_structural_reading]',
+            'product_grounding': 'maximal mixedness (L_equip + L_KMS_trace_state); NOT existence-layer L_TN_product_state',
             'S_vacuum': round(S_vac, 4),
             'S_matter': round(S_mat, 4),
             'S_dS': round(S_dS, 4),
-            'established_math': 'Ryu-Takayanagi formula (2006)',
+            'established_math': 'Ryu-Takayanagi form (2006); realized here as a thermal/marginal correspondence',
         },
     )
 
@@ -4506,7 +4542,7 @@ def check_L_quantum_evolution():
         d⟨H⟩/dt = ... reduce to the Einstein equations (T9_grav [P])
         in the geometric limit where capacity density → metric.
 
-    (F) IRREVERSIBILITY: L_irr [P] ensures each commitment step is
+    (F) IRREVERSIBILITY: L_irr [P+occupancy] ensures each commitment step is
         one-way (nᵢ: 0 → 1, never 1 → 0). This IS the arrow of time.
         The quantum channel for each step has Kraus rank 1 (pure
         projection), making the subsystem evolution non-invertible.
@@ -4525,7 +4561,7 @@ def check_L_quantum_evolution():
         E_i(ρ) = K₁ ρ K₁† + K₂ ρ K₂†
       with K₁ = |1⟩⟨0|, K₂ = |1⟩⟨1|.
       CPTP: K₁†K₁ + K₂†K₂ = |0⟩⟨0| + |1⟩⟨1| = I.
-      Kraus rank = 2, hence irreversible (L_irr [P]).
+      Kraus rank = 2, hence irreversible (L_irr [P+occupancy]).
 
     Step 3 [Composition]:
       The full evolution is the composition of 61 single-step channels:
@@ -8458,8 +8494,12 @@ def check_L_QEC_wedge_duality():
 
     RT ENTROPY AND WEDGE SIZE:
       S(A) = k · ln(d_eff) = (k/C_total) · S_dS   [L_RT_capacity, P]
-      The entanglement entropy of A equals the fraction of the horizon
-      area covered by A (uniform density from L_equip).
+      S(A) equals the fraction of the horizon count covered by A (uniform
+      density from L_equip). READING: on the maximally-mixed de Sitter
+      boundary state, S(A) is marginal (thermal) mixedness, not across-cut
+      entanglement (which is zero); the entanglement-wedge / RT reading is
+      [P_structural_reading], while the additivity and Ω-block math stay [P]
+      (cf. L_RT_capacity).
 
     COMPLEMENTARY RECOVERY AND Ω DUALITY:
       For A = matter block (k = C_mat = 19):
@@ -8611,7 +8651,8 @@ def check_L_QEC_wedge_duality():
             'Ryu-Takayanagi 2006': (
                 'RT proposed S(A) = Area(γ_A)/4G. '
                 'APF derives this as S(A) = (k/C)·S_dS from capacity counting '
-                '(L_RT_capacity [P]). RT is a consequence, not an input.'
+                '(L_RT_capacity [P]). RT is a consequence, not an input. The count share is [P]; '
+                'reading it as an entanglement entropy is [P_structural_reading] — the dS state is maximally mixed.'
             ),
         },
         artifacts={
@@ -10765,7 +10806,7 @@ def check_L_Einstein_from_entanglement():
       (i)   T_Bek [P]:    S_BH = A/(4G_N)     — area law
       (ii)  L_beta_temp [P]: T = a/(2π)         — Unruh temperature
       (iii) L_KMS_trace_state [P]: equilibrium   — KMS state exists
-      (iv)  L_irr [P]:   δS ≥ 0                 — second law
+      (iv)  L_irr [P+occupancy]:   δS ≥ 0                 — second law
 
     The derivation follows Jacobson (1995), but ALL inputs are
     internal [P] theorems — no external citation needed.
@@ -12419,7 +12460,7 @@ def check_L_metric_from_entanglement_data():
 
     CONFORMAL CLASS (from causal order):
       L_HKM_causal_geometry [P] proves: the causal partial order
-      (from L_irr [P]) determines the metric up to a positive
+      (from L_irr [P+occupancy]) determines the metric up to a positive
       scalar Ω²(x). That is, the null cones fix:
         g_μν(x) = Ω²(x) η̃_μν(x)
       where η̃ is any representative of the conformal class.
@@ -12437,7 +12478,9 @@ def check_L_metric_from_entanglement_data():
 
     RESULT: g_μν(x) = Ω²(x) η̃_μν(x) is FULLY DETERMINED.
     - The conformal class [η̃] comes from causal order (L_HKM)
-    - The conformal factor Ω² comes from entanglement (L_RT_capacity)
+    - The conformal factor Ω² comes from the horizon count/area identity (L_RT_capacity);
+      the "entanglement" label is [P_structural_reading] (dS state mixed, across-cut
+      entanglement = 0). This check is in any case superseded by L_spatial_from_cost
     - Together: the complete metric, with no additional input
 
     PROOF:
@@ -12844,7 +12887,7 @@ def check_L_spacetime_emergence():
     FIVE independent derivation chains. NO spatial input is assumed.
 
     CHAIN 1 — TOPOLOGY:
-      A1 → L_irr [P] (irreversibility)
+      A1 → L_irr [P+occupancy] (irreversibility)
          → partial order ≺ on events
          → Delta_ordering [P] (causal structure)
          → Delta_continuum [P] (continuum limit)
@@ -12858,7 +12901,7 @@ def check_L_spacetime_emergence():
          → 2 graviton DOF (T_graviton [P])
 
     CHAIN 3 — SIGNATURE:
-      A1 → L_irr [P] (arrow of time)
+      A1 → L_irr [P+occupancy] (arrow of time)
          → Delta_signature [P] (Lorentzian, −+++)
          → L_HKM_causal_geometry [P] (causal order → conformal class)
 
@@ -13402,7 +13445,7 @@ def check_L_spacetime_emergence_v2():
       L_kolmogorov_internal [P]: unique continuum limit
 
     MECHANISM 3 — CAUSAL ORDER → FULL GEOMETRY:
-      L_irr [P] → partial order on events (Delta_ordering [P])
+      L_irr [P+occupancy] → partial order on events (Delta_ordering [P])
       → conformal class [g] (L_HKM [P], 9 of 10 metric components)
       → full metric (L_Malament [P], Ω from A1 capacity density)
       → Lorentzian signature (Delta_signature [P])

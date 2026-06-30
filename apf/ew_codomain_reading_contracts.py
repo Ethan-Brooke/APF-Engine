@@ -269,8 +269,8 @@ ANCHOR_REQUIREMENTS = {
          "amplitude/half-power root (guards swap: count-not-amplitude)"),
     ),
     "abelian hypercharge reading at M_cross": (
-        ("T_gauge_reading_dichotomy", "P", "census 61 home (coupling axis)"),
-        ("T_abelian_coupling_fixed_by_rank1_capacity_count", "P", "census 61 home (coupling axis)"),
+        ("T_gauge_reading_dichotomy", "P_structural", "census 61 home (coupling axis) -- support-exhaustiveness open, alpha_s-corroborated"),
+        ("T_abelian_coupling_fixed_by_rank1_capacity_count", "P_structural", "census 61 home (coupling axis) -- support-exhaustiveness open, alpha_s-corroborated"),
         ("T_ledger_reversibility_is_L_irr_lock", "P_structural",
          "record 60.75 reading (guards swap: record-as-coupling)"),
         ("T_gauge_force_character_from_record_state", "P_structural", "record / force-character axis"),
@@ -309,7 +309,7 @@ def check_T_ew_codomain_reading_anchors_banked():
         'anchors_verified': len(checked),
         'registry_size_seen': len(reg),
         'key_result': (f'{len(checked)} banked anchors back the 4 EW codomain contracts at their claimed '
-                       'grades (3/13 [P_structural]; GH-OS 2/9 [P_attractor_structural]; census 61 [P]; '
+                       'grades (3/13 [P_structural]; GH-OS 2/9 [P_attractor_structural]; census 61 [P_structural]; '
                        'record 60.75 + floor [P_structural]; kappa_b fence [C]); each forbidden swap '
                        'protects a reading that is itself banked.'),
         'summary': 'Every codomain contract is backed by a live banked check at grade.',

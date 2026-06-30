@@ -422,7 +422,7 @@ def check_L_coleman_mandula_internal():
       This is the direct-product condition: G_S and G_I commute.
 
     Step 3 [L_irr → no higher-spin conserved charges]:
-      L_irr [P] (irreversibility) implies the arrow of time is
+      L_irr [P+occupancy] (irreversibility) implies the arrow of time is
       fundamental. Any conserved symmetric tensor T_μν beyond the
       energy-momentum tensor would create additional conservation
       laws constraining the dynamics. But A1 (finite capacity) limits
