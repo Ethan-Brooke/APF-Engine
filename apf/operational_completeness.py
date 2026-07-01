@@ -18,7 +18,7 @@ not claimed; the executable op set was deletions-only from v24.3.230.) Forced fr
     a cross-billed joint line requires (L_irr check 4's operative argument). Ops cannot
     exceed own-billing modifications.
   LOWER BOUND (the necessity structure of L_irr's two countermodels, made executable
-    here): L_irr [P+occupancy] proves the necessity of the occupancy input (Delta>0) and L_loc via two countermodels whose
+    here): L_irr [P] proves the necessity of the occupancy input (Delta>0) and L_loc via two countermodels whose
     conclusions ('additive world: all capacity locally recoverable, fully reversible';
     'single-interface world: observer has global access, all correlations recoverable')
     REQUIRE own-billing modifications to be available -- and the two countermodels
@@ -48,7 +48,7 @@ change to the four-laws check is needed.
 
 THE CONVERSE LEMMA (L_local_removability, billing-locus form, v0.2 post-audit): a
 distinction's committed capacity is recoverable by local operations IFF no joint
-(Moebius) line containing it is billed at >= 2 interfaces. Forward = L_irr [P+occupancy] (the
+(Moebius) line containing it is billed at >= 2 interfaces. Forward = L_irr [P] (the
 simultaneity obstruction). Backward = the clause: footprint lines are deletable by their
 owner (countermodel-1 half); single-billed joint lines are deletable by their sole
 owner, who has access to all correlates at that interface (countermodel-2 half); every
@@ -132,7 +132,7 @@ SCOPE / HONEST NON-CLAIMS.
     conclusions as OPERATIONAL claims (recoverability via available operations), which
     is what their role in L_irr's necessity argument requires; the audit interrogates
     exactly that reading.
-  * L_local_removability grade [P_structural]: composes the clause + L_irr [P+occupancy] + L3; the
+  * L_local_removability grade [P_structural]: composes the clause + L_irr [P] + L3; the
     structural identification is the billing-locus reading of check 4's simultaneity
     obstruction (joint line billed at >= 2 interfaces == requires coordinated
     multi-interface modification).
@@ -290,7 +290,7 @@ def check_L_operational_completeness():
     a canonical published definitional commitment consumed at zero translation, with
     falsifier (iv) exposure; the availability reading is internal to the row's landed
     text ("consumed as a lower bound on availability"). Upper bound = L_loc [P] +
-    L_irr [P+occupancy] (check-4 simultaneity). Precedent class: check_L_epsilon_star [P] over
+    L_irr [P] (check-4 simultaneity). Precedent class: check_L_epsilon_star [P] over
     the adopted structural conditions MD/BW; check_P4_IMP [P] over sec:perturbations row 1.
     The countermodel sandwich (CM1/CM2 executable bodies) is retained as
     corroboration, no longer the license. Scope: removals of Gamma-billed lines
@@ -376,7 +376,7 @@ def check_L_operational_completeness():
             "footprint-only op set leaves CM1 intact but breaks CM2 (single-interface floor > 0). "
             "Equality forced, executed at both halves. The cross-billed lock is preserved (no overshoot). GRADE "
             "[P] per the 2026-06-09 [P]-promotion audit: lower bound = Paper 0 v6.2.27 row 6 "
-            "(canonical, zero-translation, falsifier (iv)); upper bound = L_loc [P] + L_irr [P+occupancy]; "
+            "(canonical, zero-translation, falsifier (iv)); upper bound = L_loc [P] + L_irr [P]; "
             "precedent class = check_L_epsilon_star over MD/BW + check_P4_IMP over row 1; the "
             "sandwich retained as corroboration. License class: interface-ontology rows only; "
             "physical-dictionary rows do not inherit. Records the principal's 2026-06-09 "
@@ -425,7 +425,7 @@ def check_L_local_removability():
          l clean -- the record-class operational floor equals the closure energy
          E(record support) exactly; the spectator strips; Delta_cross=0 class floor = 0.
 
-    GRADE [P] (2026-06-09 [P]-promotion audit): forward = L_irr [P+occupancy]; backward =
+    GRADE [P] (2026-06-09 [P]-promotion audit): forward = L_irr [P]; backward =
     L_operational_completeness [P] (removals-only) + L3; the billing-locus reading =
     Paper 0 v6.2.27 row 7b (defense-billing locus, canonical) + the action-locality
     theorem of L_recoverability_is_orbit_reachability. The iff and the qualitative
@@ -508,7 +508,7 @@ def check_L_local_removability():
         epistemic="P",
         summary=(
             "A distinction's committed capacity is recoverable by local operations iff no Moebius "
-            "joint line containing it is billed at >= 2 interfaces. Forward = L_irr [P+occupancy] (the check-4 "
+            "joint line containing it is billed at >= 2 interfaces. Forward = L_irr [P] (the check-4 "
             "simultaneity obstruction, reproduced in the line model on the bank's own tables). "
             "Backward = L_operational_completeness: footprint lines deletable by their owner (CM1 "
             "half), single-billed joint lines deletable by their sole owner (CM2 half), every "
@@ -520,7 +520,7 @@ def check_L_local_removability():
             "locked-closure energy exactly (record support pinned, spectators stripped); a "
             "record-free class strips to the vacuum. Operational floor > 0 iff the class holds a "
             "record: mass is the locked closure, masslessness is operational (at the ledger "
-            "level). GRADE [P] per the 2026-06-09 [P]-promotion audit: forward = L_irr [P+occupancy]; "
+            "level). GRADE [P] per the 2026-06-09 [P]-promotion audit: forward = L_irr [P]; "
             "backward = the clause [P] + L3; billing-locus = Paper 0 row 7b. The iff and the "
             "qualitative floor>0-iff-record corollary are fusion-fork-insensitive at every "
             "interface count; the quantitative closure identity is [P] on the record-support-"
@@ -1609,7 +1609,7 @@ def check_T_transition_log_residue_readable():
           L_local_removability supply the per-distinction operator inventory
           the reading turns into probes;
       (4) the locked part of the residue is unerasable by any local operation
-          (L_irr [P+occupancy]) -- the readable log cannot be silently rewritten.
+          (L_irr [P]) -- the readable log cannot be silently rewritten.
 
     FENCES (the grant's exact extent, all asserted below): reading caps at
     state residue -- two histories composing to the same configuration are
@@ -1637,7 +1637,7 @@ def check_T_transition_log_residue_readable():
     totality over held content, the converse completion of storage-totality)
     consumed at zero translation, with falsifier (vii) exposure -- over
     T_ledger_rent_excluded [P] + L_recoverability_is_orbit_reachability [P] +
-    L_local_removability [P] + L_irr [P+occupancy]. Precedent class:
+    L_local_removability [P] + L_irr [P]. Precedent class:
     check_T_ledger_rent_excluded [P] over row 9; check_L_operational_completeness
     [P] over row 6. Landed row-first per the principal's 2026-06-12 ruling
     (option 2 of the L2-observability adjudication): the row is the naming.
@@ -1811,7 +1811,7 @@ def check_T_transition_log_residue_readable():
             "of per-interface holding bits (refined product space [P]); under Paper 0 v6.2.30 row 10 "
             "(observer-reading -- held content is evaluable content; an enacted operation's outcome "
             "is the post-state) the residue is evaluable at its billing interfaces; the locked part "
-            "is unerasable (L_irr [P+occupancy]). Fences asserted: residue cap (order-composed histories "
+            "is unerasable (L_irr [P]). Fences asserted: residue cap (order-composed histories "
             "indistinguishable), h-invisibility (pre-enactment placements identical; separation only "
             "through enacted pin-death), activation-only events outside the log. Consequence "
             "executed: the two-placement ALIGNED/BORROWED fork separates at the first enacted "

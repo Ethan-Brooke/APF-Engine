@@ -377,7 +377,7 @@ def check_T_ym_meaningful_spectrum_is_singlet_gapped():
 def check_T_ym_conformal_phase_excluded_by_record_locking():
     """T_ym_conformal_phase_excluded_by_record_locking: for the matter-free non-abelian gauge substrate
     the conformal (gapless / IR-fixed-point) phase is EXCLUDED -- not agnostic -- because it is the
-    REVERSIBLE (Delta=0) phase, while the gauge-invariant-record theorem (+ cost=count, L_cost) forces Delta>0 (the non-abelian colour record is the non-factorizable entangled singlet) and L_irr [P+occupancy]
+    REVERSIBLE (Delta=0) phase, while the gauge-invariant-record theorem (+ cost=count, L_cost) forces Delta>0 (the non-abelian colour record is the non-factorizable entangled singlet) and L_irr [P]
     makes Delta>0 a PERMANENT record-locked (irreversible) commitment. Corrects the prior 'agnostic
     relative to {A1,MD,PLEC}' verdict, which omitted the record-locking layer [P_structural].
 
@@ -393,7 +393,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     => Delta(S1,S2) > 0; the abelian case is factorizable => Delta=0 (which is why U(1) electromagnetism is
     Coulomb / reversible / massless). The symmetry TYPE sets the sign. (L_nc, sum-vs-budget, supplies no Delta.)
 
-    RECORD LOCKING (L_irr [P+occupancy]). Delta>0 + L_loc => the cross-interface capacity is permanently committed
+    RECORD LOCKING (L_irr [P]). Delta>0 + L_loc => the cross-interface capacity is permanently committed
     (locally unrecoverable) = an irreversible, record-locked distinction. L_irr's OWN countermodel is
     decisive: 'Additive world (Delta=0): correlations cost zero ... fully reversible.' So
         reversible  <=>  Delta=0  <=>  no record locking  <=>  gapless/Coulomb,
@@ -419,7 +419,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     is no longer the dynamical confining-vs-conformal fork; it narrows to CONTINUUM EXISTENCE (constructing
     the continuum measure / OS reconstruction), which record locking does not supply.
 
-    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + L_irr [P+occupancy] + L_irr_uniform [P] + cost=energy [P] +
+    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + L_irr [P] + L_irr_uniform [P] + cost=energy [P] +
     T_confinement [P], with two structural identifications carrying the grade: (i) gapless/conformal <=>
     net-reversible (Delta=0, no record locking); (ii) matter-free non-abelian = all-Delta>0, no reversible
     channels to net out. NOT the full Clay theorem (continuum existence still open); does NOT fix the value
@@ -434,8 +434,8 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
            "symmetry: L_cost [P] -- cost=count fixes Delta=eps*(#irreducibly-joint distinctions); the non-abelian colour "
            "record is the non-factorizable entangled singlet (gauge_invariant_record.py) => Delta>0, abelian factorizable "
            "=> Delta=0. The split is forced by the record theorem + cost=count, NOT by L_nc (sum-vs-budget, no Delta).")
-    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
-           "record locking: L_irr [P+occupancy] -- Delta>0 => permanent (locally-unrecoverable) commitment; countermodel Delta=0 => fully reversible")
+    _check(lir.get("epistemic") in ("P",) and lir.get("passed"),
+           "record locking: L_irr [P] -- Delta>0 => permanent (locally-unrecoverable) commitment; countermodel Delta=0 => fully reversible")
     _check(liru.get("epistemic")=="P" and liru.get("passed"),
            "geometry: L_irr_uniform [P] -- gauge distinctions must be recordable (yield distinct gravitational records)")
     _check(ce.get("epistemic")=="P" and ce.get("passed"),
@@ -460,7 +460,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     return _full_result(
         name=("T_ym_conformal_phase_excluded_by_record_locking: for matter-free non-abelian gauge the conformal "
               "(gapless/IR-fixed-point) phase is EXCLUDED, not agnostic -- it is the reversible (Delta=0) phase, "
-              "while the gauge-invariant-record theorem (+ cost=count) forces Delta>0 and L_irr [P+occupancy] makes Delta>0 a permanent record-locked "
+              "while the gauge-invariant-record theorem (+ cost=count) forces Delta>0 and L_irr [P] makes Delta>0 a permanent record-locked "
               "(irreversible) commitment with no matter-free Delta=0 channels to net it out. Composed with "
               "cost=energy [P] + T_confinement [P] the unscreened commitment is a singlet-spectrum gap >= Delta_min "
               "> 0. Corrects the prior 'agnostic relative to {A1,MD,PLEC}' verdict (which omitted record locking). "
@@ -470,7 +470,7 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
             "The symmetry/geometry/record-locking closure of the confining-vs-conformal question. Non-abelian "
             "composition is superadditive (L_cost + record theorem, Delta>0: the non-abelian colour record is the "
             "non-factorizable entangled singlet); the abelian case is additive (Delta=0), which is why "
-            "U(1) is Coulomb/reversible/massless. L_irr [P+occupancy] turns Delta>0 into a permanent, locally-unrecoverable "
+            "U(1) is Coulomb/reversible/massless. L_irr [P] turns Delta>0 into a permanent, locally-unrecoverable "
             "(record-locked, irreversible) commitment, and its own countermodel fixes the dictionary reversible<=>"
             "Delta=0<=>gapless, irreversible<=>Delta>0<=>gapped; L_irr_uniform [P] requires the gauge sector to be "
             "recordable. By cost=energy [P] a permanent Delta>0 commitment is a permanent energy >= Delta > 0, which "
@@ -501,11 +501,332 @@ def check_T_ym_conformal_phase_excluded_by_record_locking():
     )
 
 
+
+
+def _records_factorizable(scn):
+    """A scenario's records are factorizable iff, in every context, the joint
+    outcome distribution equals the product of its single-observable marginals
+    (no correlation). By L_irr's definition, Delta > 0 IFF the record is
+    NON-factorizable -- it carries a correlation not reducible to either
+    marginal (an irreducibly-joint distinction). NB factorizable => global
+    Boolean section requires NO-SIGNALLING (context-consistent marginals); see
+    _no_signalling."""
+    emp = scn.empirical_dict()
+    for ctx, tbl in emp.items():
+        marg = {m: {} for m in ctx}
+        for o, p in tbl.items():
+            for idx, m in enumerate(ctx):
+                marg[m][o[idx]] = marg[m].get(o[idx], 0) + p
+        for o, p in tbl.items():
+            prod = 1
+            for idx, m in enumerate(ctx):
+                prod = prod * marg[m][o[idx]]
+            if p != prod:
+                return False
+    return True
+
+
+def _no_signalling(scn):
+    """No-signalling: every measurement's single-observable marginal is the same
+    in every context it appears in (context-consistent marginals). This is the
+    condition under which a factorizable record is a genuine GLOBAL Boolean
+    section (one marginal per measurement, not a per-context one)."""
+    emp = scn.empirical_dict()
+    seen = {}
+    for ctx, tbl in emp.items():
+        marg = {m: {} for m in ctx}
+        for o, p in tbl.items():
+            for idx, m in enumerate(ctx):
+                marg[m][o[idx]] = marg[m].get(o[idx], 0) + p
+        for m in ctx:
+            if m in seen and seen[m] != marg[m]:
+                return False
+            seen[m] = marg[m]
+    return True
+
+
+def check_T_contextuality_implies_superadditive_cost():
+    """T_contextuality_implies_superadditive_cost: structural contextuality
+    (IJCStr) implies the superadditive cost Delta > 0. The gap's footing is
+    ENTANGLEMENT (a non-factorizable quantum record), which is strictly weaker
+    than contextuality and strictly stronger than classical correlation. So the
+    mass gap is QUANTUM-footed, but not contextuality; classical correlation
+    gives no gap.
+
+    THREE LEVELS OF "NON-FACTORIZABLE" (an earlier CHSH-correlator witness
+    conflated them; the corrected reading uses the BOOLEAN global-section notion,
+    which is the one the engine and L_irr's "same bit that branch (IJC) names"
+    actually intend):
+
+      (1) CLASSICAL CORRELATION -- a non-product joint marginal (e.g. CHSH
+          E=(1,1,1,1)). It HAS a global Boolean section (feasbool: SepStr), so it
+          is Boolean-FACTORIZABLE, and by cost=count it is SUBADDITIVE (a shared
+          hidden bit lowers the joint distinction-count: cost(joint)=1 <
+          cost(A)+cost(B)=2). Delta <= 0. NO gap. This is the level the discarded
+          probabilistic predicate detected -- a non-Boolean wrong turn (mere
+          statistical dependence, not superadditive cost).
+
+      (2) ENTANGLEMENT -- a non-factorizable quantum STATE (Schmidt rank > 1): the
+          non-abelian colour singlet. Delta > 0 by the gauge-invariant-record
+          theorem + L_cost (the SAME grounding confinement uses in
+          T_ym_conformal_phase_excluded_by_record_locking), WHILE its
+          gauge-invariant observable algebra is ABELIAN (span{pi_s,pi_adj},
+          dim 2) => a single context => a global Boolean section => SepStr =>
+          NONCONTEXTUAL. This is the gap's footing: QUANTUM, yet strictly weaker
+          than contextuality.
+
+      (3) CONTEXTUALITY -- no global Boolean section (IJCStr): the Mermin-Peres
+          magic square. Non-factorizable OBSERVABLE ALGEBRA. Delta > 0, strictly
+          stronger than (2).
+
+    ORDER:  classical correlation (Delta <= 0, no gap)
+              <  entanglement (Delta > 0, the gap -- quantum, noncontextual)
+              <  contextuality (IJCStr, Delta > 0, the strong face).
+
+    THE IMPLICATION (and the corrected strictness):
+      (a) IJCStr => Delta > 0. A no-global-section (IJCStr) record is
+          non-factorizable at the observable-algebra level; by L_irr an
+          irreducibly-joint distinction has Delta > 0. (Witness: magic square.)
+      (b) STRICT, but the counter-witness is ENTANGLEMENT, not classical
+          correlation. The non-abelian colour singlet has Delta > 0 (entangled
+          record) while being SepStr (abelian gauge-invariant algebra) -- Delta>0
+          WITHOUT contextuality. The gap is quantum-footed. A classically-
+          correlated record (E=(1,1,1,1)) is SepStr AND Boolean-factorizable AND
+          subadditive: it is NOT a Delta>0 witness (the correction to the earlier
+          "meson = CHSH E=(1,1,1,1)" reading, which mislabeled classical
+          correlation as the meson's entanglement).
+
+    UPSHOT. Contextuality and the mass gap are ordered faces of one
+    non-factorizability / occupancy obstruction, both QUANTUM: contextuality
+    (IJCStr) => Delta > 0 => record-locked => gapped. The gap sits at the
+    entanglement level -- quantum but noncontextual; the exactly-pinned strong
+    face (contextuality) sits strictly above it on the shared L_irr <-> branch-IJC
+    occupancy axis. "Gap-existence is classical" is FALSE (classical correlation
+    is subadditive); "gap = contextuality" is also false (contextuality is
+    strictly stronger); the gap = the quantum, entanglement-level non-factorizable
+    record.
+
+    SCOPE / NON-CLAIMS. A structural IMPLICATION between structural properties; it
+    does NOT (a) fix the gap VALUE (Lambda_QCD stays open -- Delta >= log(27/4) is
+    the trilogy's), (b) force OCCUPANCY (that Delta > 0 is realized is the
+    per-interface input; A1 admits the Delta = 0 reversible world), nor (c)
+    replace the gap's footing (the entangled colour singlet, weaker than
+    contextuality, is already sufficient for confinement). Grade
+    P_structural_reading: composes the engine's Boolean (global-section) verdict +
+    the gauge-invariant-record theorem (entanglement) + the L_irr reading
+    (Delta > 0 <=> irreducibly-joint / non-factorizable).
+    """
+    from fractions import Fraction as F
+    from apf.ijc_feasbool_engine import (
+        feasbool, _chsh_correlator_scenario, scenario_mermin_peres_magic_square,
+    )
+    from apf.core import check_L_irr
+    from apf.gauge_invariant_record import (
+        check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P as _meson_record,
+    )
+
+    prod = _chsh_correlator_scenario((F(0), F(0), F(0), F(0)))
+    corr = _chsh_correlator_scenario((F(1), F(1), F(1), F(1)))
+    ms = scenario_mermin_peres_magic_square()
+
+    # BOOLEAN (global-section) verdicts -- the operative, correct factorizability notion.
+    _check(feasbool(prod)["branch"] == "SepStr",
+           "product record E=(0,0,0,0): a global Boolean section (SepStr), factorizable, Delta=0 "
+           "(the abelian / Coulomb analog)")
+    # the wrong-turn control: E=(1,1,1,1) is probabilistically non-product yet BOOLEAN-factorizable.
+    corr_boolean_factorizable = (feasbool(corr)["branch"] == "SepStr")
+    corr_probabilistic_nonproduct = (not _records_factorizable(corr))
+    _check(corr_boolean_factorizable and corr_probabilistic_nonproduct,
+           "(control) classical correlation E=(1,1,1,1): the two factorizability notions DISAGREE -- "
+           "it is probabilistically non-product but has a global Boolean section (SepStr). The Boolean "
+           "notion is the correct one: E=(1,1,1,1) is Boolean-factorizable and subadditive by cost=count, "
+           "so Delta<=0 -- NOT a gap witness. (The earlier probabilistic reading was the non-Boolean wrong turn.)")
+    _check(feasbool(ms)["branch"] == "IJCStr",
+           "(a) the magic square has NO global Boolean section (IJCStr) => non-factorizable observable "
+           "algebra => Delta>0 by L_irr. Contextuality => superadditive cost.")
+
+    # (b) the genuine strictness/separation witness: ENTANGLEMENT without contextuality (the meson).
+    mr = _meson_record()
+    su2 = mr.get("data", {}).get("by_N", {}).get("SU(2)", {})
+    meson_abelian_sepstr = (su2.get("gauge_invariant_algebra_dim") == 2 and
+                            su2.get("algebra_is_exactly_span_pi_s_pi_adj") is True)
+    meson_record_nonfactorizable_entangled = (su2.get("singlet_nonfactorizable") is True
+                                               and su2.get("singlet_schmidt_rank", 0) > 1)
+    _check(meson_abelian_sepstr and meson_record_nonfactorizable_entangled,
+           "(b) strictness via ENTANGLEMENT: the non-abelian colour singlet is a non-factorizable "
+           "entangled record (Delta>0 by the gauge-invariant-record theorem + L_cost, as confinement) "
+           "while its gauge-invariant algebra is ABELIAN (span{pi_s,pi_adj}, dim 2) => SepStr => "
+           "noncontextual. So Delta>0 WITHOUT contextuality is witnessed by entanglement (quantum), not "
+           "by classical correlation. The gap is quantum-footed.")
+
+    lir = check_L_irr()
+    _check(lir.get("passed") and lir.get("epistemic") in ("P",),
+           "L_irr [P]: Delta>0 IFF the record carries an irreducibly-joint (non-factorizable) "
+           "distinction -- the occupancy bit branch (IJC) names; entanglement and contextuality are its "
+           "quantum forms, classical correlation is not (subadditive).")
+
+    return _full_result(
+        name=("T_contextuality_implies_superadditive_cost: structural contextuality (IJCStr) implies the "
+              "superadditive cost Delta>0; the gap's footing is entanglement (quantum, noncontextual), "
+              "strictly between classical correlation (subadditive) and contextuality [P_structural_reading]"),
+        tier=4, epistemic="P_structural_reading",
+        dependencies=["L_irr", "T_ym_conformal_phase_excluded_by_record_locking"],
+        cross_refs=["T_branch_taxonomy_inclusions",
+                    "check_T_gauge_invariant_colour_KS_coloring_obstruction",
+                    "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P"],
+        key_result=(
+            "IJCStr => non-factorizable observable algebra => Delta>0 (magic square). Strict, via "
+            "ENTANGLEMENT: the non-abelian colour singlet is Delta>0 (entangled record) yet SepStr "
+            "(abelian gauge-invariant algebra) -- Delta>0 without contextuality, the quantum gap footing. "
+            "Classical correlation E=(1,1,1,1) is SepStr + Boolean-factorizable + subadditive => NO gap "
+            "(the corrected control). Order: classical corr (Delta<=0) < entanglement (Delta>0, gap) < "
+            "contextuality (IJCStr). Both quantum faces root on the L_irr<->IJC occupancy bit."),
+        summary=(
+            "Contextuality (IJCStr, no global Boolean section) => Delta>0 (non-factorizable) => "
+            "record-locked => gapped. Strict, but the counter-witness is ENTANGLEMENT, not classical "
+            "correlation: the non-abelian colour singlet gives Delta>0 (entangled record) while its "
+            "gauge-invariant algebra is abelian (SepStr, noncontextual) -- the quantum, entanglement-level "
+            "footing of the gap. Classical correlation (E=(1,1,1,1)) is Boolean-factorizable and "
+            "subadditive, so gives no gap. The gap is quantum-footed but strictly weaker than "
+            "contextuality; 'gap is classical' and 'gap = contextuality' are both false. Does NOT fix "
+            "Lambda_QCD, force occupancy, or replace the entangled-singlet footing of confinement."),
+    )
+
+
+def check_T_su2_single_plaquette_curvature_exact():
+    """T_su2_single_plaquette_curvature_exact: the SU(2) single-plaquette heat-bath
+    measure has an EXACT Bakry-Emery curvature-dimension tensor [P].
+
+    On SU(2) with the bi-invariant (Casimir/heat-bath) metric -- the round unit S^3 --
+    parametrize by the class angle phi in [0,pi] ((1/2)Tr U = cos phi = geodesic
+    distance from the identity; antipode U=-1 at phi=pi). For the single-plaquette
+    Wilson potential S_1 = -h cos phi (h = beta, or beta*|staple| for a conditioned
+    link),
+
+        A_single = Ric_{SU(2)} + Hess(S_1) = (2 + h cos phi) . g   (isotropic),
+
+    exact, from two classical facts: Ric(unit S^3) = (n-1)g = 2g (n=3); and Obata's
+    Hess(cos phi) = -cos phi . g (cos phi is a first S^3 harmonic; radial f'' = -cos phi
+    and tangential f' cot phi = -cos phi coincide), so Hess(-h cos phi) = h cos phi . g.
+    Minimum eigenvalue 2 - h at the antipode; the curvature-dimension threshold is h=2,
+    and SU(2)'s Ricci is exactly that "2".
+
+    SCOPE / NON-CLAIMS. A single-site (DIAGONAL) fact about the plaquette /
+    conditioned-link heat-bath measure. It does NOT close the mass gap: the off-diagonal
+    (susceptibility) assembly is open, and an attempted Otto-Reznikoff tensorization of
+    this single-site bound to the full gap was REFUTED by cold audit (2026-06-30) -- the
+    induced connected-character coupling is NOT the Otto-Reznikoff Gibbs interaction norm.
+    Certifies the curvature identity only. Grade [P] (exact geometry).
+    """
+    import sympy as sp
+    phi, h = sp.symbols('phi h', positive=True)
+    f = sp.cos(phi)
+    _check(sp.simplify(sp.diff(f, phi, 2) + sp.cos(phi)) == 0,
+           "Hess(cos phi) radial eigenvalue = -cos phi (Obata, first S^3 harmonic)")
+    _check(sp.simplify(sp.diff(f, phi) * sp.cot(phi) + sp.cos(phi)) == 0,
+           "Hess(cos phi) tangential eigenvalue = -cos phi (Hessian isotropic)")
+    A = 2 + h * sp.cos(phi)
+    _check(sp.simplify(A.subs(phi, sp.pi) - (2 - h)) == 0,
+           "A_single = (2 + h cos phi) g, min 2 - h at the antipode; threshold h=2 = Ric_{SU(2)}")
+    return _full_result(
+        name=("T_su2_single_plaquette_curvature_exact: the SU(2) single-plaquette heat-bath measure has "
+              "exact Bakry-Emery curvature A = Ric + Hess(S_1) = (2 + h cos phi) g, threshold h=2 [P]"),
+        tier=4, epistemic="P",
+        dependencies=[],
+        cross_refs=["T_ym_gap_positivity_from_MD", "T_su2_single_site_uniform_gap_drift"],
+        key_result=("Ric(unit S^3)=2g, Hess(cos phi)=-cos phi.g (Obata) => A_single=(2 + h cos phi) g exact, "
+                    "min 2-h at the antipode; SU(2)'s Ricci is the '2'. DIAGONAL (single-site) only; does NOT "
+                    "close the mass gap (off-diagonal open; Otto-Reznikoff tensorization refuted 2026-06-30)."),
+        summary=("Exact curvature-dimension tensor of the SU(2) single-plaquette/heat-bath measure: "
+                 "A = (2 + h cos phi) g, isotropic, from Ric(S^3)=2 and Obata's Hess(cos phi)=-cos phi.g. "
+                 "Threshold h=2. A diagonal single-site fact; the mass-gap off-diagonal assembly is open and "
+                 "the Otto-Reznikoff tensorization to the full gap was refuted (2026-06-30 cold audit)."),
+    )
+
+
+def check_T_su2_single_site_uniform_gap_drift():
+    """T_su2_single_site_uniform_gap_drift: the SU(2) single-plaquette / conditioned-link
+    heat-bath measure has a UNIFORM single-site spectral gap, via an exact confining
+    drift [P_structural].
+
+    Single-site generator L_h f = f'' + (2 cot phi - h sin phi) f' on (0,pi), stationary
+    measure nu_h propto sin^2 phi . e^{h cos phi} (Weyl x Wilson). In maximal-tree gauge
+    the conditioned single-LINK measure is EXACTLY this heat-bath with h = beta.|staple|
+    >= 0, so the bound is uniform over beta AND environment.
+
+    EXACT DRIFT IDENTITY. For W = exp[gamma (1 - cos phi)],
+        L_h W / W = 3 gamma cos phi + gamma (gamma - h) sin^2 phi   (exact).
+    With gamma = h/2 this equals -3h/2 < 0 at the antipode (cos phi = -1) and is <= 0 for
+    cos phi <= c* = -3/h + sqrt(9/h^2 + 1): a Bakry-Barthe-Cattiaux-Guillin
+    drift-and-minorization condition (confining drift toward the identity, growing with h).
+    Drift + a local Poincare inequality on the well K = [0, arccos c*] gives a UNIFORM
+    single-site gap rho(h) >= c_0 > 0 for all h >= 0. Numerically rho(0) = 3 (the first
+    S^3-Laplacian eigenvalue n^2-1) and rho is monotone increasing in h (3, 3.2, 4.05, 6.1
+    at h = 0,1,2.3,4) -- no single-site closure; the antipodal negative-curvature region
+    (h>2) is a measure-suppressed repeller, not a gap-closing mode.
+
+    SCOPE / NON-CLAIMS. Certifies the single-site (DIAGONAL) stiffness ONLY: a uniform
+    conditional single-site gap, no single-site closure. It does NOT close the YANG-MILLS
+    MASS GAP. An attempt to tensorize this to the full gap via Otto-Reznikoff (rho > ||K||)
+    was REFUTED by cold audit (2026-06-30, 0.88): the small induced connected-character
+    coupling (kappa_2 <= 0.099) is NOT the Otto-Reznikoff Gibbs interaction norm (which is
+    the O(beta) Wilson-action Hessian on the true link coordinates), so the off-diagonal /
+    susceptibility assembly reverts to the cluster expansion and stays OPEN. The exact drift
+    identity is [P]; the uniform-gap reading rests on BBCG + a standard local-Poincare
+    constant (asserted, not written here), hence grade [P_structural].
+    """
+    import sympy as sp
+    import numpy as np
+    phi, h, gamma = sp.symbols('phi h gamma', positive=True)
+    W = sp.exp(gamma * (1 - sp.cos(phi)))
+    LW = sp.diff(W, phi, 2) + (2 * sp.cot(phi) - h * sp.sin(phi)) * sp.diff(W, phi)
+    rhs = 3 * gamma * sp.cos(phi) + gamma * (gamma - h) * sp.sin(phi) ** 2
+    _check(sp.simplify(LW / W - rhs) == 0,
+           "exact drift identity L_h W/W = 3 gamma cos phi + gamma(gamma-h) sin^2 phi, W=exp[gamma(1-cos phi)]")
+    _check(sp.simplify(rhs.subs(gamma, h / 2).subs(phi, sp.pi) + sp.Rational(3, 2) * h) == 0,
+           "at gamma=h/2 the antipodal drift is -3h/2 < 0 (confining BBCG drift, growing with h)")
+
+    def _gap(beta, N=1200):
+        x = np.linspace(1e-6, np.pi - 1e-6, N); dx = x[1] - x[0]
+        w = np.sin(x) ** 2 * np.exp(beta * np.cos(x)); wm = 0.5 * (w[:-1] + w[1:])
+        A = np.zeros((N, N)); i = np.arange(N)
+        A[i[1:], i[1:]] += wm / dx ** 2; A[i[1:], i[:-1]] += -wm / dx ** 2
+        A[i[:-1], i[:-1]] += wm / dx ** 2; A[i[:-1], i[1:]] += -wm / dx ** 2
+        d = np.sqrt(w); return float(np.linalg.eigvalsh(A / d[:, None] / d[None, :])[1])
+    gaps = [_gap(b) for b in (0.0, 1.0, 2.3, 4.0)]
+    _check(abs(gaps[0] - 3.0) < 0.06,
+           "single-site gap at h=0 is 3 = first S^3-Laplacian eigenvalue n^2-1 (validation)")
+    _check(all(gaps[k + 1] >= gaps[k] - 1e-4 for k in range(len(gaps) - 1)) and all(x >= 3.0 - 0.06 for x in gaps),
+           "single-site gap monotone increasing in h and >= 3 (no single-site closure): "
+           + ", ".join(f"{x:.3f}" for x in gaps))
+    return _full_result(
+        name=("T_su2_single_site_uniform_gap_drift: the SU(2) single-plaquette/heat-bath measure has a "
+              "uniform single-site spectral gap via the exact confining drift W=exp[(h/2)(1-cos phi)] (BBCG); "
+              "DIAGONAL only, NOT the mass gap [P_structural]"),
+        tier=4, epistemic="P_structural",
+        dependencies=["T_su2_single_plaquette_curvature_exact"],
+        cross_refs=["T_ym_gap_positivity_from_MD", "T_ym_conformal_phase_excluded_by_record_locking"],
+        key_result=("Exact drift L_h W/W = 3g cos phi + g(g-h) sin^2 phi; gamma=h/2 -> -3h/2 at the antipode "
+                    "(BBCG confining drift) -> uniform single-site gap rho(h) >= c_0 > 0; numerically rho(0)=3, "
+                    "monotone rising. DIAGONAL stiffness only; the mass-gap off-diagonal is OPEN (Otto-Reznikoff "
+                    "tensorization refuted 2026-06-30)."),
+        summary=("Uniform single-site spectral gap of the SU(2) heat-bath measure by an exact confining drift "
+                 "(BBCG): the conditioned single-link measure IS this heat-bath with h=beta.|staple|, so the gap "
+                 "is uniform over beta and environment; rho(0)=3, monotone rising, no single-site closure. "
+                 "Settles the DIAGONAL. Does NOT close the YM mass gap: the Otto-Reznikoff tensorization was "
+                 "refuted (small character-coupling is not the Gibbs interaction norm); the off-diagonal "
+                 "susceptibility assembly reverts to the cluster expansion and stays open."),
+    )
+
+
 _CHECKS = {
     "T_ym_gap_positivity_from_MD": check_T_ym_gap_positivity_from_MD,
     "T_ym_lattice_substrate_admissible": check_T_ym_lattice_substrate_admissible,
     "T_ym_meaningful_spectrum_is_singlet_gapped": check_T_ym_meaningful_spectrum_is_singlet_gapped,
     "T_ym_conformal_phase_excluded_by_record_locking": check_T_ym_conformal_phase_excluded_by_record_locking,
+    "T_contextuality_implies_superadditive_cost": check_T_contextuality_implies_superadditive_cost,
+    "T_su2_single_plaquette_curvature_exact": check_T_su2_single_plaquette_curvature_exact,
+    "T_su2_single_site_uniform_gap_drift": check_T_su2_single_site_uniform_gap_drift,
 }
 
 

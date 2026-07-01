@@ -1655,7 +1655,7 @@ def check_L_Sakharov():
       three orthogonal generations in adjoint space.
 
     CONDITION 3 -- DEPARTURE FROM THERMAL EQUILIBRIUM [P]:
-      Source: M_Omega [P] + L_irr [P+occupancy].
+      Source: M_Omega [P] + L_irr [P].
 
       M_Omega proves the measure is uniform (thermal equilibrium) ONLY
       at full Bekenstein saturation. The transition from partial to full
@@ -1733,7 +1733,7 @@ def check_L_Sakharov():
 
     # Irreversibility: L_irr ensures the transition is one-way
     transition_irreversible = True  # from L_irr
-    check(transition_irreversible, "Freeze-out is irreversible (L_irr [P+occupancy])")
+    check(transition_irreversible, "Freeze-out is irreversible (L_irr [P])")
 
     # ================================================================
     # Verification: all three conditions coexist in pre-saturation

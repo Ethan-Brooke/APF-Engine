@@ -246,7 +246,7 @@ def check_T_spin_statistics():
 
     # B3: Microcausality from L_loc + L_irr
     # Fields must satisfy [phi(x), phi(y)]_pm = 0 for spacelike separation
-    microcausality_required = True  # from L_loc [P] + L_irr [P+occupancy]
+    microcausality_required = True  # from L_loc [P] + L_irr [P]
 
     # B4: The spin-statistics connection
     # kappa(J) = e^{2*pi*i*J} = rotation_2pi[J]
@@ -465,7 +465,7 @@ def check_T_CPT():
       Since CPT is exact: T must be violated by exactly the same phase.
       T violation = CP violation = pi/4.
 
-      This is CONSISTENT with L_irr [P+occupancy]: irreversibility (the arrow
+      This is CONSISTENT with L_irr [P]: irreversibility (the arrow
       of time) IS T violation. The framework derives both:
         - T violation amount: pi/4 (from holonomy geometry)
         - T violation existence: L_irr (from admissibility physics)
@@ -1005,7 +1005,7 @@ def check_T_second_law():
     # ================================================================
 
     # C1: L_irr -> irreversible commitment direction exists
-    irreversibility = True  # from L_irr [P+occupancy]
+    irreversibility = True  # from L_irr [P]
 
     # C2: S = committed capacity -> S increases in commitment direction
     S_increases_with_k = all(
@@ -1083,7 +1083,7 @@ def check_T_second_law():
             },
             'level_C': {
                 'statement': 'Arrow of time = direction of capacity commitment',
-                'source': 'L_irr [P+occupancy]',
+                'source': 'L_irr [P]',
                 'T_violation_phase': 'pi/4',
                 'T_asymmetry': 'maximal (sin(2phi) = 1)',
                 'not_boundary_condition': True,
@@ -3059,7 +3059,7 @@ def check_T_zeroth_law():
         epistemic='P',
         summary=(
             'Temperature T = epsilon/ln(d) equalizes at equilibrium. '
-            'Flow direction: capacity flows to higher beta (L_irr [P+occupancy]). '
+            'Flow direction: capacity flows to higher beta (L_irr [P]). '
             'Equalization: flow stops at beta_1 = beta_2. '
             'Zeroth law: transitivity of equality (logical). '
             f'Cosmological: T_univ = epsilon/ln(102) = {1.0/_math.log(102):.4f}*epsilon; '
@@ -3157,7 +3157,7 @@ def check_T_first_law():
         tier=5,
         epistemic='P',
         summary=(
-            'dE = dQ + dW: dQ = T*dS (heat, irreversible, L_irr [P+occupancy]), '
+            'dE = dQ + dW: dQ = T*dS (heat, irreversible, L_irr [P]), '
             'dW = dE - T*dS (work, reversible). '
             'Verified: pure heat (dW=0), pure work (dQ=0), mixed. '
             'Second-law consistent: heat hot->cold increases total S. '
@@ -4542,7 +4542,7 @@ def check_L_quantum_evolution():
         d⟨H⟩/dt = ... reduce to the Einstein equations (T9_grav [P])
         in the geometric limit where capacity density → metric.
 
-    (F) IRREVERSIBILITY: L_irr [P+occupancy] ensures each commitment step is
+    (F) IRREVERSIBILITY: L_irr [P] ensures each commitment step is
         one-way (nᵢ: 0 → 1, never 1 → 0). This IS the arrow of time.
         The quantum channel for each step has Kraus rank 1 (pure
         projection), making the subsystem evolution non-invertible.
@@ -4561,7 +4561,7 @@ def check_L_quantum_evolution():
         E_i(ρ) = K₁ ρ K₁† + K₂ ρ K₂†
       with K₁ = |1⟩⟨0|, K₂ = |1⟩⟨1|.
       CPTP: K₁†K₁ + K₂†K₂ = |0⟩⟨0| + |1⟩⟨1| = I.
-      Kraus rank = 2, hence irreversible (L_irr [P+occupancy]).
+      Kraus rank = 2, hence irreversible (L_irr [P]).
 
     Step 3 [Composition]:
       The full evolution is the composition of 61 single-step channels:
@@ -10806,7 +10806,7 @@ def check_L_Einstein_from_entanglement():
       (i)   T_Bek [P]:    S_BH = A/(4G_N)     — area law
       (ii)  L_beta_temp [P]: T = a/(2π)         — Unruh temperature
       (iii) L_KMS_trace_state [P]: equilibrium   — KMS state exists
-      (iv)  L_irr [P+occupancy]:   δS ≥ 0                 — second law
+      (iv)  L_irr [P]:   δS ≥ 0                 — second law
 
     The derivation follows Jacobson (1995), but ALL inputs are
     internal [P] theorems — no external citation needed.
@@ -12460,7 +12460,7 @@ def check_L_metric_from_entanglement_data():
 
     CONFORMAL CLASS (from causal order):
       L_HKM_causal_geometry [P] proves: the causal partial order
-      (from L_irr [P+occupancy]) determines the metric up to a positive
+      (from L_irr [P]) determines the metric up to a positive
       scalar Ω²(x). That is, the null cones fix:
         g_μν(x) = Ω²(x) η̃_μν(x)
       where η̃ is any representative of the conformal class.
@@ -12887,7 +12887,7 @@ def check_L_spacetime_emergence():
     FIVE independent derivation chains. NO spatial input is assumed.
 
     CHAIN 1 — TOPOLOGY:
-      A1 → L_irr [P+occupancy] (irreversibility)
+      A1 → L_irr [P] (irreversibility)
          → partial order ≺ on events
          → Delta_ordering [P] (causal structure)
          → Delta_continuum [P] (continuum limit)
@@ -12901,7 +12901,7 @@ def check_L_spacetime_emergence():
          → 2 graviton DOF (T_graviton [P])
 
     CHAIN 3 — SIGNATURE:
-      A1 → L_irr [P+occupancy] (arrow of time)
+      A1 → L_irr [P] (arrow of time)
          → Delta_signature [P] (Lorentzian, −+++)
          → L_HKM_causal_geometry [P] (causal order → conformal class)
 
@@ -13445,7 +13445,7 @@ def check_L_spacetime_emergence_v2():
       L_kolmogorov_internal [P]: unique continuum limit
 
     MECHANISM 3 — CAUSAL ORDER → FULL GEOMETRY:
-      L_irr [P+occupancy] → partial order on events (Delta_ordering [P])
+      L_irr [P] → partial order on events (Delta_ordering [P])
       → conformal class [g] (L_HKM [P], 9 of 10 metric components)
       → full metric (L_Malament [P], Ω from A1 capacity density)
       → Lorentzian signature (Delta_signature [P])

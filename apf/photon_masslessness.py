@@ -53,7 +53,7 @@ def check_T_photon_massless_from_reversibility():
     FALSIFIER. APF predicts EXACTLY zero mass for the unbroken U(1)_em photon. Any nonzero photon mass
     (current bound m_gamma < ~1e-18 eV) would falsify the additive-abelian (Delta=0, reversible) reading.
 
-    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + the L_irr [P+occupancy] countermodel + cost=energy [P], with the
+    GRADE [P_structural]: composes L_cost [P] + the gauge-invariant-record theorem + the L_irr [P] countermodel + cost=energy [P], with the
     reversibility<=>masslessness identification carrying the structural grade -- the exact dual of the
     gapless<=>net-reversible identification in the confinement closure. NOT a claim that masslessness
     needs SSB to explain (it is the unbroken case); the massive-gauge-boson cases are the SSB record.
@@ -67,8 +67,8 @@ def check_T_photon_massless_from_reversibility():
            "record is factorizable (product) => no irreducibly-joint distinction => Delta=0 (additive). The split's "
            "sign is forced by the gauge-invariant-record theorem (gauge_invariant_record.py) + cost=count, NOT by "
            "L_nc (sum-vs-budget, supplies no Delta).")
-    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
-           "step 2: L_irr [P+occupancy] countermodel -- Delta=0 => fully reversible => no locked record")
+    _check(lir.get("epistemic") in ("P",) and lir.get("passed"),
+           "step 2: L_irr [P] countermodel -- Delta=0 => fully reversible => no locked record")
     _check(ce.get("epistemic") == "P" and ce.get("passed"),
            "step 3: cost=energy [P] -- a permanent commitment Delta is a permanent energy >= Delta; Delta=0 => no rest-energy floor")
     _check(True,
@@ -139,7 +139,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
          Einstein-Ritz point and Wheeler-Feynman absorber theory, sharpened to one mechanism: the same L_irr
          record-lock that orients time everywhere and gaps Yang-Mills, here acting at the absorber.
 
-    GRADE [P_structural]: composes the reversible-EM result (Paper 2 R2 / L_cost factorizable record) + L_irr [P+occupancy] + L_irr_uniform [P].
+    GRADE [P_structural]: composes the reversible-EM result (Paper 2 R2 / L_cost factorizable record) + L_irr [P] + L_irr_uniform [P].
     The physics (radiation asymmetry is thermodynamic, in the absorber) is standard; the APF content is the
     UNIFICATION -- radiation arrow, thermodynamic arrow, measurement record-lock, and confinement are one L_irr
     mechanism, not four. NOT a modification of Maxwell; the field stays T-symmetric.
@@ -149,8 +149,8 @@ def check_T_radiation_arrow_is_absorber_record_lock():
     _check(lcost.get("epistemic")=="P" and lcost.get("passed"),
            "step 1: L_cost [P] -- the abelian U(1) record is factorizable => Delta=0 (additive), reversible, arrowless; "
            "Maxwell stays T-symmetric (Paper 2 R2). (Split forced by the record theorem + cost=count, not L_nc.)")
-    _check(lir.get("epistemic") in ("P", "P+occupancy") and lir.get("passed"),
-           "step 2: L_irr [P+occupancy] -- absorption commits a locally-unrecoverable record at the absorber")
+    _check(lir.get("epistemic") in ("P",) and lir.get("passed"),
+           "step 2: L_irr [P] -- absorption commits a locally-unrecoverable record at the absorber")
     _check(liru.get("epistemic")=="P" and liru.get("passed"),
            "step 3: L_irr_uniform [P] -- the gauge sector inherits irreversibility at record-committing interfaces")
     _check(True,
@@ -169,7 +169,7 @@ def check_T_radiation_arrow_is_absorber_record_lock():
         summary=(
             "Resolves the standard puzzle -- Maxwell is T-symmetric yet radiation has an arrow -- in the framework's "
             "own terms. The photon's U(1) is additive/reversible/arrowless (Paper 2 R2); the arrow lives at the "
-            "endpoints, where absorption commits a locally-unrecoverable record (L_irr [P+occupancy]) and the gauge sector "
+            "endpoints, where absorption commits a locally-unrecoverable record (L_irr [P]) and the gauge sector "
             "inherits irreversibility at record-committing interfaces (L_irr_uniform [P]). So the radiation arrow is "
             "the absorber's, not the field's. The APF content is the unification: the radiation arrow, the "
             "thermodynamic arrow, the measurement record-lock, and confinement are one L_irr mechanism. Standard "

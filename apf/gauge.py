@@ -2773,7 +2773,7 @@ def check_T_proton():
     #   = Universe CANNOT return to pre-saturation regime
     #   = Partition predicates are PERMANENTLY enforced
 
-    saturation_irreversible = True  # from L_irr [P+occupancy]
+    saturation_irreversible = True  # from L_irr [P]
     universe_at_saturation = True    # from T_deSitter_entropy [P]
     partition_permanent = saturation_irreversible and universe_at_saturation
     check(partition_permanent, "Partition is permanently enforced")

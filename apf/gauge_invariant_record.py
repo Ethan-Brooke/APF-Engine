@@ -1686,6 +1686,589 @@ def check_T_chiral_condensate_flavour_density_interface_is_contextual():
         data=data,
     )
 
+
+# ============================================================================
+# SU(3) OCTET COLOUR CONTEXTUALITY (the physical gauge group, exact) + the
+# k-string SPECTRUM-BLINDNESS delimiting result (what the strong face does NOT buy).
+# Added on the strong-face -> confining-spectrum lane (2026-06-30).
+# ----------------------------------------------------------------------------
+from collections import defaultdict as _ddict
+from itertools import product as _iproduct, permutations as _perms, combinations as _combs
+import math as _math
+
+
+def _su3_weyl_klimyk_tetraquark():
+    """Exact decomposition of the SU(3) tetraquark q-qbar-q-qbar (3(x)3bar(x)3(x)3bar,
+    81-dim) into irreps, by the Weyl-Klimyk character formula on integer weights
+    (no sqrt3 -- multiplicities are integers).  Returns {(p,q): (dim, mult)}."""
+    fund = [(2, -1, -1), (-1, 2, -1), (-1, -1, 2)]
+    anti = [tuple(-x for x in w) for w in fund]
+    W = _ddict(int)
+    for c in _iproduct(fund, anti, fund, anti):
+        W[tuple(sum(c[k][j] for k in range(4)) for j in range(3))] += 1
+    rho = (3, 0, -3)
+    S3 = list(_perms(range(3)))
+
+    def sgn(p):
+        s = 1
+        for i in range(3):
+            for j in range(i + 1, 3):
+                if p[i] > p[j]:
+                    s = -s
+        return s
+
+    def mult(hw):
+        lr = tuple(hw[i] + rho[i] for i in range(3))
+        t = 0
+        for sig in S3:
+            sw = tuple(lr[sig[i]] for i in range(3))
+            t += sgn(sig) * W.get(tuple(sw[i] - rho[i] for i in range(3)), 0)
+        return t
+
+    out = {}
+    for hw in [w for w in W if w[0] >= w[1] >= w[2]]:
+        n = mult(hw)
+        if n > 0:
+            p = (hw[0] - hw[1]) // 3
+            q = (hw[1] - hw[2]) // 3
+            dim = (p + 1) * (q + 1) * (p + q + 2) // 2
+            out[(p, q)] = (dim, n)
+    return out
+
+
+# --- explicit SU(3) quadratic Casimir corroboration (independent of Weyl-Klimyk) ---
+class _S3E:
+    """Q[i,sqrt3] field element a + b*sqrt3 + c*i + d*i*sqrt3."""
+    __slots__ = ('a', 'b', 'c', 'd')
+
+    def __init__(s, a=0, b=0, c=0, d=0):
+        s.a = F(a); s.b = F(b); s.c = F(c); s.d = F(d)
+
+    def __add__(x, y):
+        return _S3E(x.a + y.a, x.b + y.b, x.c + y.c, x.d + y.d)
+
+    def __mul__(x, y):
+        a, b, c, d = x.a, x.b, x.c, x.d
+        p, q, r, s = y.a, y.b, y.c, y.d
+        return _S3E(a * p + 3 * b * q - c * r - 3 * d * s,
+                    a * q + b * p - c * s - d * r,
+                    a * r + c * p + 3 * b * s + 3 * d * q,
+                    a * s + d * p + b * r + c * q)
+
+    def is0(x):
+        return x.a == 0 and x.b == 0 and x.c == 0 and x.d == 0
+
+
+def _su3_casimir_trace_corroboration():
+    """Build the explicit SU(3) quadratic Casimir C = sum_a G_a^2 on the 81-dim
+    tetraquark over Q[i,sqrt3] (G_a the diagonal colour generators; lambda_2/5/7
+    imaginary, lambda_8 carries sqrt3) and return (tr C, tr C^2) as exact rationals.
+    Cross-checks the Weyl-Klimyk spectrum {C2=0:2, 3:32, 6:20, 8:27}:
+    tr C = 432, tr C^2 = 2736 -- independent confirmation that the octet sector is
+    exactly 32 states = 4 copies x dim 8 (a full M_4), with the sqrt3 load-bearing
+    yet the spectrum pure-rational."""
+    Z = _S3E(0); ONE = _S3E(1); Ii = _S3E(0, 0, 1)
+
+    def M(entries):
+        m = [[Z, Z, Z], [Z, Z, Z], [Z, Z, Z]]
+        for (i, j), v in entries.items():
+            m[i][j] = v
+        return m
+
+    lam = [
+        M({(0, 1): ONE, (1, 0): ONE}),
+        M({(0, 1): _S3E(0, 0, -1), (1, 0): Ii}),
+        M({(0, 0): ONE, (1, 1): _S3E(-1)}),
+        M({(0, 2): ONE, (2, 0): ONE}),
+        M({(0, 2): _S3E(0, 0, -1), (2, 0): Ii}),
+        M({(1, 2): ONE, (2, 1): ONE}),
+        M({(1, 2): _S3E(0, 0, -1), (2, 1): Ii}),
+        M({(0, 0): _S3E(0, F(1, 3)), (1, 1): _S3E(0, F(1, 3)), (2, 2): _S3E(0, F(-2, 3))}),
+    ]
+    half = _S3E(F(1, 2))
+    T = [[[half * lam[a][i][j] for j in range(3)] for i in range(3)] for a in range(8)]
+
+    def conj(x):
+        return _S3E(x.a, x.b, -x.c, -x.d)
+
+    Tbar = [[[Z + (_S3E(0) if False else (Z)) for _ in range(3)] for _ in range(3)] for _ in range(8)]
+    Tbar = [[[_S3E(0) for _ in range(3)] for _ in range(3)] for _ in range(8)]
+    for a in range(8):
+        for i in range(3):
+            for j in range(3):
+                Tbar[a][i][j] = _S3E(0) + (_S3E(0)) if T[a][i][j].is0() else _S3E(0)
+    # -T_a^* for antifund:
+    for a in range(8):
+        for i in range(3):
+            for j in range(3):
+                v = conj(T[a][i][j])
+                Tbar[a][i][j] = _S3E(-v.a, -v.b, -v.c, -v.d)
+
+    N = 81
+    slotgen = [T, Tbar, T, Tbar]
+    C = [[_S3E(0) for _ in range(N)] for _ in range(N)]
+    diag = _S3E(F(16, 3))  # 4 slots x C2_fund(=4/3)
+    for x in range(N):
+        C[x][x] = C[x][x] + diag
+
+    def dig(x):
+        return [(x // 27) % 3, (x // 9) % 3, (x // 3) % 3, x % 3]
+
+    for s1 in range(4):
+        for s2 in range(s1 + 1, 4):
+            Ga = slotgen[s1]; Gb = slotgen[s2]
+            tt = [[[[_S3E(0) for _ in range(3)] for _ in range(3)] for _ in range(3)] for _ in range(3)]
+            for a in range(8):
+                for i in range(3):
+                    for j in range(3):
+                        if Ga[a][i][j].is0():
+                            continue
+                        for k in range(3):
+                            for l in range(3):
+                                if Gb[a][k][l].is0():
+                                    continue
+                                tt[i][j][k][l] = tt[i][j][k][l] + Ga[a][i][j] * Gb[a][k][l]
+            two = _S3E(2)
+            for x in range(N):
+                dg = dig(x); i = dg[s1]; k = dg[s2]
+                for j in range(3):
+                    for l in range(3):
+                        v = tt[i][j][k][l]
+                        if v.is0():
+                            continue
+                        d2 = dg[:]; d2[s1] = j; d2[s2] = l
+                        y = ((d2[0] * 3 + d2[1]) * 3 + d2[2]) * 3 + d2[3]
+                        C[y][x] = C[y][x] + two * v
+
+    trC = _S3E(0)
+    for x in range(N):
+        trC = trC + C[x][x]
+    trC2 = _S3E(0)
+    for x in range(N):
+        for k in range(N):
+            if not C[x][k].is0() and not C[k][x].is0():
+                trC2 = trC2 + C[x][k] * C[k][x]
+    return trC, trC2
+
+
+def _su3_octet_M4_certificate():
+    """Exact certificate that the physical gauge group SU(3), in the octet channel of
+    the real-QCD tetraquark q-qbar-q-qbar, hosts a full M_4 (two-qubit) gauge-invariant
+    block. Two INDEPENDENT routes agree: (1) exact Weyl-Klimyk character decomposition
+    -> octet multiplicity 4; (2) an explicit 81-dim quadratic Casimir over Q[i,sqrt3]
+    with tr C = 432, tr C^2 = 2736 (the sqrt3 load-bearing yet the spectrum
+    pure-rational), consistent with the octet sector = 32 states = 4 copies x dim 8.
+    Gauge-invariance of the M_4 block is a Schur-lemma inference (octet irreducible,
+    multiplicity 4 => commutant of the octet isotypic = M_4, every element commutes with
+    the colour action); no explicit [O, G_a] = 0 operator is constructed."""
+    dec = _su3_weyl_klimyk_tetraquark()
+    tot = sum(d * n for (d, n) in dec.values())
+    octet = dec.get((1, 1), (0, 0))
+    blocks = sorted([n for (d, n) in dec.values()], reverse=True)
+    trC, trC2 = _su3_casimir_trace_corroboration()
+    casimir_ok = (trC.a == 432 and trC.b == 0 and trC.c == 0 and trC.d == 0 and
+                  trC2.a == 2736 and trC2.b == 0 and trC2.c == 0 and trC2.d == 0)
+    return {
+        "method": "exact Weyl-Klimyk character formula (integer) + explicit Q[i,sqrt3] Casimir trace cross-check",
+        "total_dim": tot,
+        "decomposition": {f"({p},{q})": {"dim": d, "mult": n} for (p, q), (d, n) in dec.items()},
+        "commutant_block_sizes_M_m": blocks,
+        "commutant_dim": sum(n * n for (d, n) in dec.values()),
+        "octet_dim": octet[0],
+        "octet_multiplicity": octet[1],
+        "explicit_casimir_trC_432_trC2_2736": bool(casimir_ok),
+        "gauge_invariance_basis": "Schur inference (octet irreducible x multiplicity 4 => commutant = M_4); "
+                                  "no explicit operator [O,G_a]=0 constructed",
+        "contains_full_M4": bool(octet == (8, 4) and tot == 81 and 4 in blocks and casimir_ok),
+    }
+
+
+def check_T_su3_octet_colour_KS_coloring_obstruction_exact():
+    """The PHYSICAL gauge group SU(3) hosts a state-independent Kochen-Specker COLORING
+    obstruction on a gauge-invariant colour interface, in EXACT arithmetic.
+
+    The real-QCD tetraquark q-qbar-q-qbar = (1(+)8)(x)(1(+)8) contains the octet with
+    multiplicity 4 (exact Weyl-Klimyk; corroborated by an explicit Q[i,sqrt3] Casimir
+    with tr C = 432, tr C^2 = 2736), so its gauge-invariant algebra (the colour
+    commutant) contains a full M_4 = the two-qubit operator algebra in the octet
+    channel. A two-qubit algebra hosts the Mermin-Peres magic square, which the
+    Interface Engine routes to IJCStr with EMPTY global-section support -- a coloring
+    IMPOSSIBILITY, contextual for every state, the strongest form.
+
+    SCOPE / honest fences:
+      * The KS obstruction itself (the magic square, the GF(2) parity certificate) is
+        GROUP-INDEPENDENT -- the identical two-qubit object banked for the SU(2)
+        pentaquark M_4 (check_T_gauge_invariant_colour_KS_coloring_obstruction). SU(3)
+        supplies only the M_4 HOST: the new, SU(3)-specific content is that the physical
+        gauge group realizes it in the physically meaningful octet channel of the
+        real-QCD tetraquark, established exactly (upgrading the census note's numerical
+        SU(3) octet finding to exact).
+      * Gauge-invariance of the M_4 block is a Schur-lemma inference from octet
+        irreducibility x multiplicity 4, not an explicit [O, G_a] = 0 operator check.
+      * IJC_str (structural) rung ONLY. IJC_adm / occupancy -- whether A1 forces the
+        world to realize such an interface -- stays the empirical QAC, untouched.
+    Grade P_structural_instrument: the verdict is the engine's exact finite-math
+    computation; occupancy is not claimed."""
+    from apf.ijc_feasbool_engine import (
+        feasbool, global_section_support_nonempty,
+        scenario_mermin_peres_magic_square, ks_parity_decide, _magic_square_parity_system,
+    )
+    cert = _su3_octet_M4_certificate()
+    scn = scenario_mermin_peres_magic_square()
+    fb = feasbool(scn)
+    sup = global_section_support_nonempty(scn)
+    n_obs, ctx = _magic_square_parity_system()
+    par = ks_parity_decide(n_obs, ctx)
+    empty = (sup["witness_section"] is None)
+    engine_ijc = (fb["branch"] == "IJCStr" and par["branch"].startswith("IJCStr"))
+    ok = bool(cert["contains_full_M4"] and engine_ijc and empty)
+    data = {
+        "SU3_octet_M4_certificate": cert,
+        "ks_set": "Mermin-Peres magic square (two-qubit, state-independent, GROUP-INDEPENDENT)",
+        "engine_branch": fb["branch"],
+        "global_section_support_empty": empty,
+        "parity_certificate": par["certificate"],
+        "gauge_group": "SU(3) -- the physical colour group (Gell-Mann lambda_8 carries sqrt3)",
+        "new_content_vs_SU2_pentaquark": ("the M_4 HOST is now the physical-SU(3) octet channel of the "
+                                          "real-QCD tetraquark, exact; the obstruction itself is the shared "
+                                          "group-independent magic square"),
+        "scope": ("IJC_str rung only; IJC_adm/occupancy stays the empirical QAC. Gauge-invariance of M_4 is "
+                  "a Schur inference (octet irreducible x mult 4), not an explicit operator check."),
+    }
+    if ok:
+        return _ok(
+            "check_T_su3_octet_colour_KS_coloring_obstruction_exact",
+            status="P_structural_instrument",
+            summary=("The physical gauge group SU(3) hosts a state-independent Kochen-Specker COLORING "
+                     "obstruction on a gauge-invariant colour interface, exactly. The real-QCD tetraquark "
+                     "q-qbar-q-qbar octet has multiplicity 4 (exact Weyl-Klimyk + explicit Q[i,sqrt3] "
+                     "Casimir tr C=432, tr C^2=2736), so the colour commutant contains a full M_4 two-qubit "
+                     "block in the octet channel; it realizes the Mermin-Peres magic square, which the "
+                     "Interface Engine returns IJCStr with empty global-section support (coloring "
+                     "impossibility, every state). The obstruction is the group-independent magic square; "
+                     "SU(3) supplies the M_4 host, exactly, in the physical octet channel. IJC_str rung "
+                     "only; occupancy stays the QAC."),
+            data=data,
+            dependencies=["check_T_gauge_invariant_colour_KS_coloring_obstruction",
+                          "check_T_gauge_invariant_colour_interface_is_contextual",
+                          "check_T_interface_contextuality_general_scenario"],
+        )
+    return _fail(
+        "check_T_su3_octet_colour_KS_coloring_obstruction_exact",
+        status="FAIL",
+        summary="SU(3) octet gauge-invariant magic-square coloring-obstruction witness did not hold.",
+        data=data,
+    )
+
+
+# --- k-string spectrum-blindness (the delimiting negative result) ---
+def _ksb_partitions(n, mx=None):
+    if mx is None:
+        mx = n
+    if n == 0:
+        yield []
+        return
+    for f in range(min(n, mx), 0, -1):
+        for r in _ksb_partitions(n - f, f):
+            yield [f] + r
+
+
+def _ksb_nsyt(lam):
+    n = sum(lam); lam = list(lam)
+    cols = [0] * (lam[0] if lam else 0)
+    for r in lam:
+        for c in range(r):
+            cols[c] += 1
+    pr = 1
+    for i, r in enumerate(lam):
+        for j in range(r):
+            pr *= ((r - j - 1) + (cols[j] - i - 1) + 1)
+    return _math.factorial(n) // pr
+
+
+def _ksb_dmax(N, k):
+    """Largest commutant multiplicity block of fund^{ox k} for SU(N) (<= N rows) = the
+    contextuality-capability invariant of the k-constituent colour interface."""
+    return max(_ksb_nsyt(l) for l in _ksb_partitions(k) if len(l) <= N)
+
+
+def _ksb_sun_dim(lam, N):
+    lam = list(lam) + [0] * (N - len(lam))
+    num = den = 1
+    for i in range(N):
+        for j in range(i + 1, N):
+            num *= (lam[i] - lam[j] + (j - i)); den *= (j - i)
+    return num // den
+
+
+def _ksb_lamk_multfree(N, k):
+    """Is Lambda^k (x) Lambda^{N-k} multiplicity-free? (dual-Pieri vertical strip + dim
+    balance). Multiplicity-free => abelian commutant => the minimal N-ality-k string
+    endpoint is never contextual."""
+    b = N - k
+    heights = [1] * k + [0] * b
+    mr = k + b
+    comps = set()
+    for chosen in _combs(range(mr), b):
+        new = heights[:]
+        for r in chosen:
+            new[r] += 1
+        tr = [x for x in new if x > 0]
+        if all(tr[i] >= tr[i + 1] for i in range(len(tr) - 1)) and len(tr) <= N:
+            comps.add(tuple(tr))
+    lhs = _math.comb(N, k) * _math.comb(N, b)
+    rhs = sum(_ksb_sun_dim(c, N) for c in comps)
+    return lhs == rhs
+
+
+def check_T_colour_contextuality_is_kstring_spectrum_blind():
+    """Every invariant that is a function of the confining colour interface's COMMUTANT
+    MULTIPLICITY STRUCTURE is k-string-SPECTRUM-BLIND: it cannot reproduce the k-string
+    tension law (Casimir k(N-k) vs sine sin(pi k/N)). A delimiting result -- the strong
+    (contextuality) face certifies gap EXISTENCE (via the banked Delta>0 = non-factorizable
+    record) but carries no k-string ordering information.
+
+    Two framings, the null holds in BOTH for DIFFERENT reasons (so the result is robust to
+    which k-sector one calls physical):
+      * Framing II (minimal N-ality-k endpoint): the source rep Lambda^k tensored with its
+        conjugate Lambda^{N-k} is MULTIPLICITY-FREE for all N,k => abelian gauge-invariant
+        record => never contextual (like the meson). d_max profile is constant = 1.
+      * Framing I (k-constituent census, fund^{ox k}): the capability invariant
+        d_max(k) = largest commutant block is, in the physical range k <= floor(N/2)
+        (N >= 2k), a pure function of k -- N-INDEPENDENT and monotone in k. It grows.
+
+    PRIMARY reason (Claim A, N-independence): at fixed k the commutant invariant is the
+    SAME for every N >= 2k, while the tension sigma_k = k(N-k) VARIES with N -- one
+    invariant input maps to many spectrum outputs, so no function of the invariant can
+    equal sigma_k. The k<->N-k symmetry mismatch (invariant asymmetric, tension symmetric)
+    is a CORROBORATING witness (its asymmetry is exhibited at k > floor(N/2), the unphysical
+    half; the physical-range argument is Claim A).
+
+    SCOPE (honest): 'spectrum-blind' is scoped to invariants that are FUNCTIONS OF THE
+    SINGLE-INTERFACE COMMUTANT MULTIPLICITY STRUCTURE, not literally every conceivable
+    quantity. The check asserts NOTHING about sigma_k values, Lambda_QCD, which law is
+    correct, occupancy/QAC, or a re-derivation of Delta>0 (it references the banked strong
+    face). Grade P_structural_instrument: an exact finite rep-theory computation delimiting
+    the engine's reach."""
+    Ns = range(3, 9)
+    II_all_abelian = all(_ksb_lamk_multfree(N, k) for N in Ns for k in range(1, N))
+    # Framing I: N-independence across the physical range k <= floor(N/2)
+    dmax_min = {k: _ksb_dmax(k + 1, k) for k in range(1, 8)}
+    N_independent = all(_ksb_dmax(N, k) == dmax_min[k]
+                        for N in range(3, 15) for k in range(1, N // 2 + 1))
+    monotone = all(dmax_min[k] <= dmax_min[k + 1] for k in range(1, 7))
+    # Claim A witness: fixed k=4, d_max constant while sigma_k = k(N-k) varies with N
+    claimA_k = 4
+    dmax_const = len({_ksb_dmax(N, claimA_k) for N in range(8, 16)}) == 1
+    sigma_varies = len({claimA_k * (N - claimA_k) for N in range(8, 16)}) > 1
+    claimA = bool(dmax_const and sigma_varies)
+    # corroborating symmetry witness (at k>floor(N/2), the unphysical half)
+    laws_symmetric = all(k * (N - k) == (N - k) * k and
+                         abs(_math.sin(_math.pi * k / N) - _math.sin(_math.pi * (N - k) / N)) < 1e-12
+                         for N in Ns for k in range(1, N))
+    census_asym = any(_ksb_dmax(N, k) != _ksb_dmax(N, N - k) for N in Ns for k in range(1, N))
+    framings_differ = (dmax_min[2] != 1)  # framing I grows (d_max(k=... )); framing II constant 1
+    ok = bool(II_all_abelian and N_independent and monotone and claimA and
+              laws_symmetric and census_asym)
+    data = {
+        "framing_II_minimal_endpoint_multiplicity_free_abelian": II_all_abelian,
+        "framing_I_census_N_independent_physical_range": N_independent,
+        "framing_I_census_monotone_in_k": monotone,
+        "claimA_fixed_k_invariant_constant_while_sigma_varies": claimA,
+        "corroborating_kstring_laws_symmetric": laws_symmetric,
+        "corroborating_census_invariant_asymmetric_unphysical_half": census_asym,
+        "framings_give_different_dmax_profiles": bool(framings_differ),
+        "scope": ("invariants = functions of the single-interface commutant multiplicity structure, "
+                  "physical range k<=floor(N/2); NOT every conceivable quantity"),
+        "asserts_nothing_about": ["sigma_k values", "Lambda_QCD", "which k-string law holds",
+                                  "occupancy/QAC", "re-deriving Delta>0"],
+        "verdict": ("commutant-multiplicity contextuality invariants are N-independent (physical range) "
+                    "and monotone/asymmetric in k; the k-string tension is N-dependent and k<->N-k "
+                    "symmetric => no such invariant tracks Casimir or sine. The strong face fixes gap "
+                    "EXISTENCE (Delta>0) but is k-string-spectrum-blind. Null holds in both framings."),
+    }
+    if ok:
+        return _ok(
+            "check_T_colour_contextuality_is_kstring_spectrum_blind",
+            status="P_structural_instrument",
+            summary=("The strong (contextuality) face is k-string-SPECTRUM-BLIND: every invariant that is "
+                     "a function of the confining colour interface's commutant multiplicity structure is "
+                     "N-independent (physical range k<=floor(N/2)) and monotone/asymmetric in k, whereas "
+                     "the k-string tension sigma_k (Casimir k(N-k) or sine sin(pi k/N)) is N-dependent and "
+                     "k<->N-k symmetric -- so no such invariant tracks either law (Claim A: at fixed k the "
+                     "invariant is constant across N while sigma_k varies). The null holds in both framings "
+                     "(minimal endpoint Lambda^k(x)Lambda^{N-k} multiplicity-free/abelian; k-constituent "
+                     "census N-independent). Delimiting: the strong face certifies gap existence via the "
+                     "banked Delta>0, but carries no k-string ordering information. Asserts nothing about "
+                     "sigma_k values, Lambda_QCD, which law holds, or occupancy."),
+            data=data,
+            dependencies=["check_T_center_order_parameter_triality",
+                          "check_T_gauge_invariant_colour_interface_is_contextual"],
+        )
+    return _fail(
+        "check_T_colour_contextuality_is_kstring_spectrum_blind",
+        status="FAIL",
+        summary="k-string spectrum-blindness witness did not hold.",
+        data=data,
+    )
+
+
+def _disjoint_bases_scenario(nbases):
+    """A finite marginal Scenario of `nbases` pairwise-DISJOINT orthonormal triads on
+    the maximally-mixed qutrit (rank-1 marginals = 1/3).  Each basis is one triad
+    context of three fresh rays; no ray is shared across bases and no cross-basis
+    orthogonality is imposed -- the orthogonality graph is `nbases` disjoint
+    triangles.  This is the engine encoding of `nbases` incompatible orthonormal
+    bases that pairwise share no rays."""
+    from apf.ijc_feasbool_engine import Scenario
+    third = F(1, 3)
+    meas = tuple((f"b{t}_r{k}", (1, 0)) for t in range(nbases) for k in range(3))
+    contexts, emp = [], []
+    for t in range(nbases):
+        names = tuple(f"b{t}_r{k}" for k in range(3))
+        contexts.append(names)
+        emp.append((names, tuple((tuple(1 if m == k else 0 for m in range(3)), third)
+                                 for k in range(3))))
+    return Scenario(meas, tuple(contexts), tuple(emp))
+
+
+def _ckm_fully_mixing():
+    """Certify from check_T_CKM's own zero-parameter construction that the forced CKM
+    matrix V = U_uL^dag U_dL is FULLY MIXING: every |V_ij| is strictly inside (0,1).
+    Fully-mixing => the up-mass basis (cols of U_uL) and the down-mass basis (cols of
+    U_dL) share NO ray (an exact |V_ij|=1 would be a coincident ray / decoupled
+    generation) and have NO cross-basis orthogonality (an exact |V_ij|=0).  So the two
+    forced mass bases form a disjoint-triad set.  Returns (ok, min|V|, max|V|)."""
+    import math
+    from apf import generations as _gen
+    phi = math.pi / 4
+    q_B = [7, 4, 0]; q_H = [7, 5, 0]
+    Delta_k = 3; x = 0.5; c_Hu = x ** 3
+    M_u = _gen._build_two_channel(q_B, q_H, phi, Delta_k, 0, 1.0, c_Hu)
+    M_d = _gen._build_two_channel(q_B, q_H, phi, 0, 0, 1.0, 1.0)
+    _, U_uL = _gen._diag_left(M_u)
+    _, U_dL = _gen._diag_left(M_d)
+    V = _gen._mm(_gen._dag(U_uL), U_dL)
+    mags = [abs(V[i][j]) for i in range(3) for j in range(3)]
+    lo, hi = min(mags), max(mags)
+    return (lo > 1e-4 and hi < 1.0 - 1e-4), lo, hi
+
+
+def check_T_ckm_flavour_coavailability_is_sepstr():
+    """The CKM-forced flavour co-availability is SepStr, NOT the contextual web.
+
+    Delimiting result on the occupancy-forcing route through the flavour sector
+    (thread 1 of the co-availability / flavour-changing-crack continuation).
+
+    The forcing hope: the weak interaction is flavour-changing (forced, chiral SU(2))
+    and the CKM matrix is A1-derived and != 1, so the weak/mass flavour bases are
+    genuinely incompatible AND both classically measured (mixing angles, branching
+    ratios).  So the off-diagonal flavour records are classically consequential, and
+    structural completeness would force their co-availability NON-circularly -- the
+    move that breaks the co-availability circularity blocking occupancy.
+
+    What is actually forced on a generation qutrit is EXACTLY TWO orthonormal bases:
+    the down-type mass basis (cols of U_dL) and the up-type mass basis via the charged
+    current (cols of U_uL), related by V = U_uL^dag U_dL != 1.  Both classically
+    consequential; no third quark-flavour basis is forced (neutral currents are
+    flavour-diagonal / GIM; weak isospin acts up<->down not within the qutrit; neutral-
+    meson mixing reduces to V; the SU(3)_V octet currents that span Herm(3) are
+    realizable TRANSITION operators, not forced co-available RECORDS -- realizability-
+    by-spanning is exactly the all-nine-densities-co-available assumption the QAC leaves
+    empirical).
+
+    Four exact facts compose:
+      (1) FORCED STRUCTURE.  The two forced mass bases, fed to the Interface Engine as
+          two disjoint triads on the maximally-mixed state, return SepStr (9 global
+          sections = a manifestly noncontextual model).  Two orthonormal bases sharing
+          no rays always admit a global section: noncommutativity, not contextuality.
+      (2) COUNT-ROBUST.  The verdict does not depend on the count being two: five
+          pairwise-disjoint bases still return SepStr (3^5 sections).  A KS obstruction
+          needs ray-SHARING / intertwining across contexts, not more bases.
+      (3) CKM FULLY MIXING.  V has every |V_ij| strictly inside (0,1), so the two
+          forced bases genuinely share no ray and have no cross-basis orthogonality --
+          the forced structure IS a disjoint-triad set.  The verdict flips only if
+          forcing produced a coincident ray (|V_ij|=1, a decoupled generation), which
+          three genuinely-mixed generations forbid.
+      (4) DISCRIMINATION.  The full Yu-Oh 13-ray web (which check_T_chiral_condensate_
+          flavour_density_interface_is_contextual uses) IS IJCStr -- so the SepStr
+          verdict on the forced set reports the web genuinely ABSENT, not an engine
+          blind spot.
+
+    Therefore forced flavour-changing dynamics buy noncommutativity classically (a
+    single forced incompatible basis pair = SepStr) but do NOT force contextuality (the
+    KS web); assembling the web needs additional co-available incompatible contexts
+    whose realization stays the empirical QAC.  One basis rotation is never KS.
+
+    SCOPE / GRADE.  P_structural_instrument: the SepStr/IJCStr verdicts are the engine's
+    exact finite Boole-polytope computations; the fully-mixing premise is a margin
+    inequality on the [P] CKM.  This delimits ONE forcing route (flavour); it does not
+    prove occupancy unforceable in general (threads 2/3 untouched).  IJC_adm / occupancy
+    stays the empirical QAC.
+    """
+    from apf.ijc_feasbool_engine import feasbool
+
+    scn2 = _disjoint_bases_scenario(2)
+    fb2 = feasbool(scn2)
+    forced_sepstr = (fb2["branch"] == "SepStr" and fb2["n_global_sections"] == 9)
+
+    scn5 = _disjoint_bases_scenario(5)
+    fb5 = feasbool(scn5)
+    robust_sepstr = (fb5["branch"] == "SepStr" and fb5["n_global_sections"] == 3 ** 5)
+
+    ckm_ok, vlo, vhi = _ckm_fully_mixing()
+
+    yscn, nrays, ntri, npair = _ccf_yuoh_flavour_scenario()
+    yfb = feasbool(yscn)
+    control_ijc = (yfb["branch"] == "IJCStr")
+
+    ok = bool(forced_sepstr and robust_sepstr and ckm_ok and control_ijc and nrays == 13)
+    data = {
+        "forced_structure": "two incompatible mass bases on the generation qutrit (down-mass U_dL, up-mass U_uL via the charged current), related by V = U_uL^dag U_dL != 1",
+        "forced_two_basis_branch": fb2["branch"],
+        "forced_two_basis_sections": fb2["n_global_sections"],
+        "five_basis_branch": fb5["branch"],
+        "five_basis_sections": fb5["n_global_sections"],
+        "count_robust": robust_sepstr,
+        "ckm_fully_mixing": ckm_ok,
+        "ckm_min_abs_Vij": vlo,
+        "ckm_max_abs_Vij": vhi,
+        "yuoh_control_branch": yfb["branch"],
+        "yuoh_n_rays": nrays,
+        "mechanism": "two orthonormal bases sharing no rays always admit a global section (SepStr); KS needs ray-sharing/intertwining, which forced flavour data lack. Forcing buys noncommutativity, not contextuality.",
+        "scope": ("delimits the flavour forcing route only; IJC_adm/occupancy (the co-availability "
+                  "of the extra intertwined contexts) stays the empirical QAC. One basis rotation is never KS."),
+    }
+    if ok:
+        return _ok(
+            "check_T_ckm_flavour_coavailability_is_sepstr",
+            status="P_structural_instrument",
+            summary=("The CKM-forced flavour co-availability is SepStr, not the contextual web. "
+                     "The A1-forced CKM (V != 1, fully mixing: |V_ij| in (%.4f, %.4f)) makes exactly "
+                     "two incompatible mass bases (down-mass, up-mass via the charged current) co-"
+                     "available and classically consequential; fed to the Interface Engine as two "
+                     "disjoint triads they return SepStr (9 sections = noncontextual), and the verdict "
+                     "is count-robust (five disjoint bases still SepStr). The full Yu-Oh 13-ray web is "
+                     "IJCStr (control), so the web is genuinely absent, not engine-blind. Forced flavour-"
+                     "changing dynamics buy noncommutativity classically but not contextuality (KS); the "
+                     "extra intertwined co-availability the web needs stays the empirical QAC. One basis "
+                     "rotation is never KS -- a delimiting null on the flavour forcing route."
+                     % (vlo, vhi)),
+            data=data,
+            dependencies=["check_T_CKM",
+                          "check_T_chiral_condensate_flavour_density_interface_is_contextual",
+                          "check_T_feasbool_general_contextuality",
+                          "check_T_interface_contextuality_general_scenario"],
+        )
+    return _fail(
+        "check_T_ckm_flavour_coavailability_is_sepstr",
+        status="FAIL",
+        summary="CKM-forced flavour co-availability SepStr delimiter did not hold.",
+        data=data,
+    )
+
+
+
 CHECKS = {
     "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P":
         check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P,
@@ -1703,6 +2286,12 @@ CHECKS = {
         check_T_chiral_condensate_flavour_density_interface_is_contextual,
     "check_T_gauge_invariant_colour_KS_coloring_obstruction":
         check_T_gauge_invariant_colour_KS_coloring_obstruction,
+    "check_T_su3_octet_colour_KS_coloring_obstruction_exact":
+        check_T_su3_octet_colour_KS_coloring_obstruction_exact,
+    "check_T_colour_contextuality_is_kstring_spectrum_blind":
+        check_T_colour_contextuality_is_kstring_spectrum_blind,
+    "check_T_ckm_flavour_coavailability_is_sepstr":
+        check_T_ckm_flavour_coavailability_is_sepstr,
 }
 
 

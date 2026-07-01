@@ -19,7 +19,13 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     full-strength reading -- structural completeness, "a
                     physical object is its continuation profile and nothing
                     beyond it"); Assumption 2 (cost-bearing distinction);
-                    Assumption 3 (structural commitment); finiteness.  What
+                    Assumption 3 (structural commitment); finiteness.  Co-equal
+                    with the finiteness clause is OCCUPANCY: that the world is
+                    instantiated -- drawn, with irreducible jointness (Delta>0
+                    somewhere) -- a constitutive feature of the referent, declared
+                    not derived (Paper 0, sec:three_term_foundation), carried in
+                    dependency lists as 'occupancy' (see the retired [P+occupancy]
+                    entry below).  What
                     the argument RESTS ON sets the grade; proof METHOD
                     (symbolic / executable witness / enumeration) does not.
                     PLEC's {A1, MD, A2, BW}, FD1, and closed-world
@@ -89,18 +95,25 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     Source-of-record: APF Reference Docs/Reference - IJC
                     Dichotomy Theorem and the Quantum-Interface Bridge
                     (2026-04-26).md.
-  [P+occupancy]     Proved from PLEC + the occupancy input at the interface
-                    (2026-06-29): the joint-vs-sum cost residual Delta = E_12 -
-                    E_1 - E_2 has its FORM fixed by L_cost (cost=count: Delta =
-                    eps * (# irreducibly-joint distinctions)), but its SIGN is a
-                    per-interface input -- Delta>0 iff the interface carries an
-                    irreducibly-joint distinction (a correlation not reducible to
-                    either marginal). A1 admits both Delta=0 (reversible) and
-                    Delta>0, so theorems whose conclusions presuppose Delta>0 carry
-                    this tag honestly. It is the SAME occupancy bit that branch (IJC)
-                    names on the quantum axis ([P+IJC]); L_irr (the arrow of time)
-                    and the IJC bridge (quantum non-commutativity) share it. (L_nc,
-                    the sum-vs-budget non-closure lemma, supplies no Delta.)
+  [P+occupancy]     RETIRED 2026-07-01 -> folded into [P].  Occupancy (the
+                    world is drawn, with irreducible jointness, Delta>0) is now a
+                    CONSTITUTIVE feature of the referent, co-equal with A1's
+                    finiteness and part of the [P] base -- not a per-interface rider.
+                    A result consuming it is [P] with 'occupancy' named in its
+                    dependency list (as using A1 gives [P], not '[P+A1]').  This
+                    ratifies what the corpus already did: L_irr's transitive consumers
+                    were already plain [P]; only L_irr itself carried the rider.
+                    History (2026-06-29..07-01): the joint-vs-sum residual Delta =
+                    E_12 - E_1 - E_2 has its FORM from L_cost (cost=count) and its
+                    SIGN from occupancy; a fully-classical Delta=0 world lacks the
+                    arrow, confinement, and the quantum -- but that world is the
+                    UNOCCUPIED LIMIT, not an alternative.  What occupancy
+                    leaves OPEN -- its profile/cardinality (one bit vs read-anew) -- is
+                    the interpretation question (Everett/Bohm/collapse), hosted not
+                    adopted.  [P+IJC] still flags PROFILE-level dependence (a specific
+                    interface being quantum-capable), a contingent rider; occupancy-
+                    OBTAINS (Delta>0 somewhere) is the base fact.  (L_nc supplies no
+                    Delta.)
   [C]               Conjecture.  Not yet proved; flagged for follow-up.
   [C, parked]       Conjecture deliberately parked pending further work
                     (e.g., subspace-level witnesses for I1/I3/I4 in
@@ -717,6 +730,37 @@ from apf._module_manifest import (
     BANK_LOAD_MODULES as _MODULE_PATHS,
     EXPECTED_REGISTRY_SIZE,
 )
+
+# ---------------------------------------------------------------------------
+# The foundational base, made explicit (2026-07-01).
+#
+# [P] = derivable from this base + standard mathematics.  The base is TYPED,
+# not a flat list -- which is why "the four" has read two different ways in
+# the corpus (FD1/MD/BW/A1 in the Prelude vs A1/MD/A2/BW in the ontology).
+# Three kinds:
+#
+#   world_facts    declared features of the world we study, not derived
+#     'A1'           finiteness: capacity bounded at every causal region
+#     'occupancy'    the world is drawn, with irreducible jointness (Delta>0)
+#
+#   cost_geometry  what the drawn, bounded structure IS
+#     'MD','A2','BW','FD1'   floor / least-cost selection / non-degeneracy /
+#                            continuation-identity + structural completeness
+#
+#   across_region  the one input still under treatment (status OPEN)
+#     'no_B'         no canonical frame carried between neighbouring regions
+#
+# Of these, 'A1', 'occupancy', and 'FD1' appear as leaf dependency strings;
+# 'no_B' is declared here but not yet cited by any check (status open).  None
+# are registered theorems -- the crystal walker drops such deps as non-nodes,
+# like MD/A2/BW already are.  This constant is the single explicit statement
+# of what those leaves are.
+# ---------------------------------------------------------------------------
+FOUNDATIONAL_BASE = {
+    "world_facts": ("A1", "occupancy"),
+    "cost_geometry": ("MD", "A2", "BW", "FD1"),
+    "across_region": ("no_B",),  # status open -- Paper 0 sec:three_term_foundation
+}
 from apf.apf_utils import CheckFailure
 from apf.apf_utils import dag_reset, dag_dump, dag_verify_chain
 

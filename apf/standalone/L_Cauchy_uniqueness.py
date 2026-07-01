@@ -23,7 +23,7 @@ C1 satisfying C2 is f(x) = x*f(1). With C3, f(x) = x. Q.E.D.
 
 CONSEQUENCE: gamma_2/gamma_1 = F(d) + F(1/d) = d + 1/d = 17/4
   where d = 4 EW channels (T_channels [P]).
-  The addition (not subtraction) follows from L_irr [P+occupancy]:
+  The addition (not subtraction) follows from L_irr [P]:
   irreversible realignment costs accumulate, never cancel.
 
 STATUS: [P]. Replaces R1+R2 with Cauchy (1821). R3 absorbed into

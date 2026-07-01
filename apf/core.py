@@ -411,7 +411,26 @@ def check_L_epsilon_star():
 def check_L_irr():
     """L_irr: Irreversibility from Admissibility Physics.
 
-    CLAIM: A1 + L_loc + L_cost (+ occupancy input) ==> A4 (irreversibility).
+    CLAIM: A1 + occupancy + L_loc + L_cost ==> A4 (irreversibility).
+
+    Occupancy (Delta>0 somewhere) is a constitutive feature of the referent,
+    co-equal with A1's finiteness: the world the framework studies is
+    instantiated -- drawn with irreducible jointness -- not the separable
+    Delta=0 limit. It is declared, not derived (Paper 0, referent/A1 chapter),
+    and is therefore part of the [P] base, carried here as the dependency
+    'occupancy' rather than a grade rider. The Delta=0 world is the unoccupied
+    limit, not an alternative physics.
+
+    FACTORING: the witness below establishes two separable contents.
+      (i)  an occupancy-FREE structural core -- monotonicity (L3), all subsets
+           globally admissible, saturation, and local-unrecoverability of
+           committed capacity -- which holds in the Delta=0 world too; and
+      (ii) the occupancy-CARRYING arrow -- given Delta>0, committed cross-
+           interface capacity is locally unrecoverable, so records accumulate
+           irreversibly.
+    Only (ii) consumes 'occupancy'. A consumer that needs only the structural
+    facts of (i) does not inherit occupancy; this separation is what bounds
+    the arrow's blast radius.
 
     MECHANISM (Option D — locality-based irreversibility):
         Irreversibility arises because cross-interface correlations
@@ -426,9 +445,11 @@ def check_L_irr():
         distinctions the joint carries - # reducible shared anchors). L_cost
         fixes the FORM; it does not fix the sign. Delta > 0 IFF the shared
         interface carries an irreducibly-joint distinction (a correlation not
-        reducible to either marginal) -- the OCCUPANCY input. A1 admits both
-        Delta = 0 (the additive/reversible countermodel below) and Delta > 0,
-        so occupancy is a per-interface input, not an A1 theorem. (L_nc, the
+        reducible to either marginal) -- the OCCUPANCY feature. A1 alone admits
+        both Delta = 0 (the unoccupied limit below) and Delta > 0; occupancy is
+        the declared constitutive feature fixing the sign, co-equal with A1 and
+        not an A1 theorem -- A1 bounds what is admissible, occupancy is that the
+        admitted structure is drawn with irreducible jointness. (L_nc, the
         sum-vs-budget non-closure lemma E1+E2 > C, plays no role here: it never
         compares joint vs sum and supplies no Delta.) This is the SAME
         occupancy bit that branch (IJC) names on the quantum axis (L_Pi
@@ -484,7 +505,11 @@ def check_L_irr():
         Single-interface world: observer has global access.
         All correlations are recoverable. Fully reversible.
 
-    STATUS: [P+occupancy]. Dependencies: A1, L_loc, L_cost (occupancy: Delta>0 is a per-interface input; A1 admits the Delta=0 reversible world).
+    STATUS: [P] (relative to the constitutive base, which includes occupancy).
+        Dependencies: A1, occupancy, L_loc, L_cost. The Delta>0 arrow content
+        (ii) is what consumes occupancy; the structural core (i) is
+        occupancy-free. The Delta=0 world is the unoccupied limit, not an
+        alternative physics.
     """
     from itertools import combinations as _combinations
 
@@ -544,7 +569,7 @@ def check_L_irr():
                       f"L3 at Gamma_E: E_E({S1}) <= E_E({S2})")
 
     # ================================================================
-    # CHECK 2: Superadditivity (L_nc premise)
+    # CHECK 2: Superadditivity (occupancy input: Delta>0)  [content (ii)]
     # ================================================================
     _Delta_S_se = _ES[frozenset({0,1})] - _ES[frozenset({0})] - _ES[frozenset({1})]
     _Delta_S_sc = _ES[frozenset({0,2})] - _ES[frozenset({0})] - _ES[frozenset({2})]
@@ -641,7 +666,7 @@ def check_L_irr():
     check(_Delta_add == 0, "Countermodel: additive world has Delta = 0")
     # In additive world, removing c from {s,e,c} frees exactly E(c)
     # at each interface independently. No cross-interface coordination needed.
-    # => fully reversible. L_nc (Delta > 0) is necessary.
+    # => fully reversible. occupancy (Delta > 0) is necessary.
 
     # ================================================================
     # COUNTERMODEL 2: Single-interface world => fully reversible
@@ -655,9 +680,9 @@ def check_L_irr():
     return _result(
         name='L_irr: Irreversibility from Admissibility Physics',
         tier=0,
-        epistemic='P+occupancy',
+        epistemic='P',
         summary=(
-            'A1 + L_loc + L_cost ==> A4, GIVEN occupancy (Delta>0). Mechanism: '
+            'A1 + occupancy + L_loc + L_cost ==> A4. Mechanism: '
             'the joint-distinction cost (Delta>0, L_cost form + occupancy input) '
             'commits capacity to cross-interface correlations. Locality (L_loc) '
             'prevents any single observer from recovering this capacity. '
@@ -667,12 +692,12 @@ def check_L_irr():
             f'interfaces. All 8 subsets globally admissible. Correlation c '
             f'commits {_corr_cost_S} at Gamma_S and {_corr_cost_E} at Gamma_E '
             '(locally unrecoverable). '
-            'Countermodels: (1) additive (Delta=0) => fully reversible, '
-            '(2) single-interface => fully reversible. '
-            'Both L_nc and L_loc are necessary.'
+            'Countermodels: (1) additive (Delta=0), the unoccupied limit => '
+            'fully reversible, (2) single-interface => fully reversible. '
+            'Both occupancy (Delta>0) and L_loc are necessary.'
         ),
-        key_result='A1 + L_loc + L_cost + occupancy(Delta>0) ==> A4 (irreversibility derived GIVEN the interface carries an irreducible correlation; A1 admits the Delta=0 reversible world)',
-        dependencies=['A1', 'L_loc', 'L_cost'],
+        key_result='A1 + occupancy + L_loc + L_cost ==> A4 (irreversibility, given the constitutive occupancy feature Delta>0; the Delta=0 world is the unoccupied limit, not an alternative)',
+        dependencies=['A1', 'occupancy', 'L_loc', 'L_cost'],
         artifacts={
             'witness': {
                 'distinctions': '{s, e, c} (system, environment, correlation)',
