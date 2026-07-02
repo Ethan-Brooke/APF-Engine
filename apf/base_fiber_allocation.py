@@ -568,6 +568,97 @@ def check_T_gauge_connection_is_gauge_variant_convention_P() -> Dict:
     )
 
 
+
+def check_T_across_frame_fork_localized() -> Dict:
+    """The across-frame fork is LOCALIZED: a closed-world citation-hygiene theorem.
+
+    CLAIM. The per-region-vs-diagonal (gauged-vs-global) across-frame fork is cited
+    by exactly three bank modules -- base_fiber_allocation (the no-B allocation,
+    adopted), gauge_quotient_ledger (GQL-2 + the two-region control, "the Goldstone
+    shadow"), ym_quotient_ledger (its own gauged-vs-global discriminating control) --
+    plus one FENCED MENTION in gauge_invariant_record (the loc_commut across-interface
+    frame, consumed as a reading, [P_structural_reading]). No other module references
+    the fork, and no confirmed quantitative prediction sits downstream of it as a
+    grade-carrying dependency (the 3/13 EW ledger share and the alpha_s forward chain
+    are horn-blind: cold audit 2026-07-01, REDUCE 0.85, Finding 1).
+
+    HONEST GLOSS (required by the same audit, Finding 7): this check certifies
+    CITATION HYGIENE -- no check outside the enumerated surfaces NAMES a fork
+    object -- not semantic horn-blindness. The fork's historical failure mode is
+    being smuggled unnamed (the Skolem-Noether Step-1 charge); a source scan cannot
+    detect smuggling. What the check buys: the FOUNDATIONAL_BASE across_region row
+    ("no_B", status OPEN) is provably CONTAINED -- nothing confirmed rests on it.
+
+    Pattern precedent: the boundary-map corpus check (closed-world over the
+    enumerated registry). Falsifiers: (i) a new module cites the fork outside the
+    enumeration (this check fails -> re-audit the containment); (ii) a future theorem
+    supplies a canonical arrow (the sibling no-B check inverts); (iii) a confirmed
+    prediction acquires a fork surface as a grade-carrying dependency.
+
+    GRADE [P_structural]: closed-world over the current corpus, by construction.
+    """
+    import os
+    import apf as _apf_pkg
+    pkg_dir = os.path.dirname(os.path.abspath(_apf_pkg.__file__))
+    tokens = (
+        "across_interface_frame",      # the substrate-primitive identifier
+        "across-interface frame",      # the prose form
+        "relative orientation",        # the two-region control vocabulary
+        "relative theta",
+        "gauged-vs-global",            # GQL-2 / YM discriminating controls
+        "Goldstone shadow",
+    )
+    allowed = {
+        "base_fiber_allocation.py":  "the no-B allocation (adopted surface; this check lives here)",
+        "gauge_quotient_ledger.py":  "GQL-2 + the two-region control (adopted, load-bearing by banked control)",
+        "ym_quotient_ledger.py":     "the YM gauged-vs-global discriminating control",
+        "gauge_invariant_record.py": "fenced MENTION only (loc_commut reading, [P_structural_reading])",
+    }
+    hits: Dict[str, list] = {}
+    for name in sorted(os.listdir(pkg_dir)):
+        if not name.endswith(".py"):
+            continue
+        try:
+            with open(os.path.join(pkg_dir, name), encoding="utf-8", errors="replace") as f:
+                src = f.read()
+        except OSError:
+            continue
+        found = [t for t in tokens if t in src]
+        if found:
+            hits[name] = found
+    unexpected = sorted(set(hits) - set(allowed))
+    missing = sorted(set(allowed) - set(hits))
+    ok = (not unexpected) and (not missing)
+    data = {
+        "tokens": list(tokens),
+        "allowed_surfaces": dict(allowed),
+        "hit_map": {k: v for k, v in sorted(hits.items())},
+        "unexpected_surfaces": unexpected,
+        "missing_expected_surfaces": missing,
+        "gloss": "citation hygiene over the enumerated corpus; NOT semantic horn-blindness",
+        "containment": ("no confirmed prediction is downstream of the fork as a "
+                        "grade-carrying dependency (audit 2026-07-01)"),
+    }
+    if ok:
+        return _ok(
+            "check_T_across_frame_fork_localized",
+            status="P_structural",
+            summary=("The across-frame fork is cited at exactly three bank surfaces plus one "
+                     "fenced mention, nowhere else; the FOUNDATIONAL_BASE across_region row is "
+                     "provably contained (citation hygiene, closed-world over the current corpus; "
+                     "not semantic horn-blindness)."),
+            data=data,
+            dependencies=["check_T_gauge_connection_is_gauge_variant_convention_P"],
+        )
+    return _fail(
+        "check_T_across_frame_fork_localized",
+        status="FAIL",
+        summary=("Fork citation surface changed: unexpected=%r missing=%r -- re-audit the "
+                 "containment before trusting the localization." % (unexpected, missing)),
+        data=data,
+    )
+
+
 CHECKS = {
     "check_T_cross_interface_algebraic_impossibility_ceiling_P": check_T_cross_interface_algebraic_impossibility_ceiling_P,
     "check_T_base_fiber_allocation_criterion_P": check_T_base_fiber_allocation_criterion_P,
@@ -579,6 +670,7 @@ CHECKS = {
     "check_T_representation_locality_theorem_P": check_T_representation_locality_theorem_P,
     "check_T_base_fiber_allocation_theorem_P": check_T_base_fiber_allocation_theorem_P,
     "check_T_gauge_connection_is_gauge_variant_convention_P": check_T_gauge_connection_is_gauge_variant_convention_P,
+    "check_T_across_frame_fork_localized": check_T_across_frame_fork_localized,
 }
 
 
