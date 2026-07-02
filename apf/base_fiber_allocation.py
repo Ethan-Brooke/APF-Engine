@@ -508,6 +508,17 @@ def check_T_gauge_connection_is_gauge_variant_convention_P() -> Dict:
     GRADE [P_structural_reading]: one adopted internal reading -- 'admissible quantity =
     substrate-global per the banked allocation criterion; the across-interface frame-choice =
     convention'. It forces nothing (not [P]).
+
+    TYPING PARTITION (v24.3.312 cross-ref; the token-registration typing walk, REDUCE 0.85
+    surviving core): token-registered orientation content is the REFERENCE-RECORD species,
+    horn-independent -- real, billed, standing, but not canonical-B; a canonical token can
+    arise only via this check's own named falsifier (a future theorem supplying the arrow,
+    condition (b) above). Canonicity cannot hide in token clothing: it sits at type level
+    (the open type-census entry lemma) or is derived (the watched falsifier slot) or does
+    not exist. See check_T_canonical_token_requires_type_or_theorem below; the sharpened
+    census conditional (antecedent OPEN) is check_T_census_unit_exclusion_conditional.
+    (Per the audits: this cross-ref cites the surviving conditional ONLY -- the retracted
+    equipartition/S_dS collision is NOT cited and carries no weight here.)
     """
     alloc = all_allocations()
     conn = alloc["across_interface_gauge_connection"]
@@ -659,6 +670,212 @@ def check_T_across_frame_fork_localized() -> Dict:
     )
 
 
+
+def check_T_canonical_token_requires_type_or_theorem() -> Dict:
+    """Canonical-B cannot be realized as token-registered content: type-level, derived, or nothing.
+
+    NAMED PREMISE (model-relative + horn-definition-relative -- this trichotomy is typed
+    against the bank's OWN two-layer partition and the rival's OWN definition, per the
+    2026-07-01 typing audit; it is architecture-relative, NOT a metaphysical theorem):
+      (i)  the two-layer partition as modeled: SUBSTRATE_PRIMITIVES (type layer, global
+           present/absent declarations) vs drawn/record content (token layer);
+      (ii) canonical-B's own claim: a canonical identification "prior to and independent
+           of contingently drawn content".
+
+    THE TRICHOTOMY (lives here as named premise; the check certifies the model facts it
+    rests on -- walker-gloss discipline): token-registered orientation content is
+      T1: bare contingent content  -> a REFERENCE RECORD -- real, billed, standing,
+          horn-independent -- not canonical-B (it IS a draw, failing the horn's own
+          "prior to drawn content" clause);
+      T2: a posited preferred configuration -> type-level structure in disguise: the
+          registry's flat present/absent architecture can express a distinguished-
+          configuration structure only as a NEW TYPE-LEVEL ENTRY (relocation forced by
+          the model). Where the relocated lock lands is OPEN ground -- the type-census
+          entry lemma (REDUCED 0.85: the rent check is placement-blind; unit-free
+          standing type-level structure exists in the bank's own ontology). EXPLICIT
+          NON-CLAIM: the retracted equipartition/S_dS collision is NOT used -- a
+          configuration-space preference does not draw against ln(Omega), and no
+          exclusion is claimed on that route;
+      T3: a derived canonical token -> the convention check's own named falsifier slot
+          (condition (b): a future theorem supplying a canonical across-interface arrow
+          flips it) -- watched, currently unconstructed after seven audited attempts.
+
+    BRUTE-FACT ABSORPTION (audit-required): a brute-CONTINGENT identification ("the
+    frames just ARE identified, the way the draw is actual") fails the horn's own
+    prior-to-drawn-content clause -- it is a draw -> T1. A brute-NECESSARY identification
+    is substrate structure by the definition of the type layer -- the diagonal horn
+    proper (the registry flip), outside the token scope entirely and already the row's
+    named question. Label-only residues are the audited surplus/idle species.
+
+    WHAT IT BUYS (and only this): canonicity cannot hide in token clothing. The census
+    counterexample's realization (i) dissolves qua canonicity-carrier; qua BILLING
+    hiding-place it relocates intact to the type level (the canonicity/billing split,
+    typing audit finding 7) -- so the exposure map keeps TWO coupled species
+    (per-activation kind-(b) billing; standing type-level census-silent billing).
+    MISSING INFRASTRUCTURE, NAMED: the billed-vs-derived criterion (when is standing
+    structure a billed commitment rather than derived architecture?) -- prerequisite for
+    any future type-census attempt; not supplied here.
+
+    GRADE [P_structural]: certifies the model facts the trichotomy rests on, over the
+    current corpus, by construction. Tier 4.
+    """
+    inv = substrate_inventory()
+    prim_fields = sorted(set().union(*[set(vars(p).keys()) for p in SUBSTRATE_PRIMITIVES]))
+    facts = {}
+    # (1) the type layer as modeled is a flat present/absent registry: no distinguished-
+    #     configuration primitive exists (T2's relocation is forced by the architecture)
+    facts["registry_flat_present_absent"] = all(
+        isinstance(getattr(p, "present", None), bool) for p in SUBSTRATE_PRIMITIVES)
+    # LOAD-BEARING (audit F1): the registry SCHEMA carries no configuration-payload slot
+    # at all -- a distinguished configuration is inexpressible except as a new entry +
+    # a new field. This is the architectural fact behind T2's "relocation is forced".
+    facts["schema_has_no_configuration_slot"] = (
+        set(prim_fields) == {"name", "present", "description"})
+    # secondary label sentinel only (a primitive could be added under another name;
+    # the schema fact above is the falsifier that matters)
+    facts["no_distinguished_configuration_primitive_by_name"] = not any(
+        ("preferred" in p.name or "distinguished" in p.name or "configuration" in p.name)
+        for p in SUBSTRATE_PRIMITIVES)
+    # (2) the token layer cannot flip a type-layer declaration: the frame identification
+    #     is a registered absence, and nothing in the allocation table supplies it
+    facts["frame_identification_absent"] = (
+        inv.get("across_interface_frame_identification", True) is False)
+    alloc = all_allocations()
+    facts["no_allocation_supplies_the_arrow"] = all(
+        v.verdict != "substrate_global"
+        or "across_interface_frame_identification" not in getattr(v, "requirements", ())
+        for v in alloc.values())
+    # (3) the T3 slot is wired: the convention check passes NOW and carries the falsifier
+    conv = check_T_gauge_connection_is_gauge_variant_convention_P()
+    facts["convention_check_passes"] = (conv.get("consistent") is True)
+    facts["falsifier_wired_in_docstring"] = (
+        "future theorem" in (check_T_gauge_connection_is_gauge_variant_convention_P.__doc__ or ""))
+    # (4) docstring-tamper sentinel (audit F2): certifies the non-claim disclaimer is
+    #     PRESENT in this docstring (fails if stripped); it does not by itself prove the
+    #     absence of a citation -- that is the audit's compliance sweep, recorded there.
+    facts["non_claim_sentinel_present"] = (
+        "NOT used" in (check_T_canonical_token_requires_type_or_theorem.__doc__ or ""))
+    ok = all(facts.values())
+    data = {"facts": facts, "substrate_primitive_fields": prim_fields,
+            "gloss": ("model-relative + horn-definition-relative typing; the trichotomy is a "
+                      "named docstring premise; the exposure map keeps TWO coupled species; "
+                      "the billed-vs-derived criterion is named missing infrastructure")}
+    if ok:
+        return _ok("check_T_canonical_token_requires_type_or_theorem",
+                   status="P_structural",
+                   summary=("Token-registered orientation content is reference-record (T1), "
+                            "relocated type-level structure (T2, landing on the OPEN type-census "
+                            "entry lemma), or the derived-canonicity falsifier slot (T3) -- "
+                            "canonicity cannot hide in token clothing; model-relative, "
+                            "horn-definition-relative, no collision citation."),
+                   data=data,
+                   dependencies=["check_T_gauge_connection_is_gauge_variant_convention_P",
+                                 "check_T_across_frame_fork_localized"])
+    return _fail("check_T_canonical_token_requires_type_or_theorem", status="FAIL",
+                 summary="Model facts under the typing trichotomy changed: %r" % (
+                     {k: v for k, v in facts.items() if not v},),
+                 data=data)
+
+
+def check_T_census_unit_exclusion_conditional() -> Dict:
+    """The sharpened two-horn census conditional, as arithmetic: IF a standing type-level
+    commitment constitutes or displaces a horizon census unit, THEN it is excluded
+    amplitude-independently. ANTECEDENT OPEN -- this check computes the exclusion
+    arithmetic GIVEN the antecedent; it does NOT discharge it.
+
+    PROVENANCE: the type-census entry lemma walk (2026-07-01, REDUCE 0.85). The lemma's
+    Step 2 ("type-level committed capacity = structural units") was REFUTED as a closure:
+    the rent check is expressly PLACEMENT-BLIND ("it fixes WHEN a commitment books, never
+    WHERE"), and the bank's own ontology carries unit-free standing type-level structure
+    (d_eff, V_global's geometry, the partition, epsilon*). What SURVIVED the audit is
+    exactly this conditional -- the lane's best -- and this check makes its arithmetic
+    executable and pinned.
+
+    THE TWO HORNS (computed below, exact where possible):
+      EXTENSION: a 62nd census unit shifts the CC register by Delta S_dS = ln(d_eff)
+        = ln(102) ~ 4.625 nats -- an INTEGER census shift, no coupling constant anywhere
+        (amplitude-independence is structural). Against the honest confirmation bands
+        (narrow: |282.123 - 282.102| = 0.021 nats; wide, under the H0DN tension:
+        ~0.10-0.19 nats) the exclusion margin is a factor ~24 (wide) to ~220 (narrow).
+        HONESTY GUARD (audit-required): the cosmological FRACTIONS alone do NOT exclude
+        extension -- Omega_Lambda = 43/62 sits ~0.8 sigma from Planck; the CC register is
+        the decisive one and this check asserts that ordering.
+      DISPLACEMENT: re-typing a confirmed census unit. The SM composition 45+12+4 = 61 is
+        pinned unit-by-unit at confirmed faces (L_count chain); the vacuum sector's 42
+        units are pinned at SIZE only (unit identity below sector granularity is
+        unconfirmed) -- so displacement is excluded at unit-content strength over the SM
+        composition and only at sector-size strength over the vacuum 42. That asymmetry
+        is the 42-sector lead (staged, unwalked -- NOT decided here).
+
+    NON-CLAIMS: does not close the across_region row; does not decide the 42-sector
+    question; does not discharge the type-census entry (the antecedent stays open); no
+    exclusion is claimed through the retracted equipartition/S_dS-deficit route.
+    MISSING INFRASTRUCTURE, NAMED: the billed-vs-derived criterion (see the sibling
+    trichotomy check) -- without it, whether any given standing type-level structure is
+    a "commitment" in this conditional's sense is not decidable in-bank.
+
+    GRADE [P_structural] (conditional arithmetic over banked registers). Tier 4.
+    """
+    import math
+    from fractions import Fraction
+    facts = {}
+    d_eff, K = 102, 61
+    # EXTENSION horn
+    dS = math.log(d_eff)                      # 4.6250... (minimal shift: holding d_eff
+    #   fixed; the full 62*ln(103)-61*ln(102) = 5.23 nats is LARGER, so exclusion robust)
+    band_narrow = abs(61 * math.log(102) - 282.102)   # theory-vs-inferred gap, nats
+    # H0DN-widened band, computed (audit F5): ~10-19% fractional shift in Omega terms
+    band_wide_lo, band_wide_hi = math.log(1.10), math.log(1.19)   # 0.0953 .. 0.1740 nats
+    facts["extension_shift_is_ln_deff"] = abs(dS - 4.625) < 0.001
+    facts["narrow_band_is_0p021_nats"] = abs(band_narrow - 0.021) < 0.002
+    facts["margin_narrow_over_200x"] = dS / band_narrow > 200
+    facts["margin_wide_at_least_24x"] = dS / band_wide_hi > 24
+    # honesty guard: fractions alone do NOT exclude
+    om_61 = Fraction(42, 61); om_62 = Fraction(43, 62)
+    planck, sigma = 0.6889, 0.0056
+    pull_62 = abs(float(om_62) - planck) / sigma
+    facts["fractions_do_not_exclude"] = pull_62 < 1.0   # ~0.83 sigma: NOT an exclusion
+    # units gloss (audit F9): band-multiples vs sigma compared under the reading "the
+    # honest band is the 1-sigma-equivalent allowed region"; advisory ordering only
+    facts["cc_register_is_decisive"] = (dS / band_wide_hi) > pull_62
+    # DISPLACEMENT horn
+    facts["sm_composition_61"] = (45 + 12 + 4 == K)   # fermion 45 + gauge 12 + Higgs 4 (L_count)
+    # T12E cosmological partition: baryon 3 + dark 16 + vacuum 42 = 61; vacuum = K - matter(19)
+    facts["vacuum_42_is_sector_size"] = (K - (3 + 16) == 42)
+    ok = all(facts.values())
+    data = {"facts": facts,
+            "delta_S_nats": dS, "band_narrow_nats": band_narrow,
+            "band_wide_nats": [band_wide_lo, band_wide_hi],
+            "omega_lambda_62": str(om_62), "pull_62_sigma": round(pull_62, 2),
+            # DECLARED PREMISES (audit F4: honest, but not machine-gated -- stated here,
+            # visibly outside the pass gate):
+            "declared_amplitude_independence": ("the extension shift is an integer census "
+                                                "shift times ln(d_eff); no coupling constant "
+                                                "enters the arithmetic"),
+            "declared_displacement_asymmetry": ("SM composition unit-pinned at confirmed "
+                                                "faces vs vacuum 42 size-only -- the staged "
+                                                "42-sector lead, not decided here"),
+            "gloss": ("conditional arithmetic; antecedent (type-census entry) OPEN; "
+                      "the 42-sector asymmetry is a staged lead, not decided here")}
+    if ok:
+        return _ok("check_T_census_unit_exclusion_conditional",
+                   status="P_structural",
+                   summary=("IF a standing type-level commitment constitutes or displaces a "
+                            "horizon census unit THEN excluded amplitude-independently: extension "
+                            "shifts the CC register by ln(102)=4.625 nats (x24-x220 over the honest "
+                            "bands; fractions alone do NOT exclude -- 43/62 at ~0.8 sigma); "
+                            "displacement excluded at unit-content strength over the SM 45+12+4, "
+                            "sector-size only over the vacuum 42. Antecedent OPEN by design."),
+                   data=data,
+                   dependencies=["check_T_canonical_token_requires_type_or_theorem",
+                                 "L_count", "T12E", "T_deSitter_entropy",
+                                 "T_ledger_rent_excluded"])
+    return _fail("check_T_census_unit_exclusion_conditional", status="FAIL",
+                 summary="Census-conditional arithmetic failed: %r" % (
+                     {k: v for k, v in facts.items() if not v},),
+                 data=data)
+
+
 CHECKS = {
     "check_T_cross_interface_algebraic_impossibility_ceiling_P": check_T_cross_interface_algebraic_impossibility_ceiling_P,
     "check_T_base_fiber_allocation_criterion_P": check_T_base_fiber_allocation_criterion_P,
@@ -671,6 +888,8 @@ CHECKS = {
     "check_T_base_fiber_allocation_theorem_P": check_T_base_fiber_allocation_theorem_P,
     "check_T_gauge_connection_is_gauge_variant_convention_P": check_T_gauge_connection_is_gauge_variant_convention_P,
     "check_T_across_frame_fork_localized": check_T_across_frame_fork_localized,
+    "check_T_canonical_token_requires_type_or_theorem": check_T_canonical_token_requires_type_or_theorem,
+    "check_T_census_unit_exclusion_conditional": check_T_census_unit_exclusion_conditional,
 }
 
 

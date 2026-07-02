@@ -57,13 +57,26 @@ _V02_RUNNER_RELATIVE = (
 
 
 def _import_v02_runner(codebase_root: Path):
-    """Import the v0.2 atlas runner via importlib (lives outside the apf/ package)."""
+    """Return the v0.2 input-set provider.
+
+    v24.3.307: the canonical source is the vendored in-repo module
+    ``apf.interface_atlas_v02_inputs`` (the refactor this docstring block
+    previously deferred), so the runner works from the git repo alone.
+    The git-ignored Drive-side bundle script is retained as a fallback for
+    archival installations that predate the vendoring.
+    """
+    try:
+        from apf import interface_atlas_v02_inputs as mod
+        return mod
+    except ImportError:
+        pass
     import importlib.util
     script_path = codebase_root / _V02_RUNNER_RELATIVE
     if not script_path.exists():
         raise FileNotFoundError(
-            f"v0.2 atlas runner not found at {script_path}. "
-            f"This runner depends on the v0.2 input set being present in the bundle."
+            f"v0.2 atlas runner not found at {script_path}, and the vendored "
+            f"apf.interface_atlas_v02_inputs module failed to import. "
+            f"One of the two must be present."
         )
     spec = importlib.util.spec_from_file_location("_v02_runner_import", str(script_path))
     mod = importlib.util.module_from_spec(spec)
@@ -219,8 +232,55 @@ def run_live_atlas(
             "axis": axis.value,
         })
 
+    # v24.3.308 (Full Bank Onboarding Wave 1c): append IE_DECLARATIONS inputs
+    # discovered manifest-wide, so declaration verdicts appear in the live
+    # atlas artifact rather than only inside the onboarding bank check.
+    # Declarations never shadow existing atlas ids (registry-wide uniqueness
+    # is certified by check_T_ie_onboarding_registry_coverage).
+    declaration_rows: List[Dict[str, Any]] = []
+    try:
+        from apf.ie_onboarding_registry import (
+            discover_ie_declarations, compile_declaration,
+        )
+        decls_by_module, _decl_skips = discover_ie_declarations()
+        existing_ids = {inp.input_id for inp in swapped_inputs}
+        for owner in sorted(decls_by_module):
+            for d in decls_by_module[owner]:
+                iid = d.get("input_id")
+                if iid in existing_ids:
+                    continue
+                try:
+                    swapped_inputs.append(compile_declaration(d))
+                    existing_ids.add(iid)
+                    declaration_rows.append({
+                        "input_id": iid,
+                        "owner_module": owner,
+                        "axis": d.get("axis"),
+                        "expect_export": d.get("expect_export"),
+                    })
+                except Exception as exc:  # noqa: BLE001 -- report, don't die
+                    declaration_rows.append({
+                        "input_id": iid,
+                        "owner_module": owner,
+                        "axis": d.get("axis"),
+                        "compile_error": str(exc),
+                    })
+    except ImportError:
+        pass  # registry not present (pre-.307 checkout); atlas runs without declarations
+
     atlas = build_interface_atlas(swapped_inputs, atlas_name=atlas_name)
     summaries = atlas.route_summaries
+
+    # attach the delivered verdict to each declaration row
+    by_id = {s.input_id: s for s in summaries}
+    for row in declaration_rows:
+        m = by_id.get(row["input_id"])
+        if m is not None:
+            row["solver_status"] = str(m.solver_status)
+            row["export_global_P"] = bool(m.export_global_P)
+            ee = row.get("expect_export")
+            if ee is not None:
+                row["verdict_matches_expectation"] = (bool(m.export_global_P) == ee)
 
     global_p_rows = [s for s in summaries if s.export_global_P]
     wired_rows = [s for s in summaries if any(s.input_id.endswith(sw["payload_name"]) for sw in swaps.values())]
@@ -258,6 +318,7 @@ def run_live_atlas(
         "total_inputs": len(summaries),
         "global_P_count": len(global_p_rows),
         "wired_adapter_count": len(adapter_results),
+        "declaration_results": declaration_rows,  # v24.3.308 Wave 1c
         "axis_summary": dict(atlas.axis_summary),  # v24.3.32 per-axis breakdown
         "adapters_discovered": [
             {

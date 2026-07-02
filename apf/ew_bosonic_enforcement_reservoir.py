@@ -57,6 +57,24 @@ reservoir volume, not merely that it admissibly can be.
 
 [P_structural_under_reservoir_reading]; local-Higgs-Hessian reading disclaimed; prefactor +
 exact v_H still blocked; no measured target consumed.
+
+STATUS OF THE IDENTIFICATIONS (2026-07-02 walk, corrected ledger). Identification (A) has TWO
+contents, and both are genuine (an earlier draft that split (A) into a "definitional" half plus
+a "forced-uniformity" half was REFUTED at hostile audit the same day): (A-i) the SAMPLE-SPACE
+identification -- that the Higgs vacuum is a state of THIS space (the pre-branch reservoir's
+d_eff^16 configurations, rather than the branch-Hessian's 7-8 or the full 61); (A-ii) the
+MEASURE-STRUCTURE reading -- that its continuation profile has the shape of a normalized
+weight assignment at all (the FD1 "continuation profile" clause does not by itself carry
+additivity or normalization). Uniformity of the weight is NOT forced from the base: equal
+eps*/sigma pricing does not give configuration-isomorphic continuation structure (the bank's
+own fermion exclusion is the counterexample -- equal pricing, categorically different measure
+type), and FD1-sc cannot exclude stratum-correlated weights (the 60+42 typing inside d_eff is
+structure, not fiat). Do not re-walk that route. Identification (B) is now PROVEN INDEPENDENT
+of the base -- not merely unproven: see check_T_ew_scale_functional_independence_no_go
+(v24.3.314, ew_scale_functional_independence.py), the form-level member of the no-go triptych
+(magnitude / prefactor / FORM). Its countermodel family formalizes this module's own
+"motivates, not proves" concession and prices any future derivation claim: name the new
+base-resting theorem that kills the countermodels, or the claim is smuggling.
 """
 from __future__ import annotations
 

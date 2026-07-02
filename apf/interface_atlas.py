@@ -74,6 +74,12 @@ class AxisKind(str, Enum):
     #   classical hidden-variable model = a global P) or hits a NAMED OBSTRUCTION
     #   (IJCStr = a Bell/noncontextuality inequality). Bucketed dynamically by
     #   axis.value in summarize(); the CODOMAIN-specific branches do not apply.
+    READOUT = "READOUT"  # Commutant record classifier (v24.3.306): a declared
+    #   colour-interface rep content either EXPORTS the canonical frame-free
+    #   gauge-invariant record (singlet multiplicity m=1) or hits a NAMED
+    #   OBSTRUCTION (m=0: no sharp record; m>=2: a multiplicity-frame choice
+    #   would be required -- the .281 trichotomy in IE currency). Bucketed
+    #   dynamically by axis.value; certifies the readout CODOMAIN only.
 
 
 class AtlasInputKind(str, Enum):
@@ -357,6 +363,41 @@ def _compile_contextuality_input(inp: AtlasInput):
     return route, cert, graph, frontier
 
 
+def _compile_readout_input(inp: AtlasInput):
+    """v24.3.306: READOUT-axis dispatch -> the commutant record classifier.
+
+    payload carries {'readout_kind': 'rep_content', 'group': 'SU', 'N': int,
+    'factors': ['fund'|'antifund', ...]}, routed through the exact trivial-rep
+    multiplicity engine (apf.interface_readout_adapter.readout_classify).
+    m=1 -> the canonical frame-free record is EXPORTED (export_global_P=True);
+    m=0 / m>=2 -> a NAMED OBSTRUCTION (no sharp record / multiplicity-frame
+    required). Codomain-half only; occupancy/profile is never read here.
+    """
+    pl = dict(inp.payload or {})
+    kind = pl.get("readout_kind")
+    if kind != "rep_content":
+        raise ValueError(f"Unsupported readout payload kind: {kind!r}")
+    if pl.get("group", "SU") != "SU":
+        raise ValueError("READOUT axis: group 'SU' only (trichotomy-anchored scope: "
+                         "the .281 canonicity reading is SU-specific; abelian U(1) "
+                         "admits product records)")
+    from apf.interface_readout_adapter import readout_classify
+    cls = readout_classify(int(pl["N"]), tuple(pl["factors"]))
+    canonical = bool(cls["canonical"])
+    cert = {
+        "solver_status": "CANONICAL_RECORD_EXPORTED" if canonical else "READOUT_OBSTRUCTION",
+        "export_global_P": canonical,
+        "obstruction": tuple(cls["obstruction"]),
+        "critical_fields": () if canonical else ("canonical_record",),
+    }
+    graph = {"missing_or_blocked_edges": [], "axis": "READOUT",
+             "engine": "commutant_record_classifier",
+             "multiplicity": cls["multiplicity"]}
+    frontier = {"critical_fields": list(cert["critical_fields"]),
+                "packet_status": "EXPORT" if canonical else "OBSTRUCTED"}
+    return "READOUT_COMMUTANT_CLASSIFICATION", cert, graph, frontier
+
+
 def summarize_input(inp: AtlasInput) -> AtlasRouteSummary:
     """v24.3.32: axis-aware dispatch.
 
@@ -368,6 +409,8 @@ def summarize_input(inp: AtlasInput) -> AtlasRouteSummary:
         route, cert, graph, frontier = _compile_codomain_input(inp)
     elif inp.axis == AxisKind.CONTEXTUALITY:
         route, cert, graph, frontier = _compile_contextuality_input(inp)
+    elif inp.axis == AxisKind.READOUT:
+        route, cert, graph, frontier = _compile_readout_input(inp)
     elif inp.kind == AtlasInputKind.CLAIM:
         route, cert, graph, frontier = _compile_claim_input(inp)
     else:

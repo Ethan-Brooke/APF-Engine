@@ -1975,7 +1975,7 @@ def check_L_prediction_catalog():
         ('log₁₀(ΛG)',      -122.5,    -122.4,   0.3,     '', 'T10',                        'A'),
         ('w₀',             -1,        -1,       0.16,    '', 'L_equation_of_state',        'A'),
         ('w_a',             0,         0,       0.48,    '', 'L_equation_of_state',        'A'),
-        ('η_B',            6.15e-10,  6.12e-10, 0.04e-10,'', 'L_eta_B_Jarlskog',          'A'),
+        ('η_B (NLO order)',6.15e-10,  None,     None,    '', 'L_eta_B_Jarlskog',          'A'),  # v24.3.309: obs moved to the NNLO row below -- one observable counts once; NLO kept as the documented cross-check order (0.54% vs Planck 2018)
         # ═══ GAUGE ═══
         ('sin²θ_W',        3/13,      0.23122,  0.00004, '', 'T_sin2theta',               'A'),
         ('1/α_cross',      47.02,     47.02,    0.01,    '', 'L_crossing_entropy',        'A'),
@@ -2010,10 +2010,10 @@ def check_L_prediction_catalog():
         ('M_W (GeV)',      80.334,    80.3692, 0.0133,  'GeV', 'L_MW_scheme_correction', 'B'),
         ('m_H (GeV)',      124.9,     125.09,  0.45,    'GeV', 'L_Higgs_2loop',          'B'),
         ('Δm_np (MeV)',    1.382,     1.2933,  0.0005,  'MeV', 'L_nucleon_mass_difference', 'B'),
+        ('η_B NNLO',       6.197e-10, 6.12e-10, 0.04e-10, '', 'L_baryogenesis_NNLO',      'B'),  # v24.3.309: current best order, obs Planck 2018 (pull 1.9σ); relocated from the stale FUTURE block; the one counted η_B row
         # ═══ FUTURE ═══
         ('r',              0.005,     None,    None,    '', 'T_inflation',               'F'),
         ('N_e',            141.1,     None,    None,    '', 'T_inflation',               'F'),
-        ('η_B NNLO',       6.197e-10, None,    None,    '', 'L_baryogenesis_NNLO',       'F'),
         ('Σmᵢ (meV)',     59.9,      None,    None,    'meV', 'L_mbb_prediction',        'F'),
         ('m_ββ (meV)',     3.5,       None,    None,    'meV', 'L_mbb_prediction',        'F'),
         ('m_σ (GeV)',      713,       None,    None,    'GeV', 'L_sigma_phenomenology',   'F'),

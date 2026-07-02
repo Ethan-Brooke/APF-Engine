@@ -595,3 +595,27 @@ if __name__ == "__main__":
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.310, Full Bank Onboarding Wave 1b). The
+# v24.3.297 threshold-robustness result's underlying scenario: the magic
+# square as a GF(2) parity system (0=1 inconsistency) -> IJCStr named
+# obstruction, verdict independent of the distortion threshold on [0,1/6).
+# Reachability only; the robustness quantification stays with the banked check.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:magic_square_threshold_robust",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "parity", "n_obs": 9,
+                    "contexts": [[[0, 1, 2], 0], [[3, 4, 5], 0], [[6, 7, 8], 0],
+                                 [[0, 3, 6], 0], [[1, 4, 7], 0], [[2, 5, 8], 1]]},
+        "note": "sign-equivalent textbook encoding of the v24.3.297 scenario (the "
+                "banked check uses column parities (1,1,1); flipping two row signs "
+                "gives this (0,0,1) form -- same 0=1 inconsistency, same delta*=1/6): "
+                "-> IJCStr regardless of stipulated threshold in [0,1/6)",
+    },
+)

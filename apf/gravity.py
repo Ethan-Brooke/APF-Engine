@@ -897,6 +897,21 @@ def check_L_global_interface_is_horizon():
            generators act; they inherit the horizon-termination
            structure from the generators.
 
+    GLOSS CORRIGENDUM NOTE (2026-07-02): the three pieces above are
+    standing ADDRESSABILITY/INDEX CAPACITY -- the census's own currency
+    (T12 Step 3: "maintaining an addressable 'reference' requires
+    gauge-invariant bookkeeping overhead"; T12E: "admissibility refs")
+    -- NOT the field quanta themselves. The locally measured gauge
+    quanta, the collider-read longitudinal structure, and the confirmed
+    masses are LOCAL-face content; read as field-DOF prose, the bullets
+    above would sit in tension with T12's not-attributable-to-any-
+    finite-interface definition of the global stratum. Only the
+    arithmetic 27+3+12 = 42 is check-witnessed; the per-piece
+    attributions remain interpretive prose at reading grade. See
+    "Reference - The Vacuum-Hosted Lock Is Excluded or Idle (2026-07-02)"
+    section 9 (audited REDUCE 0.85; the addressability reading is the
+    natural consistent one, already present in T12's banked text).
+
     STATUS: [P]. All three steps cite [P] theorems only (T12, T12E, T11,
     T9_grav, T_Bek). No new physics or axioms introduced.
 
@@ -985,9 +1000,11 @@ def check_L_global_interface_is_horizon():
                 'uniqueness they refer to the same V_61 subspace.'
             ),
             'physical_interpretation': {
-                '12 generators':    'gauge bosons terminate at dS horizon (IR pole)',
-                '3 Higgs internal': 'Goldstones absorbed by W+/W-/Z, routed to horizon',
-                '27 gauge-index':   'inherit horizon termination from 12 generators',
+                # Addressability/index capacity, not field quanta -- see the
+                # GLOSS CORRIGENDUM NOTE (2026-07-02) in the docstring.
+                '12 generators':    'addressability capacity of the generator directions; global registration terminates at the dS horizon (IR pole). The local gauge quanta are local-face content.',
+                '3 Higgs internal': 'addressability capacity of the three eaten directions; routed to the horizon. The collider-read longitudinal structure is local-face content.',
+                '27 gauge-index':   'addressability capacity of the gauge-index states; inherits horizon termination from the generators.',
             },
         },
     )
@@ -1923,3 +1940,32 @@ _CHECKS = {
 def register(registry):
     """Register gravity theorems into the global bank."""
     registry.update(_CHECKS)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.313, Full Bank Onboarding Wave 3). The
+# gravity observable-transport non-claim rows from the Phase 2 disposition
+# (source pack APF_INTERFACE_ENGINE_GRAVITY_SECTOR_SCHEME_EXPORT_BINDING_v1,
+# IE_GRAVITY_OBSERVABLE_TRANSPORT_LEDGER), consolidated to ONE claim-grade
+# probe rather than three padded rows: the transport surface is GR with the
+# named non-claims explicit. expect_export pinned by the observed verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:observable_transport_gr_nonclaims",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Gravitational observable transport is GR across the banked "
+            "surface with the non-claims explicit: FRW expansion (Friedmann; "
+            "no modified-gravity export), metric redshift (no residual fit), "
+            "lensing (no dark-particle ID), GW propagation (no non-GR "
+            "speed/damping export), ringdown (GR baseline + capacity schema, "
+            "no APF non-GR numeric); the growth route stays gate-ready with "
+            "full growth likelihood P = 0 pending Gates 3+4 (DESI "
+            "full-shape runtime, then the full-growth likelihood)."
+        ),
+        "note": "Phase 2 disposition gravity residue; pack transport-ledger rows consolidated",
+    },
+)

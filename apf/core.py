@@ -6721,3 +6721,26 @@ if __name__ == '__main__':
     if failed:
         raise SystemExit(1)
 
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.310, Full Bank Onboarding Wave 1b). The
+# v24.3.288 exact 2-qubit singlet realization of the same 3-4-5 geometry as
+# T_inseparable_IJC's inline codespace witness (whose own inline object is
+# the +-12/25 commutator, NOT a correlator table): E=(-3/5,-3/5,-4/5,4/5),
+# CHSH |S|=14/5>2 -> IJCStr named obstruction. Reachability of the spine's
+# IJC sector through the IE; the bridge theorem + occupancy semantics stay
+# with the banked checks.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "spine:inseparable_ijc_345_witness",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["-3/5", "-3/5", "-4/5", "4/5"]},
+        "note": "the v24.3.288 exact singlet realization of the 3-4-5 geometry "
+                "(constructive companion to T_inseparable_IJC's inline +-12/25 "
+                "codespace witness): CHSH |S|=14/5>2 -> IJCStr",
+    },
+)

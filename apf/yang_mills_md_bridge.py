@@ -836,3 +836,24 @@ def register(registry):
 
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.310, Full Bank Onboarding Wave 1b). The
+# v24.3.298 three-level ladder's rung-1 CLASSICAL-CORRELATION control table
+# E=(1,1,1,1): a global Boolean section exists -> SepStr export (subadditive,
+# no gap). Reachability of the ladder's computable rung; the entanglement
+# rung (the gap footing) and Delta>0 semantics stay with the banked checks.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:ladder_classical_correlation_control",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["1", "1", "1", "1"]},
+        "note": "v24.3.298 corrected ladder, rung 1: perfectly-correlated classical "
+                "table has a global Boolean section -> SepStr (subadditive control)",
+    },
+)

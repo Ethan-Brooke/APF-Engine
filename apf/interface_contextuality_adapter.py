@@ -272,3 +272,53 @@ if __name__ == "__main__":
         print(("PASS" if r["passed"] else "FAIL"), r["name"])
         for f in r["failures"]:
             print("   -", f)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declarations (v24.3.307, Full Bank Onboarding Phase 1).
+# The four bank-carried CONTEXTUALITY scenarios as first-class registry
+# inputs: two exports (local CHSH interior point; consistent parity cycle)
+# and two named obstructions (PR box; Mermin-Peres magic square). These
+# route the ijc_feasbool_engine's banked content through the IE, so the
+# engine module takes covers-credit. Static data; payloads mirror the
+# adapter's own banked check scenarios.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "contextuality:chsh_local",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["3/5", "3/5", "3/5", "3/5"]},
+        "covers": ("apf.ijc_feasbool_engine",),
+        "note": "local interior point (all CHSH sign choices |S|=6/5<=2) -> SepStr export",
+    },
+    {
+        "input_id": "contextuality:pr_box",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["1", "1", "1", "-1"]},
+        "covers": ("apf.ijc_feasbool_engine",),
+        "note": "PR box (S=4) -> IJCStr named obstruction (CHSH/Fine separator)",
+    },
+    {
+        "input_id": "contextuality:magic_square_parity",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "parity", "n_obs": 9,
+                    "contexts": [[[0, 1, 2], 0], [[3, 4, 5], 0], [[6, 7, 8], 0],
+                                 [[0, 3, 6], 0], [[1, 4, 7], 0], [[2, 5, 8], 1]]},
+        "covers": ("apf.ijc_feasbool_engine",),
+        "note": "Mermin-Peres magic square (GF(2) 0=1) -> IJCStr named obstruction",
+    },
+    {
+        "input_id": "contextuality:consistent_cycle",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "parity", "n_obs": 4,
+                    "contexts": [[[0, 1], 0], [[1, 2], 0], [[2, 3], 0], [[3, 0], 0]]},
+        "covers": ("apf.ijc_feasbool_engine",),
+        "note": "even 4-cycle (consistent GF(2) system) -> SepStr export",
+    },
+)

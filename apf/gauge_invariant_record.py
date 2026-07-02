@@ -2315,3 +2315,86 @@ if __name__ == "__main__":
     res = run_all()
     print(json.dumps(res, indent=2, sort_keys=True))
     raise SystemExit(0 if all(x.get("consistent") for x in res.values()) else 1)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declarations (v24.3.310, Full Bank Onboarding Wave 1b -- the
+# first SECTOR onboarding wave). Five bank-carried strong/flavour scenarios as
+# first-class registry inputs, each wrapping this module's own banked scenario
+# builder (payload built lazily at compile time, not at import). expect_export
+# pins the promised verdict; a drift fails the bank. REACHABILITY ONLY: these
+# onboard the contextuality-scenario slice of this module's content -- the
+# rep-theory host results (octet multiplicities, Casimir witnesses, Schmidt
+# ranks) stay with their specialist banked checks.
+# ---------------------------------------------------------------------------
+
+def _ie_payload_tetraquark_kcbs():
+    from apf.ijc_feasbool_engine import scenario_to_dict
+    return scenario_to_dict(_gic_kcbs_scenario()[0])
+
+
+def _ie_payload_tetraquark_yuoh():
+    from apf.ijc_feasbool_engine import scenario_to_dict
+    return scenario_to_dict(_gic_yuoh_scenario()[0])
+
+
+def _ie_payload_pentaquark_magic_square():
+    from apf.ijc_feasbool_engine import (
+        scenario_mermin_peres_magic_square, scenario_to_dict,
+    )
+    return scenario_to_dict(scenario_mermin_peres_magic_square())
+
+
+def _ie_payload_chiral_flavour_yuoh():
+    from apf.ijc_feasbool_engine import scenario_to_dict
+    return scenario_to_dict(_ccf_yuoh_flavour_scenario()[0])
+
+
+def _ie_payload_ckm_two_bases():
+    from apf.ijc_feasbool_engine import scenario_to_dict
+    return scenario_to_dict(_disjoint_bases_scenario(2))
+
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:tetraquark_kcbs",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_tetraquark_kcbs,
+        "note": "v24.3.293 banked scenario: gauge-invariant tetraquark M3 KCBS -> IJCStr",
+    },
+    {
+        "input_id": "strong:tetraquark_yuoh_state_independent",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_tetraquark_yuoh,
+        "note": "v24.3.294 banked scenario: Yu-Oh 13-ray on the tetraquark M3, "
+                "state-independent -> IJCStr",
+    },
+    {
+        "input_id": "strong:pentaquark_magic_square",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_pentaquark_magic_square,
+        "note": "v24.3.295 banked scenario: SU(2) pentaquark M4 hosts the Mermin-Peres "
+                "magic square (empty global-section support) -> IJCStr; the physical-host "
+                "rep theory stays with the specialist check",
+    },
+    {
+        "input_id": "flavour:chiral_condensate_yuoh",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_chiral_flavour_yuoh,
+        "note": "v24.3.296 banked scenario: Yu-Oh on the N_f=3 flavour qutrit at the "
+                "chiral condensate single density -> IJCStr",
+    },
+    {
+        "input_id": "flavour:ckm_two_mass_bases",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_ckm_two_bases,
+        "note": "v24.3.303 banked scenario: the CKM-forced up/down mass bases as two "
+                "disjoint triads -> SepStr export (forced flavour dynamics buy "
+                "noncommutativity, NOT contextuality)",
+    },
+)

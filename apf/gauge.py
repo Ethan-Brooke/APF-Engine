@@ -3916,15 +3916,43 @@ def check_L_anomaly_nonpert():
         - The capacity Hamiltonian H = -ε* Σ n_i preserves all quantum
           numbers that label capacity types. B is such a label.
 
-        Therefore: no B+L violating process exists within the APF,
-        even non-perturbatively. Sphalerons are not present because
-        the gauge vacuum is unique (T_theta_QCD: θ = 0, no θ-vacua).
+        Therefore: no B+L violating process exists within the APF
+        IN THE SATURATED REGIME, even non-perturbatively. Sphalerons
+        are not present because the gauge vacuum is unique
+        (T_theta_QCD: θ = 0, no θ-vacua).
+
+        REGIME SCOPE (v24.3.309 corrigendum -- reconciles with
+        L_Sakharov [P], validation.py): the B-conservation clause is a
+        POST-SATURATION statement. L_Sakharov Condition 1 derives that
+        baryon number IS violable in the pre-saturation epoch (P_exhaust's
+        partition predicates are enforced only at full Bekenstein
+        saturation; before freeze-out, capacity reroutes between
+        proto-baryonic and proto-dark channels). That pre-saturation
+        window is load-bearing for T_baryogenesis (CP-biased capacity
+        routing seeds eta_B != 0 there). So the corpus is consistent:
+        asymmetry seeded pre-saturation, B exactly conserved after --
+        Sakharov's B-violation condition is met by the routing epoch,
+        not by post-saturation dynamics (no sphalerons needed or present).
 
     CONSEQUENCE: The perturbative anomaly conditions from L_anomaly_free
     are ALSO the complete non-perturbative conditions. There are no
     additional non-perturbative anomalies to worry about.
 
-    STATUS: [P]. All inputs are [P] theorems.
+    SEAM FENCE (v24.3.309 corrigendum -- explicit NON-CLAIM): the
+    "no instantons / no theta-vacua" statement is about the NATIVE finite
+    structure (compact finite-dimensional configuration space, no
+    tunneling sectors). It is NOT a prediction that the hadronic
+    topological susceptibility vanishes. The world's chi_top != 0 at the
+    hadronic level (the eta' mass via Witten-Veneziano; lattice pure-YM
+    chi_top^(1/4) ~ 191 MeV) is continuum/hadronic-side physics that
+    enters, where needed, with the [P+lattice] hadronic import -- the
+    Paper 44 native/continuum boundary. This check confronts no
+    chi_top / eta' observable and implies no scorecard row for either;
+    reading it as "APF predicts chi_top = 0" is a seam-straddling
+    misreading (the species the 2026-07-01 theta-zero screening note
+    flagged as its latent watch-item, resolved by this fence).
+
+    STATUS: [P] for the scoped statements. All inputs are [P] theorems.
     """
     from fractions import Fraction
 
@@ -3999,25 +4027,31 @@ def check_L_anomaly_nonpert():
             'Anomaly cancellation is exact and non-perturbative: '
             '(1) Algebraic identities in rational Y_i (exact at all loops). '
             f'(2) Finite index = {index} (chiral balance with ν_R). '
-            '(3) No instantons: θ=0 (unique vacuum), B exact (T_proton), '
-            f'finite C={C_total} (compact config space). '
+            '(3) No instantons NATIVELY: θ=0 (unique vacuum), B exact '
+            'post-saturation (T_proton; pre-saturation violable per '
+            f'L_Sakharov, seeding η_B), finite C={C_total} (compact config '
+            'space). NON-CLAIM: hadronic χ_top ≠ 0 (η′ mass) is '
+            'continuum-side, not confronted here. '
             'No additional non-perturbative anomalies beyond L_anomaly_free.'
         ),
         key_result=(
             'Anomaly cancellation exact non-perturbatively. '
-            'No sphalerons, no B+L violation. [P]'
+            'No sphalerons, no B+L violation post-saturation (pre-saturation '
+            'window admissible per L_Sakharov, seeds eta_B); native '
+            'no-instantons is not a chi_top=0 prediction. [P]'
         ),
         dependencies=[
             'L_anomaly_free', 'L_McKean_Singer_internal',
             'T_proton', 'T_theta_QCD',
         ],
+        cross_refs=['L_Sakharov'],
         artifacts={
             'algebraic_exactness': 'All 7 conditions hold in Fraction arithmetic',
             'index': index,
             'n_Weyl_L_per_gen': n_Weyl_L,
             'n_Weyl_R_per_gen': n_Weyl_R,
             'theta_QCD': theta_QCD,
-            'B_conserved': B_conserved,
+            'B_conserved': B_conserved,  # post-saturation regime (pre-saturation violable, L_Sakharov Cond. 1)
             'C_total': C_total,
             'mechanism': 'finite C → compact config space → no tunneling',
         },
@@ -4297,10 +4331,18 @@ def check_L_baryogenesis_NNLO():
     L_eta_B_Jarlskog [P] (η_B = 6.15 × 10⁻¹⁰, 0.54% error) via
     the 7/6 Jarlskog enhancement factor.
 
-    At NNLO, the correction includes:
+    At NNLO, the implemented correction is the second-order CKM /
+    Jarlskog term ONLY:
     (1) CKM unitarity constraint: |V_ub|² corrections to the
         Jarlskog invariant J = Im(V_us V_cb V*_ub V*_cs)
-    (2) Thermal washout efficiency: κ(m̃₁) corrections at M_R₁ scale
+
+    (v24.3.309 corrigendum: a prior docstring clause advertising a
+    "thermal washout efficiency κ(m̃₁) correction at the M_R₁ scale" is
+    REMOVED -- the computed δ₂ below never used it, and washout is
+    leptogenesis vocabulary presupposing B/L-violating equilibrium
+    processes the bank excludes post-saturation (L_anomaly_nonpert;
+    APF's mechanism is pre-saturation CP-biased routing, T_baryogenesis
+    + L_Sakharov -- no washout dynamics exist to correct for).)
 
     The NNLO correction modifies η_B by:
         η_B(NNLO) = η_B(NLO) × (1 + δ₂)
@@ -4409,3 +4451,32 @@ def register(registry):
             registry['L_CKM_resolution_limit'] = check_L_CKM_resolution_limit
         except ImportError:
             pass
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.313, Full Bank Onboarding Wave 3). One
+# claim-grade structural probe carrying the gauge spine's banked disposition
+# into the IE (reachability of apf.gauge; the theorems stay with their banked
+# checks). Wording kept letter-accurate to the bank: the 3/13 LEDGER SHARE is
+# [P]; the MEASURED angle stays [P_structural] behind the w-prop-g^2
+# dictionary fence by design. expect_export pinned by the observed verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:spine_disposition",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The gauge spine closes structurally: Theorem_R forces the "
+            "SU(3) x SU(2) x U(1) template, and T_gauge fixes N_c = 3 by "
+            "cost optimization; C_total = 61 is rigid (45 + 4 + 12); the "
+            "sin^2(theta_W) = 3/13 ledger share is [P] while the measured "
+            "angle remains [P_structural] behind the w-proportional-to-g^2 "
+            "dictionary fence by design; alpha_s(M_Z) is forward-predicted "
+            "with zero measured-coupling input at 0.11 sigma, conditional "
+            "on the adopted rank-1 capacity reading [P_structural_reading]."
+        ),
+        "note": "Wave 3 spine probe; dispositions per the banked checks (Theorem_R, L_count, T_ew_load_placement_P, T_abelian_coupling_fixed_by_rank1_capacity_count)",
+    },
+)

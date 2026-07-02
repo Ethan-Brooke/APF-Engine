@@ -147,7 +147,13 @@ def check_T11():
     """T11: Cosmological Constant Lambda from Global Capacity Residual.
 
     Three-step derivation:
-      Step 1: Global admissibility != sum of local admissibilities (from L_nc).
+      Step 1: Global admissibility != sum of local admissibilities.
+              CITATION CORRIGENDUM (2026-07-02, per the v24.3.286
+              superadditivity reframe): this non-additivity gap is NOT
+              supplied by L_nc (L_nc = sum > budget, E1+E2 > C); the
+              FORM of the gap is L_cost (cost = count) and its SIGN is
+              the occupancy base feature. Dependency list below is
+              unchanged (L_nc was never a listed dep of T11).
               Some correlations are globally locked ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â admissible, enforced,
               irreversible, but not attributable to any finite interface.
 
@@ -435,6 +441,10 @@ def check_T12E():
         N_mult_refs = 16 admissibility refs (5 types * 3 gens + 1 Higgs, from T_field/T_gauge [P])
         N_matter = N_gen + N_mult_refs = 19 (total matter capacity)
         C_vacuum = 42 (27 gauge-index + 3 Higgs internal + 12 generators)
+          -- all counts are admissibility/addressability REFERENCES
+             (capacity types, T12 Step 3's currency), not field quanta;
+             see the gloss corrigendum NOTE (2026-07-02) in
+             apf/gravity.py::check_L_global_interface_is_horizon.
         C_total = N_matter + C_vacuum = 61
 
       Bridge (L_equip [P]):
@@ -2488,3 +2498,51 @@ _CHECKS = {
 def register(registry):
     """Register cosmology theorems into the global bank."""
     registry.update(_CHECKS)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declarations (v24.3.313, Full Bank Onboarding Wave 3). The two
+# net-new dark-sector items from the Phase 2 pack-absorption disposition
+# ('Reference - IE Handoff Pack Absorption Audit - Phase 2 Disposition
+# (2026-07-02)'; source pack APF_INTERFACE_ENGINE_DARK_CDM_SECTOR_
+# ARCHITECTURE_PREP_v1), landed as CLAIM-GRADE structural probes per the
+# auditor's caution: the 16/61 citation is the banked capacity SHARE used as
+# a guard, NOT a derived inequality theorem; nothing here promotes dark
+# empirical P or any particle-ID/portal claim. expect_export pinned by
+# observed engine verdicts.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "dark:saturation_no_go_guard",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The APF-CDM gravity-only saturation no-go GUARD (claim-grade, "
+            "not a derived inequality theorem): the dark clustering role's "
+            "gravitational saturation share is bounded by its banked capacity "
+            "share, S_D^grav = (16/61)*Xi_Gamma <= 16/61 < 1, so gravity-only "
+            "dynamics cannot saturate the dark sector; a non-gravity "
+            "saturation would require an interaction multiplier Lambda_int >= "
+            "61/16, and no APF-native interaction generator is exported. "
+            "Guard architecture from the held sibling pack; the 16/61 share "
+            "itself is the banked two-role decomposition (Paper 35)."
+        ),
+        "note": "Phase 2 disposition item (a); pack SATURATION_NO_GO_GUARD.md wording",
+    },
+    {
+        "input_id": "dark:phase_space_persistence_kernel",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The dark clustering role's minimal-gate behaviour is CDM-like as "
+            "a STRUCTURAL claim: conserved load, gravitational coupling, "
+            "collisionless phase-space persistence, and nonlinear halo "
+            "persistence only under the ordinary gravitational channel. No "
+            "Vlasov/phase-space kernel is yet banked -- this input names the "
+            "open receiver, it does not certify one; no dark-particle ID, "
+            "portal coupling, or self-interaction is exported."
+        ),
+        "note": "Phase 2 disposition item (b); pack PHASE_SPACE_CLUSTERING_KERNEL.md wording",
+    },
+)
