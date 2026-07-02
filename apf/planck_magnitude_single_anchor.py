@@ -308,3 +308,26 @@ _CHECKS = {
 def register(registry):
     """Register the single-anchor checks (single-anchor + scale-web matter-complete)."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:single_dimensional_anchor",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The framework carries exactly one dimensional anchor and its "
+            "magnitude is underivable by the rescaling no-go: "
+            "check_T_planck_magnitude_single_dimensional_anchor_P, graded "
+            "[P_structural_convention] -- the _P name suffix "
+            "notwithstanding, the banked grade is the convention grade. "
+        ),
+        "note": "Wave 4 probe; the name-vs-grade trap defused explicitly",
+    },
+)

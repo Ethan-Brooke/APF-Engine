@@ -69,6 +69,21 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                           readings) -- not an external import at all.  (~89)
                       P_structural_convention  unit/scale convention; O(1)
                           prefactor (Planck magnitude).  (~8)
+                      MODULE-BESPOKE TOKENS (v24.3.317 legend rows, audit
+                          by-catch from the Wave 4/5 letter-accuracy passes):
+                          P_allocation / P_ceiling (base_fiber_allocation:
+                          the allocation criterion + the cross-interface
+                          algebraic impossibility ceiling) and P_cat
+                          (TWO bare-token users: horizon_ledger_reindexing's
+                          categorical fourness by universal-mediation framing
+                          + case enumeration, AND acc_unification_all_p's
+                          categorical-ACC functor facts at 4 checks; a
+                          P_cat_* variant family -- P_cat_all_exported,
+                          P_cat_finite_descent, P_cat_stratified_unification
+                          -- lives in 3 further modules).
+                          Bespoke tokens are NOT bare [P]; each is scoped by
+                          its own check docstring. Any claim citing these
+                          checks must state the token, never [P].
                     Source-of-record: APF Reference Docs/Reference - Corpus Audit
                     of the Completion Seam (2026-06-22).md + the CONTINUATION
                     grade-split note.  Pure relabel: no math, no count change,
@@ -1066,7 +1081,11 @@ EXPECTED_THEOREM_COUNT = EXPECTED_REGISTRY_SIZE  # 3299 v24.3.37 (2026-05-19 STA
 #                                corrected observed rho_Lambda value +
 #                                H_0 inversion prediction).
 #                                +1 from apf/lambda_absolute.py:
-#                                check_T_Lambda_to_H0_inversion (tier-4 [P])
+#                                check_T_Lambda_to_H0_inversion (tier-4 [P];
+#                                v24.3.320: demoted [P_structural_reading] — 70.03
+#                                is the two-factor branch of the banked vacuum-O(1)
+#                                reading fork, count=area branch 66.84, see
+#                                check_T_vacuum_o1_reading_fork in vacuum_o1_fork.py)
 #                                derives APF's Hubble-constant prediction
 #                                H_0 = sqrt(8*pi*61/3) / 102^31 * M_Pl =
 #                                70.03 km/s/Mpc by algebraic inversion of

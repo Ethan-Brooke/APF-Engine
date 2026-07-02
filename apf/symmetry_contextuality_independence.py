@@ -203,3 +203,28 @@ def register(registry):
 
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:symmetry_contextuality_orthogonal",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Marginal degeneracy (a Type-II symmetry proxy) is logically "
+            "INDEPENDENT of CHSH-facet contextuality: all four (SYM, IJC) "
+            "cells are realized by exact 2-qubit witnesses, refuting the "
+            "logical-entailment form of maximal-symmetry-implies-IJC and "
+            "its converse -- "
+            "check_T_symmetry_degeneracy_orthogonal_to_contextuality "
+            "[P_structural_reading]. "
+        ),
+        "note": "Wave 4 probe; the four-cell witness content stays with the banked check",
+    },
+)

@@ -1101,3 +1101,47 @@ if __name__ == "__main__":
     for f in r["failures"]:
         print("   -", f)
     print("   ->", r["key_result"])
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding declarations (v24.3.319, Full Bank Onboarding -- axis depth).
+# The engine's own bank-carried scenario library as payload-real CONTEXTUALITY
+# inputs: the two canonical scenarios NOT already declared elsewhere (CHSH
+# local/PR-box ride the contextuality adapter; the magic square rides its
+# parity encoding in quantum_admissibility; the gauge-invariant scenarios ride
+# gauge_invariant_record). GHZ/Mermin is the state-independent obstruction
+# with EMPTY global-section support (brute-forced 0/512 in the banked .287
+# check); the qutrit scenario is the noncontextual control. expect_export
+# pinned by observed verdicts. Payloads built lazily from this module's own
+# canonical builders.
+# ---------------------------------------------------------------------------
+
+def _ie_payload_ghz_mermin():
+    # scenario_to_dict already carries contextuality_kind='scenario'
+    return scenario_to_dict(scenario_ghz_mermin())
+
+
+def _ie_payload_qutrit_noncontextual():
+    return scenario_to_dict(scenario_qutrit_noncontextual())
+
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:ghz_mermin_state_independent",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_ghz_mermin,
+        "note": "the GHZ/Mermin state-independent scenario (empty global-section "
+                "support, brute-forced 0/64 -- six observables, 2^6 global sections -- in "
+                "check_T_feasbool_general_contextuality) "
+                "-> IJCStr named obstruction",
+    },
+    {
+        "input_id": "quantum:qutrit_noncontextual_control",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload_builder": _ie_payload_qutrit_noncontextual,
+        "note": "the qutrit noncontextual control scenario -> SepStr export "
+                "(a faithful global hidden-variable section exists)",
+    },
+)

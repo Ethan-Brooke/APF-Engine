@@ -313,8 +313,28 @@ def check_T_Planck_scale_status_clarification():
 # =============================================================================
 
 def check_T_42_over_102_structural_uniqueness():
-    """T_42_over_102_structural_uniqueness [P] —
-    42/102 unique APF-native-only ratio with vacuum-fraction derivation.
+    """T_42_over_102_structural_uniqueness [P_structural_reading] —
+    42/102 unique APF-native-only ratio with vacuum-fraction derivation
+    WITHIN the two-factor reading (demoted; stale-broken scan, see flag).
+
+    STALE-BROKEN FLAG + DEMOTION (v24.3.320, the vacuum O(1)
+    adjudication, 2026-07-02; hostile audit HOLD-WITH-FIXES 0.85).
+    This check is STALE-BROKEN against the corrected observation
+    log10(rho_Lambda/M_Pl^4) = -122.944: its champion 42/102 sits at
+    0.034 decades — OUTSIDE the check's own 0.01-decade candidate
+    window — while 3/8 (T10's geometric coefficient, Lambda*G =
+    3pi/102^61 composed with rho = Lambda/(8 pi G)) sits INSIDE the
+    window at 0.007 decades WITH a derivation chain of its own. The
+    residual numbers tabulated below (0.012, 0.001, ...) are the
+    pre-correction Phase 14e.2 scan values, retained as the historical
+    record; the scan is NOT rebuilt here (out of scope; rebuild or
+    retire is the open follow-up). Epistemic demoted 'P' ->
+    'P_structural_reading': the uniqueness criterion ("derivation
+    chain terminating at L_self_exclusion's vacuum-fraction reading")
+    selects 42/102 only WITHIN the two-factor reading; the count=area
+    reading supplies 3/8 with its own chain. See
+    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py) for the banked
+    fork and its H0 discriminator.
 
     SHARPENED STRUCTURAL PRIVILEGE. The Phase 14e.2 coefficient-
     degeneracy audit noted that 20 APF-native candidates lie within
@@ -376,7 +396,8 @@ def check_T_42_over_102_structural_uniqueness():
     observational precision." This is tighter rhetoric and more
     defensible against selection-bias objections.
 
-    STATUS. [P]. The uniqueness claim is demonstrable via the
+    STATUS. [P_structural_reading] (demoted from [P] v24.3.320; see
+    the STALE-BROKEN flag above). The uniqueness claim is demonstrable via the
     derivation-chain criterion; post-hoc-fit competitors are
     distinguishable by whether their numerator/denominator correspond
     to bank-forced structural roles (vacuum fraction, per-slot
@@ -454,7 +475,7 @@ def check_T_42_over_102_structural_uniqueness():
              'Unique APF-native-only ratio with L_self_exclusion '
              'vacuum-fraction derivation',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural_reading',
         summary=(
             "Sharpened structural privilege of the 42/102 coefficient: "
             "among APF-native-only ratios (no math constants) within "

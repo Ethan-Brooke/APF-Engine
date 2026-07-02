@@ -173,3 +173,30 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:pre_branch_joint_necessity",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The EW distinction/reservoir lane's composed head: the triple "
+            "{y_t-free floor, C_boson = 16 ledger, separated 12/7 lift} is "
+            "JOINTLY necessary -- check_T_ew_pre_branch_necessity_P at "
+            "[P_structural_exhaustive]. It composes the reservoir ordering "
+            "(floor = pre-branch root-measure 102^-8) and the bosonic "
+            "enforcement reservoir and the static-well factorization, all "
+            "[P_structural_reading], plus the 12/7 SSB cone incidence "
+            "density [P_structural_seam]. "
+        ),
+        "covers": ("apf.ew_pre_branch_reservoir_ordering", "apf.ew_bosonic_enforcement_reservoir", "apf.ew_static_well_factorization", "apf.ew_branch_incidence_density"),
+        "note": "Wave 5 Group B head; covers = the four named dependencies of the head check",
+    },
+)

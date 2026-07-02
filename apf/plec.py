@@ -1089,3 +1089,26 @@ _CHECKS = {
 def register(registry):
     """Register PLEC infrastructure theorems into the global bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:regime_r_exit_taxonomy",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Regime R is well-posed (check_Regime_R [P]) and the "
+            "regime-exit taxonomy is complete in five named types, graded "
+            "all five exit checks [P]; the module's downstream "
+            "trivial-alignment/cosmogenesis theorems carry "
+            "[P_structural_reading]. "
+        ),
+        "note": "Wave 4 probe",
+    },
+)

@@ -918,3 +918,30 @@ if __name__ == "__main__":
     results = run_all()
     print(json.dumps(results, indent=2, sort_keys=True))
     raise SystemExit(0 if all(x.get("consistent") for x in results.values()) else 1)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:base_fiber_allocation",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Unification by base/fiber allocation with the impossibility "
+            "ceiling: full C*-structure is not substrate-global "
+            "(check_T_base_fiber_allocation_criterion_P, "
+            "check_T_cross_interface_algebraic_impossibility_ceiling_P -- "
+            "at their banked bespoke tokens [P_allocation] and "
+            "[P_ceiling], not bare [P]); the across-frame fork is "
+            "provably CONTAINED "
+            "(check_T_across_frame_fork_localized [P_structural]) and the "
+            "across_region row (no-B) stays OPEN. "
+        ),
+        "note": "Wave 4 probe; the no-B row's OPEN status stated honestly",
+    },
+)

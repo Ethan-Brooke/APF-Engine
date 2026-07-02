@@ -159,9 +159,13 @@ def check_L_abelian_no_ledger_channel_structure():
     L_equip channel-equivalence, the only invariant reading is the uniform full count, so
     1/alpha_Y = S_dS/sigma = C_total = 61 is forced. [P].
     """
-    # (1) group: rank-1, single collective mode, no internal index (L_singlet_Gram)
+    # (1) group: rank-1, single collective mode, no internal index. NOTE (2026-07-02
+    # referent corrigendum, count-neutral): this is the U(1) COMPETITION Gram A=[[1,x],[x,x^2]]
+    # (m=0), a rank-1-pattern citation to the SPECIES of L_singlet_Gram -- NOT the
+    # vacuum-42 demand Gram that check's statement names (see the corrigendum block
+    # in cosmology.py::check_L_singlet_Gram for the three-referent stabilization).
     check(_matrix_rank(0) == 1,
-          "GROUP: U(1) m=0 -> rank-1 Gram, a single collective mode (L_singlet_Gram), no internal index")
+          "GROUP: U(1) m=0 -> rank-1 competition Gram, a single collective mode (rank-1 pattern per L_singlet_Gram's species), no internal index")
     # (2) beta tiles the COMPLEMENT, disjoint from the ledger
     check(abs(6 * BY - (d_eff - C_total)) < 1e-9,
           "BETA: 6|b_Y| = 41 = d_eff - C_total -- the abelian beta tiles the COMPLEMENT, not the 61 ledger")

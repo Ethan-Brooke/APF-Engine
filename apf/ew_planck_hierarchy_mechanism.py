@@ -37,6 +37,20 @@ composition v_floor * 12/7 = 246.21 GeV is a CONVENTION-FIXED diagnostic, not a 
 
 [P_structural -- hierarchy mechanism modulo O(1); bosonic mode-restriction C_boson=16 vs
 C_total=61 OPEN; absolute value route-b]; no measured target consumed.
+
+LEDGER-SCALE CLAUSE (named 2026-07-02, principal ruling: fork (ii) consolidation). Where a
+sector's scale originates in a capacity commitment, the committed quantity is priced at the
+single-microstate occupation weight exp(-S) of the sector's ledger, S = C*sigma (C the
+sector's banked capacity-type census; sigma = ln d_eff), in the case form of the commitment:
+branch selection (A2, order parameter phi): phi/M_Pl = eta*exp(-S/2); saturation level (the
+full-ledger vacuum): rho/M_Pl^4 = eta*exp(-S); eta the sector's O(1) measure content,
+separately homed at its own grade; RG-transmuted scales EXEMPT (they ride the anchors through
+dimensionless running, banked derived). The clause CONSOLIDATES the former scattered
+identifications -- (A-i) sample space, (A-ii) measure structure, (B) per-state amplitude --
+into one named commitment. Grades UNCHANGED: this is naming, not elevation (elevation forks
+(iii)/(i) remain STAGED). Ruling note: 'Reference - The Ledger-Scale Clause - Adoption
+Investigation (2026-07-02).md'; for instance 2's branch-conditionality see
+check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py).
 """
 from __future__ import annotations
 

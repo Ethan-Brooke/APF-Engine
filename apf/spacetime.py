@@ -643,3 +643,25 @@ _CHECKS = {
 def register(registry):
     """Register spacetime theorems into the global bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:d4_unique",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Spacetime dimension d = 4 is derived uniquely (check_T8 [P]: d "
+            "<= 3 admits no propagating gravitational DOF, d >= 5 loses "
+            "Lovelock uniqueness); all eight module checks -- T8, the six "
+            "Delta closure checks, and T_Coleman_Mandula -- are banked [P]. "
+        ),
+        "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+    },
+)

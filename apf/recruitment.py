@@ -1542,3 +1542,28 @@ _CHECKS = {
 def register(registry):
     """Register recruitment-radius checks into the global bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:sixteen_case_unification",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Sixteen disjoint radiation phenomena reduce to the "
+            "recruitment-radius master equation -- "
+            "check_T_sixteen_case_unification_structural at "
+            "[P_structural_reading] (the banked field; the docstring's bare "
+            "[P_structural] is looser); the module's foundation checks (H1, "
+            "H2, T_quantum_anchor_einstein_A) are [P] and the seven "
+            "structural checks carry [P_structural_reading]. "
+        ),
+        "note": "Wave 5 probe; grade read from the epistemic field, not prose",
+    },
+)

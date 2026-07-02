@@ -2185,3 +2185,27 @@ if __name__ == "__main__":
     for n, fn in _CHECKS.items():
         r = fn()
         print(f"{n}: passed={r.get('passed')} [{r.get('epistemic')}]")
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:quotient_pinned_demand",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Gauge-orbit directions carry no pinnable record content "
+            "(check_L_gauge_orbit_unpinnable [P]); pinned demand equals the "
+            "quotient-pinned count, with the GQL-1 chain at [P] since the "
+            "2026-06-25 canonical-definition resolution (closed-world "
+            "completeness carried case + structural-completeness chart case "
+            "+ the Theorem_R/Schur value supplier). "
+        ),
+        "note": "Wave 4 probe",
+    },
+)

@@ -441,6 +441,7 @@ def ym_continuum_limit_transport() -> CodomainTransport:
 
 
 def h0_route_v_transport() -> CodomainTransport:
+    # v24.3.320 fork annotation: 70.03 is the TWO-FACTOR branch of the banked vacuum-O(1) reading fork; the count=area branch gives 66.84 — see check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py).
     return CodomainTransport(
         name='h0_route_v',
         source_codomain='APF structural prediction: H_0 = 70.03 km/s/Mpc (T_Lambda_to_H0_inversion in apf/lambda_absolute.py; algebraic from Omega_Lambda = 42/61 + rho_Lambda/M_Pl^4 = 42/102^62 + GR critical-density formula)',

@@ -309,3 +309,30 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:mw_distinction_decomposition",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "What physically sets M_W in the distinction picture: "
+            "equilibrium angle plus custodial Delta-rho, with no loop "
+            "construction -- "
+            "check_T_mw_value_equilibrium_plus_custodial_no_loop_construction_P "
+            "certifies the decomposition of the independently banked "
+            "L_W_mass value 80.3336 GeV, graded [P_structural] modulo the "
+            "absolute scale and alpha_had; its inputs (L_W_mass, "
+            "T_sin2theta, the custodial and continuation-measure theorems) "
+            "live outside the w_trace family. "
+        ),
+        "note": "Wave 4 head 4: the distinction-picture M_W head; no in-family covers",
+    },
+)

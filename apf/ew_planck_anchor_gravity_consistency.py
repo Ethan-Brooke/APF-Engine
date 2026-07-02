@@ -151,3 +151,30 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:planck_anchor_bekenstein_forced",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The EW floor's Planck anchor is the unreduced M_Pl = G^(-1/2), "
+            "forced by consistency with the Bekenstein convention l_P^2 = G "
+            "(T_Bek) -- "
+            "check_T_ew_planck_anchor_forced_by_gravity_consistency_P at "
+            "[P_structural_convention] (the _P suffix notwithstanding); the "
+            "reduced-Planck alternative differs by sqrt(8 pi). Consumes "
+            "T_ew_floor_measure_is_continuation_sum_root "
+            "[P_structural_seam]. "
+        ),
+        "covers": ("apf.ew_floor_measure_continuation_root",),
+        "note": "Wave 5 Group A sibling probe; covers = its genuine floor-measure dependency",
+    },
+)

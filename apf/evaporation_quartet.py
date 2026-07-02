@@ -303,3 +303,28 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:evaporation_quartet_page_derived",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The evaporation quartet, all four checks at the banked status "
+            "[P_structural_reading]: check_T_evaporation_lattice_ordering hosts "
+            "the Page-turnover content -- the turnover at half-evaporation "
+            "is DERIVED from s_rad = min(C_rad, C_BH) equipartition, not "
+            "posited, with the explicit falsifier that a turnover elsewhere "
+            "falsifies E4; plus saturation-alignment Type V, inverse "
+            "channel flow, and the V_global release. "
+        ),
+        "note": "Wave 5 probe; grade lives in the status field in this module",
+    },
+)

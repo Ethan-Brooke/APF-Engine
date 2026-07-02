@@ -2416,3 +2416,29 @@ def register(registry):
       * T_crystal_min_cut_v69              (workstream 3, Menger min vertex cuts)
     """
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "instrument:crystal_attribution",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The Enforcement Crystal analytical-metrics layer: all six "
+            "checks [P_structural_instrument], headed by "
+            "check_T_crystal_path_attribution_scc_v69 -- the SCC-condensed "
+            "cycle-aware path attribution certifying condensation "
+            "acyclicity, brute-force witness agreement, and shares summing "
+            "to one; plus centrality, cascade, convergence, min-cut, and "
+            "the depth-filtered cross-check. Attribution shares are "
+            "computed at runtime, not asserted. "
+        ),
+        "note": "Wave 5 probe; instrument grade per the corpus grade-split",
+    },
+)

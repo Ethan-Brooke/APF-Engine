@@ -1,0 +1,1257 @@
+{
+ "generated": "2026-07-02",
+ "pin_version": "24.3.323",
+ "coverage_summary": {
+  "modules_total": 446,
+  "modules_onboarded": 113,
+  "modules_onboarded_direct": 71,
+  "modules_onboarded_via_covers": 42,
+  "target_surface_total": 245,
+  "target_surface_onboarded": 73,
+  "modules_by_axis": {
+   "ROUTE": 57,
+   "CODOMAIN": 7,
+   "CONTEXTUALITY": 6,
+   "READOUT": 1
+  },
+  "declaration_modules": [
+   "apf.base_fiber_allocation",
+   "apf.core",
+   "apf.cosmology",
+   "apf.crystal_metrics",
+   "apf.evaporation_quartet",
+   "apf.ew_planck_anchor_gravity_consistency",
+   "apf.ew_pre_branch_necessity",
+   "apf.ew_scale_functional_independence",
+   "apf.ew_sqrtNc_carrier_color_triplet",
+   "apf.ew_unitarity_eigenscreen",
+   "apf.foundation_inputs",
+   "apf.gauge",
+   "apf.gauge_invariant_record",
+   "apf.gauge_quotient_ledger",
+   "apf.generations",
+   "apf.gravity",
+   "apf.horizon_ledger_reindexing",
+   "apf.ijc_feasbool_engine",
+   "apf.interface_contextuality_adapter",
+   "apf.interface_readout_adapter",
+   "apf.lambda_absolute",
+   "apf.majorana",
+   "apf.mw_value_from_equilibrium_and_custodial",
+   "apf.photon_masslessness",
+   "apf.planck_magnitude_single_anchor",
+   "apf.plec",
+   "apf.quantum_admissibility",
+   "apf.recruitment",
+   "apf.s_parameter_native",
+   "apf.spacetime",
+   "apf.symmetry_contextuality_independence",
+   "apf.thermo_four_laws_synthesis",
+   "apf.unification",
+   "apf.w_os_route_terminal_closure",
+   "apf.w_trace_native_delta_r_mw_assembly",
+   "apf.w_trace_native_two_loop_phase2_master_interface_router",
+   "apf.yang_mills_gap",
+   "apf.yang_mills_md_bridge"
+  ],
+  "legacy_adapter_modules": [
+   "apf.arch_defect_calculus_internal_identity_real_adapter",
+   "apf.arch_interface_engine_operational_internal_identity_real_adapter",
+   "apf.arch_rdfi_kernel_internal_identity_real_adapter",
+   "apf.bec_codomain_adapter",
+   "apf.bottom_msbar_rundec_real_adapter",
+   "apf.bottom_pole_obstruction_real_adapter",
+   "apf.charged_lepton_pole_real_adapter",
+   "apf.charged_lepton_qed_real_adapter",
+   "apf.charm_msbar_rundec_real_adapter",
+   "apf.charm_pole_obstruction_real_adapter",
+   "apf.cosmogenesis_t1_t4_quartet_real_adapter",
+   "apf.dark_modified_gravity_obstruction_real_adapter",
+   "apf.dark_particle_id_obstruction_real_adapter",
+   "apf.dark_w2_a_background_real_adapter",
+   "apf.evaporation_e1_e4_quartet_real_adapter",
+   "apf.ew_dizet_real_adapter",
+   "apf.gravity_bianchi_rigidity_real_adapter",
+   "apf.gravity_gr_limit_full_close_real_adapter",
+   "apf.gravity_ringdown_capacity_schema_real_adapter",
+   "apf.laser_coherence_codomain_adapter",
+   "apf.light_quark_real_adapter",
+   "apf.magnetism_codomain_adapter",
+   "apf.neutrino_mbb_reconciliation_real_adapter",
+   "apf.sin2theta_eff_bsy_real_adapter",
+   "apf.sin2theta_w_mass_ratio_identity_real_adapter",
+   "apf.sin2theta_w_source_identity_real_adapter",
+   "apf.superconductivity_codomain_adapter",
+   "apf.superfluidity_codomain_adapter",
+   "apf.synchronization_codomain_adapter",
+   "apf.top_msr_R_star_real_adapter",
+   "apf.top_msr_r_evolution_real_adapter",
+   "apf.top_pole_mc_obstruction_real_adapter",
+   "apf.topological_order_codomain_adapter"
+  ],
+  "declaration_skips": {},
+  "legacy_skips": {
+   "apf.dark_apf2_real_adapter": "missing atlas-contract attributes: ['build_live_atlas_payload']",
+   "apf.dark_posterior_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']",
+   "apf.ew_trace_to_scheme_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']"
+  },
+  "onboarded_module_floor": 71,
+  "target_module_types": [
+   "spine",
+   "sector",
+   "extension"
+  ],
+  "axes": [
+   "ROUTE",
+   "CODOMAIN",
+   "CONTEXTUALITY",
+   "READOUT"
+  ]
+ },
+ "how_to_regenerate": "PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py (after: python3 verify_all.py --bank-audit)",
+ "verdict_semantics": {
+  "export_global_P=True": "the route exports a global section in the IE's own currency (a certified closure)",
+  "export_global_P=False": "the route holds with a NAMED obstruction or as an honest open/held disposition -- obstructions are results, not defects"
+ },
+ "inputs": [
+  {
+   "input_id": "claim:capacity_overspend",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:cstar_substrate",
+   "axis": "ROUTE",
+   "route": "cstar",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:dark_runtime",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:ew_global_export",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:ew_local_trace",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:gauge_fiber",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:generic",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:horizon_cost",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "claim:provenance_smuggling",
+   "axis": "ROUTE",
+   "route": "provenance",
+   "solver_status": "FAIL_CLOSED_PROVENANCE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "coherent_phase:bec",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:bec",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:laser_coherence",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:laser_coherence",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:magnetism",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:magnetism",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:superconductivity",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:superconductivity",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:superfluidity",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:superfluidity",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:synchronization",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:synchronization",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "coherent_phase:topological_order",
+   "axis": "CODOMAIN",
+   "route": "coherent_phase:topological_order",
+   "solver_status": "COHERENT_CODOMAIN_SELECTED",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of (none; new codomain-axis input)); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "contextuality:chsh_local",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.interface_contextuality_adapter",
+   "expect_export": true,
+   "note": "local interior point (all CHSH sign choices |S|=6/5<=2) -> SepStr export",
+   "covers": [
+    "apf.ijc_feasbool_engine"
+   ]
+  },
+  {
+   "input_id": "contextuality:consistent_cycle",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_PARITY_KS",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.interface_contextuality_adapter",
+   "expect_export": true,
+   "note": "even 4-cycle (consistent GF(2) system) -> SepStr export",
+   "covers": [
+    "apf.ijc_feasbool_engine"
+   ]
+  },
+  {
+   "input_id": "contextuality:magic_square_parity",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_PARITY_KS",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_contextuality_adapter",
+   "expect_export": false,
+   "note": "Mermin-Peres magic square (GF(2) 0=1) -> IJCStr named obstruction",
+   "covers": [
+    "apf.ijc_feasbool_engine"
+   ]
+  },
+  {
+   "input_id": "contextuality:pr_box",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_contextuality_adapter",
+   "expect_export": false,
+   "note": "PR box (S=4) -> IJCStr named obstruction (CHSH/Fine separator)",
+   "covers": [
+    "apf.ijc_feasbool_engine"
+   ]
+  },
+  {
+   "input_id": "dark:lambda_absolute_mixed_grades",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.lambda_absolute",
+   "expect_export": false,
+   "note": "Wave 5 probe; mixed grades enumerated, no blanket bracket",
+   "covers": []
+  },
+  {
+   "input_id": "dark:phase_space_persistence_kernel",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.cosmology",
+   "expect_export": false,
+   "note": "Phase 2 disposition item (b); pack PHASE_SPACE_CLUSTERING_KERNEL.md wording",
+   "covers": []
+  },
+  {
+   "input_id": "dark:route_cross_sn_profile_probe",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "dark:route_desi_full_shape_exact",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "dark:route_full_growth_likelihood",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "dark:saturation_no_go_guard",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.cosmology",
+   "expect_export": false,
+   "note": "Phase 2 disposition item (a); pack SATURATION_NO_GO_GUARD.md wording",
+   "covers": []
+  },
+  {
+   "input_id": "ew:absolute_scale_frontier_terminated",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_scale_functional_independence",
+   "expect_export": false,
+   "note": "Wave 5 Group A head: the no-go triptych terminus (v24.3.314); covers = the prefactor chain (invariance_no_go + hierarchy_mechanism enter TRANSITIVELY via T_ew_prefactor_axiom_independence, the head's named dependency; composition verified at depth 2)",
+   "covers": [
+    "apf.ew_prefactor_axiom_independence",
+    "apf.ew_prefactor_invariance_no_go",
+    "apf.ew_planck_hierarchy_mechanism"
+   ]
+  },
+  {
+   "input_id": "ew:mw_distinction_decomposition",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.mw_value_from_equilibrium_and_custodial",
+   "expect_export": false,
+   "note": "Wave 4 head 4: the distinction-picture M_W head; no in-family covers",
+   "covers": []
+  },
+  {
+   "input_id": "ew:native_oblique_close",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.s_parameter_native",
+   "expect_export": false,
+   "note": "Wave 4 head 5: the oblique family head; covers = the cross-composed native oblique modules",
+   "covers": [
+    "apf.t_parameter_native",
+    "apf.u_parameter_native",
+    "apf.s_parameter_pure_gauge_constant_native",
+    "apf.s_higgs_finite_profile_native",
+    "apf.w_trace_native_bfm_photon_vp",
+    "apf.w_trace_native_gauge_boson_drho_uv",
+    "apf.w_trace_native_drho_top"
+   ]
+  },
+  {
+   "input_id": "ew:photon_massless_reversibility",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.photon_masslessness",
+   "expect_export": false,
+   "note": "Wave 4 probe; grade stated at the banked [P_structural_reading]",
+   "covers": []
+  },
+  {
+   "input_id": "ew:planck_anchor_bekenstein_forced",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_planck_anchor_gravity_consistency",
+   "expect_export": false,
+   "note": "Wave 5 Group A sibling probe; covers = its genuine floor-measure dependency",
+   "covers": [
+    "apf.ew_floor_measure_continuation_root"
+   ]
+  },
+  {
+   "input_id": "ew:pre_branch_joint_necessity",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_pre_branch_necessity",
+   "expect_export": false,
+   "note": "Wave 5 Group B head; covers = the four named dependencies of the head check",
+   "covers": [
+    "apf.ew_pre_branch_reservoir_ordering",
+    "apf.ew_bosonic_enforcement_reservoir",
+    "apf.ew_static_well_factorization",
+    "apf.ew_branch_incidence_density"
+   ]
+  },
+  {
+   "input_id": "ew:sqrtNc_carrier_forced",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_sqrtNc_carrier_color_triplet",
+   "expect_export": false,
+   "note": "Wave 5 Group B leaf probe",
+   "covers": []
+  },
+  {
+   "input_id": "ew_eigenscreen:coupled_channel_disposition",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_unitarity_eigenscreen",
+   "expect_export": false,
+   "note": "provenance: APF_INTERFACE_ENGINE_EW_COUPLED_CHANNEL_EIGENSCREEN_SYMBOLIC_GATE_v1 + EW_PARTIAL_WAVE_ANALYTIC_SCREEN_v1 (held, not banked); observed engine verdict SOLVED_LOCAL_HELD_FOR_REPAIR / export_global_P=False",
+   "covers": []
+  },
+  {
+   "input_id": "ew_eigenscreen:goldstone_boundary_disposition",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_unitarity_eigenscreen",
+   "expect_export": false,
+   "note": "provenance: APF_INTERFACE_ENGINE_GOLDSTONE_EQUIVALENCE_BOUNDARY_v1 + EW_SCATTERING_UNITARITY_SYMBOLIC_GATE_v1 + EW_TREE_AMPLITUDE_CUSTODIAL_CHANNEL_BASIS_v1 (held, not banked); observed engine verdict SOLVED_LOCAL_HELD_FOR_REPAIR / export_global_P=False",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:chiral_condensate_yuoh",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_invariant_record",
+   "expect_export": false,
+   "note": "v24.3.296 banked scenario: Yu-Oh on the N_f=3 flavour qutrit at the chiral condensate single density -> IJCStr",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:ckm_two_mass_bases",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.gauge_invariant_record",
+   "expect_export": true,
+   "note": "v24.3.303 banked scenario: the CKM-forced up/down mass bases as two disjoint triads -> SepStr export (forced flavour dynamics buy noncommutativity, NOT contextuality)",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:seesaw_from_a1",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.majorana",
+   "expect_export": false,
+   "note": "Wave 5 probe; the uniform-[P] letter is the banked state, cited as such",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:three_generations_forced",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.generations",
+   "expect_export": false,
+   "note": "Wave 4 probe; survey-verified against the module's banked checks",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:acc_ledger_identities",
+   "axis": "ROUTE",
+   "route": "categorical_unification",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.unification",
+   "expect_export": false,
+   "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:base_fiber_allocation",
+   "axis": "ROUTE",
+   "route": "cstar",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": "apf.base_fiber_allocation",
+   "expect_export": false,
+   "note": "Wave 4 probe; the no-B row's OPEN status stated honestly",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:d4_unique",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.spacetime",
+   "expect_export": false,
+   "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:four_input_declaration",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.foundation_inputs",
+   "expect_export": false,
+   "note": "Wave 4 probe; grades letter-checked (the clause is adopted; see the 2026-06-25 canonical-definition note)",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:regime_r_exit_taxonomy",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.plec",
+   "expect_export": false,
+   "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:single_dimensional_anchor",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.planck_magnitude_single_anchor",
+   "expect_export": false,
+   "note": "Wave 4 probe; the name-vs-grade trap defused explicitly",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:sixteen_case_unification",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.recruitment",
+   "expect_export": false,
+   "note": "Wave 5 probe; grade read from the epistemic field, not prose",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:quotient_pinned_demand",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_quotient_ledger",
+   "expect_export": false,
+   "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:spine_disposition",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gauge",
+   "expect_export": false,
+   "note": "Wave 3 spine probe; dispositions per the banked checks (Theorem_R, L_count, T_ew_load_placement_P, T_abelian_coupling_fixed_by_rank1_capacity_count)",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:bekenstein_quarter_structural",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.horizon_ledger_reindexing",
+   "expect_export": false,
+   "note": "Wave 4 probe; the one-logarithm displacement stated per the corrigendum",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:evaporation_quartet_page_derived",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.evaporation_quartet",
+   "expect_export": false,
+   "note": "Wave 5 probe; grade lives in the status field in this module",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:observable_transport_gr_nonclaims",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gravity",
+   "expect_export": false,
+   "note": "Phase 2 disposition gravity residue; pack transport-ledger rows consolidated",
+   "covers": []
+  },
+  {
+   "input_id": "instrument:crystal_attribution",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.crystal_metrics",
+   "expect_export": false,
+   "note": "Wave 5 probe; instrument grade per the corpus grade-split",
+   "covers": []
+  },
+  {
+   "input_id": "neutrino:route_dune_juno_hierarchy",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "payload:arch_defect_calculus_internal_identity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of arch:route_defect_calculus_architecture); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:arch_interface_engine_operational_internal_identity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of arch:route_interface_engine_operational); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:arch_rdfi_kernel_internal_identity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of arch:route_rdfi_global_descent_kernel); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:bottom_msbar_rundec_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route05_bottom_msbar_self_scale); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:bottom_pole_obstruction_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route06_bottom_pole); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:capacity_overspend",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "payload:charged_lepton_pole_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route01_charged_lepton_pole); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:charged_lepton_qed_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route02_charged_lepton_qed_running); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:charm_msbar_rundec_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route03_charm_msbar_self_scale); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:charm_pole_obstruction_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route04_charm_pole); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:cosmogenesis_t1_t4_quartet_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of cosmogenesis:route_t1_t4_quartet); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:dark_modified_gravity_obstruction_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of dark:route_modified_gravity); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:dark_particle_id_obstruction_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of dark:route_dark_particle_id); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:dark_runtime_open",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "payload:dark_w2_a_background_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of dark:route_w2_a_background); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:evaporation_e1_e4_quartet_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of evaporation:route_e1_e4_quartet); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:ew_dizet_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route11_mw_on_shell_dizet); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:ew_transport_open",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null
+  },
+  {
+   "input_id": "payload:gravity_bianchi_rigidity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of gravity:route_bianchi_rigidity); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:gravity_gr_limit_full_close_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of gravity:route_gr_limit_full_close); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:gravity_ringdown_capacity_schema_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of gravity:route_ringdown_capacity_schema); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:light_quark_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route10_light_quark_flag_external_kernel); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:neutrino_mbb_reconciliation_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of neutrino:route_mbb_reconciliation); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:sin2theta_eff_bsy_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route13_sin2_theta_eff_bsy_four_channel); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:sin2theta_w_mass_ratio_identity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route14_sin2_theta_w_mass_ratio_identity); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:sin2theta_w_source_identity_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route12_sin2_theta_w_source_identity); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:top_msr_R_star_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route07_top_external_msr); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:top_msr_r_evolution_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route08_top_msr_ew_transport); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "payload:top_pole_mc_obstruction_real_adapter_live",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": null,
+   "expect_export": null,
+   "note": "live adapter payload (swap of mass:route09_top_pole_mc); imported/banked content and grades per its adapter module"
+  },
+  {
+   "input_id": "quantum:ghz_mermin_state_independent",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.ijc_feasbool_engine",
+   "expect_export": false,
+   "note": "the GHZ/Mermin state-independent scenario (empty global-section support, brute-forced 0/64 -- six observables, 2^6 global sections -- in check_T_feasbool_general_contextuality) -> IJCStr named obstruction",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:magic_square_threshold_robust",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_PARITY_KS",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.quantum_admissibility",
+   "expect_export": false,
+   "note": "sign-equivalent textbook encoding of the v24.3.297 scenario (the banked check uses column parities (1,1,1); flipping two row signs gives this (0,0,1) form -- same 0=1 inconsistency, same delta*=1/6): -> IJCStr regardless of stipulated threshold in [0,1/6)",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:qutrit_noncontextual_control",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.ijc_feasbool_engine",
+   "expect_export": true,
+   "note": "the qutrit noncontextual control scenario -> SepStr export (a faithful global hidden-variable section exists)",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:symmetry_contextuality_orthogonal",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.symmetry_contextuality_independence",
+   "expect_export": false,
+   "note": "Wave 4 probe; the four-cell witness content stays with the banked check",
+   "covers": []
+  },
+  {
+   "input_id": "readout:su2_diquark",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "CANONICAL_RECORD_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": true,
+   "note": "m=1 -> canonical record EXPORTED",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su2_fund4",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "READOUT_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": false,
+   "note": "m=2 -> named obstruction: multiplicity-frame required",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su3_baryon",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "CANONICAL_RECORD_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": true,
+   "note": "m=1 -> canonical record EXPORTED (the epsilon baryon)",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su3_meson",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "CANONICAL_RECORD_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": true,
+   "note": "m=1 -> canonical frame-free record EXPORTED (the entangled singlet)",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su3_quark_pair",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "READOUT_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": false,
+   "note": "m=0 -> named obstruction: no sharp gauge-invariant record",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su3_single_quark",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "READOUT_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": false,
+   "note": "m=0 -> named obstruction: no sharp gauge-invariant record",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "readout:su3_tetraquark",
+   "axis": "READOUT",
+   "route": "READOUT_COMMUTANT_CLASSIFICATION",
+   "solver_status": "READOUT_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.interface_readout_adapter",
+   "expect_export": false,
+   "note": "m=2 -> named obstruction: multiplicity-frame required",
+   "covers": [
+    "apf.gauge_invariant_record"
+   ]
+  },
+  {
+   "input_id": "spine:inseparable_ijc_345_witness",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.core",
+   "expect_export": false,
+   "note": "the v24.3.288 exact singlet realization of the 3-4-5 geometry (constructive companion to T_inseparable_IJC's inline +-12/25 codespace witness): CHSH |S|=14/5>2 -> IJCStr",
+   "covers": []
+  },
+  {
+   "input_id": "strong:ladder_classical_correlation_control",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.yang_mills_md_bridge",
+   "expect_export": true,
+   "note": "v24.3.298 corrected ladder, rung 1: perfectly-correlated classical table has a global Boolean section -> SepStr (subadditive control)",
+   "covers": []
+  },
+  {
+   "input_id": "strong:lattice_gap_candidate",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.yang_mills_gap",
+   "expect_export": false,
+   "note": "Wave 4 probe; the candidate framing is the banked framing",
+   "covers": []
+  },
+  {
+   "input_id": "strong:pentaquark_magic_square",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_invariant_record",
+   "expect_export": false,
+   "note": "v24.3.295 banked scenario: SU(2) pentaquark M4 hosts the Mermin-Peres magic square (empty global-section support) -> IJCStr; the physical-host rep theory stays with the specialist check",
+   "covers": []
+  },
+  {
+   "input_id": "strong:tetraquark_kcbs",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_invariant_record",
+   "expect_export": false,
+   "note": "v24.3.293 banked scenario: gauge-invariant tetraquark M3 KCBS -> IJCStr",
+   "covers": []
+  },
+  {
+   "input_id": "strong:tetraquark_yuoh_state_independent",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_invariant_record",
+   "expect_export": false,
+   "note": "v24.3.294 banked scenario: Yu-Oh 13-ray on the tetraquark M3, state-independent -> IJCStr",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:four_laws_composed",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.thermo_four_laws_synthesis",
+   "expect_export": false,
+   "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "wtrace:native_one_loop_mw_close",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_native_delta_r_mw_assembly",
+   "expect_export": false,
+   "note": "Wave 4 head 1: the one-loop native close; covers = the dependency-verified composition fan",
+   "covers": [
+    "apf.w_trace_native_pv_massless_safe",
+    "apf.w_trace_native_bosonic_gauge_self_energy",
+    "apf.w_trace_native_fermion_sum_self_energy",
+    "apf.w_trace_native_delta_r_uv_assembly",
+    "apf.w_trace_native_uv_cancellation_stage4",
+    "apf.w_trace_native_fermionic_gauge_self_energy",
+    "apf.w_trace_native_uv_pole",
+    "apf.w_trace_pv_scalar_integral_substrate",
+    "apf.w_trace_pv_timelike_two_point"
+   ]
+  },
+  {
+   "input_id": "wtrace:os_route_terminal_closure_open_export",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_os_route_terminal_closure",
+   "expect_export": false,
+   "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface",
+   "covers": [
+    "apf.w_trace_final_export_readiness",
+    "apf.w_trace_physical_export_lock",
+    "apf.w_trace_counterterm_convention",
+    "apf.w_trace_onshell_transport",
+    "apf.w_trace_finite_part_ledger",
+    "apf.w_trace_real_row_bundle_admission",
+    "apf.w_trace_row_bundle_to_component_sum",
+    "apf.w_trace_admitted_row_covariance_bridge",
+    "apf.w_trace_uncertainty_propagation",
+    "apf.w_trace_component_sum_certificate",
+    "apf.w_trace_finite_part_skeleton",
+    "apf.trace_to_scheme_transport_theorem",
+    "apf.trace_transport_completion"
+   ]
+  },
+  {
+   "input_id": "wtrace:two_loop_phase2_router",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_native_two_loop_phase2_master_interface_router",
+   "expect_export": false,
+   "note": "Wave 4 head 3: the two-loop program head; covers = its promoted-lane composition only",
+   "covers": [
+    "apf.w_trace_native_two_loop_tadpole",
+    "apf.w_trace_native_two_loop_sunrise_de",
+    "apf.w_trace_native_two_loop_sunrise_2d_finite",
+    "apf.w_trace_native_two_loop_two_point_bft_dst",
+    "apf.w_trace_native_two_loop_two_point_euclidean_master"
+   ]
+  }
+ ]
+}

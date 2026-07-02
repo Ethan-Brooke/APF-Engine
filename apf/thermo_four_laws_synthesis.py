@@ -201,3 +201,26 @@ def register(registry):
     registry.update(_CHECKS); return registry
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:four_laws_composed",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The four laws of thermodynamics are certified as an exact "
+            "composition of already-banked [P] lemmas at "
+            "check_T_thermodynamics_four_laws_synthesis [P], with the "
+            "constituent loop's grade gates tightened to ('P',) since the "
+            "v24.3.304 occupancy-constitutive move. "
+        ),
+        "note": "Wave 4 probe",
+    },
+)

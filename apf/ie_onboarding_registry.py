@@ -122,7 +122,7 @@ TARGET_MODULE_TYPES: Tuple[str, ...] = ("spine", "sector", "extension")
 #: to import in a degraded sandbox, e.g. numpy/scipy-less) are excluded from
 #: the regression verdict Bucket-A style: they are REPORTED, and only a gap
 #: not explained by import-skips fails the ratchet.
-ONBOARDED_MODULE_FLOOR: int = 43  # raised at v24.3.313: cosmology + gravity + gauge (all spine) declare directly; prior raises .311 (ew_unitarity_eigenscreen) and .310 (Wave 1b)
+ONBOARDED_MODULE_FLOOR: int = 71  # raised at v24.3.319 (axis depth: ijc_feasbool_engine declares its own scenario library directly); prior raise at v24.3.317 (Wave 5: the ew_* distinction/absolute-scale lanes + 6 alternates, 10 modules declare directly); prior raises .316 / .313 / .311 / .310
 
 _PAYLOAD_SOURCES = ("claim_text", "payload", "payload_builder")
 
@@ -499,6 +499,16 @@ def check_T_ie_onboarding_registry_coverage() -> Dict[str, Any]:
                             % res.get("total_inputs"))
         if not summaries:
             failures.append("live atlas returned no summaries")
+        # v24.3.320 held-route repair: every applied claim refresh targets a
+        # real v0.2 input id and carries banked-check provenance
+        refreshes = res.get("claim_refreshes")
+        if refreshes is not None:
+            v02_ids = set(ids)
+            for row in refreshes:
+                if row.get("input_id") not in v02_ids:
+                    failures.append("claim refresh targets a non-v0.2 id: %r" % row)
+                if not row.get("provenance"):
+                    failures.append("claim refresh without provenance: %r" % row)
         legacy_conf, _ls = discover_legacy_adapters()
         wired_count = len(res.get("adapter_results") or [])
         if wired_count != len(legacy_conf):
@@ -573,8 +583,145 @@ def check_T_ie_onboarding_registry_coverage() -> Dict[str, Any]:
     }
 
 
+def check_T_ie_atlas_verdict_tripwire() -> Dict[str, Any]:
+    """T_ie_atlas_verdict_tripwire: every live-atlas verdict matches the
+    deliberate pin; no verdict drifts silently, no input runs unpinned.
+
+    Status: [P_structural_instrument]. Tier 4. The EXPECTED_THEOREM_COUNT
+    discipline extended from theorem COUNTS to theorem CONSEQUENCES: any
+    banked change that flips an export/obstruction verdict fails the bank
+    at the next run unless the pin is regenerated DELIBERATELY
+    (scripts/gen_ie_atlas_verdict_pin.py) and the diff explained by the
+    wave that caused it. Guards, among others, the W export lock (a flip
+    of payload:ew_transport_open to SOLVED_GLOBAL_P without the v15.1
+    boundary being revisited) and the dark Gates 3/4 admission.
+    """
+    failures: List[str] = []
+    try:
+        from apf.ie_atlas_verdict_pin import PINNED_VERDICTS
+        from apf.interface_atlas_live_runner import run_live_atlas
+        res = run_live_atlas(atlas_name="ie_atlas_verdict_tripwire_run")
+        summaries = res.get("all_summaries", [])
+        live = {}
+        for r in summaries:
+            get = r.get if isinstance(r, dict) else lambda k, d=None: getattr(r, k, d)
+            live[get("input_id")] = (str(get("solver_status")), bool(get("export_global_P")))
+        if len(live) != len(summaries):
+            failures.append("duplicate input_ids in the atlas (silent dict "
+                            "collapse): %d rows -> %d unique ids"
+                            % (len(summaries), len(live)))
+        for iid, pinned in PINNED_VERDICTS.items():
+            got = live.get(iid)
+            if got is None:
+                failures.append("pinned input vanished from the atlas: %s "
+                                "(pinned %r)" % (iid, pinned))
+            elif got != tuple(pinned):
+                failures.append("VERDICT DRIFT %s: pinned %r -> live %r "
+                                "(re-pin deliberately if a wave explains this)"
+                                % (iid, tuple(pinned), got))
+        unpinned = sorted(set(live) - set(PINNED_VERDICTS))
+        if unpinned:
+            failures.append("unpinned inputs (run scripts/gen_ie_atlas_verdict_pin.py "
+                            "and commit the reviewed diff): %r" % unpinned[:10])
+    except Exception as exc:  # noqa: BLE001
+        failures.append("tripwire run failed: %s" % exc)
+
+    passed = not failures
+    return {
+        "name": ("T_ie_atlas_verdict_tripwire: all live-atlas verdicts match "
+                 "the deliberate pin (consequence-level EXPECTED discipline); "
+                 "no silent verdict drift, no unpinned inputs "
+                 "[P_structural_instrument]"),
+        "passed": passed,
+        "epistemic": "P_structural_instrument",
+        "dependencies": ["T_ie_onboarding_registry_coverage"],
+        "failures": failures,
+        "key_result": (
+            "Every atlas input's (solver_status, export_global_P) is pinned "
+            "in apf/ie_atlas_verdict_pin.py and verified at every bank run. "
+            "Verdict changes require a deliberate re-pin whose diff is "
+            "explainable by the causing wave -- exports cannot silently "
+            "appear (the W export lock, the dark admission) and obstructions "
+            "cannot silently clear. An instrument; certifies stability of "
+            "delivered verdicts, asserts no physics."
+        ),
+    }
+
+
+def check_T_ie_reviewer_manifest_current() -> Dict[str, Any]:
+    """T_ie_reviewer_manifest_current: the committed reviewer artifacts match
+    the verdict pin -- the reviewer-facing atlas export cannot rot silently.
+
+    Status: [P_structural_instrument]. Tier 4. Compares the COMMITTED
+    artifacts/ie_atlas_export.json (generated by
+    scripts/gen_reviewer_manifest.py, shipped in the repo for reviewers)
+    against apf/ie_atlas_verdict_pin.py -- same input set, same verdicts,
+    same pin version. Regenerate both together at re-pin (signoff Step 8b).
+    Cheap: file-vs-pin, no atlas run.
+    """
+    import json as _json
+    import os as _os
+    failures: List[str] = []
+    try:
+        from apf.ie_atlas_verdict_pin import PINNED_VERDICTS, PIN_VERSION
+        import apf as _apf
+        root = _os.path.dirname(_os.path.dirname(_os.path.abspath(_apf.__file__)))
+        fn = _os.path.join(root, "artifacts", "ie_atlas_export.json")
+        if not _os.path.exists(fn):
+            failures.append("artifacts/ie_atlas_export.json missing -- run "
+                            "scripts/gen_reviewer_manifest.py and commit it")
+        else:
+            with open(fn, encoding="utf-8") as f:
+                export = _json.load(f)
+            got = {r["input_id"]: (str(r["solver_status"]), bool(r["export_global_P"]))
+                   for r in export.get("inputs", [])}
+            if set(got) != set(PINNED_VERDICTS):
+                missing = sorted(set(PINNED_VERDICTS) - set(got))[:5]
+                extra = sorted(set(got) - set(PINNED_VERDICTS))[:5]
+                failures.append("export input set != pin (missing %r, extra %r) "
+                                "-- regenerate the reviewer manifest" % (missing, extra))
+            else:
+                for iid, pinned in PINNED_VERDICTS.items():
+                    if got[iid] != tuple(pinned):
+                        failures.append("REVIEWER ARTIFACT STALE %s: export %r "
+                                        "!= pin %r" % (iid, got[iid], tuple(pinned)))
+            if export.get("pin_version") != PIN_VERSION:
+                failures.append("export pin_version %r != live PIN_VERSION %r"
+                                % (export.get("pin_version"), PIN_VERSION))
+        md = _os.path.join(root, "REVIEWER_ATLAS.md")
+        if not _os.path.exists(md):
+            failures.append("REVIEWER_ATLAS.md missing -- regenerate")
+        else:
+            mdtext = open(md, encoding="utf-8").read()
+            if ("pin v%s" % PIN_VERSION) not in mdtext:
+                failures.append("REVIEWER_ATLAS.md not stamped with the live "
+                                "pin version v%s -- stale, regenerate" % PIN_VERSION)
+    except Exception as exc:  # noqa: BLE001
+        failures.append("reviewer-manifest check failed: %s" % exc)
+
+    passed = not failures
+    return {
+        "name": ("T_ie_reviewer_manifest_current: the committed reviewer atlas "
+                 "export matches the verdict pin exactly (same inputs, same "
+                 "verdicts, same pin version) [P_structural_instrument]"),
+        "passed": passed,
+        "epistemic": "P_structural_instrument",
+        "dependencies": ["T_ie_atlas_verdict_tripwire"],
+        "failures": failures,
+        "key_result": (
+            "The reviewer-facing artifacts (REVIEWER_ATLAS.md + "
+            "artifacts/ie_atlas_export.json) are certified current against "
+            "the pinned verdicts at every bank run: a reviewer reading the "
+            "committed manifest reads what the engine actually delivers. "
+            "Instrument; asserts no physics."
+        ),
+    }
+
+
 _CHECKS = {
     "T_ie_onboarding_registry_coverage": check_T_ie_onboarding_registry_coverage,
+    "T_ie_atlas_verdict_tripwire": check_T_ie_atlas_verdict_tripwire,
+    "T_ie_reviewer_manifest_current": check_T_ie_reviewer_manifest_current,
 }
 
 

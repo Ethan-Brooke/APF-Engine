@@ -397,3 +397,30 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:native_oblique_close",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The native EW oblique close as one interface: fermion-loop S, "
+            "the Higgs log, and the curvature moment at "
+            "[P_S_oblique_native_reproduction]; the pure-gauge constant "
+            "-16.352 and the finite Higgs profile derived answer-free from "
+            "BFM vertices; fermionic T = the banked native Delta-rho [P]; "
+            "bosonic U [P]. All scope-fenced REPRODUCTIONS of standard "
+            "oblique structure with native tools -- no measured S, T, or U "
+            "enters anywhere. "
+        ),
+        "covers": ("apf.t_parameter_native", "apf.u_parameter_native", "apf.s_parameter_pure_gauge_constant_native", "apf.s_higgs_finite_profile_native", "apf.w_trace_native_bfm_photon_vp", "apf.w_trace_native_gauge_boson_drho_uv", "apf.w_trace_native_drho_top"),
+        "note": "Wave 4 head 5: the oblique family head; covers = the cross-composed native oblique modules",
+    },
+)

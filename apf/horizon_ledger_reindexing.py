@@ -834,3 +834,30 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:bekenstein_quarter_structural",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The Bekenstein quarter is structural: 1/4 = 1/N_commit with "
+            "N_commit = 4 categorical (check_T_horizon_reindexing at "
+            "[P_structural_reading] and "
+            "check_T_categorical_fourness at its banked token [P_cat]); "
+            "the area law and microstate "
+            "count are verified as TWO distinct identities post-corrigendum "
+            "-- A/4 = Omega = 102^61 (count = area) and S_dS = ln(A/4) = "
+            "282 (check_T_horizon_arealaw_microstate_consistency [P], "
+            "v24.3.272). "
+        ),
+        "note": "Wave 4 probe; the one-logarithm displacement stated per the corrigendum",
+    },
+)

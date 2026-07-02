@@ -669,7 +669,20 @@ def check_T_Lambda_operator_model_verification():
 # =============================================================================
 
 def check_T_Lambda_to_H0_inversion():
-    """T_Lambda_to_H0_inversion [P] — APF prediction for the Hubble constant.
+    """T_Lambda_to_H0_inversion [P_structural_reading] — the two-factor
+    branch H0 = 70.03 km/s/Mpc of the banked vacuum-O(1) reading fork.
+
+    DEMOTED 'P' -> 'P_structural_reading' (v24.3.320, the vacuum O(1)
+    adjudication, 2026-07-02 — verdict R4-with-demotions 0.85 / hostile
+    audit HOLD-WITH-FIXES 0.85). The rho_Lambda coefficient 42/102 this
+    inversion consumes is the TWO-FACTOR reading of the vacuum O(1);
+    the competing count=area reading (T10's 3/8) gives H0 = 66.84
+    km/s/Mpc through the identical composition, ratio exactly
+    sqrt(56/51). H0 = 70.03 therefore survives as the two-factor
+    BRANCH of a named reading fork, no longer as a "[P] prediction".
+    See check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py) for the
+    fork and its three-way discriminator (~67 => count=area exact;
+    ~70 => two-factor exact; ~73 => both wrong).
 
     DERIVATION (rigorous, given the bank-forced APF inputs plus the standard-
     cosmology rho_crit formula from GR). APF delivers two bank-forced [P]
@@ -717,7 +730,9 @@ def check_T_Lambda_to_H0_inversion():
     the resolution lands essentially at the tension midpoint, with zero
     free parameters.
 
-    STATUS. [P] as a derived prediction, and the gravitational relation
+    STATUS. [P_structural_reading] (see the demotion note above; the
+    algebra below is exact GIVEN the two-factor branch coefficient),
+    and the gravitational relation
     it uses is more native than an external-GR framing suggests. The
     critical density rho_crit = 3 H_0^2 / (8 pi G) is the flat-FLRW
     specialization of the APF-derived Einstein equation (T9_grav [P]:
@@ -791,21 +806,25 @@ def check_T_Lambda_to_H0_inversion():
                      log10_rho_crit_over_Mpl4_APF -
                      log10_rho_Lambda_over_Mpl4_APF) < 1e-12
     inversion_sanity = H_APF_km_s_Mpc > 0 and H_APF_km_s_Mpc < 200
-    # APF prediction lies within the Planck–SH0ES tension band
+    # APF prediction lies within the Planck–SH0ES tension band.
+    # INFORMATIONAL ONLY (v24.3.320, audit finding B): this was a hard
+    # gate; the vacuum O(1) adjudication demoted it — the count=area
+    # fork branch (66.84) legitimately falls OUTSIDE the band, so band
+    # membership is a BRANCH property, not a soundness property.
+    # Computed and reported in artifacts, never check()-gated.
     within_tension = (H_Planck_2018 < H_APF_km_s_Mpc < H_SH0ES_2022)
 
-    all_OK = (omega_sanity and rho_sanity and inversion_sanity
-              and within_tension)
+    all_OK = (omega_sanity and rho_sanity and inversion_sanity)
     check(all_OK,
           f"H_0 inversion sanity failed: Omega={omega_sanity}, "
-          f"rho={rho_sanity}, inv={inversion_sanity}, "
-          f"within_tension={within_tension}")
+          f"rho={rho_sanity}, inv={inversion_sanity} "
+          f"(within_tension={within_tension} is informational only)")
 
     return _result(
         name='T_Lambda_to_H0_inversion — '
              'APF predicts H_0 from its rho_Lambda and Omega_Lambda formulas',
         tier=4,
-        epistemic='P',
+        epistemic='P_structural_reading',
         summary=(
             f"APF's two bank-forced predictions — Omega_Lambda = 42/61 = "
             f"{Omega_Lambda_APF:.4f} and rho_Lambda/M_Pl^4 = 42/102^62 = "
@@ -823,8 +842,10 @@ def check_T_Lambda_to_H0_inversion():
             f"essentially at the midpoint. If the tension reflects "
             f"genuine new physics resolving at ~70 km/s/Mpc, APF is the "
             f"only framework I know of that predicts this value with "
-            f"zero free parameters. Status [P] as a derived prediction "
-            f"from two [P] inputs plus standard GR; the 8% residual in "
+            f"zero free parameters. Status [P_structural_reading]: the "
+            f"two-factor branch of the banked vacuum-O(1) reading fork "
+            f"(count=area branch gives 66.84 — see "
+            f"check_T_vacuum_o1_reading_fork); the 8% residual in "
             f"the rho_Lambda match (vs Planck 2018) translates to the "
             f"~4% high/low brackets vs Planck/SH0ES on H_0."
         ),
@@ -1048,6 +1069,20 @@ def check_T_ew_lambda_unified_suppression():
 
     [P_structural]; v_H and rho_Lambda are predictions vs comparators (Fermi v_H, observed
     rho_Lambda); no measured target consumed.
+
+    LEDGER-SCALE CLAUSE (named 2026-07-02, principal ruling: fork (ii) consolidation). Where a
+    sector's scale originates in a capacity commitment, the committed quantity is priced at the
+    single-microstate occupation weight exp(-S) of the sector's ledger, S = C*sigma (C the
+    sector's banked capacity-type census; sigma = ln d_eff), in the case form of the commitment:
+    branch selection (A2, order parameter phi): phi/M_Pl = eta*exp(-S/2); saturation level (the
+    full-ledger vacuum): rho/M_Pl^4 = eta*exp(-S); eta the sector's O(1) measure content,
+    separately homed at its own grade; RG-transmuted scales EXEMPT (they ride the anchors through
+    dimensionless running, banked derived). The clause CONSOLIDATES the former scattered
+    identifications -- (A-i) sample space, (A-ii) measure structure, (B) per-state amplitude --
+    into one named commitment. Grades UNCHANGED: this is naming, not elevation (elevation forks
+    (iii)/(i) remain STAGED). Ruling note: 'Reference - The Ledger-Scale Clause - Adoption
+    Investigation (2026-07-02).md'; for instance 2's branch-conditionality see
+    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py).
     """
     d_eff = _CANON_D_EFF_SM
     sigma = _math.log(d_eff)
@@ -1154,3 +1189,27 @@ _CHECKS = {
 def register(registry):
     """Register the Lambda-absolute robustness checks into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "dark:lambda_absolute_mixed_grades",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The absolute-Lambda module by its banked grades, enumerated: "
+            "the extended formula and the bulletproof composition are "
+            "[P]; the H0 inversion is [P_structural_reading] (v24.3.320, "
+            "the vacuum-O(1) reading fork); the coefficient-degeneracy audit and the "
+            "unified EW-Lambda suppression are [P_structural_convention]; "
+            "the operator-model verification is [P_structural_instrument]. "
+        ),
+        "note": "Wave 5 probe; mixed grades enumerated, no blanket bracket",
+    },
+)

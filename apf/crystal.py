@@ -698,7 +698,7 @@ _DEFAULT_SECTOR_VERDICTS = {
     "particles":        {"verdict": "partial",   "n_passing": "most",
                          "open": ["dark matter particle ID"]},
     "cosmology":        {"verdict": "watching",  "n_passing": "most",
-                         "open": ["H_0 prediction 70.03 km/s/Mpc (T_Lambda_to_H0_inversion); near Planck-SH0ES tension midpoint, empirical convergence awaited"]},
+                         "open": ["H_0 prediction 70.03 km/s/Mpc (T_Lambda_to_H0_inversion); near Planck-SH0ES tension midpoint, empirical convergence awaited; NOTE: 70.03 is the two-factor branch of the banked vacuum-O(1) reading fork, count=area branch 66.84 (check_T_vacuum_o1_reading_fork)"]},
     "geometry":         {"verdict": "complete",  "n_passing": "all"},
 }
 

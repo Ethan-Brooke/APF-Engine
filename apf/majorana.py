@@ -1731,3 +1731,27 @@ def register(registry):
     registry['L_nuR_collider_bounds'] = check_L_nuR_collider_bounds
     # Phase 3 empirical confrontation (Mar 2026)
     registry['L_mbb_0vbb'] = check_L_mbb_0vbb
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:seesaw_from_a1",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The seesaw mechanism is derived from the foundational base -- "
+            "check_L_seesaw_from_A1 [P] with check_L_nuR_enforcement [P]; "
+            "the module's eight sibling checks (sigma normalization, VEV, "
+            "phenomenology, corrected and two-loop Higgs, the MR3-top "
+            "identity, collider bounds, the 0-nu-beta-beta m_bb) all carry "
+            "the banked [P] letter. "
+        ),
+        "note": "Wave 5 probe; the uniform-[P] letter is the banked state, cited as such",
+    },
+)

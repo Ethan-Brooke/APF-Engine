@@ -174,6 +174,18 @@ def run_live_atlas(
     from apf.interface_atlas import AxisKind
 
     base_inputs = list(v02.assemble_inputs())
+
+    # v24.3.320 (held-route repair): apply the v0.3 claim-refresh layer --
+    # current-disposition texts/flags with banked-check provenance for the
+    # six inputs whose frozen 2026-05-18 wording is stale. The vendored v0.2
+    # module and canonical_atlas_inputs() are never mutated (archival; the
+    # banked check_T_interface_atlas_* certify the canonical set as-is).
+    claim_refreshes: List[Dict[str, Any]] = []
+    try:
+        from apf.interface_atlas_v03_claim_refresh import apply_refresh
+        base_inputs, claim_refreshes = apply_refresh(base_inputs)
+    except ImportError:
+        pass  # pre-.320 checkout
     swapped_inputs: List[Any] = []
     actual_swaps: List[Dict[str, Any]] = []
     for inp in base_inputs:
@@ -319,6 +331,7 @@ def run_live_atlas(
         "global_P_count": len(global_p_rows),
         "wired_adapter_count": len(adapter_results),
         "declaration_results": declaration_rows,  # v24.3.308 Wave 1c
+        "claim_refreshes": claim_refreshes,  # v24.3.320 held-route repair
         "axis_summary": dict(atlas.axis_summary),  # v24.3.32 per-axis breakdown
         "adapters_discovered": [
             {

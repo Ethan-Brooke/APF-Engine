@@ -169,3 +169,26 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:sqrtNc_carrier_forced",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The sqrt(N_c) carrier is forced by the exact colour-triplet "
+            "trace: a2 = Sum N_c * Tr over H_F = C^96 gives sqrt(N_c) = "
+            "a_Y/sqrt(b) with y_t cancelling in the ratio -- "
+            "check_T_ew_sqrtNc_carrier_forced_by_color_triplet_trace_P at "
+            "[P_structural_reading], via L_normalization_coefficient [P]. "
+        ),
+        "note": "Wave 5 Group B leaf probe",
+    },
+)

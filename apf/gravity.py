@@ -167,7 +167,39 @@ def check_T10():
             microstates from the 61-type capacity ledger."
       The 122 orders of magnitude are DERIVED, not tuned.
 
-    STATUS: [P] (v4.3.6). All dependencies [P]. No new imports.
+    STATUS: [P] (v4.3.6), scoped to the EXPONENT (the 122 orders,
+    Omega = 102^61). All dependencies [P]. No new imports FOR THE
+    EXPONENT; the O(1) prefactor imports the count=area reading and
+    kappa = 1/4 (see READING CAVEAT).
+
+    READING CAVEAT (v24.3.320, the vacuum O(1) adjudication,
+    2026-07-02 — verdict R4-with-demotions 0.85 / hostile audit
+    HOLD-WITH-FIXES 0.85). The O(1) prefactor 3*pi is
+    count=area-READING-CONDITIONAL, not [P]:
+
+      * Lambda = 3/L^2 (dS geometry) composes with A/4 = Omega, the
+        count=area reading. That reading is ANCHORED, NOT DERIVED
+        (Face-2 Move 4, "Reference - Face 2 of the Calibration Seam -
+        The One-Logarithm Displacement (2026-06-24)"): A/4 = Omega is
+        true BY CONSTRUCTION of this very relation
+        (horizon_ledger_reindexing.py:470-477 — the log(3*pi) cancels
+        and the test re-derives Omega from Omega; there is no
+        independent geometric area input to compare).
+      * The 1/4 in A/4 is T_Bek's imported kappa = 1/4 (T_Bek Step 4,
+        gravity.py ~line 300: "The 1/4 factor requires UV completion").
+
+    Honest grade of the O(1) ALONE: [P_structural_reading]. The
+    epistemic field stays 'P' BY DESIGN, scoped to the exponent
+    Omega = 102^61 — the content every consumer relies on (the 3*pi
+    cancels by construction in L_epsilon_star_Planck; no gating
+    consumer is O(1)-sensitive). NAMED READING FORK: the competing
+    two-factor coefficient 42/102 (L_Lambda_absolute_numerical_formula)
+    differs from 3/8 by exactly 56/51 (9.8%); composed with
+    Omega_Lambda = 42/61, the two O(1)s give H0 = 66.84 (this chain's
+    branch, fork-conditional: count=area) vs 70.03 km/s/Mpc (the
+    two-factor branch). See check_T_vacuum_o1_reading_fork
+    (vacuum_o1_fork.py) for the banked fork and its three-way
+    empirical discriminator.
     """
     C_total = dag_get('C_total', default=61, consumer='T10')
     C_vacuum = 42
@@ -196,8 +228,10 @@ def check_T10():
             f'v4.3.6: upgraded from [Ps] via T_deSitter_entropy.'
         ),
         key_result=(
-            f'Lambda*G = 3pi/102^61 = 10^{log10_LG:.1f} [P]; '
-            f'CC problem resolved by microstate counting'
+            f'Lambda*G = 3pi/102^61 = 10^{log10_LG:.1f} '
+            f'[P on the exponent 102^61; the 3pi O(1) is count=area-'
+            f'reading-conditional — see check_T_vacuum_o1_reading_fork]; '
+            f'CC problem (the 122 orders) resolved by microstate counting'
         ),
         dependencies=['T9_grav', 'A1', 'T_Bek', 'T_deSitter_entropy',
                       'L_self_exclusion'],
@@ -538,9 +572,12 @@ def check_T_deSitter_entropy():
       Error: 0.007%
 
       Using S_dS = pi / (H^2 * Omega_Lambda) with Omega_Lambda = 42/61:
-      Predicted H0 = 66.84 km/s/Mpc
+      Predicted H0 = 66.84 km/s/Mpc  [FORK-CONDITIONAL: this is the
+      count=area branch of the banked vacuum-O(1) reading fork; the
+      two-factor branch gives 70.03 km/s/Mpc — see READING CAVEAT
+      below and check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py)]
       Observed H0 = 67.36 +/- 0.54 (Planck 2018)
-      Tension: 1.0 sigma
+      Tension: 1.0 sigma (on this branch)
 
     WHAT THIS DERIVES:
       Lambda * G = 3*pi / 102^61  [dimensionless CC]
@@ -555,8 +592,27 @@ def check_T_deSitter_entropy():
     (Sector B) respectively, read off the T12 interface stratification.
     The same 42 appears in Omega_Lambda = 42/61 (T11, Corollary C1).
 
-    STATUS: [P] -- all five steps use [P] theorems.
-    No new imports. No new axioms.
+    STATUS: [P] -- all five steps use [P] theorems, scoped to the
+    entropy/exponent content S_dS = 61*ln(102) (equivalently
+    Omega = 102^61). No new imports and no new axioms FOR THE
+    EXPONENT; the O(1) prefactor of the equivalent Lambda*G form
+    imports the count=area reading (see READING CAVEAT).
+
+    READING CAVEAT (v24.3.320, the vacuum O(1) adjudication,
+    2026-07-02). The equivalent form Lambda*G = 3*pi/102^61 carries
+    an O(1) prefactor (3*pi) that is count=area-READING-CONDITIONAL,
+    not [P]: A/4 = Omega is anchored, not derived (Face-2 Move 4,
+    "anchored, not derived"; horizon_ledger_reindexing.py:470-477 —
+    true by construction, no independent geometric area input), and
+    the 1/4 is T_Bek's imported kappa = 1/4 ("requires UV completion",
+    gravity.py ~line 300). Honest grade of the O(1) alone:
+    [P_structural_reading]. The H0 = 66.84 above is therefore the
+    count=area BRANCH of a banked reading fork whose other branch
+    (two-factor coefficient 42/102, lambda_absolute.py) gives 70.03
+    km/s/Mpc; ratio exactly sqrt(56/51). See
+    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py). The entropy
+    identity S_dS = 61*ln(102) = 282.123 nats — this check's key
+    content — is the exponent statement and is untouched by the fork.
     """
     C_total = dag_get('C_total', default=61, consumer='T_deSitter_entropy')
     C_vacuum = 42
@@ -620,12 +676,15 @@ def check_T_deSitter_entropy():
             f'S = {C_total}*ln({d_eff}) = {S_predicted:.3f} nats '
             f'(obs {ln_S_observed:.3f}, error {entropy_error:.4%}). '
             f'Predicted H0 = {H0_pred_km:.1f} km/s/Mpc '
-            f'({H0_tension:.1f} sigma from Planck 2018). '
+            f'({H0_tension:.1f} sigma from Planck 2018; FORK-CONDITIONAL '
+            f'count=area branch, see check_T_vacuum_o1_reading_fork). '
             f'Lambda*G = 3pi/{d_eff}^{C_total} = 10^{log10_LG_pred:.1f}.'
         ),
         key_result=(
             f'S_dS = {C_total}*ln({d_eff}) = {S_predicted:.3f} nats '
-            f'[0.007%]; Lambda*G = 3pi/102^61'
+            f'[0.007%]; Lambda*G = 3pi/102^61 (3pi O(1) count=area-'
+            f'reading-conditional; H0 66.84 = count=area fork branch — '
+            f'see check_T_vacuum_o1_reading_fork)'
         ),
         dependencies=dependencies_all_P,
         artifacts={
@@ -1920,6 +1979,591 @@ def check_T_v_global_accumulation_from_type_II_resolutions():
     )
 
 
+
+
+def check_T_which_v_no_registered_interior_reader():
+    """T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural].
+
+    v24.3.318 NEW (2026-07-02; the fingerprint map was first generated at
+    .317 and regenerated recursively at .318 -- the Wave 5 IE lane took
+    .317 mid-banking, see the manifest lane note). The bank-closed-world
+    half of the off-saturation which-v lemma as a standing, drift-guarded
+    certificate (the .305 closed-world walker pattern). Reference notes of
+    record: "Reference - The Off-Saturation Which-v Lemma - The
+    Bank-Closed-World Half, Sweep-Recounted (2026-07-02)" (three
+    fresh-context hostile audits) and "Reference - Section 8 Lemmas 1 and
+    2 Walked - The Channel Census and Gravitational Structure-Blindness at
+    Bank Strength (2026-07-02)" (two audits; supplies the seven-family
+    channel census and the derived-quantity token extension). This banked
+    object itself was cold-audited (LAND-WITH-FIXES 0.80) and carries all
+    six required fixes: per-file expected ident-match sets instead of
+    blanket whitelists; the scaffolding carrier-constructor patterns made
+    visible and pinned; the recursive package walk; the ln-composite tier;
+    the version stamp; the falsifier made sound in this module.
+
+    STATEMENT (bank-closed-world strength ONLY): no registered check
+    constructs an interior instrument that reads an individual vacuum-mode
+    label -- which of the 42 Sector-B modes a channel's second-epsilon
+    commitment selected (T_horizon_reciprocity Step 1). Certified
+    syntactically in three clauses:
+
+      (a) LITERAL-PATTERN SCAN, package-recursive: the mode-identifier
+          vocabulary (assembled at runtime so this function never
+          self-matches), range-over-literal-42 loops, and the two known
+          scaffolding carrier-constructor patterns (the V_global slot-tag
+          prefix; the 42-carrier quotient-map constructor) are matched
+          against every .py file under the package, recursively. Every
+          match must equal a per-file EXPECTED set -- no blanket file
+          exemptions. Today: supplements.py carries exactly the
+          derivation-mode status string; subspace_functors.py carries
+          exactly the slot-tag prefix (and its comparisons must remain
+          tag-SET-level, asserted); acc_unification_all_p.py carries
+          exactly the carrier constructor (and must remain functor-law
+          machinery, asserted via its composition vocabulary). Any other
+          match anywhere -- including in THIS module -- fails.
+          SCOPE: literal patterns only. Parametric within-42 indexing
+          whose size is constructed at runtime is invisible to this
+          clause; it is caught, if at all, by clause (b)'s drift net plus
+          the next human disposition pass.
+
+      (b) DRIFT NET, package-recursive: the two-tier enumeration behind
+          the reference notes re-runs live. Token classes: V = the named
+          vacuum vocabulary; L = the standalone literal 42; D = the
+          derived-quantity vocabulary (-58/61, -16/61, 21/8) the
+          lemmas-1+2 audit flagged as invisible to the named tokens;
+          H = the ln-of-102 composite (the same audit's d_eff-composite
+          flag, implemented for the specific named composite; standalone
+          102/d_eff vocabulary is deliberately OUTSIDE the net -- its
+          ubiquity as benign arithmetic would make the map
+          churn-dominated; that residual is named here, not hidden).
+          Every matching file must appear in the dispositioned
+          fingerprint map with an unchanged class set; a new matching
+          file, a class-set change, or a mapped file that stops matching
+          FAILS this check until the disposition is redone by hand --
+          including the known future churn: the manifest header comment
+          rolling off to the changelog archive will drop classes from
+          _module_manifest.py and fire this clause; that is the intended
+          re-disposition discipline, not a defect. Tags: 'consumer' =
+          42-sector-sense physics consumer; 'fence' = sense fence or
+          arithmetic-42 coincidence; 'infra' = registry/test
+          infrastructure (the notes' 49 consumers = 44 'consumer' + 5
+          'infra' here; the per-file sense record lives in the notes).
+
+      (c) READOUT-SURFACE PIN: the Sector-B readout fingerprint -- the
+          Step-1 docstring phrase naming the Gamma_E commitment to a
+          vacuum mode, together with the horizon-registration artifact
+          key -- exists at check_T_horizon_reciprocity in this module and
+          at no other surface, package-recursive. The semantic claim
+          ("the sole banked readout of Sector-B content is the horizon
+          registration") lives in the reference notes, not in this check.
+
+    WHAT THIS DOES NOT CERTIFY: semantic S_42-invariance of arbitrary
+    check bodies (not mechanically decidable; the per-class disposition
+    is recorded human judgment). Anything at protocol strength: the
+    physical residual is the ICL-species channel-exhaustiveness
+    commitment [C] plus channel 3's sub-band response freedom, per the
+    lemmas-1+2 note. Mode identity only: coincidence/multiplicity
+    patterns over the 42 are S_42-invariant and not excluded. State
+    uniformity is not used and not implied (L_equip / L_KMS_trace_state
+    are saturation-only and are not premises here).
+
+    FALSIFIER: a future interior mode-label reader -- in any module,
+    INCLUDING this one -- trips clause (a) (exact expected sets, no file
+    exemptions) or clause (b) (net drift), and fails this check. Working
+    as intended, exactly as the .305 fork walker fails if the fork
+    acquires a new citing surface.
+
+    GRADE [P_structural]: closed-world over the current corpus, by
+    construction.
+    """
+    import os as _os
+    import re as _re
+    import apf as _apf_pkg
+
+    pkg_dir = _os.path.dirname(_os.path.abspath(_apf_pkg.__file__))
+
+    def _iter_py():
+        for root, dirs, files in _os.walk(pkg_dir):
+            dirs[:] = [d for d in dirs if d != '__pycache__']
+            for name in sorted(files):
+                if name.endswith('.py'):
+                    p = _os.path.join(root, name)
+                    rel = _os.path.relpath(p, pkg_dir).replace(_os.sep, '/')
+                    yield rel, p
+
+    # ---- clause (b) token tiers ----
+    pat_vocab = _re.compile(
+        r'C_vacuum|C_vac\b|C_VACUUM|DIM_V_GLOBAL|V_global|\bvacuum\b', _re.I)
+    pat_lit42 = _re.compile(r'(?<![\d.])42(?![\d.])')
+    pat_drv = _re.compile(
+        r'-\s*58(?:\.0)?\s*/\s*61|-\s*16(?:\.0)?\s*/\s*61'
+        r'|(?<![\d.])21(?:\.0)?\s*/\s*8(?![\d.])'
+        r'|Fraction\(-58,\s*61\)|Fraction\(-16,\s*61\)|Fraction\(21,\s*8\)')
+    pat_log102 = _re.compile(r'log' + r'\(102\)')
+
+    # Dispositioned fingerprint map (regenerated recursively 2026-07-02 at
+    # v24.3.318; classes V/L/D/H as above; tags consumer/fence/infra).
+    FINGERPRINT_MAP = {
+        '__init__.py': ('VL', 'infra'),
+        '_module_manifest.py': ('VLD', 'infra'),
+        '_optimize_vendored.py': ('L', 'fence'),
+        'a_mu_hvp_capacity_density.py': ('V', 'fence'),
+        'acc_reading_selection.py': ('VL', 'consumer'),
+        'acc_unification_all_p.py': ('L', 'consumer'),
+        'admissible_representation_stack.py': ('L', 'consumer'),
+        'bank.py': ('VL', 'infra'),
+        'base_fiber_allocation.py': ('VLH', 'consumer'),
+        'charged_lepton_qed_real_adapter.py': ('L', 'fence'),
+        'class_transition.py': ('VL', 'consumer'),
+        'codomain_transport_schema.py': ('VLD', 'consumer'),
+        'core.py': ('VL', 'consumer'),
+        'crystal.py': ('V', 'infra'),
+        'cosmogenesis_t1_t4_quartet_real_adapter.py': ('V', 'consumer'),
+        'cosmology.py': ('VLH', 'consumer'),
+        'crystal_metrics.py': ('L', 'fence'),
+        'dark_apf2_real_adapter.py': ('LD', 'consumer'),
+        'dark_w2_a_background_real_adapter.py': ('D', 'fence'),
+        'delta_alpha_capacity_density.py': ('V', 'fence'),
+        'delta_alpha_leptonic.py': ('V', 'fence'),
+        'descent_obstruction_calculus.py': ('L', 'consumer'),
+        'evaporation_quartet.py': ('VL', 'consumer'),
+        'ew_bosonic_enforcement_reservoir.py': ('VL', 'consumer'),
+        'ew_branch_incidence_density.py': ('V', 'fence'),
+        'ew_codomain_reading_contracts.py': ('VLD', 'consumer'),
+        'ew_dizet_real_adapter.py': ('VL', 'fence'),
+        'ew_osw_source_transcription_families.py': ('V', 'fence'),
+        'ew_planck_hierarchy_mechanism.py': ('VL', 'consumer'),
+        'ew_pre_branch_necessity.py': ('V', 'fence'),
+        'extensions.py': ('V', 'fence'),
+        'fibration_census.py': ('L', 'consumer'),
+        'fluctuation_response_two_faces.py': ('L', 'consumer'),
+        'formal_kernel.py': ('L', 'consumer'),
+        'foundation_inputs.py': ('L', 'fence'),
+        'fractional_reading.py': ('VL', 'consumer'),
+        'gauge.py': ('VL', 'consumer'),
+        'gauge_beta_capacity_tiling.py': ('VL', 'consumer'),
+        'gauge_invariant_record.py': ('V', 'fence'),
+        'gauge_quotient_ledger.py': ('L', 'fence'),
+        'generations.py': ('VL', 'consumer'),
+        'gravity.py': ('VLD', 'consumer'),
+        'horizon_joint_bridge.py': ('VL', 'consumer'),
+        'horizon_ledger_reindexing.py': ('VL', 'consumer'),
+        'i4_composition.py': ('V', 'consumer'),
+        'ie_atlas_verdict_pin.py': ('L', 'infra'),
+        'ie_onboarding_registry.py': ('L', 'fence'),
+        'interface_atlas_v02_inputs.py': ('VLD', 'consumer'),
+        'internalization_geo.py': ('L', 'fence'),
+        'kappa_int_bounds.py': ('L', 'fence'),
+        'lambda_absolute.py': ('VL', 'consumer'),
+        'lambda_operator_derivation.py': ('VL', 'consumer'),
+        'light_quark_real_adapter.py': ('L', 'fence'),
+        'operational_completeness.py': ('V', 'fence'),
+        'phase_14d3_completions.py': ('VL', 'consumer'),
+        'photon_commitment_profile.py': ('L', 'consumer'),
+        'photon_masslessness.py': ('VL', 'consumer'),
+        'pi_gammagamma_2l_moment_native.py': ('V', 'fence'),
+        'planck_magnitude_single_anchor.py': ('VL', 'consumer'),
+        'plec.py': ('V', 'fence'),
+        'quantum_operator_derivation.py': ('V', 'consumer'),
+        'recruitment.py': ('V', 'fence'),
+        'red_team.py': ('VLH', 'infra'),
+        'representation_descent_kernel_adversarial_audit.py': ('L', 'consumer'),
+        's_parameter_pure_gauge_constant_native.py': ('L', 'fence'),
+        'session_delta_pmns.py': ('L', 'fence'),
+        'session_nnlo.py': ('V', 'fence'),
+        'sigma_scale_capacity_formula_gate.py': ('L', 'fence'),
+        'sigma_scale_yukawa_free_geometric_floor.py': ('V', 'consumer'),
+        'sin2theta_w_OS_capacity_counting.py': ('LD', 'consumer'),
+        'subspace_functors.py': ('VL', 'consumer'),
+        'supplements.py': ('VLH', 'consumer'),
+        'test_no_smuggling.py': ('VL', 'infra'),
+        'thermal_absolute.py': ('VL', 'consumer'),
+        'thermo_four_laws_synthesis.py': ('VL', 'consumer'),
+        'unification.py': ('VL', 'consumer'),
+        'unification_projection_essentiality.py': ('VL', 'consumer'),
+        'unification_three_levels.py': ('VL', 'consumer'),
+        'universality_forcing.py': ('L', 'fence'),
+        'vacuum_o1_fork.py': ('VL', 'consumer'),
+        'validation.py': ('VL', 'consumer'),
+        'w_trace_apf_native_one_loop_evaluator.py': ('V', 'fence'),
+        'w_trace_denner_diagram_coefficient_table_closeout.py': ('V', 'fence'),
+        'w_trace_denner_formula_import_native_assembly.py': ('V', 'fence'),
+        'w_trace_denner_ward_identity_counterterm_import.py': ('V', 'fence'),
+        'w_trace_diagram_family_numeric_evaluator_import.py': ('V', 'fence'),
+        'w_trace_dizet_acquisition_instrumentation.py': ('L', 'fence'),
+        'w_trace_dizet_executable_run.py': ('V', 'fence'),
+        'w_trace_dizet_flag_sensitivity_covariance.py': ('V', 'fence'),
+        'w_trace_dizet_row_admission_covariance.py': ('V', 'fence'),
+        'w_trace_native_bfm_photon_vp.py': ('V', 'fence'),
+        'w_trace_native_bosonic_gauge_self_energy.py': ('V', 'fence'),
+        'w_trace_native_bosonic_photon_vp.py': ('V', 'fence'),
+        'w_trace_native_fermion_sum_self_energy.py': ('V', 'fence'),
+        'w_trace_native_timelike_self_energy.py': ('V', 'fence'),
+        'w_trace_native_two_loop_phase2_missing_terms_source_and_derivation_plan.py': ('L', 'fence'),
+        'w_trace_native_two_loop_phase2_p_plus_ibp_tool_admission_policy.py': ('V', 'fence'),
+        'w_trace_native_two_loop_tadpole.py': ('V', 'fence'),
+        'w_trace_native_two_loop_two_point_bft_dst.py': ('V', 'fence'),
+        'w_trace_pv_scalar_integral_substrate.py': ('L', 'fence'),
+        'w_trace_tensor_coefficient_map_scaffold.py': ('V', 'fence'),
+        'yang_mills_gap.py': ('V', 'fence'),
+        'yang_mills_md_bridge.py': ('V', 'fence'),
+        'ym_quotient_ledger.py': ('L', 'fence'),
+        'ew_osw_source_families/gamma_gamma_vacuum_polarization.py': ('V', 'fence'),
+    }
+
+    # ---- clause (a): literal within-42 indexing patterns, per-file expected sets ----
+    ident_tokens = ('mode' + '_index', 'mode' + '_label',
+                    'which' + '_v', 'v' + '_mode')
+    ident_pats = [_re.compile(r'\b' + _re.escape(t) + r'\b') for t in ident_tokens]
+    range42_label = 'range-over-42'
+    pat_range42 = _re.compile(r'range\(\s*42\s*\)|range\(\s*C_vac|range\(\s*C_VACUUM')
+    slot_label = 'v-global-slot-tags'
+    pat_slot = _re.compile('V_global' + '_slot_')
+    carrier_label = '42-carrier-constructor'
+    pat_carrier = _re.compile(r'_q\(' + r'42,')
+    EXPECTED_IDENT_MATCHES = {
+        'supplements.py': {'mode' + '_label'},        # derivation-mode status string (FULL_DERIVATION vs SKELETON)
+        'subspace_functors.py': {slot_label},          # slot-tag constructor; set-level comparisons asserted below
+        'acc_unification_all_p.py': {carrier_label},   # generated-category witness carriers; functor-law machinery asserted below
+    }
+
+    a_violations = {}
+    b_new, b_changed, b_stopped = [], [], []
+    live = {}
+    needle = 'commit Gamma_E to a ' + 'specific vacuum mode'
+    art_key = 'horizon_' + 'structure'
+    needle_files, art_files = [], []
+
+    for rel, p in _iter_py():
+        try:
+            with open(p, encoding='utf-8', errors='replace') as f:
+                src = f.read()
+        except OSError:
+            continue
+        # clause (b) fingerprint
+        cls = ''
+        if pat_vocab.search(src):
+            cls += 'V'
+        if pat_lit42.search(src):
+            cls += 'L'
+        if pat_drv.search(src):
+            cls += 'D'
+        if pat_log102.search(src):
+            cls += 'H'
+        if cls:
+            live[rel] = cls
+        # clause (a) matches
+        found = {t for t, pt in zip(ident_tokens, ident_pats) if pt.search(src)}
+        if pat_range42.search(src):
+            found.add(range42_label)
+        if pat_slot.search(src):
+            found.add(slot_label)
+        if pat_carrier.search(src):
+            found.add(carrier_label)
+        expected = EXPECTED_IDENT_MATCHES.get(rel, set())
+        if found != expected:
+            a_violations[rel] = {'found': sorted(found), 'expected': sorted(expected)}
+        # clause (c) occurrences
+        if needle in src:
+            needle_files.append((rel, src.count(needle)))
+        if ("'" + art_key + "'") in src:
+            art_files.append((rel, src.count("'" + art_key + "'")))
+
+    check(not a_violations,
+          f"clause (a): every literal within-42 pattern match equals its per-file expected set (violations: {a_violations})")
+
+    # scaffold character witnesses, tied to the pinned patterns above
+    with open(_os.path.join(pkg_dir, 'subspace_functors.py'), encoding='utf-8', errors='replace') as f:
+        sf_src = f.read()
+    check('_tag_set' in sf_src and 'set(tags)' in sf_src,
+          "clause (a): subspace slot-tag comparisons remain tag-set-level")
+    with open(_os.path.join(pkg_dir, 'acc_unification_all_p.py'), encoding='utf-8', errors='replace') as f:
+        au_src = f.read()
+    check('compose_after' in au_src,
+          "clause (a): acc_unification carriers remain functor-law composition machinery")
+
+    for rel, cls in live.items():
+        if rel not in FINGERPRINT_MAP:
+            b_new.append((rel, cls))
+        elif FINGERPRINT_MAP[rel][0] != cls:
+            b_changed.append((rel, FINGERPRINT_MAP[rel][0], cls))
+    for rel in FINGERPRINT_MAP:
+        if rel not in live:
+            b_stopped.append(rel)
+
+    check(not b_new, f"clause (b): no new net-matching file outside the disposition map (new: {b_new})")
+    check(not b_changed, f"clause (b): no dispositioned file changed token classes (changed: {b_changed})")
+    check(not b_stopped, f"clause (b): no dispositioned file stopped matching (stopped: {b_stopped})")
+
+    check(needle_files == [('gravity.py', 1)],
+          f"clause (c): Step-1 Sector-B phrase exists once, in gravity.py only (found: {needle_files})")
+    check(art_files == [('gravity.py', 1)],
+          f"clause (c): horizon-registration artifact key exists once, in gravity.py only (found: {art_files})")
+    hr = check_T_horizon_reciprocity()
+    check(art_key in hr.get('artifacts', {}),
+          "clause (c): the artifact key is live on check_T_horizon_reciprocity's result")
+
+    n_consumers = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'consumer')
+    n_fences = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'fence')
+    n_infra = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'infra')
+
+    return _result(
+        name='T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural]',
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            f'Closed-world walker (the .305 pattern) for the bank-closed-world half of the '
+            f'off-saturation which-v lemma: (a) package-recursive literal-pattern scan with '
+            f'per-file EXPECTED match sets, no blanket exemptions -- a which-v reader in any '
+            f'module including gravity.py fails; (b) drift net over {len(FINGERPRINT_MAP)} '
+            f'dispositioned files ({n_consumers} consumers / {n_fences} fences / {n_infra} infra) '
+            f'with V/L/D/H token-class fingerprints -- any new match, class change, or dropped '
+            f'match fails; (c) the Sector-B readout fingerprint exists exactly once, at '
+            f'T_horizon_reciprocity. Mode identity only; bank strength only; the physical '
+            f'residual (ICL-species exhaustiveness [C] + channel-3 sub-band freedom) is named '
+            f'in the reference notes, not discharged here.'
+        ),
+        key_result='no registered interior which-v reader; drift-guarded at the corpus level',
+        dependencies=[
+            'T_horizon_reciprocity',  # the mode space + the boundary readout
+            'T11',                    # the 42 as the vacuum stratum
+            'T12',                    # the stratification; the Q1=0 typing clause itself lives in core.py's sector-typing enumeration
+            'L_self_exclusion',       # the 60+42 option split
+        ],
+        artifacts={
+            'fingerprint_map_size': len(FINGERPRINT_MAP),
+            'consumers': n_consumers,
+            'fences': n_fences,
+            'infra': n_infra,
+            'expected_ident_matches': {k: sorted(v) for k, v in EXPECTED_IDENT_MATCHES.items()},
+            'readout_pin': 'T_horizon_reciprocity (unique, package-recursive)',
+            'strength': 'bank-closed-world only; protocol strength NOT certified',
+            'named_net_residuals': 'parametric within-42 indexing; standalone 102/d_eff vocabulary (churn-dominated, outside the net by design)',
+            'reference_notes': [
+                'Reference - The Off-Saturation Which-v Lemma - The Bank-Closed-World Half, Sweep-Recounted (2026-07-02)',
+                'Reference - Section 8 Lemmas 1 and 2 Walked - The Channel Census and Gravitational Structure-Blindness at Bank Strength (2026-07-02)',
+            ],
+        },
+    )
+
+
+
+def check_T_vacuum_content_typing_status():
+    """T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural].
+
+    v24.3.321 NEW (2026-07-02; .319/.320 were taken by the concurrent lane mid-banking). The typing-status pin for the vacuum
+    sector's banked decomposition C_vacuum = 27 + 3 + 12, per the pricing
+    walk "Reference - The Vacuum-Content Witness Priced - Two
+    Count-Witnesses, the 27 Residual-Only, the Slot-Level Identification
+    Open (2026-07-02)" (v0.1 cold-audited LAND-WITH-FIXES 0.83, all eight
+    fixes applied in v0.2 and in this check's design).
+
+    WHAT THE BANK KNOWS ABOUT THE DECOMPOSITION, made executable:
+
+      (i) THE SUM IDENTITY, honest source named: there is no
+          dag-registered C_vacuum anywhere in the tree (consumers read
+          dag_get defaults or literals). This clause consumes the real
+          DAG entries it can (C_total, N_gen), takes the dark
+          multiplet-reference count 16 as the named literal it is
+          (T12E), forms C_vacuum = C_total - (N_gen + 16) = 42, and
+          verifies 27 + 3 + 12 equals it.
+
+      (ii) THE 12 IS COUNT-WITNESSED: dim G_SM = (N_c^2 - 1) + (2^2 - 1)
+          + 1 = 8 + 3 + 1 = 12, group arithmetic over the banked gauge
+          template (N_c from the DAG). The typed third piece equals a
+          banked, independently derived number. Count-match, NOT a
+          content attribution -- the reading that these 12 units ARE
+          generator bookkeeping stays an adopted gloss (the 2026-07-02
+          gloss corrigendum in check_L_global_interface_is_horizon).
+
+      (iii) THE 3 IS COUNT-WITNESSED against the banked DERIVED value:
+          n_goldstone = dim(SU(2)xU(1)) - dim(U(1)_em) = 4 - 1 = 3,
+          the same dim counting check_T_Higgs performs ("DERIVED, not
+          hardcoded"); this clause requires check_T_Higgs to pass and
+          re-derives the arithmetic. Count-match only; the parent
+          note's Section 9 fence stands (the confirmed EW face consumes
+          the TEMPLATE fact, not a vacuum-unit read).
+
+      (iv) THE 27 IS RESIDUAL-ONLY, closed-world, context-scoped: the
+          literal 27 in vacuum context (co-occurring with the vacuum /
+          decomposition vocabulary within a +-2-line window; the bare
+          literal is everywhere -- kappa_l = 27/26, E6's 27, 8x8 rep
+          arithmetic, Yang-Mills 4/27 -- all fenced by context) appears
+          ONLY at the enumerated assertion sites. No registered surface
+          independently characterizes the 27; it is 42 - 12 - 3 and
+          nothing more. A new 27-in-vacuum-context surface FAILS this
+          check until the typing status is re-adjudicated by hand.
+          Mechanism stated honestly: the scan cannot distinguish
+          "characterizes the 27" from "contains 27 near vacuum
+          vocabulary" -- the drift net flags, human re-disposition
+          adjudicates (the banked which-v walker's clause-(b) pattern).
+          The enumerated sites are pinned at PER-FILE HIT COUNTS, not
+          blanket file exemptions (the sibling walker's own audit
+          discipline): a new 27-in-vacuum-context line ANYWHERE --
+          including inside gravity.py or cosmology.py, where such a
+          characterization would naturally land -- changes a count and
+          fails the pin. Editing this check's own docstring changes
+          gravity.py's count and requires re-pinning; that churn is the
+          intended re-disposition discipline. An independent derivation
+          of the 27 is WELCOME, and must announce itself here.
+
+      (v) THE SLOT-LEVEL IDENTIFICATION IS OPEN, behavioral pin: the
+          one slot-level construction in the bank (formal_kernel's
+          G_SM-invariant complement) is computed live from its
+          canonical V_local content; its 42-dim complement carries
+          (gauge, Higgs, fermion) slots = (4, 4, 34), piece-wise
+          DIFFERENT from (12, 3, 27). The slot-level identification of
+          V_global's irrep content is therefore not banked, and cannot
+          be silently claimed as banked: if a future pass lands a
+          canonical identification whose complement IS (12, 3, 27),
+          this clause fails and the typing status must be re-written --
+          the lemma landing, announced. No marker strings; survives any
+          comment cleanup.
+
+    WHAT THIS DOES NOT CERTIFY: any per-piece CONTENT attribution (the
+    addressability readings stay adopted glosses); the cross-basis map
+    between 45+4+12 and 3+16+42 (does not exist; the Section-9 audit
+    withdrew the one attempt); anything at content strength. The
+    three-route promotion shape (independent 27 characterization,
+    count- or slot-level / the cross-basis map / per-piece response
+    roles) lives in the reference note.
+
+    GRADE [P_structural]: typing-status pin, closed-world over the
+    current corpus by construction.
+    """
+    import os as _os
+    import re as _re
+    import apf as _apf_pkg
+
+    # ---- (i) the sum identity, honest source ----
+    C_total = dag_get('C_total', default=61, consumer='T_vacuum_content_typing_status')
+    N_gen = dag_get('N_gen', default=3, consumer='T_vacuum_content_typing_status')
+    N_mult_refs = 16  # named literal (T12E); no dag-registered source exists
+    C_vac = C_total - (N_gen + N_mult_refs)
+    check(C_vac == 42, f"C_vacuum = C_total - matter = {C_vac}")
+    piece_gauge_index, piece_higgs_internal, piece_generators = 27, 3, 12
+    check(piece_gauge_index + piece_higgs_internal + piece_generators == C_vac,
+          "sum identity: 27 + 3 + 12 = C_vacuum")
+
+    # ---- (ii) the 12 count-witness ----
+    N_c = dag_get('N_c', default=3, consumer='T_vacuum_content_typing_status')
+    dim_G_SM = (N_c ** 2 - 1) + (2 ** 2 - 1) + 1
+    check(dim_G_SM == piece_generators,
+          f"count-match: dim G_SM = {dim_G_SM} = the typed 12 (count only, not content)")
+
+    # ---- (iii) the 3 count-witness against the banked derived value ----
+    import apf.gauge as _gauge
+    _gauge.check_T_Higgs()  # must pass; carries the derived dim counting
+    n_goldstone = (3 + 1) - 1  # dim(SU(2)xU(1)) - dim(U(1)_em), the same arithmetic
+    check(n_goldstone == piece_higgs_internal,
+          f"count-match: n_goldstone = {n_goldstone} = the typed 3 (template fact, not a unit read)")
+
+    # ---- (iv) the residual pin: 27-in-vacuum-context closed world ----
+    pkg_dir = _os.path.dirname(_os.path.abspath(_apf_pkg.__file__))
+    pat27 = _re.compile(r'(?<![\d.])27(?![\d.])')
+    pat_ctx = _re.compile(r'C_vacuum|V_global|gauge.index|Higgs.internal|\bvacuum\b', _re.I)
+    # Per-file pinned hit counts (the sibling .318 walker's per-file discipline;
+    # any change -- new file, new line, removed line -- fails until re-pinned by
+    # hand). Reasons: cosmology = T12E docstring+comment (no check on the sum);
+    # gravity = the two bank-registered assertion sites + this pin's own text;
+    # test_no_smuggling = route-independence tests 8 and 9; _module_manifest =
+    # the EXPECTED header comment describing this pin (rolls off to the
+    # changelog archive eventually -- that roll-off fails the pin and is
+    # re-pinned in the same pass, intended discipline).
+    EXPECTED_27_CONTEXT_COUNTS = {
+        'cosmology.py': 2,
+        'gravity.py': 38,
+        'test_no_smuggling.py': 7,
+        '_module_manifest.py': 1,
+    }
+    offenders = {}
+    for root, dirs, files in _os.walk(pkg_dir):
+        dirs[:] = [d for d in dirs if d != '__pycache__']
+        for name in sorted(files):
+            if not name.endswith('.py'):
+                continue
+            rel = _os.path.relpath(_os.path.join(root, name), pkg_dir).replace(_os.sep, '/')
+            try:
+                with open(_os.path.join(root, name), encoding='utf-8', errors='replace') as f:
+                    lines = f.read().splitlines()
+            except OSError:
+                continue
+            hit_lines = []
+            for i, ln in enumerate(lines):
+                if pat27.search(ln):
+                    window = '\n'.join(lines[max(0, i - 2):i + 3])
+                    if pat_ctx.search(window):
+                        hit_lines.append(i + 1)
+            if hit_lines:
+                offenders[rel] = len(hit_lines)
+    check(offenders == EXPECTED_27_CONTEXT_COUNTS,
+          f"residual pin: 27-in-vacuum-context per-file hit counts match the pinned map "
+          f"(live: {offenders} vs pinned: {EXPECTED_27_CONTEXT_COUNTS})")
+
+    # ---- (v) the openness pin, behavioral ----
+    try:
+        from apf import formal_kernel as _fk
+        dims = _fk._irrep_dims()
+        content, local_dim = _fk._canonical_V_local_content(dims)
+    except (ImportError, AttributeError):
+        check(False, "openness pin: formal_kernel internals moved -- re-adjudicate the slot-level status")
+        raise
+    check(local_dim == 19, "formal_kernel canonical V_local has dim 19")
+    local_slots = {i for k in content for i in dims[k]}
+    comp = [i for i in range(61) if i not in local_slots]
+    check(len(comp) == 42, "formal_kernel complement has dim 42")
+    sigs = _fk._SIGS
+    comp_gauge = sum(1 for i in comp if sigs[i][0] == 'gauge')
+    comp_higgs = sum(1 for i in comp if sigs[i][0] == 'higgs')
+    comp_ferm = sum(1 for i in comp if sigs[i][0] == 'fermion')
+    check((comp_gauge, comp_higgs) != (piece_generators, piece_higgs_internal),
+          "openness pin: the banked slot-level complement does NOT reproduce (12, 3, 27) -- "
+          "the slot-level identification is open; if this ever matches, the lemma has landed "
+          "and this typing status must be re-written")
+    check((comp_gauge, comp_higgs, comp_ferm) == (4, 4, 34),
+          f"the current placeholder complement is (4, 4, 34), pinned (got ({comp_gauge}, {comp_higgs}, {comp_ferm}))")
+
+    return _result(
+        name='T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural]',
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            'The vacuum decomposition 27+3+12 = 42, at exactly its banked strength: the sum '
+            'identity holds (C_vacuum literal-sourced, stated); the 12 count-matches banked '
+            'dim G_SM and the 3 count-matches the banked derived n_goldstone (count-matches, '
+            'NOT content attributions -- the addressability readings stay adopted glosses); '
+            'the 27 is residual-only (42-12-3), closed-world context-scoped -- no registered '
+            'surface characterizes it independently; the slot-level identification of '
+            'V_global\'s irrep content is open (the banked complement is (4,4,34), not '
+            '(12,3,27), behavioral pin). A future independent 27 characterization or '
+            'slot-level identification fails this check and must announce itself -- the '
+            'falsifier working as intended.'
+        ),
+        key_result='27+3+12 typing pinned at banked strength: two count-witnesses, residual 27, slot-level open',
+        dependencies=[
+            'T12E',              # the decomposition's home + the 3+16 matter counts
+            'L_global_interface_is_horizon',  # assertion site + the gloss corrigendum
+            'T_interface_sector_bridge',      # assertion site (V_global = Sector B)
+            'T_Higgs',           # the derived n_goldstone
+            'T_gauge',           # dim G_SM group template (N_c DAG-consumed; SU(2)/U(1) dims local template literals)
+            'T_FormalKernel_VLambda_uniqueness',  # the slot-level construction whose placeholder clause (v) freezes
+            'L_count',           # the 45+4+12 basis whose 12 the count-match echoes
+        ],
+        artifacts={
+            'sum_identity': '27 + 3 + 12 = 42',
+            'source_honesty': 'no dag-registered C_vacuum exists; 42 formed from C_total - (N_gen + 16), the 16 a named T12E literal',
+            'count_witnessed': {'12': 'dim G_SM = 8+3+1 (group arithmetic, N_c from DAG)',
+                                '3': 'n_goldstone = 4-1 (check_T_Higgs dim counting)'},
+            'residual': '27 = 42 - 12 - 3, no independent banked characterization (context-scoped closed world)',
+            'pinned_27_context_counts': dict(EXPECTED_27_CONTEXT_COUNTS),
+            'slot_level': f'OPEN: banked complement (gauge, higgs, fermion) = ({comp_gauge}, {comp_higgs}, {comp_ferm}) != (12, 3, 27)',
+            'content_attributions': 'NOT certified -- adopted glosses per the 2026-07-02 gloss corrigendum',
+            'promotion_routes': 'independent 27 characterization (count- or slot-level) / cross-basis map / per-piece response roles -- see the reference note',
+            'reference_note': 'Reference - The Vacuum-Content Witness Priced - Two Count-Witnesses, the 27 Residual-Only, the Slot-Level Identification Open (2026-07-02)',
+        },
+    )
+
+
 _CHECKS = {
     'T7B': check_T7B,
     'T9_grav': check_T9_grav,
@@ -1928,6 +2572,8 @@ _CHECKS = {
     'L_self_exclusion': check_L_self_exclusion,
     'T_deSitter_entropy': check_T_deSitter_entropy,
     'T_horizon_reciprocity': check_T_horizon_reciprocity,
+    'T_which_v_no_registered_interior_reader': check_T_which_v_no_registered_interior_reader,
+    'T_vacuum_content_typing_status': check_T_vacuum_content_typing_status,
     'L_global_interface_is_horizon': check_L_global_interface_is_horizon,
     'T_interface_sector_bridge': check_T_interface_sector_bridge,
     'T_graviton': check_T_graviton,

@@ -705,3 +705,26 @@ _CHECKS = {
 def register(registry):
     for name, fn in _CHECKS.items():
         registry[name] = fn
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:photon_massless_reversibility",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The photon is exactly massless because the abelian sector is "
+            "additive: Delta = 0, no locked record forms, the dual of the "
+            "non-abelian record-locking that underwrites the YM gap -- "
+            "check_T_photon_massless_from_reversibility "
+            "[P_structural_reading], NOT [P]. "
+        ),
+        "note": "Wave 4 probe; grade stated at the banked [P_structural_reading]",
+    },
+)

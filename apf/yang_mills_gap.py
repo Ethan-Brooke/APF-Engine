@@ -757,3 +757,26 @@ if __name__ == "__main__":
         print(f"  {status}  {name}")
         if not r.get("passed") and "error" in r:
             print(f"        error: {r['error']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:lattice_gap_candidate",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Papers 29-31 land a CANDIDATE proof of the SU(2) lattice mass "
+            "gap in d = 3, 4: the composed master and "
+            "check_T_mass_gap_SU2_d4 are graded [P_structural] throughout "
+            "-- candidate, never stronger; the continuum limit and the gap "
+            "VALUE (Lambda_QCD) stay open by design. "
+        ),
+        "note": "Wave 4 probe; the candidate framing is the banked framing",
+    },
+)

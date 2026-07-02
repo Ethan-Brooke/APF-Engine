@@ -437,3 +437,28 @@ if __name__ == "__main__":
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:four_input_declaration",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The canonical foundational base: the four-input declaration "
+            "(FD1, FD2, FD3, finiteness) with PLEC's four features derived "
+            "from it (check_T_four_input_declaration [P_structural]); FD1's "
+            "structural-completeness clause is an ADOPTED clause, banked at "
+            "check_FD1_structural_completeness with the canonical [P] "
+            "definition resting on the Paper 0 four -- the clause itself "
+            "entered by adoption, not derivation. "
+        ),
+        "note": "Wave 4 probe; grades letter-checked (the clause is adopted; see the 2026-06-25 canonical-definition note)",
+    },
+)

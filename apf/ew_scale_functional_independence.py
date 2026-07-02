@@ -74,6 +74,14 @@ fiat); supply any value; or exclude the enhancement reading from the base (readi
 conditional only).
 
 [P_structural]; no measured target consumed (246 GeV appears nowhere as an input or a gate).
+
+LEDGER-SCALE CLAUSE cross-reference (2026-07-02 principal ruling, fork (ii) consolidation):
+this no-go is the clause's MINIMALITY CERTIFICATE -- its countermodel family is the smuggling
+guard pricing any future claim to derive the form the clause declares (branch case
+phi/M_Pl = eta*exp(-S/2); saturation case rho/M_Pl^4 = eta*exp(-S); transmuted scales exempt).
+Clause named per the 2026-07-02 ruling; grades unchanged (naming, not elevation; forks
+(iii)/(i) remain staged). Ruling note: 'Reference - The Ledger-Scale Clause - Adoption
+Investigation (2026-07-02).md'.
 """
 from __future__ import annotations
 
@@ -270,3 +278,32 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.317, Full Bank Onboarding Wave 5). Claim-
+# grade structural probe; the theorems stay with their banked checks; verdicts
+# inherit banked grades, routing confers nothing. expect_export pinned by the
+# observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:absolute_scale_frontier_terminated",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The absolute-scale frontier terminus: the functional form f = "
+            "v_H/M_Pl is not derivable -- "
+            "check_T_ew_scale_functional_independence_no_go [P_structural] "
+            "is a closed-world classification of the v_H-fixing surface "
+            "with zero unclassified completions (candidate vevs span "
+            "8.9e-14 to 1.2e+15 GeV against the banked reading 246.2). It "
+            "composes the prefactor no-go chain: "
+            "T_ew_prefactor_axiom_independence and "
+            "T_ew_prefactor_invariance_no_go plus the 102^-8 hierarchy "
+            "suppression mechanism, all three at [P_structural_convention]. "
+        ),
+        "covers": ("apf.ew_prefactor_axiom_independence", "apf.ew_prefactor_invariance_no_go", "apf.ew_planck_hierarchy_mechanism"),
+        "note": "Wave 5 Group A head: the no-go triptych terminus (v24.3.314); covers = the prefactor chain (invariance_no_go + hierarchy_mechanism enter TRANSITIVELY via T_ew_prefactor_axiom_independence, the head's named dependency; composition verified at depth 2)",
+    },
+)

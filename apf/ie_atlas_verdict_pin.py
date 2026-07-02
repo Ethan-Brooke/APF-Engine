@@ -1,0 +1,135 @@
+"""APF IE Atlas verdict pin (v24.3.323) -- the tripwire snapshot.
+
+Full Bank Onboarding: the corpus-wide consequence tripwire. This module pins
+the verdict (solver_status, export_global_P) of EVERY live-atlas input. The
+banked check_T_ie_atlas_verdict_tripwire (apf/ie_onboarding_registry.py)
+fails on ANY drift from this pin and on ANY unpinned input -- the same
+discipline as EXPECTED_THEOREM_COUNT, extended from theorem COUNTS to theorem
+CONSEQUENCES: a banked change that flips an export to an obstruction, clears
+an obstruction, or would claim a global-P export without its certificate
+(e.g. the W export lock, the dark Gates 3/4 admission) fires loudly at the
+next bank run instead of drifting silently.
+
+RE-PIN PROCEDURE (deliberate, per wave): when a wave legitimately changes or
+adds verdicts, regenerate this module --
+
+    PYTHONPATH=. python3 scripts/gen_ie_atlas_verdict_pin.py
+
+-- review the diff (every changed line is a consequence change and must be
+explainable by the wave's banked content), and commit it WITH the wave. An
+unexplained diff line is the tripwire doing its job. NB the input-count
+breakdown in this docstring's last paragraph is a pin-time snapshot; update
+it by hand at re-pin or ignore it -- PINNED_VERDICTS is the record.
+
+Data module: no checks, no logic. Generated 2026-07-02 from run_live_atlas at
+v24.3.323 (103 inputs: 42 v0.2 base [6 refreshed by the v0.3 layer], 26
+adapter swaps, 7 codomain appends, 28 declaration inputs).
+"""
+
+PINNED_VERDICTS = {
+    "claim:capacity_overspend": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:cstar_substrate": ("BLOCKED_SUBSTRATE_REVISION_REQUIRED", False),
+    "claim:dark_runtime": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:ew_global_export": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:ew_local_trace": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:gauge_fiber": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:generic": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:horizon_cost": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "claim:provenance_smuggling": ("FAIL_CLOSED_PROVENANCE", False),
+    "coherent_phase:bec": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:laser_coherence": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:magnetism": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:superconductivity": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:superfluidity": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:synchronization": ("COHERENT_CODOMAIN_SELECTED", True),
+    "coherent_phase:topological_order": ("COHERENT_CODOMAIN_SELECTED", True),
+    "contextuality:chsh_local": ("GLOBAL_SECTION_EXPORTED", True),
+    "contextuality:consistent_cycle": ("GLOBAL_SECTION_EXPORTED", True),
+    "contextuality:magic_square_parity": ("IJC_OBSTRUCTION", False),
+    "contextuality:pr_box": ("IJC_OBSTRUCTION", False),
+    "dark:lambda_absolute_mixed_grades": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "dark:phase_space_persistence_kernel": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "dark:route_cross_sn_profile_probe": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "dark:route_desi_full_shape_exact": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "dark:route_full_growth_likelihood": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "dark:saturation_no_go_guard": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:absolute_scale_frontier_terminated": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:mw_distinction_decomposition": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:native_oblique_close": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:photon_massless_reversibility": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:planck_anchor_bekenstein_forced": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:pre_branch_joint_necessity": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew:sqrtNc_carrier_forced": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew_eigenscreen:coupled_channel_disposition": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "ew_eigenscreen:goldstone_boundary_disposition": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "flavour:chiral_condensate_yuoh": ("IJC_OBSTRUCTION", False),
+    "flavour:ckm_two_mass_bases": ("GLOBAL_SECTION_EXPORTED", True),
+    "flavour:seesaw_from_a1": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "flavour:three_generations_forced": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:acc_ledger_identities": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:base_fiber_allocation": ("BLOCKED_SUBSTRATE_REVISION_REQUIRED", False),
+    "foundation:d4_unique": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:four_input_declaration": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:regime_r_exit_taxonomy": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:single_dimensional_anchor": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:sixteen_case_unification": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "gauge:quotient_pinned_demand": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "gauge:spine_disposition": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "gravity:bekenstein_quarter_structural": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "gravity:evaporation_quartet_page_derived": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "gravity:observable_transport_gr_nonclaims": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "instrument:crystal_attribution": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "neutrino:route_dune_juno_hierarchy": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "payload:arch_defect_calculus_internal_identity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:arch_interface_engine_operational_internal_identity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:arch_rdfi_kernel_internal_identity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:bottom_msbar_rundec_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:bottom_pole_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "payload:capacity_overspend": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "payload:charged_lepton_pole_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:charged_lepton_qed_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:charm_msbar_rundec_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:charm_pole_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "payload:cosmogenesis_t1_t4_quartet_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:dark_modified_gravity_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "payload:dark_particle_id_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "payload:dark_runtime_open": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "payload:dark_w2_a_background_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:evaporation_e1_e4_quartet_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:ew_dizet_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:ew_transport_open": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "payload:gravity_bianchi_rigidity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:gravity_gr_limit_full_close_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:gravity_ringdown_capacity_schema_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:light_quark_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:neutrino_mbb_reconciliation_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:sin2theta_eff_bsy_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:sin2theta_w_mass_ratio_identity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:sin2theta_w_source_identity_real_adapter_live": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "payload:top_msr_R_star_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:top_msr_r_evolution_real_adapter_live": ("SOLVED_GLOBAL_P", True),
+    "payload:top_pole_mc_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "quantum:ghz_mermin_state_independent": ("IJC_OBSTRUCTION", False),
+    "quantum:magic_square_threshold_robust": ("IJC_OBSTRUCTION", False),
+    "quantum:qutrit_noncontextual_control": ("GLOBAL_SECTION_EXPORTED", True),
+    "quantum:symmetry_contextuality_orthogonal": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "readout:su2_diquark": ("CANONICAL_RECORD_EXPORTED", True),
+    "readout:su2_fund4": ("READOUT_OBSTRUCTION", False),
+    "readout:su3_baryon": ("CANONICAL_RECORD_EXPORTED", True),
+    "readout:su3_meson": ("CANONICAL_RECORD_EXPORTED", True),
+    "readout:su3_quark_pair": ("READOUT_OBSTRUCTION", False),
+    "readout:su3_single_quark": ("READOUT_OBSTRUCTION", False),
+    "readout:su3_tetraquark": ("READOUT_OBSTRUCTION", False),
+    "spine:inseparable_ijc_345_witness": ("IJC_OBSTRUCTION", False),
+    "strong:ladder_classical_correlation_control": ("GLOBAL_SECTION_EXPORTED", True),
+    "strong:lattice_gap_candidate": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "strong:pentaquark_magic_square": ("IJC_OBSTRUCTION", False),
+    "strong:tetraquark_kcbs": ("IJC_OBSTRUCTION", False),
+    "strong:tetraquark_yuoh_state_independent": ("IJC_OBSTRUCTION", False),
+    "thermo:four_laws_composed": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "wtrace:native_one_loop_mw_close": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "wtrace:os_route_terminal_closure_open_export": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "wtrace:two_loop_phase2_router": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+}
+
+PIN_VERSION = "24.3.323"

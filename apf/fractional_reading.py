@@ -868,9 +868,15 @@ def check_L_Lambda_absolute_numerical_formula():
     d_eff = 102 from L_self_exclusion, N_SM = d_eff^K_SM =
     102^61 from the SM interface ACC record), evaluates to
     log10 = -122.910. The observed log10(rho_vac / M_Planck^4) =
-    -122.898 (standard Planck-mass convention, Planck 2018 +
-    rho_crit). Residual 0.012 decades = factor 1.028, inside
-    the ~1% observational precision on rho_vac itself.
+    -122.944 (standard Planck-mass convention, Planck 2018 +
+    rho_crit; the retired -122.898 rested on an incorrect look-up —
+    see the code comment below). Residual 0.0335 decades = factor
+    ~1.08 (8%). SCOPE OF THE [P] (corrected v24.3.320): this check
+    certifies ONLY that the formula passes the 0.05-decade (factor
+    1.12) gate at the current observation — NOT a ~1%-precision
+    match. (The pre-correction header claimed "0.012 decades /
+    factor 1.028 / inside ~1% precision" against the retired obs;
+    that surface was stale and is fixed here.)
 
     SCOPE OF THIS CHECK. Certifies the numerical identity only.
     The formula evaluates to the observed number within
@@ -883,14 +889,17 @@ def check_L_Lambda_absolute_numerical_formula():
 
     CONTEXT. Bare 1/N_SM (no coefficient) gives log10 = -122.525,
     residual 0.375 decades (factor 2.4). The coefficient
-    C_vacuum/d_eff closes that gap to 0.012 decades, a factor 31
-    improvement in agreement. A targeted scan over APF-native
-    candidate coefficients (K_SM, d_eff, C_vacuum, C_local,
-    K_gauge, K_higgs, K_fermions, and standard math constants
-    pi, e, sqrt(2pi)) finds C_vacuum/d_eff = 42/102 as the
-    uniquely close match; the next-best candidate (1/sqrt(2pi))
-    is at 0.026 decades, twice as far off and lacking APF
-    structural content.
+    C_vacuum/d_eff closes that gap to 0.034 decades, a factor ~11
+    improvement in agreement. SCAN CLAIM INVERT-CORRECTED
+    (v24.3.320, the vacuum O(1) adjudication, 2026-07-02): at the
+    corrected observation -122.944, 42/102 is NOT the uniquely
+    close match — the geometric coefficient 3/8 (T10's Lambda*G =
+    3pi/102^61 composed with rho = Lambda/(8 pi G)) passes at
+    0.007 decades, CLOSER than 42/102's 0.034, and carries a
+    derivation chain of its own. Both pass the shared 0.05-decade
+    gate; the coefficient choice is a banked READING FORK,
+    discriminated H0-empirically, not by scan proximity. See
+    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py).
 
     DEPENDENCIES: L_count, L_self_exclusion, T11 (C_vacuum).
     """
@@ -950,8 +959,11 @@ def check_L_Lambda_absolute_numerical_formula():
             f"with all constants bank-native. Observed value "
             f"10^({log10_obs:.3f}) (standard Planck-mass, Planck "
             f"2018). Residual {residual_decades:.4f} decades = "
-            f"factor {10**residual_decades:.3f}, inside the ~1% "
-            f"observational precision on rho_vac. Closes the "
+            f"factor {10**residual_decades:.3f} (8%), passing the "
+            f"0.05-decade (factor 1.12) gate — the [P] certifies "
+            f"gate-passage only, not a ~1%-precision match; T10's 3/8 "
+            f"also passes the gate at 0.007 decades "
+            f"(check_T_vacuum_o1_reading_fork). Closes the "
             f"bare-1/N_SM near-miss gap of 0.375 decades by a "
             f"factor of {0.375/residual_decades:.0f}. The coefficient "
             f"C_vacuum/d_eff = {C_vacuum}/{d_eff} has a proposed "
@@ -963,8 +975,10 @@ def check_L_Lambda_absolute_numerical_formula():
         ),
         key_result=(
             f'rho_vac/M_Pl^4 = (42/102) * 102^-61 = 10^-122.910; '
-            f'observed 10^-122.898; residual '
-            f'{residual_decades:.4f} decades at 3% precision.'
+            f'observed 10^-122.944; residual '
+            f'{residual_decades:.4f} decades (8%) — passes the '
+            f'0.05-decade gate; 3/8 also passes (0.007 decades). '
+            f'See check_T_vacuum_o1_reading_fork.'
         ),
         dependencies=['L_count', 'L_self_exclusion',
                       'I2_integer', 'T_fractional_reading_equivalence'],
@@ -988,8 +1002,13 @@ def check_L_Lambda_absolute_numerical_formula():
             'formula_sympy': 'rho_vac / M_Pl^4 = 42 / 102^62',
             'observational_precision_note': (
                 "Planck 2018 quotes Omega_Lambda to 0.8% precision; "
-                "rho_vac to ~1%; residual 0.012 decades corresponds to "
-                "3%, inside observational window."
+                "rho_vac to ~1%. The residual is 0.0335 decades = 8%, "
+                "well OUTSIDE the ~1% observational precision; the "
+                "check's gate is the looser 0.05-decade threshold and "
+                "the [P] certifies gate-passage only. T10's geometric "
+                "3/8 also passes the same gate (0.007 decades) — the "
+                "coefficient is a banked reading fork "
+                "(check_T_vacuum_o1_reading_fork, vacuum_o1_fork.py)."
             ),
         },
     )

@@ -9628,3 +9628,26 @@ _CHECKS = {
 def register(registry):
     """Register generations theorems into the global bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:three_generations_forced",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Exactly three fermion generations are forced by the capacity "
+            "structure (check_L_AF_capacity, check_T4G, [P]); the "
+            "mass-hierarchy and CKM/PMNS content is banked predominantly "
+            "[P] with six named [P_structural_seam] fences carrying the "
+            "genuine physics imports. "
+        ),
+        "note": "Wave 4 probe; survey-verified against the module's banked checks",
+    },
+)

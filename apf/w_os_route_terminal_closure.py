@@ -392,3 +392,31 @@ def run_all() -> Dict[str, Any]:
         "exports_physical_M_W": EXPORTS_PHYSICAL_M_W,
         "results": results,
     }
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:os_route_terminal_closure_open_export",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The W on-shell route terminal state: CLOSED as "
+            "theorem-and-obstruction certificate, OPEN as physical export. "
+            "Eleven checks at [P_w_os_route_terminal_closure] certify the "
+            "complete theorem boundary (contract, counterterm convention, "
+            "readiness predicate, no-smuggling lock, obstruction "
+            "certificate) and BLOCK any physical W export: no admitted real "
+            "finite-part rows and no component-sum, covariance, or "
+            "uncertainty certificates exist. The allowed paper claim is "
+            "validation plus the symbolic on-shell route theorem only. "
+        ),
+        "covers": ("apf.w_trace_final_export_readiness", "apf.w_trace_physical_export_lock", "apf.w_trace_counterterm_convention", "apf.w_trace_onshell_transport", "apf.w_trace_finite_part_ledger", "apf.w_trace_real_row_bundle_admission", "apf.w_trace_row_bundle_to_component_sum", "apf.w_trace_admitted_row_covariance_bridge", "apf.w_trace_uncertainty_propagation", "apf.w_trace_component_sum_certificate", "apf.w_trace_finite_part_skeleton", "apf.trace_to_scheme_transport_theorem", "apf.trace_transport_completion"),
+        "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface",
+    },
+)

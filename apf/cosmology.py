@@ -523,6 +523,29 @@ def check_L_singlet_Gram():
     project onto a SINGLE collective mode. The Gram matrix of the
     singlet sector has rank 1.
 
+    REFERENT CORRIGENDUM (2026-07-02, count-neutral, rides the tree for signoff bundling -- three-referent drift found by
+    the lemma-2 walk + its audit; STABILIZED HERE): the corpus cites
+    "L_singlet_Gram" for THREE distinct objects. (1) THIS check's statement: the
+    42 VACUUM channels' demand structure (Q1=0 units, the 3+16+42 basis). (2) The
+    consequence clause + consumer L_dark_budget read a DARK-sector claim ("dark
+    matter behaves as a single fluid") -- the dark sector is 16 units (Q1=1,
+    Q2=0), a DIFFERENT sector under P_exhaust's own typing. The honest reading of
+    the consequence: the single-fluid statement is about the collective mode's
+    COSMOLOGICAL ROLE (the vacuum stratum gravitates as one component; the
+    'dark sector' wording is a legacy label from the v5.1.0 era when the two were
+    not yet typed apart), and L_dark_budget's Step 1 consumes the 42/61 eigenvalue
+    as the VACUUM fraction, correctly numbered, under the drifted name. (3)
+    acc_reading_selection.py cites "L_singlet_Gram" for the U(1) COMPETITION Gram
+    A=[[1,x],[x,x^2]] (m=0, rank 1) -- a rank-1-precedent citation to a different
+    matrix; that citation should be read as 'rank-1 collective-mode PATTERN, per
+    the species of L_singlet_Gram', not as consuming this check's object.
+    WITNESS CAVEAT (unchanged by this corrigendum): the rank below is a LITERAL
+    ASSIGNMENT (rank = 1, outer-product form asserted, no Gram computed, no demand
+    vector constructed) -- the witness sub-lemma is open, spec'd in the lemma-2
+    note SS7 (construction independent of the conclusion / exact-rational Gram /
+    the factorization premise). This check's [P] covers the Fraction arithmetic
+    and the T12E partition consumption; the rank-1 statement is asserted-form.
+
     PROOF (3 steps):
 
     Step 1 [T12E, P]: The capacity budget partitions as
@@ -606,6 +629,17 @@ def check_L_dark_budget():
     dark sector is collisionless (σ/m = 0). The vacuum saturation
     fraction s enters the right-handed neutrino Majorana mass matrix
     as the coupling strength of the rank-1 self-energy correction.
+
+    REFERENT POINTER (2026-07-02 corrigendum, count-neutral): see the REFERENT
+    CORRIGENDUM block in check_L_singlet_Gram. Step 1 below consumes the 42/61
+    eigenvalue as the VACUUM fraction, correctly numbered, under a drifted
+    ('dark sector') legacy label. STEP 3 CAVEAT: the collisionlessness /
+    N_species=1 inference reads the rank-1 property as a DARK-16 self-interaction
+    statement -- a dark-16 Gram is nowhere constructed in the bank, and the
+    vacuum-42 rank is itself asserted-form (witness sub-lemma open). The executed
+    arithmetic of this check consumes only s = 4/15 and never touches 42/61, so
+    the check's PASS is unaffected; the Step-3 prose inference carries the drift
+    and awaits the witness sub-lemma.
 
     PROOF (3 steps):
 

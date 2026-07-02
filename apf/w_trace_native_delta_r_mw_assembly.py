@@ -299,3 +299,32 @@ def register(registry):
 
 def run_all() -> Dict[str, Dict[str, Any]]:
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:native_one_loop_mw_close",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The native OS-W one-loop close: Denner's complete one-loop "
+            "Delta-r assembled from native PV-evaluated self-energies gives "
+            "M_W = 80.26 GeV against Denner's published one-loop 80.23 "
+            "(residual ~30 MeV from G_F-loop resummation and Sigma_W(0) "
+            "extrapolation) -- check_T_w_trace_native_mw_reproduces_denner "
+            "[P] with mu-independence and IR-finiteness [P] and the scope "
+            "fence [P_structural_partial]. This is the SM calculation "
+            "reproduced with native tools from SM inputs (alpha, M_Z, G_F, "
+            "m_t, M_H; Delta-alpha_had via effective masses), NOT a "
+            "parameter-free APF prediction of M_W. "
+        ),
+        "covers": ("apf.w_trace_native_pv_massless_safe", "apf.w_trace_native_bosonic_gauge_self_energy", "apf.w_trace_native_fermion_sum_self_energy", "apf.w_trace_native_delta_r_uv_assembly", "apf.w_trace_native_uv_cancellation_stage4", "apf.w_trace_native_fermionic_gauge_self_energy", "apf.w_trace_native_uv_pole", "apf.w_trace_pv_scalar_integral_substrate", "apf.w_trace_pv_timelike_two_point"),
+        "note": "Wave 4 head 1: the one-loop native close; covers = the dependency-verified composition fan",
+    },
+)

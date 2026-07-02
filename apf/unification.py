@@ -1799,3 +1799,25 @@ _CHECKS = {
 def register(registry):
     """Register T_ACC unification + four identity checks into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:acc_ledger_identities",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One ledger: the Admissibility-Capacity record's six regime "
+            "projections satisfy the four cross-regime identities I1-I4, "
+            "individually banked and composed at check_T_ACC_unification "
+            "[P]. "
+        ),
+        "note": "Wave 4 probe",
+    },
+)

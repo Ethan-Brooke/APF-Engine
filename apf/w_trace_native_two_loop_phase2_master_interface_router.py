@@ -385,3 +385,31 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding declaration (v24.3.316, Full Bank Onboarding Wave 4 -- the
+# systematic sector sweep). Claim-grade structural probe; the theorems stay
+# with their banked checks; verdicts inherit banked grades, routing confers
+# nothing. expect_export pinned by the observed engine verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:two_loop_phase2_router",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The two-loop Phase-2 program head: the master interface router "
+            "assigns each master-topology request a PROMOTED or GUARDED "
+            "lane over the Phase-1 substrate "
+            "[P_two_loop_phase2_master_interface_router_current_depth]. It "
+            "exports an admissibility decision, NOT a self-energy value: "
+            "the export flags for unrestricted physical-sheet routing, "
+            "automatic MB continuation, d=4 MSbar sunset, and all-threshold "
+            "timelike two-point are all 0; no Delta-r or M_W finite part is "
+            "exported. "
+        ),
+        "covers": ("apf.w_trace_native_two_loop_tadpole", "apf.w_trace_native_two_loop_sunrise_de", "apf.w_trace_native_two_loop_sunrise_2d_finite", "apf.w_trace_native_two_loop_two_point_bft_dst", "apf.w_trace_native_two_loop_two_point_euclidean_master"),
+        "note": "Wave 4 head 3: the two-loop program head; covers = its promoted-lane composition only",
+    },
+)
