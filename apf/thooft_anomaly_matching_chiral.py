@@ -678,6 +678,20 @@ def check_T_vafa_witten_selects_su3v_pattern_conditional():
               supplies natively" corroboration phrasing inherits this
               demotion when the hook is promoted to a premise: NATIVELY
               SUPPORTED, NOT DISCHARGED.
+              [2026-07-02, v24.3.354 -- THE READING NOW HAS A NAME: the
+              No-Record Default Transport principle (NRDT): every
+              parameter of the realized completion corresponding to no
+              native record takes its no-record default (the absence
+              value -- trivial phase, positive determinant). Named at
+              the measure-angle walk ("Reference - The Native
+              Measure-Angle Walk...", v0.2, audited 0.85); OPEN, NOT
+              ADOPTED -- principal ruling pending. UPGRADE is refuted in
+              principle (content underdetermines the angle; the strong
+              CP problem is the counterexample), so eps cannot be
+              natively discharged, only named. Falsifier: any confirmed
+              nonzero theta-bar kills the transport and leaves
+              T_theta_QCD's ledger content standing. Rider count
+              UNCHANGED at five.]
 
     FENCES AND NON-CLAIMS: the conclusion is stated for the CONNECTED
     component of H, per convention; the global form (SU(3)_V x U(1)_B vs its
@@ -1930,6 +1944,16 @@ def check_T_vafa_witten_strong_parity_not_spontaneously_broken_conditional():
               (real positive masses => arg det M = 0) is a SECOND
               identification leg that .337's eps never carried.
               Natively supported, not discharged -- BOTH legs.
+              [2026-07-02, v24.3.354: LEG 2 IS NOW CERTIFIED NATIVE over
+              the banked texture -- check_L_mass_texture_det_real [P]
+              (session_nnlo.py): every banked channel is a diagonal
+              conjugation of a real symmetric PSD core, so det M_u and
+              det M_d are real and POSITIVE, forced (the complex NNLO
+              Fritzsch channel is Hermitian rank-1 -- it cannot phase
+              the determinant, and it is exactly what lifts det M_d
+              from its LO zero). Leg 1 (the measure transport) is the
+              named-open NRDT, shared with .337's eps: ONE principle,
+              not two readings. NOT adopted; rider standing unchanged.]
 
     FENCES: no strong-CP re-derivation (T_theta_QCD is consumed as an
     eps'-supported premise, not re-proved); no explicit-P statement (the

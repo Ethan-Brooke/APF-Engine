@@ -470,6 +470,198 @@ def check_L_lepton_GJ():
     )
 
 
+
+# ═════════════════════════════════════════════════════════════════════
+# Theorem 5: L_mass_texture_det_real [P]  (v24.3.354)
+# ═════════════════════════════════════════════════════════════════════
+
+def check_L_mass_texture_det_real():
+    """L_mass_texture_det_real: det M_q Is Real and Positive over the Banked Texture [P].
+
+    v24.3.354 NEW (2026-07-02). The native closure of the quark-mass-phase
+    leg of rider eps' (.343): arg det M_q = 0 over the banked texture, in
+    its fixed convention -- derived from per-channel structure, with the
+    sign FORCED, not numerically owed. From the measure-angle walk
+    ("Reference - The Native Measure-Angle Walk - Typing the Ledger Theta
+    Against the Realized Measure", v0.2, walker + hostile audit
+    LAND-WITH-FIXES 0.85, 2026-07-02); the audit's headline catch is
+    pinned here as a negative control.
+
+    STATEMENT: Every channel of the banked mass texture is a unitary-
+    diagonal conjugation of a real symmetric PSD core, so M_u and M_d are
+    Hermitian PSD; their determinants are real, and the banked rank-3
+    structure forces det > 0 in both sectors. Hence
+    arg det M_q = arg det(M_u M_d) = 0 exactly, over the banked texture.
+
+    THE CHANNELS (all from this module's own builders + generations.py):
+      Down (LO):   three REAL rank-1 outers -- bookkeeper vB, Higgs vH,
+                   curvature v_curv (L_Higgs_curvature_channel [P]).
+                   TRAP, pinned as negative control: vB - vH is
+                   proportional to v_curv, so the LO span is RANK 2 and
+                   det M_d(LO) = 0 EXACTLY. A check built on the LO (or
+                   any two-channel) texture computes det = 0 -- the
+                   measure-angle walk's draft made exactly this error and
+                   the hostile audit caught it.
+      Down (NNLO): the complex Fritzsch term c*|w><w|, w = (1, -e^{i pi/3},
+                   0)/sqrt(2) (L_NNLO_Fritzsch [P]) -- the phase-carrying
+                   channel, load-bearing for delta_CKM = 65.7 deg. It is
+                   HERMITIAN rank-1 (|w><w| = D'(u u^T)D'^dagger with
+                   u = |w| entrywise), so it CANNOT phase the determinant
+                   -- and it is exactly what lifts det M_d from the LO
+                   zero (w is outside the LO span).
+      Up (NLO):    bookkeeper core K o (b b^T) conjugated by
+                   D = diag(e^{i phi g}) -- Hermitian by construction; the
+                   KMS kernel K[g][h] = (x^eta)^{|Qc_g - Qc_h|} is positive
+                   definite for 0 < x^eta < 1, and the Schur product with
+                   the positive-diagonal rank-1 b b^T stays positive
+                   definite (Schur product theorem). Plus the real PSD
+                   Higgs channel c_Hu * h h^T.
+
+    CONSEQUENCE (carried in-docstring, never over-claimed): with
+    arg det M_q = 0 native over the banked texture, the two legs of
+    rider eps' (.343) collapse to ONE transport question -- the same
+    single question .337's eps carries: the ledger-selected theta-bar
+    versus the realized measure's angle. That transport is the No-Record
+    Default Transport principle (NRDT), NAMED at the measure-angle walk
+    and OPEN -- NOT ADOPTED (principal ruling pending). This check
+    discharges nothing at the measure level; it closes the NATIVE half
+    of eps' leg 2 only.
+
+    REPHASING CAVEAT: arg det M alone is convention-relative; this
+    statement is made in the banked texture's fixed convention and feeds
+    the invariant theta-bar = theta + arg det M_q through the
+    invariant-binding reading recorded on T_theta_QCD (gauge.py). The
+    leptonic matrix (M_lep = M_d.copy() in L_lepton_GJ) is complex
+    Hermitian -- NOT real outright -- with real det; it is theta-bar-
+    irrelevant either way.
+
+    FALSIFIERS (live): (a) any future banked texture channel that is not
+    a diagonal conjugation of a real symmetric PSD core (the NNLO
+    |w><w| is the nontrivial instance); (b) any channel losing PSD;
+    (c) the negative control inverting (det M_d(LO) != 0 would mean the
+    banked LO texture changed shape under this check's feet).
+
+    GRADE [P] tier 3: exact structural identities + eigenvalue witnesses
+    on the banked matrices; no import, no continuum content, no measure
+    claim.
+    """
+    x = _X
+    tol = 1e-12
+
+    # ---- build the banked matrices from this module's own builders ----
+    M_d, vB, vH, v_curv = _build_down_sector(include_nnlo=True)
+    M_d_LO, _, _, _ = _build_down_sector(include_nnlo=False)
+    M_u = _build_up_sector()
+
+    # ---- (1) Hermiticity, per sector ----
+    check(np.max(np.abs(M_d - M_d.conj().T)) < tol, "M_d Hermitian")
+    check(np.max(np.abs(M_u - M_u.conj().T)) < tol, "M_u Hermitian")
+
+    # ---- (2) per-channel form witnesses ----
+    # Down NNLO channel: |w><w| = D'(u u^T)D'^dagger with u = |w|
+    theta = math.pi / _N_GEN
+    w = np.array([1, -complex(math.cos(theta), math.sin(theta)), 0]) / math.sqrt(2)
+    u = np.abs(w)
+    Dp = np.diag([w[g] / u[g] if u[g] > tol else 1.0 for g in range(3)])
+    W = np.outer(w, w.conj())
+    W_reconstructed = Dp @ np.outer(u, u) @ Dp.conj().T
+    check(np.max(np.abs(W - W_reconstructed)) < tol,
+          "NNLO channel = diagonal conjugation of a real PSD core: |w><w| = D'(uu^T)D'^dag")
+    # Up bookkeeper: B = D (K o bb^T) D^dag with real symmetric core
+    b = np.array([x ** q for q in _Q_B])
+    K = np.array([[x ** (_ETA_U * abs(_Q_CAP[g] - _Q_CAP[h])) for h in range(3)]
+                  for g in range(3)])
+    core = K * np.outer(b, b)
+    check(np.max(np.abs(core - core.T)) < tol, "bookkeeper core real symmetric")
+    D = np.diag([complex(math.cos(_PHI * g), math.sin(_PHI * g)) for g in range(3)])
+    B = D @ core.astype(complex) @ D.conj().T
+    H_up = _C_HU * np.outer(np.array([x ** q for q in _Q_H]),
+                            np.array([x ** q for q in _Q_H]))
+    check(np.max(np.abs((B + H_up) - M_u)) < tol,
+          "M_u = D(K o bb^T)D^dag + Higgs channel (exact reconstruction)")
+    # KMS kernel positive definite (0 < rho < 1)
+    check(np.min(np.linalg.eigvalsh(K)) > 0, "KMS kernel positive definite")
+
+    # ---- (3) PSD + rank-3 lift => positive definite ----
+    ev_d = np.linalg.eigvalsh(M_d)
+    ev_u = np.linalg.eigvalsh(M_u)
+    check(np.min(ev_d) > 0, f"M_d positive definite (min eig {np.min(ev_d):.3e})")
+    check(np.min(ev_u) > 0, f"M_u positive definite (min eig {np.min(ev_u):.3e})")
+
+    # ---- (4) the negative control: the LO trap, pinned ----
+    det_LO = np.linalg.det(M_d_LO)
+    check(abs(det_LO) < 1e-15,
+          f"NEGATIVE CONTROL: det M_d(LO) = 0 exactly (LO span rank 2: vB - vH ~ v_curv); got {det_LO}")
+    span_LO = np.linalg.matrix_rank(np.vstack([vB, vH, v_curv]), tol=1e-12)
+    check(span_LO == 2, f"LO span rank 2 (got {span_LO})")
+    span_full = np.linalg.matrix_rank(np.vstack([vB.astype(complex), vH.astype(complex),
+                                                 v_curv.astype(complex), w]), tol=1e-12)
+    check(span_full == 3, "the NNLO channel supplies the third direction (full span rank 3)")
+
+    # ---- (5) det real and positive; arg det M_q = 0 ----
+    det_d, det_u = np.linalg.det(M_d), np.linalg.det(M_u)
+    check(abs(det_d.imag) < tol and det_d.real > 0,
+          f"det M_d real positive: {det_d}")
+    check(abs(det_u.imag) < tol and det_u.real > 0,
+          f"det M_u real positive: {det_u}")
+    arg_det = np.angle(det_u * det_d)
+    check(abs(arg_det) < tol, f"arg det(M_u M_d) = 0 (got {arg_det:.2e})")
+
+    # ---- (6) the phase is real physics elsewhere: delta_CKM survives ----
+    obs = _diag_ckm(M_d, M_u)
+    check(60.0 < obs['delta_CKM'] < 71.0,
+          f"the phase-carrying channel still delivers delta_CKM ~ 65.7 (got {obs['delta_CKM']:.1f})")
+
+    # ---- (7) leptonic: complex Hermitian, det real, theta-bar-irrelevant ----
+    M_lep = M_d.copy()
+    check(np.max(np.abs(M_lep.imag)) > tol,
+          "M_lep is genuinely complex (inherits the NNLO term) -- 'real outright' would be false")
+    check(abs(np.linalg.det(M_lep).imag) < tol, "det M_lep real (Hermitian)")
+
+    return _result(
+        name='L_mass_texture_det_real: det M_q Real and Positive over the Banked Texture',
+        tier=3,
+        epistemic='P',
+        summary=(
+            'Every banked mass-texture channel is a unitary-diagonal conjugation '
+            'of a real symmetric PSD core (down: 3 real rank-1 outers + the '
+            'Hermitian NNLO Fritzsch |w><w|; up: the D(K o bb^T)D^dag bookkeeper '
+            'with KMS-positive-definite kernel + the real Higgs channel), so M_u '
+            'and M_d are Hermitian positive definite: det real AND positive, '
+            'forced. Hence arg det M_q = 0 over the banked texture (fixed '
+            'convention) -- the native half of rider eps-prime leg 2 closes; the '
+            'measure-level transport stays the named-open NRDT (NOT adopted). '
+            'Negative control pinned: det M_d(LO) = 0 exactly (LO span rank 2); '
+            'the complex, delta_CKM-carrying NNLO channel is what lifts the rank '
+            '-- and being Hermitian it cannot phase the determinant.'
+        ),
+        key_result=(
+            'det M_u, det M_d real and > 0 (forced by per-channel PSD structure '
+            '+ rank-3 lift); arg det M_q = 0 native over the banked texture; '
+            'eps-prime leg 2 closes natively, transport residue = NRDT (named, '
+            'open, not adopted).'
+        ),
+        dependencies=[
+            'L_Higgs_curvature_channel', 'L_NNLO_Fritzsch',
+        ],
+        cross_refs=[
+            'T_theta_QCD', 'L_CKM_phase_bracket', 'L_lepton_GJ',
+        ],
+        artifacts={
+            'det_M_d': complex(det_d),
+            'det_M_u': complex(det_u),
+            'arg_det_Mq': float(arg_det),
+            'min_eig_M_d': float(np.min(ev_d)),
+            'min_eig_M_u': float(np.min(ev_u)),
+            'det_M_d_LO_negative_control': complex(det_LO),
+            'LO_span_rank': int(span_LO),
+            'delta_CKM_deg': float(obs['delta_CKM']),
+            'transport_residue': 'NRDT -- named, OPEN, NOT adopted (principal ruling pending)',
+            'note_of_record': 'The Native Measure-Angle Walk v0.2 (2026-07-02)',
+        },
+    )
+
+
 # ═════════════════════════════════════════════════════════════════════
 # Registration
 # ═════════════════════════════════════════════════════════════════════
@@ -480,6 +672,7 @@ def register(registry):
     registry['L_NNLO_Fritzsch']           = check_L_NNLO_Fritzsch
     registry['L_sin2_oneloop']            = check_L_sin2_oneloop
     registry['L_lepton_GJ']              = check_L_lepton_GJ
+    registry['L_mass_texture_det_real']   = check_L_mass_texture_det_real
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -495,6 +688,7 @@ if __name__ == '__main__':
         ('L_NNLO_Fritzsch',           check_L_NNLO_Fritzsch),
         ('L_sin2_oneloop',            check_L_sin2_oneloop),
         ('L_lepton_GJ',              check_L_lepton_GJ),
+        ('L_mass_texture_det_real',   check_L_mass_texture_det_real),
     ]
 
     passed = failed = 0

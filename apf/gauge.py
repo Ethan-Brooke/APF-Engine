@@ -1719,12 +1719,32 @@ def check_T_theta_QCD():
       From L_epsilon*: every enforceable distinction costs >= epsilon > 0.
       Therefore maintaining theta = theta_0 costs at least epsilon.
 
-    Step 3: theta = 0 is unique cost-free value.
-      theta = 0 is the ONLY value that does not break a symmetry (CP).
-      At theta = 0, the strong sector is CP-invariant -- the value is
-      not an independent parameter but a CONSEQUENCE of the symmetry.
-      No admissibility record is needed to maintain a symmetry consequence.
-      Cost(theta=0) = 0 additional admissibility (symmetry default).
+    Step 3: the no-record default is cost-free (CORRECTED 2026-07-02).
+      [Corrigendum, v24.3.354 -- the measure-angle walk's audit: the
+      earlier clause "theta = 0 is the ONLY value that does not break a
+      symmetry (CP)" was FALSE as written (theta = pi is also
+      CP-conserving at parameter level, Dashen/GKKS), and by Step 3's own
+      symmetry-consequence criterion it licensed cost(pi) = 0, breaking
+      Step 4's uniqueness -- the proof as written delivered
+      theta-bar in {0, pi}, not theta-bar = 0. The repair below is a
+      proof-step substitution, not a phrasing pass.]
+      The load-bearing discriminator is RECORD-VS-NO-RECORD, not
+      CP-uniqueness. What this theorem asserts natively: the ledger
+      carries NO STANDING RECORD for any theta-family distinction. The
+      native structure has no topological sectors at any stage
+      (L_anomaly_nonpert), so there is no native angle slot at all -- the
+      assertion is an ABSENCE, not a native selection of the value 0 over
+      the value pi. Cost(no record) = 0; any definite maintained
+      theta-record costs >= epsilon at zero gain (Step 4).
+      THE 0-VS-PI DISCRIMINATION lives at the MEASURE level of the
+      realized theory and is NOT native content: the no-record default of
+      the realized measure is the ABSENT phase term (trivial weighting,
+      positive determinant) = theta-bar = 0; theta = pi is a nontrivial
+      CP-symmetric weighting, not an absence. That default-transport step
+      is the No-Record Default Transport principle (NRDT) -- NAMED at the
+      2026-07-02 measure-angle walk, OPEN, NOT ADOPTED (principal ruling
+      pending). This theorem's [P] covers the ledger content (no standing
+      record; Steps 1-4); the measure-level value is NRDT's to carry.
 
     Step 4: theta != 0 strictly more expensive (A1 selects minimum cost).
       Cost(theta!=0) >= epsilon > 0 = Cost(theta=0).
@@ -1739,7 +1759,20 @@ def check_T_theta_QCD():
       (c) Cost of CKM phase is offset by capacity gain. Net: admissible.
       theta has cost but NO capacity gain. Net: inadmissible.
 
-    EXPERIMENTAL: |theta_QCD| < 1e-10 (neutron EDM bound).
+    INVARIANT-BINDING READING (2026-07-02, carried here, unbanked lemma):
+      Step 2's "enforceable distinction" premise binds the
+      reparametrization-INVARIANT theta-bar = theta + arg det M_q, not
+      convention-theta (an anomalous U(1)_A rotation shifts
+      convention-theta at zero enforceable difference; distinguishing
+      convention-equivalent values is not an enforceable distinction).
+      The quark-phase leg is certified native over the banked texture:
+      check_L_mass_texture_det_real [P] (session_nnlo.py, v24.3.354) --
+      det M_u and det M_d real and POSITIVE, forced per-channel, so
+      arg det M_q = 0 in the banked convention.
+
+    EXPERIMENTAL: |theta_QCD| < 1e-10 (neutron EDM bound; the scorecard
+      row at validation.py is this bound -- its honest label is
+      theta-bar, per the invariant-binding reading).
 
     CROSS-REF (v24.3.243): the cost comparison in Steps 2-4 compares STANDING
     LEVELS at fixed C = 61, not rates -- "maintaining theta = theta_0 costs
