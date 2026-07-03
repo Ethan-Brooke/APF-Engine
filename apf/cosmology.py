@@ -838,9 +838,13 @@ def check_L_singlet_Gram_exchangeable_form():
             'Export_demand_label_functionality_premise':
                 'NAMED (adopted: demand is built only from addressable/banked unit content)',
             'Export_config_demand_register_split_premise':
-                ('NAMED/OPEN (configuration register carries 42 distinct mode choices -- '
-                 'T_horizon_reciprocity S_propagation = 61 ln 42 -- while the demand '
-                 'register is label-blind; the split is prose, not banked)'),
+                ('NAMED/OPEN at world strength (configuration register carries 42 '
+                 'distinct mode choices -- T_horizon_reciprocity S_propagation = '
+                 '61 ln 42 -- while the demand register is label-blind); the '
+                 'bank-closed-world respect-census is banked at '
+                 'check_T_config_demand_register_split_bank_respected -- what is '
+                 'banked is the respect-census over registered surfaces, not the '
+                 'premise; the world-strength split itself stays NAMED/OPEN'),
             'nonconstructiveness_dichotomy':
                 ('L_Gram species (demand on the 4-dim EW gauge channel space): INAPPLICABLE '
                  'to vacuum units (not gauge sectors), or zero-embedding (Q1=0) -> 42x42 '
@@ -1060,6 +1064,727 @@ def check_L_common_demand_iff_degenerate():
                       'list inherited whole'),
         },
     )
+
+def check_T_config_demand_register_split_bank_respected():
+    """T_config_demand_register_split_bank_respected: Every Registered Surface Respects the Configuration/Demand Register Split [P_structural].
+
+    v24.3.NEW (2026-07-02). The bank-closed-world half of the .330
+    NAMED/OPEN register-split premise, landed as a respect-census
+    (walk LAND-WITH-CAVEATS + hostile cold audit LAND-WITH-FIXES 0.78;
+    all seven required fixes + polish P2/P4 carried). The closed-world
+    restriction is carried IN THE NAME (the .318
+    `_no_registered_interior_reader` precedent): what is banked is that
+    the bank's registered surfaces RESPECT the split -- not the
+    world-strength split itself, which stays a NAMED premise on .330.
+
+    STATEMENT (bank-closed-world strength ONLY): the configuration/
+    demand register split -- named as the NAMED/OPEN export flag
+    Export_config_demand_register_split_premise on
+    check_L_singlet_Gram_exchangeable_form (v24.3.330) -- is RESPECTED
+    by every registered surface of the bank, certified in three
+    clauses. Honest framing of clause (A)'s content (audit P1): its
+    value is TYPE-FACTS CONSUMED FROM LIVE SIBLING ARTIFACTS, pinned to
+    executed sibling runs -- the arithmetic identities themselves
+    (61 != 42; MI of a product state = 0; 27+3+12 = 42) are
+    restatements, not new mathematics. This check banks the enforcement
+    mechanism for the split's closed-world half.
+
+      (A) TYPE-MISMATCH CERTIFICATES, consumed live: each of the three
+          banked cross-register vacuum structures that would press
+          against a = b under a register collapse carries, in the
+          bank's own executed arithmetic, a register type that is NOT
+          the demand type:
+
+          A1. THE QEC PRODUCT CODE (supplements.py, check_L_QEC_code_space
+              + check_L_QEC_product_structure): rho_code =
+              tensor_{i=1..61} (I_102/102). The collapse to the demand
+              register is DOUBLY mismatched: (index) the code's tensor
+              index set is the 61 TYPES (C_total), not the 42 vacuum
+              UNITS -- any restriction drops the 19 matter types and is
+              performed by no registered surface; (species) the banked
+              surface's NAMED pairwise object is the STATE-register
+              mutual information I(i:j) = 0 (named in
+              L_QEC_product_structure's key_result; the additivity
+              identity is re-evaluated here from the product form --
+              a restatement pinned to the live artifact, not an
+              independent test), which is not a demand-overlap entry b.
+              "I(i:j) = 0 => b = 0" would need both an index
+              restriction and a species conversion; the census (clause
+              B) finds neither banked. (No claim is made that this is
+              the code's ONLY pairwise object -- the QEC stack is not
+              censused for pairwise objects here; the certificate rests
+              on the named surface + the clause-B census.)
+
+          A2. S_PROPAGATION (gravity.py, check_T_horizon_reciprocity
+              Step 6): S_propagation = 61 ln 42. Register type
+              certified from the check's own arithmetic: the assignment
+              consumes exactly two cardinalities (C_total, C_vacuum) --
+              the source line is pinned unique, package-recursive --
+              and the check's artifacts carry no Gram/demand object.
+              This is the incidence/configuration register (.339 kernel
+              row 5: "banked functional dependence count-only",
+              consumed live). The orthogonal-incidence reading (42
+              distinct choices => orthogonal incidence vectors => b = 0)
+              has no banked pullback: no registered surface constructs
+              incidence vectors over the 42, and per the standing fence
+              this clause reads S_propagation as neither proof NOR
+              disproof of rank-1 -- only its register species is
+              certified.
+
+          A3. THE .321 TYPING PIN (gravity.py,
+              check_T_vacuum_content_typing_status): the 27+3+12
+              decomposition is COUNT-typed by its own clauses (sum
+              identity; 12 = dim G_SM group arithmetic; 3 = Goldstone
+              dim counting; the 27 residual-only) -- count-matches, not
+              content attributions ("Count-match, NOT a content
+              attribution" is the pin's own docstring text, asserted
+              present). The rank-3 per-block demand pressure is
+              count-level ONLY (.330 block-fence artifact, consumed
+              live); the slot-level identification that a count->demand
+              transport would need is REFUTED in the unbroken basis
+              (check_T_vglobal_slot_identification_no_go, .326, surface
+              anchored in formal_kernel.py).
+
+          A4. THE .338 PSD-PREMISE EXPORT, run live (audit REQUIRED 2):
+              check_L_common_demand_iff_degenerate is EXECUTED here and
+              its Export_demand_realizability_PSD_premise consumed --
+              asserted still NAMED/OPEN. The fence architecture this
+              check certifies is the .330 premise pair PLUS the .338
+              PSD premise; all three named premises are asserted live
+              and open, so no leg of the geometry around the a = b
+              kernel can silently harden into a supplied fact.
+
+      (B) CLOSED-WORLD CENSUS, mechanical: the package-recursive triple
+          co-occurrence scan (demand vocabulary within a +-2-line
+          window of BOTH vacuum-sector vocabulary AND pairwise-
+          structure vocabulary) returns exactly the dispositioned
+          fingerprint map -- five registered-corpus files, none of
+          which reads or writes a pairwise (off-diagonal) vacuum-unit
+          demand entry:
+            cosmology.py          register-home (the .517/.330/.338
+                                  family: the (a, b) form held
+                                  SYMBOLICALLY, a = b exported OPEN; no
+                                  off-diagonal supplied)
+            gravity.py            rider (the .339 demand_register_rider
+                                  artifact + kernel-row prose;
+                                  scalar-typed)
+            acc_reading_selection.py  fence (the referent-3 corrigendum
+                                  comment; the U(1) competition Gram is
+                                  a different matrix)
+            _module_manifest.py   infra (changelog prose; 2 hits at
+                                  scan time 2026-07-02 -- the second
+                                  arrived with the .353 changelog entry)
+            bank.py               infra (changelog prose)
+
+          PLUS the REGISTERED-module disposition (audit REQUIRED 1;
+          supersedes the draft's staged-file tripwire, which fired
+          live when the module banked at v24.3.352 -- the designed-for
+          event, caught within hours): vacuum_label_code.py is now a
+          REGISTERED surface (2 banked checks, [P_structural_instrument],
+          v24.3.352), dispositioned here at registered strength -- its
+          checks are RUN LIVE and their typing surfaces pinned:
+            - its Gram = I_42 is over Fourier LABEL states (the
+              CONFIGURATION register), orthonormality certified by its
+              own banked check;
+            - its carrier correlation is CONSTRUCTION-SUPPLIED, not
+              bank-supplied (the carrier fence, pinned in both its
+              artifact and its source), with the register form cited
+              as the OPEN a = b identity [C] (.338) -- cross-
+              referenced, never assumed banked;
+            - the banked horizon registration is label-BLIND on the
+              code (pinned from its live artifacts).
+          FAIL DIRECTION (the inverted tripwire): this check now FAILS
+          if vacuum_label_code's banked surfaces start supplying a
+          positive off-diagonal b -- i.e. if the carrier claim flips
+          from construction-supplied to bank-supplied, the OPEN a = b
+          [C] citation drops from its source, the label-blind finding
+          flips, or its instrument grade changes -- not if it registers.
+          (Its tier-1 census hit count is ZERO at scan time; it is
+          deliberately NOT a CENSUS_EXPECTED row, so any vocabulary
+          drift toward demand-pairwise text fires the census new-file
+          clause and demands re-disposition.)
+
+          Verdict: ZERO registered readers or writers of pairwise
+          vacuum-unit demand structure, at scan time. This is an
+          OBSERVABLE/SURFACE census (the .318 species). It does NOT
+          say the traceless direction carries nothing -- that would be
+          a state claim, and the state/observable distinction is
+          load-bearing (Route C of the note of record was REFUTED 0.90
+          for exactly that conflation).
+
+          The .318 walker itself is RUN LIVE here (audit P2, the
+          walker's own DEFECT-6 fix): its no-registered-interior-reader
+          verdict is consumed from its executed result, not through
+          .339's frozen artifact string -- closing the silent-
+          degradation window.
+
+      (C) DRIFT NET: FIVE tiers, per-file expected sets in the .318
+          style, so a future banked surface that starts reading/writing
+          demand off-diagonals announces itself by failing this check
+          until re-dispositioned by hand:
+            tier 0 (STRUCTURAL, audit REQUIRED 4 -- the answer to the
+                    demonstrated vocabulary-blindness of tiers 1-3):
+                    the BROAD-pass candidate FILE SET -- files matching
+                    (Gram|demand|off-diag|overlap) AND vacuum vocab
+                    (C_vacuum|C_vac|V_global|vacuum|literal 42) at file
+                    level -- is pinned by enumeration (61 files at scan
+                    time 2026-07-02). NEW ENTRANTS FAIL this check
+                    until dispositioned. vacuum_label_code.py was in
+                    this set from its first appearance -- this tier
+                    would have flagged it with no bespoke pre-naming.
+                    Drops are allowed silently (a dropped file only
+                    reduces exposure; re-pin at next touch);
+            tier 1: the clause-(B) triple co-occurrence map (exact
+                    per-file hit counts; the .321 count-pin discipline
+                    -- editing a dispositioned docstring re-fires the
+                    pin; intended);
+            tier 2: the exchangeable-form CONSTRUCTOR -- expected in
+                    cosmology.py only (6);
+            tier 3: the exchangeable form literal (diagonal a /
+                    off-diagonal b, regex-tolerant spacing) -- expected
+                    cosmology.py (9), majorana.py (1),
+                    _module_manifest.py (1);
+            tier 4: the S_propagation token (word-bounded) -- expected
+                    file membership {cosmology.py, gravity.py,
+                    vacuum_label_code.py}; a new consumer of the
+                    configuration-register scalar must be dispositioned
+                    before it can be read as a demand fact.
+          NAMED NET RESIDUALS (honest, the .318 disclaimer): a supplier
+          avoiding BOTH the tier-0 broad vocabulary AND tiers 1-3 is
+          still invisible -- self-announcing surfaces only; census
+          dispositions are recorded human judgment; moving this check
+          into cosmology.py changes cosmology.py's tier-1 count and
+          requires a re-pin in the same commit.
+
+    WHAT THIS DOES NOT DO (scope fences, binding):
+      (1) It does NOT supply a = b. Even landed, it supplies no
+          positive b -- the anti-supplier finding stands: all three
+          pressure sources are non-demand registers, and the census
+          finds no demand off-diagonal writer AT ALL, in either
+          direction. a = b stays OPEN [C].
+      (2) It does NOT decide the S2D cost-or-idle trichotomy horn.
+      (3) It does NOT touch occupancy. Occupancy is CONSTITUTIVE
+          (v24.3.304, co-equal with A1); it is cited here only to
+          fence it.
+      (4) It is BANK-CLOSED-WORLD, and says so in its name: a
+          statement about registered surfaces, not about the world.
+          The WORLD-strength register split (that the physical demand
+          register is label-blind and configuration facts do not
+          transport to demand facts) remains a NAMED premise; the .330
+          export flag re-words on banking to carry both halves --
+          KEEPING the literal token NAMED/OPEN (this check asserts
+          that token, so the two surfaces cannot silently diverge
+          before or after the re-word; what is banked is the
+          respect-census, not the premise).
+      (5) The do-not-re-walk list of the two notes of record is
+          inherited whole (no rank-1 from exchangeability; no L_Gram
+          vacuum vectors; no slot-level constructions; no a = b from
+          L_equip/L_KMS; no S_propagation as evidence on rank-1;
+          Routes B/C/cost-dichotomy dead).
+
+    GRADE [P_structural]: closed-world census + type-facts pinned to
+    live sibling artifacts + drift net, the .318/.339 species, with the
+    census dispositions recorded human judgment (same disclaimer as
+    both siblings).
+    """
+    import math
+    import os
+    import re
+    from apf.apf_utils import check, _result
+    import apf as _apf_pkg
+    from apf import _module_manifest as _mm
+    from apf.supplements import (check_L_QEC_code_space,
+                                 check_L_QEC_product_structure)
+    from apf.gravity import (check_T_horizon_reciprocity,
+                             check_T_vacuum_content_typing_status,
+                             check_T_vglobal_offdiagonal_blocks_scalar_typed,
+                             check_T_which_v_no_registered_interior_reader)
+    from apf.cosmology import (check_L_singlet_Gram_exchangeable_form,
+                               check_L_common_demand_iff_degenerate)
+    from apf.vacuum_label_code import (
+        check_T_vacuum_label_code_no_leakage,
+        check_T_vacuum_logical_sector_classical_ceiling)
+
+    pkg_dir = os.path.dirname(os.path.abspath(_apf_pkg.__file__))
+
+    def _iter_py():
+        for root, dirs, files in os.walk(pkg_dir):
+            dirs[:] = [d for d in dirs if d != '__pycache__']
+            for name in sorted(files):
+                if name.endswith('.py'):
+                    p = os.path.join(root, name)
+                    rel = os.path.relpath(p, pkg_dir).replace(os.sep, '/')
+                    yield rel, p
+
+    sources = {}
+    for rel, p in _iter_py():
+        try:
+            with open(p, encoding='utf-8', errors='replace') as f:
+                sources[rel] = f.read()
+        except OSError:
+            continue
+
+    # =================================================================
+    # Clause A1 -- the QEC double mismatch, pinned to live artifacts
+    # =================================================================
+    r_code = check_L_QEC_code_space()
+    r_prod = check_L_QEC_product_structure()
+
+    C_total = r_code['artifacts']['C_total']
+    d_eff = r_code['artifacts']['d_eff']
+    n_vac = 42
+    check(C_total == 61 and d_eff == 102,
+          "A1: the code's banked constants are C_total = 61, d_eff = 102")
+
+    # (index mismatch) the tensor index set is the 61 types, not the 42 units
+    check(C_total != n_vac,
+          "A1-index: code tensor index set (61 types) != demand Gram index set (42 units)")
+    check(C_total - n_vac == 19,
+          "A1-index: any 61 -> 42 index restriction drops exactly the 19 matter types")
+
+    # (species mismatch) the banked surface's NAMED pairwise object is
+    # STATE mutual information; the additivity identity is re-evaluated
+    # from the product form as a pin to the live artifact (a restatement
+    # of the banked premise, not an independent test -- audit P1):
+    S_1 = math.log(d_eff)                    # per-type entropy of I/d_eff
+    S_code = r_code['artifacts']['S_code']   # the banked total (rounded to 4 dp)
+    check(abs(S_code - C_total * S_1) < 1e-3,
+          "A1-species: S_code = 61 * ln(102) -- entropy is ADDITIVE over types")
+    S_pair_joint = 2 * S_1                   # joint entropy of any product pair
+    MI = S_1 + S_1 - S_pair_joint
+    check(MI == 0.0,
+          "A1-species: I(i:j) = S_i + S_j - S_ij = 0 for the product form "
+          "(restatement pinned to the live artifact)")
+    check('I(i:j)=0' in r_prod['key_result'],
+          "A1-species: the banked surface's NAMED pairwise object is state "
+          "mutual information (L_QEC_product_structure key_result)")
+    # the per-factor object is a d_eff-dim STATE, not a demand amplitude:
+    check('I/d_eff' in r_code['key_result'] or 'I/d_eff' in r_prod['key_result'],
+          "A1-species: the per-type factor is the maximally mixed STATE I/d_eff")
+
+    # =================================================================
+    # Clause A2 -- S_propagation register type from its own arithmetic
+    # =================================================================
+    r_hr = check_T_horizon_reciprocity()
+    S_prop = r_hr['artifacts']['S_propagation_nats']
+    check(abs(S_prop - round(61 * math.log(42), 3)) < 1e-9,
+          "A2: S_propagation = 61 ln 42 reproduced from the two cardinalities alone")
+
+    # source pin: the assignment consumes exactly (C_total, C_vacuum) --
+    # unique, package-recursive (needle assembled so an in-package copy of
+    # this check never self-matches):
+    needle_sp = ('S_propagation = C_total * ' + '_math.log(C_vacuum)')
+    sp_hits = [(rel, src.count(needle_sp)) for rel, src in sources.items()
+               if needle_sp in src]
+    check(sp_hits == [('gravity.py', 1)],
+          f"A2: the count-only assignment line is unique in gravity.py (found: {sp_hits})")
+
+    # the check's own artifacts carry no Gram/demand object:
+    art_blob = repr(sorted(r_hr['artifacts'].items()))
+    check(not re.search(r'Gram|dem' + r'and', art_blob, re.I),
+          "A2: T_horizon_reciprocity's artifacts carry no Gram/demand register object")
+
+    # .339 kernel row 5 consumed live: the configuration slot's banked
+    # functional dependence is count-only:
+    r_339 = check_T_vglobal_offdiagonal_blocks_scalar_typed()
+    row5 = r_339['artifacts']['kernel_row_5_step3_configuration_slot']
+    check('count-only' in row5,
+          "A2: .339 kernel row 5 -- the Step-3 configuration slot's banked "
+          "dependence is count-only")
+    check('no registered reader' in row5,
+          "A2: .339 kernel row 5 -- the configuration slot has no registered reader (.318)")
+
+    # =================================================================
+    # Clause A3 -- the .321 pin: count register, not demand register
+    # =================================================================
+    r_321 = check_T_vacuum_content_typing_status()
+    check(bool(r_321.get('name')),
+          "A3: the .321 typing-status pin runs green")
+    check('Count-match, NOT a' in sources.get('gravity.py', '')
+          and 'Count-match only' in sources.get('gravity.py', ''),
+          "A3: the .321 pin's own count-typing clause text is present in "
+          "gravity.py (line-wrapped in source; both tokens pinned)")
+    # the count arithmetic, re-derived as a pin (a restatement -- audit P1):
+    dim_G_SM = (3 ** 2 - 1) + (2 ** 2 - 1) + 1
+    n_gold = (3 + 1) - 1
+    check(dim_G_SM == 12 and n_gold == 3 and 27 + n_gold + dim_G_SM == 42,
+          "A3: 27 + 3 + 12 = 42 with 12 = dim G_SM and 3 = Goldstone count "
+          "(count-register arithmetic)")
+
+    # the rank-3 per-block pressure is count-level ONLY, slot-level refuted:
+    r_330 = check_L_singlet_Gram_exchangeable_form()
+    bf = r_330['artifacts']['block_fence']
+    check('count-level' in bf and 'rank 3' in bf and '.326' in bf,
+          "A3: the .330 block-fence is count-level only, rank 3 computed, "
+          "slot-level refuted at .326")
+    check('check_T_vglobal_slot_identification_no_go' in sources.get('formal_kernel.py', ''),
+          "A3: the .326 slot no-go surface is anchored in formal_kernel.py")
+
+    # the register-split flag itself is still present and still carries the
+    # literal NAMED/OPEN token (this check certifies the split's respect at
+    # closed-world strength; it does NOT silently retire the world-strength
+    # premise). The landing re-word of this flag KEEPS the token, so this
+    # assertion passes before and after the re-word (audit REQUIRED 3):
+    flag = r_330['artifacts']['Export_config_demand_register_split_premise']
+    check('NAMED/OPEN' in flag,
+          "A3/fence: the .330 export flag is live and carries NAMED/OPEN -- the "
+          "world-strength split stays a named premise (re-word keeps the token)")
+
+    # =================================================================
+    # Clause A4 -- the .338 PSD premise, RUN LIVE (audit REQUIRED 2)
+    # =================================================================
+    r_338 = check_L_common_demand_iff_degenerate()
+    psd_flag = r_338['artifacts']['Export_demand_realizability_PSD_premise']
+    check('NAMED/OPEN' in psd_flag,
+          "A4: .338 executed live -- its PSD (demand-realizability) premise "
+          "export is still NAMED/OPEN")
+    check('OPEN [C]' in r_338['artifacts']['open_identity'],
+          "A4: .338's own open-identity artifact keeps a = b OPEN [C]")
+
+    # =================================================================
+    # Clause B -- the closed-world census (triple co-occurrence scan)
+    # =================================================================
+    pat_pair = re.compile(r'Gram|off[-_ ]?diag|overlap|G_ij|rank[ (]|exchangeab', re.I)
+    pat_dem = re.compile('dem' + 'and', re.I)
+    pat_vac = re.compile(r'C_vacuum|C_vac\b|V_global|\bvacuum\b', re.I)
+    WINDOW = 2
+
+    CENSUS_EXPECTED = {
+        # file: (hit count, disposition)  -- recorded human judgment,
+        # per-candidate verdicts in the walk record of 2026-07-02;
+        # counts pinned at scan time 2026-07-02 (post-.353 tree)
+        '_module_manifest.py': (2, 'infra: changelog prose (2nd hit arrived '
+                                   'with the v24.3.353 changelog entry)'),
+        'acc_reading_selection.py': (1, 'fence: referent-3 corrigendum comment'),
+        'bank.py': (1, 'infra: changelog prose (EXPECTED_THEOREM_COUNT line)'),
+        'cosmology.py': (30, 'register-home: .517/.330/.338 family + this '
+                             'check itself (same-commit re-pin); (a, b) '
+                             'symbolic, a = b exported OPEN; no off-diagonal supplied'),
+        'gravity.py': (5, 'rider: .339 demand_register_rider + kernel-row prose; '
+                          'scalar-typed'),
+        # vacuum_label_code.py: REGISTERED module, ZERO tier-1 hits at scan
+        # time -- deliberately NOT a row here, so vocabulary drift toward
+        # demand-pairwise text fires the new-file clause below; its
+        # registered-strength disposition is the dedicated clause that
+        # follows this scan (audit REQUIRED 1).
+    }
+
+    live_census = {}
+    for rel, src in sources.items():
+        lines = src.splitlines()
+        hits = 0
+        for i, ln in enumerate(lines):
+            if not pat_dem.search(ln):
+                continue
+            lo, hi = max(0, i - WINDOW), min(len(lines), i + WINDOW + 1)
+            win = '\n'.join(lines[lo:hi])
+            if pat_vac.search(win) and pat_pair.search(win):
+                hits += 1
+        if hits:
+            live_census[rel] = hits
+
+    census_new = sorted(set(live_census) - set(CENSUS_EXPECTED))
+    census_gone = sorted(set(CENSUS_EXPECTED) - set(live_census))
+    census_changed = sorted((rel, CENSUS_EXPECTED[rel][0], live_census[rel])
+                            for rel in set(live_census) & set(CENSUS_EXPECTED)
+                            if live_census[rel] != CENSUS_EXPECTED[rel][0])
+    check(not census_new,
+          f"B/net-1: no new file carries the vacuum-demand-pairwise fingerprint (new: {census_new})")
+    check(not census_gone,
+          f"B/net-1: no dispositioned file stopped matching (gone: {census_gone})")
+    check(not census_changed,
+          f"B/net-1: no dispositioned file changed its hit count (changed: {census_changed})")
+
+    # -----------------------------------------------------------------
+    # vacuum_label_code: REGISTERED-strength disposition (audit REQUIRED 1;
+    # replaces the draft's staged-file registration tripwire, which fired
+    # live -- correctly -- when the module banked at v24.3.352).
+    # The new expected state is REGISTERED + DISPOSITIONED. Fail direction
+    # inverted: this clause FAILS if the module's banked surfaces start
+    # supplying a positive off-diagonal b (carrier flips to bank-supplied,
+    # the OPEN a = b [C] citation drops, the label-blind finding flips, or
+    # the instrument grade changes) -- NOT if it registers.
+    # -----------------------------------------------------------------
+    check('apf.vacuum_label_code' in _mm.BANK_REGISTRY_MODULES,
+          "B/vlc: vacuum_label_code is a REGISTERED bank module "
+          "(BANK_REGISTRY_MODULES; the v24.3.352 landing)")
+    check(any('vacuum_label_code' in str(m) for m in _mm.ALL_MODULES_VERIFY_ORDER),
+          "B/vlc: vacuum_label_code is in ALL_MODULES_VERIFY_ORDER")
+
+    r_vlc1 = check_T_vacuum_label_code_no_leakage()
+    r_vlc2 = check_T_vacuum_logical_sector_classical_ceiling()
+    check(r_vlc1['epistemic'] == 'P_structural_instrument'
+          and r_vlc2['epistemic'] == 'P_structural_instrument',
+          "B/vlc: both banked surfaces carry the instrument grade "
+          "[P_structural_instrument] (typing pin)")
+    check('construction-supplied' in r_vlc1['artifacts']['carrier'],
+          "B/vlc: the carrier correlation is CONSTRUCTION-supplied, not "
+          "bank-supplied (live artifact) -- a flip here would be the module "
+          "supplying a positive off-diagonal b, and fails this check")
+    check(r_vlc1['artifacts']['banked_horizon_read_on_this_code']
+          == 'label-blind (uniform)',
+          "B/vlc: the banked horizon registration is label-BLIND on the code "
+          "(live artifact)")
+    check('label-blind' in r_vlc1['key_result'],
+          "B/vlc: the label-blindness finding is carried in the banked "
+          "key_result")
+    check('subspace-coherent' in r_vlc2['key_result']
+          and 'named open' in r_vlc2['key_result'],
+          "B/vlc: the ceiling surface still excludes the subspace-coherent "
+          "42-dim sector and keeps subsystem/mixed encodings NAMED OPEN")
+    vlc_src = sources.get('vacuum_label_code.py', '')
+    check('CONSTRUCTION-SUPPLIED input, not bank-supplied' in vlc_src,
+          "B/vlc: the carrier fence is pinned in the module source")
+    check(('OPEN a = b common-dem' + 'and identity [C]') in vlc_src,
+          "B/vlc: the module source still types its register form as the "
+          "OPEN a = b identity [C] (cross-referenced to .338, never assumed "
+          "banked)")
+
+    # the census result is an OBSERVABLE/SURFACE verdict, at scan time --
+    # the state/observable fence is carried as an artifact below.
+
+    # -----------------------------------------------------------------
+    # the .318 walker, RUN LIVE (audit P2, the walker's DEFECT-6 fix):
+    # consume its verdict from the executed result, not through .339's
+    # frozen artifact string.
+    # -----------------------------------------------------------------
+    r_318 = check_T_which_v_no_registered_interior_reader()
+    check('no registered interior which-v reader' in r_318['key_result'],
+          "B/net: .318 executed live -- no registered interior which-v "
+          "reader (consumed from the run, not from .339's artifact string)")
+
+    # =================================================================
+    # Clause C -- drift-net tiers 0-4
+    # =================================================================
+    # tier 0 (STRUCTURAL, audit REQUIRED 4): the broad-pass candidate file
+    # set, pinned by enumeration at scan time 2026-07-02 (61 files). New
+    # entrants FAIL until dispositioned; drops are allowed silently (a
+    # dropped file only reduces exposure; re-pin at next touch). This tier
+    # catches the demonstrated failure mode of tiers 1-3: a module (e.g.
+    # vacuum_label_code.py) whose demand-adjacent text sits outside every
+    # +-2-line window enters the broad set on arrival with no bespoke
+    # pre-naming required.
+    BROAD_EXPECTED = frozenset({
+        '_module_manifest.py', 'acc_reading_selection.py',
+        'admissible_representation_stack.py', 'bank.py',
+        'base_fiber_allocation.py', 'charged_lepton_qed_real_adapter.py',
+        'closed_world_completeness.py', 'core.py', 'cosmology.py',
+        'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
+        'descent_obstruction_calculus.py', 'ew_branch_incidence_density.py',
+        'extensions.py', 'fibration_census.py', 'foundation_inputs.py',
+        'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
+        'generations.py', 'gravity.py', 'ie_atlas_verdict_pin.py',
+        'ie_onboarding_registry.py', 'interface_atlas.py',
+        'interface_atlas_v02_inputs.py', 'kappa_int_bounds.py',
+        'lambda_absolute.py', 'majorana.py', 'operational_completeness.py',
+        'phase_14d3_completions.py', 'photon_masslessness.py',
+        'pi_gammagamma_2l_moment_native.py', 'plec.py',
+        'quantum_operator_derivation.py', 'recruitment.py', 'red_team.py',
+        'representation_descent_kernel_adversarial_audit.py',
+        's_parameter_pure_gauge_constant_native.py', 'session_delta_pmns.py',
+        'sin2theta_w_OS_capacity_counting.py', 'subspace_functors.py',
+        'supplements.py', 'thooft_anomaly_matching_chiral.py',
+        'unification.py', 'unification_three_levels.py',
+        'universality_forcing.py', 'vacuum_label_code.py',
+        'vacuum_o1_fork.py',
+        'w_trace_denner_diagram_coefficient_table_closeout.py',
+        'w_trace_denner_formula_import_native_assembly.py',
+        'w_trace_denner_ward_identity_counterterm_import.py',
+        'w_trace_diagram_family_numeric_evaluator_import.py',
+        'w_trace_dizet_acquisition_instrumentation.py',
+        'w_trace_native_bosonic_photon_vp.py',
+        'w_trace_native_two_loop_phase2_missing_terms_source_and_derivation_plan.py',
+        'w_trace_native_two_loop_phase2_p_plus_ibp_tool_admission_policy.py',
+        'w_trace_native_two_loop_phase2_zfitter_comparator_guard.py',
+        'w_trace_tensor_coefficient_map_scaffold.py',
+        'yang_mills_md_bridge.py', 'ym_quotient_ledger.py',
+    })
+    pat_broad = re.compile(r'Gram|dem' + r'and|off[-_ ]?diag|overlap', re.I)
+    pat_vac42 = re.compile(r'C_vacuum|C_vac\b|V_global|\bvacuum\b|\b42\b', re.I)
+    broad_live = {rel for rel, src in sources.items()
+                  if pat_broad.search(src) and pat_vac42.search(src)}
+    broad_new = sorted(broad_live - BROAD_EXPECTED)
+    check(not broad_new,
+          f"C/net-0 (structural): no NEW file enters the broad demand-adjacent "
+          f"candidate set without disposition (new entrants: {broad_new})")
+
+    # tier 2: the exchangeable-form constructor
+    pat_exch = re.compile(re.escape('_ex' + 'ch('))
+    exch_live = {rel: len(pat_exch.findall(src))
+                 for rel, src in sources.items() if pat_exch.search(src)}
+    check(exch_live == {'cosmology.py': 6},
+          f"C/net-2: the exchangeable-form constructor lives in cosmology.py "
+          f"only, 6 occurrences (live: {exch_live})")
+
+    # tier 3: the form literal
+    pat_form = re.compile(r'\(a\s*-\s*b\)\s*I\s*\+\s*b\s*J')
+    form_live = {rel: len(pat_form.findall(src))
+                 for rel, src in sources.items() if pat_form.search(src)}
+    check(form_live == {'cosmology.py': 9, 'majorana.py': 1,
+                        '_module_manifest.py': 1},
+          f"C/net-3: the form literal's per-file counts are pinned (live: {form_live})")
+
+    # tier 4: S_propagation consumer membership (word-bounded)
+    pat_sp = re.compile(r'\bS_' + r'propagation\b')
+    sp_live = sorted(rel for rel, src in sources.items() if pat_sp.search(src))
+    check(sp_live == ['cosmology.py', 'gravity.py', 'vacuum_label_code.py'],
+          f"C/net-4: S_propagation consumers are exactly gravity.py (home) + "
+          f"cosmology.py (premise-flag text) + vacuum_label_code.py "
+          f"(registered configuration-register code witness) (live: {sp_live})")
+
+    # =================================================================
+    # Result
+    # =================================================================
+    return _result(
+        name=('T_config_demand_register_split_bank_respected: Every '
+              'Registered Surface Respects the Configuration/Demand '
+              'Register Split (bank-closed-world)'),
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            'The .330 NAMED/OPEN register-split premise, certified as '
+            'RESPECTED by every registered surface (the closed-world '
+            'restriction is in the name, the .318 precedent): (A) three '
+            'type-mismatch certificates pinned to live sibling artifacts '
+            '-- the QEC product code is doubly mismatched (61-type index '
+            'vs 42-unit index; the banked surface\'s named pairwise object '
+            'is state-MI I(i:j)=0, not a demand overlap b), S_propagation '
+            '= 61 ln 42 is count-only at pinned-source strength (.339 row '
+            '5 consumed live; read as neither proof nor disproof of '
+            'rank-1), and the .321 27+3+12 pin is count-typed with the '
+            'rank-3 block pressure count-level only (slot-level refuted '
+            '.326) -- plus the .338 PSD premise executed live and asserted '
+            'NAMED/OPEN; (B) the closed-world census at scan time: zero '
+            'registered readers/writers of pairwise vacuum-unit demand '
+            'structure (five fingerprint files, all dispositioned; '
+            'vacuum_label_code dispositioned at REGISTERED strength with '
+            'its two banked checks run live -- its Gram = I_42 is '
+            'configuration-register over Fourier label states, its carrier '
+            'correlation construction-supplied with the register form '
+            'cited as the OPEN a = b identity [C], and the check now FAILS '
+            'if those surfaces start supplying a positive off-diagonal b); '
+            'the .318 walker run live; (C) a five-tier drift net including '
+            'the structural tier-0 broad-pass file-set pin (61 files; new '
+            'entrants fail without pre-naming). Anti-supplier: even '
+            'landed, no positive b is supplied -- a = b stays OPEN [C]. '
+            'Bank-closed-world only; the world-strength split stays a '
+            'NAMED premise (the .330 flag keeps the literal NAMED/OPEN '
+            'token through its banking re-word). Observable/surface census '
+            'only -- no state claim about the traceless direction.'
+        ),
+        key_result=('config/demand register split RESPECTED at bank-closed-'
+                    'world strength: 3 mismatch certificates pinned to live '
+                    'artifacts + zero-reader/writer census (vacuum_label_'
+                    'code dispositioned at registered strength, fail '
+                    'direction inverted) + 5-tier drift net with the '
+                    'structural broad-pass pin; supplies no positive b; '
+                    'a = b stays OPEN [C]'),
+        dependencies=['L_QEC_code_space', 'L_QEC_product_structure',
+                      'T_horizon_reciprocity',
+                      'T_vacuum_content_typing_status',
+                      'T_vglobal_offdiagonal_blocks_scalar_typed',
+                      'L_singlet_Gram_exchangeable_form',
+                      'L_common_demand_iff_degenerate',
+                      'T_which_v_no_registered_interior_reader',
+                      'T_vacuum_label_code_no_leakage',
+                      'T_vacuum_logical_sector_classical_ceiling'],
+        cross_refs=['T_vglobal_slot_identification_no_go',
+                    'L_singlet_Gram'],
+        artifacts={
+            'certificate_A1_qec': (
+                'DOUBLE mismatch: index (61 types != 42 units; restriction '
+                'drops the 19 matter types, performed nowhere) + species '
+                "(the banked surface's NAMED pairwise object is state MI, "
+                'additivity re-evaluated as a pin; not a demand overlap). '
+                'No only-pairwise-object claim is made; the certificate '
+                'rests on the named surface + the clause-B census'),
+            'certificate_A2_s_propagation': (
+                'count-only register at pinned-source strength: the '
+                'assignment consumes exactly (C_total, C_vacuum), unique in '
+                'gravity.py; artifacts Gram/demand-free; .339 row 5 count-'
+                'only + no registered reader; FENCE: certifies register '
+                'species only -- neither proof nor disproof of rank-1'),
+            'certificate_A3_321_pin': (
+                'count register: 27+3+12 = 42 with both witnesses re-derived '
+                'as pins (12 = dim G_SM, 3 = Goldstone); rank-3 block '
+                'pressure count-level only (.330 artifact), slot-level '
+                'transport refuted (.326, anchored in formal_kernel.py)'),
+            'premise_A4_psd': (
+                '.338 executed live: Export_demand_realizability_PSD_premise '
+                'still NAMED/OPEN; all three named premises of the fence '
+                'architecture (label-functionality, register split, PSD) '
+                'asserted live in this check'),
+            'census_verdict': (
+                'ZERO registered surfaces read or write pairwise (off-'
+                'diagonal) vacuum-unit demand structure, at scan time '
+                '2026-07-02'),
+            'census_expected': {k: v for k, v in CENSUS_EXPECTED.items()},
+            'census_method': (
+                'package-recursive triple co-occurrence: demand token within '
+                '+-2 lines of vacuum vocab AND pairwise vocab; per-file hit '
+                'counts pinned at scan time (the .321 count-pin discipline)'),
+            'vacuum_label_code_disposition': (
+                'REGISTERED strength (v24.3.352, 2 banked checks '
+                '[P_structural_instrument], both run live here): Gram = I_42 '
+                'over Fourier LABEL states = configuration register; carrier '
+                'correlation construction-supplied (pinned in artifact + '
+                'source), register form cited as the OPEN a = b identity [C] '
+                '(.338); banked horizon read label-blind on the code; zero '
+                'tier-1 hits at scan time (vocabulary drift fires the census '
+                'new-file clause). FAIL DIRECTION (inverted tripwire): this '
+                'check fails if its banked surfaces start supplying a '
+                'positive off-diagonal b -- not if it registers'),
+            'run_live': (
+                'L_QEC_code_space, L_QEC_product_structure, '
+                'T_horizon_reciprocity, T_vacuum_content_typing_status (.321), '
+                'T_vglobal_offdiagonal_blocks_scalar_typed (.339), '
+                'L_singlet_Gram_exchangeable_form (.330), '
+                'L_common_demand_iff_degenerate (.338), '
+                'T_which_v_no_registered_interior_reader (.318), '
+                'T_vacuum_label_code_no_leakage (.352), '
+                'T_vacuum_logical_sector_classical_ceiling (.352)'),
+            'drift_net_tiers': {
+                'tier_0': ('STRUCTURAL broad-pass file-set pin: 61 files at '
+                           'scan time 2026-07-02; new entrants fail without '
+                           'pre-naming; drops allowed (exposure only shrinks)'),
+                'tier_1': 'the census map (exact per-file counts)',
+                'tier_2': "constructor '_ex" + "ch(': cosmology.py x6 only",
+                'tier_3': 'form literal (diagonal a / off-diagonal b): '
+                          'cosmology 9 / majorana 1 / manifest 1',
+                'tier_4': ('S_propagation membership {cosmology.py, '
+                           'gravity.py, vacuum_label_code.py} -- the actual '
+                           'pinned three-file set'),
+            },
+            'named_net_residuals': (
+                'a supplier avoiding BOTH the tier-0 broad vocabulary and '
+                'tiers 1-3 is invisible (self-announcing surfaces only, the '
+                '.318 disclaimer); census dispositions are recorded human '
+                'judgment; in-package move requires same-commit re-pin of '
+                "cosmology.py's tier-1 count"),
+            'scope_fence_anti_supplier': (
+                'supplies NO positive b; all three pressure sources are non-'
+                'demand registers and the census finds no demand off-'
+                'diagonal writer in either direction; a = b stays OPEN [C]'),
+            'scope_fence_trichotomy': 'the S2D cost-or-idle horn is NOT decided here',
+            'scope_fence_occupancy': (
+                'occupancy is CONSTITUTIVE (v24.3.304, co-equal with A1); '
+                'cited only to fence it; not open'),
+            'scope_fence_closed_world': (
+                'bank-closed-world, carried in the name: a statement about '
+                'registered surfaces, not the world; the WORLD-strength '
+                'split stays NAMED/OPEN -- what is banked is the respect-'
+                'census, not the premise; the .330 flag re-word keeps the '
+                'literal NAMED/OPEN token'),
+            'scope_fence_state_observable': (
+                'observable/surface census only; no inference from "no '
+                'reader" to "the traceless direction carries nothing" '
+                '(Route C REFUTED 0.90)'),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+
 
 def check_L_dark_budget():
     """L_dark_budget: Dark Sector Budget and Collisionlessness [P].
@@ -2995,6 +3720,7 @@ _CHECKS = {
     'L_singlet_Gram': check_L_singlet_Gram,
     'L_singlet_Gram_exchangeable_form': check_L_singlet_Gram_exchangeable_form,
     'L_common_demand_iff_degenerate': check_L_common_demand_iff_degenerate,
+    'T_config_demand_register_split_bank_respected': check_T_config_demand_register_split_bank_respected,
     'L_dark_budget': check_L_dark_budget,
     'L_saturation_partition': check_L_saturation_partition,
     'L_equation_of_state': check_L_equation_of_state,
