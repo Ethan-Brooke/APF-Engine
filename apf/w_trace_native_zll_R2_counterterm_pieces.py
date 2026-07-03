@@ -301,3 +301,38 @@ _CHECKS = {
 def register(registry):
     for name, fn in _CHECKS.items():
         registry[name] = fn
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:zll_r2_counterterm_pieces",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Single banked check "
+            "check_T_w_trace_native_zll_R2_counterterm_pieces_P (tier 4, "
+            "epistemic=P_structural_partial) certifying a thin API wrapper over "
+            "the banked v24.3.99 Denner OS machinery: four self-energy-derived "
+            "counterterms (delta_Z2_Z, delta_Z2_gamma, delta_Z_AZ, delta_Z_e) "
+            "plus the composed Z-vertex counterterm delta_Z1_Z are exposed as "
+            "standalone callables for a downstream R2 renormalized-vertex "
+            "assembly. Certified: each is finite and bounded at standard Denner "
+            "inputs; delta_Z2_gamma = -Pi_AA_0 and delta_Z_AZ = -2 "
+            "Sig_AZ(0)/M_Z^2 to machine precision; delta_Z2_Z stable under "
+            "numerical-differentiation step halving; delta_Z_e mu-variation "
+            "bounded (full mu-cancellation lives in the banked Delta_r "
+            "combination that v24.3.99 validates). The wrapper does NOT close R2: "
+            "the external-lepton chiral wavefunction counterterms delta_Z2^L/R "
+            "require a lepton-self-energy callable layer that is NOT yet banked "
+            "(the named next gap on the kappa_l vertex program), and the "
+            "Goldstone/ghost vertex factors are sibling-supplied reference "
+            "constants. Conventions are Denner OS (hep-ph/0709.1075), matching "
+            "the banked assembly whose reproduction of Denner's published one- "
+            "loop M_W = 80.23 GeV serves as the validation anchor. No loop "
+            "quantity is re-derived here; no value-level EW export is made. "
+        ),
+        "note": "Wave 7; plumbing-with-a-theorem: banked content = finiteness + the delta_Z2_gamma = -Pi_AA(0) identity + delta_Z_AZ self-consistency + step-halving stability (the docstring's Sirlin delta_VB anchor language is stale -- delta_VB is imported but never compared; docstring corrigendum owed)",
+    },
+)

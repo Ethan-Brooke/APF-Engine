@@ -416,7 +416,7 @@ IE_DECLARATIONS = (
             "uncertainty certificates exist. The allowed paper claim is "
             "validation plus the symbolic on-shell route theorem only. "
         ),
-        "covers": ("apf.w_trace_final_export_readiness", "apf.w_trace_physical_export_lock", "apf.w_trace_counterterm_convention", "apf.w_trace_onshell_transport", "apf.w_trace_finite_part_ledger", "apf.w_trace_real_row_bundle_admission", "apf.w_trace_row_bundle_to_component_sum", "apf.w_trace_admitted_row_covariance_bridge", "apf.w_trace_uncertainty_propagation", "apf.w_trace_component_sum_certificate", "apf.w_trace_finite_part_skeleton", "apf.trace_to_scheme_transport_theorem", "apf.trace_transport_completion"),
-        "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface",
+        "covers": ("apf.w_trace_final_export_readiness", "apf.w_trace_physical_export_lock", "apf.w_trace_counterterm_convention", "apf.w_trace_onshell_transport", "apf.w_trace_finite_part_ledger", "apf.w_trace_real_row_bundle_admission", "apf.w_trace_row_bundle_to_component_sum", "apf.w_trace_admitted_row_covariance_bridge", "apf.w_trace_uncertainty_propagation", "apf.w_trace_component_sum_certificate", "apf.w_trace_finite_part_skeleton", "apf.trace_to_scheme_transport_theorem", "apf.trace_transport_completion", "apf.w_trace_constants_source_ledger", "apf.w_trace_delta_r_finite_map", "apf.w_trace_external_ingestion_dryrun", "apf.w_trace_finite_part_evaluator_gate", "apf.w_trace_input_basis_ledger", "apf.w_trace_real_source_candidate",),
+        "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface; Wave 7 covers extension: +6 stages, criterion = transitive import closure of the head module (machine-checked 2026-07-02, same import-verified standard as Wave 4)",
     },
 )

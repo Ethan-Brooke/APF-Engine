@@ -62,3 +62,32 @@ def register(registry):
     """Register charged-fermion trace spectrum master theorems into the global bank."""
 
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:charged_fermion_trace_spectrum",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Compositional master module for the charged-fermion trace sector: "
+            "check_T_charged_fermion_apf_trace_spectrum composes the up-family "
+            "and down/lepton APF_TRACE vectors into the full nine-mass charged- "
+            "fermion spectrum at machine grade 'P_local | upstream-banking- "
+            "ready', codomain APF_TRACE, exports_physical_scheme_masses = False. "
+            "check_T_no_inverse_inputs_charged_trace certifies no observed "
+            "charged-fermion masses, target-fitted transport, or physical scheme "
+            "identities are consumed; check_T_up_bridge_strengthened records that "
+            "the up-family Gram-to-Trace bridge carries a scale-covariance "
+            "theorem plus a no-smuggling check. Grade is P_local, not [P]: the "
+            "module's own claim ladder marks the up bridge as needing upstream "
+            "banking to become repository-native [P], and physical "
+            "pole/MSbar/MC/lattice/threshold masses are explicitly NOT exported "
+            "-- trace-to-scheme transport is the separate Paper 33 export "
+            "architecture lane. "
+        ),
+        "note": "Wave 7 charged trace spectrum aggregator; P_local grade with named yellow rung (upstream-banking of the up bridge)",
+    },
+)

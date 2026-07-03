@@ -812,3 +812,38 @@ _CHECKS = {
 def register(registry):
     """Register all 7 projection-essentiality checks into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:acc_projection_essentiality",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Per-projection essentiality for the Admissibility-Capacity Ledger: "
+            "six checks (check_pi_T_essentiality, check_pi_G_essentiality, "
+            "check_pi_Q_essentiality, check_pi_F_essentiality, "
+            "check_pi_C_essentiality, check_pi_A_essentiality) plus the composed "
+            "tier-4 check_T_projection_essentiality, all machine-graded "
+            "epistemic='P_structural_exhaustive'. Each certifies that pi_X is the "
+            "unique regime projection of the ACC record at its canonical "
+            "interface, characterized by (a) reading the regime-appropriate ACC "
+            "field(s) and (b) satisfying the regime structural constraint "
+            "(additivity for pi_T, area scaling for pi_G, positive-integer "
+            "valuation for pi_Q, K-valued for pi_F, residual partition with "
+            "denominator K for pi_C, ln Z -> ACC for pi_A); condition (c), "
+            "consistency under I1-I4, is cross-referenced to the banked checks in "
+            "apf/unification.py rather than re-proved here. Uniqueness is "
+            "exhaustive over the enumerated class of alternative projections "
+            "differing in field-reading, normalization, or inter-projection "
+            "consistency, up to trivial affine rescaling consistent with the eps* "
+            "normalization -- that enumerated closed-world class is exactly the "
+            "scope the P_structural_exhaustive token prices. Serves as the "
+            "machine-verified coderef companion to Paper 8's six-projection "
+            "derivations. "
+        ),
+        "note": "Wave 7; flag: docstring prose says 'all [P_structural]' while the machine field is the finer 'P_structural_exhaustive' -- field wins.",
+    },
+)

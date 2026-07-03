@@ -276,3 +276,40 @@ if __name__ == "__main__":
     out = run_all(); print(out["status"])
     for row in out["checks"]: print(("PASS" if row["passed"] else "FAIL"), row["name"])
     raise SystemExit(0 if out["passed"] else 1)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:bottom_msbar_transport_route",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Validation layer for the bottom-quark trace-to-scheme comparison, "
+            "graded by module status tokens rather than per-check epistemic "
+            "fields (the ~44 check_T_bottom_msbar_* gates return bare pass "
+            "dicts): STATUS = P_bottom_msbar_transport_route, ROUTE_STATUS = "
+            "P_validation_plus_MSbar_route_contract, EXPORT_STATUS = "
+            "OPEN_identity_or_QCD_transport_required. The gates certify that the "
+            "banked APF_TRACE bottom anchor m_b = 4.1775 GeV sits -5.5 MeV "
+            "(-0.13%) from the PDG m_b(m_b) MSbar comparator 4.183 +/- 0.007 "
+            "(pull -0.79 at quoted scale, -1.29 at 90%-CL rescale; "
+            "check_T_bottom_msbar_residual_mev, _pull_quoted_scale, "
+            "_pull_90cl_rescaled), that the trace value is short-distance-like "
+            "via a > 9 sigma pole-mass knockout "
+            "(check_T_bottom_msbar_pole_knockout_large, "
+            "_not_pole_like_certificate), and that no target observable is "
+            "consumed (check_T_bottom_msbar_no_target_consumed; PDG mass, "
+            "alpha_s(m_b), and pole context are comparison-only no-smuggling "
+            "rows). check_T_bottom_msbar_validation_not_export certifies this is "
+            "validation plus a route contract, NOT an export: the 7-stage route "
+            "map has B_PHYSICAL_EXPORT BLOCKED and two stages OPEN "
+            "(check_T_bottom_msbar_blocked_export_stage, _export_status_open), "
+            "first failed gate = the APF_TRACE-to-MSbar codomain identity / "
+            "evaluated QCD transport map. Physical MSbar export of m_b stays "
+            "OPEN. "
+        ),
+        "note": "Wave 7 bottom trace-to-scheme validation lane; grade lives in module status tokens, no per-check epistemic field",
+    },
+)

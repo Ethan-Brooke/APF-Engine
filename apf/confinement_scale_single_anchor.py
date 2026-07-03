@@ -186,3 +186,36 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:confinement_single_anchor",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_confinement_scale_rides_single_anchor_P (tier 4, machine "
+            "field epistemic='P_structural_seam') certifies that the confinement "
+            "scale adds NO new dimensional anchor: Lambda_QCD = M_Z x exp(-2 pi / "
+            "(b alpha_s)) with alpha_s imported from L_alpha_s at [P+alpha_EM] "
+            "and the one-loop beta coefficient b native (L_beta_capacity), "
+            "chained through the EW floor M_Z = M_Pl x (pure capacity number), "
+            "gives Lambda_QCD = M_Pl x (dimensionless ~1e-20) -- so the framework "
+            "has exactly ONE dimensional anchor (the absolute Planck magnitude, "
+            "route-b by design). The structural claim is robust to the alpha_s "
+            "grade because alpha_s is dimensionless either way. Honest non-claims "
+            "pinned by export flags: the precise Lambda_QCD value is NOT [P] "
+            "(one-loop nf=3 output 244 MeV vs the PDG ~332 MeV comparator; the "
+            "residual is the known multi-loop + threshold-matching factor, "
+            "[P+alpha_EM, +tool]); the 2 m_pi hadronic floor (pion as pseudo- "
+            "Goldstone) is a chiral-dynamics ratio held separately, not claimed; "
+            "no measured target consumed. Flag: the docstring headline and the "
+            "result-name text say [P_structural] while the machine field is "
+            "P_structural_seam -- the field wins; the seam token marks the "
+            "alpha_EM import. "
+        ),
+        "note": "Wave 7 single-anchor collapse for the strong sector; field P_structural_seam vs docstring [P_structural] flagged",
+    },
+)

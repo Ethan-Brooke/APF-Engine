@@ -217,3 +217,34 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:a_mu_hvp_capacity_density",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_a_mu_hvp_capacity_counted_distinction_density_P (tier 4, "
+            "epistemic=P_structural_seam) certifies the source-codomain reading "
+            "for muon g-2: a_mu^HVP,LO is the capacity-counted distinction "
+            "density R = N_c x sum Q^2 -- the same source object as the hadronic "
+            "running -- integrated against the known QED kernel K(s) (Gourdin-de "
+            "Rafael), whose positivity, monotonicity, and m_mu^2/(3s) asymptote "
+            "are checked, with R at its capacity values 2, 10/3, 11/3. The "
+            "quantified honest caveat is part of the certified content: the "
+            "native perturbative slice above 2 m_c is only ~5% of a_mu^HVP,LO (vs "
+            "~76% for Delta_alpha), so this is a structural reframing, NOT a "
+            "value derivation. The nonperturbative bulk (~95%) is held [C] as the "
+            "universal QCD difficulty; no a_mu value is derived; the 2025 anomaly "
+            "dissolution (exp vs lattice-HVP SM agree to ~127 ppb) is recorded as "
+            "comparator only; APF takes no side in the dispersive-vs-lattice "
+            "split and consumes no measured target. Grade note: the docstring "
+            "headline says [P_structural] but the machine field is "
+            "P_structural_seam -- the field wins. "
+        ),
+        "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_seam flagged, field wins",
+    },
+)

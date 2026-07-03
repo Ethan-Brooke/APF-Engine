@@ -835,3 +835,35 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 13.2 crystal-walker consistency check."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "instrument:enforcement_crystal_walker",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Instrument module, not a physics claim: the Enforcement Crystal "
+            "walker (Paper 20) builds the bank as a typed graph from "
+            "apf.bank.REGISTRY plus the four PLEC axiom anchors "
+            "(crystal_axiom_roots.PLEC_AXIOM_ROOTS), computes the Tier-1 "
+            "structural metrics (depth profile, waist candidates, dual-view "
+            "counts), exposes the dual-view contract {full_graph, "
+            "post_R_subgraph} (Regime R + five exit channels present vs factored "
+            "out), supports the CORE/EXTENDED/FULL module-include presets, and "
+            "emits the dashboard_data.json payload for the canonical Three.js "
+            "viewer. Its one bank check, check_T_crystal_v69_consistent, tier 4 "
+            "at epistemic='P_structural_instrument', certifies walker-bank "
+            "coherence only: the walker's node count and epistemic distribution "
+            "agree with the bank's self-report, all four PLEC anchors (A1, A2, "
+            "MD, BW) are reachable as roots in both views, and the payload is "
+            "JSON-serializable. No theorem content is routed through this row "
+            "beyond the instrument-coherence certificate; the physics attribution "
+            "numbers computed ON the crystal live in apf/crystal_metrics.py, not "
+            "here. "
+        ),
+        "note": "Wave 7; instrument coherence certificate only",
+    },
+)

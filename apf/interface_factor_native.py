@@ -347,3 +347,37 @@ def run_all() -> Dict[str, Dict[str, Any]]:
 if __name__ == "__main__":
     import json
     print(json.dumps(run_all(), indent=2, default=str))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:interface_factoriality_native",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_interface_algebra_is_factor_native_P, tier 4 "
+            "at epistemic='P' (current field verified; this is the v24.3.271 "
+            "regrade via the corner argument, two independent hostile audits "
+            "HOLDS ~0.9): the interface von Neumann algebra M -- the M_2-ITPFI in "
+            "the GNS representation of the native faithful product Gibbs state "
+            "(L_TN_product_state, lambda = e^{-beta eps*}) -- is a FACTOR, Z(M) = "
+            "C.1, proved NATIVELY. The earlier fence charging the finite-leg "
+            "splitting to the von Neumann tensor commutation theorem was an over- "
+            "charge, corrected 2026-06-23: the relative-commutant identity for a "
+            "FINITE type-I left leg is elementary finite-type-I subfactor "
+            "splitting (matrix-unit corner reconstruction + Kaplansky density; "
+            "von Neumann 1938 / Jones Ex. 4.3.3), never leaving M. Factoriality "
+            "is thereby severed from the type classification: the III_lambda TYPE "
+            "stays at [P_structural] (L_algebra_type, Araki-Woods/Connes -- the "
+            "genuinely both-legs-infinite case) and is NOT claimed here. Banked "
+            "consequence: discharges the antecedent of the conditional condensate "
+            "no-go carried by T_number_u1_is_interface_modular_flow. Composes "
+            "with the two native lemma modules (tail_center_trivial_native F1 and "
+            "itpfi_tail_scalar_native N4): F1 + X5 => Z(M) = C.1, exported from "
+            "this module. "
+        ),
+        "note": "Wave 7; current field confirmed 'P' per the v24.3.271 corner-argument regrade; III_lambda type explicitly stays [P_structural]",
+    },
+)

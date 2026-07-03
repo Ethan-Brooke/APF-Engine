@@ -1961,3 +1961,52 @@ def check_T_ew_broken_phase_dof_conservation_12() -> Dict[str, Any]:
 
 
 _CHECKS["T_ew_broken_phase_dof_conservation_12"] = check_T_ew_broken_phase_dof_conservation_12
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:sin2theta_w_os_capacity_counting_gh_codomain",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Seventeen banked checks; ALL grades are codomain-fenced to the "
+            "gauge+Higgs-only structural codomain GH_OS. The value checks "
+            "check_T_sin2_theta_W_OS_capacity_counting_value_P, "
+            "check_T_MW2_over_MZ2_capacity_counting_value_P, and "
+            "check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P "
+            "carry epistemic=P_attractor_structural_GH_OS_codomain and certify "
+            "sin^2 theta_W^OS = 2/9 and M_W^2/M_Z^2 = 7/9 (tree) within that "
+            "codomain, via five convergent proof spines; "
+            "check_T_M_W_tree_dimensionful_from_M_Z_GH_OS_codomain_composed_P "
+            "(P_tree_dimensionful_GH_OS_codomain_composed) composes the tree M_W "
+            "= sqrt(7)/3 x M_Z, and check_T_kappa_l_composed_with_paper_18_P "
+            "(P_attractor_structural_GH_OS_codomain_composed) composes kappa_l = "
+            "(3/13)/(2/9) = 27/26 with Paper 18. Four mechanization checks at "
+            "P_structural_exhaustive certify the canonical capacity assignment "
+            "unique among 3^8 = 6561 candidates under premises P0..P14, the OSR "
+            "premise implications, and the Lyapunov unique-global-minimum/strict- "
+            "descent properties. Five meta checks "
+            "(P_full_structural_GH_OS_codomain_meta / "
+            "P_structural_meta_GH_OS_codomain) carry the grade promotion, "
+            "principled scope restriction, and constraint-rank decomposition; che "
+            "ck_T_sin2theta_W_OS_reconciliation_GH_OS_codomain_to_native_one_loop "
+            "_P (P_reconciliation_GH_OS_codomain_to_native_one_loop) reconciles "
+            "the codomain value to the native one-loop chain. "
+            "check_T_kappa_b_universality_falsified_C (epistemic=C) banks a "
+            "FALSIFICATION: the carrier-counting rule does NOT extend to kappa_b "
+            "(factor 1.65), so no fermion-channel extension is claimed. "
+            "check_T_ew_broken_phase_dof_conservation_12 (epistemic=P_structural) "
+            "certifies 12 -> 12 gauge-Higgs DOF conservation across EWSB computed "
+            "from banked T8/T_Higgs/T_gauge inputs. Preserved non-claims: not "
+            "physical-final, not a loop-renormalized OS-W close, does not replace "
+            "Paper 18's 3/13; 27/26 is the source-angle ratio while data select "
+            "the lifted ratio ~1.0368 -- two objects, as banked. Note: the "
+            "docstring headline '[P_full_structural | GH_OS_codomain]' is carried "
+            "by the meta promotion check; the value checks themselves sit at "
+            "P_attractor_structural_GH_OS_codomain per the machine fields. "
+        ),
+        "note": "Wave 7; docstring headline P_full_structural vs value-check machine fields P_attractor_structural_GH_OS_codomain flagged, fields quoted",
+    },
+)

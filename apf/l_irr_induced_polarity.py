@@ -464,3 +464,37 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:l_irr_induced_polarity",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Substrate-side *-algebra (i)+(ii) closure: the L_irr orientation on "
+            "class-transition histories lifts (via the eternalist commitment) to "
+            "a per-distinction polarity whose continuation pairing satisfies "
+            "*-algebra axioms (i) involution and (ii) antimultiplicativity at the "
+            "substrate, dissolving Fact 1 of the cross-interface algebraic "
+            "impossibility theorem. Machine grades: "
+            "check_T_L_irr_polarity_well_defined, "
+            "check_T_L_irr_polarity_involution, "
+            "check_T_L_irr_polarity_antimultiplicative, and the top theorem "
+            "check_T_L_irr_polarity_star_axioms_i_ii all carry "
+            "status='P_structural_reading'; "
+            "check_T_L_irr_polarity_substrate_primitive carries status='P_audit'. "
+            "Axioms (iii) C-antilinearity and (iv) the C*-norm condition are NOT "
+            "claimed -- they remain fiber-internal at quantum-capable interfaces, "
+            "blocked by Fact 3 (the substrate's ([0, inf], +) cost enrichment "
+            "supplies no C-action or operator norm), so the strong-form cross- "
+            "interface algebraic foundation stays OPEN. Discrepancy flagged: the "
+            "module docstring labels the top theorem 'P_structural' while the "
+            "machine status fields say P_structural_reading (and P_audit for the "
+            "substrate-primitive leg); the fields win. "
+        ),
+        "note": "Wave 7 substrate *-algebra closure; docstring 'P_structural' vs machine P_structural_reading/P_audit flagged",
+    },
+)

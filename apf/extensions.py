@@ -1669,3 +1669,35 @@ _CHECKS = {
 def register(registry):
     """Register extension theorems into the global bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:import_internalization_extensions",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Seven import-internalization theorems, all machine-graded "
+            "epistemic='P': check_L_Pauli_Jordan (Pauli-Jordan commutator "
+            "reflection symmetry), check_T6B_beta_one_loop (1-loop SM beta "
+            "coefficients from APF particle content by Casimir arithmetic), "
+            "check_L_seesaw_type_I (Type-I seesaw mass formula by block "
+            "diagonalization of the APF Dirac operator), "
+            "check_L_HKM_causal_geometry (causal order -> conformal Lorentzian "
+            "class, internalized from L_irr), check_L_Malament_uniqueness "
+            "(conformal geometry uniquely fixed, from A1 volume normalization), "
+            "check_L_McKean_Singer_internal (McKean-Singer index formula from "
+            "SVD, pure linear algebra), and check_L_Tannaka_Krein. Billed effect: "
+            "previously external theorem imports (Pauli-Jordan propagator theory, "
+            "the 1-loop beta formula, the seesaw mechanism, HKM 1976, Malament "
+            "1977, McKean-Singer 1967 / Atiyah-Singer 1963) are re-derived on "
+            "internal premises, so the derivation chain no longer bills them as "
+            "external mathematics imports. The [P] scope is the internalized "
+            "derivations themselves; consumers of these lemmas carry their own "
+            "grades. "
+        ),
+        "note": "Wave 7; minor prose drift: header docstring says 'six new theorems' but the module registers seven (check_L_Tannaka_Krein added after the header was written) -- count from the registry.",
+    },
+)

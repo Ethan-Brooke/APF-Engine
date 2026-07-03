@@ -276,3 +276,41 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:beta_capacity_tiling",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Two checks, both tier 4 with machine field "
+            "epistemic='P_structural_seam' (the docstring headline says "
+            "[P_structural] -- the field wins, flagged). "
+            "check_T_gauge_beta_capacity_tiling_abelian_P extends L_beta_capacity "
+            "to the abelian sector: 6|b_Y| = 41 = d_eff - C_total (with |b_Y| = "
+            "41/6 in the SM non-GUT normalization), giving a THIRD independent "
+            "determination of N_gen = 3 -- genuinely independent because the "
+            "abelian 6|b_Y| INCREASES with n while the non-abelian coefficients "
+            "decrease -- and the three betas tile the horizon: 6(|b_3| + |b_2| + "
+            "|b_Y|) = 42 + 19 + 41 = 102 = d_eff, the non-abelian pair summing to "
+            "C_total = 61. Beta coefficients are field-content counts; no "
+            "measured coupling consumed. "
+            "check_T_capacity_coupling_is_leading_log_P certifies the capacity "
+            "<-> coupling correspondence is a LEADING-LOG (one-loop) identity: "
+            "the SM two-loop b_ij are continuum rationals with no count tiling, "
+            "and the witnessed crossing values match at one loop (0.00%) but "
+            "degrade at two loop (1.94%), inverted from ordinary QFT. Honest non- "
+            "claims pinned by export flags: does NOT derive the absolute crossing "
+            "scale M_cross, does NOT close sin^2 theta_W = 3/13, and does NOT fix "
+            "the absolute hypercharge coupling -- the docstring's '1/alpha_Y "
+            "approx 61 held [C]' line concerns that separate question, whose "
+            "current disposition lives in the abelian_coupling lane (consolidated "
+            "2026-07-02 at the .284 [P_structural_reading]); this row is scoped "
+            "to the beta-tiling content only. "
+        ),
+        "note": "Wave 7 abelian beta-tiling + leading-log identity; field P_structural_seam vs docstring [P_structural] flagged",
+    },
+)

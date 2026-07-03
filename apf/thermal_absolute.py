@@ -678,3 +678,36 @@ _CHECKS = {
 def register(registry):
     """Register Phase 14e.4 thermal-absolute theorems into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:thermal_absolute_scope",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Five checks delineating how far the C_X/d_eff^k absolute-formula "
+            "pattern extends beyond rho_Lambda. check_T_T_CMB_absolute_formula "
+            "[P] certifies the numerical theorem (T_CMB/M_Pl)^4 = 48/102^64, "
+            "predicting T_CMB = 2.7166 K vs the FIRAS 2.7255 K, residual 0.33% -- "
+            "the coefficient 48 has two bank-forced integer readings (16x3 "
+            "matter-slot product, 12x4 gauge-Higgs product) with no privilege "
+            "claimed between them. check_T_Phase_14e4_thermal_scope [P] composes "
+            "the scope map: matter densities at k = 62 (8%), photon at k = 64 "
+            "(0.33%), the baryon-to-photon ratio eta OUTSIDE scope (no clean "
+            "small-integer fit at any k in [2..9]), Sigma m_nu suggestive only. "
+            "The interpretive layer is honestly [C]: "
+            "check_T_thermal_exponent_interpretation (the k = K_SM + 1 + N_pol "
+            "polarization reading of the exponent shift), "
+            "check_L_eta_does_not_fit_cleanly (a negative/scope finding "
+            "registered at conjecture level), and check_L_Sigma_m_nu_suggestive "
+            "(~0.10 eV, inside the [0.058, 0.12] eV observational window, not "
+            "pinned). Billed imports: FIRAS T_CMB and Planck 2018 densities as "
+            "comparison observations; all coefficients and exponents are bank "
+            "integers. "
+        ),
+        "note": "Wave 7; 2 [P] numerical/scope checks over a 3-check [C] interpretive layer",
+    },
+)

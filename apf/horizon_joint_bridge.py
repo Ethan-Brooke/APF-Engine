@@ -572,3 +572,37 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14f.4 I1 joint-point bridge into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:i1_bridge_at_joint_k42",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_I1_bridge_at_joint_K42, tier 4 at "
+            "epistemic='P_bridge': at the canonical SM-dS joint point K = 42, "
+            "three structurally independent constructions of a 42-dim subspace "
+            "inside V_61 coincide as combinatorial Subspaces -- (1) "
+            "F_horizon(acc_horizon(42)) under Convention A (d_eff = e, Bekenstein "
+            "area quantisation via T_Bek), (2) V_global from T12's interface "
+            "partition witnessed by T_interface_sector_bridge, and (3) "
+            "F_horizon(acc_horizon_bit(42)) under Convention B (d_eff = 2, a "
+            "literal (C^2)^x42 qubit tensor product, verified numerically at "
+            "K_bit in {2,3,4,5} with partial-trace reduction and K-parametric "
+            "extension to 42). The agreement composes two independently banked "
+            "theorems: T_interface_sector_bridge gives (1)=(2) and "
+            "L_horizon_convention_equivalence gives (1)=(3), so (2)=(3) by "
+            "transitivity. This is the I1 bridge theorem at the joint point, "
+            "structurally parallel to I2's T_interface_sector_bridge; the check's "
+            "own artifacts record the closure stratification honestly -- i1 "
+            "closure level 'P_bridge' AT the K=42 joint only, 'P_def' at generic "
+            "K (bridge-at-joint + regime-local-elsewhere). Dependencies billed: "
+            "T_Bek, T_interface_sector_bridge, L_global_interface_is_horizon, "
+            "L_horizon_convention_equivalence, T_horizon_subspace_functor. "
+        ),
+        "note": "Wave 7; single-check module, bridge grade is joint-point-only per its own artifacts",
+    },
+)

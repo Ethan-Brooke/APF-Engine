@@ -261,3 +261,39 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:yt_normalization_no_go",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Banks a NEGATIVE result -- an obstruction, not a value: "
+            "check_T_yt_absolute_scale_not_fixable_by_normalization_no_go_P "
+            "(machine field "
+            "epistemic='P_structural_yt_absolute_scale_normalization_no_go', a "
+            "bespoke structural token) certifies that the absolute top Yukawa y_t "
+            "cannot be fixed by any unitarity/normalization principle on the "
+            "Yukawa matrix. Three independently re-verified legs: (1) the two- "
+            "channel structure that gives CKM and the light generations "
+            "(T_channels; q_B = (7,4,0), q_H = (7,5,0), both zero on top) "
+            "destroys the Cauchy-Schwarz unit ceiling -- the physical top entry "
+            "is the channel sum x^3 + 1 = 9/8 > 1; (2) every norm invariant of "
+            "the top-dominated Yukawa matrix equals the top to 1 part in 1e4, so "
+            "normalizing any matrix norm IS fixing y_t -- circular; (3) the one "
+            "count-based handle, the spectral-action a_Y, is color-counting- "
+            "convention dependent, hence non-physical by the invariance "
+            "criterion. The inter-generation Yukawa RATIOS remain native [P] "
+            "(L_multiplicative_amplitude, L_Yukawa_bilinear); the absolute scale "
+            "remains OPEN, consistent with the 2026-07-02 termination of the "
+            "absolute-scale frontier "
+            "(check_T_ew_scale_functional_independence_no_go). No absolute-scale "
+            "derivation is claimed; the route is fenced so future cycles do not "
+            "re-attempt it. "
+        ),
+        "note": "Wave 7 absolute-top-Yukawa normalization no-go; bespoke P_structural_* token, obstruction result",
+    },
+)

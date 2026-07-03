@@ -295,3 +295,33 @@ if __name__ == "__main__":
         print(f"key_result: {result['key_result']}")
     if not result["passed"] and "error" in result:
         print(f"error: {result['error']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:ym_kappa3_negative",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_kappa3_negative_all_beta (tier 4, machine field "
+            "epistemic='[P_structural]') is the bank witness for kappa_3(beta) := "
+            "d^3/dbeta^3 log(I_1(beta)/beta) < 0 for all beta > 0 -- the Turan- "
+            "type input that bounds the one-tube eigenvalue lambda_1 < 4/27 "
+            "uniformly in beta in Paper 30's d=3 lattice mass-gap tube mechanism. "
+            "The bank check is a four-phase REPRESENTATIVE witness, not the full "
+            "certificate: small-beta power-series anchor (-beta/16 leading term) "
+            "on (0, 0.5]; 200-point logarithmic grid on [0.5, 200]; large-beta "
+            "asymptotic -3/beta^3 samples; and Riccati-identity consistency of "
+            "the closed-form kappa_4 (r' = 1 - r^2 + r/beta) to relative error < "
+            "1e-7. The full interval-arithmetic certificate (~14000 blocks at "
+            "60-digit precision) lives outside the bank in Paper 30's "
+            "supplementary kappa3_certified_v3.py, which is the source of record. "
+            "The statement is a pure mathematical inequality (modified Bessel "
+            "functions via mpmath -- a tool import for evaluation); no physics "
+            "import, no gap-value claim, no continuum-limit claim. "
+        ),
+        "note": "Wave 7 Paper 30 kappa_3 negativity witness; [P_structural] field, full interval certificate lives off-bank",
+    },
+)

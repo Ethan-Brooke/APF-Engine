@@ -198,3 +198,37 @@ def register(registry):
     registry.update(_CHECKS); return registry
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:negative_temperature_ceiling",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_negative_temperature_needs_the_ceiling, tier "
+            "4 at epistemic='P': on the bounded canonical ensemble P(n) ~ "
+            "e^{n(sigma - beta*eps)}, n in {0..C_total}, the FD4 ceiling is "
+            "exactly what places the distinction ledger in the bounded-spectrum "
+            "class that admits negative absolute temperature. With the ceiling, "
+            "Z(beta) is finite for EVERY real beta, so beta = 0 (infinite "
+            "temperature) and beta < 0 (population inversion) are accessible; "
+            "remove the ceiling and the partition sum converges only for beta > "
+            "sigma/eps -- the entire negative-temperature branch does not exist. "
+            "The framework temperature beta = sigma/eps is the inversion onset "
+            "(uniform distribution, <n> = C_total/2), and ln Z(beta=0) = C_total "
+            "x sigma = S_dS (T_deSitter_entropy). Exact structural facts "
+            "composing banked [P] lemmas (L_count/FD4, L_beta_temp, "
+            "T_realignment_cost_is_transition_energy, T_entropy, "
+            "L_sigma_intensive, T_deSitter_entropy). Scope fences named in- "
+            "module: this is a canonical/accessibility statement, NOT a contested "
+            "microcanonical-entropy claim (the Dunkel-Hilbert dispute does not "
+            "bite); no claim that the cosmos or ledger IS in an inverted state; "
+            "the dynamical route to inversion stays parked under "
+            "T_no_physical_time_flow_overclaim. "
+        ),
+        "note": "Wave 7; single [P] check with explicit microcanonical-dispute fence",
+    },
+)

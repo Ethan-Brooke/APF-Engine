@@ -237,3 +237,36 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:sigma_scale_yukawa_free_floor",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_sigma_scale_yukawa_free_geometric_component_P (machine field "
+            "epistemic='P_structural_sigma_scale_yukawa_free_geometric_component_ "
+            "modulo_planck_convention') banks the y_t-independent consequence "
+            "that survives the top-Yukawa normalization no-go: in the Paper-28 "
+            "capacity formula the top Yukawa CANCELS in the leading term, "
+            "a_Y/sqrt(b) = N_c y_t^2 / (sqrt(N_c) y_t^2) = sqrt(N_c), factorizing "
+            "the electroweak scale into (i) a geometry-locked component A x N_c ~ "
+            "144 GeV fixed by M_Pl, N_c = 3, C_boson = 16, d_eff = 102 alone "
+            "(y_t-free AND c_R-free), plus (ii) a cross-term A c_R / y_t^2 "
+            "carrying the RH-neutrino / sigma0 input and the only residual y_t "
+            "dependence. The numerical 144 GeV carries the unreduced-Planck "
+            "convention (M_Pl = 1.22e19 GeV), named in the token's "
+            "modulo_planck_convention rider; the invariant claim is the "
+            "cancellation and the factorization, not the bare number. Inputs are "
+            "the banked Paper-8 ledger numbers, not fitted; no measured v_H or "
+            "measured mass is consumed. The absolute value 246 GeV remains OPEN "
+            "by design (the 144 -> 246 lift is the open c_R / sigma0 cross-term; "
+            "the absolute-scale frontier is terminated) -- this banks only the "
+            "y_t-free component and the factorization. "
+        ),
+        "note": "Wave 7 Yukawa-free geometric component of v_H; bespoke P_structural_* token with Planck-convention rider",
+    },
+)

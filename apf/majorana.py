@@ -272,7 +272,10 @@ def check_L_nuR_enforcement():
     L_dm2_hierarchy [P].
 
     CAPACITY COUNT: C_total = 61 is PRESERVED. The ν_R is the propagating
-    mode of the existing singlet Gram eigenstate (L_singlet_Gram [P]),
+    mode of the distinguished collective eigenstate -- the uniform vector,
+    an eigenvector of the exchangeable Gram (a-b)I + bJ for ALL a, b,
+    symmetry-distinguished regardless of rank (L_singlet_Gram
+    [P_structural]; witness check_L_singlet_Gram_exchangeable_form) --
     not a new capacity channel. No cosmological predictions change.
     """
 
@@ -339,7 +342,7 @@ def check_L_nuR_enforcement():
         dependencies=[
             'L_Weinberg_dim',           # dim-5 LLHH uniqueness
             'L_capacity_per_dimension', # 4ε* per vertex
-            'L_singlet_Gram',           # ν_R = singlet propagating mode
+            'L_singlet_Gram',           # ν_R = uniform collective eigenstate (eigenvector for ALL a,b; rank-independent)
             'L_seesaw_from_A1',         # chain completeness verification
         ],
         cross_refs=['L_seesaw_dimension', 'L_dm2_hierarchy', 'L_sigma_normalization'],

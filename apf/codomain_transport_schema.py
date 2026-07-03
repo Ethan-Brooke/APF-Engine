@@ -444,8 +444,8 @@ def h0_route_v_transport() -> CodomainTransport:
     # v24.3.320 fork annotation: 70.03 is the TWO-FACTOR branch of the banked vacuum-O(1) reading fork; the count=area branch gives 66.84 — see check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py).
     return CodomainTransport(
         name='h0_route_v',
-        source_codomain='APF structural prediction: H_0 = 70.03 km/s/Mpc (T_Lambda_to_H0_inversion in apf/lambda_absolute.py; algebraic from Omega_Lambda = 42/61 + rho_Lambda/M_Pl^4 = 42/102^62 + GR critical-density formula)',
-        target_codomain='empirical H_0 measurement codomain: Planck 2018 = 67.36 km/s/Mpc (early-universe fit) vs SH0ES 2022 = 73.04 km/s/Mpc (late-universe distance-ladder); midpoint = 70.20 km/s/Mpc',
+        source_codomain='APF forked structural value: H_0 = 70.03 km/s/Mpc on the TWO-FACTOR branch of the banked vacuum-O(1) reading fork (count=area branch: 66.83; check_T_vacuum_o1_reading_fork) (T_Lambda_to_H0_inversion in apf/lambda_absolute.py, [P_structural_reading]; algebraic from Omega_Lambda = 42/61 + rho_Lambda/M_Pl^4 = 42/102^62 + GR critical-density formula)',
+        target_codomain='empirical H_0 measurement codomain: Planck 2018 = 67.36 +/- 0.54 km/s/Mpc (early-universe fit) vs H0DN 2026 = 73.50 +/- 0.81 km/s/Mpc (late-universe distance-ladder); midpoint = 70.43 km/s/Mpc',
         transport_map_name='prediction_stability_under_hubble_tension_resolution',
         status=TRANSPORT_WATCHING,
         certificate=TransportCertificate(
@@ -454,7 +454,7 @@ def h0_route_v_transport() -> CodomainTransport:
             loop_order_or_regularization=_slot('loop_order_or_regularization', SLOT_CLOSED, 'classical cosmology; no loop expansion'),
             coupling_provenance=_slot('coupling_provenance', SLOT_CLOSED, 'APF prediction algebraic from K_SM=61, C_vacuum=42, d_eff=102; zero free parameters'),
             threshold_rule=_slot('threshold_rule', SLOT_CLOSED, 'GR critical-density formula rho_crit = 3 H_0^2 M_Pl^2 / (8 pi)'),
-            subtraction_rule=_slot('subtraction_rule', SLOT_PARTIAL, 'Route V (local-void/KBC inhomogeneity) admissible direction within Planck pole; cross-checks consistent with APF=70.03 prediction'),
+            subtraction_rule=_slot('subtraction_rule', SLOT_PARTIAL, 'Route V (local-void/KBC inhomogeneity) admissible direction within Planck pole; ~x2 insufficient against the H0DN endpoint on the two-factor branch (needed ~5.0% local shift vs ~2.5% allowed)'),
             finite_part_rule=_slot('finite_part_rule', SLOT_EXTERNAL, 'M_Pl + GR coupling G consumed as external constants ledger'),
             anomalous_dimension_rule=_slot('anomalous_dimension_rule', SLOT_CLOSED, 'matter density Omega_m derived from same capacity-partition'),
             uncertainty_pushforward=_slot('uncertainty_pushforward', SLOT_PARTIAL, 'strong-lens time-delay + JWST + LIGO standard-siren independent ladders awaited for tension resolution'),
@@ -465,14 +465,15 @@ def h0_route_v_transport() -> CodomainTransport:
             'cepheid_to_match_local', 'sne_ia_calibration_to_match_local',
             'planck_to_match_apf', 'sh0es_to_match_apf',
         }),
-        notes='Status WATCHING: APF predicts H_0 = 70.03 km/s/Mpc (T_Lambda_to_H0_inversion), which lies '
-              '0.17 km/s/Mpc from the Planck-SH0ES tension midpoint (70.20), 2.67 km/s/Mpc above Planck '
-              '2018 (67.36, ~3 sigma) and 3.01 km/s/Mpc below SH0ES 2022 (73.04, ~3.7 sigma). The prediction '
-              'is closed; empirical convergence is awaited as JWST, LIGO standard sirens, and time-delay '
-              'cosmography refine the tension. APF is consistent with any tension-resolving physics that '
-              'lands H_0 near 70 km/s/Mpc; falsified only if H_0 converges sharply to one endpoint of the '
-              'current band. Earlier corpus material misread the schema as carrying a Planck-only '
-              'commitment to 67.76 km/s/Mpc; this row was retired 2026-05-10.',
+        notes='Status WATCHING (fork-annotated v24.3.344): the row carries the TWO-FACTOR branch value '
+              'H_0 = 70.03 km/s/Mpc; the count=area branch gives 66.83 (check_T_vacuum_o1_reading_fork -- '
+              'a named reading fork, not a prediction row). Against current data: 70.03 is 4.94 sigma above '
+              'Planck 2018 (67.36 +/- 0.54), 4.28 sigma below H0DN 2026 (73.50 +/- 0.81), 0.19 sigma from '
+              'CCHP TRGB (70.39 +/- 1.9); 66.83 is 0.96 sigma from Planck and 8.22 sigma from H0DN. '
+              'Three-way discriminator: ~67 => count=area exact; ~70 => two-factor exact; ~73 => both '
+              'branches wrong. Empirical convergence awaited (DESI DR3, ladder-light TRGB/JAGB at sigma <~ 1, '
+              'time-delay cosmography, standard sirens). Earlier corpus material misread the schema as '
+              'carrying a Planck-only commitment to 67.76 km/s/Mpc; this row was retired 2026-05-10.',
     )
 
 

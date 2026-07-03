@@ -2157,6 +2157,180 @@ def check_T_ew_load_placement_P():
     )
 
 
+def check_T_orientation_ew_route_priced():
+    """T_orientation_ew_route_priced: the orientation->EW cell's route-pricing pin.
+
+    Tier 4 [P_structural] -- a closed-world hygiene + arithmetic pin over the one
+    in-bank route from orientation content to the EW spectrum (the record-term slot
+    Delta in gamma_2 = a_22 + Delta), per the 2026-07-02 orientation-EW note SS5
+    (the .305/.318 walker pattern). Three clauses:
+
+      (a) THE QUARANTINE, EXACT. The two block-D/E adjudication lemmas -- scanned
+          by BARE theorem name, never check_-prefixed (the v0.1 grep error is on
+          the record) -- are cited only in the two quotient-ledger modules,
+          per-file count-pinned. T_record_demand_is_quotient_codim and
+          T_ew_load_placement_P are OUTSIDE this clause by design: they ARE the
+          route (consumed by fibration_census and the generations spine). The
+          pinned gauge_quotient_ledger.py counts INCLUDE this check's own two
+          dependency citations (+1 each vs the pre-pin corpus); editing the
+          dependencies list trips the quarantine by design.
+
+      (b) THE TOKEN NET. The four orientation tokens of the note's SS5(b) appear
+          only at the enumerated files, per-file count-pinned. This extends the
+          .305 walker's net: the fourth token (the continuum pseudo-scalar species
+          name, the pion-sector vocabulary) was unpoliced before this check. The
+          needles are assembled at runtime so this check's own source never
+          matches its own scan.
+
+      (c) THE ROUTE'S FALSIFIER CONTRACT, LOCALLY RECOMPUTED. The four placement
+          fractions {13/35, 3/13, 5/43, 13/19} re-derived by exact local
+          arithmetic (the fixed-point computation, no spine import), plus
+          source-level presence of the discriminator's artifact strings in
+          generations.py -- including the record-on-U(1) row priced 2026-07-02
+          (t < 0: the forward solve puts the crossing ~13 decades BELOW M_Z, an
+          ordering inversion of the construction's own premise; alpha_s(M_Z) off
+          by 89%; 1/alpha_2 off by x2.1). A PDG shift or a .284-cascade re-grades
+          the DISCRIMINATOR, not this pin; if the route's arithmetic itself
+          changes, this clause fails and the cell re-opens.
+
+    EXPLICITLY NOT CERTIFIED: the cross-quotient identification (note SS3
+    condition (i)); the billing semantics (condition (ii) -- stays
+    NOT certified here; the criterion is now supplied at register-map strength --
+    check_T_billed_vs_derived_register_criterion; whether it discharges this
+    condition is its own future adjudication); the rank-1 reading and the
+    w-g^2 dictionary crossing (condition (iii)); pincer condition (b)'s
+    account-grade status; anything continuum-side (the pseudo-scalar potential
+    species, the Paper 44 boundary). The U(1)-row pricing VERDICT lives in the
+    discriminator check at its own grade (corroboration riding the rank-1
+    reading); this pin certifies that the pricing exists and that the route's
+    arithmetic is stable.
+
+    GRADE [P_structural]: closed-world over the current corpus. Falsifier: any
+    new TOP-LEVEL apf/*.py file citing the quarantined lemmas or carrying the
+    tokens (the scan is os.listdir over the package root, the .305/.318 scope;
+    subpackages are outside the net -- verified clean at pin time), any per-file
+    count drift, any change to the placement arithmetic -- drift flags, human
+    re-adjudicates.
+    """
+    import os as _os
+    import apf as _apf_pkg
+    pkg_dir = _os.path.dirname(_os.path.abspath(_apf_pkg.__file__))
+
+    def _scan(needle):
+        counts = {}
+        for name in sorted(_os.listdir(pkg_dir)):
+            if not name.endswith(".py"):
+                continue
+            try:
+                with open(_os.path.join(pkg_dir, name), encoding="utf-8",
+                          errors="replace") as f:
+                    n = f.read().count(needle)
+            except OSError:
+                continue
+            if n:
+                counts[name] = n
+        return counts
+
+    # ---- (a) the quarantine, exact (bare names, runtime-assembled) ----
+    lem1 = "L_defended_fact" + "_is_template_invariant"
+    lem2 = "L_gauge_orbit" + "_unpinnable"
+    QUARANTINE_EXPECTED = {
+        lem1: {"gauge_quotient_ledger.py": 11, "ym_quotient_ledger.py": 1},
+        lem2: {"gauge_quotient_ledger.py": 13, "ym_quotient_ledger.py": 2},
+    }
+    quarantine_hits = {}
+    for lem, expected in QUARANTINE_EXPECTED.items():
+        got = _scan(lem)
+        quarantine_hits[lem] = got
+        _check(got == expected,
+               f"quarantine drift on {lem}: expected {expected}, got {got} -- "
+               f"a new consumer of the block-D/E adjudication exists; re-adjudicate")
+
+    # ---- (b) the token net (runtime-assembled needles) ----
+    tok_orient = "relative " + "orientation"
+    tok_theta = "relative " + "theta"
+    tok_shadow = "Goldstone " + "shadow"
+    tok_pseudo = "pseudo-" + "Goldstone"
+    TOKEN_EXPECTED = {
+        tok_orient: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 5},
+        tok_theta: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 1},
+        tok_shadow: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 3},
+        tok_pseudo: {"confinement_scale_single_anchor.py": 4},
+    }
+    token_hits = {}
+    for tok, expected in TOKEN_EXPECTED.items():
+        got = _scan(tok)
+        token_hits[tok] = got
+        _check(got == expected,
+               f"token-net drift on {tok!r}: expected {expected}, got {got} -- "
+               f"orientation vocabulary moved; re-disposition before trusting the cell")
+
+    # ---- (c) the route arithmetic, local and exact ----
+    x, m = F(1, 2), 3
+    a11, a12, a21, a22 = F(1), x, x, x * x + m
+
+    def _ledger_fraction(g1, g2):
+        rstar = (g1 * a22 - g2 * a12) / (g2 * a11 - g1 * a21)
+        return rstar / (1 + rstar)
+
+    placements = {
+        "inert (Delta=0)": (_ledger_fraction(F(1), a22), F(13, 35)),
+        "record-in (Delta=1)": (_ledger_fraction(F(1), a22 + 1), F(3, 13)),
+        "two-records (Delta=2)": (_ledger_fraction(F(1), a22 + 2), F(5, 43)),
+        "record-on-U(1) (gamma_1=2)": (_ledger_fraction(F(2), a22), F(13, 19)),
+    }
+    for label, (got, want) in placements.items():
+        _check(got == want, f"placement arithmetic {label}: {got} != {want}")
+
+    # discriminator artifact strings present at source level (the pricing exists;
+    # its verdict stays with the discriminator at its own grade)
+    gen_src = open(_os.path.join(pkg_dir, "generations.py"),
+                   encoding="utf-8", errors="replace").read()
+    for marker in ("record-on-U(1)", "13/19", "ordering inversion",
+                   "T_load_form_selected_by_alpha_s"):
+        _check(marker in gen_src,
+               f"discriminator artifact string {marker!r} absent from generations.py -- "
+               f"the U(1)-row pricing surface moved; re-adjudicate")
+
+    return _full_result(
+        name="T_orientation_ew_route_priced: the orientation->EW cell's route-pricing pin (quarantine + token net + placement arithmetic, all four placements priced)",
+        tier=4,
+        epistemic="P_structural",
+        summary=(
+            "The orientation->EW cell's standing pin, per the 2026-07-02 note SS5. "
+            "(a) The block-D/E adjudication lemmas are quarantined to the two "
+            "quotient ledgers (bare-name scan, per-file count-pinned); the route "
+            "checks (T_record_demand_is_quotient_codim, T_ew_load_placement_P) are "
+            "outside the clause by design -- they are the route. (b) The four "
+            "orientation tokens appear only at the enumerated files, count-pinned; "
+            "the fourth token is policed for the first time. (c) The four placement "
+            "fractions {13/35, 3/13, 5/43, 13/19} recomputed exactly and locally; "
+            "the discriminator's artifact strings verified present, including the "
+            "record-on-U(1) row priced 2026-07-02 (t<0 ordering inversion + alpha_s "
+            "89% off + 1/alpha_2 x2.1 off -- the cell's last unpriced row, closed). "
+            "NOT certified: the cross-quotient identification, the billing "
+            "semantics, the rank-1 reading chain, anything continuum-side. "
+            "Closed-world [P_structural]; drift flags, human re-adjudicates."
+        ),
+        key_result="all four banked EW placements priced (3/13 survives; 13/35 77% off; 5/43 negative; 13/19 t<0 + 89% off); quarantine + token net pinned; the orientation->EW cell has no unpriced row (placement VERDICTS live in check_T_load_form_selected_by_alpha_s at its reading-conditional grade; this pin certifies the pricing exists and the arithmetic is stable)",
+        dependencies=["T_ew_load_placement_P",
+                      "T_load_form_selected_by_alpha_s",
+                      "L_defended_fact_is_template_invariant",
+                      "L_gauge_orbit_unpinnable"],
+        cross_refs=["T_across_frame_fork_localized",
+                    "T_record_demand_is_quotient_codim",
+                    "T_sin2theta_higgs_record"],
+        artifacts={
+            "quarantine": {k: dict(v) for k, v in quarantine_hits.items()},
+            "token_net": {k: dict(v) for k, v in token_hits.items()},
+            "placements": {k: str(v[0]) for k, v in placements.items()},
+            "u1_row_pricing": "t=-29.8 (M_cross ~ 1e-13 M_Z, ordering inversion) + alpha_s(M_Z)=0.0125 (89% off) + 1/alpha_2=62.0 (x2.1 off); verdict lives in check_T_load_form_selected_by_alpha_s at its grade",
+            "not_certified": "cross-quotient identification; billed-vs-derived criterion; rank-1 reading + w-g2 dictionary; pincer condition (b); continuum-side species",
+        },
+    )
+
+
+
 _CHECKS = {
     "L_gauge_orbit_unpinnable": check_L_gauge_orbit_unpinnable,
     "T_record_demand_is_quotient_codim": check_T_record_demand_is_quotient_codim,
@@ -2169,6 +2343,7 @@ _CHECKS = {
     "T_alpha_gamma_coincide_on_template_class": check_T_alpha_gamma_coincide_on_template_class,
     "UB_usage_billing_adopted": check_UB_usage_billing_adopted,
     "T_ew_load_placement_P": check_T_ew_load_placement_P,
+    "T_orientation_ew_route_priced": check_T_orientation_ew_route_priced,
 }
 
 
@@ -2207,5 +2382,23 @@ IE_DECLARATIONS = (
             "+ the Theorem_R/Schur value supplier). "
         ),
         "note": "Wave 4 probe",
+    },
+    {
+        "input_id": "ew:orientation_ew_route_priced",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Every EW placement of the record-term slot Delta carries a "
+            "certificate (check_T_orientation_ew_route_priced "
+            "[P_structural], v24.3.327): Delta = 1 -> sin^2 theta_W = 3/13 "
+            "(retains the 0.11 sigma corroboration); Delta = 0 -> 13/35 "
+            "killed (alpha_s 77% off); Delta = 2 -> 5/43 excluded in-check "
+            "(alpha_s negative); Reading D 13/19 killed at "
+            "reading-conditional strength (the forward solve exits its "
+            "domain of validity, t = -29.8, 'crossing' ~10 meV; alpha_s 89% "
+            "off; 1/alpha_2 x2.1 off). Quarantine + four-token net + all "
+            "four placement fractions computed locally. "
+        ),
+        "note": "Wave 6 depth; the B3 close (.327)",
     },
 )

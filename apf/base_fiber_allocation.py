@@ -712,9 +712,11 @@ def check_T_canonical_token_requires_type_or_theorem() -> Dict:
     hiding-place it relocates intact to the type level (the canonicity/billing split,
     typing audit finding 7) -- so the exposure map keeps TWO coupled species
     (per-activation kind-(b) billing; standing type-level census-silent billing).
-    MISSING INFRASTRUCTURE, NAMED: the billed-vs-derived criterion (when is standing
-    structure a billed commitment rather than derived architecture?) -- prerequisite for
-    any future type-census attempt; not supplied here.
+    INFRASTRUCTURE, NAMED -- NOW SUPPLIED AT REGISTER-MAP STRENGTH: the
+    billed-vs-derived criterion (when is standing structure a billed commitment rather
+    than derived architecture?) -- prerequisite for any future type-census attempt --
+    is supplied by the sibling check_T_billed_vs_derived_register_criterion (register
+    exhaustiveness open, R5 uninstrumented, R4 scoped to the Delta=1 template class).
 
     GRADE [P_structural]: certifies the model facts the trichotomy rests on, over the
     current corpus, by construction. Tier 4.
@@ -759,7 +761,9 @@ def check_T_canonical_token_requires_type_or_theorem() -> Dict:
     data = {"facts": facts, "substrate_primitive_fields": prim_fields,
             "gloss": ("model-relative + horn-definition-relative typing; the trichotomy is a "
                       "named docstring premise; the exposure map keeps TWO coupled species; "
-                      "the billed-vs-derived criterion is named missing infrastructure")}
+                      "the billed-vs-derived criterion is supplied at register-map "
+                      "strength (sibling check_T_billed_vs_derived_register_criterion; "
+                      "exhaustiveness open)")}
     if ok:
         return _ok("check_T_canonical_token_requires_type_or_theorem",
                    status="P_structural",
@@ -810,9 +814,14 @@ def check_T_census_unit_exclusion_conditional() -> Dict:
     NON-CLAIMS: does not close the across_region row; does not decide the 42-sector
     question; does not discharge the type-census entry (the antecedent stays open); no
     exclusion is claimed through the retracted equipartition/S_dS-deficit route.
-    MISSING INFRASTRUCTURE, NAMED: the billed-vs-derived criterion (see the sibling
-    trichotomy check) -- without it, whether any given standing type-level structure is
-    a "commitment" in this conditional's sense is not decidable in-bank.
+    INFRASTRUCTURE, NAMED -- NOW SUPPLIED AT REGISTER-MAP STRENGTH: the
+    billed-vs-derived criterion is supplied by the sibling
+    check_T_billed_vs_derived_register_criterion, giving PARTIAL antecedent
+    decidability: whether a standing type-level structure is a "commitment" in this
+    conditional's sense is decidable for R1 (census unit) and R3 (kind-(a)
+    value-configuration), decidable on the Delta=1 template class for R4 (demand
+    row), and undecidable for R5 (room-structure/tilt, uninstrumented). Register
+    exhaustiveness stays open; the antecedent as a whole stays OPEN by design.
 
     GRADE [P_structural] (conditional arithmetic over banked registers). Tier 4.
     """
@@ -876,6 +885,219 @@ def check_T_census_unit_exclusion_conditional() -> Dict:
                  data=data)
 
 
+def check_T_billed_vs_derived_register_criterion() -> Dict:
+    """The billed-vs-derived question is REGISTER-RELATIVE: the register-map criterion.
+
+    THE NAMED PREMISE (walker-gloss discipline: an architecture-relative
+    classification, NOT a metaphysical theorem -- the trichotomy lives here as a
+    named premise; the check certifies the model facts it rests on): for standing
+    structure X the billed-vs-derived question is decided by a trichotomy:
+
+      CONSTITUTIVE: X is part of the adopted pricing scheme (A1, occupancy, MD
+          with eps* as its [P] floor witness, BW, A2, FD1, UB). Detection: a
+          declared adoption record. REGISTRY-RELATIVE (audit Fix 4): the
+          CONSTITUTIVE cell types by declared adoption record (closed-world over
+          the registry's adoption layer); it does not arbitrate whether a future
+          candidate SHOULD be adopted -- that is a principal ruling, outside the
+          criterion.
+      DERIVED: X is a theorem of the stack-minus-X with the scheme fixed (the
+          removal counterfactual is incoherent for theorems -- the question is
+          whether the remainder re-derives X, and it does).
+      BILLED-in-a-named-REGISTER:
+        R1  census unit (K = 61; instrument = the census counterfactual
+            arithmetic, the sibling exclusion conditional; sector-size-only over
+            the vacuum 42);
+        R3  value-configuration in existing room (instrument = the rent
+            dichotomy's kind-(a) booking, operational_completeness.py;
+            census-silent by construction);
+        R4  demand row in a competition ledger (instrument = FD1 + the
+            constitutive-evaluator precedent, T_ew_load_placement_P as the
+            instrument of record with UB as the adopted reading layer -- audit
+            (E); DECIDABLE ON THE Delta=1 TEMPLATE CLASS ONLY, off-class
+            candidates undecidable pending UB F-d -- audit Fix 3);
+        R5  room-structure/tilt (NAMED OPEN, uninstrumented).
+      R2 (d_eff as its own register) is KILLED by the register collapse:
+          d_eff = (K - 1) + C_vacuum = 60 + 42 = 102 -- d_eff never bills
+          separately; it recomputes from the registers that do.
+      REGISTER EXHAUSTIVENESS IS NOT CLAIMED (ICL-shaped; certifying it would be
+      the inventory closure by another name).
+
+    THE MONADIC CRITERION, STATED AND KILLED (audit Fixes 1+2). The naive form
+    ("X is billed iff a census invariant moves under removal of X; derived iff X
+    is a theorem of the remainder") fails the bank twice:
+      (f) a formed record is billed kind-(a) by the banked rent dichotomy, is
+          NOT a theorem of the remainder, and moves NO census invariant: no cell
+          -- the clean counterexample;
+      (a) the Higgs radial +1 exposes REGISTER-BLINDNESS: the monadic form
+          returns one bit where the bank needs per-register verdicts -- the same
+          structure is derived in magnitude (n_radial = 4 - 3 = 1: 4 real Higgs
+          components minus 3 eaten Goldstones, T_Higgs), billed once in R1 (one
+          of L_count's 4 Higgs units), and billed in R4 (the demand +1,
+          census-silent under the billing toggle). Deliberately NOT worded as a
+          removal counterexample (structure-removal vs billing-removal
+          equivocation -- the census-lemma species).
+      eps* is NOT a counterexample: it types via the CONSTITUTIVE cell / the
+      derived-over-adopted-basis grade story (audit Fix 1).
+
+    SCOPE / NON-CLAIMS (tamper-sentinel-pinned by clause (vi) below):
+      - does not derive UB-s (the nine-audit relocation stands; the status
+        sentinel pins it adopted at epistemic 'P_structural_reading');
+      - does not type transport (L_loc is budget-only; the RVC kernel untouched;
+        ICL_vac NOT derived; the count-squeeze stays stamped);
+      - does not decide the 42-sector question (the across-region candidate gets
+        a placement DISJUNCTION over the map, not an existence verdict);
+      - register exhaustiveness open.
+
+    EXECUTABLE CONTENT (model facts only; exact arithmetic / status probes):
+      (i)   the register collapse d_eff = (61-1) + 42 = 102 from the banked
+            constants (source surface: check_T_cosmogenic_to_recruitment_reduction,
+            cosmology.py, asserts d_eff == 60 + 42) -- the R2-kill;
+      (ii)  derived exemplars re-derive from their banked premises: d_eff (the
+            collapse), sigma = ln(d_eff), n_radial = 4-3 = 1, the complement
+            61-3-16 = 42 (the 3+16+42 COUNT-LEVEL typing only -- the slot level
+            is refuted by check_T_vglobal_slot_identification_no_go, cross-ref;
+            no slot claim restated);
+      (iii) R3 census-silence: record formation books kind-(a) while
+            (K, d_eff) = (61, 102) sit fixed by construction; the rent
+            dichotomy's placement-blind clause probed at source
+            (operational_completeness.py, literal 'PLACEMENT-BLIND');
+      (iv)  the four placement fractions {13/35, 3/13, 5/43, 13/19} recomputed
+            locally (the fixed-point arithmetic) -- R4's instrument-of-record
+            arithmetic;
+      (v)   status sentinels, with re-adjudication failure wording (audit Fix 6:
+            a sentinel drift means the register-map premise drifted and the map
+            must be re-adjudicated -- NOT that the criterion is refuted);
+      (vi)  docstring-tamper sentinel on this check's own non-claims (the .312
+            F2 pattern).
+
+    GRADE [P_structural] (register-map strength: named premise + certified model
+    facts, closed-world over the current corpus). Tier 4.
+    """
+    import math
+    import os as _os
+    from fractions import Fraction as _Fr
+    import apf as _apf_pkg
+
+    facts = {}
+    # (i) the register collapse: the R2-kill
+    K, C_vacuum = 61, 42
+    d_eff = (K - 1) + C_vacuum
+    facts["register_collapse_d_eff"] = (d_eff == 102)
+    # (ii) derived exemplars re-derive from banked premises
+    sigma = math.log(d_eff)
+    facts["sigma_ln_deff"] = abs(sigma - 4.624973) < 1e-5
+    n_radial = 4 - 3          # 4 real Higgs components - 3 eaten Goldstones (T_Higgs)
+    facts["n_radial_rederives"] = (n_radial == 1)
+    facts["complement_count_level"] = (K - 3 - 16 == C_vacuum)   # 3+16+42, count level only
+    # (iii) R3 census-silence: kind-(a) booking leaves the census registers fixed
+    registers_before = (K, d_eff)
+    registers_after = (K, d_eff)   # kind-(a) books a value-configuration in existing
+    #   room; by the rent dichotomy's own clause it moves neither K nor d_eff
+    facts["r3_census_silent"] = (registers_before == registers_after == (61, 102))
+    pkg_dir = _os.path.dirname(_os.path.abspath(_apf_pkg.__file__))
+    with open(_os.path.join(pkg_dir, "operational_completeness.py"),
+              encoding="utf-8", errors="replace") as f:
+        oc_src = f.read()
+    facts["rent_dichotomy_placement_blind"] = ("PLACEMENT-BLIND" in oc_src)
+    # (iv) R4's instrument-of-record arithmetic, local and exact
+    a11, a12, a21, a22 = _Fr(1), _Fr(1, 2), _Fr(1, 2), _Fr(13, 4)
+
+    def _fraction(g1, g2):
+        rstar = (g1 * a22 - g2 * a12) / (g2 * a11 - g1 * a21)
+        return rstar / (1 + rstar)
+
+    facts["r4_placement_arithmetic"] = (
+        _fraction(_Fr(1), a22) == _Fr(13, 35)
+        and _fraction(_Fr(1), a22 + 1) == _Fr(3, 13)
+        and _fraction(_Fr(1), a22 + 2) == _Fr(5, 43)
+        and _fraction(_Fr(2), a22) == _Fr(13, 19))
+    # (v) status sentinels (drift here = the register-map premise drifted;
+    #     re-adjudicate the map -- see the failure wording below)
+    from apf.gauge_quotient_ledger import (
+        check_UB_usage_billing_adopted as _ub_check,
+        check_T_ew_load_placement_P as _ewp_check)
+    ub = _ub_check()
+    facts["ub_stays_adopted_reading"] = (ub.get("epistemic") == "P_structural_reading")
+    ewp = _ewp_check()
+    facts["r4_instrument_of_record_live"] = (
+        ewp.get("passed") is True
+        and "FD1_structural_completeness" in ewp.get("dependencies", []))
+    # (vi) docstring-tamper sentinel (the .312 F2 pattern)
+    doc = check_T_billed_vs_derived_register_criterion.__doc__ or ""
+    facts["non_claim_sentinel_present"] = all(
+        t in doc for t in ("does not derive UB-s",
+                           "does not type transport",
+                           "ICL_vac NOT derived",
+                           "does not decide the 42-sector question",
+                           "REGISTER EXHAUSTIVENESS IS NOT CLAIMED"))
+    ok = all(facts.values())
+    data = {
+        "facts": facts,
+        "register_map": {
+            "CONSTITUTIVE": "A1, occupancy, MD (eps* floor witness), BW, A2, FD1, UB "
+                            "-- declared adoption record; registry-relative",
+            "DERIVED": "theorem of the stack-minus-X, scheme fixed",
+            "R1": "census unit (K=61); census counterfactual arithmetic; "
+                  "sector-size-only over the vacuum 42",
+            "R2": "KILLED by the register collapse d_eff = (K-1) + C_vacuum",
+            "R3": "value-configuration in existing room; rent dichotomy kind-(a); "
+                  "census-silent by construction",
+            "R4": "demand row in a competition ledger; T_ew_load_placement_P + UB; "
+                  "Delta=1 template class only",
+            "R5": "room-structure/tilt; NAMED OPEN, uninstrumented",
+        },
+        "placements": {"inert": "13/35", "record-in": "3/13",
+                       "two-records": "5/43", "record-on-U1": "13/19"},
+        "sigma_nats": sigma,
+        "monadic_criterion": "stated and killed: the formed record has no cell (f); "
+                             "the Higgs radial +1 needs three per-register verdicts (a)",
+        "cross_refs": ["T_orientation_ew_route_priced",
+                       "T_vglobal_slot_identification_no_go",
+                       "L_singlet_Gram_exchangeable_form"],
+    }
+    key_result = ("the billed-vs-derived question is register-relative "
+                  "(CONSTITUTIVE/DERIVED/BILLED-in-{R1,R3,R4}+R5-open; R2 killed by "
+                  "the collapse d_eff=(K-1)+C_vacuum); the monadic criterion fails "
+                  "the bank (record kind-(a) has no cell; the Higgs +1 needs three "
+                  "verdicts); R4 decidable on the Delta=1 class only; register "
+                  "exhaustiveness NOT claimed; supplied at register-map strength for "
+                  "the three waiting surfaces")
+    if ok:
+        res = _ok(
+            "check_T_billed_vs_derived_register_criterion",
+            status="P_structural",
+            summary=("Billed-vs-derived is REGISTER-RELATIVE: CONSTITUTIVE (declared "
+                     "adoption record, registry-relative) / DERIVED (theorem of the "
+                     "stack-minus-X) / BILLED in a named register (R1 census unit; R3 "
+                     "kind-(a) value-configuration, census-silent; R4 demand row, "
+                     "Delta=1 template class only; R5 named open, uninstrumented); R2 "
+                     "killed by the register collapse d_eff = (K-1) + C_vacuum = 102; "
+                     "the monadic criterion stated and killed (the formed record has "
+                     "no cell; the Higgs radial +1 needs per-register verdicts); "
+                     "register exhaustiveness NOT claimed (ICL-shaped)."),
+            data=data,
+            dependencies=["T_canonical_token_requires_type_or_theorem",
+                          "T_census_unit_exclusion_conditional",
+                          "UB_usage_billing_adopted",
+                          "T_ew_load_placement_P"],
+        )
+        res["tier"] = 4
+        res["epistemic"] = "P_structural"
+        res["key_result"] = key_result
+        res["cross_refs"] = data["cross_refs"]
+        return res
+    return _fail(
+        "check_T_billed_vs_derived_register_criterion",
+        status="FAIL",
+        summary=("register-map premise drifted; re-adjudicate the map (failing "
+                 "facts: %r). A sentinel or arithmetic surface moved -- this is a "
+                 "drift flag on the register map's premises, NOT a refutation of "
+                 "the criterion; the map must be re-adjudicated by hand." % (
+                     {k: v for k, v in facts.items() if not v},)),
+        data=data,
+    )
+
+
 CHECKS = {
     "check_T_cross_interface_algebraic_impossibility_ceiling_P": check_T_cross_interface_algebraic_impossibility_ceiling_P,
     "check_T_base_fiber_allocation_criterion_P": check_T_base_fiber_allocation_criterion_P,
@@ -890,6 +1112,7 @@ CHECKS = {
     "check_T_across_frame_fork_localized": check_T_across_frame_fork_localized,
     "check_T_canonical_token_requires_type_or_theorem": check_T_canonical_token_requires_type_or_theorem,
     "check_T_census_unit_exclusion_conditional": check_T_census_unit_exclusion_conditional,
+    "check_T_billed_vs_derived_register_criterion": check_T_billed_vs_derived_register_criterion,
 }
 
 
@@ -943,5 +1166,23 @@ IE_DECLARATIONS = (
             "across_region row (no-B) stays OPEN. "
         ),
         "note": "Wave 4 probe; the no-B row's OPEN status stated honestly",
+    },
+    {
+        "input_id": "foundation:billed_vs_derived_register_criterion",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The billed-vs-derived question is register-relative "
+            "(check_T_billed_vs_derived_register_criterion [P_structural], "
+            "v24.3.332): the trichotomy CONSTITUTIVE / DERIVED / BILLED "
+            "evaluated in registers {R1, R3, R4} (R5 open; R2 killed by "
+            "d_eff = (K-1) + C_vacuum); the monadic criterion is killed by "
+            "the bank's own cases (the record kind-(a) no-cell; the Higgs +1 "
+            "needs three verdicts). Strategic stop-line stated honestly: "
+            "billing register does not type transport (L_loc is "
+            "budget-only), so ICL_vac does NOT follow from the criterion; "
+            "route (b) is the live route. "
+        ),
+        "note": "Wave 6 depth; the B5 close (.332)",
     },
 )

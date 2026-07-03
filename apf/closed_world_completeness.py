@@ -1512,3 +1512,45 @@ if __name__ == "__main__":
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:closed_world_regime_gates",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The Phase 22c unbundling: the three externally-flagged 'regime "
+            "gates' of the quantum-reconstruction chain (reciprocal calibration "
+            "-> self-duality + adjoint; stable simple-record completeness; finite "
+            "composite closure selecting C over R and H) are DERIVED from the "
+            "deeper closed-world primitive of ledger conservation + no-phantom- "
+            "records, exercised on small finite witnesses across 14 bank- "
+            "registered checks. Field selection is the sharp result: H is ruled "
+            "out by tensor closure M_n(H) x_R M_m(H) ~= M_2nm(R) "
+            "(check_T_split_composite_gates_tensor_closure, epistemic P_math), R "
+            "by the Wootters-Hardy tomographic-locality parameter count "
+            "(check_T_split_composite_gates_tomographic_locality, P_math), and "
+            "the composed check_T_split_closed_world_complex_selection lands at "
+            "P_regime+P_math -- the unbundled sharper form of "
+            "check_T_field_selection_complex. Machine grades span "
+            "P_regime+accounting (check_T_closed_ledger_reciprocity, "
+            "check_T_closed_read_write_self_duality), P_structural_reading "
+            "(check_T_no_phantom_record_quotient, "
+            "check_T_operational_radical_equals_jacobson, "
+            "check_T_capacity_only_distinct_from_structural_ijc, "
+            "check_T_gate_certified_hilbert_born_pipeline, "
+            "check_T_closed_world_completeness_derives_three_gates), P_math "
+            "(check_T_positive_cone_quotient_compatible, both split gates, "
+            "check_T_constructive_commuting_realization), P_regime "
+            "(check_T_preservation_ijc_obstruction), and P_regime+P_math (complex "
+            "selection, check_T_adjoint_closure_reversible_lock_cycles). Scope is "
+            "closed-world by construction: finite witnesses exercising the "
+            "derivation chain of Paper 5 Supplement v5.97, not an operational- "
+            "axioms reconstruction billed from outside. "
+        ),
+        "note": "Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2)-(3) as [P_structural], while the fields give P_math for (4)-(6), P_regime+P_math for (7), and P_structural_reading for (2)-(3); fields win.",
+    },
+)

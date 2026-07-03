@@ -692,3 +692,33 @@ def register(registry):
     registry['L_normalization_coefficient'] = check_L_normalization_coefficient
     registry['L_scalar_potential_form']     = check_L_scalar_potential_form
     registry['L_spectral_action_internal']  = check_L_spectral_action_internal
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:spectral_action_internalization",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Spectral-action internalization: three checks, all machine-graded "
+            "epistemic='P'. check_L_normalization_coefficient derives the 1/2 "
+            "coefficient on Tr(kappa^dagger kappa) from KO-dimension 6; "
+            "check_L_scalar_potential_form derives the scalar potential V(H, "
+            "sigma) from spectral invariance + A1; the tier-4 "
+            "check_L_spectral_action_internal composes both. Billed effect: "
+            "eliminates the Chamseddine-Connes scalar-potential import -- the "
+            "single largest external dependency at the v5.3.1 landing -- and "
+            "upgrades L_sigma_VEV from [P_structural] to [P] (both of its "
+            "previously-imported ingredients now derived). The witnesses are "
+            "explicit: the checks build the full extended finite Dirac operator "
+            "D_F with the Majorana kappa_R block on C^96 and verify the trace "
+            "identities on it, rather than citing the spectral-action literature. "
+            "Scope: the internalization of the potential's form and "
+            "normalization; downstream numeric consumers (sigma VEV, mass "
+            "predictions) carry their own banked grades elsewhere. "
+        ),
+        "note": "Wave 7; fields match docstring.",
+    },
+)

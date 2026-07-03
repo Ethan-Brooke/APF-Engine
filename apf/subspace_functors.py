@@ -1135,3 +1135,37 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14c subspace-functor checks into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:subspace_functors_i1_i3_i4",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Phase 14c constructive closure of the three parked subspace "
+            "witnesses: explicit subspace functors F: ACC(regime) -> Subspace for "
+            "I1 (horizon), I3 (quantum), and I4 (operator), promoting I1_subspace "
+            "/ I3_subspace / I4_subspace from [C, parked] to [P] in "
+            "apf/unification_three_levels. Four checks, all machine-graded "
+            "epistemic='P': check_T_horizon_subspace_functor, "
+            "check_T_quantum_subspace_functor, check_T_operator_subspace_functor, "
+            "and the composed check_T_subspace_functors_unified. Each functor is "
+            "verified against five structural conditions: (i) existence/well- "
+            "definedness, (ii) dimension preservation dim F(acc) = acc.K in "
+            "agreement with the integer- and scalar-level witnesses, (iii) "
+            "monotonicity under the regime's natural nesting, (iv) compatibility "
+            "with T_interface_sector_bridge's V_global/V_local split at the "
+            "canonical joint point, (v) scalar commutation dim F(acc) x ln(d_eff) "
+            "= ACC_scalar. This makes the I2 pattern (whose subspace witness was "
+            "already [P] via the 42-dim V_global from apf/gravity.py) uniform "
+            "across all four consistency identities. The five conditions are "
+            "properties derived from A1 + the regime-local setup, not independent "
+            "axioms; that closed-world property list is the exact scope of the "
+            "[P] tag. "
+        ),
+        "note": "Wave 7; fields match docstring intent (module exists precisely to earn the [P] the three-level module had parked).",
+    },
+)

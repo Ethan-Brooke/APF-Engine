@@ -1860,3 +1860,37 @@ if __name__ == "__main__":
     for n, fn in _CHECKS.items():
         r = fn()
         print(f"{n}: passed={r.get('passed')} [{r.get('epistemic')}]")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:operational_completeness_sandwich",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The access-partition arc's executable core: six checks, all machine- "
+            "graded epistemic='P'. check_L_operational_completeness banks the "
+            "SANDWICH: the operation set available to the observer at interface "
+            "Gamma is EXACTLY the set of admissibility-data REMOVALS billed "
+            "solely at Gamma, within global admissibility -- upper bound from "
+            "L_loc (no cross-interface or simultaneous multi-interface "
+            "modification), lower bound from L_irr's two necessity countermodels "
+            "executed as check bodies (CM1 forces the footprint half, CM2 the "
+            "single-billed-joint half), replacing what was previously prose-level "
+            "license (CM2's old body was a literal True). The deletions-only "
+            "narrowing is a rider inside the [P] statement itself: additions and "
+            "general modifications are NOT claimed; the clause's strength is "
+            "exactly its removals-only scope per the 2026-06-09 row-6 audit. "
+            "check_L_local_removability banks the billing-locus converse of L_irr "
+            "(a distinction's committed capacity is locally recoverable iff no "
+            "cross-billed joint line contains it). The remaining four -- "
+            "check_L_recoverability_is_orbit_reachability, "
+            "check_T_fusion_scope_dissolved, check_T_ledger_rent_excluded, "
+            "check_T_transition_log_residue_readable -- extend the ledger-line "
+            "machinery, each at epistemic='P'. "
+        ),
+        "note": "Wave 7; flag: the _module_manifest.py:438 comment (v24.3.230 stamp) still reads '[P_structural] x2' for the first two checks, but the in-module machine fields are 'P' following the 2026-06-09 [P]-promotion audit cited in the module docstring -- fields win, manifest comment is stale.",
+    },
+)

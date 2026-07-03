@@ -607,3 +607,41 @@ if __name__ == "__main__":
     results = run_all()
     print(json.dumps(results, indent=2, sort_keys=True))
     raise SystemExit(0 if all(x.get("consistent") for x in results.values()) else 1)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:representation_descent_stack",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Finite descent theorem over the generated APF interface site: "
+            "check_T_admissible_representation_stack_P (top status "
+            "P_cat_finite_descent) composes a presheaf/fibration of "
+            "representation categories over a finite interface site with a "
+            "descent/gluing rule (check_T_descent_gluing_rule_P, status "
+            "P_descent) and a complete 10-class obstruction classification "
+            "including EVALUATOR_MISSING, CAPACITY_OVERSPEND, and "
+            "PROVENANCE_SMUGGLE (check_T_obstruction_classification_complete_P, "
+            "status P_obstruction). Three schema readings are banked at status "
+            "P_schema: contextuality as failed descent, scheme dependence as "
+            "fiber-local, and quantum C*-structure as fiber-local "
+            "(check_T_contextuality_as_failed_descent_schema_P, "
+            "check_T_scheme_dependence_as_fiber_local_schema_P, "
+            "check_T_quantum_Cstar_as_fiber_local_schema_P). Site finiteness and "
+            "presheaf/restriction typing carry status P_structural_reading. The "
+            "overclaim fence is itself banked: "
+            "check_T_not_full_infinity_stack_overclaim_P (status P_audit) "
+            "certifies the module does NOT claim a full infinity-stack "
+            "construction -- this is a finite, 1-categorical, bankable descent- "
+            "plus-obstruction result, and that fence is the exact strength of the "
+            "claim. The slogan certified is structural: physical descriptions "
+            "unify as admissible representation descent over the finite-capacity "
+            "interface base, with descent failure classified rather than assumed "
+            "away. "
+        ),
+        "note": "Wave 7; grades are the bespoke P_descent/P_obstruction/P_schema/P_audit/P_cat_finite_descent tokens read from status= fields.",
+    },
+)

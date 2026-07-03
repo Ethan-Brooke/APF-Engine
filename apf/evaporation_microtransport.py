@@ -1012,3 +1012,51 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:evaporation_microtransport_gates",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Twenty checks in three honesty tiers for the Paper 41 evaporation- "
+            "closure work plan. Nine bank at status='P_structural_reading': the "
+            "seven Tier-A structural gates "
+            "(check_G_DIL_ledger_transport_to_unitary_dilation, "
+            "check_G_NONPROD_backreaction_nonproduct, "
+            "check_G_FACT_typed_factorization_schema, "
+            "check_G_UNIT_amplitude_unitarity, check_G_GREY_ROLE_beamsplitter, "
+            "check_G_DEC_CRIT_rank_gram_preserving, "
+            "check_G_END_UNIT_endpoint_isometry) plus "
+            "check_G_import_certify_contract_guards and "
+            "check_T_parameter_matching_harness -- pure finite-dimensional linear "
+            "algebra / typed composition, deliberately near-tautological, no "
+            "physical content billed. Ten bank at status='P_conditional', each "
+            "conditioned on a named regime: "
+            "check_G_SCHW_THETA_thermal_weight_form and "
+            "check_G_SCHW_BR_backreaction_kernel (Schwarzschild ledger regime), "
+            "check_G_ISL_island_instantiation (island-reconstruction regime), "
+            "check_T_apf_physical_quotient, "
+            "check_T_greybody_integer_spin_evaluated and "
+            "check_T_fermion_dirac_greybody_evaluated (GR exterior field-equation "
+            "shooting evaluators, computed not APF-derived), "
+            "check_T_apf_species_threshold_registry (external scale ledger), and "
+            "the endpoint trio check_T_endpoint_identity_completion / "
+            "check_T_endpoint_admissibility_exhaustion / "
+            "check_T_md_endpoint_scale_criterion (finite witnesses, conditional "
+            "stances). check_C_evaporation_open_frontier_fence banks at "
+            "status='C' and fences the open frontier plainly. Preserved honest "
+            "non-claims: no greybody physics derived from A1, no islands/QES "
+            "derived from APF, no explicit decoder, no unique scrambling "
+            "Hamiltonian, no physical endpoint phase, no physical closure from "
+            "toy witnesses. Discrepancy flag: several P_conditional checks carry "
+            "data 'epistemic_grade': 'P | <regime>' prose alongside the "
+            "status='P_conditional' token; the status token wins -- the 'P' in "
+            "the data string is regime-conditioned, never unconditional. "
+        ),
+        "note": "Wave 7; data-field 'P | regime' prose vs status='P_conditional' token flagged (token wins)",
+    },
+)

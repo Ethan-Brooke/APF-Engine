@@ -270,3 +270,35 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14f.3 I4 composition theorem into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:i4_operator_self_identification",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_I4_operator_self_identification, tier 4 at "
+            "epistemic='P_comp': the composed self-identification of the I4 "
+            "(action-thermo) identity -- four structurally independent readings "
+            "recover the same ln Z(beta->0) = ACC_scalar on the same explicit "
+            "H_micro: (A) direct partition-function trace, (B) vacuum-projector "
+            "trace <P_vac> = C_vac/d_eff, (C) per-microstate uniform probability "
+            "1/dim H, and (D) Paper 7's spectral-action heat-kernel reading "
+            "(L_spectral_action_internal: S_spec = Tr[f(D/Lambda)] with Boltzmann "
+            "f equals Z; heat-kernel coefficient a_0 = dim H_F reads off the same "
+            "dimension). Readings (A)-(C) reuse the Phase 14d.2 machine-precision "
+            "machinery (lambda_operator_derivation); (D) is the structurally "
+            "distinct Connes-internalisation route. The grade token 'P_comp' "
+            "marks this as a COMPOSITION theorem: I4 closes regime-locally as a "
+            "self-identification (parallel to T_I3_operator_self_identification), "
+            "NOT as a three-level bridge -- per the two-tier memo, K = 1 at the "
+            "I3/I4 interfaces collapses the slot scale, so the bridge-theorem "
+            "species in the I_k family belongs to I2 (always) and I1 (at the K = "
+            "42 joint point only). "
+        ),
+        "note": "Wave 7; P_comp composition token, regime-local self-identification distinguished from bridge closure",
+    },
+)

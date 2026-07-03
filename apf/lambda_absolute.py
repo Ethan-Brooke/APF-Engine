@@ -153,15 +153,17 @@ def check_T_Lambda_absolute_extended_formula():
     C_X in {K_SM, C_b, C_c, C_vacuum} = {61, 3, 16, 42}.
 
     NUMERICAL VERIFICATION. All four components match observation to
-    within 0.035 decades (factor 1.08, i.e. ~8%):
+    within 0.035 decades (factor 1.08, i.e. ~8%) at the corrected
+    observational anchor (_OBS_LOG10; v24.3.344 corrigendum -- the
+    earlier table printed the retired pre-correction anchor):
 
         Component    APF          Observed     Residual  Factor
-        rho_crit    -122.7479    -122.735      0.013     1.030
-        rho_b       -124.0561    -124.043      0.013     1.031
-        rho_c       -123.3291    -123.317      0.012     1.028
-        rho_Lambda  -122.9100    -122.898      0.012     1.028
+        rho_crit    -122.7479    -122.782      0.034     1.082
+        rho_b       -124.0561    -124.089      0.033     1.079
+        rho_c       -123.3291    -123.364      0.035     1.084
+        rho_Lambda  -122.9100    -122.944      0.034     1.081
 
-    The observational residuals cluster in a narrow 0.012-0.013 band,
+    The observational residuals cluster in a narrow 0.033-0.035 band,
     inside Planck 2018's ~1% precision on Omega_Lambda and ~2%
     precision on H0. This pattern is structurally consistent: all four
     residuals are the same size because they share the same
@@ -899,6 +901,14 @@ def check_T_Lambda_to_H0_inversion():
 def check_T_Lambda_absolute_bulletproof():
     """T_Lambda_absolute_bulletproof [P] — Full robustness of Λ-absolute claim.
 
+    v24.3.344 FORK ANNOTATION: the O(1) coefficient 42/102 is the
+    TWO-FACTOR branch of the banked vacuum-O(1) reading fork
+    (check_T_vacuum_o1_reading_fork, v24.3.320; count=area branch 3/8,
+    H0 66.83 vs 70.03). The [P] here is carried by the exponent and the
+    formula-form gates, which pass under either coefficient; the
+    coefficient reading is fork-conditional. The prose below predates
+    the fork and is scoped accordingly.
+
     Composed top theorem assembling the four bulletproofing passes
     into a single audit record. Paper 8 cites this check as the
     headline structural result.
@@ -922,7 +932,9 @@ def check_T_Lambda_absolute_bulletproof():
         L_self_exclusion and T12, not by numerical closeness. This
         passes the bulletproofing test: the framework is NOT pretending
         to uniqueness it does not have, and the structural argument
-        is rigorously what pins down the coefficient.
+        is what privileges the coefficient WITHIN the two-factor
+        reading (the coefficient itself is fork-conditional --
+        check_T_vacuum_o1_reading_fork).
 
       Pass 4 (operator verification):
         `T_Lambda_operator_model_verification` [P_structural] —
@@ -976,7 +988,8 @@ def check_T_Lambda_absolute_bulletproof():
             "(1) numerical identity rho_Lambda/M_Pl^4 = 42/102^62 "
             "matches observation to 0.034 decades [P]; "
             "(2) extended formula matches rho_crit, rho_b, rho_c, "
-            "rho_Lambda all to within 0.013 decades simultaneously "
+            "rho_Lambda all to within 0.035 decades simultaneously "
+            "at the corrected observational anchor "
             "[P]; "
             "(3) numerical degeneracy audit [C] honestly documents "
             "that many APF-native coefficient candidates land within "
@@ -1022,10 +1035,13 @@ def check_T_Lambda_absolute_bulletproof():
             'audit_within_001_count': audit_r['artifacts']['within_001_count'],
             'operator_SM_fraction': operator_r['artifacts']['SM_fraction'],
             'headline_claim': (
-                'APF predicts the absolute cosmological constant to 8% '
-                'from zero free parameters; the prediction is robust '
-                'against the three bulletproofing tests; upgrade to full '
-                'A1-derivation is Phase 14d.2 scope.'),
+                'APF pins the absolute cosmological constant to within '
+                'the fork band (0.007-0.035 decades depending on the '
+                'O(1) reading) from zero free parameters: exponent [P], '
+                'O(1) a named reading fork (42/102 two-factor vs 3/8 '
+                'count=area; check_T_vacuum_o1_reading_fork). Robust '
+                'against the three bulletproofing tests; the two-factor '
+                'upgrade to full A1-derivation is Phase 14d.2 scope.'),
             'what_remains_open': (
                 'Phase 14d.2 operator-level construction at I4 to '
                 'rigorously derive the (Planck scale, 1/N_SM suppression, '

@@ -239,3 +239,35 @@ if __name__ == "__main__":
     r = check_T_pi_gammagamma_2L_moment_native_P()
     print("PASS:", r["name"][:80], "...")
     print("key_result:", r["key_result"], "| epistemic:", r["epistemic"], "| tier:", r["tier"])
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:pi_gammagamma_2l_moment_native",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Single banked check check_T_pi_gammagamma_2L_moment_native_P (tier "
+            "4, bespoke machine grade "
+            "P_pi_gammagamma_2L_photon_vp_native_master_route_reproduction) "
+            "certifying that APF's native two-loop machinery -- the d-dimensional "
+            "Dirac trace engine, IBP-style tensor reduction, the banked (m,m,0) "
+            "chetyrkin_two_massive_one_massless_scalar vacuum master, and on- "
+            "shell mass renormalization -- reproduces the two-loop QED photon "
+            "vacuum-polarization slope Pi_R^(2)'(0) = 41/162, i.e. the Kallen- "
+            "Sabry moment M(0) = 82/81, exactly. The assembly 2 x SE + 1 x "
+            "crossed + delta_m counterterm has its 1/eps pole AND EulerGamma "
+            "cancel, leaving a pure rational; the negative control (the 2-crossed "
+            "miscount) leaves a +8/(15 eps) residual, so the combinatorics is "
+            "load-bearing. Scope fence carried in the grade token itself: this is "
+            "a native-master-route REPRODUCTION of a known two-loop QED quantity, "
+            "NOT an A1-derivation; Kallen-Sabry is comparator-only, never an "
+            "input; the SE_a/V_a two-loop reductions enter as witness-certified "
+            "constants (not re-run in verify_all); the check inherits the scope "
+            "caveat of the banked master. "
+        ),
+        "note": "Wave 7; scope fence (reproduction, not A1-derivation) is part of the banked grade token",
+    },
+)

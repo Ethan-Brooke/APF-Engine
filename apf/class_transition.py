@@ -358,3 +358,38 @@ def run_all():
 if __name__ == '__main__':
     import json
     print(json.dumps(run_all(), indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:class_transition_primitive",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Bank-side model-integrity companion to Paper 37 (Collapse as "
+            "Realignment), closing the Supplement v0.9 Q4 flag. "
+            "check_T_class_transition verifies existence + uniqueness + "
+            "irreversibility on a worked instance (per-slot saturation depth phi "
+            "monotone and bounded by C_vacuum = 42, finite completion time, one- "
+            "way 2 x eps_min round-trip cost); check_L_per_slot_capacity_flow "
+            "verifies that the per-slot capacity-flow RHS equals the Paper 16 "
+            "v1.1 Markov-breakdown RHS exactly (max diff < 1e-12 across a "
+            "parameter grid); check_T_class_transition_completion verifies the "
+            "formula t_trans = (|S| Gamma_app)^-1 x ln(Phi_IJC(0)/eps_min) at "
+            "machine precision plus its boundary limits. "
+            "check_T_realignment_floor_is_epsilon_star banks the STRUCTURAL "
+            "identification kappa_min == eps*_Gamma -- the Paper 36 posited per- "
+            "transition floor is the already-derived marginal admissibility floor "
+            "(composed from check_L_epsilon_star, apf/core.py, and "
+            "check_T_minimum_distinction_floor_via_MD, apf/kappa_int_bounds.py); "
+            "per-module numeric normalizations differ and are explicitly NOT "
+            "asserted equal. These are executable numeric witnesses of supplement "
+            "theorems on worked instances, not independent derivations; the "
+            "derivational weight sits in the Paper 37 Supplement and the cited "
+            "floor checks. "
+        ),
+        "note": "Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade lives in prose ('model-integrity checks'), so this row bills them as worked-instance witnesses, nothing stronger.",
+    },
+)

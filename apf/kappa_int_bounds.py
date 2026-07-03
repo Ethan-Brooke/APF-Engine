@@ -830,3 +830,43 @@ if __name__ == "__main__":
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:kappa_int_two_sided_rigidity",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Six checks witnessing the kappa_int structural-rigidity program of "
+            "Paper 1 Supplement v8.27+ on finite toy interfaces. Five bank at "
+            "'[P_structural]': check_T_kappa_int_lower_bound (the MD-via-BW "
+            "marginal-floor lemma gives a structural lower bound on kappa_Gamma "
+            "and the residue kappa_int), check_T_kappa_int_upper_bound_C1C5 (the "
+            "binary-form upper bound plus far-separation exponential suppression, "
+            "valid ONLY in the C1-C5 continuum-bridge regime), "
+            "check_T_kappa_int_two_sided_rigidity (the residue sits between "
+            "explicit substrate-derived endpoints in the C1-C5 regime, no "
+            "remaining structural freedom), check_T_R1_R4_spine_derivable (R1-R4 "
+            "are derivable consequences of the spine + interrogation structure on "
+            "the canonical 4-input witness), and "
+            "check_T_minimum_distinction_floor_via_MD (the floor theorem "
+            "mu_Gamma(Q) >= eps* > 0 from MD's uniform floor alone -- no "
+            "compactness, no LSC, no Weierstrass). The sixth, "
+            "check_T_kappa_int_upper_bound_topological_gap_regime_restricted_P, "
+            "banks at the narrower token "
+            "'[P_structural_topological_regime_restricted]': kappa_int <= "
+            "Delta_top x N_defects under four load-bearing regime preconditions "
+            "(positive bulk gap, finite ground-state degeneracy, all anti- "
+            "cooperative couplings U_i <= Delta_top, gap/floor independence) -- "
+            "precondition (3) is genuinely load-bearing (39/74 witness failures "
+            "when U > Delta_top), and the bound is undefined outside the regime. "
+            "All six are finite-witness certifications of supplement theorems; "
+            "the upper-bound side is regime-conditional throughout, never "
+            "unconditional. "
+        ),
+        "note": "Wave 7; module docstring line 34 says all checks are [P_structural] but the sixth carries the narrower regime-restricted token (field wins)",
+    },
+)

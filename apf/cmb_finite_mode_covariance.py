@@ -361,3 +361,39 @@ def run_all():
 if __name__ == '__main__':
     import json
     print(json.dumps(run_all(), indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "dark:cmb_finite_mode_covariance_prototype",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Six model-integrity checks (check_T_cmb_fm_finite_multipliers, "
+            "check_T_cmb_fm_nonneg_reference, "
+            "check_T_cmb_fm_large_angle_reduction, "
+            "check_T_cmb_fm_quadrupole_suppression, "
+            "check_T_cmb_fm_high_ell_preservation, "
+            "check_T_cmb_fm_legendre_recurrence), all banked at epistemic "
+            "P_structural_reading tier 4, certify the internal structure of the "
+            "Model-5 finite-mode covariance projection behind Paper 19's large- "
+            "angle CMB suppression reading: the least-distortion multipliers "
+            "m_ell are finite and within [0,2], the toy reference a_ell >= 0, the "
+            "projection strictly reduces the large-angle functional S_theta_c "
+            "(S_proj < S_std), m_2 < 0.5, m_ell stays within 15% of 1 for ell >= "
+            "20, and the Legendre table satisfies Bonnet's recurrence to 1e-12. "
+            "Everything runs on a toy Sachs-Wolfe-plateau-like reference spectrum "
+            "on ell in [2,30] at theta_c = 60 deg, lambda = 0.2 -- these are NOT "
+            "Planck-likelihood results and the module says so: ladder status is "
+            "C1+ (banked prototype), not C2 (adversarial likelihood comparison, "
+            "deferred) and not C4 (theta_c, lambda APF-derived, deferred). No "
+            "observational data is billed as input; the only external machinery "
+            "is the optimizer (scipy or the vendored fallback). Discrepancy flag: "
+            "the check docstrings say [P_structural] while the machine field on "
+            "all six is 'P_structural_reading' -- the field wins. "
+        ),
+        "note": "Wave 7; scipy-blocked module read statically; docstring [P_structural] vs field P_structural_reading flagged on all six checks",
+    },
+)

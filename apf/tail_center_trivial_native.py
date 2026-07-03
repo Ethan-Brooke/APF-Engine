@@ -186,3 +186,33 @@ if __name__ == "__main__":
     r = check_L_tail_center_trivial_native()
     print("PASS" if r["passed"] else "FAIL", r["name"])
     print("  ->", r["key_result"])
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:tail_center_trivial_f1",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_L_tail_center_trivial_native, tier 3 at "
+            "epistemic '[P]': the F1 lemma of the factoriality program -- Z(M) "
+            "cap (cap_k M_{>=k}) = C.1 for the M_2-ITPFI interface algebra, "
+            "proved natively from exactly three inputs: the N4 scalar-on-Omega "
+            "lemma (check_L_itpfi_tail_acts_scalar_on_omega_native), centrality, "
+            "and cyclicity of Omega. Centrality is precisely the ingredient that "
+            "upgrades scalar-on-a-vector to scalar-operator with NO separating "
+            "vector, NO modular structure, NO commutation theorem: c central and "
+            "c Omega = phi(c) Omega give c(x Omega) = phi(c)(x Omega) on the "
+            "dense set M Omega, hence c = phi(c).1. Verified on a finite model. "
+            "Scope fence per the module's own export flags: "
+            "Export_tail_center_trivial_native_P = 1 but "
+            "Export_factoriality_native_P = 0 -- full factoriality Z(M) = C.1 (F1 "
+            "+ X5, where X5 was closed natively by the corner argument) is "
+            "exported by interface_factor_native, not here, and the III_lambda "
+            "type classification stays [P_structural] elsewhere. "
+        ),
+        "note": "Wave 7; native F1 half only, factoriality export explicitly disclaimed by in-module flags",
+    },
+)

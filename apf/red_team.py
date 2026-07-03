@@ -886,7 +886,7 @@ PHENOMENOLOGICAL_TOLERANCE_WHITELIST = {
     ),
     'L_prediction_catalog': (
         10.0,
-        'Meta-check across all 48 predictions: flags any individual '
+        'Meta-check across all 49 predictions: flags any individual '
         'prediction >10% off. This is a loose-by-design aggregator '
         'threshold for catalog consistency, not a per-prediction tolerance. '
         'Per-prediction tolerances are tracked separately.'

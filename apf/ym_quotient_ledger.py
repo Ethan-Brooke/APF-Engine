@@ -728,3 +728,41 @@ def register(registry):
 
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:ym_quotient_ledger",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Eight banked checks from the 2026-06-10/11 GQL-on-the-YM-quotient "
+            "arc, ledger-level only: the Q8 finite-gauge single-site model (exact "
+            "integer quaternion arithmetic) witnesses the SHAPE of the colour "
+            "record's demand content -- explicitly no spectral claim and no value "
+            "claim. Six checks carry machine field "
+            "epistemic='P_structural_instrument': check_L_ym_orbit_unpinnable, "
+            "check_T_ym_record_demand_is_pinned_count, "
+            "check_T_ym_demand_count_resolution_independent, "
+            "check_T_ub_consistency_three_record_states (record terms (0, 1, --) "
+            "match the maintenance-demand column, with gamma_3 = 6 trace-grounded "
+            "OUTSIDE the additive form, pre-registered), "
+            "check_T_routing_parallel_interface_conditional, and "
+            "check_T_sector_granularity_below_billing_type (sector-valued bills "
+            "are below the canonical billing type system). Two checks are exact "
+            "algebra at machine field epistemic='P': "
+            "check_T_det_gram_is_pair_count (Cauchy-Binet reads the banked det A "
+            "= m as a gauge-invariant pair count; the identity and banked value "
+            "are unconditional, the count READING is census-conditional on the "
+            "internal-block premise) and check_T_demand_not_routing_readable "
+            "(demands are not Gram functionals, not routing-funded, not load- "
+            "readable -- the executable certificate behind the ID-H ILL-POSED "
+            "verdict). The docstring names the held-not-banked remainder: "
+            "T_ym_saturation_layering DEFERRED and the Cycle-B exhibit ports are "
+            "wave 2, not contained here. "
+        ),
+        "note": "Wave 7 YM quotient ledger; 6x P_structural_instrument + 2x P machine fields, no spectral/value claim",
+    },
+)

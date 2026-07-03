@@ -201,3 +201,35 @@ def run_all():
 if __name__ == '__main__':
     import json
     print(json.dumps(run_all(), indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:trace_sector_closure",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Five compositional master theorems closing the APF_TRACE sector "
+            "locally, at machine grades P_local / P_local_boundary: "
+            "check_T_W_trace_branch_local [P_local] (M_W_TRACE = 80.362164334 GeV "
+            "using the same Lambda_u = 2 normalizer, no shadow normalizer; "
+            "exports_physical_M_W = False); check_T_neutrino_boundary_reconciled "
+            "[P_local_boundary] (canonical m_bb = 4.42 meV; absolute neutrino "
+            "scale conditional on the Delta m^2_31 normalization); "
+            "check_T_qcd_transport_knockouts [P_local_boundary] (bottom trace is "
+            "short-distance and not pole-like, MSbar-compatible, with "
+            "MSbar_identity_proved = False and target_fit_rejected = True); "
+            "check_T_ew_trace_sector_closure and the master "
+            "check_T_apf_trace_sector_closure [both P_local] compose these with "
+            "the charged-fermion spectrum. The result fields state "
+            "physical_transport_status = 'open: requires counterterm/codomain "
+            "theorem' -- this is a local trace-codomain closure, not a physical "
+            "export. The physical W export was subsequently adjudicated "
+            "[P_boundary] in the separate export lane (v15.1); this module's W "
+            "value is the trace branch only. "
+        ),
+        "note": "Wave 7 trace-sector master closure; P_local/P_local_boundary, physical transport explicitly open here",
+    },
+)

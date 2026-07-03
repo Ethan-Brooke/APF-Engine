@@ -186,3 +186,37 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:delta_rho_leading_distinction",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_delta_rho_leading_custodial_from_distinction_P (tier 4, "
+            "bespoke machine grade P_structural_delta_rho_leading_custodial_from_ "
+            "distinction_modulo_scale_and_convention) certifies that the leading "
+            "custodial Delta_rho composes end-to-end from native pieces: N_c "
+            "(colour distinction count, apf.gauge) x the custodial cost-asymmetry "
+            "function F(m_t^2, m_b^2) (symmetric under t<->b, vanishing on the "
+            "diagonal, forcing the leading scale to m_t^2) x the banked "
+            "continuation-sum measure 1/(16 pi^2) (forced by native D=4) / v^2, "
+            "giving Delta_rho^(1)_leading = N_c y_t^2 / (32 pi^2), verified "
+            "symbolically equal to the standard one-loop N_c x_t (comparator, not "
+            "consumed). The STRUCTURE is native; the numerical VALUE is "
+            "explicitly not claimed native -- it needs the absolute top scale y_t "
+            "(Export_delta_rho_numerical_value_native_P = 0; the absolute-scale "
+            "functional-independence no-go banked at v24.3.314 stands, so this "
+            "remains a structural/ratio result, not a pending value derivation). "
+            "Scope: the leading M_H = 0 top slice only (full M_H-dependent "
+            "Delta_rho stays [P+tool]); inherits the (2 pi)^D convention caveat "
+            "of the continuation-sum measure; the bespoke grade token's 'modulo "
+            "scale and convention' rider is load-bearing. No target consumed; no "
+            "physical-final claim. "
+        ),
+        "note": "Wave 7; grade rider (modulo scale and convention) carried in the bespoke token",
+    },
+)

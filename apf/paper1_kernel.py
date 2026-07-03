@@ -528,3 +528,29 @@ if __name__ == '__main__':
                 print(f'{k}: {v}')
     else:
         print(result)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347). Spine module.
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:paper1_fd1_executable_witness",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The FD1 executable witness "
+            "(check_T_FD1_substrate_distinctions_capacity [P_structural]): "
+            "Paper 1 Supplement's bedrock definition of an enforcement "
+            "interface -- the triple (S_Gamma, D(Gamma), C(Gamma)) -- is "
+            "set-theoretically realisable by direct construction on a "
+            "3-element substrate (two distinctions + a non-null pool "
+            "direction, explicit realignment costs, finite capacity), "
+            "supporting the full PLEC discipline (A1 budget bound, MD "
+            "positive cost floor, A2 argmin selection) with no measure "
+            "theory, sigma-algebra, or topology imposed. A realisability "
+            "witness for the definition, not a physics claim. "
+        ),
+        "note": "Wave 7; the Paper 1 analog of formal_kernel's Theorem 1.1 witness",
+    },
+)

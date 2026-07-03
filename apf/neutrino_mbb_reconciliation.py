@@ -202,3 +202,34 @@ def register(registry):
     """Register the 3 m_bb reconciliation checks into the bank registry."""
     for name, fn in _CHECKS.items():
         registry[name] = fn
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:neutrino_mbb_transport",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Two layers. Value hygiene [P_local]: check_L_mbb_canonical_source, "
+            "check_L_mbb_confrontation_uses_canonical_source, and "
+            "check_T_neutrino_mbb_reconciled (all graded P_local via the shared "
+            "_ok helper) certify the phenomenology wrapper consumes the computed "
+            "m_bb = 4.42 meV from L_mbb_prediction, retiring a stale 3.5 meV "
+            "literal -- no new physics. Transport certificate [P]: "
+            "check_T_mbb_transport_certificate (tier 4, machine field "
+            "epistemic='P') packages the full 11-field 0nubb effective-Majorana- "
+            "mass transport from banked [P] ingredients (T_PMNS mixing, "
+            "L_seesaw_type_I reality forcing zero Majorana phases hence MAXIMAL "
+            "m_bb, L_dm2_hierarchy ratios), modulo the ONE named external anchor "
+            "Delta m^2_31 = 2.511e-3 eV^2 -- i.e. [P + Delta m^2_31 anchor]. "
+            "Route status WATCHING: m_bb = 4.42 meV is ~8x below the KamLAND-Zen "
+            "36-156 meV band, nEXO contact ~2030s; experimental bounds are "
+            "comparators, not consumed. Explicitly NOT export-candidate (no "
+            "measurement to test a residual against) and NOT physical-final (the "
+            "absolute scale rests on Delta m^2_31). "
+        ),
+        "note": "Wave 7 mbb transport certificate; [P] machine field with the Delta m^2_31 anchor named as the sole external input",
+    },
+)

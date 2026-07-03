@@ -24,7 +24,7 @@ PART 2 -- THE POSITIVE CORE (one anchor suffices).
 The framework does not need one input per sector. It needs ONE number, and the EW scale and the
 cosmological constant are both ratios to it. Two banked ratios demonstrate this:
   - EW floor:        v_H = M_Pl * sqrt(N_c) * (4 pi)^-1 * 102^-8 * (12/7)  (this session, v24.3.176-185)
-  - Cosmological:    Lambda * G = 3 pi / 102^61                            (T10, gravity.py [P])
+  - Cosmological:    Lambda * G = 3 pi / 102^61        (T10, gravity.py -- exponent [P]; O(1) fork-conditional, vacuum_o1_fork.py)
 Both are the Planck magnitude times a pure capacity number. So one dimensional anchor fixes both
 the electroweak scale and the cosmological constant, with zero free dimensionless parameters. This
 ELEVATES T10's remark from a limitation ("we still need one input") to a unification ("one input
@@ -91,7 +91,7 @@ def _m_fermion(MPl, y_f):
 
 
 def _lambda_times_G_dimensionless():
-    """Lambda * G = 3 pi / 102^61 -- a pure capacity number (T10, gravity.py [P])."""
+    """Lambda * G = 3 pi / 102^61 -- a pure capacity number (T10, gravity.py; exponent [P], O(1) fork-conditional per check_T_vacuum_o1_reading_fork)."""
     return 3 * math.pi / D_EFF ** C_TOTAL
 
 
@@ -152,7 +152,7 @@ def check_T_planck_magnitude_single_dimensional_anchor_P():
             "axiom-independence no-go (v24.3.180) one level deeper (independent of ANY dimensionless "
             "axiom set). (2) POSITIVE CORE: the framework needs ONE number, not one per sector -- the "
             "EW vev (v_H = M_Pl*sqrt(N_c)*(4pi)^-1*102^-8*(12/7) = 246.22 GeV, this session) and the "
-            "cosmological constant (Lambda*G = 3pi/102^61 ~ 10^-122, T10 [P]) are both the Planck "
+            "cosmological constant (Lambda*G = 3pi/102^61 ~ 10^-122, T10 -- exponent [P], O(1) fork-conditional) are both the Planck "
             "magnitude times a pure capacity number, so one anchor fixes both with zero free "
             "dimensionless parameters -- the theoretical minimum. This elevates T10's remark from a "
             "limitation to a unification. (3) OPEN [C]: the strong-sector confinement threshold (the "

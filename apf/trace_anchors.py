@@ -114,3 +114,33 @@ def register(registry):
     """Register trace anchors theorems into the global bank."""
 
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:quark_trace_anchors",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Trace-anchor centralization: check_L_top_apf_trace_anchor ['P_local "
+            "| trace-anchor from prior closed local chain'] pins the top "
+            "APF_TRACE anchor m_t = 168.1690557938 GeV as a module constant "
+            "inherited from the prior "
+            "DominantChannel/WBranch/TraceToSchemeTransport chain -- an anchor "
+            "declaration, not a rederivation here. "
+            "check_L_bottom_apf_trace_from_ratio ['P_local | bank-hardened "
+            "formula'] makes the bottom anchor computable rather than an opaque "
+            "downstream literal: m_b_TRACE = m_t_TRACE x (Lambda_d/Lambda_u) x "
+            "(L2_d/L2_u) x (E3/(2 C_EW)) / (sv_d/sv_u) = 4.1775 GeV. "
+            "check_T_quark_apf_trace_anchors [P_local] composes the two; "
+            "check_T_no_inverse_inputs_trace_anchors certifies the used-input set "
+            "is disjoint from the forbidden list (observed masses, PDG values, "
+            "pole/MSbar/MC/lattice/threshold masses, physical Yukawa, observed "
+            "v). Boundary: APF_TRACE internal trace faces only -- no physical "
+            "scheme mass of any kind is exported. "
+        ),
+        "note": "Wave 7 top/bottom trace anchors; P_local machine fields, top anchor is an inherited constant",
+    },
+)

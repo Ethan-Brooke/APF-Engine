@@ -1302,3 +1302,43 @@ _CHECKS = {
 def register(registry):
     """Register the FRE theorems + SM entropy dictionary into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:fre_and_lambda_absolute",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Nine checks. The core Fractional Reading Equivalence theorem "
+            "check_T_fractional_reading_equivalence [P] tier 4 proves that at any "
+            "ACC interface with a structural residual partition, the pi_F slot "
+            "fraction, pi_T admissibility-capacity fraction, and pi_C "
+            "cosmological residual all collapse to the single number K_X/K "
+            "(verified at the SM K=61 with the 3+16+42 partition, the canonical "
+            "horizon, and a quantum interface). Five companion [P] checks land "
+            "the entropy dictionary: check_L_Omega_Lambda_is_entropy_fraction, "
+            "check_L_Omega_b_is_entropy_fraction, "
+            "check_L_Omega_c_is_entropy_fraction, "
+            "check_T_residual_entropy_closure, "
+            "check_T_FRE_SM_to_entropy_dictionary -- Omega_Lambda = 42/61, "
+            "Omega_b = 3/61, Omega_c = 16/61 read as admissibility-capacity "
+            "allocation fractions on V_61. "
+            "check_L_Lambda_absolute_numerical_formula [P] certifies GATE-PASSAGE "
+            "ONLY (its own corrected v24.3.320 scope): rho_vac/M_Pl^4 = (42/102) "
+            "x 102^-61 = 10^-122.910 vs observed 10^-122.944, residual 0.034 "
+            "decades (8%), passing the 0.05-decade gate -- NOT a ~1%-precision "
+            "match, and T10's geometric 3/8 passes the same gate closer (0.007 "
+            "decades); the coefficient choice is the banked two-branch "
+            "vacuum-O(1) reading fork (check_T_vacuum_o1_reading_fork, "
+            "v24.3.320), H0-discriminated -- this row takes no branch. The "
+            "structural interpretation of 42/102 as a vacuum fraction "
+            "(check_T_Lambda_absolute_structural_derivation) and the hierarchy "
+            "near-miss (check_L_N_SM_hierarchy_near_miss) are both explicitly "
+            "banked at [C]. "
+        ),
+        "note": "Wave 7; fork-conformed surfaces (v24.3.320) respected, row is branch-neutral; the L_Lambda [P] is gate-passage-only by its own corrected header",
+    },
+)

@@ -967,3 +967,40 @@ if __name__ == "__main__":
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
     print(f"\nTotal: {n_pass}/{len(checks)} PASS")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:forced_universality_classes",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Codebase landing of Paper 11 sec 3.5's Forced Universality theorems: "
+            "seven checks, all machine field epistemic='[P_structural]'. "
+            "check_T_C1_symmetry_class (order parameter inherits substrate- "
+            "algebra symmetry, G_Gamma-equivariance on U(1) and Z_2 witnesses); "
+            "check_T_C2_codim_one (L_loc factorization makes slack a single "
+            "scalar per connected component; multicritical exclusion via Delta- "
+            "alpha exhaustiveness); check_T_C3_dimensional_window (upper critical "
+            "dimensions {4, 6, 4, d+z=4} and lower {1, 2, 1, 1} across the sub- "
+            "families Z2/O(N), percolation, DP, Lifshitz QCP); "
+            "check_T_C4_dynamics_class (L_irr regime stratification maps to "
+            "dynamics class via Hohenberg-Halperin); "
+            "check_T_capacity_LV_equilibrium_uniqueness (lifted Lotka-Volterra "
+            "equilibrium uniqueness with explicit Lyapunov function + LaSalle "
+            "convergence on a 3-interface witness); "
+            "check_T_C5_admissibility_classification (13-regime audit table as "
+            "parametrized predicate); and the composed master "
+            "check_T_universality_forced. Riders named in the module itself and "
+            "preserved here: C3 is CONDITIONAL on C1 + C4 + standard RG, and "
+            "Mermin-Wagner / Hohenberg-Halperin are imported standard critical- "
+            "phenomena results applied rather than re-derived -- the uniform "
+            "[P_structural] grade prices exactly that posture: forced structure "
+            "verified on finite witnesses, not an ab-initio RG derivation of "
+            "exponents. "
+        ),
+        "note": "Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider.",
+    },
+)

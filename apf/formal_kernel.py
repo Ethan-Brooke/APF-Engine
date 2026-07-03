@@ -447,11 +447,318 @@ def check_T_FormalKernel_VLambda_uniqueness():
 
 
 # ═══════════════════════════════════════════════════════════════════
+# v24.3.326 — The slot-level V_global identification no-go
+# ═══════════════════════════════════════════════════════════════════
+
+def _isotypic_inventory():
+    """Group the live irrep inventory into isotypic classes.
+
+    Returns a sorted list of (sector_label, base_irrep_id, irrep_dim,
+    multiplicity). Two irreps are isomorphic copies iff their irrep_id
+    differs only in the generation suffix (``_genN``) — the banked
+    inventory's own convention (identical (dim_SU3, dim_SU2, Y)
+    signature across generations). Computed from ``_SIGS`` live, so any
+    change to the banked inventory re-adjudicates every consumer below.
+    """
+    import re as _re2
+    dims = _irrep_dims()
+    classes = {}
+    for (label, irrep_id), slots in dims.items():
+        base = _re2.sub(r'_gen\d+$', '', irrep_id)
+        classes.setdefault((label, base), []).append(len(slots))
+    out = []
+    for (label, base), dim_list in sorted(classes.items()):
+        check(len(set(dim_list)) == 1,
+              f"isotypic class {(label, base)} has uniform copy dimension "
+              f"(got {dim_list}) — a merged-class/conjugation mutation of the "
+              f"inventory announces itself here")
+        out.append((label, base, dim_list[0], len(dim_list)))
+    return out
+
+
+def _achievable_invariant_signatures(inventory, target_dim):
+    """All (gauge, higgs, fermion) sector-piece signatures of
+    G_SM-invariant subspaces of V_61 with total dimension target_dim.
+
+    Schur/Maschke: an invariant subspace W meets each isotypic class
+    (irrep dim d, multiplicity m) in dimension k*d for some
+    k in {0, ..., m} — W's intersection with the isotypic component is
+    (multiplicity subspace) (x) (the irrep), so only multiples of d
+    occur. The enumeration is therefore complete at BOTH levels: in the
+    banked signature model (distinct phases per generation copy →
+    invariant subspaces are exactly whole-irrep sums) and in the true
+    G_SM representation theory (where multiplicity spaces contribute
+    continuous families whose intersection DIMENSIONS are still k*d),
+    given the inventory.
+    """
+    from itertools import product as _product
+    per_class = [[(label, k * d) for k in range(m + 1)]
+                 for (label, _base, d, m) in inventory]
+    sigs = set()
+    for combo in _product(*per_class):
+        if sum(c for _lab, c in combo) != target_dim:
+            continue
+        g = sum(c for lab, c in combo if lab == 'gauge')
+        h = sum(c for lab, c in combo if lab == 'higgs')
+        f = sum(c for lab, c in combo if lab == 'fermion')
+        sigs.add((g, h, f))
+    return sigs
+
+
+def _prod_comb(mult_vec):
+    """Number of generation-labeled selections realizing a multiplicity vector."""
+    from math import comb as _c
+    out = 1
+    for k in mult_vec:
+        out *= _c(3, k)
+    return out
+
+
+def check_T_vglobal_slot_identification_no_go():
+    """T_vglobal_slot_identification_no_go: (12, 3, 27) Is Not a G_SM-Invariant Slot Signature [P_structural].
+
+    v24.3.326 NEW (2026-07-02). Executes the slot-level V_global
+    identification walk staged in "Reference - The Vacuum-Content
+    Witness Priced - Two Count-Witnesses, the 27 Residual-Only, the
+    Slot-Level Identification Open (2026-07-02)" §3 route (a), and
+    lands its REFUTATION branch at unbroken strength: the typing-status
+    pin's (check_T_vacuum_content_typing_status, clause (v)) "open"
+    slot-level identification is not merely open — in the unbroken
+    field basis it is IMPOSSIBLE by Maschke/Schur over the bank's own
+    irrep inventory.
+
+    STATEMENT (three clauses, all exact):
+
+      (1) HIGGS-ISOTYPIC NO-GO. The Higgs isotypic class of V_61 has
+          multiplicity 1 and dimension 4 (the bank's own L_count
+          specification: 45 fermion + 4 Higgs + 12 gauge; no second
+          (1,2,1/2) block exists in the inventory). Hence ANY
+          G_SM-invariant subspace W of V_61 meets the Higgs sector in
+          dimension 0 or 4 — never 3. In particular no G_SM-invariant
+          42-dim complement carries sector pieces (gauge, Higgs,
+          fermion) = (12, 3, 27): the "3 Higgs internal" piece of the
+          banked vacuum typing 27 + 3 + 12 = 42 (T12E) has no
+          G_SM-invariant slot realization. The complete achievable
+          signature set at dim 42 is enumerated exhaustively (16
+          signatures; Higgs piece ∈ {0, 4} in every one) and FROZEN as
+          this check's falsifier surface: any inventory change (e.g. a
+          future conjugation identification L̄_L ≅ H, nowhere banked
+          today) changes the set and fails this check — announcing
+          itself, the typing-pin discipline.
+
+      (2) BROKEN-BASIS RELOCATION, with degeneracy priced. The typing's
+          only possible slot-level home is the residual basis: splitting
+          the Higgs class by the SSB datum (n_goldstone = 3 vs the
+          radial h — the same dim(SU(2)×U(1)) − dim(U(1)_em) = 3
+          template arithmetic check_T_Higgs derives) makes Higgs-piece 3
+          achievable, and (12, 3, 27) IS then realizable. The 3+1 split
+          is a COARSE MODEL of the residual decomposition (under the
+          actual SU(3)×U(1)_em the three Goldstone directions are not
+          one irrep — charged pair + neutral — and h mixes with the
+          neutral sector); the true residual theory only refines
+          further, i.e. only STRENGTHENS the degeneracy conclusion
+          below. But invariance no longer selects, already at this
+          coarse granularity: already at G_SM-whole-irrep granularity the
+          fermion-27 side is degenerate — 44 multiplicity vectors over
+          the five fermion types hit 27, i.e. 1600 generation-labeled
+          whole-irrep selections (both counted live), a LOWER bound on
+          the residual-basis degeneracy (residual splitting only refines
+          further). Two explicit distinct (12, 3, 27) complements are
+          constructed as witnesses. A broken-basis landing therefore
+          still requires a per-irrep selection criterion — T12's
+          non-termination criterion formalized per irrep, which no
+          banked surface supplies (termination language exists at
+          strata level only: L_global_interface_is_horizon,
+          T_horizon_reciprocity). The criterion, not invariance, is the
+          missing content.
+
+      (3) CROSS-BASIS COROLLARY. Route (b) of the reference note (the
+          missing map between the 45+4+12 field basis and the 3+16+42
+          reference basis) is re-priced: whatever the map is, it is NOT
+          induced by any slot assignment in the unbroken field basis
+          compatible with G_SM invariance — clause (1) excludes every
+          candidate. The 27+3+12 typing survives at exactly its banked
+          strength (a reference-basis statement, count-witnessed at 12
+          and 3, residual at 27, per the typing pin) or as a broken-
+          basis statement conditioned on the unformalized criterion.
+
+    WHAT THIS DOES NOT CLAIM: no numerological reading of the 27 is
+    adopted (the reference note's do-not-re-walk list stands); the
+    witness complements below are SLOT WITNESSES of degeneracy, not
+    candidate identifications — their physical glosses are exactly the
+    type/token move the note fences; the reference-basis typing itself
+    is NOT refuted (its 12- and 3-count-witnesses and the residual-27
+    status are untouched); nothing here selects which reading the world
+    takes.
+
+    MODEL FENCE: stated over the banked signature model (this module's
+    inventory) plus the abstract isotypic argument, whose one premise
+    is the inventory itself (Higgs multiplicity 1 — the bank's own
+    specification). The fence is CONSERVATIVE: the audit's own probe
+    shows the "3 impossible" conclusion survives even a conjugation
+    identification raising the Higgs multiplicity (achievable
+    intersections stay multiples of 4) — the check re-adjudicates on
+    any inventory change, but the load-bearing exclusion is robust to
+    the very change the fence names. Grade [P_structural], closed-world
+    over the current corpus by construction.
+    """
+    from itertools import product as _product
+    from math import comb as _comb
+
+    # ---- inventory, live ----
+    inv = _isotypic_inventory()
+    total_dim = sum(d * m for (_l, _b, d, m) in inv)
+    check(total_dim == 61, f"inventory spans V_61 (got {total_dim})")
+    gauge_classes = [(b, d, m) for (l, b, d, m) in inv if l == 'gauge']
+    higgs_classes = [(b, d, m) for (l, b, d, m) in inv if l == 'higgs']
+    ferm_classes = [(b, d, m) for (l, b, d, m) in inv if l == 'fermion']
+    check(sorted(d for (_b, d, _m) in gauge_classes) == [1, 3, 8]
+          and all(m == 1 for (_b, _d, m) in gauge_classes),
+          "gauge classes: dims {8,3,1}, multiplicity 1 each (banked template)")
+    check(len(higgs_classes) == 1 and higgs_classes[0][1] == 4
+          and higgs_classes[0][2] == 1,
+          "Higgs isotypic class: dim 4, multiplicity 1 (the no-go premise, "
+          "= the bank's L_count 4-Higgs specification; a future conjugation "
+          "identification would change this and must announce itself here)")
+    check(sorted(d for (_b, d, _m) in ferm_classes) == [1, 2, 3, 3, 6]
+          and all(m == 3 for (_b, _d, m) in ferm_classes),
+          "fermion classes: dims {6,3,3,2,1}, multiplicity 3 each (generations)")
+
+    # ---- clause (1): the unbroken no-go ----
+    target = (12, 3, 27)
+    sigs = _achievable_invariant_signatures(inv, 42)
+    check(target not in sigs,
+          "NO-GO: (12, 3, 27) is not an achievable sector signature of any "
+          "G_SM-invariant 42-dim complement")
+    check(all(h in (0, 4) for (_g, h, _f) in sigs),
+          "Higgs piece is 0 or 4 in every achievable signature (isotypic "
+          "multiplicity 1 -> intersection dim in {0, 4}; never 3)")
+    FROZEN_SIGNATURES = {
+        (0, 0, 42), (0, 4, 38), (1, 0, 41), (1, 4, 37),
+        (3, 0, 39), (3, 4, 35), (4, 0, 38), (4, 4, 34),
+        (8, 0, 34), (8, 4, 30), (9, 0, 33), (9, 4, 29),
+        (11, 0, 31), (11, 4, 27), (12, 0, 30), (12, 4, 26),
+    }
+    check(sigs == FROZEN_SIGNATURES,
+          f"the achievable signature set is frozen (16 signatures); any "
+          f"inventory change re-adjudicates (live: {sorted(sigs)})")
+    check((4, 4, 34) in sigs,
+          "cross-link: the typing pin's pinned placeholder signature "
+          "(4, 4, 34) is realizable (clause-(v) coherence)")
+
+    # ---- clause (2): broken-basis relocation + degeneracy ----
+    n_goldstone = (3 + 1) - 1  # dim(SU(2)xU(1)) - dim(U(1)_em), the T_Higgs template arithmetic
+    check(n_goldstone == 3, "SSB split: 3 Goldstone directions + 1 radial h")
+    refined = [c for c in inv if c[0] != 'higgs'] + [
+        ('higgs', 'goldstone_directions', 3, 1),
+        ('higgs', 'radial_h', 1, 1),
+    ]
+    refined_sigs = _achievable_invariant_signatures(refined, 42)
+    check(target in refined_sigs,
+          "RELOCATION: (12, 3, 27) IS achievable once the Higgs class is "
+          "split by the SSB datum — the typing's only slot-level home is "
+          "the broken basis")
+
+    ferm_dims_by_type = [d for (_b, d, _m) in ferm_classes]
+    vecs27 = [m for m in _product(range(4), repeat=len(ferm_dims_by_type))
+              if sum(d * k for d, k in zip(ferm_dims_by_type, m)) == 27]
+    n_vecs = len(vecs27)
+    n_labeled = sum(_prod_comb(m) for m in vecs27)
+    check(n_vecs == 44,
+          f"degeneracy (multiplicity vectors over the 5 fermion types "
+          f"hitting 27): {n_vecs} = 44")
+    check(n_labeled == 1600,
+          f"degeneracy (generation-labeled whole-irrep selections): "
+          f"{n_labeled} = 1600 — invariance does not select")
+
+    # two explicit distinct (12,3,27) complements (slot witnesses only)
+    dims = _irrep_dims()
+    def _slots(keys):
+        return sorted(i for k in keys for i in dims[k])
+    gauge_all = [('gauge', 'SU3_adj'), ('gauge', 'SU2_adj'), ('gauge', 'U1')]
+    w1_ferm = ([('fermion', f'u_R_gen{g}') for g in range(3)]
+               + [('fermion', f'd_R_gen{g}') for g in range(3)]
+               + [('fermion', f'L_L_gen{g}') for g in range(3)]
+               + [('fermion', f'e_R_gen{g}') for g in range(3)])
+    w2_ferm = ([('fermion', k + '_gen0') for k in ('Q_L', 'u_R', 'd_R', 'L_L', 'e_R')]
+               + [('fermion', 'Q_L_gen1'), ('fermion', 'u_R_gen1'),
+                  ('fermion', 'L_L_gen1'), ('fermion', 'e_R_gen1')])
+    # NB: no broken-basis slots exist in the 61-slot model — the Goldstone-3
+    # piece of each witness is BY DECLARATION (the SSB split above); the
+    # genuinely computed content is the two distinct fermion-27 slot sets.
+    w1 = _slots(gauge_all + w1_ferm)  # + the declared Goldstone-3
+    w2 = _slots(gauge_all + w2_ferm)  # + the declared Goldstone-3
+    check(len(w1) + n_goldstone == 42 and len(w2) + n_goldstone == 42,
+          "both witnesses have total dim 42 (12 gauge + 27 fermion slots + the declared Goldstone-3)")
+    check(set(w1) != set(w2),
+          "the two (12, 3, 27) complements are DISTINCT — non-uniqueness witnessed")
+
+    # ---- clause (3) is a corollary of clause (1); no further computation ----
+
+    return _result(
+        name='T_vglobal_slot_identification_no_go: (12,3,27) is not a G_SM-invariant slot signature [P_structural]',
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            'The slot-level V_global identification walk, refutation branch: the Higgs '
+            'isotypic class of V_61 has multiplicity 1 and dim 4, so every G_SM-invariant '
+            'subspace meets the Higgs sector in dim 0 or 4 — never 3. No G_SM-invariant '
+            '42-dim complement has sector signature (12, 3, 27); the complete achievable '
+            'set (16 signatures, exhaustively enumerated, frozen) all carry Higgs piece '
+            '0 or 4. The banked 27+3+12 typing therefore has NO slot realization in the '
+            'unbroken field basis; its only slot-level home is the broken basis (SSB '
+            'split makes (12,3,27) realizable), where invariance is degenerate (44 '
+            'multiplicity vectors / 1600 labeled whole-irrep fermion-27 selections; two '
+            'explicit distinct complements witnessed) — a landing requires the per-irrep '
+            'non-termination criterion, which no banked surface formalizes. Corollary: '
+            'the missing cross-basis map (45+4+12 vs 3+16+42) is provably non-slot AT '
+            "G_SM-INVARIANT STRENGTH (given Theorem 1.1's invariant-complement premise; "
+            'gauge-fixed slot assignments are excluded via that premise, not by the '
+            'enumeration alone). The '
+            'reference-basis typing survives at exactly its banked strength (the typing '
+            'pin); nothing here adopts a numerological 27.'
+        ),
+        key_result=('(12,3,27) unbroken slot realization: IMPOSSIBLE (Higgs isotypic '
+                    'multiplicity 1); broken-basis home realizable but 44/1600-degenerate; '
+                    'per-irrep criterion = the missing content'),
+        dependencies=[
+            'T12E',                                # the 27+3+12 typing's home
+            'T_vacuum_content_typing_status',      # the .321 pin this sharpens (clause (v))
+            'T_FormalKernel_VLambda_uniqueness',   # the slot-level construction + inventory
+            'L_global_interface_is_horizon',       # assertion site of the typing
+            'T_Higgs',                             # the SSB split (n_goldstone = 3); arithmetic re-derived locally, check_T_Higgs executed by the .321 pin
+            'T_gauge',                             # the gauge template (dims 8+3+1)
+            'L_count',                             # the 45+4+12 field basis
+        ],
+        cross_refs=['T_interface_sector_bridge', 'T_horizon_reciprocity'],
+        artifacts={
+            'no_go': 'Higgs piece of any G_SM-invariant subspace is 0 or 4, never 3',
+            'achievable_dim42_signatures': sorted(FROZEN_SIGNATURES),
+            'target_excluded': str(target),
+            'broken_basis': 'realizable after the SSB 3+1 split; NOT selected by invariance',
+            'degeneracy': {'multiplicity_vectors': 44,
+                           'generation_labeled_selections': 1600,
+                           'bound_direction': 'lower bound on residual-basis degeneracy'},
+            'missing_content': ('T12 non-termination criterion per irrep — unformalized; '
+                                'termination language exists at strata level only'),
+            'cross_basis_corollary': ('the 45+4+12 <-> 3+16+42 map is non-slot at '
+                                      'G_SM-invariant strength (Theorem 1.1 premise named)'),
+            'model_fence': ('banked signature inventory; Higgs isotypic multiplicity 1 '
+                            'is the premise (= L_count specification); a conjugation '
+                            'identification would change the frozen set and announce itself'),
+            'reference_note': ('Reference - The Slot-Level V_global Identification - The '
+                               'Higgs-Isotypic No-Go and the Broken-Basis Relocation (2026-07-02)'),
+        },
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════
 # Bank registration
 # ═══════════════════════════════════════════════════════════════════
 
 _CHECKS = {
     'T_FormalKernel_VLambda_uniqueness': check_T_FormalKernel_VLambda_uniqueness,
+    'T_vglobal_slot_identification_no_go': check_T_vglobal_slot_identification_no_go,
 }
 
 
@@ -476,3 +783,32 @@ if __name__ == '__main__':
                 print(f'{k}: {v}')
     else:
         print(result)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 6, v24.3.346). Spine module.
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:formal_kernel_theorem11_and_slot_no_go",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The formal kernel's two executable witnesses: (i) Theorem 1.1 "
+            "(check_T_FormalKernel_VLambda_uniqueness) -- V_local, specified "
+            "by irrep content, has a G_SM-invariant complement of the "
+            "expected dimension while a random subspace of the same dimension "
+            "is NOT invariant (the dimension count alone does not do the "
+            "work); (ii) the slot-level no-go "
+            "(check_T_vglobal_slot_identification_no_go [P_structural], "
+            "v24.3.326): (12, 3, 27) is NOT an achievable slot signature of "
+            "any G_SM-invariant 42-dim complement (the Higgs isotypic class "
+            "has mult 1 / dim 4; the 16-signature set enumerated and frozen); "
+            "the typing's only slot-level home is the broken basis "
+            "(44/1600-degenerate); the cross-basis map is non-slot at "
+            "G_SM-invariant strength. Slot-level identification is CLOSED as "
+            "a no-go, not open. "
+        ),
+        "note": "Wave 6; spine; never cite slot-level V_global identification as an open lead",
+    },
+)

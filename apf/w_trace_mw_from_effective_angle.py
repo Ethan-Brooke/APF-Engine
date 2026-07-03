@@ -14,7 +14,7 @@ Chain
 
 With kappa_l = 1.036808 (banked KAPPA_L_TARGET) and M_Z = 91.1876:
     s^2_OS = 0.22257,  M_W/M_Z = 0.88172,  M_W = 80.40 GeV
-vs measured M_W = 80.369 GeV  ->  ~27 MeV.
+vs measured M_W = 80.369 GeV  ->  ~32 MeV.
 
 Epistemic status -- the THREE open gates that block [P] (chased one by one)
 -------------------------------------------------------------------------
@@ -34,7 +34,7 @@ stays scale-anchored. Nothing here is a zero-parameter prediction.
 
 Status
 ------
-- Export_MW_from_3_13_chain                = 1   (the chain exists + lands ~27 MeV)
+- Export_MW_from_3_13_chain                = 1   (the chain exists + lands ~32 MeV)
 - Export_MW_dimensionless_ratio_P          = 0   (gated on native kappa_l + 3/13-eff)
 - Export_MW_zero_parameter_prediction      = 0   (blocked by the M_Z scale anchor)
 """
@@ -75,7 +75,7 @@ EXPORT_FLAGS: Dict[str, int] = {
 # checks
 # ===========================================================================
 def check_C_w_trace_mw_from_3_13_chain_C() -> Dict[str, Any]:
-    """C: the 3/13 -> kappa_l -> s2_OS -> M_W chain lands ~27 MeV from measured [C]."""
+    """C: the 3/13 -> kappa_l -> s2_OS -> M_W chain lands ~32 MeV from measured [C]."""
     mw = mw_from_3_13()
     dev = abs(mw - _M_W_MEAS)
     # the chain must land in the right ballpark (this is the [C] physics content)
@@ -83,7 +83,7 @@ def check_C_w_trace_mw_from_3_13_chain_C() -> Dict[str, Any]:
     check(dev < 0.10, f"M_W from 3/13 = {mw:.4f} vs measured {_M_W_MEAS} dev {dev*1000:.0f} MeV")
     return _result(
         name="C_w_trace_mw_from_3_13_chain: "
-             "APF sin^2 theta_eff = 3/13 drives M_W to ~27 MeV of measured [C]",
+             "APF sin^2 theta_eff = 3/13 drives M_W to ~32 MeV of measured [C]",
         tier=4, epistemic="C",
         summary=(
             f"Running the effective-mixing chain FORWARD from APF's candidate "
@@ -93,7 +93,7 @@ def check_C_w_trace_mw_from_3_13_chain_C() -> Dict[str, Any]:
             f"{mw:.4f} GeV -- {dev*1000:.0f} MeV from the measured {_M_W_MEAS} GeV. "
             f"This is the first chain in which APF's 3/13 actually fixes the W mass "
             f"(distinct from the v24.3.99 SM-loop evaluator, which never uses 3/13). "
-            f"Graded [C]: kappa_l is 41% non-native and 3/13 is a candidate for the "
+            f"Graded [C]: kappa_l is ~37% non-native (63% native) and 3/13 is a candidate for the "
             f"physical effective angle -- see the open-gates check."
         ),
         key_result=f"3/13 -> M_W = {mw:.3f} GeV ({dev*1000:.0f} MeV from measured). [C]",
@@ -173,3 +173,36 @@ def register(registry):
 
 def run_all() -> Dict[str, Dict[str, Any]]:
     return {name: fn() for name, fn in _CHECKS.items()}
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 8, v24.3.348). The one physics_claim module found by
+# the plumbing classification pass -- declared, not labeled.
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:mw_from_3_13_effective_angle",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The 3/13 -> M_W chain, run forward through the effective mixing "
+            "angle: sin^2 theta_eff = 3/13 (APF candidate) -> s^2_OS via the "
+            "banked kappa_l -> M_W/M_Z = sqrt(1 - s^2_OS) -> M_W = 80.40 GeV "
+            "vs measured 80.369 (~32 MeV), a deliberately distinct route "
+            "from the native one-loop Delta-r evaluator. Grades from the "
+            "machine fields: the full chain is [C] "
+            "(check_C_w_trace_mw_from_3_13_chain_C -- kappa_l is only ~63% "
+            "native, the Delta-kappa_rem remainder is [C]); the "
+            "dimensionless M_W/M_Z leg is [P_structural_partial] "
+            "(check_T_w_trace_mw_from_3_13_dimensionless_P; the _P name "
+            "suffix is aspirational, the field wins); the three open gates "
+            "blocking [P] are themselves banked "
+            "(check_C_w_trace_mw_from_3_13_open_gates_C: the proper Zll "
+            "vertex remainder, the 3/13-as-physical-angle transport "
+            "question, and the external M_Z scale anchor). Nothing here is "
+            "a zero-parameter prediction; the reachable ceiling is "
+            "dimensionless M_W/M_Z. "
+        ),
+        "note": "Wave 8; classified physics_claim in the plumbing pass (the only one in the 86-module pool); absolute-scale discipline: M_Z anchor named, no absolute claim",
+    },
+)

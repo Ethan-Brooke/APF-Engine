@@ -542,3 +542,38 @@ if __name__ == "__main__":
         indent=2,
     ))
     print(json.dumps(_leptonic_running(), indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:delta_alpha_leptonic",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Five banked checks covering the leptonic running of alpha and the "
+            "honest fencing of the hadronic piece. "
+            "check_T_delta_alpha_leptonic_first_principles_P (tier 3, "
+            "epistemic=P) certifies Delta_alpha_lep(M_Z) = 0.031421 from the one- "
+            "loop QED vacuum-polarization sum evaluated on APF-banked charged- "
+            "lepton pole masses only (charged_lepton_pole_real_adapter), "
+            "reproducing the known three-loop value 0.0314977 to 0.24%; "
+            "check_L_delta_alpha_leptonic_masses_banked_P (tier 4, epistemic=P) "
+            "certifies the mass provenance. "
+            "check_L_delta_alpha_hadronic_external_open_C (tier 4, epistemic=C) "
+            "records the hadronic piece Delta_alpha_had = 0.02766 as a data-bound "
+            "external input -- the single named open gate; "
+            "check_T_delta_alpha_had_principled_external_universal_QCD_C "
+            "(epistemic=C_principled_external_universal_QCD_difficulty) "
+            "recharacterizes that [C] as principled-external, not unfinished: the "
+            "naive perturbative quark skeleton overshoots dispersion and the "
+            "overshoot IS the nonperturbative resonance physics, a difficulty the "
+            "SM itself shares. check_T_delta_alpha_total_decomposition_P (tier 4, "
+            "epistemic=P_structural_seam) certifies the three-piece decomposition "
+            "ledger. The full Delta_alpha(M_Z) is NOT claimed first-principles; "
+            "only its leptonic 53.2% is. "
+        ),
+        "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+    },
+)

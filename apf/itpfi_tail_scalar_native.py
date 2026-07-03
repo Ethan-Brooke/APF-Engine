@@ -197,3 +197,35 @@ if __name__ == "__main__":
     r = check_L_itpfi_tail_acts_scalar_on_omega_native()
     print("PASS" if r["passed"] else "FAIL", r["name"])
     print("  ->", r["key_result"])
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:itpfi_tail_scalar_on_omega",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_L_itpfi_tail_acts_scalar_on_omega_native, tier "
+            "3 at epistemic '[P]': the import-free native fragment of tail- "
+            "triviality for the M_2-ITPFI interface algebra -- every tail element "
+            "z in cap_k M_{>=k} acts as a scalar on the cyclic vector, z Omega = "
+            "phi(z) Omega, proved from native inputs only (type-I ampliation "
+            "lemma, product-state GNS tensor factorization, finite-dim "
+            "cyclicity), with NO separating-ness, NO modular structure, and NO "
+            "tensor commutation theorem. Verified on a finite-truncation witness "
+            "of the load-bearing identity P_{<=k} z Omega = phi(z) Omega plus the "
+            "ampliation commutant fact. The module's scope fence is explicit and "
+            "load-bearing: it does NOT bank full tail-triviality or factoriality "
+            "-- the step-(iv) upgrade 'Omega separating for M' is proven non- "
+            "native in-module (the general implication faithful-C*-state => "
+            "separating GNS vector for the weak closure is FALSE, counterexample "
+            "A = C.1 + K(H)), and that upgrade lives at the same tier as the "
+            "Araki-Woods import. Factoriality itself is exported downstream by "
+            "interface_factor_native (natively, via the corner argument), not by "
+            "this module. "
+        ),
+        "note": "Wave 7; native-fragment-only lemma, non-native step (iv) explicitly fenced in-module",
+    },
+)

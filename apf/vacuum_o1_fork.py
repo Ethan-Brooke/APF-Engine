@@ -35,13 +35,15 @@ THREE-WAY DISCRIMINATOR (ladder-light H0 program):
     H0 converges to ~70  =>  two-factor exact (chain B branch);
     H0 converges to ~73  =>  both wrong.
 
-EPOCH-CONDITIONALITY CAVEAT (audit finding C). The shared 0.05-decade
-gate is epoch-conditional: its observational input log10(rho_Lambda/
+MEASUREMENT-CONDITIONALITY CAVEAT (audit finding C; renamed from
+'epoch-conditionality' at v24.3.344 -- the gate is DATA-conditional,
+rho_Lambda itself is epoch-constant). The shared 0.05-decade
+gate is measurement-conditional: its observational input log10(rho_Lambda/
 M_Pl^4) is derived from H0 and scales as H0^2. At the Planck 2018
 value (H0 = 67.36, obs = -122.944) BOTH coefficients pass. At the
 73.5 distance-ladder endpoint (obs = -122.868) chain A FAILS the gate
 (residual 0.082) while chain B passes (0.042). "Both pass" is a
-statement at current data, not an epoch-invariant fact.
+statement at current data, not a measurement-invariant fact.
 """
 
 import math as _math
@@ -117,7 +119,7 @@ def check_T_vacuum_o1_reading_fork():
     res_A_735 = abs(log10_A - obs_735)
     res_B_735 = abs(log10_B - obs_735)
     check(res_A_735 > 0.05 and res_B_735 < 0.05,
-          f"epoch-conditionality witness failed: at 73.5-endpoint obs "
+          f"measurement-conditionality witness failed: at 73.5-endpoint obs "
           f"{obs_735:.3f}, res_A={res_A_735:.4f} (expect >0.05), "
           f"res_B={res_B_735:.4f} (expect <0.05)")
 
@@ -153,7 +155,7 @@ def check_T_vacuum_o1_reading_fork():
             f"reading); exact ratio 56/51 (9.8%). At current obs "
             f"-122.944 BOTH pass the shared 0.05-decade gate "
             f"(residuals {res_A:.3f} and {res_B:.3f} decades) — "
-            f"epoch-conditionally: at the 73.5 endpoint chain A fails "
+            f"measurement-conditionally: at the 73.5 endpoint chain A fails "
             f"({res_A_735:.3f}) while chain B passes ({res_B_735:.3f}). "
             f"Composed with Omega_Lambda = 42/61 + flat FLRW the "
             f"branches give H0 = {H_A:.2f} (count=area) vs {H_B:.2f} "
@@ -192,7 +194,7 @@ def check_T_vacuum_o1_reading_fork():
             'H0_ratio_sq_exact': '56/51',
             'discriminator': ('~67 => count=area exact; ~70 => '
                               'two-factor exact; ~73 => both wrong'),
-            'epoch_conditionality': (
+            'measurement_conditionality': (
                 'the shared gate\'s obs input scales as H0^2; '
                 'both-pass holds at current data only'),
             'gloss': ('named reading fork per the v24.3.305 '
@@ -222,3 +224,28 @@ def run_all():
 if __name__ == '__main__':
     for _n, _r in run_all().items():
         print(('PASS' if _r.get('passed', True) else 'FAIL'), _n)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 6, v24.3.346).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:vacuum_o1_h0_fork",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The vacuum O(1) is a named two-branch reading fork with an H0 "
+            "discriminator (check_T_vacuum_o1_reading_fork [P_structural], "
+            "v24.3.320): both banked O(1) coefficients (42/102 count=area and "
+            "3/8 two-factor) are reading-conditional, ratio exactly "
+            "sqrt(56/51); H0 = 66.84 km/s/Mpc (count=area) vs 70.03 "
+            "(two-factor). Adjudicating the fork selects which side of the "
+            "Hubble tension APF predicts -- the standing watch item. Neither "
+            "branch is exported as a global-[P] H0 claim (the H0-inversion "
+            "and 42/102-uniqueness surfaces were demoted to "
+            "P_structural_reading at the .320 landing). "
+        ),
+        "note": "Wave 6; the fork is deliberately preserved (principal's charter: preserve the tension), not a defect",
+    },
+)

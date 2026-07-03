@@ -386,3 +386,35 @@ _CHECKS = {
 def register(registry):
     for name, fn in _CHECKS.items():
         registry[name] = fn
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:delta_alpha_adler_pqcd_m_z",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "check_T_delta_alpha_had_adler_pqcd_first_principles_P (tier 4, "
+            "epistemic=P_perturbative_QCD_M_Z_first_principles_Adler) banks the "
+            "Euclidean Adler-function pQCD piece Delta_alpha_had^Adler-pQCD(> "
+            "Q^2_match) = 0.020886 at Q_match = 2 m_c(m_c) = 2.558 GeV, computed "
+            "from banked m_c(m_c) = 1.279, banked m_b(m_b) = 4.18, alpha_s(M_Z) = "
+            "0.1189 (the one experimental coupling input), Theorem_R quark "
+            "charges, N_c = 3, and the M_Z anchor, with Adler coefficients (1.64, "
+            "6.37) per Baikov-Chetyrkin-Kuehn -- not the time-like R(s) "
+            "coefficients. It certifies the two-route corroboration against the "
+            "Candidate A dispersion-threshold route (delta_alpha_pqcd_m_z, "
+            "v24.3.118) at a 0.182% relative gap, under the pre-committed 1% "
+            "gate; residual mu-dependence (half-span 1.26%) is reported as a "
+            "truncation witness, not absorbed. The nonperturbative residual below "
+            "Q_match stays [C_principled_external_universal_QCD]; the module does "
+            "NOT close the full Delta_alpha_had(M_Z) and does NOT supersede "
+            "v24.3.118 -- it corroborates it. Dispersion 0.02766 and BMW lattice "
+            "values sit in the FORBIDDEN input ledger; no target consumed. "
+            "Auditor-gated promotion passed 7/7 gates. "
+        ),
+        "note": "Wave 7; bespoke grade token quoted verbatim from the machine field",
+    },
+)

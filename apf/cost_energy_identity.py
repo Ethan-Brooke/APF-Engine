@@ -106,3 +106,35 @@ def register(registry):
     registry.update(_CHECKS); return registry
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:cost_energy_identity",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_realignment_cost_is_transition_energy, tier "
+            "4 at epistemic='P': for any APF admissible substrate, realignment "
+            "cost equals transition energy, C(transition) = n x eps = Delta E, "
+            "derived as an exact composition of three banked [P] facts -- L_cost "
+            "(cost = n x eps), T_epsilon (per-distinction quantum eps), and "
+            "L_beta_temp (beta = Delta S / Delta E = ln(d)/eps, so per-unit Delta "
+            "E = eps) -- with the per-distinction cost and energy the same "
+            "quantum eps = eps*_Gamma (L_epsilon_star). This DERIVES the "
+            "'realignment cost = transition energy' dictionary that the Yang- "
+            "Mills eps* bridge (yang_mills_md_bridge.py) previously carried as a "
+            "cited premise, removing that premise at the APF-internal level. "
+            "Scope: the identity is internal to the APF ledger; identifying an "
+            "external Hamiltonian (e.g., the Wilson lattice transfer-matrix "
+            "energy) with the APF energy operator is a separate claim carried "
+            "by the YM bridge module. Cross-referenced to the "
+            "cost-kind dichotomy check_T_ledger_rent_excluded [P]: this identity "
+            "prices the null transition at zero, one of the dichotomy's two "
+            "carriers. "
+        ),
+        "note": "Wave 7; single [P] derivation check. Verdict-class adjudication (post-audit 2026-07-02): the claim compiler prices the named external-Hamiltonian fence as the blocked movement, so the row reads BLOCKED_SUBSTRATE_REVISION_REQUIRED -- that class attaches to the unclosed YM-bridge movement, NOT to the [P] identity itself; verified stable under rewording (not a keyword artifact).",
+    },
+)

@@ -189,3 +189,38 @@ def register(registry):
     registry.update(_CHECKS); return registry
 def run_all():
     return {n: fn() for n, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "thermo:fluctuation_response_equilibrium",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank check, check_T_fluctuation_response_is_two_faces, tier 4 at "
+            "epistemic='P': the equilibrium (static) fluctuation-response "
+            "identity <Delta E^2> = -d<E>/d beta holds exactly on the bounded "
+            "distinction ledger's canonical distribution P(n) ~ e^{n(sigma - "
+            "beta*eps)}, n in {0..C_total} -- fluctuation is the entropy face and "
+            "response the energy face of the same resolved distinction, locked by "
+            "beta = sigma/eps (L_beta_temp). The identity itself is the "
+            "elementary cumulant property of Z(beta); what the framework "
+            "supplies, and what the check certifies, is that the distribution is "
+            "the max-entropy canonical one, that the two sides ARE the entropy "
+            "and energy faces, and that the FD4 bound C_total keeps the "
+            "fluctuation FINITE (at beta = sigma/eps the distribution is uniform "
+            "with closed-form variance N(N+2)/12; without the ceiling it "
+            "diverges). Composes banked [P] lemmas (T_entropy, L_self_exclusion, "
+            "L_sigma_intensive, L_beta_temp, L_equip, "
+            "T_realignment_cost_is_transition_energy) with no fitted quantity. "
+            "Named non-claims: it does NOT prove the dynamical Einstein-Brownian "
+            "relation D = mu x k_B T, which needs a physical time-flow the "
+            "framework parks under T_no_physical_time_flow_overclaim; reading "
+            "-d<E>/d beta as measured laboratory dissipation is the standard "
+            "equilibrium dictionary, not certified transport. "
+        ),
+        "note": "Wave 7; equilibrium-only, dynamical FDT explicitly not claimed",
+    },
+)

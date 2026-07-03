@@ -794,3 +794,37 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14f.1 I3 operator-level checks into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:i3_operator_self_identification",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Phase 14f.1 upgrade of the I3 (thermo-quantum) subspace witness from "
+            "a combinatorial metadata tag (F_quantum's 'carries max-mixed density "
+            "matrix' flag, previously unexecuted) to explicit operator-level "
+            "content. Three independent constructions each land on rho_max = "
+            "(1/d) I_d in C^d: check_T_I3_svn_direct_computation (direct pi_Q "
+            "reading; S_vN = ln d = ACC_scalar verified across d in "
+            "{2,3,5,8,16,32,61,102}), check_T_I3_unitary_invariance_witness "
+            "(Schur-lemma uniqueness of the unitarily-invariant normalized state, "
+            "verified against Haar-sampled U(d) elements, not just the identity), "
+            "and check_T_I3_thermal_K1_limit_witness (the beta -> 0 limit of the "
+            "Phase 14d.2 thermal machinery specialized to K=1) -- each machine- "
+            "graded epistemic='P'. The composed "
+            "check_T_I3_operator_self_identification carries epistemic='P_comp': "
+            "a composition grade over the three [P] constructions, verified "
+            "pairwise to Frobenius-norm precision, not a new derivation. The "
+            "honest fence is in the design and must be stated: for I3 the slot "
+            "scale is trivial (K = 1 under acc_quantum(d)), so a cross-interface "
+            "bridge theorem in the I2 sense is structurally unavailable -- the "
+            "banked object is a SELF-identification, the strongest closure the "
+            "I1/I3/I4 Bridge-Closure Work Plan argues is available for I3. "
+        ),
+        "note": "Wave 7; P_comp on the top check quoted as-is (composed status, distinct from plain P).",
+    },
+)

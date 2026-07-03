@@ -122,7 +122,7 @@ TARGET_MODULE_TYPES: Tuple[str, ...] = ("spine", "sector", "extension")
 #: to import in a degraded sandbox, e.g. numpy/scipy-less) are excluded from
 #: the regression verdict Bucket-A style: they are REPORTED, and only a gap
 #: not explained by import-skips fails the ratchet.
-ONBOARDED_MODULE_FLOOR: int = 71  # raised at v24.3.319 (axis depth: ijc_feasbool_engine declares its own scenario library directly); prior raise at v24.3.317 (Wave 5: the ew_* distinction/absolute-scale lanes + 6 alternates, 10 modules declare directly); prior raises .316 / .313 / .311 / .310
+ONBOARDED_MODULE_FLOOR: int = 144  # raised at v24.3.348 (Wave 8: the mw_from_effective_angle physics row found by the plumbing classification); prior raise at v24.3.347 (IE Wave 7 breadth sweep: 64 direct declarations incl. both remaining spines + 3 downstream w_trace consumers; covers extension +23 on the Wave-4 heads); prior raise at v24.3.346 (IE Wave 6: the 2026-07-02 arc onboarded -- thooft_anomaly_matching_chiral, vacuum_o1_fork, formal_kernel [spine], u1y_landau_pole, acc_reading_selection, abelian_coupling_capacity_count [the Wave-6(a) probe, post fix-down], fencea_hinge_trichotomy [+ MODULE_TYPES entry]; 3 depth rows on gauge_quotient_ledger/cosmology/base_fiber_allocation); prior raise at v24.3.330 (drawn_content_readings declares the generative functional + the 4|n rigidity as claim inputs; scenario payloads stay with their home modules per the .319 no-relabel discipline); prior raise at v24.3.319 (axis depth: ijc_feasbool_engine declares its own scenario library directly); prior raise at v24.3.317 (Wave 5: the ew_* distinction/absolute-scale lanes + 6 alternates, 10 modules declare directly); prior raises .316 / .313 / .311 / .310
 
 _PAYLOAD_SOURCES = ("claim_text", "payload", "payload_builder")
 
@@ -297,6 +297,7 @@ def coverage_map(
             "axes": sorted(set(mod_axes)),
             "input_count": n_inputs,
             "covered_by": credited,
+            "plumbing": IE_PLUMBING.get(mod_name, (None, None))[0],
         }
 
     n_total = len(rows)
@@ -313,6 +314,18 @@ def coverage_map(
         "modules_onboarded_direct": n_direct,
         "modules_onboarded_via_covers": n_onboarded - n_direct,
         "target_surface_total": len(target_rows),
+        "target_surface_plumbing": sum(
+            1 for name, r in rows.items()
+            if r["in_target_surface"] and not r["onboarded"]
+            and r["plumbing"] is not None),
+        "target_surface_open": sum(
+            1 for name, r in rows.items()
+            if r["in_target_surface"] and not r["onboarded"]
+            and r["plumbing"] is None),
+        "target_open_modules": sorted(
+            name for name, r in rows.items()
+            if r["in_target_surface"] and not r["onboarded"]
+            and r["plumbing"] is None),
         "target_surface_onboarded": sum(1 for r in target_rows if r["onboarded"]),
         "modules_by_axis": by_axis,
         "declaration_modules": sorted(decls),
@@ -718,10 +731,219 @@ def check_T_ie_reviewer_manifest_current() -> Dict[str, Any]:
     }
 
 
+
+
+# ---------------------------------------------------------------------------
+# The plumbing classification (Wave 8, v24.3.348).
+#
+# CRITERION. A target-surface module is PLUMBING when it carries no claimable
+# standalone physics for the reviewer atlas, in exactly one of two senses:
+#
+#   "stage_certificate"  -- the module's banked checks certify interior
+#       pipeline stages of an already-adjudicated computation lane
+#       (construction certificates, PV/tensor reduction stages, transcription/
+#       ingestion instrumentation, validation and sprint reports, release
+#       attestations, replay gates, status ledgers). The lane's terminal
+#       physics claim is routed through the IE elsewhere; the stage certifies
+#       THAT A STEP WAS DONE CORRECTLY, not a statement about the world. All
+#       current entries are the OS-W/w_trace lane (terminals: the four
+#       Wave-4/5 heads; the physical W export adjudicated [P_boundary], v15.1).
+#   "no_banked_checks"   -- the module registers nothing in the theorem bank
+#       (architecture-only, or register() deliberately returns None).
+#
+# The label is EXCLUSIVE with onboarding: a plumbing module may not carry
+# IE_DECLARATIONS and may not be covers-listed by any head. Bringing a
+# plumbing module's content into the atlas requires REMOVING it from this map
+# in the same pass (the check below fails the bank otherwise). New bank
+# modules are neither onboarded nor plumbing until dispositioned -- they
+# surface in ``target_open_modules``, which is the honest owed-work list.
+#
+# Machine-checked predicates (check_T_ie_plumbing_classification):
+#   (i)   every key is a manifest module of a target-surface type;
+#   (ii)  tag validity;
+#   (iii) exclusivity with onboarding (no declarations, no covers-credit);
+#   (iv)  "no_banked_checks" entries contain zero ``def check_`` defs (static);
+#   (v)   "stage_certificate" entries belong to a lane family with at least
+#         one declared head (currently: the w_trace/w_os lane).
+# The class assignment itself (stage vs physics) is curated -- pinned here,
+# reviewed by diff, one fresh-context classification pass + audit per wave.
+# ---------------------------------------------------------------------------
+PLUMBING_TAGS = ("stage_certificate", "no_banked_checks")
+PLUMBING_LANE_PREFIXES = ("apf.w_trace_", "apf.w_os_")
+PLUMBING_LANE_HEADS = (
+    "apf.w_os_route_terminal_closure",
+    "apf.w_trace_native_delta_r_mw_assembly",
+    "apf.w_trace_native_two_loop_phase2_master_interface_router",
+    "apf.mw_value_from_equilibrium_and_custodial",
+)
+IE_PLUMBING = {
+    "apf.continuability_preservation_resolution": ("no_banked_checks", "Architecture/math scaffolding only with no check_* functions and no register(); [P_architecture] status, pre-seeded architecture-only."),
+    "apf.ew_sector_closure": ("no_banked_checks", "register() deliberately returns None by design (pre-seeded adjudication); the module carries a sector-closure ledger but banks nothing."),
+    "apf.perturbative_refinability": ("no_banked_checks", "Utility module implementing the refinability defect formula with no check_* functions and no register(); pre-seeded architecture-only."),
+    "apf.w_trace_acfw_candidate_preflight": ("stage_certificate", "Source-acquisition preflight: certifies the ACFW candidate is registered, not admitted, forbidden tokens absent, and export stays locked ..."),
+    "apf.w_trace_cms_global_fit_context": ("stage_certificate", "Comparison-context ingestion: records the CMS-era global-fit SM prediction as a comparator row and certifies it is not an observed-W inpu..."),
+    "apf.w_trace_correlated_uncertainty_model": ("stage_certificate", "Uncertainty-propagation harness for the source-comparison cluster: certifies conservative-floor weighted summaries stay under pull thresh..."),
+    "apf.w_trace_delta_r_pull_diagnostics": ("stage_certificate", "Pull-diagnostic instrumentation over the comparison cluster (GREEN/AMBER/RED bands); certifies the diagnostic computation and export lock..."),
+    "apf.w_trace_delta_r_source_candidate_registry": ("stage_certificate", "Candidate-only literature registry for Delta_r sources: names source classes and admission preconditions, admits no numerical rows, certi..."),
+    "apf.w_trace_delta_r_source_mapping": ("stage_certificate", "Import-strategy pivot module: declares the standard Delta_r decomposition payload contract and forbidden tokens; certifies mapping/schema..."),
+    "apf.w_trace_denner_diagram_coefficient_table_closeout": ("stage_certificate", "Import-contract closeout: turns the reviewed-Denner-coefficient-table obstruction into machine-checkable gates and quarantines the numeri..."),
+    "apf.w_trace_denner_formula_import_native_assembly": ("stage_certificate", "Source-formula import matrix + partial assembly gates: certifies which rows are evaluated vs target-only and that open gates block full c..."),
+    "apf.w_trace_denner_sirlin_notation_map": ("stage_certificate", "Notation-map ingestion: certifies the Denner/Sirlin symbol map is complete and consistent with the standard decomposition; pure transcrip..."),
+    "apf.w_trace_denner_ward_identity_counterterm_import": ("stage_certificate", "Reviewed-relation import layer: certifies the Ward/counterterm relation DAG is imported, orphan-free, and that target residuals remain ta..."),
+    "apf.w_trace_diagram_family_numeric_evaluator_import": ("stage_certificate", "Family-frontier ledger separating APF-owned evaluated rows from acquisition targets; certifies bucket decomposition, no-fit guard, and op..."),
+    "apf.w_trace_import_session_log": ("stage_certificate", "Audit-trail bank for future reviewed payload import sessions: immutable record schema, digests, admission-state locks; certifies logging ..."),
+    "apf.w_trace_import_session_replay": ("stage_certificate", "Replay/reproducibility validator over the import session log: digest recomputation, mismatch fail-closed, export-lock invariants; a repla..."),
+    "apf.w_trace_independent_delta_r_crosscheck": ("stage_certificate", "Independent-source cross-check bank (DGG 2015, GFitter 2012): certifies the comparison rows exclude observed-W inputs and gaps sit within..."),
+    "apf.w_trace_input_convention_stress_test": ("stage_certificate", "Convention stress test of the extraction against nearby SM prediction conventions; certifies sensitivity and gap bounds with export locke..."),
+    "apf.w_trace_measurement_quarantine_context": ("stage_certificate", "Quarantine layer proving observed CMS/CDF W measurements are context-only and cannot feed source extraction or export; a discipline gate,..."),
+    "apf.w_trace_multisource_delta_r_comparison": ("stage_certificate", "Multi-source comparison harness: weighted/envelope summaries of prediction sources vs the W_TRACE anchor; verdict is explicitly a no-expo..."),
+    "apf.w_trace_native_bosonic_gauge_self_energy": ("stage_certificate", "Transcription certificate: Denner's reviewed bosonic self-energy closed forms evaluated natively with pole/regularity validation against ..."),
+    "apf.w_trace_native_bosonic_photon_vp": ("stage_certificate", "Stage-3 rung: native evaluation of Denner's reviewed transverse photon self-energy with transversality and pole -3 validation; certifies ..."),
+    "apf.w_trace_native_bosonic_scalar_vp": ("stage_certificate", "First bosonic sub-rung: constructs and validates the charged-scalar (Goldstone) photon VP loop (Ward identity, quarter-fermion pole, clos..."),
+    "apf.w_trace_native_charge_running": ("stage_certificate", "Validation rung: assembles the gauge-invariant charge running from Denner's two reviewed self-energies and certifies the native evaluator..."),
+    "apf.w_trace_native_delta_r_uv_assembly": ("stage_certificate", "Stage-4 capstone gate: certifies the assembled Delta r UV pole cancels to machine precision and delta_VB matches the reviewed closed form..."),
+    "apf.w_trace_native_ew_self_energy": ("stage_certificate", "Stage-2 rung: slot-by-slot fermion-loop self-energies reduced to native PV functions, validated by photon transversality and reproduction..."),
+    "apf.w_trace_native_fermion_sum_self_energy": ("stage_certificate", "Assembly rung: full SM fermion-content sum with mu-independence gate and anchors to already-banked quantities; coherent-assembly certific..."),
+    "apf.w_trace_native_fermionic_gauge_self_energy": ("stage_certificate", "Pole-structure rung: fermionic self-energy p^2-pole coefficients assembled from SM charges and validated against internal sum-rule anchor..."),
+    "apf.w_trace_native_lepton_self_energy": ("no_banked_checks", "Self-declared ARCHITECTURE-ONLY with no register(): the Denner chiral lepton self-energy wrapper is shipped for a sibling attempt but exp..."),
+    "apf.w_trace_native_os_renormalized_self_energy": ("stage_certificate", "Step-2 rung: builds the twice-subtracted OS-renormalized self-energy and proves it mu-independent; renormalization-machinery certificate,..."),
+    "apf.w_trace_native_timelike_gauge_width": ("stage_certificate", "Unitarity cross-check rung: native absorptive parts satisfy the optical theorem against tree widths from the same couplings; validates th..."),
+    "apf.w_trace_native_timelike_self_energy": ("stage_certificate", "Internal validation anchor: the timelike machinery reproduces the ALREADY-BANKED Delta alpha_lep (from apf.delta_alpha_leptonic) to rel 5..."),
+    "apf.w_trace_native_two_loop_phase2_bosonic_vertex_master_anchors": ("stage_certificate", "MASTERS ONLY: CAF 2006 bosonic master integrals I4-I10 banked as named anchors with pole ledger; docstring is explicit that the diagram c..."),
+    "apf.w_trace_native_two_loop_phase2_coefficient_output_slices": ("stage_certificate", "Algebraic substrate slices: TP5/SUN3/ZFF/BOSONIC coefficient rows with every row carrying physical_value = 0; certifies the numerator-exp..."),
+    "apf.w_trace_native_two_loop_phase2_coefficient_surface_no_smuggling": ("stage_certificate", "Degree-5 coefficient surface + sector no-smuggling guard; certifies the expansion identity and the irreducibility discipline gate, explic..."),
+    "apf.w_trace_native_two_loop_phase2_counterterm_residue_formula_ledger": ("stage_certificate", "Structural-contract certificate for the formula infrastructure: channels seeded with physical_value = 0, comparator-typed grid, no self-e..."),
+    "apf.w_trace_native_two_loop_phase2_current_source_coefficient_no_go": ("stage_certificate", "Audit-first source-sufficiency finding scoped to the currently uploaded source set ('NOT a physics impossibility theorem'); certifies an ..."),
+    "apf.w_trace_native_two_loop_phase2_delta_r_source_import": ("stage_certificate", "Source-import stage: 10 literature rows ingested at byte-precise ranges and the AC 2002 Eq. 11 formula transcribed with the source's own ..."),
+    "apf.w_trace_native_two_loop_phase2_ew_self_energy_assembly_gate": ("stage_certificate", "TOY LEDGER ONLY: pole-cancellation gate exercised against a manufactured toy ledger; docstring states it proves the algebraic gate only, ..."),
+    "apf.w_trace_native_two_loop_phase2_ew_source_table_extraction": ("stage_certificate", "Aggregate-formula/convention extraction from five literature sources with the strict rule that no row-level coefficient is promoted; inge..."),
+    "apf.w_trace_native_two_loop_phase2_ew_source_table_extraction_queue": ("stage_certificate", "NO ROWS EXTRACTED: a discipline-gate extraction queue naming source families; refuses pre-promoted targets, banks no coefficient."),
+    "apf.w_trace_native_two_loop_phase2_ew_tex_source_exact_extraction": ("stage_certificate", "SOURCE WINDOWS ONLY: byte-level verbatim source citations with SHA256; promotion class is fixed to 'not_coefficient_row' - pure acquisiti..."),
+    "apf.w_trace_native_two_loop_phase2_fermionic_vertex_reduction_ledger": ("stage_certificate", "METHODS ONLY: ACFW 2004 reduction methods banked as row records, every row status='coefficient_table_open'; method-ingestion certificate."),
+    "apf.w_trace_native_two_loop_phase2_missing_terms_source_and_derivation_plan": ("stage_certificate", "Plan/ledger module banking the source-acquisition order, gap-to-source matrix, workplan stages, and claim-language rules; workflow bookke..."),
+    "apf.w_trace_native_two_loop_phase2_osw_deltar_connector_refusal": ("stage_certificate", "TOY ONLY connector + refusal gate: exercises coverage/refusal validation with deliberately non-fitted toy coefficients, claims no physica..."),
+    "apf.w_trace_native_two_loop_phase2_projectors_preibp_router": ("stage_certificate", "Projector/pre-IBP/router infrastructure with an exact-rational toy cancellation testbench; certifies the gate is load-bearing, banks no p..."),
+    "apf.w_trace_native_two_loop_phase2_zfitter_comparator_guard": ("stage_certificate", "FORMAL ROLE LEDGER: closed set of allowed ZFITTER/DIZET roles + forbidden component tokens; a pure anti-smuggling role guard."),
+    "apf.w_trace_native_two_loop_phase2_zpole_bosonic_deltakappa_import": ("stage_certificate", "AGGREGATE SHIFT ROWS import: ACF 2006 published shift tables ingested and the source's own Hollik cross-check reproduced; import-fidelity..."),
+    "apf.w_trace_native_two_loop_phase2_zpole_form_factor_connector_dag": ("stage_certificate", "CONNECTOR ONLY: the ACF 2006 NNLO Z-pole decomposition encoded as a 12-node DAG; evaluates nothing, coefficient ledger stays open."),
+    "apf.w_trace_native_two_loop_sunset": ("stage_certificate", "Source-DE + threshold gate for the sunset topology; the full numeric master is explicitly NOT promoted here (next pack), and the one nume..."),
+    "apf.w_trace_native_two_loop_tier1_status": ("stage_certificate", "Self-described status ledger: 'NOT a math module - purely a structural-status record of which gates have closed at which grades'."),
+    "apf.w_trace_native_two_loop_two_point": ("stage_certificate", "Source-formula binding + DOUBLE_COUNT discipline gate for the bubble master - explicitly NOT the full master integral; gates, anchors, an..."),
+    "apf.w_trace_native_uv_cancellation_stage4": ("stage_certificate", "Stage-4 UV gate: proves bosonic self-energy poles are linear in p^2 and cancelled by OS counterterms - exactly a 'UV poles cancel' stage ..."),
+    "apf.w_trace_native_uv_pole": ("stage_certificate", "PV pole-bookkeeping layer: exact pole coefficients for A0/B0/B1/B11/B00 validated three ways against the banked finite toolkit; toolkit-c..."),
+    "apf.w_trace_native_zll_vertex_form_factors": ("stage_certificate", "Generic-layer substrate for the Zll kappa_l assembly: Denner App. C vertex form factors on the native three-point toolkit, validated agai..."),
+    "apf.w_trace_physics_source_stop_condition": ("stage_certificate", "No-more-scaffold gate: declares stop conditions and allowed/forbidden next actions; pure workflow discipline."),
+    "apf.w_trace_prediction_cluster_robustness": ("stage_certificate", "Robustness diagnostics (floor scans, subset scans) over the comparison cluster; certifies the comparison stays GREEN with export locked -..."),
+    "apf.w_trace_publication_claim_language": ("stage_certificate", "Claim-language bank: allowed vs forbidden publication sentences and a safety predicate; publication-report instrumentation verbatim."),
+    "apf.w_trace_pv_c0_general_momentum": ("stage_certificate", "PV substrate stage: native general-momentum spacelike scalar C0 with self-validation (zero-momentum limit, permutation symmetry, mesh); e..."),
+    "apf.w_trace_pv_cij_three_point": ("stage_certificate", "PV tensor-reduction stage: rank-1/2 three-point coefficients with trace/contraction identity self-validation; toolkit construction certif..."),
+    "apf.w_trace_pv_d0_general_momentum": ("stage_certificate", "PV substrate stage: native spacelike box scalar D0 with symmetry and mesh validation; 'Spacelike scalar D0 only', remaining assembly open."),
+    "apf.w_trace_pv_derivative_two_point": ("stage_certificate", "PV derivative stage: native B0'/B1' validated against finite differences and closed forms; explicitly does not assemble any self-energy o..."),
+    "apf.w_trace_pv_dij_four_point": ("stage_certificate", "PV box tensor-reduction stage (rank 1-3) with contraction/trace-relation self-validation; toolkit construction certificate."),
+    "apf.w_trace_pv_ewwgr_bare_proper_vertex": ("stage_certificate", "Vertex-assembly sub-rung (R1b) of the Gate A kappa_l arc: EWWGR Zff/gamma-ff form factors assembled on the BHM layer with reference-value..."),
+    "apf.w_trace_pv_lambda_bhm_vertex": ("stage_certificate", "R1 rung: BHM Lambda_2/Lambda_3 Z-vertex scalar functions implemented from the LEP Yellow Report closed forms with Li2 and reference-value..."),
+    "apf.w_trace_pv_timelike_three_point": ("stage_certificate", "R0 rung: timelike/above-threshold scalar C0 branch with absorptive-part validation two ways; PV-branch construction certificate."),
+    "apf.w_trace_pv_timelike_three_point_tensor": ("stage_certificate", "R0b rung: timelike rank-1 tensor coefficients with stability fix and closed-form validation; PV-branch construction certificate."),
+    "apf.w_trace_pv_timelike_three_point_tensor_rank2": ("stage_certificate", "R0c rung: timelike rank-2 tensor coefficients (C00/C11/C12/C22) with trace-relation and threshold validation; PV-branch construction cert..."),
+    "apf.w_trace_release_attestation": ("stage_certificate", "Release attestation contract: signed-attestation and immutable-manifest-digest schema, template-only and locked; release attestation verb..."),
+    "apf.w_trace_release_evidence_bundle": ("stage_certificate", "Terminal release evidence bundle: 'infrastructure completion, not a physical W export'; certifies missing evidence blocks release."),
+    "apf.w_trace_release_packet_validator": ("stage_certificate", "Release-packet preflight validator: rejects templates, bad digests, forbidden tokens, export overrides; pure release gating."),
+    "apf.w_trace_release_runbook": ("stage_certificate", "Operator release checklist/runbook bank; declares required artifacts and predicates, ships nothing real; process documentation certificate."),
+    "apf.w_trace_residual_interpretation": ("stage_certificate", "Interpretation layer over the residual with an overclaim guard and a paper-safe sentence ending 'not a physical W-mass export'; validatio..."),
+    "apf.w_trace_review_packet_validator": ("stage_certificate", "Completed source-review packet validator/preflight: default packets fail closed, export locked; review-gate instrumentation."),
+    "apf.w_trace_reviewed_source_import_handoff": ("stage_certificate", "Handoff gate between validated review packet and payload loader: permission-boundary contract with fail-closed behavior; import-gate inst..."),
+    "apf.w_trace_signed_release_replay": ("stage_certificate", "Signed release replay contract: ordered replay stages, digest chain, unsigned/template rejection; replay/consistency gate verbatim."),
+    "apf.w_trace_source_acquisition_review_packet": ("stage_certificate", "Acquisition worksheet/review-packet bank, template-only artifacts, no real source acquired; acquisition instrumentation."),
+    "apf.w_trace_source_authority_grading": ("stage_certificate", "Source authority grading ledger (A/A-/B+/Q grades, measurements quarantined); comparison-source bookkeeping, no physics value."),
+    "apf.w_trace_source_candidate_registry": ("stage_certificate", "External-source acquisition checklist/candidate registry, candidate entries only, no rows admitted; acquisition instrumentation."),
+    "apf.w_trace_tensor_coefficient_map_scaffold": ("stage_certificate", "Tensor/coefficient-map scaffold over the PV substrate; deliberately refuses to promote fitted coefficients, leaves the reviewed table as ..."),
+    "apf.w_trace_terminal_state_report": ("stage_certificate", "Terminal open/closed state report; 'infrastructure completion, not a physical W export' - status ledger verbatim."),
+    "apf.w_trace_v142_physics_validation_sprint_report": ("stage_certificate", "Sprint terminal report aggregating three validation modules; certifies sub-module passes and export locks - validation/sprint report verb..."),
+    "apf.w_trace_v143_physics_deep_validation_report": ("stage_certificate", "Sprint terminal report for the v14.3 deep-validation pass; aggregates sub-module state and export locks."),
+    "apf.w_trace_v144_publication_validation_report": ("stage_certificate", "Publication-validation sprint terminal report; aggregates authority/robustness/residual/claim-language sub-modules, export locked."),
+    "apf.w_trace_v14_physics_sprint_terminal_report": ("stage_certificate", "v14.0 sprint terminal report listing the five sprint modules and the no-more-scaffold status; sprint report verbatim."),
+}
+
+
+def check_T_ie_plumbing_classification():
+    """The plumbing map is well-formed, exclusive with onboarding, and its
+    machine-checkable predicates hold. [P_structural_instrument] tier 4.
+
+    Certifies predicates (i)-(v) of the criterion above. The curated class
+    assignment is pinned data (review-the-diff discipline); this check makes
+    the label impossible to abuse silently: a plumbing module that gains
+    IE_DECLARATIONS or covers-credit fails the bank until the label is
+    removed in the same pass.
+    """
+    import io as _io
+    failures = []
+    from apf import _module_manifest as manifest
+    for mod, (tag, _reason) in IE_PLUMBING.items():
+        if mod not in manifest.MODULE_TYPES:
+            failures.append("%s: not a manifest module" % mod)
+            continue
+        if manifest.MODULE_TYPES[mod] not in TARGET_MODULE_TYPES:
+            failures.append("%s: plumbing label on a non-target type %s"
+                            % (mod, manifest.MODULE_TYPES[mod]))
+        if tag not in PLUMBING_TAGS:
+            failures.append("%s: unknown tag %r" % (mod, tag))
+        if tag == "no_banked_checks":
+            src = _io.open(mod.replace("apf.", "apf/") + ".py",
+                           encoding="utf-8").read()
+            if "def check_" in src:
+                failures.append("%s: tagged no_banked_checks but defines "
+                                "check_* functions" % mod)
+        if tag == "stage_certificate":
+            if not mod.startswith(PLUMBING_LANE_PREFIXES):
+                failures.append("%s: stage_certificate outside the declared "
+                                "lane families" % mod)
+    # lane heads must actually be declared (the lane terminal is routed)
+    import importlib as _il
+    n_head_decls = 0
+    for h in PLUMBING_LANE_HEADS:
+        try:
+            n_head_decls += len(declarations_from_module(_il.import_module(h)))
+        except Exception as exc:  # noqa: BLE001
+            failures.append("lane head %s failed to import: %s" % (h, exc))
+    if n_head_decls == 0:
+        failures.append("no lane head carries a declaration -- "
+                        "stage_certificate labels are unanchored")
+    # exclusivity with onboarding
+    cov = coverage_map()
+    for mod in IE_PLUMBING:
+        r = cov["rows"].get(mod)
+        if r is None:
+            continue
+        if r["onboarded"]:
+            failures.append("%s: plumbing label on an ONBOARDED module -- "
+                            "remove the label in the same pass" % mod)
+    # summary coherence
+    s = cov["summary"]
+    if s.get("target_surface_plumbing") != sum(
+            1 for m in IE_PLUMBING
+            if manifest.MODULE_TYPES.get(m) in TARGET_MODULE_TYPES):
+        failures.append("summary plumbing count inconsistent with IE_PLUMBING")
+    if s.get("target_surface_open") != len(s.get("target_open_modules", ())):
+        failures.append("summary open count inconsistent with open list")
+    return {
+        "name": "check_T_ie_plumbing_classification",
+        "passed": not failures,
+        "failures": failures,
+        "status": "P_structural_instrument",
+        "summary": ("plumbing map: %d entries (%d stage_certificate, %d "
+                    "no_banked_checks); target surface open: %d"
+                    % (len(IE_PLUMBING),
+                       sum(1 for v in IE_PLUMBING.values() if v[0] == "stage_certificate"),
+                       sum(1 for v in IE_PLUMBING.values() if v[0] == "no_banked_checks"),
+                       s.get("target_surface_open", -1))),
+    }
+
+
 _CHECKS = {
     "T_ie_onboarding_registry_coverage": check_T_ie_onboarding_registry_coverage,
     "T_ie_atlas_verdict_tripwire": check_T_ie_atlas_verdict_tripwire,
     "T_ie_reviewer_manifest_current": check_T_ie_reviewer_manifest_current,
+    "T_ie_plumbing_classification": check_T_ie_plumbing_classification,
 }
 
 

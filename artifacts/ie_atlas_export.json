@@ -1,58 +1,134 @@
 {
  "generated": "2026-07-02",
- "pin_version": "24.3.323",
+ "pin_version": "24.3.348",
  "coverage_summary": {
-  "modules_total": 446,
-  "modules_onboarded": 113,
-  "modules_onboarded_direct": 71,
-  "modules_onboarded_via_covers": 42,
-  "target_surface_total": 245,
-  "target_surface_onboarded": 73,
+  "modules_total": 449,
+  "modules_onboarded": 203,
+  "modules_onboarded_direct": 144,
+  "modules_onboarded_via_covers": 59,
+  "target_surface_total": 247,
+  "target_surface_plumbing": 85,
+  "target_surface_open": 0,
+  "target_open_modules": [],
+  "target_surface_onboarded": 162,
   "modules_by_axis": {
-   "ROUTE": 57,
+   "ROUTE": 130,
    "CODOMAIN": 7,
    "CONTEXTUALITY": 6,
    "READOUT": 1
   },
   "declaration_modules": [
+   "apf.a_mu_hvp_capacity_density",
+   "apf.abelian_coupling_capacity_count",
+   "apf.acc_reading_selection",
+   "apf.acc_unification_all_p",
+   "apf.acc_unification_no_imports",
+   "apf.admissible_representation_stack",
    "apf.base_fiber_allocation",
+   "apf.bottom_msbar_export_candidate",
+   "apf.bottom_msbar_transport",
+   "apf.charged_trace_spectrum",
+   "apf.class_transition",
+   "apf.closed_world_completeness",
+   "apf.cmb_finite_mode_covariance",
+   "apf.confinement_scale_single_anchor",
+   "apf.continuation_sum_measure",
    "apf.core",
    "apf.cosmology",
+   "apf.cost_energy_identity",
+   "apf.critical_slack",
+   "apf.crystal",
    "apf.crystal_metrics",
+   "apf.delta_alpha_adler_m_z",
+   "apf.delta_alpha_capacity_density",
+   "apf.delta_alpha_leptonic",
+   "apf.delta_alpha_pqcd_m_z",
+   "apf.delta_rho_leading_distinction",
+   "apf.down_lepton_trace",
+   "apf.drawn_content_readings",
+   "apf.evaporation_microtransport",
    "apf.evaporation_quartet",
+   "apf.ew_osw_source_transcription_families",
    "apf.ew_planck_anchor_gravity_consistency",
    "apf.ew_pre_branch_necessity",
    "apf.ew_scale_functional_independence",
    "apf.ew_sqrtNc_carrier_color_triplet",
    "apf.ew_unitarity_eigenscreen",
+   "apf.extensions",
+   "apf.fencea_hinge_trichotomy",
+   "apf.fermion_normalizers",
+   "apf.fluctuation_response_two_faces",
+   "apf.formal_kernel",
    "apf.foundation_inputs",
+   "apf.fractional_reading",
    "apf.gauge",
+   "apf.gauge_beta_capacity_tiling",
    "apf.gauge_invariant_record",
    "apf.gauge_quotient_ledger",
    "apf.generations",
    "apf.gravity",
+   "apf.horizon_joint_bridge",
    "apf.horizon_ledger_reindexing",
+   "apf.i4_composition",
    "apf.ijc_feasbool_engine",
    "apf.interface_contextuality_adapter",
+   "apf.interface_factor_native",
    "apf.interface_readout_adapter",
+   "apf.internalization",
+   "apf.internalization_geo",
+   "apf.itpfi_tail_scalar_native",
+   "apf.kappa_int_bounds",
+   "apf.l_irr_induced_polarity",
    "apf.lambda_absolute",
+   "apf.lambda_operator_derivation",
    "apf.majorana",
    "apf.mw_value_from_equilibrium_and_custodial",
+   "apf.negative_temperature_ceiling",
+   "apf.neutrino_mbb_reconciliation",
+   "apf.operational_completeness",
+   "apf.paper1_kernel",
+   "apf.phase_14d3_completions",
+   "apf.photon_commitment_profile",
    "apf.photon_masslessness",
+   "apf.pi_gammagamma_2l_moment_native",
    "apf.planck_magnitude_single_anchor",
    "apf.plec",
    "apf.quantum_admissibility",
+   "apf.quantum_operator_derivation",
    "apf.recruitment",
    "apf.s_parameter_native",
+   "apf.sigma_scale_capacity_formula_gate",
+   "apf.sigma_scale_yukawa_free_geometric_floor",
+   "apf.sin2theta_eff_kappa_l_decomposition",
+   "apf.sin2theta_w_OS_capacity_counting",
    "apf.spacetime",
+   "apf.subspace_functors",
    "apf.symmetry_contextuality_independence",
+   "apf.tail_center_trivial_native",
+   "apf.thermal_absolute",
    "apf.thermo_four_laws_synthesis",
+   "apf.thooft_anomaly_matching_chiral",
+   "apf.trace_anchors",
+   "apf.trace_sector_closure",
+   "apf.u1y_landau_pole",
    "apf.unification",
+   "apf.unification_projection_essentiality",
+   "apf.unification_three_levels",
+   "apf.universality_forcing",
+   "apf.up_family_trace",
+   "apf.vacuum_o1_fork",
    "apf.w_os_route_terminal_closure",
+   "apf.w_trace_BSY_one_loop_kappa_l_native_validator",
+   "apf.w_trace_mw_from_effective_angle",
    "apf.w_trace_native_delta_r_mw_assembly",
    "apf.w_trace_native_two_loop_phase2_master_interface_router",
+   "apf.w_trace_native_zll_R2_counterterm_pieces",
+   "apf.w_trace_native_zll_kappa_l_oblique",
    "apf.yang_mills_gap",
-   "apf.yang_mills_md_bridge"
+   "apf.yang_mills_kappa3",
+   "apf.yang_mills_md_bridge",
+   "apf.ym_quotient_ledger",
+   "apf.yt_absolute_scale_normalization_no_go"
   ],
   "legacy_adapter_modules": [
    "apf.arch_defect_calculus_internal_identity_real_adapter",
@@ -95,7 +171,7 @@
    "apf.dark_posterior_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']",
    "apf.ew_trace_to_scheme_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']"
   },
-  "onboarded_module_floor": 71,
+  "onboarded_module_floor": 144,
   "target_module_types": [
    "spine",
    "sector",
@@ -142,6 +218,17 @@
    "expect_export": null
   },
   {
+   "input_id": "claim:drawn_content_readings_functional",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.drawn_content_readings",
+   "expect_export": false,
+   "note": "the .306 open object closed at v0.2 strength (banked v24.3.328/.329); scenario payloads live with their home modules -- this claim onboards the generative map itself",
+   "covers": []
+  },
+  {
    "input_id": "claim:ew_global_export",
    "axis": "ROUTE",
    "route": "ew",
@@ -185,6 +272,17 @@
    "export_global_P": false,
    "owner_module": null,
    "expect_export": null
+  },
+  {
+   "input_id": "claim:magic_square_4n_rigidity",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.drawn_content_readings",
+   "expect_export": false,
+   "note": "upgrades the ladder's parity column from constructive to characterized: a parity off-cell is an invariant absence",
+   "covers": []
   },
   {
    "input_id": "claim:provenance_smuggling",
@@ -318,6 +416,17 @@
    ]
   },
   {
+   "input_id": "dark:cmb_finite_mode_covariance_prototype",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.cmb_finite_mode_covariance",
+   "expect_export": false,
+   "note": "Wave 7; scipy-blocked module read statically; docstring [P_structural] vs field P_structural_reading flagged on all six checks",
+   "covers": []
+  },
+  {
    "input_id": "dark:lambda_absolute_mixed_grades",
    "axis": "ROUTE",
    "route": "ew",
@@ -378,6 +487,17 @@
    "covers": []
   },
   {
+   "input_id": "ew:a_mu_hvp_capacity_density",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.a_mu_hvp_capacity_density",
+   "expect_export": false,
+   "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_seam flagged, field wins",
+   "covers": []
+  },
+  {
    "input_id": "ew:absolute_scale_frontier_terminated",
    "axis": "ROUTE",
    "route": "dark",
@@ -393,6 +513,61 @@
    ]
   },
   {
+   "input_id": "ew:delta_alpha_adler_pqcd_m_z",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.delta_alpha_adler_m_z",
+   "expect_export": false,
+   "note": "Wave 7; bespoke grade token quoted verbatim from the machine field",
+   "covers": []
+  },
+  {
+   "input_id": "ew:delta_alpha_capacity_density",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.delta_alpha_capacity_density",
+   "expect_export": false,
+   "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_seam on both checks flagged, field wins",
+   "covers": []
+  },
+  {
+   "input_id": "ew:delta_alpha_leptonic",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.delta_alpha_leptonic",
+   "expect_export": false,
+   "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+   "covers": []
+  },
+  {
+   "input_id": "ew:delta_alpha_pqcd_m_z",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.delta_alpha_pqcd_m_z",
+   "expect_export": false,
+   "note": "Wave 7; bespoke grade token quoted verbatim from the machine field",
+   "covers": []
+  },
+  {
+   "input_id": "ew:delta_rho_leading_distinction",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.delta_rho_leading_distinction",
+   "expect_export": false,
+   "note": "Wave 7; grade rider (modulo scale and convention) carried in the bespoke token",
+   "covers": []
+  },
+  {
    "input_id": "ew:mw_distinction_decomposition",
    "axis": "ROUTE",
    "route": "ew",
@@ -401,6 +576,17 @@
    "owner_module": "apf.mw_value_from_equilibrium_and_custodial",
    "expect_export": false,
    "note": "Wave 4 head 4: the distinction-picture M_W head; no in-family covers",
+   "covers": []
+  },
+  {
+   "input_id": "ew:mw_from_3_13_effective_angle",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_mw_from_effective_angle",
+   "expect_export": false,
+   "note": "Wave 8; classified physics_claim in the plumbing pass (the only one in the 86-module pool); absolute-scale discipline: M_Z anchor named, no absolute claim",
    "covers": []
   },
   {
@@ -423,6 +609,28 @@
    ]
   },
   {
+   "input_id": "ew:orientation_ew_route_priced",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_quotient_ledger",
+   "expect_export": false,
+   "note": "Wave 6 depth; the B3 close (.327)",
+   "covers": []
+  },
+  {
+   "input_id": "ew:osw_source_transcription_families",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ew_osw_source_transcription_families",
+   "expect_export": false,
+   "note": "Wave 7; architecture-only instrument layer; W-export language aligned to the v15.1 adjudication",
+   "covers": []
+  },
+  {
    "input_id": "ew:photon_massless_reversibility",
    "axis": "ROUTE",
    "route": "generic",
@@ -431,6 +639,17 @@
    "owner_module": "apf.photon_masslessness",
    "expect_export": false,
    "note": "Wave 4 probe; grade stated at the banked [P_structural_reading]",
+   "covers": []
+  },
+  {
+   "input_id": "ew:pi_gammagamma_2l_moment_native",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.pi_gammagamma_2l_moment_native",
+   "expect_export": false,
+   "note": "Wave 7; scope fence (reproduction, not A1-derivation) is part of the banked grade token",
    "covers": []
   },
   {
@@ -463,6 +682,50 @@
    ]
   },
   {
+   "input_id": "ew:sigma_scale_formula_held",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.sigma_scale_capacity_formula_gate",
+   "expect_export": false,
+   "note": "Wave 7 v_H capacity-formula held-gate; bespoke P_structural_* token, reproduced-but-held disposition",
+   "covers": []
+  },
+  {
+   "input_id": "ew:sigma_scale_yukawa_free_floor",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.sigma_scale_yukawa_free_geometric_floor",
+   "expect_export": false,
+   "note": "Wave 7 Yukawa-free geometric component of v_H; bespoke P_structural_* token with Planck-convention rider",
+   "covers": []
+  },
+  {
+   "input_id": "ew:sin2theta_eff_kappa_l_decomposition",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.sin2theta_eff_kappa_l_decomposition",
+   "expect_export": false,
+   "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+   "covers": []
+  },
+  {
+   "input_id": "ew:sin2theta_w_os_capacity_counting_gh_codomain",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.sin2theta_w_OS_capacity_counting",
+   "expect_export": false,
+   "note": "Wave 7; docstring headline P_full_structural vs value-check machine fields P_attractor_structural_GH_OS_codomain flagged, fields quoted",
+   "covers": []
+  },
+  {
    "input_id": "ew:sqrtNc_carrier_forced",
    "axis": "ROUTE",
    "route": "generic",
@@ -471,6 +734,17 @@
    "owner_module": "apf.ew_sqrtNc_carrier_color_triplet",
    "expect_export": false,
    "note": "Wave 5 Group B leaf probe",
+   "covers": []
+  },
+  {
+   "input_id": "ew:u1y_landau_pole_trans_planckian",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.u1y_landau_pole",
+   "expect_export": false,
+   "note": "Wave 6",
    "covers": []
   },
   {
@@ -496,6 +770,39 @@
    "covers": []
   },
   {
+   "input_id": "flavour:bottom_msbar_export_candidate",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.bottom_msbar_export_candidate",
+   "expect_export": false,
+   "note": "Wave 7 bottom export-candidate closure; grade in module status tokens (export candidate, not physical-final)",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:bottom_msbar_transport_route",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.bottom_msbar_transport",
+   "expect_export": false,
+   "note": "Wave 7 bottom trace-to-scheme validation lane; grade lives in module status tokens, no per-check epistemic field",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:charged_fermion_trace_spectrum",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.charged_trace_spectrum",
+   "expect_export": false,
+   "note": "Wave 7 charged trace spectrum aggregator; P_local grade with named yellow rung (upstream-banking of the up bridge)",
+   "covers": []
+  },
+  {
    "input_id": "flavour:chiral_condensate_yuoh",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
@@ -515,6 +822,39 @@
    "owner_module": "apf.gauge_invariant_record",
    "expect_export": true,
    "note": "v24.3.303 banked scenario: the CKM-forced up/down mass bases as two disjoint triads -> SepStr export (forced flavour dynamics buy noncommutativity, NOT contextuality)",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:down_lepton_trace_vector",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.down_lepton_trace",
+   "expect_export": false,
+   "note": "Wave 7 down/lepton trace vector; all grades P_local machine fields",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:neutrino_mbb_transport",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.neutrino_mbb_reconciliation",
+   "expect_export": false,
+   "note": "Wave 7 mbb transport certificate; [P] machine field with the Delta m^2_31 anchor named as the sole external input",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:quark_trace_anchors",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.trace_anchors",
+   "expect_export": false,
+   "note": "Wave 7 top/bottom trace anchors; P_local machine fields, top anchor is an inherited constant",
    "covers": []
   },
   {
@@ -540,6 +880,50 @@
    "covers": []
   },
   {
+   "input_id": "flavour:trace_sector_closure",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.trace_sector_closure",
+   "expect_export": false,
+   "note": "Wave 7 trace-sector master closure; P_local/P_local_boundary, physical transport explicitly open here",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:up_family_trace_bridge",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.up_family_trace",
+   "expect_export": false,
+   "note": "Wave 7 up-family Gram-to-Trace bridge; P_local with named upstream-banking promotion condition",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:up_normalizer_local",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.fermion_normalizers",
+   "expect_export": false,
+   "note": "Wave 7; local theorem + guard pair; conditional gates named as banked",
+   "covers": []
+  },
+  {
+   "input_id": "flavour:yt_normalization_no_go",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.yt_absolute_scale_normalization_no_go",
+   "expect_export": false,
+   "note": "Wave 7 absolute-top-Yukawa normalization no-go; bespoke P_structural_* token, obstruction result",
+   "covers": []
+  },
+  {
    "input_id": "foundation:acc_ledger_identities",
    "axis": "ROUTE",
    "route": "categorical_unification",
@@ -548,6 +932,50 @@
    "owner_module": "apf.unification",
    "expect_export": false,
    "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:acc_projection_essentiality",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.unification_projection_essentiality",
+   "expect_export": false,
+   "note": "Wave 7; flag: docstring prose says 'all [P_structural]' while the machine field is the finer 'P_structural_exhaustive' -- field wins.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:acc_three_level_identities",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.unification_three_levels",
+   "expect_export": false,
+   "note": "Wave 7; grades from the epistemic fields (17 x 'P'); the promotion history is stated, not laundered",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:acc_unification_all_p_categorical_closure",
+   "axis": "ROUTE",
+   "route": "categorical_unification",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.acc_unification_all_p",
+   "expect_export": false,
+   "note": "Wave 7; flag: header docstring advertises plain 'P' per piece and check names end in _P, but the machine status tokens are the bespoke P_cat/P_structural_reading/P_audit family -- fields win.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:acc_unification_no_imports_provenance_gate",
+   "axis": "ROUTE",
+   "route": "categorical_unification",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.acc_unification_no_imports",
+   "expect_export": false,
+   "note": "Wave 7; grades are the bespoke P_provenance/P_audit/P_cat_fully_closed_no_imports tokens read from the status= fields.",
    "covers": []
   },
   {
@@ -562,6 +990,39 @@
    "covers": []
   },
   {
+   "input_id": "foundation:billed_vs_derived_register_criterion",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.base_fiber_allocation",
+   "expect_export": false,
+   "note": "Wave 6 depth; the B5 close (.332)",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:class_transition_primitive",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.class_transition",
+   "expect_export": false,
+   "note": "Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade lives in prose ('model-integrity checks'), so this row bills them as worked-instance witnesses, nothing stronger.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:closed_world_regime_gates",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.closed_world_completeness",
+   "expect_export": false,
+   "note": "Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2)-(3) as [P_structural], while the fields give P_math for (4)-(6), P_regime+P_math for (7), and P_structural_reading for (2)-(3); fields win.",
+   "covers": []
+  },
+  {
    "input_id": "foundation:d4_unique",
    "axis": "ROUTE",
    "route": "generic",
@@ -570,6 +1031,39 @@
    "owner_module": "apf.spacetime",
    "expect_export": false,
    "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:fencea_hinge_trichotomy_ladder",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.fencea_hinge_trichotomy",
+   "expect_export": false,
+   "note": "Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:forced_universality_classes",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.universality_forcing",
+   "expect_export": false,
+   "note": "Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:formal_kernel_theorem11_and_slot_no_go",
+   "axis": "ROUTE",
+   "route": "structural_kernel",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": "apf.formal_kernel",
+   "expect_export": false,
+   "note": "Wave 6; spine; never cite slot-level V_global identification as an open lead",
    "covers": []
   },
   {
@@ -584,6 +1078,116 @@
    "covers": []
   },
   {
+   "input_id": "foundation:geometric_symmetry_internalization",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.internalization_geo",
+   "expect_export": false,
+   "note": "Wave 7; fields match docstring.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:import_internalization_extensions",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.extensions",
+   "expect_export": false,
+   "note": "Wave 7; minor prose drift: header docstring says 'six new theorems' but the module registers seven (check_L_Tannaka_Krein added after the header was written) -- count from the registry.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:interface_factoriality_native",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.interface_factor_native",
+   "expect_export": false,
+   "note": "Wave 7; current field confirmed 'P' per the v24.3.271 corner-argument regrade; III_lambda type explicitly stays [P_structural]",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:itpfi_tail_scalar_on_omega",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.itpfi_tail_scalar_native",
+   "expect_export": false,
+   "note": "Wave 7; native-fragment-only lemma, non-native step (iv) explicitly fenced in-module",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:kappa_int_two_sided_rigidity",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.kappa_int_bounds",
+   "expect_export": false,
+   "note": "Wave 7; module docstring line 34 says all checks are [P_structural] but the sixth carries the narrower regime-restricted token (field wins)",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:l_irr_induced_polarity",
+   "axis": "ROUTE",
+   "route": "cstar",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": "apf.l_irr_induced_polarity",
+   "expect_export": false,
+   "note": "Wave 7 substrate *-algebra closure; docstring 'P_structural' vs machine P_structural_reading/P_audit flagged",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:mean_field_slack_equation",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.critical_slack",
+   "expect_export": false,
+   "note": "Wave 7; grade read from the epistemic field, matches docstring.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:one_loop_measure_from_d4",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.continuation_sum_measure",
+   "expect_export": false,
+   "note": "Wave 7; the bespoke epistemic token carries its own rider (modulo_convention) -- quoted verbatim, not shortened to [P].",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:operational_completeness_sandwich",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.operational_completeness",
+   "expect_export": false,
+   "note": "Wave 7; flag: the _module_manifest.py:438 comment (v24.3.230 stamp) still reads '[P_structural] x2' for the first two checks, but the in-module machine fields are 'P' following the 2026-06-09 [P]-promotion audit cited in the module docstring -- fields win, manifest comment is stale.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:paper1_fd1_executable_witness",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.paper1_kernel",
+   "expect_export": false,
+   "note": "Wave 7; the Paper 1 analog of formal_kernel's Theorem 1.1 witness",
+   "covers": []
+  },
+  {
    "input_id": "foundation:regime_r_exit_taxonomy",
    "axis": "ROUTE",
    "route": "generic",
@@ -592,6 +1196,17 @@
    "owner_module": "apf.plec",
    "expect_export": false,
    "note": "Wave 4 probe",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:representation_descent_stack",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.admissible_representation_stack",
+   "expect_export": false,
+   "note": "Wave 7; grades are the bespoke P_descent/P_obstruction/P_schema/P_audit/P_cat_finite_descent tokens read from status= fields.",
    "covers": []
   },
   {
@@ -614,6 +1229,83 @@
    "owner_module": "apf.recruitment",
    "expect_export": false,
    "note": "Wave 5 probe; grade read from the epistemic field, not prose",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:spectral_action_internalization",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.internalization",
+   "expect_export": false,
+   "note": "Wave 7; fields match docstring.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:subspace_functors_i1_i3_i4",
+   "axis": "ROUTE",
+   "route": "categorical_unification",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.subspace_functors",
+   "expect_export": false,
+   "note": "Wave 7; fields match docstring intent (module exists precisely to earn the [P] the three-level module had parked).",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:tail_center_trivial_f1",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.tail_center_trivial_native",
+   "expect_export": false,
+   "note": "Wave 7; native F1 half only, factoriality export explicitly disclaimed by in-module flags",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:abelian_rank1_capacity_count",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.abelian_coupling_capacity_count",
+   "expect_export": false,
+   "note": "Wave 6 item (a); the check name's _P suffix is historical -- the operative grade is the declared [P_structural_reading]",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:acc_reading_selection_map",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.acc_reading_selection",
+   "expect_export": false,
+   "note": "Wave 6",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:beta_capacity_tiling",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gauge_beta_capacity_tiling",
+   "expect_export": false,
+   "note": "Wave 7 abelian beta-tiling + leading-log identity; field P_structural_seam vs docstring [P_structural] flagged",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:photon_slot4_c4_keystone",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.photon_commitment_profile",
+   "expect_export": false,
+   "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_reading flagged, field wins",
    "covers": []
   },
   {
@@ -650,6 +1342,17 @@
    "covers": []
   },
   {
+   "input_id": "gravity:evaporation_microtransport_gates",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.evaporation_microtransport",
+   "expect_export": false,
+   "note": "Wave 7; data-field 'P | regime' prose vs status='P_conditional' token flagged (token wins)",
+   "covers": []
+  },
+  {
    "input_id": "gravity:evaporation_quartet_page_derived",
    "axis": "ROUTE",
    "route": "capacity",
@@ -658,6 +1361,39 @@
    "owner_module": "apf.evaporation_quartet",
    "expect_export": false,
    "note": "Wave 5 probe; grade lives in the status field in this module",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:fre_and_lambda_absolute",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.fractional_reading",
+   "expect_export": false,
+   "note": "Wave 7; fork-conformed surfaces (v24.3.320) respected, row is branch-neutral; the L_Lambda [P] is gate-passage-only by its own corrected header",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:i1_bridge_at_joint_k42",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.horizon_joint_bridge",
+   "expect_export": false,
+   "note": "Wave 7; single-check module, bridge grade is joint-point-only per its own artifacts",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:lambda_operator_level_derivation",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.lambda_operator_derivation",
+   "expect_export": false,
+   "note": "Wave 7; composed check field 'P' is over-[C]-ansatz per its own docstring (flagged); row is fork-branch-neutral",
    "covers": []
   },
   {
@@ -672,6 +1408,39 @@
    "covers": []
   },
   {
+   "input_id": "gravity:phase_14d3_completions",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.phase_14d3_completions",
+   "expect_export": false,
+   "note": "Wave 7; 42/102-uniqueness demotion (v24.3.320) and stale-broken scan flag surfaced; row is fork-branch-neutral",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:singlet_gram_exchangeable_form",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.cosmology",
+   "expect_export": false,
+   "note": "Wave 6 depth; the B4 close (.330); the a=b identity is a named open kernel",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:vacuum_o1_h0_fork",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.vacuum_o1_fork",
+   "expect_export": false,
+   "note": "Wave 6; the fork is deliberately preserved (principal's charter: preserve the tension), not a defect",
+   "covers": []
+  },
+  {
    "input_id": "instrument:crystal_attribution",
    "axis": "ROUTE",
    "route": "dark",
@@ -680,6 +1449,17 @@
    "owner_module": "apf.crystal_metrics",
    "expect_export": false,
    "note": "Wave 5 probe; instrument grade per the corpus grade-split",
+   "covers": []
+  },
+  {
+   "input_id": "instrument:enforcement_crystal_walker",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.crystal",
+   "expect_export": false,
+   "note": "Wave 7; instrument coherence certificate only",
    "covers": []
   },
   {
@@ -990,6 +1770,17 @@
    "covers": []
   },
   {
+   "input_id": "quantum:i3_operator_self_identification",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.quantum_operator_derivation",
+   "expect_export": false,
+   "note": "Wave 7; P_comp on the top check quoted as-is (composed status, distinct from plain P).",
+   "covers": []
+  },
+  {
    "input_id": "quantum:magic_square_threshold_robust",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_PARITY_KS",
@@ -1125,6 +1916,17 @@
    "covers": []
   },
   {
+   "input_id": "strong:confinement_single_anchor",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.confinement_scale_single_anchor",
+   "expect_export": false,
+   "note": "Wave 7 single-anchor collapse for the strong sector; field P_structural_seam vs docstring [P_structural] flagged",
+   "covers": []
+  },
+  {
    "input_id": "strong:ladder_classical_correlation_control",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC",
@@ -1158,6 +1960,17 @@
    "covers": []
   },
   {
+   "input_id": "strong:pi0_anomaly_width_row",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.thooft_anomaly_matching_chiral",
+   "expect_export": false,
+   "note": "Wave 6; scorecard row 49 (49 total / 40 tested / 33 consistent at the .341 landing)",
+   "covers": []
+  },
+  {
    "input_id": "strong:tetraquark_kcbs",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
@@ -1180,6 +1993,61 @@
    "covers": []
   },
   {
+   "input_id": "strong:vacuum_realization_triptych",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.thooft_anomaly_matching_chiral",
+   "expect_export": false,
+   "note": "Wave 6: the 2026-07-02 vacuum-realization arc (.335/.337/.341-.343); no [P] claimed anywhere in this row",
+   "covers": []
+  },
+  {
+   "input_id": "strong:ym_kappa3_negative",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.yang_mills_kappa3",
+   "expect_export": false,
+   "note": "Wave 7 Paper 30 kappa_3 negativity witness; [P_structural] field, full interval certificate lives off-bank",
+   "covers": []
+  },
+  {
+   "input_id": "strong:ym_quotient_ledger",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.ym_quotient_ledger",
+   "expect_export": false,
+   "note": "Wave 7 YM quotient ledger; 6x P_structural_instrument + 2x P machine fields, no spectral/value claim",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:cost_energy_identity",
+   "axis": "ROUTE",
+   "route": "cstar",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": "apf.cost_energy_identity",
+   "expect_export": false,
+   "note": "Wave 7; single [P] derivation check. Verdict-class adjudication (post-audit 2026-07-02): the claim compiler prices the named external-Hamiltonian fence as the blocked movement, so the row reads BLOCKED_SUBSTRATE_REVISION_REQUIRED -- that class attaches to the unclosed YM-bridge movement, NOT to the [P] identity itself; verified stable under rewording (not a keyword artifact).",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:fluctuation_response_equilibrium",
+   "axis": "ROUTE",
+   "route": "horizon",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.fluctuation_response_two_faces",
+   "expect_export": false,
+   "note": "Wave 7; equilibrium-only, dynamical FDT explicitly not claimed",
+   "covers": []
+  },
+  {
    "input_id": "thermo:four_laws_composed",
    "axis": "ROUTE",
    "route": "generic",
@@ -1191,6 +2059,50 @@
    "covers": []
   },
   {
+   "input_id": "thermo:i4_operator_self_identification",
+   "axis": "ROUTE",
+   "route": "structural_kernel",
+   "solver_status": "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+   "export_global_P": false,
+   "owner_module": "apf.i4_composition",
+   "expect_export": false,
+   "note": "Wave 7; P_comp composition token, regime-local self-identification distinguished from bridge closure",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:negative_temperature_ceiling",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.negative_temperature_ceiling",
+   "expect_export": false,
+   "note": "Wave 7; single [P] check with explicit microcanonical-dispute fence",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:thermal_absolute_scope",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.thermal_absolute",
+   "expect_export": false,
+   "note": "Wave 7; 2 [P] numerical/scope checks over a 3-check [C] interpretive layer",
+   "covers": []
+  },
+  {
+   "input_id": "wtrace:bsy_one_loop_kappa_l_assembly_consistency",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_BSY_one_loop_kappa_l_native_validator",
+   "expect_export": false,
+   "note": "Wave 7; bespoke grade token quoted verbatim; opens stated as banked",
+   "covers": []
+  },
+  {
    "input_id": "wtrace:native_one_loop_mw_close",
    "axis": "ROUTE",
    "route": "ew",
@@ -1198,17 +2110,28 @@
    "export_global_P": false,
    "owner_module": "apf.w_trace_native_delta_r_mw_assembly",
    "expect_export": false,
-   "note": "Wave 4 head 1: the one-loop native close; covers = the dependency-verified composition fan",
+   "note": "Wave 4 head 1: the one-loop native close; covers = the dependency-verified composition fan; Wave 7 covers extension: +11 stages, criterion = transitive import closure of the head module (AST-verified 2026-07-02 after a hostile audit caught 6 unreachable targets in the first pass -- the self-energy/UV sub-cluster is NOT routed by this head and stays honestly un-covered, Tier 2)",
    "covers": [
     "apf.w_trace_native_pv_massless_safe",
-    "apf.w_trace_native_bosonic_gauge_self_energy",
-    "apf.w_trace_native_fermion_sum_self_energy",
-    "apf.w_trace_native_delta_r_uv_assembly",
-    "apf.w_trace_native_uv_cancellation_stage4",
-    "apf.w_trace_native_fermionic_gauge_self_energy",
-    "apf.w_trace_native_uv_pole",
     "apf.w_trace_pv_scalar_integral_substrate",
-    "apf.w_trace_pv_timelike_two_point"
+    "apf.w_trace_pv_timelike_two_point",
+    "apf.w_trace_acfw_delta_r_extraction_attempt",
+    "apf.w_trace_apf_native_one_loop_evaluator",
+    "apf.w_trace_delta_r_remainder_resolution",
+    "apf.w_trace_delta_r_route_input_evaluation",
+    "apf.w_trace_delta_r_row_extraction_closeout",
+    "apf.w_trace_delta_r_source_acquisition_matrix",
+    "apf.w_trace_delta_r_transport_buildout",
+    "apf.w_trace_denner_sirlin_counterterm_functional",
+    "apf.w_trace_dizet_acquisition_instrumentation",
+    "apf.w_trace_dizet_executable_run",
+    "apf.w_trace_dizet_flag_sensitivity_covariance",
+    "apf.w_trace_dizet_internal_dr_decomposition",
+    "apf.w_trace_full_loop_derivation_closeout",
+    "apf.w_trace_native_finite_remainder_evaluator",
+    "apf.w_trace_pv_tensor_reduction",
+    "apf.w_trace_same_input_evaluator_closeout",
+    "apf.w_trace_standard_delta_r_extraction_worksheet"
    ]
   },
   {
@@ -1219,7 +2142,7 @@
    "export_global_P": false,
    "owner_module": "apf.w_os_route_terminal_closure",
    "expect_export": false,
-   "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface",
+   "note": "Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface; Wave 7 covers extension: +6 stages, criterion = transitive import closure of the head module (machine-checked 2026-07-02, same import-verified standard as Wave 4)",
    "covers": [
     "apf.w_trace_final_export_readiness",
     "apf.w_trace_physical_export_lock",
@@ -1233,7 +2156,13 @@
     "apf.w_trace_component_sum_certificate",
     "apf.w_trace_finite_part_skeleton",
     "apf.trace_to_scheme_transport_theorem",
-    "apf.trace_transport_completion"
+    "apf.trace_transport_completion",
+    "apf.w_trace_constants_source_ledger",
+    "apf.w_trace_delta_r_finite_map",
+    "apf.w_trace_external_ingestion_dryrun",
+    "apf.w_trace_finite_part_evaluator_gate",
+    "apf.w_trace_input_basis_ledger",
+    "apf.w_trace_real_source_candidate"
    ]
   },
   {
@@ -1252,6 +2181,28 @@
     "apf.w_trace_native_two_loop_two_point_bft_dst",
     "apf.w_trace_native_two_loop_two_point_euclidean_master"
    ]
+  },
+  {
+   "input_id": "wtrace:zll_kappa_l_oblique",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_native_zll_kappa_l_oblique",
+   "expect_export": false,
+   "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+   "covers": []
+  },
+  {
+   "input_id": "wtrace:zll_r2_counterterm_pieces",
+   "axis": "ROUTE",
+   "route": "ew",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.w_trace_native_zll_R2_counterterm_pieces",
+   "expect_export": false,
+   "note": "Wave 7; plumbing-with-a-theorem: banked content = finiteness + the delta_Z2_gamma = -Pi_AA(0) identity + delta_Z_AZ self-consistency + step-halving stability (the docstring's Sirlin delta_VB anchor language is stale -- delta_VB is imported but never compared; docstring corrigendum owed)",
+   "covers": []
   }
  ]
 }

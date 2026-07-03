@@ -1422,3 +1422,30 @@ _CHECKS = {
 def register(registry):
     """Register all 17 three-level checks into the bank."""
     registry.update(_CHECKS)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347). Spine module.
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:acc_three_level_identities",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The three-level refinement of the four T_ACC consistency "
+            "identities I1-I4 (holographic / gauge-cosmological / "
+            "thermo-quantum / action-thermo): each identity certified at "
+            "the integer, scalar, and subspace levels plus a composed "
+            "pairwise-consistency witness per identity and the top "
+            "check_T_three_level_unification -- 17 checks, all banked "
+            "epistemic [P]. The subspace witnesses for I1/I3/I4 were "
+            "promoted from [C, parked] to [P] at Phase 14c.1; no parked "
+            "kernels remain; explicit inter-level functors (d_eff coercion, "
+            "dimension functor, direct identification) are constructed, not "
+            "posited. I2's subspace level is the 42-dim V_global "
+            "co-witness via T_interface_sector_bridge. "
+        ),
+        "note": "Wave 7; grades from the epistemic fields (17 x 'P'); the promotion history is stated, not laundered",
+    },
+)

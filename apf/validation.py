@@ -2011,6 +2011,7 @@ def check_L_prediction_catalog():
         ('m_H (GeV)',      124.9,     125.09,  0.45,    'GeV', 'L_Higgs_2loop',          'B'),
         ('Δm_np (MeV)',    1.382,     1.2933,  0.0005,  'MeV', 'L_nucleon_mass_difference', 'B'),
         ('η_B NNLO',       6.197e-10, 6.12e-10, 0.04e-10, '', 'L_baryogenesis_NNLO',      'B'),  # v24.3.309: current best order, obs Planck 2018 (pull 1.9σ); relocated from the stale FUTURE block; the one counted η_B row
+        ('Γ(π⁰→γγ) (eV)',  7.780,     7.72,    0.12,    'eV', 'T_pi0_two_photon_anomaly_row', 'B'),  # v24.3.341: LO anomaly value (coeff N_c(Q_u²−Q_d²)=1 exact, pull +0.50σ vs PDG); NLO χPT ≈ 8.10 eV is a continuum-side refinement (the .309 η_B precedent); no dependency edge by the same precedent
         # ═══ FUTURE ═══
         ('r',              0.005,     None,    None,    '', 'T_inflation',               'F'),
         ('N_e',            141.1,     None,    None,    '', 'T_inflation',               'F'),

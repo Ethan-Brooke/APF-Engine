@@ -610,3 +610,41 @@ if __name__ == "__main__":
     results = run_all()
     print(json.dumps(results, indent=2, sort_keys=True))
     raise SystemExit(0 if all(r.get("consistent") for r in results.values()) else 1)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:acc_unification_all_p_categorical_closure",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Consolidated categorical closure of the ACC unification stack. "
+            "check_T_ACC_unification_all_P (top status P_cat_all_exported) "
+            "composes subchecks certifying that the ACC record (K, ACC = K ln "
+            "d_eff) is a functorial base, the six regime structures are fibers "
+            "over ACC, the generated APF bank category canonically resolves and "
+            "lifts into the fibered carrier-map category, and all four subspace "
+            "witnesses (horizon/bridge/quantum/operator) are strict fiber "
+            "functors. Grades come from the machine status tokens, not from the "
+            "_P suffix in the check names: components carry P_structural_reading "
+            "(check_T_ACC_base_record_functor_P, "
+            "check_T_generated_ACC_category_P, "
+            "check_T_regime_structures_fibered_over_ACC_P, "
+            "check_T_fibered_ACC_category_P, "
+            "check_T_free_vector_space_linearization_P), P_cat "
+            "(check_T_integer_scalar_projections_strict_P, "
+            "check_T_canonical_resolution_functor_P, the four strict subspace- "
+            "functor checks, check_T_all_four_subspace_witnesses_strict_P), "
+            "P_cat_original_level (check_T_original_generated_level_pullback_P), "
+            "and P_audit (check_T_bare_record_only_boundary_P). The no-smuggling "
+            "boundary is itself banked: the module does NOT claim that a bare "
+            "two-number record (K, d_eff) determines subspace maps without the "
+            "generated morphism/carrier-map presentation. Scope is closed-world "
+            "over the APF-generated presentation; the tokens are the bespoke "
+            "P_cat family, not a physics-export [P]. "
+        ),
+        "note": "Wave 7; flag: header docstring advertises plain 'P' per piece and check names end in _P, but the machine status tokens are the bespoke P_cat/P_structural_reading/P_audit family -- fields win.",
+    },
+)

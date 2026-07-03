@@ -366,3 +366,39 @@ if __name__ == "__main__":
     out = run_all()
     print(json.dumps({k: {"passed": v["passed"], "epistemic": v["epistemic"]}
                       for k, v in out.items()}, indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:osw_source_transcription_families",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Five banked checks, architecture-only. Four instrument checks at "
+            "epistemic=P_structural_instrument "
+            "(check_T_ew_osw_source_families_kernels_present_P, "
+            "check_T_ew_osw_source_families_coefficient_maps_P, "
+            "check_T_ew_osw_source_families_fail_closed_P, "
+            "check_T_ew_osw_source_families_forbidden_input_guard_P) certify that "
+            "the six verbatim SOURCE_TRANSCRIBE kernels (W/Z transverse self- "
+            "energy, gamma-Z mixing, vertex-box, gamma-gamma vacuum polarization, "
+            "mass/charge/weak-angle counterterms; transcribed from "
+            "Dao/Gabelmann/Muehlleitner 2022 and Denner 1993) are present, "
+            "implement the documented coefficient maps, fail closed without "
+            "source certification, and reject every forbidden target/shortcut "
+            "input (measured M_W, DIZET aggregate output). "
+            "check_C_ew_osw_source_families_values_open_C (epistemic=C) is the "
+            "honest-OPEN record: no self-energy VALUE is computed; a source- "
+            "certified coefficient map is not an evaluated value. Every value- "
+            "level export stays 0 -- no Delta_r_rem evaluation, no numeric M_W, "
+            "no fitted counterterm. Per the v15.1 adjudication the W loop-sum "
+            "export stands adjudicated [P_boundary] (Delta_r_rem has no scheme- "
+            "free standalone measurement) and the native route M_W = 80.3336 GeV "
+            "[P] carries the physics; no W export is pending or owed through "
+            "these kernels -- they are certified instruments, nothing more. "
+        ),
+        "note": "Wave 7; architecture-only instrument layer; W-export language aligned to the v15.1 adjudication",
+    },
+)

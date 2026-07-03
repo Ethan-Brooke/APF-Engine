@@ -91,3 +91,32 @@ def register(registry):
     """Register down/lepton trace vector theorems into the global bank."""
 
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:down_lepton_trace_vector",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Down/lepton APF_TRACE hardening at machine grade P_local throughout: "
+            "check_T_down_lepton_apf_trace_vector [P_local] builds the down-quark "
+            "and charged-lepton trace vector from the NNLO Fritzsch spectral "
+            "ratios (session_nnlo.check_L_NNLO_Fritzsch) and the Georgi-Jarlskog "
+            "vector (session_nnlo.check_L_lepton_GJ + "
+            "generations.check_L_GJ_from_capacity), anchored on the bottom trace "
+            "mass imported from apf.trace_anchors. "
+            "check_L_residual_down_normalizer_local [P_local] certifies Lambda_d "
+            "= 1 (d_R^c is the selected down residual channel after the color- "
+            "interface residual quotient, F1(d_R^c) = 1); "
+            "check_L_bottom_apf_trace [P_local] pins m_b_APF_TRACE; "
+            "check_T_no_inverse_inputs_down_lepton_trace certifies the forbidden- "
+            "input set (observed masses, physical Yukawa, pole/MSbar/lattice "
+            "masses, target fits) is untouched. Codomain is APF_TRACE only; no "
+            "physical scheme masses are exported. "
+        ),
+        "note": "Wave 7 down/lepton trace vector; all grades P_local machine fields",
+    },
+)

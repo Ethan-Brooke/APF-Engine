@@ -450,3 +450,41 @@ admission.
 
 if __name__ == "__main__":
     print(json.dumps(run_all(), indent=2, default=str))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:bottom_msbar_export_candidate",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Closes the bottom route at export-candidate grade, mirroring the EW "
+            "post-DIZET disposition. Grade lives in module status tokens pinned "
+            "by the checks themselves (checks return bare pass dicts): "
+            "EXPORT_STATUS = P_export_candidate_not_physical_final and "
+            "ROUTE_STATUS = P_self_scale_MSbar_codomain_admission "
+            "(check_T_bottom_msbar_export_status, _route_status). The ~44 gates "
+            "certify: the self-scale m_b(m_b) MSbar codomain branch is CLOSED as "
+            "export candidate at 4.1775 GeV with sub-sigma quoted pull "
+            "(check_T_bottom_msbar_export_self_scale_branch_closed, "
+            "_pull_quoted_subsigma); the pole codomain is REJECTED by a > 10 "
+            "sigma knockout (check_T_bottom_msbar_export_pole_rejected, "
+            "_pole_knockout_strength); the non-self-scale running branch m_b(mu "
+            "!= m_b) stays OPEN with the downstream gate the QCD "
+            "running/threshold map "
+            "(check_T_bottom_msbar_export_nonselfscale_open, "
+            "_downstream_gate_qcd); and the claim-boundary tables forbid 'final "
+            "physical' language at any renormalization scale "
+            "(check_T_bottom_msbar_export_boundary_forbids_final, "
+            "_boundary_forbids_any_scale). PDG m_b is comparison-only and "
+            "alpha_s(m_b) future-route-input only "
+            "(check_T_bottom_msbar_export_pdg_not_consumed, "
+            "_alpha_s_future_only). Explicitly not claimed: a final physical "
+            "bottom mass, an APF derivation of the QCD mass anomalous dimension / "
+            "threshold matching, or any non-self-scale export. "
+        ),
+        "note": "Wave 7 bottom export-candidate closure; grade in module status tokens (export candidate, not physical-final)",
+    },
+)

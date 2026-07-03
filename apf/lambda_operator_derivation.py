@@ -715,3 +715,42 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14d.2 operator-level derivation into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:lambda_operator_level_derivation",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Four checks upgrading the Lambda-absolute chain rho_vac = "
+            "(C_vac/d_eff) x M_Pl^4 / N_SM to operator-algebra level, with the "
+            "honest split of what upgrades and what does not. "
+            "check_T_Lambda_partition_function_at_beta_zero [P] certifies three "
+            "rigorous identities on explicit numpy tensor-product H_micro at six "
+            "test interfaces: (A) ln Z(beta->0) = K ln d_eff = ACC, (B) "
+            "<P_vac_slot> = C_vac/d_eff, (C) per-microstate probability 1/N at "
+            "max mixing, to machine precision. "
+            "check_T_Lambda_vacuum_projector_operator_identity "
+            "[P_structural_instrument] adds the beta-sweep (vacuum expectation "
+            "flows from 1 at ground to C_vac/d_eff at max-mix). "
+            "check_T_Lambda_Planck_scale_ansatz is honestly banked at [C]: the "
+            "residual step (D), the dimensional identification eps_Planck = "
+            "M_Planck, is recorded as NOT derivable from A1 in current scope (the "
+            "later phase_14d3 Planck-units clarification reframes this as a "
+            "natural-units convention, but THIS module's field remains 'C'). "
+            "check_T_Lambda_d2_operator_derivation carries epistemic='P' as the "
+            "composed audit record, but by its own docstring it is 'P over "
+            "[P]+[P_structural]+[C]' -- the composition is [P] only modulo the "
+            "[C] ansatz, and its pass condition hard-asserts passes 1-2 while "
+            "merely recording pass 3. Fork caution: the 42/102 coefficient this "
+            "chain instantiates is one branch of the banked two-branch "
+            "vacuum-O(1) reading fork (check_T_vacuum_o1_reading_fork, "
+            "v24.3.320); this row certifies the operator-level identities for the "
+            "C_vac/d_eff form and takes no branch of the fork. "
+        ),
+        "note": "Wave 7; composed check field 'P' is over-[C]-ansatz per its own docstring (flagged); row is fork-branch-neutral",
+    },
+)

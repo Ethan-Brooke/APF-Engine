@@ -5514,8 +5514,8 @@ def check_L_seesaw_ordering():
       values of 0.44 and 0.92, which violate the observational hierarchy
       Δm²_atm >> Δm²_sol by a factor of 15–30.
 
-    DEPENDENCIES: T_PMNS [P], L_seesaw_dimension [P], L_singlet_Gram [P],
-    L_dark_budget [P].
+    DEPENDENCIES: T_PMNS [P], L_seesaw_dimension [P], L_singlet_Gram
+    [P_structural] (exchangeable form witnessed; rank 1 open), L_dark_budget.
     """
     import math
     from fractions import Fraction
@@ -5675,9 +5675,13 @@ def check_L_dm2_hierarchy():
         M_R = diag(D_g) + s × D·D^T
 
     where D_g = 2^{q_B[g]/d_seesaw} (L_seesaw_dimension [P]),
-    the rank-1 term comes from the singlet collective mode
-    (L_singlet_Gram [P]), and s = 4/15 is the vacuum saturation
-    fraction (L_dark_budget [P]).
+    the rank-1 term is rank-1 in GENERATION space because the vacuum
+    sector carries no generation label (core.py sector-typing species
+    list: 'generation' is not an addressable vacuum label) -- true for
+    ANY number of collective vacuum modes, i.e. at exchangeability
+    strength (L_singlet_Gram [P_structural], exchangeable form witnessed
+    by check_L_singlet_Gram_exchangeable_form), and s = 4/15 is the
+    vacuum saturation fraction (L_dark_budget).
 
     Combined with canonical seesaw ordering, this predicts:
 
@@ -5695,11 +5699,17 @@ def check_L_dm2_hierarchy():
       D_g = 2^{q_B[g]/d_seesaw} with d_seesaw = 9/2.
       D = [2.940, 1.852, 1.000].
 
-    Step 3 [L_singlet_Gram, P]: The 42 vacuum channels support one
-      rank-1 collective singlet mode. Right-handed neutrinos couple
-      to this mode with generation-dependent amplitude proportional
-      to D_g (capacity coupling). This creates a rank-1 self-energy
-      correction: δM_R = s × D·D^T.
+    Step 3 [generation-space re-anchor; L_singlet_Gram, P_structural]:
+      the correction δM_R = s × D·D^T is rank-1 in GENERATION space
+      because the vacuum sector carries no generation label (core.py
+      sector-typing species list) -- whatever the number of collective
+      vacuum modes, none is generation-addressed, so the self-energy
+      each generation receives is proportional to its own capacity
+      coupling D_g and the correction factorizes as D·D^T. This holds
+      at exchangeability strength (the S_42-exchangeable form,
+      check_L_singlet_Gram_exchangeable_form) and does NOT require
+      rank(G_vacuum) = 1; the 0.03% prediction below keeps its grade
+      under the L_singlet_Gram demotion (v24.3.330).
 
     Step 4 [L_dark_budget, P]: The singlet mode saturates fraction
       s = 4/15 of vacuum capacity. This determines the self-energy
@@ -5826,8 +5836,10 @@ def check_L_dm2_hierarchy():
             f'(exp {ratio_exp:.4f}, err {err*100:.2f}%). '
             f'Closes L_nu_mass_gap: {gap_old:.1f}x → {gap_new:.4f}x. '
             f'M_R = diag(D) + s×D·D^T with D from L_seesaw_dimension, '
-            f'rank-1 from L_singlet_Gram, s=4/15 from L_dark_budget. '
-            f'All inputs [P]. '
+            f'rank-1 in generation space (no generation label on the vacuum '
+            f'sector -- exchangeable-form re-anchor, '
+            f'check_L_singlet_Gram_exchangeable_form), s=4/15 from '
+            f'L_dark_budget. '
             f'PMNS angles preserved (mass-basis rescaling). '
             f'Normal ordering maintained. '
             f'Structural: canonical seesaw ordering (m_0 69% gen 1).'
@@ -9433,10 +9445,20 @@ def check_T_load_form_selected_by_alpha_s():
     (_alpha_s_forward, abelian_coupling_capacity_count.py), and that prediction is acutely
     angle-sensitive:
 
-      reading       sin^2 theta_W    -> alpha_s(M_Z)   vs measured 0.1180
-      record-in     3/13  = 0.2308      0.1179            0.0 %
-      frozen-out    13/35 = 0.3714      0.0275           77 %
-      two-records   5/43  = 0.1163     -0.05            unphysical (negative)
+      reading         sin^2 theta_W    -> alpha_s(M_Z)   vs measured 0.1180
+      record-in       3/13  = 0.2308      0.1179            0.0 %
+      frozen-out      13/35 = 0.3714      0.0275           77 %
+      two-records     5/43  = 0.1163     -0.05            unphysical (negative)
+      record-on-U(1)  13/19 = 0.6842      0.0125           89 %, and t < 0
+
+    The record-on-U(1) row (T_ew_load_placement_P's fourth banked placement,
+    gamma_1 = a11 + 1 -> 13/19) is priced 2026-07-02, closing the one row the
+    orientation-EW cell note named unpriced: the forward solve INVERTS the scale
+    ordering (t = ln(M_cross/M_Z) = -29.8, i.e. M_cross ~ 1e-13 M_Z ~ 10 meV --
+    the construction's own premise of a UV crossing above M_Z fails), and the
+    coupling outputs still miss (alpha_s low by 89%; 1/alpha_2(M_Z) = 62.0 vs
+    measured 29.58, off by x2.1). The kill inherits the same reading-conditional
+    strength as the other rows (the anchor rides the rank-1 capacity reading).
 
     The record-in reading (the radial-Higgs record sits in gamma_2; T_sin2theta_higgs_record)
     is the ONLY load-form under which the whole gauge sector is mutually consistent -- a SECOND,
@@ -9463,13 +9485,13 @@ def check_T_load_form_selected_by_alpha_s():
         t = (ratio * K - invY_cross) / (BY / (2 * _m.pi) + ratio * (B2 / (2 * _m.pi)))
         inv_a3 = K - (B3 / (2 * _m.pi)) * t
         inv_a2 = K - (B2 / (2 * _m.pi)) * t
-        return 1.0 / inv_a3, inv_a2
+        return 1.0 / inv_a3, inv_a2, t
 
     ALPHA_S_MEAS = 0.1180
 
     # Reading A -- record-in (the banked 3/13): forward alpha_s lands on measured at 0.11 sigma (vs PDG-2024).
     sin2_A = float(Fraction(3, 13))
-    aS_A, inv_a2_A = _alpha_s_at(sin2_A)
+    aS_A, inv_a2_A, t_A = _alpha_s_at(sin2_A)
     check(abs(aS_A - ALPHA_S_MEAS) / ALPHA_S_MEAS < 2e-3,
           f"record-in 3/13 -> alpha_s(M_Z) = {aS_A:.5f} vs measured 0.1180 (0.11 sigma)")
     check(abs(inv_a2_A - 29.58) < 0.1,
@@ -9477,7 +9499,7 @@ def check_T_load_form_selected_by_alpha_s():
 
     # Reading B -- frozen-out (13/35, the bare-L_irr "source-exclusivity" lean): misses by ~77%.
     sin2_B = float(Fraction(13, 35))
-    aS_B, _ = _alpha_s_at(sin2_B)
+    aS_B, _, _ = _alpha_s_at(sin2_B)
     check(abs(aS_B - 0.0275) < 1e-3,
           f"frozen-out 13/35 -> alpha_s(M_Z) = {aS_B:.4f} (vs measured 0.1180)")
     check(abs(aS_B - ALPHA_S_MEAS) / ALPHA_S_MEAS > 0.5,
@@ -9485,9 +9507,27 @@ def check_T_load_form_selected_by_alpha_s():
 
     # Reading C -- two records (5/43): drives alpha_s negative -> unphysical.
     sin2_C = float(Fraction(5, 43))
-    aS_C, _ = _alpha_s_at(sin2_C)
+    aS_C, _, _ = _alpha_s_at(sin2_C)
     check(aS_C < 0,
           f"two-records 5/43 -> alpha_s(M_Z) = {aS_C:.4f} < 0 (unphysical, excluded)")
+
+    # Reading D -- record on U(1) (13/19, T_ew_load_placement_P's fourth banked
+    # placement; priced 2026-07-02): the forward solve inverts the scale ordering
+    # (t < 0: M_cross ~ 1e-13 M_Z ~ 10 meV -- below Lambda_QCD and the breaking
+    # scale, where the six-flavor unbroken-SM one-loop coefficients that define
+    # the solve are not valid; the solution exits the running's domain of
+    # validity, so the crossing premise is uninstantiable, not merely inverted)
+    # and the coupling outputs still miss a fortiori.
+    sin2_D = float(Fraction(13, 19))
+    aS_D, inv_a2_D, t_D = _alpha_s_at(sin2_D)
+    check(t_D < 0,
+          f"record-on-U(1) 13/19 -> t = ln(M_cross/M_Z) = {t_D:.2f} < 0: the crossing "
+          f"scale falls ~13 decades BELOW M_Z (ordering inversion, construction fails)")
+    check(abs(aS_D - ALPHA_S_MEAS) / ALPHA_S_MEAS > 0.5,
+          f"record-on-U(1) 13/19 -> alpha_s(M_Z) = {aS_D:.4f} misses measured 0.1180 by "
+          f"{100*abs(aS_D-ALPHA_S_MEAS)/ALPHA_S_MEAS:.0f}% (excluded at the reading's strength)")
+    check(abs(inv_a2_D - 29.58) > 10,
+          f"record-on-U(1) 13/19 -> 1/alpha_2(M_Z) = {inv_a2_D:.1f} vs measured 29.58 (x2.1 off)")
 
     # The fork is settled: exactly the banked record-in reading survives.
     check(sin2_A == float(Fraction(3, 13)),
@@ -9502,7 +9542,9 @@ def check_T_load_form_selected_by_alpha_s():
             "3/13 alone does not separate the load-form readings of gamma_2, but the forward "
             "alpha_s(M_Z) prediction from the banked horizon counts (1/alpha_cross=47.02, "
             "1/alpha_Y=61) plus the weak angle does: record-in (3/13) -> alpha_s=0.11790 (0.11 sigma); "
-            "frozen-out (13/35) -> 0.0275 (77% off); two-records (5/43) -> negative (unphysical). "
+            "frozen-out (13/35) -> 0.0275 (77% off); two-records (5/43) -> negative (unphysical); "
+            "record-on-U(1) (13/19, priced 2026-07-02) -> t<0 (crossing ~13 decades below M_Z, "
+            "ordering inversion) AND alpha_s=0.0125 (89% off) AND 1/alpha_2=62.0 (x2.1 off). "
             "The record-in reading (T_sin2theta_higgs_record) is the only load-form under which the "
             "whole gauge sector is consistent -- a SECOND independent empirical anchor on 3/13. "
             "CORROBORATION, NOT DERIVATION: alpha_s consumes sin^2 theta_W as input, so this is "
@@ -9510,7 +9552,8 @@ def check_T_load_form_selected_by_alpha_s():
             "residual stays the w propto g^2 observable dictionary. [P_structural]."
         ),
         key_result=("forward alpha_s(M_Z): record-in 3/13 -> 0.11790 (0.11 sigma), frozen-out 13/35 -> "
-                    "0.0275 (77% off), two-records 5/43 -> negative; load-form fork empirically "
+                    "0.0275 (77% off), two-records 5/43 -> negative, record-on-U(1) 13/19 -> t<0 + "
+                    "alpha_s 89% off (all four banked placements priced); load-form fork empirically "
                     "forced to record-in [P_structural]"),
         dependencies=['T_sin2theta_higgs_record', 'L_alpha_s', 'L_crossing_entropy'],
         cross_refs=['T_abelian_coupling_fixed_by_rank1_capacity_count', 'T20'],

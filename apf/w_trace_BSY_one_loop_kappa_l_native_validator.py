@@ -308,3 +308,34 @@ if __name__ == "__main__":
     for k, v in out.items():
         print(json.dumps({"name": k, "passed": v["passed"],
                           "epistemic": v["epistemic"]}, indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:bsy_one_loop_kappa_l_assembly_consistency",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Single banked check check_T_BSY_one_loop_kappa_l_assembly_consistenc "
+            "y_at_Denner_validated_inputs_P (tier 4, bespoke machine grade "
+            "P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_consistency) "
+            "certifying that the native one-loop substrate (v24.3.99 self- "
+            "energies + v24.3.107 3-pt F_V/F_A) composed via EWWGR Eq 175 (BSY "
+            "recipe) yields a structurally consistent one-loop kappa_l assembly "
+            "at Denner-validated inputs (sW^2 = 0.223339, alpha(M_Z) = 1/128.21, "
+            "m_t = 140 GeV, M_H = 100 GeV): g_V/g_A finite and real-dominated, "
+            "sin^2 theta_eff in the physical band [0.20, 0.25], renormalized Pi- "
+            "hat^gammaZ_R(M_Z^2) in the one-loop band, Delta_rho_OS reproducing "
+            "Denner's published 0.00780 to ~1e-3 relative, and Delta_kappa_l in "
+            "[0.040, 0.055]. This is assembly CONSISTENCY at a validated input "
+            "set, nothing more: PDG-canonical one-loop kappa_l closure stays OPEN "
+            "(+1.7e-2 gap to DFGRU), all-orders/two-loop EW closure stays OPEN "
+            "(scoping brief filed), no physical-final kappa_l or sin^2 theta_eff "
+            "is exported, and no DFGRU/Awramik target is consumed -- all enforced "
+            "by explicit export-flag guards inside the check. "
+        ),
+        "note": "Wave 7; bespoke grade token quoted verbatim; opens stated as banked",
+    },
+)

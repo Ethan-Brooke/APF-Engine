@@ -347,3 +347,35 @@ if __name__ == "__main__":
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
     print(f"  exports: {exports()}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:up_normalizer_local",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Two bank-registered checks, both tier 4 with returned machine field "
+            "epistemic='[P_structural]'. check_L_residual_up_normalizer_local "
+            "certifies the LOCAL up-sector normalizer theorem: after the declared "
+            "spent quotient Q_spent (removing weak-scale, common spectral, weak- "
+            "carrier, Yukawa-bilinear, and projective trace-shape structure), the "
+            "residual quadratic U(1) interface load L_2(f) = d_3 d_2 Y^2 uniquely "
+            "selects u_R^c at 4/3 on the five-channel one-generation table (Q_L = "
+            "1/6, d_R^c = 1/3, L_L = 1/2, e_R^c = 1), and the residual flux "
+            "functional gives F_1(u_R^c) = |3 x 1 x (-2/3)| = 2, hence Lambda_u = "
+            "c_R = 2. check_T_no_inverse_inputs_up_normalizer is the structural "
+            "non-smuggling guard: the declared input set {d_3, d_2, Y, Q_spent, "
+            "L_2, F_1} is disjoint from the forbidden set {m_t, y_t, m_b, m_tau, "
+            "v_obs, physical_yukawa_normalization}. The module exports Lambda_u = "
+            "2 and NOTHING else -- no physical top mass, no MSbar or pole mass, "
+            "no W-mass correction. The full top-mass theorem stays conditional on "
+            "the T_scheme and W_commute upstream gates; this module supplies only "
+            "the B_upstream gate, and the T_scheme transport-contract validator "
+            "is held outside the bank (PASS_CONTRACT_SHAPE_ONLY). "
+        ),
+        "note": "Wave 7; local theorem + guard pair; conditional gates named as banked",
+    },
+)

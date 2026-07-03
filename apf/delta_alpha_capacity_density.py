@@ -266,3 +266,37 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:delta_alpha_capacity_density",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Two banked checks, both machine-graded epistemic=P_structural_seam. "
+            "check_T_delta_alpha_capacity_counted_distinction_density_P certifies "
+            "the reformulation: the running of alpha is the accumulation of the "
+            "capacity-counted distinction density R = N_c x sum Q^2, validated "
+            "EXACTLY on the leptonic sector (reproduces the banked "
+            "Delta_alpha_lep = 0.031421), with quark R at the capacity values 2, "
+            "10/3, 11/3; the NP residual VALUE is explicitly NOT claimed native "
+            "(external threshold + nonperturbative duality violation; a rigorous "
+            "bound would be [P+tool] via OPE duality-violation control). "
+            "check_T_dalpha_had_threshold_quantum_number_forced_P certifies that "
+            "the hadronic-VP nonperturbative threshold is forced at 4 m_pi^2 by "
+            "the photon's J^PC = 1^-- selection rule (single-pi is C-forbidden), "
+            "so the threshold identification is a selection rule, not a tunable "
+            "scale; the capacity residual at the forced threshold is a parameter- "
+            "free prediction landing +1.9% from the dispersive comparator, and "
+            "that +1.9% is identified as a QCD condensate via FESR, anchor- "
+            "scaled, its O(1) coefficient [P+tool]. The dispersive value is "
+            "comparator only; no measured target consumed. Grade note: the "
+            "docstring headline says [P_structural] but both machine fields read "
+            "P_structural_seam -- the field wins. "
+        ),
+        "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_seam on both checks flagged, field wins",
+    },
+)

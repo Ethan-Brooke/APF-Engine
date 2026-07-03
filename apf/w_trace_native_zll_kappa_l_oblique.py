@@ -281,3 +281,38 @@ if __name__ == "__main__":
     out = run_all()
     print(json.dumps({k: {"passed": v["passed"], "epistemic": v["epistemic"]}
                       for k, v in out.items()}, indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "wtrace:zll_kappa_l_oblique",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Four banked checks assembling the OBLIQUE part of the leptonic "
+            "effective-angle form factor kappa_l natively per the DFGRU recipe "
+            "(arXiv:1906.08815 eqs 1.1-1.2). "
+            "check_T_w_trace_native_kappa_l_gammaZ_mixing_P (tier 4, "
+            "epistemic=P_structural_partial) certifies the gamma-Z-mixing piece "
+            "(c/s) x Sigma^gZ(M_Z^2)/M_Z^2 = +0.001483 evaluated natively from "
+            "the banked Sig_AZ self-energy, sign sourced from the reference, with "
+            "the ~6% Sigma^gg denominator correction named as a dropped higher- "
+            "order effect. check_T_w_trace_native_kappa_l_custodial_consistent_P "
+            "(tier 4, epistemic=P) certifies consistency with the banked "
+            "custodial term 0.021721. "
+            "check_T_w_trace_native_kappa_l_oblique_assembly_P (tier 4, "
+            "epistemic=P_structural_partial) certifies the oblique assembly "
+            "Delta_kappa_l^obl = 0.023204 = 63.0% of the banked target 0.036808. "
+            "check_L_w_trace_native_kappa_l_proper_vertex_open_C (tier 4, "
+            "epistemic=C) is the honest-OPEN record: the proper Zll vertex form "
+            "factors (the genuine ~37% non-oblique remainder: proper vertex + "
+            "light-fermion + data-bound Delta_alpha) are NOT computed -- the "
+            "named next rung. No sin^2 theta_eff value is exported; kappa_l is "
+            "NOT closed. Caveat as banked: Sig_AZ uses the v24.3.99 Denner input "
+            "masses (m_t = 140), m_t-insensitive at the quoted precision. "
+        ),
+        "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+    },
+)

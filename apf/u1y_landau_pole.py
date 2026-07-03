@@ -191,3 +191,26 @@ if __name__ == "__main__":
     print(("PASS" if r["passed"] else "FAIL"), r["name"])
     for f in r["failures"]:
         print("   -", f)
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 6, v24.3.346).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:u1y_landau_pole_trans_planckian",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The one-loop U(1)_Y Landau pole is trans-Planckian by more "
+            "than twenty-two decades [P] "
+            "(check_T_u1y_landau_pole_trans_planckian, v24.3.315): b_Y = 41/6 "
+            "exact from the banked hypercharge content (20/9 per "
+            "generation), anchor-robust across the banked anchor readings; "
+            "generation bound n_g <= 6 from pole > M_Pl. No claim that the "
+            "pole is physical -- the content is that the abelian sector "
+            "cannot self-obstruct below the Planck scale. "
+        ),
+        "note": "Wave 6",
+    },
+)

@@ -239,3 +239,33 @@ def register(registry):
     """Register up-family Gram-to-Trace bridge theorems into the global bank."""
 
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "flavour:up_family_trace_bridge",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Up-family Gram-to-Trace bridge: check_L_up_gram_ratios_executable "
+            "[P_local] computes the up-family Gram-kernel eigenvalue ratios from "
+            "APF structural constants only (x = 1/2, cos(pi/5), cos(pi/4), "
+            "cos(pi/6), crossing depletion (x^3)^2 x 5/4) with a pure-Python "
+            "Jacobi eigensolver; check_B_gram_to_trace_bridge_scale_covariance "
+            "['P_local | upstream-banking-ready'] proves the bridge theorem that "
+            "the degree-zero-homogeneous Gram ratios plus the independently "
+            "closed APF_TRACE top anchor fix m_c_TRACE = (lambda_2/lambda_3) "
+            "m_t_TRACE and m_u_TRACE = (lambda_1/lambda_2) m_c_TRACE by scale "
+            "covariance; check_T_up_family_apf_trace_vector ['P_local | "
+            "B_GramToTrace strengthened'] exports the up-family trace vector; "
+            "check_T_no_inverse_inputs_up_trace certifies no observed masses or "
+            "physical-scheme quantities are consumed. Grades are P_local machine "
+            "fields, with upstream banking named as the promotion condition. "
+            "APF_TRACE codomain only; physical comparison requires the separate "
+            "T_scheme transport contract. "
+        ),
+        "note": "Wave 7 up-family Gram-to-Trace bridge; P_local with named upstream-banking promotion condition",
+    },
+)

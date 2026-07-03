@@ -200,3 +200,38 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:one_loop_measure_from_d4",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One check, check_T_continuation_sum_measure_native_from_D4_P, "
+            "machine-graded epistemic='P_structural_continuation_sum_measure_nati "
+            "ve_from_D4_modulo_convention' -- the modulo_convention rider in the "
+            "token is load-bearing. Certified: the STRUCTURE of the universal "
+            "one-loop measure factor is (4pi)^{-D/2}, forced at the framework's "
+            "native D=4 (check_T8, [P]) to 1/(16pi^2), re-verified from two "
+            "pillars rather than hardcoded: (1) the Gamma(D/2) in the angular "
+            "continuation-direction volume cancels the Gamma(D/2) from the "
+            "quadratic-cost radial Beta integral, leaving pi^{D/2}/(2pi)^D; (2) "
+            "the A2 lemma forces the free cost kernel to k^2 + m^2 from "
+            "translation invariance (check_Delta_continuum) + Lorentz invariance "
+            "(check_L_irr) + locality (check_L_loc) + the cost floor "
+            "(check_L_epsilon_star), with the no-ghost/Ostrogradsky exclusion of "
+            "higher-derivative kinetic terms verified at propagator-residue "
+            "level. Honest non-claims are exported inside the check: the bare "
+            "value 1/(16pi^2) carries the (2pi)^D normalization convention "
+            "(Export_measure_value_convention_free_P = 0), "
+            "Export_physical_final_P = 0, and Ostrogradsky is billed as cited "
+            "math on native premises ([P+math] posture), not as native APF "
+            "content. Nothing is tuned to the known value; the check confirms the "
+            "measure tracks D (1/(4pi) at D=2). "
+        ),
+        "note": "Wave 7; the bespoke epistemic token carries its own rider (modulo_convention) -- quoted verbatim, not shortened to [P].",
+    },
+)

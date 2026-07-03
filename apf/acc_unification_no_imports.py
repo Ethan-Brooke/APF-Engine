@@ -382,3 +382,38 @@ if __name__ == "__main__":
     results = run_all()
     print(json.dumps(results, indent=2, sort_keys=True))
     raise SystemExit(0 if all(x.get("consistent") for x in results.values()) else 1)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:acc_unification_no_imports_provenance_gate",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Provenance/no-smuggling gate over the categorical unification stack. "
+            "check_T_ACC_unification_fully_P_no_external_imports (top status "
+            "P_cat_fully_closed_no_imports) composes: a predecessor pass-through "
+            "requiring acc_unification_all_p's top theorem at exactly status "
+            "P_cat_all_exported (check_T_ACC_unification_all_P_predecessor); "
+            "three provenance audits certifying that every object, every "
+            "morphism, and every carrier map in the presentation is APF-generated "
+            "(check_T_APF_object_provenance_P, check_T_APF_morphism_provenance_P, "
+            "check_T_APF_carrier_map_provenance_P, each status P_provenance); and "
+            "three boundary audits "
+            "(check_T_formal_math_language_not_physical_import_P, "
+            "check_T_no_external_physical_imports_P, "
+            "check_T_no_bare_record_overclaim_P, each status P_audit). What is "
+            "certified: the categorical unification consumes no external "
+            "constants, Lagrangians, empirical equations, Hilbert-space physical "
+            "primitives, or SM/cosmology dynamics; finite sets, vector spaces, "
+            "and categories are billed as formal math language, not physical "
+            "imports. The bare-record boundary is restated as a banked audit: no "
+            "claim that (K, d_eff) alone determines subspace maps. The grades are "
+            "provenance/audit tokens over a closed-world presentation, not a "
+            "physics-export [P]. "
+        ),
+        "note": "Wave 7; grades are the bespoke P_provenance/P_audit/P_cat_fully_closed_no_imports tokens read from the status= fields.",
+    },
+)

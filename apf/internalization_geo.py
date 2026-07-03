@@ -722,3 +722,33 @@ def register(registry):
     registry['L_chartability']              = check_L_chartability
     registry['L_coleman_mandula_internal']  = check_L_coleman_mandula_internal
     registry['L_lovelock_internal']         = check_L_lovelock_internal
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:geometric_symmetry_internalization",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Geometric and symmetry internalization: four checks, all machine- "
+            "graded epistemic='P'. check_L_kolmogorov_internal derives the "
+            "continuum limit of the admissibility lattice from A1 + the "
+            "marginalization consistency condition R3 (internalizing the "
+            "Kolmogorov extension theorem); check_L_chartability derives a smooth "
+            "atlas from Lipschitz cost + compactness (internalizing the Nash- "
+            "Kuiper/Palais manifold inputs); check_L_coleman_mandula_internal "
+            "derives the direct-product symmetry structure G = Poincare x Gauge "
+            "from admissibility (internalizing Coleman-Mandula 1967 and the Haag- "
+            "Lopuszanski-Sohnius extension); check_L_lovelock_internal derives "
+            "the uniqueness of the Einstein equations in d=4 (internalizing "
+            "Lovelock 1971). Billed effect at the v5.3.2 landing: external "
+            "imports 11 -> 5. Cross-reference: the Lovelock prerequisites "
+            "A9.1-A9.5 are separately unified by check_A9_closure in "
+            "apf/gravity.py; this module carries the internalized derivations "
+            "themselves. "
+        ),
+        "note": "Wave 7; fields match docstring.",
+    },
+)

@@ -28,7 +28,7 @@ at the crossing scale (L_crossing_entropy [P]).
   m > 0 (rank 2) the competition has a UV fixed point; its Fisher equilibrium resolves
   the within-slot d_eff microstates, reading S_dS smeared as B*sigma per running mode
   (L_coupling_capacity_id [P]). For m = 0 (rank 1) there is no fixed point and the
-  structure is a single collective mode (L_singlet_Gram [P]) which reads the bare count
+  structure is a single collective mode (L_singlet_Gram [P_structural]) which reads the bare count
   S_dS/sigma = C_total. The rank-1 reading is forced -- see T_gauge_reading_dichotomy [P].
 
   TYPE. A bosonic root-measure supports the 16 bosonic slots; a universal reading
@@ -153,7 +153,7 @@ def check_L_abelian_no_ledger_channel_structure():
     touch the 61 ledger channels at all, so the uniform full count is forced with no unstated premise.
     A gauge coupling's channel structure is its gauge group plus its running. For the rank-1 abelian
     both are absent from the ledger: (1) the U(1) Gram is rank 1, a single collective mode with no
-    internal index (L_singlet_Gram [P]); (2) the abelian beta tiles the degeneracy COMPLEMENT,
+    internal index (L_singlet_Gram [P_structural]); (2) the abelian beta tiles the degeneracy COMPLEMENT,
     6|b_Y| = 41 = d_eff - C_total, disjoint from the 61 ledger slots (T_gauge_beta_capacity_tiling
     [P]; the non-abelian betas tile the ledger, 6(|b3|+|b2|) = 61). With no structure to break the
     L_equip channel-equivalence, the only invariant reading is the uniform full count, so
@@ -191,7 +191,7 @@ def check_L_abelian_no_ledger_channel_structure():
     return _result(
         name=("L_abelian_no_ledger_channel_structure: the rank-1 abelian U(1) has NO structure that "
               "distinguishes the 61 ledger channels. Its gauge group is rank 1 (a single collective "
-              "mode, no internal index -- L_singlet_Gram [P]) and its beta tiles the degeneracy "
+              "mode, no internal index -- L_singlet_Gram [P_structural]) and its beta tiles the degeneracy "
               "complement (6|b_Y| = 41 = d_eff - C_total, disjoint from the ledger -- "
               "T_gauge_beta_capacity_tiling [P]; the non-abelian betas tile the ledger, 6(|b3|+|b2|)=61). "
               "With no distinguishing structure, the L_equip channel-equivalence leaves only the uniform "
@@ -206,7 +206,7 @@ def check_L_abelian_no_ledger_channel_structure():
             "discharges that premise for the abelian without the broad claim, by showing the abelian's "
             "ACTUAL structures are both absent from the ledger. A gauge coupling's channel structure is "
             "its gauge group plus its running. (1) The U(1) Gram A=[[1,x],[x,x^2]] (m=0) is rank 1 -- a "
-            "single collective mode with no internal index (L_singlet_Gram [P]) -- so the group gives no "
+            "single collective mode with no internal index (L_singlet_Gram [P_structural]) -- so the group gives no "
             "per-channel profile over the 61 slots. (2) The abelian beta tiles the degeneracy COMPLEMENT: "
             "6|b_Y| = 41 = d_eff - C_total, disjoint from the 61 ledger channels (the non-abelian betas "
             "tile the ledger, 6(|b3|+|b2|) = 61, and the three together tile d_eff = 102; "
@@ -399,7 +399,7 @@ def check_T_rank_field_selector():
         name=("T_rank_field_selector: a resolving structure's competition rank fixes which of the two "
               "ACC scalars it reads. Rank-2 (det A = m > 0) has a UV fixed point whose Fisher "
               "equilibrium reads S_dS smeared as B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id [P]); "
-              "rank-1 (m = 0) is a single collective mode (L_singlet_Gram [P]) that reads the bare count "
+              "rank-1 (m = 0) is a single collective mode (L_singlet_Gram [P_structural]) that reads the bare count "
               "S_dS/sigma = C_total = 61. The rank-1 whole-horizon support is ARGUED by "
               "T_gauge_reading_dichotomy; the selector is [P_structural_reading] (2026-06-27: the support-exhaustiveness is open, alpha_s-corroborated, not closed)"),
         tier=4,
@@ -412,7 +412,7 @@ def check_T_rank_field_selector():
             "A = [[1,x],[x,x^2+m]] has det A = m. For m > 0 (SU(3) m=8, SU(2) m=3) A is rank 2, has a "
             "UV fixed point, and its Fisher equilibrium distributes S_dS over the running modes -- the "
             "smeared reading B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id [P]). For U(1) m=0 A is "
-            "rank 1: a single collective mode (L_singlet_Gram [P]) with no fixed point, forced to the "
+            "rank 1: a single collective mode (L_singlet_Gram [P_structural]) with no fixed point, forced to the "
             "uniform full-ledger count S_dS/sigma = C_total = 61. GRADE [P_structural]: the rank-1 whole-horizon "
             "support -- the no-third-reading exhaustiveness that holds this at [P_structural] is argued (not closed to [P]) by "
             "T_gauge_reading_dichotomy [P_structural], which argues a gauge coupling has two readings "
@@ -860,3 +860,31 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 6, v24.3.346).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:acc_reading_selection_map",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "The Reading-Selection Rule (the gauge reading map): competition "
+            "rank fixes which ACC scalar a structure reads "
+            "(check_T_rank_field_selector [P_structural_reading], "
+            "support-exhaustiveness open); a gauge coupling has exactly two "
+            "horizon readings (check_T_gauge_reading_dichotomy "
+            "[P_structural_reading], no-third-reading exhaustiveness open); "
+            "the crossing arm 1/alpha_cross = 47.02 is a [P] composition of "
+            "four bank-[P] links while the abelian arm 1/alpha_Y = 61 "
+            "inherits the open support-uniqueness "
+            "(check_T_gauge_value_chain_is_P [P_structural_reading]); the "
+            "top rule (check_T_acc_reading_selection) stands at its bespoke "
+            "token [P_structural_exhaustive] -- open instances: the EW-floor "
+            "type clause and the abelian sub-support exhaustiveness. "
+        ),
+        "note": "Wave 6",
+    },
+)

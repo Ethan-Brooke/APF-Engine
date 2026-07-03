@@ -266,8 +266,10 @@ def check_T_Planck_scale_status_clarification():
             f"a missing derivation. Paper 8 clarifies: APF's "
             f"quantitative predictions are complete as dimensionless "
             f"structural statements; the 8% gap vs Planck 2018 rho_Lambda "
-            f"is the Hubble tension (APF's algebraically-linked H_0 = "
-            f"70.03 km/s/Mpc), not a Planck-scale deficiency."
+            f"tracks the Hubble-tension band (H_0 = 70.03 km/s/Mpc is the "
+            f"two-factor branch of the banked vacuum-O(1) reading fork; "
+            f"count=area gives 66.83 -- check_T_vacuum_o1_reading_fork), "
+            f"not a Planck-scale deficiency."
         ),
         key_result=(
             'M_Planck is external natural-units scale (standard physics '
@@ -294,11 +296,14 @@ def check_T_Planck_scale_status_clarification():
             'planck_scale_ansatz_status_reframed_to':
                 planck_scale_ansatz_status_reframed,
             'relation_to_Hubble_tension': (
-                'The 8% rho_Lambda residual vs Planck 2018 IS the '
-                'Hubble tension. APF H_0 = 70.03 km/s/Mpc predicts the '
-                'tension midpoint, not an end-value. Phase 14d.3 '
-                'clarifies this is the correct framing, not a '
-                'Planck-scale-derivation residual.'),
+                'The 8% rho_Lambda residual vs Planck 2018 sits in the '
+                'Hubble-tension band. H_0 = 70.03 km/s/Mpc is the '
+                'TWO-FACTOR branch of the banked vacuum-O(1) reading '
+                'fork (count=area gives 66.83; '
+                'check_T_vacuum_o1_reading_fork, v24.3.320) -- a named '
+                'reading fork, not a prediction row. Phase 14d.3 '
+                'clarifies the residual is not a '
+                'Planck-scale-derivation deficiency.'),
             'paper_8_framing_consequence': (
                 'Paper 8 states: APF predicts dimensionless ratios; SI '
                 'conversion uses standard natural-units practice. The '
@@ -713,3 +718,40 @@ _CHECKS = {
 def register(registry):
     """Register the Phase 14d.3 structural completions into the bank."""
     registry.update(_CHECKS)
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:phase_14d3_completions",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Three completion checks with three different grades, each carrying "
+            "its own honesty machinery. check_T_Planck_scale_status_clarification "
+            "[P]: Planck units are APF's native unit system -- every APF "
+            "prediction is a dimensionless ratio (slot counts, d_eff = 102, mass "
+            "ratios, rho_Lambda/M_Pl^4 = 42/102^62, etc.), M_Planck = 1 by "
+            "convention, and SI conversion is the standard external unit "
+            "interface (measuring G), not a framework deficiency; its H0 surface "
+            "is conformed to the banked two-branch vacuum-O(1) reading fork (the "
+            "sqrt(8 x pi x 61/3)/102^31 form is the two-factor branch; count=area "
+            "gives 66.83; check_T_vacuum_o1_reading_fork named in-summary) -- a "
+            "named fork, not a prediction row. "
+            "check_T_42_over_102_structural_uniqueness [P_structural_reading]: "
+            "DEMOTED from [P] at v24.3.320 with an in-module STALE-BROKEN flag -- "
+            "against the corrected observation -122.944, the champion 42/102 sits "
+            "at 0.034 decades, OUTSIDE the check's own 0.01-decade window, while "
+            "T10's 3/8 sits INSIDE at 0.007 decades with its own derivation "
+            "chain; the uniqueness criterion selects 42/102 only WITHIN the two- "
+            "factor reading, the tabulated scan values are pre-correction "
+            "historical record, and rebuild-or-retire of the scan is the named "
+            "open follow-up. check_T_bridge_observer_independence_open [C]: the "
+            "observer-dependence question of the bridge theorem is formalized and "
+            "registered as honestly open at conjecture grade. This row takes no "
+            "branch of the reading fork. "
+        ),
+        "note": "Wave 7; 42/102-uniqueness demotion (v24.3.320) and stale-broken scan flag surfaced; row is fork-branch-neutral",
+    },
+)

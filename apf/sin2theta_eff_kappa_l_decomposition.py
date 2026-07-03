@@ -551,3 +551,39 @@ if __name__ == "__main__":
         indent=2,
     ))
     print(json.dumps(_decomposition(), indent=2))
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:sin2theta_eff_kappa_l_decomposition",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Six banked checks decomposing the leptonic effective-angle form "
+            "factor Delta_kappa_l = Xi_rho x Delta_rho + Delta_kappa_rem. "
+            "check_T_sin2theta_eff_kappa_l_leading_custodial_internal_P (tier 4, "
+            "epistemic=P) certifies the leading custodial term Xi_rho x Delta_rho "
+            "= 0.021721 (59.0% of the banked target Delta_kappa_l = 0.036808) as "
+            "APF-internal, built only from the banked on-shell codomain sin^2 "
+            "theta_OS = 0.223339 and the L_W_mass Delta_rho; "
+            "check_L_sin2theta_eff_kappa_l_drho_matches_gauge_P (tier 3, "
+            "epistemic=P) certifies the Delta_rho recomputation value-identical "
+            "to gauge.check_L_W_mass; "
+            "check_T_sin2theta_eff_kappa_l_no_target_smuggling_P (tier 4, "
+            "epistemic=P) certifies no measured sin^2 theta_eff is consumed (the "
+            "kappa_l target is the already-banked import-only ratio, not a new "
+            "fit). "
+            "check_T_sin2theta_eff_kappa_l_remainder_mt_normalization_split_P "
+            "(tier 4, epistemic=P_structural_partial) splits the remainder along "
+            "the m_t-normalization axis. The remainder Delta_kappa_rem = 0.015087 "
+            "is the single named OPEN slot, recorded honestly by two [C] checks "
+            "(check_L_sin2theta_eff_kappa_l_remainder_named_open_C and "
+            "check_L_sin2theta_eff_kappa_l_nonrho_remainder_open_C, both tier 4, "
+            "epistemic=C). The full-form-factor export stays 0: leading custodial "
+            "term internal + named remainder gate, an increment, not a closure. "
+        ),
+        "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+    },
+)

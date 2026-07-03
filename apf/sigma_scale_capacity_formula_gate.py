@@ -221,3 +221,36 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "ew:sigma_scale_formula_held",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Banks a GATE disposition, not a value: check_T_sigma_scale_capacity_ "
+            "formula_held_pending_independent_scale_P (machine field epistemic='P "
+            "_structural_sigma_scale_capacity_formula_held_pending_independent_sc "
+            "ale', a bespoke token whose name IS the claim boundary) certifies "
+            "that the Paper-28 / L_vev_threshold_matching capacity formula v_H = "
+            "a_total x M_Pl / sqrt(C_boson pi^2 b d_eff^C_boson) REPRODUCES v_H = "
+            "246.5 GeV but is HELD, not a native absolute-scale derivation. "
+            "Reasons certified: the O(1) prefactor rests on TWO calibrated inputs "
+            "-- the absolute top Yukawa y_t (unfixable by normalization per the "
+            "sibling no-go) and c_R (~42% of a_total; without it v_H ~ 144 GeV) "
+            "-- and the y_t color-counting convention moves v_H across 178-452 "
+            "GeV, failing the invariance criterion. The formula's genuinely "
+            "native content is the M_Pl -> EW hierarchy suppression "
+            "d_eff^(C_boson/2) ~ 102^8. Measured v_H is comparator only, never "
+            "input; export flags pin Export_sigma_capacity_formula_reproduced_P = "
+            "1 and Export_sigma_scale_native_close_P = 0 (y_t, c_R, sigma0 all "
+            "open). No absolute electroweak scale is derived, and the frontier "
+            "has since been TERMINATED by the 2026-07-02 FORM no-go "
+            "(check_T_ew_scale_functional_independence_no_go). "
+        ),
+        "note": "Wave 7 v_H capacity-formula held-gate; bespoke P_structural_* token, reproduced-but-held disposition",
+    },
+)

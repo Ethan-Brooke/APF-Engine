@@ -211,3 +211,33 @@ if __name__ == "__main__":
         status = "PASS" if result.get("passed") else "FAIL"
         print(f"  [{status}] {result['name']}")
         print(f"         -> {result['key_result']}")
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "foundation:mean_field_slack_equation",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "One bank-registered check, check_T_critical_mean_field, machine "
+            "field epistemic='[P_structural]'. Witnesses the mean-field slack "
+            "equation Delta*_SSA(1+delta) = C(1+delta)/(2+delta) derived from "
+            "PLEC's saturation/superadditivity bookkeeping, on a canonical finite "
+            "witness (representative capacity C = 100 with a 7-point delta grid "
+            "spanning the linear-order regime), plus the linear-order extraction "
+            "of the mean-field exponents beta = gamma = 1 as the entry point to "
+            "Paper 11 Theorem C3's field-theoretic promotion. What is certified "
+            "is static: algebraic relations on the slack scalar lambda = (C - "
+            "E)/C at a single enforcement interface; the 'approach/trajectory' "
+            "language is the operational reading of those static relations under "
+            "the eternalist convention (Paper 0). The field-theoretic promotion "
+            "to actual critical behavior beyond mean field is Paper 11's Theorem "
+            "C3 content, not this module's -- this module supplies the coderef "
+            "anchor for the load-bearing Paper 11 sec 3.5 reference to Paper 16's "
+            "T_critical. "
+        ),
+        "note": "Wave 7; grade read from the epistemic field, matches docstring.",
+    },
+)

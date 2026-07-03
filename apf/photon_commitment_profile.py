@@ -155,3 +155,36 @@ _CHECKS = {
 def register(registry):
     for name, fn in _CHECKS.items():
         registry[name] = fn
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 7, v24.3.347).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:photon_slot4_c4_keystone",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Single banked check check_T_ledger_reversibility_is_L_irr_lock (tier "
+            "4, machine grade epistemic=P_structural_reading) certifying the "
+            "slot-4 keystone of the photon capacity profile: the fourth horizon- "
+            "record commitment C_4 (ledger reversibility) IS the L_irr permanent- "
+            "ledger-entry commitment, so the reversible photon -- locking no "
+            "record (T_photon_massless_from_reversibility [P_structural], L_irr's "
+            "abelian countermodel) -- makes no permanent entry and fails C_4. The "
+            "identification composes L_irr [P] + photon masslessness "
+            "[P_structural] + the horizon four-commitment basis [P_structural]; "
+            "NF_rev is the LOCAL absence of a permanent entry, not global "
+            "erasure. Scope as banked: this banks the slot-4 keystone ONLY -- the "
+            "full (1,1,1,0) profile and C_gamma = 3 eps await the carrier-triad "
+            "pin, which is NOT yet in the live bank. The 3/4 is the photon's "
+            "record state / force character (the missing C_4 is the rest mass / "
+            "longitudinal polarization), NOT a coupling: the abelian coupling "
+            "stays the integer-rigid channel count C_total = 61, which the 3/4 "
+            "cannot enter. Grade note: the docstring and summary say 'GRADE "
+            "[P_structural]' but the machine field is P_structural_reading -- the "
+            "field wins. "
+        ),
+        "note": "Wave 7; docstring [P_structural] vs machine epistemic=P_structural_reading flagged, field wins",
+    },
+)
