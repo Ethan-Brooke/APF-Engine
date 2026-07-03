@@ -41,7 +41,10 @@ This module is the bank-side companion to today's session work:
   Findings (2026-05-27).md.
 - "+0.0084 honest-open R2" framing REVISITED as frame-comparison error;
   matched-inputs reading gives +1.6×10^-3 at Denner-set, +1.7×10^-2 at
-  PDG canonical (the latter is the two-loop gate).
+  PDG canonical (the latter is the two-loop gate). [Numbers pre-.358: the
+  corrigendum adds +0.00104. The "two-loop gate" ATTRIBUTION IS SUPERSEDED
+  at .358 by the ACFW published-one-loop benchmark below: the dominant
+  excess is an M_H-flat assembly-sector defect, not two-loop content.]
 - v24.3.107 docstring corrected (3-pt function piece, not "BARE"; pre-
   edit snapshot at Codebase/Old/).
 
@@ -61,6 +64,32 @@ one-loop κ_ℓ output at Denner-validated inputs. The all-orders closure
 to DFGRU and the absolute precision improvement to PDG canonical both
 go through the two-loop EW arc, which is now actively staged via the
 scoping brief.
+
+v24.3.358 (2026-07-03) — two changes from the 2026-07-02 Zll proper-vertex
+walk (fresh-context walker + hostile audit SOUND-WITH-CORRECTIONS 0.90;
+witnesses at The Turning/zll_vertex_walk_2026-07-02/; note "Reference -
+CONTINUATION - The Zll Proper Vertex; Closing the Kappa_l Transport Gate
+for Real (2026-07-02).md"):
+
+1. CORRIGENDUM in _bsy_compose: the eq-rself mixing renormalization was
+   transcribed with +2·Σ^γZ(0)/M_Z²; the source-exact coefficient is +1
+   (the (δZ₁^γZ−δZ₂^γZ)·M_Z² term was dropped). Worth +0.0010444 in Δκ_ℓ;
+   the defect partially masked the assembly overshoot. Independently
+   re-derived by the audit from eq counterm. No banked band flips; the
+   δr chain uses eq deltar and is untouched; v15.1 untouched.
+
+2. NEW published-one-loop benchmark check (ACFW = Awramik–Czakon–Freitas–
+   Weiglein, PRL 93 (2004) 201805, Table II: full one-loop O(α) Δκ,
+   M_W-input, α(0) expansion, m_t=178.0, M_W=80.426, M_Z=91.1876,
+   m_b=4.85): the native assembly PASSES the M_H-shape benchmark to
+   ≤1.7e-4 over an 8.0e-3 published M_H swing and FAILS the absolute
+   benchmark by +0.0194, M_H-FLAT. One-loop vs one-loop: the κ_ℓ
+   overshoot is an assembly-sector defect localized in the
+   M_H-INDEPENDENT sector, NOT two-loop truncation — recorded at
+   published-benchmark grade. FAIL-recording instrument
+   [P_structural_instrument]; retires the [C] slot check's
+   "UNBENCHMARKED" clause the hard way. The M_H-shape PASS
+   simultaneously benchmark-validates the oblique sector.
 """
 from __future__ import annotations
 
@@ -117,14 +146,31 @@ def _bsy_compose(sW2: float, alpha: float, mu2: float = None) -> Dict[str, Any]:
     dMW2 = Sigma_W_MW2c / MW2_consistent
     Drho = dMZ2 - dMW2
 
-    # EWWGR-exact counterm L5827-5852 + rself
+    # EWWGR-exact counterm L5827-5852 + rself L5783-5791.
+    # v24.3.358 CORRIGENDUM (Zll proper-vertex walk 2026-07-02; hostile audit
+    # SOUND-WITH-CORRECTIONS 0.90, the fix independently re-derived by the
+    # auditor from eq counterm): eq rself's mixing line carries BOTH
+    # renormalization terms,
+    #   Sig-hat^gZ(M_Z^2) = Sig^gZ(M_Z^2) - dZ2_gZ*M_Z^2 + (dZ1_gZ - dZ2_gZ)*M_Z^2,
+    # and the pre-.358 transcription dropped the second, (dZ1^gZ - dZ2^gZ)*M_Z^2.
+    # With eq counterm's dZ1^g = -Pi^g(0) - (s/c)*SgZ0 and
+    # dZ1^Z = -Pi^g(0) - (3c^2-2s^2)/(sc)*SgZ0 + (c^2-s^2)/s^2*Drho, the net
+    # source-exact coefficient of Sig^gZ(0)/M_Z^2 inside Pi_gZ_R is +1, not the
+    # pre-.358 +2. Worth +0.0010444 in Delta_kappa_l (the defect partially
+    # masked the assembly overshoot measured by the ACFW benchmark check below).
+    # No banked band flips (verified at .358 landing).
     SgZ0 = Sigma_AZ_0 / _ndr_MZ2
     dZ2_g  = -Pi_g_0
+    dZ1_g  = -Pi_g_0 - (sW/cW) * SgZ0
     dZ2_Z  = -Pi_g_0 \
              - 2.0*(cW2-sW2)/(sW*cW) * SgZ0 \
              + (cW2-sW2)/sW2 * Drho
+    dZ1_Z  = -Pi_g_0 \
+             - (3.0*cW2 - 2.0*sW2)/(sW*cW) * SgZ0 \
+             + (cW2-sW2)/sW2 * Drho
     dZ2_gZ = (sW*cW)/(cW2-sW2) * (dZ2_Z - dZ2_g)
-    Pi_gZ_R = Sigma_AZ_MZ2/_ndr_MZ2 - dZ2_gZ
+    dZ1_gZ = (sW*cW)/(cW2-sW2) * (dZ1_Z - dZ1_g)
+    Pi_gZ_R = Sigma_AZ_MZ2/_ndr_MZ2 - dZ2_gZ + (dZ1_gZ - dZ2_gZ)
 
     # v24.3.107 3-pt function piece (banked F_V_Z uses scalar-substrate MW²;
     # the ~0.1% gap to c²·M_Z² at non-PDG sW² is acceptable for the
@@ -207,8 +253,9 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
 
     # (5) Δκ_ℓ at Denner-validated inputs lands in the one-loop SM band.
     # Acceptance criterion: [0.040, 0.055]. Tight bounds reflect Denner-
-    # set's known one-loop range; today's matched-inputs result was 0.0475
-    # (Case B α(M_Z)).
+    # set's known one-loop range; the 2026-05-27 matched-inputs result was
+    # 0.0475 (Case B α(M_Z)); post-.358 corrigendum it is 0.04854 — still
+    # comfortably in-band.
     check(0.040 <= Dkl <= 0.055,
           f"Δκ_ℓ = {Dkl:.6f} outside Denner-validated one-loop band [0.040, 0.055]")
 
@@ -251,9 +298,12 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
             f"two-loop EW gate (multi-session arc, scoping at "
             f"`APF Reference Docs/Reference - Native OS-W Two-Loop Close Scoping Brief "
             f"(2026-05-26).md`). The PDG-canonical reading (m_t=173.2, M_H=125) shows a "
-            f"+1.7×10⁻² gap to DFGRU, identified as the leading-Δρ_top one-loop content "
-            f"that DFGRU's all-orders fit absorbs via two-loop EW + α_s + reducible-term "
-            f"resummation. Today's executable witnesses preserved at "
+            f"+1.7×10⁻² gap to DFGRU, previously identified as the leading-Δρ_top one-loop "
+            f"content that DFGRU's all-orders fit absorbs via two-loop EW + α_s + "
+            f"reducible-term resummation — ATTRIBUTION SUPERSEDED at .358: the ACFW "
+            f"published-one-loop benchmark (check_T_w_trace_kappa_l_ACFW_published_"
+            f"one_loop_benchmark) shows the dominant excess is an M_H-flat "
+            f"ASSEMBLY-SECTOR defect, not two-loop content. Today's executable witnesses preserved at "
             f"`outputs/kappa_l_BSY_*.py`; findings at "
             f"`APF Reference Docs/Reference - Q2 Empirical sW2 BSY Probe Findings "
             f"(2026-05-27).md`."
@@ -287,9 +337,179 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
     )
 
 
+# ===========================================================================
+# v24.3.358 — the ACFW published-one-loop benchmark harness
+# ===========================================================================
+_ACFW_TABLE_II = {100.0: 438.94e-4, 200.0: 419.60e-4,
+                  600.0: 379.56e-4, 1000.0: 358.62e-4}   # PRL 93 (2004) 201805
+_ACFW_MT, _ACFW_MB = 178.0, 4.85                          # Table I inputs
+_ACFW_MW, _ACFW_MZ = 80.426, 91.1876
+_ACFW_SW2 = 1.0 - (_ACFW_MW / _ACFW_MZ) ** 2
+_ALPHA_0 = 1.0 / 137.0359895                              # α(0) expansion frame
+
+
+def _acfw_benchmark_rows():
+    """Run the BANKED _bsy_compose on the ACFW Table-II deck.
+
+    Monkeypatch-and-restore of the v24.3.99 globals (m_t, m_b, M_H) — the
+    same in-memory patch the walk witnesses used; no repo state is touched.
+    The self-energies keep the .99 deck's M_Z = 91.177 (stale vs ACFW's
+    91.1876) — the BW→pole M_Z shift was MEASURED at +3.0e-5 in Δκ_ℓ,
+    three orders below the +0.0194 signal. Light-quark effective-mass
+    choices were MEASURED at ≤1.5e-5 under ±20% variation. Both walk-
+    audited; both far below every band asserted here.
+    """
+    import apf.w_trace_native_delta_r_mw_assembly as _ndr_mod
+    saved = (_ndr_mod.MU["t"], _ndr_mod.MD["b"], _ndr_mod.MH, _ndr_mod.MH2)
+    rows = []
+    try:
+        _ndr_mod.MU["t"] = _ACFW_MT
+        _ndr_mod.MD["b"] = _ACFW_MB
+        for MH, dk_pub in _ACFW_TABLE_II.items():
+            _ndr_mod.MH = MH
+            _ndr_mod.MH2 = MH * MH
+            r = _bsy_compose(_ACFW_SW2, _ALPHA_0)
+            rows.append((MH, dk_pub, r["Delta_kappa_l"]))
+    finally:
+        (_ndr_mod.MU["t"], _ndr_mod.MD["b"],
+         _ndr_mod.MH, _ndr_mod.MH2) = saved
+    return rows, saved
+
+
+def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, Any]:
+    """T: the native BSY κ_ℓ assembly against a PUBLISHED full one-loop Δκ
+    comparator — M_H-shape PASS / absolute FAIL, recorded [P_structural_instrument].
+
+    FAIL-recording instrument (established precedent). Comparator: ACFW
+    PRL 93 (2004) 201805 Table II — one-loop O(α) Δκ with M_W input, α(0)
+    expansion, at M_H = 100/200/600/1000. The check calls the BANKED
+    _bsy_compose (post-.358 source-exact eq-rself transcription) — the walk
+    harness re-implemented the composition; a banked check must exercise
+    the banked object (audit fix 1 of the landing).
+
+    What it certifies:
+      (a) SHAPE PASS — native M_H-differences track the published one-loop
+          to ≤5e-4 (measured ≤1.7e-4) over an 8.0e-3 published swing: the
+          oblique (Higgs self-energy) sector is benchmark-validated.
+      (b) ABSOLUTE FAIL — the native assembly overshoots the published
+          one-loop by ~+0.0194 at EVERY M_H, M_H-flat (spread <20% of the
+          mean; measured 0.9%). One-loop vs one-loop: the overshoot is an
+          ASSEMBLY DEFECT in the M_H-independent sector, not two-loop
+          truncation.
+      (c) LOCALIZATION, stated at its honest strength: the attribution of
+          the M_H-flat excess to the proper-vertex filler SPECIFICALLY is
+          inference (literature-scale ~+0.0025 lepton vertex + the
+          independent Δρ/Δr validations), CONDITIONAL on the effva booking
+          of the γZ term and a defect-free oblique sector — not proof.
+          The γZ booking collision is ADJUDICATED (principal ruling
+          2026-07-03: the effva booking is CANONICAL); ruling recorded in
+          the Decisions List, dual-booking machine-pinned at the slot check
+          in w_trace_native_zll_kappa_l_oblique.
+
+    Frame-sensitivity budget (measured by the walk audit, cited not
+    re-derived): light-quark masses ±20% → ≤1.5e-5; BW→pole M_Z → +3.0e-5;
+    stale .99-deck M_Z = 91.177 inherited. All ≥2 orders below the signal.
+    No published value is consumed as a fit target: the comparator enters
+    only as a benchmark and the absolute comparison is recorded as FAIL.
+    """
+    rows, saved = _acfw_benchmark_rows()
+
+    # restore integrity — the patch must not leak into the .99 globals
+    import apf.w_trace_native_delta_r_mw_assembly as _ndr_mod
+    check((_ndr_mod.MU["t"], _ndr_mod.MD["b"], _ndr_mod.MH, _ndr_mod.MH2) == saved,
+          "ACFW deck patch leaked into the v24.3.99 globals")
+
+    gaps = [dk - pub for (_, pub, dk) in rows]
+    mean_gap = sum(gaps) / len(gaps)
+    spread = max(gaps) - min(gaps)
+    base_pub, base_nat = rows[0][1], rows[0][2]
+    shape_diffs = [(dk - base_nat) - (pub - base_pub) for (_, pub, dk) in rows[1:]]
+    pub_swing = rows[0][1] - rows[-1][1]
+
+    # (a) SHAPE PASS
+    check(pub_swing > 5.0e-3,
+          f"published M_H swing {pub_swing:.6f} too small to discriminate shape")
+    check(all(abs(sd) < 5.0e-4 for sd in shape_diffs),
+          f"M_H-shape does not track the published one-loop: {shape_diffs}")
+
+    # (b) ABSOLUTE FAIL — recorded, with the defect band pinned
+    check(all(g > 5.0e-3 for g in gaps),
+          f"absolute overshoot no longer present: gaps={gaps} (re-price the slot!)")
+    check(all(0.015 < g < 0.024 for g in gaps),
+          f"gap left the pinned defect band [0.015, 0.024]: {gaps}")
+    check(spread < 0.20 * abs(mean_gap),
+          f"gap not M_H-flat: spread {spread:.6f} vs mean {mean_gap:.6f}")
+
+    # (c) honest non-claims
+    check(EXPORT_FLAGS["Export_BSY_kappa_l_PDG_canonical_one_loop"] == 0,
+          "PDG-canonical one-loop κ_ℓ closure must remain OPEN")
+    check(EXPORT_FLAGS["target_consumed"] == 0,
+          "no published target may be consumed as a fit — benchmark only")
+
+    return _result(
+        name=("T_w_trace_kappa_l_ACFW_published_one_loop_benchmark: native BSY "
+              "assembly vs ACFW PRL 93 (2004) Table II — M_H-shape PASS "
+              "≤5e-4 / absolute FAIL +0.0194 M_H-flat, recorded "
+              "[P_structural_instrument]"),
+        tier=4,
+        epistemic="P_structural_instrument",
+        summary=(
+            f"The banked _bsy_compose (source-exact eq-rself transcription, "
+            f".358), run at the ACFW deck (m_t={_ACFW_MT}, m_b={_ACFW_MB}, "
+            f"M_W={_ACFW_MW}, M_Z={_ACFW_MZ} → sW²={_ACFW_SW2:.6f}, α(0) "
+            f"frame), against the published full one-loop O(α) Δκ "
+            f"(Table II):\n"
+            + "".join(f"  M_H={MH:6.0f}: published {pub:+.6f}, native "
+                      f"{dk:+.6f}, gap {dk-pub:+.6f}\n"
+                      for (MH, pub, dk) in rows)
+            + f"Mean gap {mean_gap:+.6f}, spread {spread:.6f} "
+            f"({spread/abs(mean_gap)*100:.1f}% — M_H-FLAT); shape diffs "
+            f"{[round(sd, 7) for sd in shape_diffs]} vs published swing "
+            f"{pub_swing:.4f}. VERDICT: the oblique sector is benchmark-"
+            f"validated at ≤5e-4 (shape PASS); the assembly carries an "
+            f"M_H-independent defect of ~+0.019 (absolute FAIL, recorded). "
+            f"One-loop vs one-loop — NOT two-loop truncation. The implied "
+            f"true one-loop vertex-sector content ≈ +0.0025 is INFERENCE, "
+            f"conditional on the effva booking (ADJUDICATED canonical, "
+            f"ruling 2026-07-03, pinned at the slot check) and a defect-free "
+            f"oblique sector. This check retires "
+            f"the slot check's UNBENCHMARKED clause; it does NOT fill the "
+            f"slot. Frame budget: light-quark ±20% ≤1.5e-5, BW→pole M_Z "
+            f"+3.0e-5, stale .99 M_Z=91.177 — all far below the signal."
+        ),
+        key_result=(
+            f"ACFW published-one-loop benchmark: shape PASS (≤5e-4), absolute "
+            f"FAIL ({mean_gap:+.4f} M_H-flat) — κ_ℓ overshoot is an assembly "
+            f"defect, not two-loop content. [P_structural_instrument]"
+        ),
+        dependencies=[
+            "T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs",
+        ],
+        cross_refs=[
+            "L_w_trace_native_kappa_l_proper_vertex_open",
+            "T_w_trace_native_kappa_l_gammaZ_mixing",
+        ],
+        artifacts={
+            "acfw_rows_MH_pub_native": [(MH, pub, round(dk, 9))
+                                        for (MH, pub, dk) in rows],
+            "gaps": [round(g, 9) for g in gaps],
+            "mean_gap": round(mean_gap, 9),
+            "gap_spread": round(spread, 9),
+            "shape_diffs": [round(sd, 9) for sd in shape_diffs],
+            "benchmark_shape": "PASS",
+            "benchmark_absolute": "FAIL_RECORDED",
+            "implied_true_vertex_content_conditional": 0.0025,
+            "comparator": "ACFW PRL 93 (2004) 201805 Table II, O(alpha), M_W input",
+            "export_flags": dict(EXPORT_FLAGS),
+        },
+    )
+
+
 _CHECKS = {
     "T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs":
         check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs_P,
+    "T_w_trace_kappa_l_ACFW_published_one_loop_benchmark":
+        check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P,
 }
 
 
@@ -318,8 +538,8 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Single banked check check_T_BSY_one_loop_kappa_l_assembly_consistenc "
-            "y_at_Denner_validated_inputs_P (tier 4, bespoke machine grade "
+            "Banked check check_T_BSY_one_loop_kappa_l_assembly_"
+            "consistency_at_Denner_validated_inputs_P (tier 4, bespoke machine grade "
             "P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_consistency) "
             "certifying that the native one-loop substrate (v24.3.99 self- "
             "energies + v24.3.107 3-pt F_V/F_A) composed via EWWGR Eq 175 (BSY "
@@ -336,6 +556,17 @@ IE_DECLARATIONS = (
             "is exported, and no DFGRU/Awramik target is consumed -- all enforced "
             "by explicit export-flag guards inside the check. "
         ),
-        "note": "Wave 7; bespoke grade token quoted verbatim; opens stated as banked",
+        "note": ("Wave 7; bespoke grade token quoted verbatim; opens stated as "
+                 "banked. NOTE (v24.3.358): the module now carries a SECOND "
+                 "banked check, T_w_trace_kappa_l_ACFW_published_one_loop_"
+                 "benchmark [P_structural_instrument] (ACFW PRL 93 (2004) "
+                 "Table II published-one-loop benchmark: M_H-shape PASS / "
+                 "absolute FAIL +0.0194 M_H-flat, FAIL-recording), and the "
+                 "eq-rself +2->+1 SgZ0 corrigendum in _bsy_compose: "
+                 "Delta_kappa_l at the Denner set is +0.04854 post-corrigendum "
+                 "(claim text's 0.0475-era band [0.040, 0.055] unchanged and "
+                 "still met); the claim text's two-loop-gate attribution for "
+                 "the PDG-canonical gap is superseded by the benchmark "
+                 "finding (assembly-sector defect)."),
     },
 )
