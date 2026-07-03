@@ -939,11 +939,162 @@ def check_T_ie_plumbing_classification():
     }
 
 
+
+
+# ---------------------------------------------------------------------------
+# The repair-frontier census (v24.3.349) -- the engine's first full-bank lap.
+#
+# With the target surface fully dispositioned (162 onboarded / 85 plumbing /
+# 0 open at .348), the atlas was swept end-to-end for the first time and the
+# ENGINE-NATIVE rows (vendored v0.2 canonical inputs + v0.3 refresh layer +
+# legacy real adapters -- i.e. every input NOT introduced as an
+# IE_DECLARATIONS claim row) were partitioned by what the solver actually
+# demands. THE FINDING, pinned below: the genuinely open, engine-repairable
+# frontier of the whole bank is EVIDENCE-SHAPED, not theory-shaped -- every
+# genuine-open row carries packet_status OPEN_EVIDENCE_REQUIRED with
+# empirical-run fields (posterior_closed / robustness_checks_passed /
+# run_completed): the dark empirical gates (DESI full-shape, growth
+# likelihood, cross-SN profile, the dark runtime lock) and the DUNE/JUNO
+# hierarchy watch row. The one held theory-side row (payload:ew_transport_open)
+# is the v15.1 [P_boundary] adjudication, not owed work.
+#
+# SEMANTICS GUARD (the sweep's methodological finding): movement-graph
+# frontiers on DECLARED CLAIM ROWS measure parse-visibility of the claim
+# text, NOT physics distance -- e.g. abstract categorical claims parse to
+# NO_CLOSING_FRONTIER with zero critical fields. Claim rows are therefore
+# EXCLUDED from this census by construction (their verdict stability is the
+# .323 tripwire's job). Never rank claim rows by frontier size. Honesty
+# note on the census's own composition: four of the five GENUINE-OPEN
+# frontiers are parse-derived from VENDORED claim text (the v0.2 canonical
+# inputs, refresh-layer provenance discipline); only payload:dark_runtime_open
+# earns its frontier from payload data. The finding rests on those vendored
+# texts being accurate descriptions of the empirical gates, not on
+# independent solver measurement.
+# ---------------------------------------------------------------------------
+FRONTIER_GENUINE_OPEN = {
+    "payload:dark_runtime_open": ("posterior_closed", "robustness_checks_passed"),
+    "dark:route_desi_full_shape_exact": ("posterior_closed", "robustness_checks_passed"),
+    "dark:route_cross_sn_profile_probe": ("posterior_closed", "robustness_checks_passed"),
+    "dark:route_full_growth_likelihood": ("posterior_closed", "robustness_checks_passed", "run_completed"),
+    "neutrino:route_dune_juno_hierarchy": ("posterior_closed", "robustness_checks_passed", "run_completed"),
+}
+FRONTIER_ADJUDICATED_BOUNDARY = {
+    "payload:ew_transport_open": ("uncertainty_protocol_declared",),
+}
+FRONTIER_CONTROL_WITNESS = (
+    "claim:capacity_overspend", "claim:dark_runtime", "claim:ew_global_export",
+    "claim:ew_local_trace", "claim:gauge_fiber", "claim:generic",
+    "claim:horizon_cost", "payload:capacity_overspend",
+)
+FRONTIER_CLOSED_STATUSES = (
+    "OBSTRUCTION_NAMED_CLOSURE", "FAIL_CLOSED_PROVENANCE",
+    "BLOCKED_SUBSTRATE_REVISION_REQUIRED",
+)
+
+
+def check_T_ie_repair_frontier_census():
+    """The engine-native open frontier is pinned: five evidence-shaped rows,
+    one adjudicated boundary, nothing else. [P_structural_instrument] tier 4.
+
+    Recomputes the live atlas, restricts to engine-native rows (every input
+    not introduced by an IE_DECLARATIONS claim row), and certifies the
+    partition: EXPORTED / CLOSED-BY-DESIGN / ADJUDICATED-BOUNDARY /
+    GENUINE-OPEN / CONTROL-WITNESS covers the native rows exactly. For each
+    GENUINE-OPEN row the critical-field frontier must equal the pinned set
+    and the packet must remain OPEN_EVIDENCE_REQUIRED; a row that starts
+    exporting FAILS THE BANK on purpose -- an empirical gate closing is an
+    adjudication event, never a silent flip. The boundary row must stay held
+    per the v15.1 ruling. New engine-native rows fail the .323 tripwire
+    (unpinned input) and, if neither exporting nor closed-status, this
+    census too -- an already-exporting or closed-status arrival is absorbed
+    into its class here and caught by the tripwire alone (defense in depth;
+    the .348 plumbing pattern, at frontier level).
+
+    Cost note: one full atlas run (the .323
+    memoization decision stands -- coupling cost beats runtime at current
+    scale).
+    """
+    failures = []
+    from apf.interface_atlas_live_runner import run_live_atlas
+    import apf.interface_atlas as _ia
+    _cap = {}
+    _orig = _ia.build_interface_atlas
+    def _hook(inputs, **kw):
+        a = _orig(inputs, **kw); _cap["atlas"] = a; return a
+    _ia.build_interface_atlas = _hook
+    try:
+        run_live_atlas(atlas_name="ie_repair_frontier_census_run")
+    finally:
+        _ia.build_interface_atlas = _orig
+    atlas = _cap.get("atlas")
+    if atlas is None:
+        return {"name": "check_T_ie_repair_frontier_census", "passed": False,
+                "failures": ["atlas capture failed"], "status": "P_structural_instrument"}
+    decls, _skips = discover_ie_declarations()
+    declared_ids = {d.get("input_id") for entries in decls.values() for d in entries}
+    native = {s.input_id: s for s in atlas.route_summaries
+              if s.input_id not in declared_ids}
+    classified = set()
+    for iid, fields in FRONTIER_GENUINE_OPEN.items():
+        s = native.get(iid)
+        if s is None:
+            failures.append("GENUINE-OPEN row vanished: %s" % iid); continue
+        classified.add(iid)
+        if s.export_global_P:
+            failures.append("%s EXPORTS -- an empirical gate closed; "
+                            "adjudicate the promotion, re-pin deliberately" % iid)
+        if tuple(sorted(s.critical_fields)) != tuple(sorted(fields)):
+            failures.append("%s frontier drift: %r != pinned %r"
+                            % (iid, sorted(s.critical_fields), sorted(fields)))
+        if str(s.packet_status) != "OPEN_EVIDENCE_REQUIRED":
+            failures.append("%s packet %r != OPEN_EVIDENCE_REQUIRED"
+                            % (iid, s.packet_status))
+    for iid, fields in FRONTIER_ADJUDICATED_BOUNDARY.items():
+        s = native.get(iid)
+        if s is None:
+            failures.append("boundary row vanished: %s" % iid); continue
+        classified.add(iid)
+        if s.export_global_P or str(s.solver_status) != "SOLVED_LOCAL_HELD_FOR_REPAIR":
+            failures.append("%s left its v15.1 [P_boundary] state: %s/%r"
+                            % (iid, s.solver_status, s.export_global_P))
+        if tuple(sorted(s.critical_fields)) != tuple(sorted(fields)):
+            failures.append("%s boundary frontier drift: %r"
+                            % (iid, sorted(s.critical_fields)))
+    for iid in FRONTIER_CONTROL_WITNESS:
+        if iid in native:
+            classified.add(iid)
+        else:
+            failures.append("control row vanished: %s" % iid)
+    for iid, s in native.items():
+        if iid in classified:
+            continue
+        if s.export_global_P:
+            continue  # EXPORTED class
+        if str(s.solver_status) in FRONTIER_CLOSED_STATUSES:
+            continue  # CLOSED-BY-DESIGN class
+        failures.append("undispositioned engine-native row: %s (%s) -- "
+                        "classify it (genuine-open / boundary / control) "
+                        "before it rides" % (iid, s.solver_status))
+    n_exported = sum(1 for s in native.values() if s.export_global_P)
+    return {
+        "name": "check_T_ie_repair_frontier_census",
+        "passed": not failures,
+        "failures": failures,
+        "status": "P_structural_instrument",
+        "summary": ("engine-native rows: %d (exported %d, genuine-open %d, "
+                    "boundary %d, controls %d); the open frontier is "
+                    "evidence-shaped" % (len(native), n_exported,
+                    len(FRONTIER_GENUINE_OPEN), len(FRONTIER_ADJUDICATED_BOUNDARY),
+                    len(FRONTIER_CONTROL_WITNESS))),
+    }
+
+
 _CHECKS = {
     "T_ie_onboarding_registry_coverage": check_T_ie_onboarding_registry_coverage,
     "T_ie_atlas_verdict_tripwire": check_T_ie_atlas_verdict_tripwire,
     "T_ie_reviewer_manifest_current": check_T_ie_reviewer_manifest_current,
     "T_ie_plumbing_classification": check_T_ie_plumbing_classification,
+    "T_ie_repair_frontier_census": check_T_ie_repair_frontier_census,
 }
 
 
