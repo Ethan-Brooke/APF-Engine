@@ -4502,6 +4502,234 @@ def check_L_RT_capacity():
     )
 
 
+def check_L_RT_two_sided_reading_no_go():
+    """L_RT_two_sided_reading_no_go: No Purification of S_dS Across Any Internal Cut; the Reading Grade Pinned [P].
+
+    v24.3.349 NEW (2026-07-02). The no-go pin from the RT re-pricing walk and
+    the mirror-copy typing walk (both fresh-context hostile-audited same day,
+    LAND-WITH-FIXES 0.87 / 0.85; notes of record: "Re-Pricing the RT Reading
+    on the Drawn Base - The Matter-Absorber Purification Question" v0.2 and
+    "Typing the Mirror Copy - Connected Is Billed, Disconnected Is Outside
+    the Referent" v0.2, both 2026-07-02).
+
+    STATEMENT: The entanglement/holographic READING of the L_RT_capacity
+    identity S(A) = (k/61)*S_dS cannot be upgraded by any internal
+    purification, and the banked grade split is pinned programmatically.
+
+    (i) EQUAL-MARGINAL KILL [P]: the two marginals of a pure bipartite state
+        have equal entropy (Schmidt; witnessed on a seeded random pure state
+        below). The banked marginals are S(matter) = 19*sigma = 87.87 and
+        S(vacuum) = 42*sigma = 194.25 (sigma = ln 102, L_RT_capacity [P]).
+        Unequal, so NO pure state on matter (x) absorber has these marginals:
+        no purification of the saturation state exists across the 19|42 cut.
+
+    (ii) CAPACITY KILL [P]: any standard entanglement measure across the
+        19|42 cut is bounded by the log-dimension of the smaller factor,
+        min(19,42)*sigma = 19*sigma = 87.87 < 282.12 = S_dS. The cut cannot
+        carry S_dS as entanglement, off by more than 3x.
+
+    (iii) EVERY-CUT GENERALIZATION [P]: C_total = 61 is odd, so k != 61-k at
+        every internal cut, and min(k, 61-k) <= 30 < 61 at every proper
+        bipartition -- the kills close every internal cut, not just 19|42.
+        COROLLARY: the trace state I/d^61 factorizes across every bipartition
+        (I/d^n is the n-fold product of I/d), so the mutual information is 0
+        on every cut and the matter|absorber disjoint-vs-shared licensing
+        question is MOOT for the saturation-state product.
+
+    (iv) TRIPWIRE -- the reading-grade pin (the v24.3.323 verdict-pin
+        pattern): L_RT_capacity's artifacts must keep reading_grade EXACTLY
+        'identity [P]; entanglement/holographic reading
+        [P_structural_reading]' and genuine_across_cut_entanglement EXACTLY
+        0. Any future upgrade of the two-sided reading must arrive by
+        editing a pinned surface, which fails this check until the
+        arithmetic above is re-adjudicated and a connection mechanism named.
+
+    (v) MIRROR-COPY CLAUSE (the typing walk). (v-1) Witnesses, declared
+        unfalsifiable-but-pinning: the commutant of the full matrix algebra
+        on its defining space is the scalars (computed below by exact rank:
+        no same-space mirror exists; the nontrivial commutant copy lives
+        only on the GNS dilation -- representation-relative convention
+        data); and a purification of I/d needs a second factor of dimension
+        >= d (Schmidt-rank floor), so a connected, physically instantiated
+        mirror copy of the horizon system needs a second full 61*sigma of
+        enforceable structure -- 2*S_dS = 564.25 nats against the banked,
+        saturated ceiling S_dS = 282.12 (T_deSitter_entropy [P], L_equip
+        Step 1: the causal horizon is the outermost enforceable boundary at
+        maximum entropy). Connected instantiation is EXCLUDED; disconnected
+        instantiation is OUTSIDE THE REFERENT (a scoping statement recorded
+        in the typing note section 3 -- prose, deliberately not bank
+        content). (v-2) Tripwire: the codebase carries NO dependency on a
+        physically instantiated commutant double -- pinned as zero
+        occurrences of the two strings built as 'TF'+'D' and
+        'thermo'+'field' (written split here so this file stays scan-clean;
+        a raw "mirror" grep is NOT pinnable -- that string occurs across
+        apf/ in unrelated senses: mirror symmetry, the abelian mirror,
+        adapter vocabulary) anywhere in apf/ python source.
+
+    HONESTY NOTE (from the audits): clauses (i)-(iii) and (v-1) are exact
+    arithmetic that cannot fail while C_total = 61 and T_deSitter_entropy
+    stand -- parity/proper-subset facts, not live falsifiers (the
+    singlet-Gram lesson). The check earns its slot at clauses (iv) and
+    (v-2), the tripwires. FENCES: not a 2pi route (the trace-state modular
+    flow is trivial and nothing here changes that); the occupancy base is
+    used existentially only (rider R1, per-interface drawnness, stays a
+    [P+IJC] reading); the disconnected mirror copy is declined, not
+    disproven.
+    """
+    import math as _m
+    import os as _os
+    import random as _random
+
+    d_eff, C_total, C_mat, C_vac = 102, 61, 19, 42
+    sigma = _m.log(d_eff)
+    S_dS = C_total * sigma
+    S_mat, S_vac = C_mat * sigma, C_vac * sigma
+
+    # ---- (i) equal-marginal law, seeded witness on C^3 (x) C^7 ----
+    rng = _random.Random(20260702)
+    dA, dB = 3, 7
+    amps = [rng.gauss(0.0, 1.0) for _ in range(dA * dB)]  # real amps: rho stays real symmetric
+    nrm = _m.sqrt(sum(a * a for a in amps))
+    psi = [a / nrm for a in amps]
+    rho = [[psi[i] * psi[j] for j in range(dA * dB)] for i in range(dA * dB)]
+    rho_A = _partial_trace_B(rho, dA, dB)
+    rho_B = [[sum(rho[i * dB + k][i * dB + l] for i in range(dA))
+              for l in range(dB)] for k in range(dB)]
+    S_A, S_B = _vn_entropy(rho_A), _vn_entropy(rho_B)
+    check(abs(S_A - S_B) < 1e-8,
+          f"Equal-marginal law witnessed: S(A)={S_A:.8f} == S(B)={S_B:.8f} for a seeded pure state")
+    check(abs(S_mat - S_vac) > 20.0,
+          f"Banked marginals UNEQUAL: S_mat={S_mat:.2f} != S_vac={S_vac:.2f} (gap 23*sigma) -> no 19|42 purification")
+
+    # ---- (ii) capacity bound ----
+    check(min(C_mat, C_vac) * sigma < S_dS - 100.0,
+          f"Capacity kill: min(19,42)*sigma = {C_mat*sigma:.2f} < S_dS = {S_dS:.2f} (deficit > 3x)")
+
+    # ---- (iii) every internal cut ----
+    for k in range(1, C_total):
+        check(k != C_total - k, f"61 odd: k={k} != 61-k={C_total-k} (no balanced cut exists)")
+        check(min(k, C_total - k) * sigma <= 30 * sigma + 1e-12,
+              f"min({k},{C_total-k}) <= 30 < 61: no internal cut can carry S_dS")
+        MI = k * sigma + (C_total - k) * sigma - S_dS
+        check(abs(MI) < 1e-9, f"Trace state factorizes at cut k={k}: MI = {MI:.2e} = 0")
+
+    # ---- (iv) TRIPWIRE: the reading-grade pin on L_RT_capacity ----
+    r = check_L_RT_capacity()
+    a = r['artifacts']
+    pinned_grade = 'identity [P]; entanglement/holographic reading [P_structural_reading]'
+    check(a.get('reading_grade') == pinned_grade,
+          f"TRIPWIRE: L_RT_capacity reading_grade must stay exactly {pinned_grade!r}; got {a.get('reading_grade')!r}")
+    check(a.get('genuine_across_cut_entanglement') == 0,
+          f"TRIPWIRE: genuine_across_cut_entanglement must stay exactly 0; got {a.get('genuine_across_cut_entanglement')!r}")
+
+    # ---- (v-1) commutant of the full matrix algebra is scalars (exact rank, d=3) ----
+    d = 3
+    n_unknowns = d * d           # X_{ai}, row-major index a*d+i
+    rows = []
+    for g in range(d):
+        for h in range(d):
+            for aa in range(d):
+                for bb in range(d):
+                    # (X E_gh - E_gh X)_{ab} = X_{ag} delta_{hb} - delta_{ag} X_{hb} = 0
+                    row = [0.0] * n_unknowns
+                    if h == bb:
+                        row[aa * d + g] += 1.0
+                    if aa == g:
+                        row[h * d + bb] -= 1.0
+                    if any(abs(x) > 0 for x in row):
+                        rows.append(row)
+    rank = 0
+    mat = [row[:] for row in rows]
+    for col in range(n_unknowns):
+        piv = None
+        for rr in range(rank, len(mat)):
+            if abs(mat[rr][col]) > 1e-9:
+                piv = rr
+                break
+        if piv is None:
+            continue
+        mat[rank], mat[piv] = mat[piv], mat[rank]
+        pv = mat[rank][col]
+        mat[rank] = [x / pv for x in mat[rank]]
+        for rr in range(len(mat)):
+            if rr != rank and abs(mat[rr][col]) > 1e-12:
+                fac = mat[rr][col]
+                mat[rr] = [x - fac * y for x, y in zip(mat[rr], mat[rank])]
+        rank += 1
+    commutant_dim = n_unknowns - rank
+    check(commutant_dim == 1,
+          f"B(H)' = C*I on the defining space: commutant dimension = {commutant_dim} (must be 1; no same-space mirror)")
+    # Schmidt-rank floor + the doubling arithmetic
+    check(min(5, 4) < 5, "Schmidt-rank floor: a dim-4 partner cannot purify I/5 (min(5,4)=4 < 5)")
+    check(2 * S_dS > S_dS + 100.0,
+          f"Connected mirror copy needs 2*S_dS = {2*S_dS:.2f} nats; the saturated banked ceiling is {S_dS:.2f} -- no room")
+
+    # ---- (v-2) TRIPWIRE: no commutant-double dependency in apf/ source ----
+    needle_1 = 'TF' + 'D'                    # built split: this file stays scan-clean
+    needle_2 = 'thermo' + 'field'
+    apf_dir = _os.path.dirname(_os.path.abspath(__file__))
+    hits = []
+    for root, _dirs, files in _os.walk(apf_dir):
+        for f_ in files:
+            if not f_.endswith('.py'):
+                continue
+            p_ = _os.path.join(root, f_)
+            try:
+                with open(p_, 'r', encoding='utf-8', errors='ignore') as fh:
+                    content = fh.read()
+            except OSError:
+                continue
+            if needle_1 in content or needle_2 in content.lower():
+                hits.append(_os.path.relpath(p_, apf_dir))
+    check(not hits,
+          f"TRIPWIRE: commutant-double vocabulary must not enter apf/ source; found in {hits}")
+
+    return _result(
+        name='L_RT_two_sided_reading_no_go: No Purification of S_dS Across Any Internal Cut [P]',
+        tier=4,
+        epistemic='P',
+        summary=(
+            'The entanglement/holographic reading of L_RT_capacity cannot be '
+            'upgraded by any internal purification: pure-state marginals are '
+            'equal (Schmidt) while the banked marginals are 19*sigma != '
+            '42*sigma, and every internal cut is capped at min(k,61-k)*sigma '
+            '<= 30*sigma < 61*sigma = S_dS (61 odd: no balanced cut exists). '
+            'The trace state factorizes across every bipartition, so the '
+            'disjoint-vs-shared licensing question is moot at saturation. '
+            'The only surviving two-sided form is the GNS/commutant-double '
+            'reading: connected instantiation is EXCLUDED (2*S_dS = 564.25 '
+            'nats against the saturated 282.12 ceiling; a pure global state '
+            'would give S = 0 != 282.12), disconnected instantiation is '
+            'OUTSIDE THE REFERENT (scoping statement, prose). Tripwires pin '
+            'the L_RT_capacity reading grade and fence apf/ source against '
+            'commutant-double vocabulary.'
+        ),
+        key_result=(
+            'No purification of the saturation state across any internal cut '
+            '[P]; reading grade pinned: identity [P], entanglement reading '
+            '[P_structural_reading]; connected mirror copy excluded, '
+            'disconnected outside the referent.'
+        ),
+        dependencies=[
+            'L_equip', 'L_KMS_trace_state', 'L_RT_capacity',
+            'T_deSitter_entropy', 'T11',
+        ],
+        artifacts={
+            'equal_marginal_kill': f'S_mat = {S_mat:.4f} != S_vac = {S_vac:.4f} (pure marginals must be equal)',
+            'capacity_kill': f'min(19,42)*sigma = {C_mat*sigma:.4f} < S_dS = {S_dS:.4f}',
+            'every_cut': '61 odd: k != 61-k for all k; min(k,61-k) <= 30 < 61 for all proper bipartitions',
+            'moot_corollary': 'trace state factorizes across every cut: MI = 0; disjoint-vs-shared moot at saturation',
+            'commutant_dim_defining_rep': commutant_dim,
+            'mirror_copy_connected': 'EXCLUDED (2*S_dS = 564.25 > 282.12 saturated ceiling; purity S=0 != 282.12)',
+            'mirror_copy_disconnected': 'OUTSIDE THE REFERENT (scoping statement; declined, not disproven)',
+            'idle_route_riders': 'R1 per-interface drawnness [P+IJC]; R2 commutant-copy instantiation (unbanked); R3 state-existential cap',
+            'pinned_reading_grade': pinned_grade,
+            'source_fence': "zero occurrences of 'TF'+'D' / 'thermo'+'field' in apf/ python source",
+            'notes_of_record': 'Re-Pricing the RT Reading on the Drawn Base v0.2; Typing the Mirror Copy v0.2 (2026-07-02)',
+        },
+    )
+
+
 def check_L_quantum_evolution():
     """L_quantum_evolution: Non-Perturbative Quantum Dynamics from Capacity Commitment [P].
 
@@ -9611,6 +9839,7 @@ _CHECKS = {    'T_spin_statistics': check_T_spin_statistics,
     # Mathematical Connections to Established Formalisms
     'L_KMS_trace_state':    check_L_KMS_trace_state,
     'L_RT_capacity':        check_L_RT_capacity,
+    'L_RT_two_sided_reading_no_go': check_L_RT_two_sided_reading_no_go,
     'L_MERA_generation':    check_L_MERA_generation,
     'L_algebra_type':       check_L_algebra_type,
     'L_anomaly_index':      check_L_anomaly_index,
