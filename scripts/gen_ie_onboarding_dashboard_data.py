@@ -72,8 +72,16 @@ def build_payload() -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="ie_onboarding_dashboard_data.json")
+    ap.add_argument("--with-crystal", action="store_true",
+                    help="append the crystal spine grade census + strengthening "
+                         "ledger (CORE view; ~20 s extra: registry load + "
+                         "build_crystal + betweenness). The disposition map is "
+                         "curated in apf/crystal_ledger_dispositions.py.")
     args = ap.parse_args()
     payload = build_payload()
+    if args.with_crystal:
+        from apf.crystal_ledger import crystal_dashboard_section
+        payload["crystal"] = crystal_dashboard_section()
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=1, default=str)
     s = payload["coverage_summary"]
