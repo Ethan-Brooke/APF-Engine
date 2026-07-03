@@ -2128,6 +2128,7 @@ def check_T_which_v_no_registered_interior_reader():
         'delta_alpha_capacity_density.py': ('V', 'fence'),
         'delta_alpha_leptonic.py': ('V', 'fence'),
         'descent_obstruction_calculus.py': ('L', 'consumer'),
+        'crystal_ledger.py': ('L', 'analysis'),  # re-dispositioned at the .351+ crystal-ledger landing: dashboard analysis layer -- LITERAL mentions of which-v/vglobal check names inside the curated disposition map (strings, not readers); no interior mode-label read
         'drawn_content_readings.py': ('L', 'fence'),  # re-dispositioned during .326: staged generative functional (concurrent lane); 42s are SU(3) isotypic-dim arithmetic, no 42-sector sense
         'evaporation_quartet.py': ('VL', 'consumer'),
         'ew_bosonic_enforcement_reservoir.py': ('VL', 'consumer'),
@@ -2151,7 +2152,7 @@ def check_T_which_v_no_registered_interior_reader():
         'gravity.py': ('VLD', 'consumer'),
         'horizon_joint_bridge.py': ('VL', 'consumer'),
         'horizon_ledger_reindexing.py': ('VL', 'consumer'),
-        'i4_composition.py': ('V', 'consumer'),
+        'i4_composition.py': ('VL', 'consumer'),  # re-dispositioned 2026-07-02 (vacuum_label_code landing pass): L appeared at e0b1ff8 -- the Wave-7 IE declaration note string 'at the K = 42 joint point only' (count-level prose, no reader); latent until the owed native verify_all; first surfaced by this landing's walker run
         'ie_atlas_verdict_pin.py': ('L', 'infra'),
         'ie_onboarding_registry.py': ('L', 'fence'),
         'interface_atlas_v02_inputs.py': ('VLD', 'consumer'),
@@ -2188,6 +2189,7 @@ def check_T_which_v_no_registered_interior_reader():
         'unification_three_levels.py': ('VL', 'consumer'),
         'universality_forcing.py': ('L', 'fence'),
         'vacuum_o1_fork.py': ('VL', 'consumer'),
+        'vacuum_label_code.py': ('VL', 'consumer'),  # v24.3.NEW: the route-(b) P1 witness; V from vacuum-mode vocabulary, L from ALPHABET = 42; constructs NO interior reader (its negative control is a counterfactual encoding exhibit) -- the module certifies reader-absence in-model
         'validation.py': ('VL', 'consumer'),
         'w_trace_apf_native_one_loop_evaluator.py': ('V', 'fence'),
         'w_trace_denner_diagram_coefficient_table_closeout.py': ('V', 'fence'),
@@ -2512,7 +2514,7 @@ def check_T_vacuum_content_typing_status():
         'formal_kernel.py': 4,
         'gravity.py': 38,
         'test_no_smuggling.py': 7,
-        '_module_manifest.py': 1,
+        '_module_manifest.py': 2,
     }
     offenders = {}
     for root, dirs, files in _os.walk(pkg_dir):
@@ -2708,6 +2710,15 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
         'unification.py': 'proof-witness',
         'unification_projection_essentiality.py': 'proof-witness',
         'unification_three_levels.py': 'proof-witness',
+        # v24.3.NEW (2026-07-02, ICL_vac route-(b) P1 witness): the module
+        # introduces a LABEL-TYPED object on the stratum -- exactly the
+        # species this census's falsifier names -- and is dispositioned
+        # 'code-witness' because it is ITSELF the certificate that its
+        # label is not an interior operator-readout: the label-typed read
+        # is global-only (improper subset); every interior coupling is
+        # computed to compress into the abelian circulant algebra; the
+        # banked horizon registration is computed label-blind on the code.
+        'vacuum_label_code.py': 'code-witness',
     }
 
     live = set()
@@ -2738,7 +2749,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
         kinds[k] = kinds.get(k, 0) + 1
     check(kinds == {'infra': 4, 'declaration': 2, 'count-readout': 8,
                     'no-go-witness': 1, 'proof-witness': 6,
-                    'register-home': 1},
+                    'register-home': 1, 'code-witness': 1},
           f"clause (b): per-kind counts pinned (live: {kinds})")
     check(DISPOSITION.get('gravity.py') == 'register-home',
           "self-inclusion disclosed: this module is its own census row")
