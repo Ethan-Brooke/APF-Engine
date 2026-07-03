@@ -1432,6 +1432,238 @@ def check_T_reading_coverage_sweep() -> Dict:
 # functional itself: declared as letter-accurate claims.)
 # =====================================================================
 
+# ---------------------------------------------------------------------------
+# The LR-divisibility extended scan (v24.3.351) -- the .334 named-open
+# question pushed hard by raw compute.
+# ---------------------------------------------------------------------------
+
+def _lr_mod12_su2_scan(nmax, on_row):
+    """Mod-12-tracked multiplicity DP for SU(2) fund^{(x)n}: each block is
+    carried as (value mod 12, min(value, 13)) -- enough to decide the 3|n
+    (n >= 3) / 4|n (n >= 4) saver predicates and the max >= 3 gate exactly,
+    at tiny-integer cost. Flag-equivalence to the exact commutant_profile
+    blocks is certified in-check on the .334 bounds before any scan runs."""
+    cur = {0: (1, 1)}
+    for n in range(1, nmax + 1):
+        nxt = {}
+        for tj, (md, cap) in cur.items():
+            for t2 in ((tj + 1,) if tj == 0 else (tj + 1, tj - 1)):
+                omd, ocap = nxt.get(t2, (0, 0))
+                nxt[t2] = ((omd + md) % 12, min(13, ocap + cap))
+        cur = nxt
+        on_row(n, list(cur.values()))
+
+
+def _lr_mod12_su3_row_scan(l, kmax, on_content):
+    """Same tracking for SU(3) fund^k (x) antifund^l along fixed l."""
+    def _tensor(cur, moves):
+        nxt = {}
+        for (p, q), (md, cap) in cur.items():
+            for dp, dq in moves:
+                p2, q2 = p + dp, q + dq
+                if p2 < 0 or q2 < 0:
+                    continue
+                omd, ocap = nxt.get((p2, q2), (0, 0))
+                nxt[(p2, q2)] = ((omd + md) % 12, min(13, ocap + cap))
+        return nxt
+    cur = {(0, 0): (1, 1)}
+    for _ in range(l):
+        cur = _tensor(cur, ((0, 1), (1, -1), (-1, 0)))
+    for k in range(1, kmax + 1):
+        cur = _tensor(cur, ((1, 0), (-1, 1), (0, -1)))
+        if k >= l:
+            on_content(k, l, list(cur.values()))
+
+
+def _lr_fires_mods(pairs):
+    """The honest-open flag from (mod12, cap) pairs: max block >= 3 and NO
+    saver block (3|n with n >= 3, or 4|n with n >= 4)."""
+    if not pairs or max(c for _, c in pairs) < 3:
+        return False
+    for md, cap in pairs:
+        if md % 3 == 0 and cap >= 3:
+            return False
+        if md % 4 == 0 and cap >= 4:
+            return False
+    return True
+
+
+# The deep-scan record (2026-07-02, witness: The Turning/
+# lr_divisibility_hunt_runner_2026-07-02.py + its fastdp companion; recorded
+# data, NOT re-run in-check -- the in-check scan below re-verifies a large
+# interior region on every bank run):
+LR_DEEP_SCAN_RECORD = {
+    "su2_nmax": 14764,            # zero firers (was 24 at .334: pairs m<=12)
+    "su3_full_triangle": 131,     # zero firers, all k >= l (was 10 at .334)
+    "su3_strip": (65, 400),       # l <= 65 out to k+l = 400, zero firers
+}
+# in-check bounds (re-verified every bank run, ~0.3 s):
+LR_INCHECK_SU2_NMAX = 600
+LR_INCHECK_SU3_TRIANGLE = 60
+
+
+def check_T_lr_divisibility_extended_scan() -> Dict:
+    """The pure-quark LR-divisibility observation, pushed 13x-600x past the
+    .334 bounds by an independent exact scan: still zero firers. The general
+    question stays a named open -- observation, not law.
+
+    THE QUESTION (named at .334, general form open): does every pure
+    fund/antifund content whose commutant profile carries a block >= 3 also
+    carry a 3|n or 4|n block? The gluonic alphabet already refutes the
+    universal form (the (5f,3g) firer, pinned in the coverage sweep), so a
+    pure-quark counterexample is live until proven otherwise.
+
+    THE SCAN. An independent mod-12-tracked multiplicity DP (blocks carried
+    as (mod 12, capped value) pairs -- exact for the saver predicates) is
+    first certified against this module's own commutant_profile on the .334
+    bounds: block multisets equal on the exact DP, flag equal on every
+    scanned content. Then: SU(2) to n = 600 and the full SU(3) triangle to
+    k+l = 60 are re-scanned on every bank run -- zero firers required. The
+    DEEP record (LR_DEEP_SCAN_RECORD, witness scripts in The Turning): SU(2)
+    to n = 14764, SU(3) full triangle to k+l = 131 plus the l <= 65 strip to
+    k+l = 400 -- zero firers, recorded 2026-07-02.
+
+    STRUCTURE FINDING, pinned: the SU(2) single-saver near-misses are
+    exactly n in {4, 5, 6, 7} -- from n = 8 every scanned row carries at
+    least TWO saver blocks (verified in-check to n = 600). Proof-attempt
+    state for the record: SU(2) blocks are ballot numbers; n == 0, 1 (mod 3)
+    are closed by the second/third blocks (n-1 and n(n-3)/2); n == 2 (mod 3)
+    is the open congruence class. Named, not claimed.
+
+    Fails loudly under drift: a firer inside any scanned region is a GENUINE
+    RESULT (re-adjudicate, do not silence); a validation mismatch between
+    the DP and commutant_profile kills the instrument. Negative-tested: the
+    (5f,3g) gluonic block list fires the detector; saver-carrying lists do
+    not. Grade P_structural_instrument tier 4. Alphabet-sensitivity carve:
+    this check says nothing about words containing adjoints.
+    """
+    failures: List[str] = []
+
+    # (1) validation: exact blocks + flag vs commutant_profile on .334 bounds
+    from collections import defaultdict
+    def su2_exact(n):
+        cur = {0: 1}
+        for _ in range(n):
+            nxt = defaultdict(int)
+            for tj, m in cur.items():
+                nxt[tj + 1] += m
+                if tj >= 1:
+                    nxt[tj - 1] += m
+            cur = dict(nxt)
+        return sorted(cur.values(), reverse=True)
+    def su3_exact(k, l):
+        cur = {(0, 0): 1}
+        for moves, reps in (((( 0, 1), (1, -1), (-1, 0)), l),
+                            (((1, 0), (-1, 1), (0, -1)), k)):
+            for _ in range(reps):
+                nxt = defaultdict(int)
+                for (p, q), m in cur.items():
+                    for dp, dq in moves:
+                        if p + dp >= 0 and q + dq >= 0:
+                            nxt[(p + dp, q + dq)] += m
+                cur = dict(nxt)
+        return sorted(cur.values(), reverse=True)
+    def _fires_exact(blocks):
+        if not blocks or max(blocks) < 3:
+            return False
+        return not any((n % 3 == 0 and n >= 3) or (n % 4 == 0 and n >= 4)
+                       for n in blocks)
+    # mod-12 rows for the flag cross-validation (SU(2) to n=24 -- the .334
+    # pairs bound m<=12; SU(3) over the mixed table)
+    _m12_su2: Dict[int, list] = {}
+    _lr_mod12_su2_scan(24, lambda n, prs: _m12_su2.__setitem__(n, prs))
+    _m12_su3: Dict[Tuple[int, int], list] = {}
+    for _l in range(0, 6):
+        _lr_mod12_su3_row_scan(
+            _l, 10 - _l,
+            lambda k, l2, prs: _m12_su3.__setitem__((k, l2), prs))
+    for N in (2, 3):
+        for k in range(0, 11):
+            for l in range(0, 11 - k):
+                if k + l == 0 or k < l:
+                    continue
+                mod_blocks = sorted(
+                    commutant_profile(N, ("fund",) * k + ("antifund",) * l)["blocks"],
+                    reverse=True)
+                mine = su2_exact(k + l) if N == 2 else su3_exact(k, l)
+                if mod_blocks != mine:
+                    failures.append("DP validation mismatch SU(%d) (%d,%d)"
+                                    % (N, k, l))
+                m12 = _m12_su2.get(k + l) if N == 2 else _m12_su3.get((k, l))
+                if m12 is None or (_lr_fires_mods(m12)
+                                   != _fires_exact(mod_blocks)):
+                    failures.append("mod-12 flag mismatch SU(%d) (%d,%d)"
+                                    % (N, k, l))
+    # the .334 SU(2) pairs bound reaches n = 24: flag-validate the tail rows
+    for n in range(11, 25):
+        if _lr_fires_mods(_m12_su2[n]) != _fires_exact(su2_exact(n)):
+            failures.append("mod-12 flag mismatch SU(2) n=%d" % n)
+
+    # (2) the in-check scan, mod-12 DP, zero firers required
+    su2_firers: List[int] = []
+    su2_single_saver: List[int] = []
+    def _row2(n, prs):
+        if _lr_fires_mods(prs):
+            su2_firers.append(n)
+        elif max(c for _, c in prs) >= 3:
+            savers = [1 for md, cap in prs
+                      if (md % 3 == 0 and cap >= 3) or (md % 4 == 0 and cap >= 4)]
+            if len(savers) == 1:
+                su2_single_saver.append(n)
+    _lr_mod12_su2_scan(LR_INCHECK_SU2_NMAX, _row2)
+    if su2_firers:
+        failures.append("SU(2) FIRER inside scanned region (a genuine result "
+                        "-- re-adjudicate, do not silence): %s" % su2_firers[:5])
+    if su2_single_saver != [4, 5, 6, 7]:
+        failures.append("SU(2) single-saver census drifted: %s"
+                        % su2_single_saver[:10])
+    su3_firers: List[Tuple[int, int]] = []
+    for l in range(0, LR_INCHECK_SU3_TRIANGLE // 2 + 1):
+        _lr_mod12_su3_row_scan(
+            l, LR_INCHECK_SU3_TRIANGLE - l,
+            lambda k, l2, prs: su3_firers.append((k, l2))
+            if _lr_fires_mods(prs) else None)
+    if su3_firers:
+        failures.append("SU(3) FIRER inside scanned region (a genuine result "
+                        "-- re-adjudicate, do not silence): %s" % su3_firers[:5])
+
+    # (3) detector negative tests
+    if not _lr_fires_mods([(59 % 12, 13), (46 % 12, 13), (43 % 12, 13),
+                           (23 % 12, 13), (7, 7), (1, 1)]):
+        failures.append("detector dead: the (5f,3g) block list must fire")
+    if _lr_fires_mods([(3, 3), (2, 2)]):
+        failures.append("detector overfires: 3-saver list must not fire")
+    if _lr_fires_mods([(1, 2), (2, 2)]):
+        failures.append("detector overfires: max<3 must not fire")
+
+    # (4) deep-record sanity (data coherence only; not re-run)
+    if LR_DEEP_SCAN_RECORD["su2_nmax"] < LR_INCHECK_SU2_NMAX:
+        failures.append("deep record smaller than in-check bound (su2)")
+    if LR_DEEP_SCAN_RECORD["su3_full_triangle"] < LR_INCHECK_SU3_TRIANGLE:
+        failures.append("deep record smaller than in-check bound (su3)")
+
+    return {
+        "name": "check_T_lr_divisibility_extended_scan",
+        "tier": 4,
+        "epistemic": "P_structural_instrument",
+        "passed": not failures,
+        "failures": failures,
+        "key_result": ("the pure-quark LR-divisibility observation holds to "
+                       "SU(2) n=600 / SU(3) full triangle k+l=60 in-check "
+                       "(deep record, witnessed: n=14764 / triangle 131 / "
+                       "the l<=65 strip to k+l=400 -- zero firers "
+                       "everywhere); the general question stays a NAMED "
+                       "OPEN (observation, not law; the gluonic (5f,3g) "
+                       "firer shows the universal form is alphabet-"
+                       "sensitive); SU(2) single-saver near-miss census "
+                       "pinned exactly {4,5,6,7}"),
+        "summary": ("LR-divisibility extended scan: zero firers to 13x-600x "
+                    "the .334 bounds; mod-12 DP validated against "
+                    "commutant_profile; detector negative-tested; the open "
+                    "stays open"),
+    }
+
+
 IE_DECLARATIONS = (
     {
         "input_id": "claim:drawn_content_readings_functional",
@@ -1483,6 +1715,7 @@ _CHECKS = {
     "T_sm_interface_generation_qutrit_readings": check_T_sm_interface_generation_qutrit_readings,
     "T_gluonic_content_readings": check_T_gluonic_content_readings,
     "T_reading_coverage_sweep": check_T_reading_coverage_sweep,
+    "T_lr_divisibility_extended_scan": check_T_lr_divisibility_extended_scan,
 }
 
 
