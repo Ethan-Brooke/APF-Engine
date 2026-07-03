@@ -2514,7 +2514,7 @@ def check_T_vacuum_content_typing_status():
         'formal_kernel.py': 4,
         'gravity.py': 38,
         'test_no_smuggling.py': 7,
-        '_module_manifest.py': 2,
+        '_module_manifest.py': 3,  # re-pinned 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
     }
     offenders = {}
     for root, dirs, files in _os.walk(pkg_dir):

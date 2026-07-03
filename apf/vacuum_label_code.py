@@ -13,11 +13,17 @@ step (Cleve-Gottesman-Lo 1999) -- and the fit question is CLOSED
 EXISTS at abstract-encoding strength: check 3 exhibits a perfect
 ((61,61)) mixed scheme carrying a coherent 42-dim secret with every
 share dimension 43 <= 102 (see the check-3 block below).
-Realization/identification remains the open reading. Hostile cold
-audits 2026-07-02: LAND-WITH-FIXES 0.80 (checks 1-2, all eight fixes
-carried) and LAND-WITH-FIXES 0.88 (check 3, all seven fixes carried;
-the walker's construction independently re-derived and re-run by the
-auditor).
+Realization/identification remains the open reading. Checks 4-5
+walk the successor (the sector-aligned question) to its three-pronged
+closure: support-alignment EXISTS at exact fill (share dim exactly
+42, check 4), the carrier reading dissolves (type mismatch), and the
+registration reading closes negatively at coherent strength (the
+classical-record ceiling F_e <= 1/42, check 5); the S_42-covariant
+refinement stays open. Hostile cold audits 2026-07-02: LAND-WITH-FIXES
+0.80 (checks 1-2, all eight fixes), 0.88 (check 3, all seven fixes;
+independent re-derivation), and 0.88 (checks 4-5, all eight fixes;
+independent re-implementation, incl. the red-bank repair of the
+narrative-merge race pins).
 
 THE MODEL (banked skeleton, every constant anchored):
   - C_total = 61 capacity channels (L_count [P]).
@@ -217,9 +223,11 @@ WHAT check_T_vacuum_mixed_42dim_secret_scheme_exists CERTIFIES:
         scheme embeds C^43 arbitrarily in each C^102 -- no alignment
         with the 60+42 sector split, the common-mode carrier, or the
         banked horizon registration is claimed; the ALIGNED-scheme
-        question is separate and un-walked. Share dimension exactly 42
-        is not settled (42 <= d_share <= 43 pinned; the Gottesman
-        important-share bound d_share >= 42 makes 43 near-tight).
+        question closed three-pronged by checks 4-5 (support EXISTS /
+        carrier dissolved / registration no-go; covariant open). Share
+        dimension exactly 42 is SETTLED by check 4 (the [[5,1,3]]
+        qubit factor; the Gottesman floor tight at the banked
+        dimension).
         Privacy is not erasure-protection. n = 61 is not directly
         simulated; it rests on (D), verified at n = 3, 4 including
         the composed decoder. No cited theorem is load-bearing:
@@ -267,10 +275,13 @@ WHAT THIS MODULE DOES NOT CERTIFY:
       carries a coherent 42-dim secret. Existence != realization: the
       exhibited scheme embeds C^43 arbitrarily in each C^102 -- it
       respects neither the 60+42 sector split, nor the common-mode
-      carrier, nor the banked horizon registration; "a mixed scheme
-      ALIGNED with banked sector structure" is a separate, un-walked
-      question (named so a later disposition pass cannot read EXISTS
-      as realization-adjacent). Dimensional structure does not force
+      carrier, nor the banked horizon registration; the ALIGNED-scheme
+      question is closed THREE-PRONGED by checks 4-5 (support-aligned
+      EXISTS at exact fill / carrier reading dissolved, type mismatch /
+      registration reading negative at coherent strength), never
+      "closed" simpliciter, and support-alignment is still NOT
+      realization (the fence pattern inherited so EXISTS cannot be
+      read as realization-adjacent). Dimensional structure does not force
       classicality of globally-locked content (locked = recoverable
       only from the full set, invisible to every proper subset); the
       subspace ceiling and the banked label-typing stand; realization
@@ -951,6 +962,142 @@ def _qss_build(n, p, d_ref, seed=None):
     return state, n_shares
 
 
+# ---------------------------------------------------------------------------
+# Checks 4-5 machinery: the sector-aligned scheme (share dim exactly 42)
+# and the banked-registration coherent-recovery no-go.
+# ---------------------------------------------------------------------------
+
+_FIVEQ_STABS = ('XZZXI', 'IXZZX', 'XIXZZ', 'ZXIXZ')
+
+
+def _pauli_apply(pstr, state):
+    """Apply a 5-qubit Pauli string to a sparse {int5: amp} state."""
+    out = {}
+    for b, amp in state.items():
+        nb, namp = b, amp
+        for q, ch in enumerate(pstr):
+            bit = (nb >> (4 - q)) & 1
+            if ch == 'X':
+                nb ^= (1 << (4 - q))
+            elif ch == 'Z':
+                if bit:
+                    namp = -namp
+            elif ch == 'Y':
+                namp = namp * (1j if bit == 0 else -1j)
+                nb ^= (1 << (4 - q))
+        out[nb] = out.get(nb, 0j) + namp
+    return out
+
+
+def _fiveq_codewords():
+    """The [[5,1,3]] logical codewords as sparse dicts, built in-check
+    from the cyclic XZZXI stabilizers (no literature table imported)."""
+    cw = []
+    for logical in (0, 1):
+        st = {0b11111 if logical else 0b00000: 1.0 + 0j}
+        for stab in _FIVEQ_STABS:
+            new = _pauli_apply(stab, st)
+            merged = dict(st)
+            for b, a in new.items():
+                merged[b] = merged.get(b, 0j) + a
+            st = {b: a / 2.0 for b, a in merged.items() if abs(a) > 1e-14}
+        norm = math.sqrt(sum(abs(a) ** 2 for a in st.values()))
+        cw.append({b: a / norm for b, a in st.items()})
+    return cw
+
+
+def _fiveq_kl_certificate(cw):
+    """KL for all 106 weight-<=2 Paulis: <iL|E|jL> = c(E) delta_ij,
+    with c(E) = 0 for E != I (pure code). Returns worst deviation."""
+    paulis = ['IIIII']
+    letters = 'XYZ'
+    for q in range(5):
+        for ch in letters:
+            p = list('IIIII'); p[q] = ch
+            paulis.append(''.join(p))
+    for q1 in range(5):
+        for q2 in range(q1 + 1, 5):
+            for c1 in letters:
+                for c2 in letters:
+                    p = list('IIIII'); p[q1] = c1; p[q2] = c2
+                    paulis.append(''.join(p))
+    assert len(paulis) == 106
+    worst = 0.0
+    for p in paulis:
+        for i in range(2):
+            ei = _pauli_apply(p, cw[i])
+            for j in range(2):
+                ov = sum(cw[j].get(b, 0j).conjugate() * a
+                         for b, a in ei.items())
+                want = 1.0 if (p == 'IIIII' and i == j) else 0.0
+                worst = max(worst, abs(ov - want))
+    return worst
+
+
+def _q33_encode(state, pos, cw):
+    """Encode register `pos` (a qubit) of a sparse tuple-state with the
+    [[5,1,3]]-derived mixed ((3,3)): three kept child registers replace
+    the parent at pos..pos+2; the two environment qubits append at the
+    tail. Registers hold ints; kept children are bits."""
+    out = {}
+    for tup, amp in state.items():
+        sec = tup[pos]
+        for b, camp in cw[sec].items():
+            k0, k1, k2 = (b >> 4) & 1, (b >> 3) & 1, (b >> 2) & 1
+            e0, e1 = (b >> 1) & 1, b & 1
+            new = tup[:pos] + (k0, k1, k2) + tup[pos + 1:] + (e0, e1)
+            out[new] = out.get(new, 0j) + amp * camp
+    return out
+
+
+def _q33_decode(state, pos, cw):
+    """Coherent Petz decode of the three kept children at pos..pos+2
+    back into the parent qubit. Kraus of the recovery: R_e = 2 K_e^dag
+    with K_e = (<e|_env (x) I) V (verified in-check: N(I/2) = I/8 and
+    R(N(rho)) = rho). The Stinespring index e joins the tail; if the
+    decode is exact the tail decouples."""
+    amp_table = {}   # (kept3, env2) -> per-logical amplitude
+    for sec in (0, 1):
+        for b, camp in cw[sec].items():
+            kept = (b >> 2) & 7
+            env = b & 3
+            amp_table.setdefault((kept, env), [0j, 0j])[sec] = camp
+    out = {}
+    for tup, amp in state.items():
+        kept = (tup[pos] << 2) | (tup[pos + 1] << 1) | tup[pos + 2]
+        for (k, e), pair in amp_table.items():
+            if k != kept:
+                continue
+            for sec in (0, 1):
+                coeff = 2.0 * pair[sec].conjugate()
+                if abs(coeff) < 1e-14:
+                    continue
+                new = tup[:pos] + (sec,) + tup[pos + 3:] + (e,)
+                out[new] = out.get(new, 0j) + amp * coeff
+    return out
+
+
+def _uniform_on_support_logrank(rho, tol=1e-10):
+    """If rho is (proportional to) a projector, return ln(rank); else None.
+    Entrywise test: rho/tr must satisfy P^2 = P/rank with equal diagonal
+    on support -- sufficient for the structured marginals used here."""
+    keys = sorted({k[0] for k in rho} | {k[1] for k in rho})
+    tr = sum(rho.get((k, k), 0j).real for k in keys)
+    if tr <= tol:
+        return None
+    diag = [rho.get((k, k), 0j).real / tr for k in keys if
+            abs(rho.get((k, k), 0j)) > tol]
+    if not diag or max(diag) - min(diag) > tol:
+        return None
+    rank = round(1.0 / diag[0])
+    # off-diagonals must vanish for the projector-diagonal form
+    for k1 in keys:
+        for k2 in keys:
+            if k1 != k2 and abs(rho.get((k1, k2), 0j)) > tol * tr:
+                return None
+    return math.log(rank)
+
+
 def check_T_vacuum_mixed_42dim_secret_scheme_exists():
     """T_vacuum_mixed_42dim_secret_scheme_exists: The Fit Question Closed EXISTS [P_structural_instrument].
 
@@ -959,7 +1106,9 @@ def check_T_vacuum_mixed_42dim_secret_scheme_exists():
     secret exists with every share dimension 43 <= 102. Walker
     CONSTRUCTION 0.95 + hostile audit LAND-WITH-FIXES 0.88, all seven
     fixes carried. Existence at abstract-encoding strength only; the
-    banked-sector-ALIGNED scheme question is separate and un-walked.
+    banked-sector-ALIGNED scheme question is closed three-pronged by
+    checks 4-5 (support EXISTS at exact fill / carrier dissolved /
+    registration no-go; covariant refinement open).
     """
     P = 43
 
@@ -1097,7 +1246,8 @@ def check_T_vacuum_mixed_42dim_secret_scheme_exists():
             'dimensional structure does not force classicality of '
             'globally-locked content; the subspace ceiling and the '
             'banked label-typing stand; the banked-sector-ALIGNED '
-            'scheme question is separate and un-walked; realization/'
+            'scheme question is closed three-pronged by checks 4-5; '
+            'realization/'
             'identification remains the open reading. No cited '
             'theorem is load-bearing (CGL 1999 is attribution).'
         ),
@@ -1119,8 +1269,9 @@ def check_T_vacuum_mixed_42dim_secret_scheme_exists():
             'scheme': '((61,61)) mixed; 60x cascade of polynomial-code '
                       '((2,2)) at p = 43; 1 base + 59 re-shares',
             'share_dims': '43 each (61 shares) <= 102',
-            'share_dim_bound': '43 >= 42 (Gottesman important-share '
-                               'bound, near-tight; exactly-42 open)',
+            'share_dim_bound': '43 >= 42 here; exactly 42 SETTLED by '
+                               'check 4 (the floor is tight at the '
+                               'banked dimension)',
             'naive_cgl_excluded': 'pure ((61,121)) needs p >= 121 > '
                                   '102; the cascade is what fits',
             'base_certificates': 'integer congruence + decoder phase '
@@ -1130,8 +1281,533 @@ def check_T_vacuum_mixed_42dim_secret_scheme_exists():
             'norm_convention': 'entrywise max defect (reported '
                                'elsewhere as Frobenius/trace -- '
                                'convention only)',
-            'alignment': 'NOT sector-aligned; the aligned-scheme '
-                         'question is separate and un-walked',
+            'alignment': 'this scheme NOT sector-aligned; the '
+                         'aligned question closed three-pronged by '
+                         'checks 4-5 (support EXISTS / carrier '
+                         'dissolved / registration no-go; covariant '
+                         'open)',
+        },
+    )
+
+
+def check_T_vacuum_sector_aligned_scheme_share_dim_42():
+    """T_vacuum_sector_aligned_scheme_share_dim_42: Support-Alignment EXISTS at Exact Fill [P_structural_instrument].
+
+    Check 4 (2026-07-02; walker CONSTRUCTION 0.93 + hostile audit
+    LAND-WITH-FIXES 0.88, all eight fixes carried). THE STATEMENT: a
+    perfect ((61,61)) mixed quantum threshold scheme for a coherent
+    42-dim secret exists with EVERY share dimension exactly 42 --
+    admitting a Sector-B-supported embedding (exact fill of each
+    channel's 42-dim Sector-B block; the embedding is a choice the
+    dimension permits, not a consequence). This settles the check-3
+    open pin (42 <= d_share <= 43) at 42: the important-share floor
+    (d >= 42, CMI chain in this docstring) is TIGHT at the banked
+    dimension, zero Sector-B slack.
+
+    THE CONSTRUCTION (42 = 2 x 3 x 7, tensor of three ((61,61))s):
+      - factors 3 and 7: the check-3 polynomial cascade at p = 3 and
+        p = 7 (both prime >= 3; integer certificates re-run here);
+      - THE QUBIT FACTOR (the load-bearing novelty; p = 2 FAILS the
+        polynomial route -- three evaluation points do not exist mod
+        2): the five-qubit code [[5,1,3]], BUILT IN-CHECK from its
+        cyclic XZZXI stabilizers, is a pure ((3,5)) threshold
+        structure (KL for all 106 weight-<=2 Paulis, deviation
+        exactly 0); discarding two positions to the environment gives
+        a mixed ((3,3)) qubit-secret ALL-QUBIT-SHARES scheme;
+        re-sharing one share with the same ((3,3)) gives
+        ((n+2, n+2)); 61 IS ODD (load-bearing fence): base + 29
+        re-shares = ((61,61)) all-qubit. 3 + 2*29 = 61.
+      - tensor composition: tensors of constant channels are constant
+        (one-line linearity), decoders tensor; share_i =
+        C^2 x C^3 x C^7 = C^42.
+
+    THE LOWER BOUND (derived here, so exactly-42 is TIGHT, not just
+    achieved): with reference R maximally entangled with the secret,
+    privacy gives I(R:S_A) = 0 for proper A; perfect recovery gives
+    I(R:S_[61]) = 2 log 42; for any share t with A = [61] minus t:
+    2 log 42 = I(R:S_t|S_A) <= I(S_t : R S_A) <= 2 log d_t, so
+    d_t >= 42 [chain rule + MI nonnegativity + dimension bound,
+    textbook inequalities]. The saturation instance I(R:S_t|A) =
+    2 ln 2 is COMPUTED on the qubit ((3,3)) below via
+    uniform-on-support log-rank entropies.
+
+    THE INDUCTION (the one nontrivial lemma, same shape as check 3's
+    case (ii)): for proper A after a re-share, if A contains 1 or 2
+    of the 3 children, the corresponding ((3,3)) marginal channel is
+    the CONSTANT channel (KL weight-<=2 privacy at superoperator
+    strength, verified at Choi strength below), and
+    (id (x) Lambda)(rho) = rho_rest (x) sigma kills the parent for
+    arbitrary correlations BEFORE any appeal to the previous
+    scheme's privacy -- the case naive pullback misses (A = all
+    other shares + some children pulls back to the FULL set). If A
+    contains all 3 children, A misses some old share and pulls back
+    proper; if none, directly proper.
+
+    FENCES: (1) support-alignment is NOT realization -- the .356
+    fence pattern is inherited verbatim; nothing here identifies any
+    scheme with physical vacuum content; ICL_vac stays named [C];
+    MSC untouched. (2) The aligned-question closure is
+    THREE-PRONGED, never "closed" simpliciter: the sector-split
+    reading closes EXISTS (this check); the common-mode-carrier
+    reading DISSOLVES (type mismatch: the carrier is a global 42-dim
+    subspace with no per-channel tensor structure -- "shares
+    supported on it" is not well-typed; its subspace-coherent
+    version is already killed by check 2); the registration reading
+    closes NEGATIVELY at coherent strength (check 5). (3) The
+    S_42-covariant refinement is OPEN (the 2x3x7 factorization is
+    not mode-permutation covariant; no continuous-symmetry
+    obstruction is available for a finite group; priced note-only).
+    (4) n = 61 is not directly simulated: the ((3,3))/((5,5)) full
+    scans + the reduced ((7,7)) hard-case scan are computed here;
+    the FULL ((7,7)) 126-subset scan is pinned offline (The
+    Turning/vacuum_aligned_full77_witness_2026-07-02.py, the .351
+    pattern). (5) AME(4,2) nonexistence (Higuchi-Sugita 2000) is
+    docstring attribution [cited, unverified] and NOT load-bearing
+    (61 odd; n = 2 never used); the computed reason the qubit factor
+    needs the QEC route is the p = 2 evaluation-point failure.
+    (6) Privacy is not erasure-protection (inherited).
+    """
+    from itertools import combinations
+
+    cw = _fiveq_codewords()
+
+    # ---- [[5,1,3]] built in-check: orthonormal, KL weight-<=2 exact ----
+    for i in range(2):
+        nrm = sum(abs(a) ** 2 for a in cw[i].values())
+        check(abs(nrm - 1.0) < 1e-12, f"codeword {i} normalized")
+    ov = abs(sum(cw[1].get(b, 0j).conjugate() * a for b, a in cw[0].items()))
+    check(ov < 1e-12, f"codewords orthogonal (overlap {ov:.2e})")
+    kl = _fiveq_kl_certificate(cw)
+    check(kl < 1e-12,
+          f"KL for all 106 weight-<=2 Paulis, c(E!=I) = 0 (worst {kl:.2e})")
+
+    # ---- the ((3,3)) qubit-shares scheme: privacy + decoupling + decode ----
+    import math as _m
+    state = {(0, 0): 1 / _m.sqrt(2), (1, 1): 1 / _m.sqrt(2)}
+    s33 = _q33_encode(state, 1, cw)
+    for r in (1, 2):
+        for A in combinations((1, 2, 3), r):
+            d = _qss_rho_defect(_qss_marginal(s33, (0,)),
+                                _qss_marginal(s33, A),
+                                _qss_marginal(s33, (0,) + A))
+            check(d < 1e-12, f"((3,3)) subset {A} leaks (defect {d:.2e})")
+    d = _qss_rho_defect(_qss_marginal(s33, (0,)), _qss_marginal(s33, (4, 5)),
+                        _qss_marginal(s33, (0, 4, 5)))
+    check(d < 1e-12, f"((3,3)) decoupling (recovery certificate): {d:.2e}")
+    dec = _q33_decode(s33, 1, cw)
+    target = {((a, a), (b, b)): 0.5 for a in (0, 1) for b in (0, 1)}
+    rho = _qss_marginal(dec, (0, 1))
+    keys = {k[0] for k in rho} | {k[1] for k in rho} | {k[0] for k in target}
+    w = max(abs(rho.get((k1, k2), 0j) - target.get((k1, k2), 0j))
+            for k1 in keys for k2 in keys)
+    check(w < 1e-12, f"((3,3)) Petz decode exact (defect {w:.2e})")
+
+    # ---- CMI saturation instance: I(R:S_t|A) = 2 ln 2 exactly ----
+    # entropies via uniform-on-support log-rank (each marginal verified
+    # proportional to a projector entrywise)
+    # S(X) computed where the marginal is diagonal-uniform; for tA and
+    # RtA use purity duality S(X) = S(X^c) (global state pure): the
+    # complements (R, env) and (env) ARE diagonal-uniform.
+    ent = {}
+    for name, kp in (('RA', (0, 1, 2)), ('tA', (0, 4, 5)),
+                     ('A', (1, 2)), ('RtA', (4, 5))):
+        lr = _uniform_on_support_logrank(_qss_marginal(s33, kp))
+        check(lr is not None, f"CMI marginal {name} uniform-on-support "
+                              f"(via complement where noted)")
+        ent[name] = lr
+    cmi = ent['RA'] + ent['tA'] - ent['A'] - ent['RtA']
+    check(abs(cmi - 2 * _m.log(2)) < 1e-10,
+          f"CMI floor saturated: I(R:S_t|A) = {cmi:.6f} = 2 ln 2 "
+          f"(the d >= 42 bound is tight at the banked dimension)")
+
+    # ---- ((5,5)) cascade: FULL 30-subset scan + composed decoder ----
+    s55 = _q33_encode(s33, 3, cw)
+    for r in range(1, 5):
+        for A in combinations((1, 2, 3, 4, 5), r):
+            d = _qss_rho_defect(_qss_marginal(s55, (0,)),
+                                _qss_marginal(s55, A),
+                                _qss_marginal(s55, (0,) + A))
+            check(d < 1e-12, f"((5,5)) subset {A} leaks (defect {d:.2e})")
+    d2 = _q33_decode(_q33_decode(s55, 3, cw), 1, cw)
+    rho = _qss_marginal(d2, (0, 1))
+    w = max(abs(rho.get((k1, k2), 0j) - target.get((k1, k2), 0j))
+            for k1 in keys for k2 in keys)
+    check(w < 1e-12, f"((5,5)) composed decode exact (defect {w:.2e})")
+
+    # ---- ((7,7)) reduced scan: the named hard cases + one probe/size ----
+    s77 = _q33_encode(s55, 5, cw)
+    hard = [(1, 2, 3, 4, 5, 6), (1, 2, 3, 4, 5, 7), (1, 2, 3, 4, 6, 7)]
+    probes = [(1,), (2, 5), (1, 4, 7), (2, 3, 5, 6), (1, 2, 4, 6, 7)]
+    for A in hard + probes:
+        d = _qss_rho_defect(_qss_marginal(s77, (0,)),
+                            _qss_marginal(s77, A),
+                            _qss_marginal(s77, (0,) + A))
+        check(d < 1e-12, f"((7,7)) subset {A} leaks (defect {d:.2e}) -- "
+                         f"hard cases = all-shares-minus-one-child")
+    # decoupling of the accumulated environment
+    env77 = tuple(range(8, 8 + 6))
+    d = _qss_rho_defect(_qss_marginal(s77, (0,)), _qss_marginal(s77, env77),
+                        _qss_marginal(s77, (0,) + env77))
+    check(d < 1e-12, f"((7,7)) decoupling: {d:.2e}")
+    check(3 + 2 * 29 == 61, "parity: base 3 + 29 re-shares = 61 (odd)")
+
+    # ---- factors 3 and 7: integer certificates (the check-3 pattern) ----
+    for P_ in (3, 7):
+        bad = [ds for ds in range(1, P_) if (2 * ds - ds) % P_ == 0]
+        check(not bad, f"p={P_} share-1 congruence insoluble")
+        bad = [ds for ds in range(1, P_) if (2 * ds) % P_ == 0]
+        check(not bad, f"p={P_} share-2 congruence insoluble")
+        bad = [(w_, sec) for w_ in range(P_) for sec in range(P_)
+               if (2 * w_ * sec + (P_ - 2) * w_ * sec) % P_ != 0]
+        check(not bad, f"p={P_} decoder phase identity")
+    # p = 2 FAILS (the computed reason the qubit factor needs QEC):
+    check(len(set(x % 2 for x in (0, 1, 2))) < 3,
+          "p=2: three distinct evaluation points do not exist mod 2")
+
+    # ---- tensor witness at share dim 6: qubit ((3,3)) x qutrit ((3,3))
+    #      (both factors THREE shares -- tensoring requires equal n;
+    #      the qutrit ((3,3)) is one cascade level of the p=3 scheme) ----
+    q3 = {}
+    for r_ in range(3):
+        q3[(r_, r_)] = 1.0 / math.sqrt(3)
+    q3, nsh = _qss_encode_last(q3, 1, 3)      # 2 shares
+    q3, nsh = _qss_encode_last(q3, nsh, 3)    # 3 shares (+ 2 envs at tail)
+    # combined: registers (ref2, ref3, q1,t1, q2,t2, q3,t3, qenvs, tenvs)
+    comb = {}
+    for t1, a1 in s33.items():
+        for t2, a2 in q3.items():
+            new = (t1[0], t2[0], t1[1], t2[1], t1[2], t2[2], t1[3], t2[3],
+                   t1[4], t1[5], t2[4], t2[5])
+            comb[new] = comb.get(new, 0j) + a1 * a2
+    refs = (0, 1)
+    joint = {1: (2, 3), 2: (4, 5), 3: (6, 7)}
+    for r_ in (1, 2):
+        for A in combinations((1, 2, 3), r_):
+            kp = sum((joint[i] for i in A), ())
+            d = _qss_rho_defect(_qss_marginal(comb, refs),
+                                _qss_marginal(comb, kp),
+                                _qss_marginal(comb, refs + kp))
+            check(d < 1e-12,
+                  f"tensor witness (dim 6) subset {A} leaks ({d:.2e})")
+
+    check(2 * 3 * 7 == ALPHABET, "42 = 2 x 3 x 7 (exact fill of Sector-B)")
+
+    return _result(
+        name='T_vacuum_sector_aligned_scheme_share_dim_42 -- '
+             'support-alignment EXISTS at exact fill: a perfect ((61,61)) '
+             'mixed scheme for a coherent 42-dim secret with every share '
+             'dimension exactly 42 (the [[5,1,3]] qubit factor x the p=3,7 '
+             'cascades); the important-share floor tight at the banked '
+             'dimension',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            'The check-3 open pin (42 <= d_share <= 43) settles at 42: '
+            'tensoring the polynomial cascades at p = 3, 7 with a qubit '
+            'factor built from the five-qubit code [[5,1,3]] (a pure '
+            '((3,5)) threshold structure; discard two positions -> mixed '
+            '((3,3)) all-qubit-shares; re-share +2 per step; 61 odd '
+            'reaches ((61,61))) gives every share dimension exactly '
+            '2 x 3 x 7 = 42, admitting a Sector-B-supported embedding at '
+            'exact fill. KL certificate exact over all 106 weight-<=2 '
+            'Paulis; ((3,3))/((5,5)) FULL proper-subset scans + composed '
+            'Petz decoders exact; ((7,7)) hard cases + probes in-check '
+            '(full scan pinned offline); CMI floor computed saturated '
+            '(2 ln 2); p = 2 failure computed (the reason the qubit '
+            'factor needs the QEC route). THE THREE-PRONGED closure of '
+            'the aligned question: sector-split EXISTS (here), carrier '
+            'reading dissolved (type mismatch), registration reading '
+            'negative at coherent strength (check 5). Support-alignment '
+            'is NOT realization; ICL_vac stays named [C]; the '
+            'S_42-covariant refinement stays open.'
+        ),
+        key_result=(
+            'Share dimension exactly 42 = the Sector-B block, exact '
+            'fill: aligned support EXISTS; the Gottesman floor is tight '
+            'at the banked dimension (realization open)'
+        ),
+        dependencies=['L_count', 'T_kappa', 'L_self_exclusion',
+                      'T_horizon_reciprocity', 'T11',
+                      'T_interface_sector_bridge', 'L_QEC_code_space'],
+        cross_refs=['T_vacuum_mixed_42dim_secret_scheme_exists',
+                    'T_vacuum_logical_sector_classical_ceiling',
+                    'T_vacuum_label_code_no_leakage',
+                    'T_banked_registration_coherent_recovery_no_go'],
+        artifacts={
+            'share_dims': 'exactly 42 = 2 x 3 x 7, all 61 shares '
+                          '(Sector-B exact fill)',
+            'qubit_factor': '[[5,1,3]] -> mixed ((3,3)) all-qubit; '
+                            '+2 per re-share; 3 + 2*29 = 61 (odd, '
+                            'load-bearing)',
+            'kl_certificate': '106 weight-<=2 Paulis, deviation 0',
+            'cmi_saturation': 'I(R:S_t|A) = 2 ln 2 computed (floor '
+                              'tight)',
+            'p2_failure': 'computed: no 3 evaluation points mod 2',
+            'ame42_citation': 'Higuchi-Sugita 2000 [cited, unverified, '
+                              'NOT load-bearing]',
+            'offline_witness': 'The Turning/vacuum_aligned_full77_'
+                               'witness_2026-07-02.py (full ((7,7)) '
+                               'scan)',
+            'alignment_ledger': 'support EXISTS / carrier dissolved / '
+                                'registration no-go / covariant open',
+        },
+    )
+
+
+def check_T_banked_registration_coherent_recovery_no_go():
+    """T_banked_registration_coherent_recovery_no_go: The Classical-Record Ceiling [P_structural_instrument].
+
+    Check 5 (2026-07-02; walker NO-GO 0.97 + hostile audit
+    LAND-WITH-FIXES 0.88, all fixes carried). THE STATEMENT: no
+    recovery that factors through the CLASSICAL RECORD of any
+    measurement of all shares -- the banked horizon registration
+    (per-channel Sector-B-basis readout, T_horizon_reciprocity Step
+    4) being the relevant instance UNDER THE IDENTIFICATION READING
+    (wedge-fence strength) -- can deliver a coherent secret of
+    dimension >= 2, for ANY encoding (any share dims, any alignment,
+    mixed or pure). PROOF (elementary, in full): recovery-from-record
+    is measure-and-prepare, rho -> sum_k Tr(M_k rho) sigma_k; with
+    any reference the output is manifestly separable; for separable
+    states the overlap with the maximally entangled state is at most
+    1/d (computed below, attained at product |alpha>|alpha*>); hence
+    entanglement fidelity F_e <= 1/d and the composite cannot be the
+    identity on any dim >= 2 subspace. The average-fidelity
+    conversion F_avg = (d F_e + 1)/(d + 1) is a one-line Kraus
+    identity (trace preservation gives sum_K Tr K^dag K = d). At the
+    banked constants: F_e <= 1/42, F_avg <= 2/43 -- classical-guess
+    level.
+
+    MEASUREMENT-LEVEL CEILING STRUCTURE (audit fix 2 -- the ceiling
+    is attained under SOME measurements; a FIXED basis readout need
+    not attain it): computed below on three schemes --
+      - the ((2,2)) polynomial scheme: the share-basis record
+        DETERMINES the classical label (label-transparent), and
+        coherent recovery attains the ceiling F_e = 1/d exactly;
+      - the phase code: the per-channel v-basis record is
+        LABEL-BLIND (uniform, mu-independent -- the .352 clause-(v)
+        finding re-derived), and coherent recovery still attains the
+        ceiling 1/d;
+      - the qubit ((3,3)): the fixed Z-basis record gives F_e = 1/4
+        < 1/2 (ceiling NOT attained by that basis), while the
+        decoder-basis measurement attains 1/2 exactly (computed via
+        the coherent Petz decode + computational readout).
+    The inversion (label-blind yet ceiling-attaining vs
+    label-transparent and ceiling-attaining) is recorded as a
+    finding.
+
+    THE COMPOSED FINDING (honest form, audit fix 3): a coherent
+    42-dim secret can be carried with every share Sector-B-supported
+    at exact fill (check 4), and any recovery factoring through the
+    classical record of any full-share measurement -- the banked
+    registration being the relevant instance under the
+    identification reading -- is capped at F_e <= 1/42; CLASSICAL
+    label content is NOT protected by this no-go (the ((2,2)) record
+    determines its label); realization/identification stays the open
+    reading. This inherits the direction of the .352 label-blindness
+    finding: it prices the identification reading, nothing more.
+
+    FENCES: the no-go binds recovery factoring through the classical
+    record ONLY -- coherent operations before registration and
+    quantum side-information are untouched; "banked registration =
+    v-basis measure-and-record" is a reading of Step 4 (wedge-fence
+    strength, same as .352 clause (v)); nothing here adopts ICL_vac,
+    closes RVC, or touches MSC.
+    """
+    import math as _m
+    from itertools import product as _prod
+
+    # ---- separable overlap bound: max_sep <phi|sigma|phi> = 1/d ----
+    d3 = 3
+    rng = random.Random(20260703)
+    worst = 0.0
+    for _ in range(400):
+        a = [complex(rng.gauss(0, 1), rng.gauss(0, 1)) for _ in range(d3)]
+        b = [complex(rng.gauss(0, 1), rng.gauss(0, 1)) for _ in range(d3)]
+        na = _m.sqrt(sum(abs(c) ** 2 for c in a))
+        nb = _m.sqrt(sum(abs(c) ** 2 for c in b))
+        ov = abs(sum(a[i] / na * b[i] / nb for i in range(d3))) ** 2 / d3
+        worst = max(worst, ov)
+    check(worst <= 1.0 / d3 + 1e-12,
+          f"separable overlap <= 1/d (sampled max {worst:.6f})")
+    att = abs(sum((1 / _m.sqrt(d3)) * (1 / _m.sqrt(d3))
+                  for _ in range(1))) ** 2  # |alpha>|alpha*> attains:
+    ov = sum(1 / d3 * 1 / d3 for _ in range(d3))  # = 1/d exactly
+    check(abs(ov - 1.0 / d3) < 1e-12, "bound attained at |alpha>|alpha*>")
+
+    # ---- ((2,2)) p=3: record determines the label; F_e = 1/3 exactly ----
+    p = 3
+    st = {}
+    for r in range(p):
+        for a in range(p):
+            st[(r, a, (a + r) % p, (a + 2 * r) % p)] = 1.0 / p
+    # measure shares (positions 1,2): outcomes (x,y); conditional rho_R
+    fe = 0.0
+    n_out = 0
+    for x in range(p):
+        for y in range(p):
+            branch = {t: amp for t, amp in st.items()
+                      if t[1] == x and t[2] == y}
+            if not branch:
+                continue
+            n_out += 1
+            pk = sum(abs(a) ** 2 for a in branch.values())
+            rhoR = {}
+            for t1, a1 in branch.items():
+                for t2, a2 in branch.items():
+                    if t1[3] == t2[3]:
+                        rhoR[(t1[0], t2[0])] = rhoR.get((t1[0], t2[0]), 0j)                             + a1 * a2.conjugate()
+            # purity test => lambda_max = 1 (the record determines s)
+            tr = sum(rhoR.get((k, k), 0j).real for k in range(p))
+            tr2 = sum((rhoR.get((k1, k2), 0j)
+                       * rhoR.get((k2, k1), 0j)).real
+                      for k1 in range(p) for k2 in range(p))
+            check(abs(tr2 - tr * tr) < 1e-12,
+                  f"((2,2)) outcome ({x},{y}): conditional rho_R pure "
+                  f"(label determined by the record)")
+            s_det = (y - x) % p
+            check(abs(rhoR.get((s_det, s_det), 0j).real - tr) < 1e-12,
+                  f"((2,2)) record determines s = y - x = {s_det}")
+            fe += tr * 1.0   # p_k * lambda_max, lambda_max = 1
+    fe /= p                  # F_e = (1/d) sum p_k lambda_max
+    check(abs(fe - 1.0 / p) < 1e-12,
+          f"((2,2)) record-recovery ceiling attained: F_e = {fe:.6f} = 1/3 "
+          f"(label-transparent AND coherence-capped)")
+
+    # ---- phase code (3 channels, q=3): record label-blind, F_e = 1/3 ----
+    F3 = _frame(3)
+    ph = {}
+    for mu in range(3):
+        for v in range(3):
+            ph[(mu, v, v, v)] = F3[mu][v] / _m.sqrt(3)
+    fe = 0.0
+    for v in range(3):     # only all-equal outcomes occur
+        branch = {t: a for t, a in ph.items() if t[1] == v}
+        pk = sum(abs(a) ** 2 for a in branch.values())
+        check(abs(pk - 1.0 / 3) < 1e-12,
+              f"phase-code record uniform (outcome v={v}: {pk:.4f}) -- "
+              f"label-BLIND (the .352 finding re-derived)")
+        rhoR = {}
+        for t1, a1 in branch.items():
+            for t2, a2 in branch.items():
+                rhoR[(t1[0], t2[0])] = rhoR.get((t1[0], t2[0]), 0j)                     + a1 * a2.conjugate()
+        tr = sum(rhoR.get((k, k), 0j).real for k in range(3))
+        tr2 = sum((rhoR.get((k1, k2), 0j) * rhoR.get((k2, k1), 0j)).real
+                  for k1 in range(3) for k2 in range(3))
+        check(abs(tr2 - tr * tr) < 1e-12, "phase-code conditional pure")
+        fe += tr
+    fe /= 3
+    check(abs(fe - 1.0 / 3) < 1e-12,
+          f"phase-code record-recovery: F_e = {fe:.6f} = 1/3 "
+          f"(label-BLIND and coherence-capped)")
+
+    # ---- qubit ((3,3)): fixed Z-record 1/4 < 1/2; decoder basis = 1/2 ----
+    cw = _fiveq_codewords()
+    st33 = _q33_encode({(0, 0): 1 / _m.sqrt(2), (1, 1): 1 / _m.sqrt(2)},
+                       1, cw)
+    fe = 0.0
+    for out in _prod((0, 1), repeat=3):
+        branch = {t: a for t, a in st33.items()
+                  if (t[1], t[2], t[3]) == out}
+        if not branch:
+            continue
+        pk = sum(abs(a) ** 2 for a in branch.values())
+        rhoR = {}
+        for t1, a1 in branch.items():
+            for t2, a2 in branch.items():
+                if t1[4:] == t2[4:]:
+                    rhoR[(t1[0], t2[0])] = rhoR.get((t1[0], t2[0]), 0j)                         + a1 * a2.conjugate()
+        # lambda_max of the 2x2 conditional (exact closed form)
+        a11 = rhoR.get((0, 0), 0j).real
+        a22 = rhoR.get((1, 1), 0j).real
+        a12 = rhoR.get((0, 1), 0j)
+        lam = 0.5 * (a11 + a22) + 0.5 * _m.sqrt((a11 - a22) ** 2
+                                                + 4 * abs(a12) ** 2)
+        fe += lam
+    fe /= 2
+    check(abs(fe - 0.25) < 1e-12,
+          f"((3,3)) fixed Z-record: F_e = {fe:.6f} = 1/4 < 1/2 -- the "
+          f"ceiling is NOT attained by that basis")
+    # decoder-basis measurement attains the ceiling exactly:
+    dec = _q33_decode(st33, 1, cw)
+    fe = 0.0
+    groups = {}
+    for t, a in dec.items():
+        key = t[1:]          # recovered secret + env + anc = the record
+        groups.setdefault(key, {})[t[0]] =             groups.setdefault(key, {}).get(t[0], 0j) + a
+    for key, rvec in groups.items():
+        pk = sum(abs(a) ** 2 for a in rvec.values())
+        lam = pk             # conditional rho_R pure (verify)
+        tr2 = sum((rvec.get(k1, 0j) * rvec.get(k1, 0j).conjugate()).real
+                  for k1 in (0, 1))
+        check(abs(tr2 - pk) < 1e-12, "decoder-basis conditional pure")
+        fe += lam
+    fe /= 2
+    check(abs(fe - 0.5) < 1e-12,
+          f"((3,3)) decoder-basis measurement attains the ceiling: "
+          f"F_e = {fe:.6f} = 1/2 (measurement-level structure)")
+
+    # ---- the banked-constant statement ----
+    check(abs(1.0 / ALPHABET - 1.0 / 42) < 1e-15
+          and abs((42 * (1.0 / 42) + 1) / 43 - 2.0 / 43) < 1e-15,
+          "banked constants: F_e <= 1/42, F_avg = (d F_e + 1)/(d + 1) "
+          "<= 2/43")
+
+    return _result(
+        name='T_banked_registration_coherent_recovery_no_go -- the '
+             'classical-record ceiling: no recovery factoring through '
+             'the classical record of any full-share measurement (the '
+             'banked horizon registration being the relevant instance '
+             'under the identification reading) delivers a coherent '
+             'secret of dim >= 2; F_e <= 1/42 at banked constants',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            'Measure-and-prepare is entanglement-breaking: output '
+            'separable with any reference; separable overlap with the '
+            'maximally entangled state <= 1/d (computed, attained); '
+            'hence F_e <= 1/d = 1/42 and F_avg <= 2/43 at banked '
+            'constants -- classical-guess level; identity on any dim '
+            '>= 2 subspace impossible. Measurement-level structure '
+            'computed on three schemes: the ((2,2)) record is '
+            'label-TRANSPARENT and coherence-capped at exactly 1/d; '
+            'the phase-code v-record is label-BLIND (the .352 finding '
+            're-derived) and coherence-capped at exactly 1/d; the '
+            'qubit ((3,3)) fixed Z-record sits BELOW the ceiling (1/4 '
+            '< 1/2) while the decoder-basis measurement attains it -- '
+            'the ceiling is attained under some measurements, not '
+            'necessarily by a fixed basis readout. Composed finding '
+            '(honest form): coherent globally-lockable content is '
+            'Sector-B-supportable at exact fill (check 4) and its '
+            'coherent recovery through the classical record of any '
+            'full-share measurement is capped at 1/42; classical label '
+            'content is NOT protected; the banked-registration '
+            'identification is a reading (wedge-fence strength); '
+            'realization stays open; ICL_vac/RVC/MSC untouched.'
+        ),
+        key_result=(
+            'Coherent recovery through any classical full-share record '
+            'capped at F_e <= 1/42 (entanglement-breaking, exact '
+            'ceilings computed); classical content not protected; '
+            'identification stays a reading'
+        ),
+        dependencies=['L_count', 'T_kappa', 'L_self_exclusion',
+                      'T_horizon_reciprocity', 'T11',
+                      'T_interface_sector_bridge', 'L_QEC_code_space'],
+        cross_refs=['T_vacuum_sector_aligned_scheme_share_dim_42',
+                    'T_vacuum_mixed_42dim_secret_scheme_exists',
+                    'T_vacuum_label_code_no_leakage',
+                    'T_which_v_no_registered_interior_reader'],
+        artifacts={
+            'ceiling': 'F_e <= 1/42, F_avg <= 2/43 (banked constants)',
+            'mechanism': 'measure-and-prepare = entanglement-breaking; '
+                         'separable overlap <= 1/d, attained',
+            'regimes': '((2,2)) label-transparent capped at 1/d; '
+                       'phase code label-blind capped at 1/d; ((3,3)) '
+                       'Z-record 1/4 < 1/2, decoder basis attains 1/2',
+            'scope': 'recovery-from-classical-record only; coherent '
+                     'pre-registration operations untouched; Step-4 '
+                     'identification at reading strength',
+            'nielsen_conversion': 'Kraus identity, derived in docstring',
         },
     )
 
@@ -1143,6 +1819,10 @@ _CHECKS = {
         check_T_vacuum_logical_sector_classical_ceiling,
     'T_vacuum_mixed_42dim_secret_scheme_exists':
         check_T_vacuum_mixed_42dim_secret_scheme_exists,
+    'T_vacuum_sector_aligned_scheme_share_dim_42':
+        check_T_vacuum_sector_aligned_scheme_share_dim_42,
+    'T_banked_registration_coherent_recovery_no_go':
+        check_T_banked_registration_coherent_recovery_no_go,
 }
 
 

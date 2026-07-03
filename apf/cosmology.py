@@ -1453,8 +1453,7 @@ def check_T_config_demand_register_split_bank_respected():
         # file: (hit count, disposition)  -- recorded human judgment,
         # per-candidate verdicts in the walk record of 2026-07-02;
         # counts pinned at scan time 2026-07-02 (post-.353 tree)
-        '_module_manifest.py': (2, 'infra: changelog prose (2nd hit arrived '
-                                   'with the v24.3.353 changelog entry)'),
+        '_module_manifest.py': (3, 'infra: changelog prose (3rd hit = the 192891d narrative-merge race, same event as the .321 pin re-pin of 2026-07-02; verified changelog-narrative, no reader)'),
         'acc_reading_selection.py': (1, 'fence: referent-3 corrigendum comment'),
         'bank.py': (1, 'infra: changelog prose (EXPECTED_THEOREM_COUNT line)'),
         'cosmology.py': (30, 'register-home: .517/.330/.338 family + this '
@@ -1529,9 +1528,15 @@ def check_T_config_demand_register_split_bank_respected():
           "B/vlc: the label-blindness finding is carried in the banked "
           "key_result")
     check('subspace-coherent' in r_vlc2['key_result']
-          and 'named open' in r_vlc2['key_result'],
+          and 'realization open' in r_vlc2['key_result'],
           "B/vlc: the ceiling surface still excludes the subspace-coherent "
-          "42-dim sector and keeps subsystem/mixed encodings NAMED OPEN")
+          "42-dim sector and carries the successor fence (the mixed "
+          "direction closed EXISTS at .356 -- the 'named open' token this "
+          "clause originally pinned was retired by that landing the same "
+          "day, an intended-fence succession, re-pinned 2026-07-02 to the "
+          "surviving 'realization open' token; the census's own purpose -- "
+          "no positive off-diagonal b supplied -- is untouched by the "
+          "successor: the .356 scheme is abstract-encoding-strength only)")
     vlc_src = sources.get('vacuum_label_code.py', '')
     check('CONSTRUCTION-SUPPLIED input, not bank-supplied' in vlc_src,
           "B/vlc: the carrier fence is pinned in the module source")
@@ -1627,10 +1632,15 @@ def check_T_config_demand_register_split_bank_respected():
     # tier 4: S_propagation consumer membership (word-bounded)
     pat_sp = re.compile(r'\bS_' + r'propagation\b')
     sp_live = sorted(rel for rel, src in sources.items() if pat_sp.search(src))
-    check(sp_live == ['cosmology.py', 'gravity.py', 'vacuum_label_code.py'],
+    check(sp_live == ['_module_manifest.py', 'cosmology.py', 'gravity.py',
+                      'vacuum_label_code.py'],
           f"C/net-4: S_propagation consumers are exactly gravity.py (home) + "
           f"cosmology.py (premise-flag text) + vacuum_label_code.py "
-          f"(registered configuration-register code witness) (live: {sp_live})")
+          f"(registered configuration-register code witness) + "
+          f"_module_manifest.py (changelog prose: this check's own .355 "
+          f"narrative merged into the manifest by the 192891d final commit "
+          f"-- same narrative-merge race as the .321 re-pin of 2026-07-02; "
+          f"no consumer) (live: {sp_live})")
 
     # =================================================================
     # Result
