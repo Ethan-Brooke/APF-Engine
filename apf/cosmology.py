@@ -515,7 +515,7 @@ def check_T12E():
 
 
 def check_L_singlet_Gram():
-    """L_singlet_Gram: Singlet Gram Matrix is Rank-1 [P].
+    """L_singlet_Gram: Singlet Gram Matrix is S_42-Exchangeable (exchangeable form witnessed; rank 1 open) [P_structural].
 
     v5.1.0 NEW.  Target 1 (Dark Sector Internal Structure).
 
@@ -545,6 +545,14 @@ def check_L_singlet_Gram():
     note SS7 (construction independent of the conclusion / exact-rational Gram /
     the factorization premise). This check's [P] covers the Fraction arithmetic
     and the T12E partition consumption; the rank-1 statement is asserted-form.
+
+    DEMOTION (2026-07-02, v24.3.330, per the walk + its hostile audit
+    LAND-WITH-FIXES 0.84): the walk proved rank-1 <=> the common-demand
+    identity a = b, which is UNBANKED/OPEN -- the eigenvalue 42/61 and the
+    rank are ONE assumption (a = b = 1/61), not two independent facts; this
+    check is demoted [P] -> [P_structural] in this pass; the exchangeable
+    form G = (a-b)I + bJ, its spectrum, and the rank dichotomy are witnessed
+    exactly in check_L_singlet_Gram_exchangeable_form (directly below).
 
     PROOF (3 steps):
 
@@ -598,16 +606,18 @@ def check_L_singlet_Gram():
     delta_N_eff = 0
 
     return _result(
-        name='L_singlet_Gram: Singlet Gram Matrix is Rank-1',
-        tier=4, epistemic='P',
+        name='L_singlet_Gram: Singlet Gram Matrix is S_42-Exchangeable (exchangeable form witnessed; rank 1 open)',
+        tier=4, epistemic='P_structural',
         summary=(
-            f'The 42 vacuum (gauge-singlet) channels project onto a '
-            f'single collective mode. G_singlet = v v^T has rank 1. '
-            f'Dark sector = 1 species (not 42). '
-            f'Singlet eigenvalue = 42/61 = {float(singlet_eigenvalue):.4f}. '
-            f'N_species = 1, ΔN_eff = 0.'
+            f'The 42 vacuum (gauge-singlet) channels: G_singlet is '
+            f'S_42-exchangeable [P_structural]. rank(G) = 1 (single '
+            f'collective mode) holds iff the common-demand identity a = b, '
+            f'OPEN [C] (witness: check_L_singlet_Gram_exchangeable_form). '
+            f'At the banked point a = b = 1/61: eigenvalue = 42/61 = '
+            f'{float(singlet_eigenvalue):.4f}, N_species = 1, ΔN_eff = 0 '
+            f'(asserted-form consequences at the demoted strength).'
         ),
-        key_result='rank(G_singlet) = 1: dark sector = single collective mode [P]',
+        key_result='G_singlet is S_42-exchangeable [P_structural]; rank(G)=1 <=> the common-demand identity a=b, OPEN [C] (witnessed dichotomy: check_L_singlet_Gram_exchangeable_form)',
         dependencies=['T12E', 'T12', 'L_Gram', 'T_field'],
         artifacts={
             'C_vacuum': C_vacuum,
@@ -618,6 +628,438 @@ def check_L_singlet_Gram():
         },
     )
 
+
+def check_L_singlet_Gram_exchangeable_form():
+    """L_singlet_Gram_exchangeable_form: Vacuum Demand Gram is S_42-Exchangeable; Rank 1 <=> the Open Common-Demand Identity [P_structural].
+
+    v24.3.330 NEW (2026-07-02). The witness sub-lemma required by the
+    L_singlet_Gram demotion (walk REDUCE + hostile audit LAND-WITH-FIXES
+    0.84): what the bank actually forces about the vacuum demand Gram,
+    computed exactly in Fractions, with the unforced remainder named.
+
+    (i) NON-CONSTRUCTIVENESS DICHOTOMY (why L_singlet_Gram's rank was a
+    literal assignment): the banked demand-vector species is L_Gram
+    (generations.py) -- sector demand on the 4-dim EW gauge channel
+    space (T_channels). For vacuum units that species is either
+    INAPPLICABLE (vacuum units are not gauge sectors; they carry no
+    gauge quantum numbers, T12E), or, under its only literal embedding
+    (Q1 = 0 => zero demand on every gauge channel, P_exhaust's
+    zero-addressable-labels clause), it yields the 42x42 zero matrix --
+    rank 0. In neither branch does the banked species produce a rank-1
+    Gram. Branch B computed below; branch A recorded as artifact.
+
+    (ii) TWO NAMED PREMISES (explicit artifact exports, not prose):
+      - demand_label_functionality [NAMED, adopted]: demand is built
+        only from addressable/banked unit content.
+      - config_demand_register_split [NAMED, OPEN]: the configuration
+        register carries 42 distinct mode choices (T_horizon_reciprocity:
+        S_propagation = 61 ln 42) while the demand register is
+        label-blind; the split is prose, not banked.
+
+    (iii) THE FORCING: P_exhaust's zero-addressable-labels clause +
+    premises (ii) => any label-functional vacuum demand Gram is
+    S_42-exchangeable:
+        G = (a - b) I + b J
+    with a the common diagonal and b the common off-diagonal entry.
+    Spectrum (exact): {a + 41b (x1, the uniform vector), a - b (x41)}.
+    RANK DICHOTOMY: rank(G) = 1 <=> a = b != 0. Verified by exact
+    row-reduction over Q at four witness points:
+        a = b = 1/61       -> rank 1, eigenvalue 42/61 (the banked values)
+        a = 2/61, b = 1/61 -> rank 42
+        a = 41,   b = -1   -> rank 41
+        a = 1/61, b = 0    -> rank 42
+    So the banked rank-1 AND the banked eigenvalue 42/61 are ONE
+    assumption -- the common-demand identity a = b (at a = 1/61) -- not
+    two independent facts.
+
+    (iv) COUNT-LEVEL BLOCK-FENCE: if the exchange symmetry is broken to
+    the .321 count-level typing blocks (residual + Goldstone-count +
+    generator-count; count-level ONLY -- the slot-level identification
+    is REFUTED in the unbroken basis by
+    check_T_vglobal_slot_identification_no_go, .326), an
+    exchangeable-per-block Gram with per-block common demand has
+    collective rank <= 3 (one collective mode per block) plus block
+    structure. One example computed exactly below: rank 3.
+
+    (v) OPEN, BY NAME: the a = b common-demand identity. Nothing banked
+    forces every vacuum unit to place the same demand at the same
+    mutual overlap and amplitude. This is the honest residue of
+    "single collective mode" -- [C] until banked.
+
+    (vi) SCOPE: this witnesses the which-v common-coupling CARRIER at
+    exchangeability strength -- the candidate for the sweep note's
+    'witnessed common-coupling statement' ("Reference - The
+    Off-Saturation Which-v Lemma - The Bank-Closed-World Half,
+    Sweep-Recounted (2026-07-02)" SS5/SS7). Whether exchangeability
+    SUFFICES as the witnessed common-coupling statement needs its own
+    ruling; lemmas 1 + 2 of the vacuum-lock conditioning remain open;
+    which-v protocol strength is NOT discharged.
+    """
+    from fractions import Fraction
+
+    C_total = dag_get('C_total', default=61,
+                      consumer='L_singlet_Gram_exchangeable_form')
+    n = 42  # dim of the vacuum stratum (T12E)
+    check(n + 19 == C_total, "vacuum stratum: 42 + 19 = C_total")
+
+    Z = Fraction(0)
+
+    # ---- exact rank over Q by row reduction ----
+    def _rank(M):
+        M = [row[:] for row in M]
+        rows = len(M)
+        cols = len(M[0]) if rows else 0
+        r = 0
+        for c in range(cols):
+            piv = None
+            for i in range(r, rows):
+                if M[i][c] != 0:
+                    piv = i
+                    break
+            if piv is None:
+                continue
+            M[r], M[piv] = M[piv], M[r]
+            pv = M[r][c]
+            M[r] = [x / pv for x in M[r]]
+            for i in range(rows):
+                if i != r and M[i][c] != 0:
+                    f = M[i][c]
+                    M[i] = [x - f * y for x, y in zip(M[i], M[r])]
+            r += 1
+            if r == rows:
+                break
+        return r
+
+    def _exch(a, b, size):
+        return [[a if i == j else b for j in range(size)] for i in range(size)]
+
+    def _matvec(M, v):
+        return [sum(row[j] * v[j] for j in range(len(v))) for row in M]
+
+    # ---- (i) the dichotomy, branch B computed ----
+    n_ch = 4  # the L_Gram species' channel space (T_channels d = 4)
+    zero_demand = [Z] * n_ch  # Q1 = 0: zero demand on every gauge channel
+    gram_entry = sum(u * v for u, v in zip(zero_demand, zero_demand))
+    G_zero = [[gram_entry for _ in range(n)] for _ in range(n)]
+    rank_zero = _rank(G_zero)
+    check(rank_zero == 0,
+          "dichotomy branch B: the Q1=0 zero-embedding Gram has rank 0")
+    check(rank_zero != 1,
+          "dichotomy: the only literal embedding of the banked species does not give rank 1")
+
+    # ---- (iii) spectrum + rank dichotomy at witness points ----
+    witness_points = [
+        (Fraction(1, 61), Fraction(1, 61), 1),   # the banked values: a = b
+        (Fraction(2, 61), Fraction(1, 61), 42),  # a != b, b != 0
+        (Fraction(41), Fraction(-1), 41),        # a + 41b = 0: uniform mode killed
+        (Fraction(1, 61), Z, 42),                # b = 0: diagonal, no collective mode
+    ]
+    ranks = {}
+    for a, b, expected_rank in witness_points:
+        G = _exch(a, b, n)
+        # eigenvector identities, exact
+        u = [Fraction(1)] * n
+        check(all(x == a + 41 * b for x in _matvec(G, u)),
+              f"uniform vector: eigenvalue a + 41b at (a, b) = ({a}, {b})")
+        w = [Fraction(1), Fraction(-1)] + [Z] * (n - 2)
+        lam2 = a - b
+        check(_matvec(G, w) == [lam2, -lam2] + [Z] * (n - 2),
+              f"difference vector: eigenvalue a - b at (a, b) = ({a}, {b})")
+        # multiplicities via exact rank of (G - lambda I)
+        if b != 0:
+            check(_rank(_exch(a - (a + 41 * b), b, n)) == n - 1,
+                  "eigenvalue a + 41b has multiplicity 1 (b != 0)")
+            check(_rank(_exch(b, b, n)) == 1,
+                  "eigenvalue a - b has multiplicity n - 1 (b != 0): G - (a-b)I = bJ, rank 1")
+        r_G = _rank(G)
+        ranks[f'a={a}, b={b}'] = r_G
+        check(r_G == expected_rank,
+              f"rank(G) = {expected_rank} at (a, b) = ({a}, {b}), got {r_G}")
+        check((r_G == 1) == (a == b and a != 0),
+              "rank dichotomy: rank 1 <=> a = b != 0")
+
+    # the banked eigenvalue at the banked point
+    a0 = b0 = Fraction(1, 61)
+    check(a0 + 41 * b0 == Fraction(42, 61),
+          "banked point a = b = 1/61: nonzero eigenvalue = 42/61")
+
+    # ---- (iv) count-level block-fence example ----
+    N_c = dag_get('N_c', default=3,
+                  consumer='L_singlet_Gram_exchangeable_form')
+    n_generators = (N_c ** 2 - 1) + (2 ** 2 - 1) + 1   # dim G_SM = 12
+    n_goldstone = (3 + 1) - 1                          # 3 (check_T_Higgs arithmetic)
+    n_residual = n - n_generators - n_goldstone        # the .321 residual block
+    check(n_residual + n_goldstone + n_generators == n,
+          "count-level typing blocks tile the vacuum stratum")
+    blocks = [n_residual, n_goldstone, n_generators]
+    G_blk = [[Z] * n for _ in range(n)]
+    off = 0
+    for k, size in enumerate(blocks):
+        ab = Fraction(k + 1, 61)  # per-block common demand a_k = b_k != 0
+        for i in range(size):
+            for j in range(size):
+                G_blk[off + i][off + j] = ab
+        off += size
+    rank_blk = _rank(G_blk)
+    check(rank_blk == len(blocks),
+          f"block-fence example: per-block common demand -> rank {len(blocks)}")
+
+    return _result(
+        name=('L_singlet_Gram_exchangeable_form: Vacuum Demand Gram is '
+              'S_42-Exchangeable (rank 1 <=> the open a=b identity)'),
+        tier=4, epistemic='P_structural',
+        summary=(
+            'Any label-functional vacuum demand Gram is S_42-exchangeable '
+            'G = (a-b)I + bJ (P_exhaust zero-addressable-labels clause + two '
+            'named premises, exported as artifacts), with exact spectrum '
+            '{a+41b x1, a-b x41} and rank(G) = 1 <=> a = b != 0 -- verified '
+            'by exact Q row-reduction at four witness points (banked point '
+            'a = b = 1/61: rank 1, eigenvalue 42/61; rank and eigenvalue are '
+            'ONE assumption). The banked demand-vector species (L_Gram) is '
+            'inapplicable to vacuum units or zero-embeds to rank 0 -- in '
+            'neither case rank 1 (the non-constructiveness dichotomy). The '
+            'a = b common-demand identity is OPEN [C]: the honest residue of '
+            'single-collective-mode. Count-level block-fence: per-block '
+            'common demand over the .321 typing blocks gives rank 3 '
+            '(computed); the slot-level unbroken-basis identification is '
+            'refuted (.326). Scope: the which-v common-coupling CARRIER at '
+            'exchangeability strength; whether exchangeability SUFFICES as '
+            'the witnessed common-coupling statement needs its own ruling; '
+            'vacuum-lock lemmas 1+2 open; which-v protocol strength NOT '
+            'discharged.'
+        ),
+        key_result=('any label-functional vacuum demand Gram is G=(a-b)I+bJ; '
+                    'spectrum {a+41b x1, a-b x41}; rank 1 <=> the '
+                    'common-demand identity a=b, OPEN [C]'),
+        dependencies=['P_exhaust', 'L_Gram', 'T12E', 'T_horizon_reciprocity'],
+        cross_refs=['T_which_v_no_registered_interior_reader',
+                    'L_singlet_Gram', 'T_vglobal_slot_identification_no_go'],
+        artifacts={
+            'Export_demand_label_functionality_premise':
+                'NAMED (adopted: demand is built only from addressable/banked unit content)',
+            'Export_config_demand_register_split_premise':
+                ('NAMED/OPEN (configuration register carries 42 distinct mode choices -- '
+                 'T_horizon_reciprocity S_propagation = 61 ln 42 -- while the demand '
+                 'register is label-blind; the split is prose, not banked)'),
+            'nonconstructiveness_dichotomy':
+                ('L_Gram species (demand on the 4-dim EW gauge channel space): INAPPLICABLE '
+                 'to vacuum units (not gauge sectors), or zero-embedding (Q1=0) -> 42x42 '
+                 'zero matrix, rank 0 (computed) -- in neither case rank 1'),
+            'exchangeable_form': 'G = (a-b)I + bJ on the 42-dim vacuum stratum',
+            'spectrum': '{a + 41b (x1, uniform vector), a - b (x41)}',
+            'rank_dichotomy': 'rank(G) = 1 <=> a = b != 0',
+            'witness_ranks': dict(ranks),
+            'banked_point': ('a = b = 1/61 -> rank 1, eigenvalue 42/61 '
+                             '(rank and eigenvalue are ONE assumption)'),
+            'open_identity': ('a = b (common demand) -- OPEN [C]; the honest residue of '
+                              'single-collective-mode'),
+            'block_fence': (f'count-level typing blocks {tuple(blocks)} (count-level only, '
+                            f'.321; slot-level unbroken basis refuted, .326): per-block '
+                            f'common demand -> rank {rank_blk} (computed)'),
+            'scope': ('which-v common-coupling CARRIER at exchangeability strength; '
+                      'sufficiency as the witnessed common-coupling statement needs its '
+                      'own ruling; vacuum-lock lemmas 1+2 open; which-v protocol strength '
+                      'NOT discharged'),
+            'sweep_note': ('Reference - The Off-Saturation Which-v Lemma - The '
+                           'Bank-Closed-World Half, Sweep-Recounted (2026-07-02) SS5/SS7'),
+        },
+    )
+
+
+
+def check_L_common_demand_iff_degenerate():
+    """L_common_demand_iff_degenerate: a = b <=> Demand Degeneracy; PSD Bounds on the Exchangeable Cone [P_structural].
+
+    v24.3.338 NEW (2026-07-02). The PSD sharpening of the .330 open kernel,
+    from the a=b walk + hostile cold audit (LAND-WITH-FIXES 0.75; all four
+    required fixes carried: the PSD premise is NAMED/OPEN and exported, the
+    nonzero clause is explicit, no banked-species claim is made, and no
+    vectors are constructed in L_Gram's banked channel space). Reference
+    note of record: "Reference - The Common-Demand Identity Walked - Not
+    Derived; the PSD Sharpening, the Anti-Supplier Pressure, and the
+    Cost-or-Idle Trichotomy (2026-07-02)".
+
+    PREMISES: the .330 pair (demand label-functionality [adopted]; the
+    config/demand register split [NAMED/OPEN]) PLUS one further premise,
+    exported here exactly as the .330 premises are:
+      demand_realizability_PSD [NAMED/OPEN] -- the vacuum demand Gram is
+      positive-semidefinite, i.e. realizable as the Gram matrix of SOME
+      family of demand vectors. This is NOT supplied by the banked L_Gram
+      species (the .330 non-constructiveness dichotomy: that species is
+      inapplicable to vacuum units or zero-embeds to rank 0); it is a
+      substantive assumption about the unbanked vacuum demand register,
+      named so it cannot be smuggled as minor.
+
+    STATEMENT (exact linear algebra over the premises; Fractions
+    throughout): for the S_42-exchangeable form G = (a-b)I + bJ
+    (spectrum {a+41b x1, a-b x41}; .330):
+      (i)   PSD <=> a + 41b >= 0 AND a - b >= 0. Hence under PSD:
+            -a/41 <= b <= a. The common-demand identity a = b is the
+            EXTREME POINT of the PSD exchangeable cone -- maximal
+            off-diagonal overlap at given diagonal.
+      (ii)  For all i != j: G_ii + G_jj - 2*G_ij = 2(a - b) -- the
+            squared-distance identity |d_i - d_j|^2 under PSD (a
+            Gram-entry identity; no vectors constructed). Cauchy-Schwarz
+            saturation for every pair <=> a = b.
+      (iii) rank(G) = 1 <=> a = b AND a != 0 <=> the 42 demand vectors
+            coincide AND are nonzero. The zero Gram (a = b = 0, rank 0)
+            has coincident vectors and trivial saturation but is NOT
+            rank 1 -- the nonzero clause is load-bearing.
+
+    So the open identity a = b is, equivalently: the traceless sector
+    carries exactly zero demand; one demand vector under 42 names. WHAT
+    THIS DOES NOT DO: derive a = b (OPEN [C], .330), supply the PSD
+    premise, or touch the register split. It banks the geometry AROUND
+    the open kernel -- b <= a becomes a theorem under PSD, and any future
+    walk inherits the degeneracy characterization instead of re-deriving
+    it. Fence hygiene: nothing here evaluates demand on L_Gram's banked
+    EW channel space; the do-not-re-walk list of the note of record is
+    inherited whole.
+    """
+    from fractions import Fraction
+
+    C_total = dag_get('C_total', default=61,
+                      consumer='L_common_demand_iff_degenerate')
+    n = 42  # dim of the vacuum stratum (T12E)
+    check(n + 19 == C_total, "vacuum stratum: 42 + 19 = C_total")
+    Z = Fraction(0)
+
+    def _rank(M):
+        M = [row[:] for row in M]
+        rows = len(M)
+        cols = len(M[0]) if rows else 0
+        r = 0
+        for c in range(cols):
+            piv = None
+            for i in range(r, rows):
+                if M[i][c] != 0:
+                    piv = i
+                    break
+            if piv is None:
+                continue
+            M[r], M[piv] = M[piv], M[r]
+            pv = M[r][c]
+            M[r] = [x / pv for x in M[r]]
+            for i in range(rows):
+                if i != r and M[i][c] != 0:
+                    f = M[i][c]
+                    M[i] = [x - f * y for x, y in zip(M[i], M[r])]
+            r += 1
+            if r == rows:
+                break
+        return r
+
+    def _exch(a, b, size):
+        return [[a if i == j else b for j in range(size)] for i in range(size)]
+
+    def _matvec(M, v):
+        return [sum(row[j] * v[j] for j in range(len(v))) for row in M]
+
+    # ---- witness points: (a, b, is_PSD, expected_rank or None) ----
+    pts = [
+        (Fraction(1, 61), Fraction(1, 61), True, 1),    # the banked point: PSD boundary (a-b = 0), rank 1
+        (Fraction(2, 61), Fraction(1, 61), True, 42),   # PSD interior
+        (Fraction(1, 61), Z, True, 42),                 # diagonal: PSD, no collective mode
+        (Fraction(41), Fraction(-1), True, 41),         # PSD boundary (a+41b = 0)
+        (Fraction(1, 61), Fraction(2, 61), False, None),   # b > a: violates the upper bound
+        (Fraction(1, 61), Fraction(-1, 61), False, None),  # b < -a/41: violates the lower bound
+        (Z, Z, True, 0),                                # the zero Gram: the nonzero clause's fence
+    ]
+
+    for a, b, is_psd, exp_rank in pts:
+        G = _exch(a, b, n)
+        # exact eigen-identities (the .330 pattern): spectrum {a+41b, a-b}
+        u = [Fraction(1)] * n
+        check(all(x == a + 41 * b for x in _matvec(G, u)),
+              f"uniform eigenvector at (a, b) = ({a}, {b})")
+        w = [Fraction(1), Fraction(-1)] + [Z] * (n - 2)
+        lam2 = a - b
+        check(_matvec(G, w) == [lam2, -lam2] + [Z] * (n - 2),
+              f"difference eigenvector at (a, b) = ({a}, {b})")
+        # (i) PSD <=> both eigenvalues nonnegative
+        psd = (a + 41 * b >= 0) and (a - b >= 0)
+        check(psd == is_psd,
+              f"PSD classification at (a, b) = ({a}, {b}): expected {is_psd}")
+        if is_psd:
+            check(-a / 41 <= b <= a,
+                  f"PSD interval -a/41 <= b <= a holds at (a, b) = ({a}, {b})")
+            # (ii) squared-distance identity on the full matrix
+            dists = {G[i][i] + G[j][j] - 2 * G[i][j]
+                     for i in range(n) for j in range(n) if i != j}
+            check(dists == {2 * (a - b)},
+                  f"squared-distance identity: all pairs give 2(a-b) at (a, b) = ({a}, {b})")
+            check((2 * (a - b) == 0) == (a == b),
+                  "Cauchy-Schwarz saturation for every pair <=> a = b")
+            # (iii) rank dichotomy with the nonzero clause
+            r_G = _rank(G)
+            check(r_G == exp_rank,
+                  f"rank(G) = {exp_rank} at (a, b) = ({a}, {b}), got {r_G}")
+            check((r_G == 1) == (a == b and a != 0),
+                  "rank 1 <=> a = b AND a != 0 (the zero Gram is rank 0, not 1)")
+        else:
+            # the violated bound, named
+            check(b > a or b < -a / 41,
+                  f"non-PSD point violates a named bound at (a, b) = ({a}, {b})")
+
+    # extreme point: at the banked diagonal a = 1/61, b = a is PSD and any
+    # exchangeable b > a is not (witnessed above at b = 2/61)
+    a0 = Fraction(1, 61)
+    check((a0 + 41 * a0 >= 0) and (a0 - a0 >= 0),
+          "b = a is PSD (the extreme point exists)")
+
+    return _result(
+        name=('L_common_demand_iff_degenerate: a = b <=> Demand Degeneracy '
+              '(PSD sharpening of the open identity)'),
+        tier=4, epistemic='P_structural',
+        summary=(
+            'Under the .330 premise pair PLUS the NAMED/OPEN PSD '
+            '(demand-realizability) premise: the exchangeable vacuum Gram '
+            'G = (a-b)I + bJ is PSD <=> a+41b >= 0 and a-b >= 0, giving '
+            '-a/41 <= b <= a -- so b <= a is a theorem under PSD and a = b '
+            'is the extreme point of the PSD exchangeable cone. The '
+            'squared-distance identity G_ii + G_jj - 2G_ij = 2(a-b) (a '
+            'Gram-entry identity; no vectors constructed) makes a = b '
+            'equivalent to Cauchy-Schwarz saturation at every pair: one '
+            'demand vector under 42 names, i.e. exactly zero traceless '
+            'demand. Rank dichotomy with the explicit nonzero clause: '
+            'rank 1 <=> a = b AND a != 0 (zero Gram is rank 0). Verified '
+            'by exact Fraction arithmetic at seven witness points, PSD and '
+            'non-PSD. The a = b identity itself stays OPEN [C]; this banks '
+            'the geometry around it.'
+        ),
+        key_result=('under PSD: -a/41 <= b <= a; a = b <=> demand degeneracy '
+                    '(one vector, 42 names) <=> zero traceless demand; '
+                    'the identity itself stays OPEN [C]'),
+        dependencies=['L_singlet_Gram_exchangeable_form', 'P_exhaust', 'T12E'],
+        cross_refs=['L_singlet_Gram',
+                    'T_which_v_no_registered_interior_reader',
+                    'T_vglobal_offdiagonal_blocks_scalar_typed'],
+        artifacts={
+            'Export_demand_realizability_PSD_premise':
+                ('NAMED/OPEN (the vacuum demand Gram is PSD / '
+                 'vector-realizable; NOT supplied by the banked L_Gram '
+                 'species per the .330 dichotomy; a substantive premise, '
+                 'exported so it cannot be smuggled as minor)'),
+            'psd_characterization': 'PSD <=> a + 41b >= 0 AND a - b >= 0',
+            'psd_interval': '-a/41 <= b <= a (b <= a is a theorem under PSD)',
+            'extreme_point': ('a = b is the extreme point of the PSD '
+                              'exchangeable cone: maximal off-diagonal '
+                              'overlap at given diagonal'),
+            'squared_distance_identity':
+                ('G_ii + G_jj - 2*G_ij = 2(a-b) for all i != j (Gram-entry '
+                 'identity; no vectors constructed); saturation <=> a = b'),
+            'degeneracy_characterization':
+                ('a = b <=> one demand vector under 42 names <=> zero '
+                 'traceless demand'),
+            'nonzero_clause': ('rank 1 <=> a = b AND a != 0; the zero Gram '
+                               '(a = b = 0) is rank 0'),
+            'open_identity': ('a = b stays OPEN [C] (.330); nothing here '
+                              'derives it or supplies the PSD premise'),
+            'fence': ('no vectors constructed in the banked L_Gram EW '
+                      'channel space; the note-of-record do-not-re-walk '
+                      'list inherited whole'),
+        },
+    )
 
 def check_L_dark_budget():
     """L_dark_budget: Dark Sector Budget and Collisionlessness [P].
@@ -638,8 +1080,13 @@ def check_L_dark_budget():
     statement -- a dark-16 Gram is nowhere constructed in the bank, and the
     vacuum-42 rank is itself asserted-form (witness sub-lemma open). The executed
     arithmetic of this check consumes only s = 4/15 and never touches 42/61, so
-    the check's PASS is unaffected; the Step-3 prose inference carries the drift
-    and awaits the witness sub-lemma.
+    the check's PASS is unaffected; the Step-3 prose inference carries the drift.
+    WITNESS LANDED + DEMOTION (v24.3.330): the witness is
+    check_L_singlet_Gram_exchangeable_form -- L_singlet_Gram now stands
+    [P_structural]; rank-1 <=> the OPEN a = b common-demand identity, so the
+    sigma/m = 0 / N_species = 1 consequence claims below stand at that
+    strength ([P_structural over the exchangeable form + the OPEN a = b
+    identity]); the executed s = 4/15 arithmetic is unchanged.
 
     PROOF (3 steps):
 
@@ -695,13 +1142,18 @@ def check_L_dark_budget():
         summary=(
             f'Singlet collective mode saturates s = 4/15 = {float(s):.4f} '
             f'of vacuum capacity. '
-            f'Collisionless: σ/m = 0 (rank-1 Gram → no self-scattering channel). '
+            f'Collisionless at the rank-1 clause strength ([P_structural] over '
+            f'the exchangeable form + the OPEN a=b identity): '
+            f'σ/m = 0 (rank-1 Gram → no self-scattering channel). '
             f'N_species = 1. ΔN_eff = 0. '
             f's = 4/15 enters M_R = diag(D) + s×D·D^T for neutrino masses.'
         ),
         key_result=(
-            f'sigma/m = 0 (collisionless), N_species = 1, '
-            f'Delta_N_eff = 0 [P]; s = 4/15 < 1'
+            f'sigma/m = 0, N_species = 1, Delta_N_eff = 0 rest on the '
+            f'rank-1/single-mode clause, now [P_structural over the '
+            f'exchangeable form + the OPEN a=b identity] '
+            f'(witness: check_L_singlet_Gram_exchangeable_form); the '
+            f'executed arithmetic s = 4/15 < 1 is unchanged [P]'
         ),
         dependencies=['L_singlet_Gram', 'T12E', 'T12'],
         cross_refs=['L_dm2_hierarchy'],
@@ -916,8 +1368,26 @@ def check_L_equation_of_state():
         (c) New types appear or existing types disappear.
             BLOCKED: L_anomaly_free requires all 61 simultaneously.
         (d) The Gram structure of the vacuum sector evolves.
-            BLOCKED: L_singlet_Gram proves rank = 1 (topology, not dynamics).
-      All four escape routes are closed by [P] theorems.
+            BLOCKED at the register w reads: the vacuum Gram's
+            S_42-exchangeable FORM (a-b)I + bJ (L_singlet_Gram
+            [P_structural]; witnessed exactly by
+            check_L_singlet_Gram_exchangeable_form) is a TWO-parameter
+            family (a, b) -- S_42-invariance blocks every basis
+            direction, not the two scalars. The trace scalar is blocked
+            by L_saturation_partition/T11 (topological partition,
+            non-redistributable locking). The traceless scalar (a - b)
+            is NOT banked-frozen: it is registerless at the density
+            register (where w is read) and band-fenced at the response
+            register (the w(a) bands; the 2026-07-02 census note's
+            three-panel fence). w = -1 rests on the trace pin plus
+            S_42-invariance, not on freezing (a - b); the (a - b) drift
+            is named open alongside the a = b identity
+            (check_L_common_demand_iff_degenerate, v24.3.338).
+      All four escape routes are closed at the register w reads (a-c by
+      [P] theorems; d by the trace pin plus the exchangeable FORM at
+      [P_structural] -- the block rests on the trace pin and
+      S_42-invariance, not on the open rank-1 clause; the traceless
+      scalar's residual freedom lives below the w(a) bands).
 
     Step 4 — Experimental contact [P]:
       The prediction w = -1 exactly is testable by:
@@ -995,7 +1465,7 @@ def check_L_equation_of_state():
         'partition_evolves': False,   # BLOCKED by L_saturation_partition [P]
         'vacuum_dilutes': False,      # BLOCKED by T11 global locking [P]
         'types_change': False,        # BLOCKED by L_anomaly_free [P]
-        'Gram_evolves': False,        # BLOCKED by L_singlet_Gram [P]
+        'Gram_evolves': False,        # BLOCKED at the density register: trace pin + S_42-invariance (L_singlet_Gram [P_structural] + check_L_singlet_Gram_exchangeable_form); the traceless scalar (a-b) is band-fenced at the response register, not frozen (v24.3.338 corrigendum)
     }
     for route, possible in escape_routes.items():
         check(not possible, f"Escape route '{route}' must be blocked")
@@ -1734,12 +2204,14 @@ def check_L_GW_matching():
     fully determines the transition parameters from A1:
 
       α = 19/42 ≈ 0.452  (latent heat / vacuum energy, strong transition)
-      T* ~ T_rh ~ 5×10¹⁵ GeV  (transition temperature ≈ reheating)
+      T* ~ T_rh ~ 5.5×10¹⁷ GeV  (transition temperature ≈ reheating;
+      T_reheating's best-estimate VALUE, [P_structural] — its [P] content
+      is the bound T_rh >> T_BBN)
       β/H* ~ O(d_eff) = 102  (rapid snap-in, not slow nucleation)
 
     The resulting GW spectrum peaks at extremely high frequency:
 
-      f_peak ≈ 2×10¹⁰ Hz  (10 GHz)
+      f_peak ≈ 2×10¹² Hz  (~2 THz)
 
     This is far above LISA (mHz), LIGO (100 Hz), and even proposed
     high-frequency GW detectors (~MHz). The signal is a genuine
@@ -1771,11 +2243,13 @@ def check_L_GW_matching():
         f_peak = 1.65×10⁻⁵ Hz × (f*/β) × (β/H*) × (T*/100 GeV) × (g*/100)^(1/6)
       where f*/β ~ 0.62/(1.8 - 0.1×v_w + v_w²) ≈ 0.23 (for v_w → 1).
 
-      T* ≈ T_rh ~ 5×10¹⁵ GeV (from T_reheating [P]).
+      T* ≈ T_rh ~ 5.5×10¹⁷ GeV (from T_reheating; the specific value is
+      [P_structural] per T_reheating's own grade split — its [P] claim
+      covers only T_rh >> T_BBN).
       g* = 106.75 (SM d.o.f. at T >> m_t).
 
-      f_peak = 1.65e-5 × 0.23 × 102 × 5e13 × (106.75/100)^(1/6)
-             ≈ 1.95×10¹⁰ Hz ≈ 20 GHz.
+      f_peak = 1.65e-5 × 0.23 × 102 × 5.5e15 × (106.75/100)^(1/6)
+             ≈ 2.1×10¹² Hz ≈ 2 THz.
 
     Step 4 [Peak amplitude]:
       Ω_GW h² ≈ 1.67×10⁻⁵ × (H*/β)² × (κα/(1+α))² × (100/g*)^(1/3)
@@ -1785,11 +2259,21 @@ def check_L_GW_matching():
               ≈ 1.67e-5 × 9.6e-5 × 0.097 × 0.98
               ≈ 1.5×10⁻¹⁰.
 
-      This is small but nonzero — a definite signal if GHz GW
+      This is small but nonzero — a definite signal if THz-band GW
       detectors ever become feasible.
 
-    STATUS: [P]. All inputs from [P] theorems. Import: standard GW
+    STATUS: [P] for the existence, strength, and rapidity of the transition
+    (alpha = 19/42 and beta/H* ~ 102 from [P] inputs); the NUMERIC f_peak
+    rides T_reheating's [P_structural] best-estimate value. Import: standard GW
     spectrum formulae (Kamionkowski, Kosowsky & Turner 1994; Caprini et al 2016).
+
+    CORRIGENDUM (2026-07-02, v24.3.325): T* corrected 5e15 -> 5.5e17 GeV to
+    match check_T_reheating's own computed best estimate (5e15 appears in no
+    banked derivation; the deriving surface is validation.py check_T_reheating).
+    Grade attribution corrected: the specific value is [P_structural] by
+    T_reheating's explicit split, not [P]. f_peak scales x110 to ~2 THz;
+    Omega_GW h^2 is unchanged; the qualitative conclusion (far above all
+    current and proposed detectors) is robust.
     """
     import math
 
@@ -1804,7 +2288,7 @@ def check_L_GW_matching():
     beta_over_H = float(d_eff)  # rapid snap-in
 
     # Step 3: Peak frequency
-    T_star = 5e15  # GeV, from T_reheating
+    T_star = 5.5e17  # GeV, T_reheating best estimate (value [P_structural]; its [P] content is T_rh >> T_BBN)
     g_star = 106.75  # SM effective d.o.f.
     v_w = 1.0  # detonation (strong transition)
 
@@ -1845,7 +2329,7 @@ def check_L_GW_matching():
             f'First-order matching transition produces SGWB. '
             f'α = {alpha:.3f} (strong), β/H* = {beta_over_H:.0f} (rapid). '
             f'T* = {T_star:.0e} GeV. '
-            f'f_peak = {f_peak:.1e} Hz (GHz — above all current detectors). '
+            f'f_peak = {f_peak:.1e} Hz (THz — above all current detectors). '
             f'Ω_GW h² = {Omega_GW_h2:.1e}. '
             f'Genuine prediction but not testable with foreseeable technology. '
             f'Secondary EW-scale transition (from σ scalar) may produce '
@@ -2509,6 +2993,8 @@ _CHECKS = {
     'T12': check_T12,
     'T12E': check_T12E,
     'L_singlet_Gram': check_L_singlet_Gram,
+    'L_singlet_Gram_exchangeable_form': check_L_singlet_Gram_exchangeable_form,
+    'L_common_demand_iff_degenerate': check_L_common_demand_iff_degenerate,
     'L_dark_budget': check_L_dark_budget,
     'L_saturation_partition': check_L_saturation_partition,
     'L_equation_of_state': check_L_equation_of_state,
@@ -2578,5 +3064,24 @@ IE_DECLARATIONS = (
             "portal coupling, or self-interaction is exported."
         ),
         "note": "Phase 2 disposition item (b); pack PHASE_SPACE_CLUSTERING_KERNEL.md wording",
+    },
+    {
+        "input_id": "gravity:singlet_gram_exchangeable_form",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Any label-functional vacuum Gram on the 42 vacuum channels is "
+            "S_42-exchangeable, G = (a-b)I + bJ "
+            "(check_L_singlet_Gram_exchangeable_form [P_structural], "
+            "v24.3.330: dichotomy witness + named premises + exact rank "
+            "dichotomy + block fence); rank 1 holds iff a = b -- the "
+            "common-demand identity, UNBANKED/OPEN [C]. The prior "
+            "check_L_singlet_Gram was demoted [P] -> [P_structural] (its "
+            "eigenvalue check was the tautology 42/61 == 42/61); consumers "
+            "re-anchored with measured blast radius: the Delta-m^2 row via "
+            "the generation-space re-anchor, w = -1 via the exchangeable "
+            "form, nu_R via the uniform eigenvector. "
+        ),
+        "note": "Wave 6 depth; the B4 close (.330); the a=b identity is a named open kernel",
     },
 )

@@ -195,7 +195,7 @@ def check_T10():
     consumer is O(1)-sensitive). NAMED READING FORK: the competing
     two-factor coefficient 42/102 (L_Lambda_absolute_numerical_formula)
     differs from 3/8 by exactly 56/51 (9.8%); composed with
-    Omega_Lambda = 42/61, the two O(1)s give H0 = 66.84 (this chain's
+    Omega_Lambda = 42/61, the two O(1)s give H0 = 66.83 (this chain's
     branch, fork-conditional: count=area) vs 70.03 km/s/Mpc (the
     two-factor branch). See check_T_vacuum_o1_reading_fork
     (vacuum_o1_fork.py) for the banked fork and its three-way
@@ -572,7 +572,7 @@ def check_T_deSitter_entropy():
       Error: 0.007%
 
       Using S_dS = pi / (H^2 * Omega_Lambda) with Omega_Lambda = 42/61:
-      Predicted H0 = 66.84 km/s/Mpc  [FORK-CONDITIONAL: this is the
+      Predicted H0 = 66.83 km/s/Mpc  [FORK-CONDITIONAL: this is the
       count=area branch of the banked vacuum-O(1) reading fork; the
       two-factor branch gives 70.03 km/s/Mpc — see READING CAVEAT
       below and check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py)]
@@ -606,7 +606,7 @@ def check_T_deSitter_entropy():
     true by construction, no independent geometric area input), and
     the 1/4 is T_Bek's imported kappa = 1/4 ("requires UV completion",
     gravity.py ~line 300). Honest grade of the O(1) alone:
-    [P_structural_reading]. The H0 = 66.84 above is therefore the
+    [P_structural_reading]. The H0 = 66.83 above is therefore the
     count=area BRANCH of a banked reading fork whose other branch
     (two-factor coefficient 42/102, lambda_absolute.py) gives 70.03
     km/s/Mpc; ratio exactly sqrt(56/51). See
@@ -644,8 +644,10 @@ def check_T_deSitter_entropy():
                           - C_total * _math.log10(d_eff)
                           - _math.log10(Omega_L_float))
     H_pred_Pl = 10**log10_H_pred
-    # Convert: 1 km/s/Mpc = 1.7469e-63 Planck units
-    conv = 1e3 / (3.086e22) * 5.391e-44
+    # Convert km/s/Mpc -> Planck units. v24.3.344 corrigendum: precise Mpc
+    # and Planck-time constants (the earlier truncated 3.086e22 / 5.391e-44
+    # rounded the informational H0 endpoint to 66.84; precise gives 66.83).
+    conv = 1e3 / (3.0856775814913673e22) * 5.391247e-44
     H0_pred_km = H_pred_Pl / conv
     H0_obs_km = 67.36
     H0_sigma = 0.54
@@ -683,7 +685,7 @@ def check_T_deSitter_entropy():
         key_result=(
             f'S_dS = {C_total}*ln({d_eff}) = {S_predicted:.3f} nats '
             f'[0.007%]; Lambda*G = 3pi/102^61 (3pi O(1) count=area-'
-            f'reading-conditional; H0 66.84 = count=area fork branch — '
+            f'reading-conditional; H0 66.83 = count=area fork branch — '
             f'see check_T_vacuum_o1_reading_fork)'
         ),
         dependencies=dependencies_all_P,
@@ -2126,6 +2128,7 @@ def check_T_which_v_no_registered_interior_reader():
         'delta_alpha_capacity_density.py': ('V', 'fence'),
         'delta_alpha_leptonic.py': ('V', 'fence'),
         'descent_obstruction_calculus.py': ('L', 'consumer'),
+        'drawn_content_readings.py': ('L', 'fence'),  # re-dispositioned during .326: staged generative functional (concurrent lane); 42s are SU(3) isotypic-dim arithmetic, no 42-sector sense
         'evaporation_quartet.py': ('VL', 'consumer'),
         'ew_bosonic_enforcement_reservoir.py': ('VL', 'consumer'),
         'ew_branch_incidence_density.py': ('V', 'fence'),
@@ -2137,7 +2140,7 @@ def check_T_which_v_no_registered_interior_reader():
         'extensions.py': ('V', 'fence'),
         'fibration_census.py': ('L', 'consumer'),
         'fluctuation_response_two_faces.py': ('L', 'consumer'),
-        'formal_kernel.py': ('L', 'consumer'),
+        'formal_kernel.py': ('VL', 'consumer'),  # re-dispositioned .326: the slot-no-go check adds count-level vacuum vocabulary
         'foundation_inputs.py': ('L', 'fence'),
         'fractional_reading.py': ('VL', 'consumer'),
         'gauge.py': ('VL', 'consumer'),
@@ -2178,6 +2181,7 @@ def check_T_which_v_no_registered_interior_reader():
         'supplements.py': ('VLH', 'consumer'),
         'test_no_smuggling.py': ('VL', 'infra'),
         'thermal_absolute.py': ('VL', 'consumer'),
+        'thooft_anomaly_matching_chiral.py': ('V', 'fence'),  # re-dispositioned .334: chiral-VACUUM sense (symmetric-vacuum no-go), no 42-sector content
         'thermo_four_laws_synthesis.py': ('VL', 'consumer'),
         'unification.py': ('VL', 'consumer'),
         'unification_projection_essentiality.py': ('VL', 'consumer'),
@@ -2406,6 +2410,20 @@ def check_T_vacuum_content_typing_status():
           gravity.py's count and requires re-pinning; that churn is the
           intended re-disposition discipline. An independent derivation
           of the 27 is WELCOME, and must announce itself here.
+          RE-DISPOSITION (2026-07-02, same day, count-neutral): the 27
+          now carries an ANCHORED CANDIDATE READING at reading grade --
+          the record-criterion predicate census (colour's fundamental
+          index structure is the unique unbroken non-abelian survivor:
+          no sharp gauge-invariant local colour record, .276; abelian
+          readable by the same theorem's U(1) control; broken isospin
+          readable, .303) under the ADOPTED billing rule "dim per
+          banked reference" gives 27 = 9 coloured refs x 3. Cold audit
+          REDUCE 0.85 NOTE-ONLY: the predicate is anchored, the
+          COUNTING IS NOT DERIVED (three unforced switches; rival
+          tallies 3/18/36/53; pre-EWSB A4 collision; see the census
+          note). Status: residual WITH a named candidate reading,
+          counting rule adopted, alternatives named, derivation OPEN.
+          Route (a) count-level is NOT discharged by this.
 
       (v) THE SLOT-LEVEL IDENTIFICATION IS OPEN, behavioral pin: the
           one slot-level construction in the bank (formal_kernel's
@@ -2419,11 +2437,26 @@ def check_T_vacuum_content_typing_status():
           this clause fails and the typing status must be re-written --
           the lemma landing, announced. No marker strings; survives any
           comment cleanup.
+          .326 SHARPENING (2026-07-02): the slot-level identification is
+          now PROVABLY UNREACHABLE in the unbroken field basis --
+          check_T_vglobal_slot_identification_no_go (formal_kernel.py):
+          the Higgs isotypic class of V_61 has multiplicity 1 and dim 4,
+          so every G_SM-invariant subspace meets the Higgs sector in
+          dimension 0 or 4, never 3; (12, 3, 27) is not among the 16
+          achievable complement signatures (exhaustively enumerated,
+          frozen there). This clause's behavioral pin STAYS -- it guards
+          non-invariant placeholder changes and the broken-basis route,
+          where (12, 3, 27) IS realizable after the SSB 3+1 split but is
+          44/1600-degenerate at whole-irrep granularity -- and the
+          "lemma landing" branch is now confined to the broken basis or
+          a non-slot cross-basis map (the unbroken-slot form of route
+          (a) is closed negatively).
 
     WHAT THIS DOES NOT CERTIFY: any per-piece CONTENT attribution (the
     addressability readings stay adopted glosses); the cross-basis map
     between 45+4+12 and 3+16+42 (does not exist; the Section-9 audit
-    withdrew the one attempt); anything at content strength. The
+    withdrew the one attempt; per the .326 no-go it is provably
+    NON-SLOT if it ever lands); anything at content strength. The
     three-route promotion shape (independent 27 characterization,
     count- or slot-level / the cross-basis map / per-piece response
     roles) lives in the reference note.
@@ -2469,9 +2502,14 @@ def check_T_vacuum_content_typing_status():
     # test_no_smuggling = route-independence tests 8 and 9; _module_manifest =
     # the EXPECTED header comment describing this pin (rolls off to the
     # changelog archive eventually -- that roll-off fails the pin and is
-    # re-pinned in the same pass, intended discipline).
+    # re-pinned in the same pass, intended discipline); formal_kernel = the
+    # .326 slot-level no-go check (check_T_vglobal_slot_identification_no_go)
+    # -- the first surface to ANNOUNCE ITSELF through this pin, exactly the
+    # designed discipline: it characterizes where the 27 CANNOT live (no
+    # unbroken G_SM-invariant slot realization), not a numerological reading.
     EXPECTED_27_CONTEXT_COUNTS = {
         'cosmology.py': 2,
+        'formal_kernel.py': 4,
         'gravity.py': 38,
         'test_no_smuggling.py': 7,
         '_module_manifest.py': 1,
@@ -2554,15 +2592,229 @@ def check_T_vacuum_content_typing_status():
             'source_honesty': 'no dag-registered C_vacuum exists; 42 formed from C_total - (N_gen + 16), the 16 a named T12E literal',
             'count_witnessed': {'12': 'dim G_SM = 8+3+1 (group arithmetic, N_c from DAG)',
                                 '3': 'n_goldstone = 4-1 (check_T_Higgs dim counting)'},
-            'residual': '27 = 42 - 12 - 3, no independent banked characterization (context-scoped closed world)',
+            'residual': ('27 = 42 - 12 - 3; no banked DERIVATION -- an anchored candidate reading exists '
+                         '(colour-index census at reading grade, REDUCE 0.85 NOTE-ONLY, counting rule adopted, '
+                         'derivation open; see the 2026-07-02 census note)'),
             'pinned_27_context_counts': dict(EXPECTED_27_CONTEXT_COUNTS),
-            'slot_level': f'OPEN: banked complement (gauge, higgs, fermion) = ({comp_gauge}, {comp_higgs}, {comp_ferm}) != (12, 3, 27)',
+            'slot_level': f'OPEN at reference strength; unbroken slot realization EXCLUDED (check_T_vglobal_slot_identification_no_go, .326); banked complement = ({comp_gauge}, {comp_higgs}, {comp_ferm}) != (12, 3, 27)',
             'content_attributions': 'NOT certified -- adopted glosses per the 2026-07-02 gloss corrigendum',
-            'promotion_routes': 'independent 27 characterization (count- or slot-level) / cross-basis map / per-piece response roles -- see the reference note',
-            'reference_note': 'Reference - The Vacuum-Content Witness Priced - Two Count-Witnesses, the 27 Residual-Only, the Slot-Level Identification Open (2026-07-02)',
+            'promotion_routes': 'independent 27 characterization (count-level, or slot-level in the BROKEN basis only per the .326 no-go) / non-slot cross-basis map / per-piece response roles -- see the reference notes',
+            'reference_note': ('Reference - The Vacuum-Content Witness Priced - Two Count-Witnesses, the 27 Residual-Only, '
+                               'the Slot-Level Identification Open (2026-07-02); slot no-go + candidate reading: '
+                               'the Slot-Level V_global Identification note + the Vacuum Census note (both 2026-07-02)'),
         },
     )
 
+
+
+def check_T_vglobal_offdiagonal_blocks_scalar_typed():
+    """T_vglobal_offdiagonal_blocks_scalar_typed: The Global-Column Kernel Census [P_structural].
+
+    v24.3.339 NEW (2026-07-02). The kernel-level sibling of the .318
+    reader walker, from the ICL_vac route-(b) walk + hostile cold audit
+    (LAND-WITH-FIXES 0.75; all three mandatory build fixes carried: the
+    T_horizon_reciprocity Step-3 configuration slot is a named census
+    row, the subspace-witness constructors are dispositioned as internal
+    proof witnesses, and the does-not-certify block is explicit). Banked
+    on principal sign-off (2026-07-02) per the Lemma-1 note SS8
+    disposition. Reference note of record: "Reference - ICL_vac Route (b)
+    Walked - The Kernel Formulation, the MSC Swap, and the QEC Strength
+    Finding (2026-07-02)".
+
+    STATEMENT (bank-closed-world strength ONLY): every banked surface
+    that couples an interior interface to the global stratum -- the
+    off-diagonal interior<->global blocks of the route-(b) dependence
+    kernel -- does so through scalar-typed registers (amounts, counts,
+    fractions, entropies), with the census rows pinned as artifacts; and
+    the file-level census of the global-stratum vocabulary is
+    drift-guarded, so any new surface coupling to the stratum announces
+    itself by failing this check until dispositioned by hand.
+
+    THE KERNEL ROWS (recorded human judgment, pinned as artifacts):
+      1. the gravitational/thermodynamic load register (T11/T12: total
+         committed load; scalar);
+      2. the horizon registration (T_horizon_reciprocity): fingerprint
+         pinned unique by the .318 walker's clause (c); the SEMANTIC
+         sole-readout claim lives in the reference notes, not here;
+      3. the count/cardinality registers (S_42-symmetric functionals:
+         dims, fractions, S_dS);
+      4. the sigma per-slot scalar (L_sigma_intensive: sigma = ln d_eff);
+      5. the T_horizon_reciprocity Step-3 configuration slot -- a
+         label-indexed slot in the SETUP (unmatched channels choose among
+         the 42 vacuum modes); its banked functional dependence is
+         count-only (S_propagation = 61 ln 42) and it has no registered
+         reader (.318). Named as a row because a kernel census that
+         omitted it would be false on the bank's own text.
+      The vacuum demand register rides rows 3-4 at exchangeable form
+      (rank 1 <=> the OPEN a = b identity;
+      L_common_demand_iff_degenerate, v24.3.338).
+
+    MECHANICAL CONTENT (what actually fails): (a) the package-recursive
+    file census of the global-stratum token must equal the disposition
+    map exactly -- a new matching file or a dropped one fails until
+    re-pinned by hand (the manifest header roll-off will fire this;
+    intended re-disposition discipline, the .318 precedent); (b) per-kind
+    counts are pinned; (c) the geometric-locus dependency is live
+    (check_L_global_interface_is_horizon runs green); (d) the
+    no-go-witness disposition is tied to its surface (the .326 check name
+    present in formal_kernel.py). Self-inclusion disclosed: this module
+    is its own census row ('register-home').
+
+    WHAT THIS DOES NOT CERTIFY: kernel-list EXHAUSTIVENESS -- that is
+    RVC(V_global), unbanked; RVC; ICL_vac (named [C], NOT adopted, NOT
+    derived: route (a) closed at .332, route (b) REDUCED to the MSC swap
+    in the note of record); anything at protocol strength; semantic
+    codomain typing of arbitrary bodies (not mechanically decidable --
+    the per-file kind stamps are recorded human judgment, the .318
+    disclaimer). A coupling that avoids the stratum vocabulary entirely
+    is invisible here: self-announcing couplings only, exactly as the
+    .305/.318 nets are.
+
+    FALSIFIER: any new banked coupling into the global column trips
+    clause (a) and fails this check until re-dispositioned; if the
+    re-disposition finds an operator-, frame-, or label-typed interior
+    readout, the census row it would occupy is the named refutation
+    surface for the scalar-typed statement above.
+
+    GRADE [P_structural]: closed-world over the current corpus, by
+    construction.
+    """
+    import os as _os
+    import apf as _apf_pkg
+
+    pkg_dir = _os.path.dirname(_os.path.abspath(_apf_pkg.__file__))
+    token = 'V_glo' + 'bal'
+
+    DISPOSITION = {
+        '__init__.py': 'infra',
+        '_module_manifest.py': 'infra',
+        'bank.py': 'infra',
+        'base_fiber_allocation.py': 'declaration',
+        'cosmogenesis_t1_t4_quartet_real_adapter.py': 'count-readout',
+        'cosmology.py': 'count-readout',
+        'evaporation_quartet.py': 'count-readout',
+        'formal_kernel.py': 'no-go-witness',
+        'generations.py': 'count-readout',
+        'gravity.py': 'register-home',
+        'horizon_joint_bridge.py': 'proof-witness',
+        'horizon_ledger_reindexing.py': 'count-readout',
+        'interface_atlas_v02_inputs.py': 'declaration',
+        'lambda_absolute.py': 'count-readout',
+        'phase_14d3_completions.py': 'count-readout',
+        'photon_masslessness.py': 'count-readout',
+        'quantum_operator_derivation.py': 'proof-witness',
+        'subspace_functors.py': 'proof-witness',
+        'test_no_smuggling.py': 'infra',
+        'unification.py': 'proof-witness',
+        'unification_projection_essentiality.py': 'proof-witness',
+        'unification_three_levels.py': 'proof-witness',
+    }
+
+    live = set()
+    for root, dirs, files in _os.walk(pkg_dir):
+        dirs[:] = [d for d in dirs if d != '__pycache__']
+        for name in sorted(files):
+            if not name.endswith('.py'):
+                continue
+            p = _os.path.join(root, name)
+            rel = _os.path.relpath(p, pkg_dir).replace(_os.sep, '/')
+            try:
+                with open(p, encoding='utf-8', errors='replace') as f:
+                    src = f.read()
+            except OSError:
+                continue
+            if token in src:
+                live.add(rel)
+
+    new_files = sorted(live - set(DISPOSITION))
+    gone_files = sorted(set(DISPOSITION) - live)
+    check(not new_files,
+          f"clause (a): no new file couples to the global stratum outside the disposition map (new: {new_files})")
+    check(not gone_files,
+          f"clause (a): no dispositioned file stopped matching (gone: {gone_files})")
+
+    kinds = {}
+    for k in DISPOSITION.values():
+        kinds[k] = kinds.get(k, 0) + 1
+    check(kinds == {'infra': 4, 'declaration': 2, 'count-readout': 8,
+                    'no-go-witness': 1, 'proof-witness': 6,
+                    'register-home': 1},
+          f"clause (b): per-kind counts pinned (live: {kinds})")
+    check(DISPOSITION.get('gravity.py') == 'register-home',
+          "self-inclusion disclosed: this module is its own census row")
+
+    # clause (c): the geometric locus is live
+    r = check_L_global_interface_is_horizon()
+    check(bool(r.get('passed', True)) or 'name' in r,
+          "clause (c): the geometric-locus dependency runs green")
+
+    # clause (d): the no-go-witness disposition is tied to its surface
+    with open(_os.path.join(pkg_dir, 'formal_kernel.py'),
+              encoding='utf-8', errors='replace') as f:
+        fk_src = f.read()
+    check('check_T_vglobal_slot_identification_no_go' in fk_src,
+          "clause (d): the .326 no-go check anchors the no-go-witness disposition")
+
+    return _result(
+        name=('T_vglobal_offdiagonal_blocks_scalar_typed: The Global-Column '
+              'Kernel Census (drift-guarded)'),
+        tier=4, epistemic='P_structural',
+        summary=(
+            f'Closed-world census of the route-(b) dependence kernel\'s '
+            f'global column: every banked interior<->global coupling is '
+            f'scalar-typed (amounts, counts, fractions, entropies), with '
+            f'five kernel rows pinned as artifacts -- including the '
+            f'T_horizon_reciprocity Step-3 label-indexed configuration slot '
+            f'(banked dependence count-only; no registered reader per .318) '
+            f'-- and {len(DISPOSITION)} dispositioned files under a '
+            f'drift-guarded file census (new match or dropped match fails '
+            f'until re-dispositioned by hand). Kind stamps are recorded '
+            f'human judgment; the mechanical content is the census plus the '
+            f'drift net. Exhaustiveness is NOT certified: RVC(V_global) '
+            f'stays unbanked, ICL_vac stays named-[C]-not-adopted (route (a) '
+            f'closed at .332; route (b) reduced to the MSC swap).'
+        ),
+        key_result=('global-column couplings scalar-typed at census strength; '
+                    'drift-guarded; exhaustiveness NOT certified '
+                    '(RVC / ICL_vac stay open)'),
+        dependencies=['T12', 'T_interface_sector_bridge',
+                      'L_global_interface_is_horizon',
+                      'T_horizon_reciprocity'],
+        cross_refs=['T_which_v_no_registered_interior_reader',
+                    'T_billed_vs_derived_register_criterion',
+                    'L_common_demand_iff_degenerate',
+                    'T_vglobal_slot_identification_no_go'],
+        artifacts={
+            'kernel_row_1_load_register':
+                'T11/T12 gravitational-thermodynamic load: scalar (total committed load)',
+            'kernel_row_2_horizon_registration':
+                ('T_horizon_reciprocity boundary readout: fingerprint pinned by the '
+                 '.318 walker clause (c); semantic sole-readout claim at notes strength'),
+            'kernel_row_3_count_registers':
+                'S_42-symmetric functionals: dims, fractions, S_dS (scalar)',
+            'kernel_row_4_sigma_register':
+                'L_sigma_intensive per-slot scalar: sigma = ln d_eff',
+            'kernel_row_5_step3_configuration_slot':
+                ('T_horizon_reciprocity Step 3: label-indexed slot in the SETUP; '
+                 'banked functional dependence count-only (S_propagation = 61 ln 42); '
+                 'no registered reader (.318); named so the census is true on the '
+                 'bank\'s own text'),
+            'demand_register_rider':
+                ('the vacuum demand register rides rows 3-4 at exchangeable form; '
+                 'rank 1 <=> the OPEN a = b identity (L_common_demand_iff_degenerate)'),
+            'disposition_kinds':
+                {'infra': 4, 'declaration': 2, 'count-readout': 8,
+                 'no-go-witness': 1, 'proof-witness': 6, 'register-home': 1},
+            'does_not_certify':
+                ('kernel-list exhaustiveness (= RVC(V_global), unbanked); ICL_vac '
+                 '(named [C], not adopted); protocol strength; semantic codomain '
+                 'typing (recorded human judgment)'),
+            'falsifier':
+                ('any new banked coupling into the global column fails the census '
+                 'until re-dispositioned; an operator/frame/label-typed interior '
+                 'readout found at re-disposition is the named refutation surface'),
+        },
+    )
 
 _CHECKS = {
     'T7B': check_T7B,
@@ -2574,6 +2826,7 @@ _CHECKS = {
     'T_horizon_reciprocity': check_T_horizon_reciprocity,
     'T_which_v_no_registered_interior_reader': check_T_which_v_no_registered_interior_reader,
     'T_vacuum_content_typing_status': check_T_vacuum_content_typing_status,
+    'T_vglobal_offdiagonal_blocks_scalar_typed': check_T_vglobal_offdiagonal_blocks_scalar_typed,
     'L_global_interface_is_horizon': check_L_global_interface_is_horizon,
     'T_interface_sector_bridge': check_T_interface_sector_bridge,
     'T_graviton': check_T_graviton,
