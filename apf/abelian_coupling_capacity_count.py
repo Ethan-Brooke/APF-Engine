@@ -1,4 +1,4 @@
-"""The abelian coupling is fixed by the rank-1 capacity count: 1/alpha_Y(M_cross) = C_total [P_structural -- the rank-1-reading no-third-reading EXHAUSTIVENESS is the open entailment; L_reading_profile_blind retires only the profile/diag(Y) obstruction, NOT the sub-support reading], corroborated by the alpha_s prediction at 0.11 sigma, at L_coupling_capacity_id parity. (GRADE CONTRADICTION owed to the principal: the v24.3.215 epistemic='P' upgrade is contradicted by this module's + acc_reading_selection's own proof bodies, which still grade it [P_structural]/open -- see check_T_gauge_reading_dichotomy summary 'stands at [P_structural] (NOT [P])'. Resolve by either closing the sub-support exhaustiveness or reverting the field to [P_structural].)
+"""The abelian coupling is fixed by the rank-1 capacity count: 1/alpha_Y(M_cross) = C_total [P_structural_reading per the v24.3.284 regrade -- the rank-1-reading no-third-reading EXHAUSTIVENESS is the open entailment; L_reading_profile_blind retires only the profile/diag(Y) obstruction, NOT the sub-support reading], corroborated by the alpha_s prediction at 0.11 sigma, at L_coupling_capacity_id parity. (GRADE RULED 2026-07-02: FIX DOWNWARD -- the v24.3.215 'P'-upgrade language is retired; every surface conforms to the .284 [P_structural_reading], matching this module's own epistemic field and acc_reading_selection's proof bodies. Any future re-promotion must first close the sub-support/structure-list exhaustiveness AND kill the .314 countermodel family (check_T_ew_scale_functional_independence_no_go programmatically pins this module at [P_structural_reading]). Record: APF Reference Docs/Reference - Decisions List - Consolidation of the 2026-07-02 Threads.md.)
 
 SUPERSEDES the v24.3.191 no-go (abelian_coupling_irreducible). That no-go was half right: U(1) is the
 m=0 singular case, so the NON-ABELIAN fixed-point mechanism (the balanced crossing) does not reach it.
@@ -156,7 +156,7 @@ def check_T_abelian_coupling_fixed_by_rank1_capacity_count_P():
             "alpha_s(M_Z)=0.11790 (measured 0.1180, 0.11 sigma) and 1/alpha_2(M_Z)=29.586 -- FORWARD, with no "
             "measured coupling anywhere (alpha_s is the output, not the input, so this is not the "
             "circular relabeling the earlier reading refused). The 0.11-sigma consistency validates the rank-1 step "
-            "as the 25.6 ppm match validated the non-abelian crossing. GRADE [P_structural_reading] (2026-06-27: the no-third-reading exhaustiveness is OPEN): every numerical input below is banked [P], but the assembly support-uniqueness step is an adopted reading -- the charge-indicator [Y!=0] (count 45) survives the trace-only filter -- corroborated by the alpha_s prediction (0.11 sigma; the 45-reading gives alpha_s=0.49, absurd). The couplings at M_cross read the de Sitter horizon S_dS (L_crossing_entropy [P]); sigma=S_dS/C_total is the unique intensive quantum (L_sigma_intensive [P]); rank-2 sectors read S_dS smeared as B*sigma=S_dS/6 via the fixed-point Fisher equilibrium (L_coupling_capacity_id [P]); the abelian competition Gram A is rank-1 (det A=m=0, exact), and a rank-1 Gram is a single collective mode (L_singlet_Gram [P]) with no fixed point / no equilibrium to distribute over modes, so the only reading of S_dS at the unique quantum sigma is the bare count S_dS/sigma=C_total=61. The rank-1 count-reading is the structural COMPLEMENT of L_coupling_capacity_id's rank-2 sigma-reading, not a new principle; the one composition assumption is that the two readings (modes*sigma vs S_dS/sigma) are exhaustive, forced by elimination since sigma is the unique intensive scale. The one open inference -- that the rank-1 structure resolves the WHOLE horizon S_dS (full support, 61) rather than the charged subset (45) -- is ARGUED (not proved to [P]) by T_gauge_reading_dichotomy [P_structural_reading] and L_abelian_no_ledger_channel_structure [P_structural_reading] (the abelian's rank-1 Gram and complement-tiling beta single out no ledger channel). The dichotomy's no-third-reading EXHAUSTIVENESS is OPEN: L_reading_profile_blind [P] shows the reading is trace-only (killing the non-uniform WEIGHT directions diag(Y), diag(Y^2) and defeating the reading-space-span worry), but trace-only does NOT fix the {0,1} SUPPORT -- the charge-indicator [Y!=0] (trace 45) survives. So the grade is [P_structural_reading], corroborated by the alpha_s prediction (0.11 sigma). CONSEQUENCE: every gauge coupling "
+            "as the 25.6 ppm match validated the non-abelian crossing. GRADE [P_structural_reading] (2026-06-27: the no-third-reading exhaustiveness is OPEN): every numerical input below is banked [P], but the assembly support-uniqueness step is an adopted reading -- the charge-indicator [Y!=0] (count 45) survives the trace-only filter -- corroborated by the alpha_s prediction (0.11 sigma; the 45-reading gives alpha_s=0.49, absurd). The couplings at M_cross read the de Sitter horizon S_dS (L_crossing_entropy [P]); sigma=S_dS/C_total is the unique intensive quantum (L_sigma_intensive [P]); rank-2 sectors read S_dS smeared as B*sigma=S_dS/6 via the fixed-point Fisher equilibrium (L_coupling_capacity_id [P]); the abelian competition Gram A is rank-1 (det A=m=0, exact), and a rank-1 Gram is a single collective mode (L_singlet_Gram [P_structural]) with no fixed point / no equilibrium to distribute over modes, so the only reading of S_dS at the unique quantum sigma is the bare count S_dS/sigma=C_total=61. The rank-1 count-reading is the structural COMPLEMENT of L_coupling_capacity_id's rank-2 sigma-reading, not a new principle; the one composition assumption is that the two readings (modes*sigma vs S_dS/sigma) are exhaustive, forced by elimination since sigma is the unique intensive scale. The one open inference -- that the rank-1 structure resolves the WHOLE horizon S_dS (full support, 61) rather than the charged subset (45) -- is ARGUED (not proved to [P]) by T_gauge_reading_dichotomy [P_structural_reading] and L_abelian_no_ledger_channel_structure [P_structural_reading] (the abelian's rank-1 Gram and complement-tiling beta single out no ledger channel). The dichotomy's no-third-reading EXHAUSTIVENESS is OPEN: L_reading_profile_blind [P] shows the reading is trace-only (killing the non-uniform WEIGHT directions diag(Y), diag(Y^2) and defeating the reading-space-span worry), but trace-only does NOT fix the {0,1} SUPPORT -- the charge-indicator [Y!=0] (trace 45) survives. So the grade is [P_structural_reading], corroborated by the alpha_s prediction (0.11 sigma). CONSEQUENCE: every gauge coupling "
             "is a capacity output; the residual dimensionless input is eliminated; the framework's "
             "parameter count drops to ONE (the Planck magnitude); L_alpha_em's 'one free parameter + two "
             "predictions' becomes 'zero free parameters + three predictions'."
@@ -195,3 +195,31 @@ def register(registry):
 
 def run_all():
     return {name: fn() for name, fn in _CHECKS.items()}
+
+
+# ---------------------------------------------------------------------------
+# IE onboarding (Wave 6, v24.3.346): the Wave-6(a) probe, unblocked by the
+# 2026-07-02 fix-down ruling (docstring 'P' -> the v24.3.284
+# [P_structural_reading]; executed at v24.3.325).
+# ---------------------------------------------------------------------------
+IE_DECLARATIONS = (
+    {
+        "input_id": "gauge:abelian_rank1_capacity_count",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "1/alpha_Y(M_cross) = S_dS/sigma = C_total = 61: the abelian "
+            "coupling fixed by a rank-1 capacity count with zero measured "
+            "couplings imported "
+            "(check_T_abelian_coupling_fixed_by_rank1_capacity_count_P); the "
+            "forward solve predicts alpha_s(M_Z) = 0.1179 (0.11 sigma). "
+            "Grade [P_structural_reading] per the v24.3.284 regrade, every "
+            "surface conformed at the v24.3.325 fix-down; the residual is "
+            "the sub-support/[Y!=0] reading exhaustiveness "
+            "(L_reading_profile_blind [P] retires only the profile "
+            "obstruction, not this), pinned programmatically by the "
+            "v24.3.314 falsifier hook. "
+        ),
+        "note": "Wave 6 item (a); the check name's _P suffix is historical -- the operative grade is the declared [P_structural_reading]",
+    },
+)
