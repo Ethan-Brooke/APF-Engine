@@ -1453,7 +1453,7 @@ def check_T_config_demand_register_split_bank_respected():
         # file: (hit count, disposition)  -- recorded human judgment,
         # per-candidate verdicts in the walk record of 2026-07-02;
         # counts pinned at scan time 2026-07-02 (post-.353 tree)
-        '_module_manifest.py': (2, 'infra: changelog prose (re-pinned 3->2 2026-07-03 v24.3.363: the 192891d merge-race 3rd hit no longer exists -- its narrative line was rewritten during the .358-.362 multi-lane manifest restructuring; verified comment-line churn only, already absent at HEAD 7ab46f2, no reader/writer involved; found by the IP-review lane running the sentinel after landing -- the red-bank lesson applied)'),
+        '_module_manifest.py': (5, 'infra: changelog prose (re-pinned 3->5 2026-07-04 by the .396 full-surface-inventory landing seat: the two new hits are the .396 narrative line itself, which must name the config-dem./register-split sentinel repairs it documents and sits adjacent to family-register narrative words; verified changelog-narrative, no reader/writer, the pin catching its own landing note is the intended discipline. (Token-avoidance convention applies to this comment.) Prior re-pin 2->3 2026-07-04 by the wg2 C(n)-census landing seat, v24.3.394, running the sentinel after the multi-lane day -- the red-bank lesson applied: the 3rd hit is the OLD .362 T27d narrative line, textually UNCHANGED, pulled into scope because the EXPECTED_REGISTRY_SIZE prior-chain comment two lines above it accreted the .389 ladder-ceiling summary whose d_eff decomposition names the C-word register; verified changelog-narrative churn only, no reader/writer involved, no new demand-pairwise surface. Prior re-pin 3->2 2026-07-03 v24.3.363: the 192891d merge-race 3rd hit no longer existed -- its narrative line was rewritten during the .358-.362 multi-lane manifest restructuring; verified comment-line churn only, found by the IP-review lane running the sentinel after landing)'),
         'acc_reading_selection.py': (1, 'fence: referent-3 corrigendum comment'),
         'bank.py': (1, 'infra: changelog prose (EXPECTED_THEOREM_COUNT line)'),
         'cosmology.py': (30, 'register-home: .517/.330/.338 family + this '
@@ -1576,7 +1576,11 @@ def check_T_config_demand_register_split_bank_respected():
         'closed_world_completeness.py', 'core.py', 'cosmology.py',
         'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
         'descent_obstruction_calculus.py', 'ew_branch_incidence_density.py',
-        'extensions.py', 'fibration_census.py', 'foundation_inputs.py',
+        'extensions.py',
+        'fencea_hinge_trichotomy.py',  # v24.3.396-landing disposition (2026-07-04, the full-surface census banking leg; net-0 caught the concurrent .389 module, the .374/.373 landing-lane pattern): its corner-entry-token hits are correlation-matrix PLACEMENT prose in the hinge-trichotomy case analysis (case (c)), the vacuum-adjacent vocab is the d_eff = 60+42 capacity arithmetic -- no register reader/writer of the policed kind. (This comment deliberately avoids the bare tokens it polices.)
+        'fibration_census.py',
+        'formal_kernel.py',  # v24.3.396-landing disposition (2026-07-04, same leg; net-0 caught the .391 Maschke landing): its bilinear-form-matrix token hits are check_L_maschke_semisimplicity_witness's trace-form nondegeneracy witness on the group algebras Q[Z_4]/Q[S_3] [P_math] -- representation-theory content, not a register object of the policed kind; the vacuum-adjacent vocab pre-exists (the .326 slot-no-go surface, see the which-v map). (Same token-avoidance convention.)
+        'foundation_inputs.py',
         'gamma_c_carrier_program.py',  # v24.3.374-landing disposition (2026-07-04): the concurrent .375 gamma_C-program module caught live by net-0 at the .374 landing (with the which-v clause-(b) catch, same scan; .360/.373 precedent -- the landing lane dispositions the concurrent module); carrier-fork/no-trace instruments over Paper 9 conventions, no vacuum-42 register reader/writer
         'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
         'generations.py', 'gravity.py', 'ie_atlas_verdict_pin.py',

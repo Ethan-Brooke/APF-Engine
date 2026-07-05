@@ -289,7 +289,16 @@ def check_T_w_os_terminal_closure_bank_closure() -> Dict[str, Any]:
     )
     results = [fn() for fn in checks]
     ok = all(_passed(r) for r in results)
-    return {"name": "T_w_os_terminal_closure_bank_closure", "passed": ok, "status": "PASS" if ok else "FAIL", "dependencies": [r["name"] for r in results], "report": terminal_closure_report()}
+    # component_checks, not dependencies (census root repair round 2,
+    # v24.3.396; the .391 K3 precedent): the nine constituents are run
+    # IN-BODY above -- they are this check's parts, not upstream premises,
+    # and they are not individually registered, so listing them as
+    # dependencies manufactured nine dangling roots in the dependency
+    # census. The composite's registered key is the certifying surface.
+    # dependencies = the REGISTERED surfaces this composite consults in-body
+    # (.396 audit m3: the "parts, not premises" argument covers the nine
+    # unregistered constituents, not the upstream theorems they wrap).
+    return {"name": "T_w_os_terminal_closure_bank_closure", "passed": ok, "status": "PASS" if ok else "FAIL", "dependencies": ["check_T_trace_to_scheme_transport_theorem_bank_closure", "T_w_final_export_readiness_bank_closure", "T_w_physical_export_lock_bank_closure"], "component_checks": [r["name"] for r in results], "report": terminal_closure_report()}
 
 
 def check_T_w_os_delta_r_rem_principled_terminal_boundary() -> Dict[str, Any]:

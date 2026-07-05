@@ -109,6 +109,7 @@ PINNED_VERDICTS = {
     "foundation:billed_vs_derived_register_criterion": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "foundation:class_transition_primitive": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "foundation:closed_world_regime_gates": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "foundation:collapse_triad_free_spend_permanent": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "foundation:continuation_capacity_floor_bound": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "foundation:d4_unique": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "foundation:delta_calculus_derived_identities": ("INTERNAL_IDENTITY_GLOBAL_P", True),
@@ -185,6 +186,7 @@ PINNED_VERDICTS = {
     "payload:top_msr_R_star_real_adapter_live": ("SOLVED_GLOBAL_P", True),
     "payload:top_msr_r_evolution_real_adapter_live": ("SOLVED_GLOBAL_P", True),
     "payload:top_pole_mc_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
+    "quantum:born_trace_rule": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:ghz_mermin_state_independent": ("IJC_OBSTRUCTION", False),
     "quantum:i3_operator_self_identification": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "quantum:magic_square_threshold_robust": ("IJC_OBSTRUCTION", False),
@@ -216,6 +218,7 @@ PINNED_VERDICTS = {
     "thermo:four_laws_composed": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "thermo:i4_operator_self_identification": ("BLOCKED_SUBSTRATE_REVISION_REQUIRED", False),
     "thermo:negative_temperature_ceiling": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "thermo:rent_exclusion_cost_kind_dichotomy": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "thermo:thermal_absolute_scope": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "wtrace:bsy_one_loop_kappa_l_assembly_consistency": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "wtrace:native_one_loop_mw_close": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
@@ -225,4 +228,4 @@ PINNED_VERDICTS = {
     "wtrace:zll_r2_counterterm_pieces": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
 }
 
-PIN_VERSION = "24.3.389"
+PIN_VERSION = "24.3.398"

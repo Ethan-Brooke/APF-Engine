@@ -618,4 +618,34 @@ IE_DECLARATIONS = (
                 "gives this (0,0,1) form -- same 0=1 inconsistency, same delta*=1/6): "
                 "-> IJCStr regardless of stipulated threshold in [0,1/6)",
     },
+    {
+        "input_id": "quantum:born_trace_rule",
+        "axis": "ROUTE",
+        "route": "born_trace_rule",
+        "expect_export": True,
+        "payload": {
+            "name": "born_trace_rule",
+            "closure_kind": "internal_identity",
+            "identity_summary": (
+                "The finite Born rule holds at math strength by trace "
+                "duality, with NO Gleason import: on M_n(C) every positive "
+                "normalized record functional omega is represented by a "
+                "unique density matrix rho >= 0 with Tr(rho) = 1 via "
+                "omega(A) = Tr(rho*A), and outcome probabilities are "
+                "p(E|rho) = Tr(rho*E) for effects 0 <= E <= I, reducing to "
+                "|<phi|psi>|^2 on rank-one projectors. The density matrix "
+                "is the trace-dual representative of a record functional, "
+                "not a state postulate; Gleason enters the corpus only as "
+                "the infinite-dimensional-case import. "
+                "(check_T_Born_trace_rule, quantum_admissibility.py)"
+            ),
+        },
+        "note": (
+            "v24.3.398 quantum-spine export wave: the finite Born rule as "
+            "its own exporting input, downstream of the complex-sector "
+            "gate (field selection). The axiomatic-Born rival stays "
+            "killed (check_R_Born_axiomatic_killed): postulating the rule "
+            "is strictly dominated by deriving it."
+        ),
+    },
 )

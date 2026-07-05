@@ -1893,4 +1893,38 @@ IE_DECLARATIONS = (
         ),
         "note": "Wave 7; flag: the _module_manifest.py:438 comment (v24.3.230 stamp) still reads '[P_structural] x2' for the first two checks, but the in-module machine fields are 'P' following the 2026-06-09 [P]-promotion audit cited in the module docstring -- fields win, manifest comment is stale.",
     },
+    {
+        "input_id": "thermo:rent_exclusion_cost_kind_dichotomy",
+        "axis": "ROUTE",
+        "route": "rent_exclusion",
+        "expect_export": True,
+        "payload": {
+            "name": "rent_exclusion_cost_kind_dichotomy",
+            "closure_kind": "internal_identity",
+            "identity_summary": (
+                "The cost-kind dichotomy holds at [P] by structural "
+                "identity over the ledger as constituted: every booked cost "
+                "is either a formation/realignment commitment (booked at a "
+                "transition, standing thereafter) or a per-activation "
+                "charge (booked when an interface activates on held "
+                "content); the excluded third kind -- a standing rent, a "
+                "cost of merely persisting at fixed structure -- is "
+                "incoherent in the ledger (A1's bound is a level not a "
+                "meter; accumulated cost is a state function; a rent tick "
+                "would be a booking change with no transition). The "
+                "coherent hold is FREE; the spend is at resolution. "
+                "Falsifier: a demonstrated booking change with no "
+                "transition of any type. "
+                "(check_T_ledger_rent_excluded, operational_completeness.py)"
+            ),
+        },
+        "note": (
+            "v24.3.398 quantum-spine export wave: the free-hold leg of the "
+            "collapse triad as its own exporting input. Scope clause "
+            "carried: the ledger as constituted -- a future banked "
+            "continuation-flow law would reopen the question. "
+            "Placement-blind by proof: fixes WHEN a cost books, never "
+            "WHERE among internal sectors."
+        ),
+    },
 )

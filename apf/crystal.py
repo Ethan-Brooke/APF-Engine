@@ -209,6 +209,14 @@ _DEP_ALIASES: dict[str, str] = {
     "L_ε*":        "L_epsilon*",     # unicode legacy
     "L_epsilon_star": "L_epsilon*",  # ascii legacy (census root repair, v24.3.391)
     "T12_partition":  "T12",         # partition alias (census root repair, v24.3.391)
+    # -- census root repair, round 2 (v24.3.396, the full-surface inventory leg) --
+    "L_T2_finite_gns": "L_T2",       # core.py registers check_L_T2_finite_gns under 'L_T2'
+    "check_T_w_trace_pv_a0_finite_gate": "check_T_w_trace_pv_a0_gate_closed",    # dep-string spelling vs the pv substrate's registered gate key
+    "check_T_w_trace_pv_b0_finite_gate": "check_T_w_trace_pv_b0_gate_closed",    # same
+    "T_w_trace_pv_b0_threshold_closed": "T_w_trace_pv_timelike_b0_threshold_closed",  # the TIMELIKE B0 threshold closure [P] (equal-/unequal-mass closed forms); retargeted at the .396 audit (M2): the first draft aliased to the spacelike quarantine DECLARATION, which certifies strictly less than the citing optical-theorem check relies on
+    "T_w_trace_native_bosonic_photon_vp_pole": "T_w_trace_native_bosonic_photon_vp_pole_minus3",  # the -3 pole check's registered key
+    "L_mc_mt_RG": "L_mc_mt_twoloop_RG",  # SUBSUMED, not a spelling variant: the two-loop witness's Step 1 carries the cited one-loop content (.396 audit m7 wording fix)
+    "A4": "L_irr",  # .396 audit M1: A4 (irreversibility) is DERIVED, not premised -- core.py's registered L_irr [P] states "A1 + occupancy + L_loc + L_cost ==> A4" and pins the derivation order; citing A4 as a premise root contradicted the corpus headline chain
 }
 
 

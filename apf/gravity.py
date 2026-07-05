@@ -2139,6 +2139,7 @@ def check_T_which_v_no_registered_interior_reader():
         'ew_planck_hierarchy_mechanism.py': ('VL', 'consumer'),
         'ew_pre_branch_necessity.py': ('V', 'fence'),
         'extensions.py': ('V', 'fence'),
+        'fencea_hinge_trichotomy.py': ('VL', 'consumer'),  # dispositioned 2026-07-04 (the .396 full-surface banking leg; net fired at the CONTINUATION's predicted point, on the .389 sibling module): V/L from the d_eff = (C_total-1)+C_vacuum = 60+42 = 102 capacity arithmetic in the framework-anchored ceiling legs -- count-level consumer of the banked T11 constant; constructs NO interior mode reader (clause (a) scans it clean)
         'fibration_census.py': ('L', 'consumer'),
         'fluctuation_response_two_faces.py': ('L', 'consumer'),
         'formal_kernel.py': ('VL', 'consumer'),  # re-dispositioned .326: the slot-no-go check adds count-level vacuum vocabulary
@@ -2243,6 +2244,7 @@ def check_T_which_v_no_registered_interior_reader():
         'supplements.py': {'mode' + '_label'},        # derivation-mode status string (FULL_DERIVATION vs SKELETON)
         'subspace_functors.py': {slot_label},          # slot-tag constructor; set-level comparisons asserted below
         'acc_unification_all_p.py': {carrier_label},   # generated-category witness carriers; functor-law machinery asserted below
+        '_module_manifest.py': {'which' + '_v'},       # dispositioned 2026-07-04 (the .395 live catch, banked at the .396 landing): the token sits in the .395 STAGED-BANKING narrative string ("the which-v net disposition", spelled with the underscore there), prose-about-this-net, not a reader; the manifest is a narrative/count surface with no executable interior read. If the narrative rolls off, this pin fails found-empty -- the drift net working as designed; re-disposition then.
     }
 
     a_violations = {}
@@ -2524,9 +2526,9 @@ def check_T_vacuum_content_typing_status():
     EXPECTED_27_CONTEXT_COUNTS = {
         'cosmology.py': 2,
         'formal_kernel.py': 4,
-        'gravity.py': 38,
+        'gravity.py': 39,  # re-pinned 2026-07-04 by the wg2 C(n)-census landing seat (same cross-lane repair as the manifest entry below): the 39th hit is THIS MAP'S OWN manifest-entry re-pin comment line -- the .395 leg's comment names the knee-design 'Eq.' token and the T-two-seven-d header verbatim and carries the family phrase in-line, so it self-announced through the pin it documents (the intended discipline; verified narrative, no rogue characterization; the count was 39 both before and after this seat's own comment edit, verified by reverting the edit in memory)
         'test_no_smuggling.py': 7,
-        '_module_manifest.py': 5,  # re-pinned 2026-07-04 (the .394 full-surface census pass; the census's out-of-order walk executed this sentinel and scored the catch): +2 hit lines, BOTH verified changelog-narrative from the 2026-07-03 sibling landings -- the .363 knee-design line (Paper 26 App. A 'Eq. 27' citation) and the .362 'T27d REWIRING' header, each pulled into scope by vacuum-family words on adjacent narrative lines (the window is +/-2). No rogue characterization. Prior re-pin 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
+        '_module_manifest.py': 6,  # re-pinned 2026-07-04 LATER by the concurrent wg2 C(n)-census landing seat (v24.3.394; cross-lane sentinel repair, exactly the documented merge-race pattern below): sixth hit line = the .395 lane's OWN count-neutral narrative header, which names this very pin and self-carries both the token and a family word in one line -- verified changelog-narrative, no rogue characterization; caught by the .394 landing's post-land sentinel sweep after the .395 leg merged mid-landing. Prior re-pin same day (the .394 full-surface census pass; the census's out-of-order walk executed this sentinel and scored the catch): +2 hit lines, BOTH verified changelog-narrative from the 2026-07-03 sibling landings -- the .363 knee-design line (Paper 26 App. A 'Eq. 27' citation) and the .362 'T27d REWIRING' header, each pulled into scope by vacuum-family words on adjacent narrative lines (the window is +/-2). No rogue characterization. Prior re-pin 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
     }
     offenders = {}
     for root, dirs, files in _os.walk(pkg_dir):

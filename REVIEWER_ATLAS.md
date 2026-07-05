@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-04 against verdict pin v24.3.389. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-05 against verdict pin v24.3.398. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3876 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3882 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 216 of 462 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 216 of 463 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -21,8 +21,9 @@ Generated 2026-07-04 against verdict pin v24.3.389. Every row below is produced 
 | `foundation:anchor_support_formalization` | ROUTE | **EXPORT** | Onboards the Paper 12 round-6 algebraic-anchor formalization onto the ROUTE axis as a structural identity. The two-clause honesty is froz... |
 | `foundation:base_fiber_allocation` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 4 probe; the no-B row's OPEN status stated honestly |
 | `foundation:billed_vs_derived_register_criterion` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 depth; the B5 close (.332) |
-| `foundation:class_transition_primitive` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade live... |
+| `foundation:class_transition_primitive` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, the collapse triad as a [P] composition over A1 + occupancy). FIVE checks. ... |
 | `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2... |
+| `foundation:collapse_triad_free_spend_permanent` | ROUTE | **EXPORT** | The v24.3.398 export split: the [P] triad gets its own exporting input, separated from the foundation:class_transition_primitive bundle a... |
 | `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid s... |
 | `foundation:d4_unique` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 5 probe; all-[P] verified per epistemic fields |
 | `foundation:delta_calculus_derived_identities` | ROUTE | **EXPORT** | Onboards the Paper 12 Delta-calculus onto the ROUTE axis as a structural identity: the derived ledger identities are the codomain by cons... |
@@ -58,6 +59,7 @@ Generated 2026-07-04 against verdict pin v24.3.389. Every row below is produced 
 | `contextuality:native_ladder_bell_local` | CONTEXTUALITY | **EXPORT** | the exact-rational native-family ENTANGLED-but-Bell-local state /S/ = 707/515 < 2 (delta = ln102) -> SepStr, a global section exported; t... |
 | `contextuality:native_ladder_chsh_violation` | CONTEXTUALITY | IJC_OBSTRUCTION | the exact-rational native-family CHSH violation /S/ = 202/75 > 2 (entangled state at eps,mu,delta = -ln102,ln102,2ln102; 3-4-5 settings) ... |
 | `contextuality:pr_box` | CONTEXTUALITY | IJC_OBSTRUCTION | PR box (S=4) -> IJCStr named obstruction (CHSH/Fine separator) |
+| `quantum:born_trace_rule` | ROUTE | **EXPORT** | v24.3.398 quantum-spine export wave: the finite Born rule as its own exporting input, downstream of the complex-sector gate (field select... |
 | `quantum:ghz_mermin_state_independent` | CONTEXTUALITY | IJC_OBSTRUCTION | the GHZ/Mermin state-independent scenario (empty global-section support, brute-forced 0/64 -- six observables, 2^6 global sections -- in ... |
 | `quantum:i3_operator_self_identification` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; P_comp on the top check quoted as-is (composed status, distinct from plain P). |
 | `quantum:magic_square_threshold_robust` | CONTEXTUALITY | IJC_OBSTRUCTION | sign-equivalent textbook encoding of the v24.3.297 scenario (the banked check uses column parities (1,1,1); flipping two row signs gives ... |
@@ -242,6 +244,7 @@ Generated 2026-07-04 against verdict pin v24.3.389. Every row below is produced 
 | `thermo:four_laws_composed` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe |
 | `thermo:i4_operator_self_identification` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 7; P_comp composition token, regime-local self-identification distinguished from bridge closure |
 | `thermo:negative_temperature_ceiling` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; single [P] check with explicit microcanonical-dispute fence |
+| `thermo:rent_exclusion_cost_kind_dichotomy` | ROUTE | **EXPORT** | v24.3.398 quantum-spine export wave: the free-hold leg of the collapse triad as its own exporting input. Scope clause carried: the ledger... |
 | `thermo:thermal_absolute_scope` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; 2 [P] numerical/scope checks over a 3-check [C] interpretive layer |
 
 ---

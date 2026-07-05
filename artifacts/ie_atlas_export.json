@@ -1,8 +1,8 @@
 {
- "generated": "2026-07-04",
- "pin_version": "24.3.389",
+ "generated": "2026-07-05",
+ "pin_version": "24.3.398",
  "coverage_summary": {
-  "modules_total": 462,
+  "modules_total": 463,
   "modules_onboarded": 216,
   "modules_onboarded_direct": 157,
   "modules_onboarded_via_covers": 59,
@@ -12,7 +12,7 @@
   "target_open_modules": [],
   "target_surface_onboarded": 175,
   "modules_by_axis": {
-   "ROUTE": 143,
+   "ROUTE": 144,
    "CODOMAIN": 7,
    "CONTEXTUALITY": 7,
    "READOUT": 1
@@ -1087,7 +1087,7 @@
    "export_global_P": false,
    "owner_module": "apf.class_transition",
    "expect_export": false,
-   "note": "Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade lives in prose ('model-integrity checks'), so this row bills them as worked-instance witnesses, nothing stronger.",
+   "note": "Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, the collapse triad as a [P] composition over A1 + occupancy). FIVE checks. check_T_coherent_free_spend_permanent [P] (dependencies occupancy, L_irr, T_ledger_rent_excluded, L_epsilon_star -- all banked [P]; SPEND routed via L_irr + eps_star giving cost >= eps* > 0, so NO [P_structural] sits in the gate; the realignment-floor identification is a cross_ref only; substrate ODE reported-only; fresh audit LAND-[P] 0.88) and check_T_realignment_floor_is_epsilon_star [P_structural] carry machine epistemic fields. The other THREE (T_class_transition, L_per_slot_capacity_flow, T_class_transition_completion) are DELIBERATELY grade-in-prose worked-instance witnesses of the substrate ODE, counted as no-epistemic-field members of the full-surface grade-coverage census (FULL_SURFACE_NO_EPISTEMIC pin, ie_export_core_census.py; censused, not gated). Do NOT add machine grades to those three without re-pinning that census. The phenomenological dynamics (Gamma_app/Gamma_rel rates, timescales) are NOT [P]-from-A1 and stay instrument-level. The [P] triad itself exports via the dedicated foundation:collapse_triad_free_spend_permanent input below (v24.3.398).",
    "covers": []
   },
   {
@@ -1099,6 +1099,17 @@
    "owner_module": "apf.closed_world_completeness",
    "expect_export": false,
    "note": "Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2)-(3) as [P_structural], while the fields give P_math for (4)-(6), P_regime+P_math for (7), and P_structural_reading for (2)-(3); fields win.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:collapse_triad_free_spend_permanent",
+   "axis": "ROUTE",
+   "route": "collapse_triad",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.class_transition",
+   "expect_export": true,
+   "note": "The v24.3.398 export split: the [P] triad gets its own exporting input, separated from the foundation:class_transition_primitive bundle above (which stays expect_export=False for its grade-in-prose substrate-ODE witnesses). The quantum/classical SPLIT (the form free-hold -> eps-spend-at-resolution -> permanent) is what exports; WHICH side a given situation is on stays occupancy-profile, situational, never exported. Fresh audit LAND-[P] 0.88 at banking (v24.3.397).",
    "covers": []
   },
   {
@@ -1904,6 +1915,17 @@
    "note": "live adapter payload (swap of mass:route09_top_pole_mc); imported/banked content and grades per its adapter module"
   },
   {
+   "input_id": "quantum:born_trace_rule",
+   "axis": "ROUTE",
+   "route": "born_trace_rule",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.quantum_admissibility",
+   "expect_export": true,
+   "note": "v24.3.398 quantum-spine export wave: the finite Born rule as its own exporting input, downstream of the complex-sector gate (field selection). The axiomatic-Born rival stays killed (check_R_Born_axiomatic_killed): postulating the rule is strictly dominated by deriving it.",
+   "covers": []
+  },
+  {
    "input_id": "quantum:ghz_mermin_state_independent",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
@@ -2256,6 +2278,17 @@
    "owner_module": "apf.negative_temperature_ceiling",
    "expect_export": false,
    "note": "Wave 7; single [P] check with explicit microcanonical-dispute fence",
+   "covers": []
+  },
+  {
+   "input_id": "thermo:rent_exclusion_cost_kind_dichotomy",
+   "axis": "ROUTE",
+   "route": "rent_exclusion",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.operational_completeness",
+   "expect_export": true,
+   "note": "v24.3.398 quantum-spine export wave: the free-hold leg of the collapse triad as its own exporting input. Scope clause carried: the ledger as constituted -- a future banked continuation-flow law would reopen the question. Placement-blind by proof: fixes WHEN a cost books, never WHERE among internal sectors.",
    "covers": []
   },
   {

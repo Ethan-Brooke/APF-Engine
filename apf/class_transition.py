@@ -1,6 +1,6 @@
 """APF v24.3 — Class-Transition Primitive (Paper 37 bank-side companion).
 
-Closes Q4 of the Paper 37 Technical Supplement v0.9 open-questions list:
+Closes Q4 of the Paper 37 Technical Supplement v0.12 open-questions list:
 the bank-side machinery for the class-transition theorem developed in
 Paper 37 (Collapse as Realignment).
 
@@ -26,13 +26,13 @@ completion time is finite under the substrate's hypotheses, and that the
 per-slot Markov-breakdown reduction holds at machine precision on a
 worked numerical instance.
 
-Status (per Paper 37 Supplement v0.9 closure surface): closes the v0.1 Q4
+Status (per Paper 37 Supplement v0.12 closure surface): closes the v0.1 Q4
 "bank-side machinery for the class transition" reserved flag. Promotes
 the Phase~4 codebase deliverable for the Vocabulary Refactor + Three-
 Regime Ontology Rollout work plan.
 
 Created: 2026-05-14 (Phase 4 codebase pass; Paper 37 v0.7 main +
-Supplement v0.9 substrate-side Class-Transition Primitive at proof grade).
+Supplement v0.12 substrate-side Class-Transition Primitive at proof grade).
 """
 from __future__ import annotations
 
@@ -157,7 +157,7 @@ def check_T_class_transition() -> dict:
             f't_trans={t_trans:.4f} (finite={finite_completion}); '
             f'round_trip_cost={round_trip} (irreversible={irreversible})'
         ),
-        'theorem_refs': ['Paper 37 Supp v0.9 Theorem 5.1', 'Theorem 5.2', 'Theorem 5.3'],
+        'theorem_refs': ['Paper 37 Supp v0.12 Theorem 5.1', 'Theorem 5.2', 'Theorem 5.3'],
     }
 
 
@@ -192,7 +192,7 @@ def check_L_per_slot_capacity_flow() -> dict:
             f'max RHS diff across grid = {max_diff:.2e} '
             f'(Markov-breakdown reduction exact at machine precision)'
         ),
-        'theorem_refs': ['Paper 37 Supp v0.9 Theorem 6.1', 'Paper 16 v1.1 sec:phase'],
+        'theorem_refs': ['Paper 37 Supp v0.12 Theorem 6.1', 'Paper 16 v1.1 sec:phase'],
     }
 
 
@@ -238,7 +238,7 @@ def check_T_class_transition_completion() -> dict:
             f'boundary_zero={boundary_zero}; boundary_infty={boundary_infty}; '
             f'independence_of_rel={independence_of_rel}'
         ),
-        'theorem_refs': ['Paper 37 Supp v0.9 Theorem 5.1 Step C'],
+        'theorem_refs': ['Paper 37 Supp v0.12 Theorem 5.1 Step C'],
     }
 
 
@@ -317,6 +317,113 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
     }
 
 
+def check_T_coherent_free_spend_permanent() -> dict:
+    """T_coherent_free_spend_permanent: the collapse triad, [P] as a
+    composition of banked [P] theorems over the constitutive base
+    (A1 + occupancy). Coherent hold is FREE, resolving BOOKS the enforcement
+    floor (>= eps* > 0), and the committed distinction is PERMANENT (one-way).
+
+    THE THREE LEGS, each discharged by a banked [P] theorem:
+      (1) FREE while coherent/held -- check_T_ledger_rent_excluded [P]
+          (Paper 3): "no cost accrues to a held alignment at fixed
+          structure." Holding continuations open, at fixed structure, is
+          free.
+      (2) SPEND at resolution -- check_L_irr [P] (a resolution / cross-
+          interface interaction COMMITS capacity Delta > 0, given occupancy)
+          + check_L_epsilon_star [P] (any committed distinction is floored
+          by the marginal admissibility floor eps* > 0, MD-derived).
+          Composing: a resolution's committed cost is >= eps* > 0 -- it is
+          not free. NOTE the routing: this leg does NOT gate on the
+          kappa_min == eps* identification (check_T_realignment_floor_is_
+          epsilon_star, [P_structural], which additionally carries the
+          substrate ODE); the triad needs only ">= eps* > 0", which L_irr +
+          eps_star give directly at [P]. The exact-equality identification
+          stays a [P_structural] cross-ref for anyone who wants kappa == eps*.
+      (3) PERMANENT / one-way -- check_L_irr [P]: committed cross-interface
+          capacity is locally unrecoverable, so the record is irreversible
+          (the arrow); the reverse is itself a resolution that books its own
+          floor (no refund).
+
+    GRADE [P]: dependencies occupancy, L_irr, T_ledger_rent_excluded,
+    L_epsilon_star -- ALL banked [P] over the constitutive base; the triad is
+    their composition, and the class-transition ORDER (free-hold -> paid
+    resolution -> permanent record) is what rent-exclusion + L_irr + the eps*
+    floor jointly force. No [P_structural] check sits inside the pass gate
+    (the earlier [P_structural] grade was an artifact of gating on the
+    realignment-floor identification, now dropped to a cross-ref); the
+    substrate ODE is REPORTED only, never gating. No new derivation, no grade
+    uplift beyond the pillars.
+
+    FENCE (situational line): the quantum/classical SPLIT -- the FORM
+    free-hold -> eps_min-at-resolution -> permanent -- is what this check
+    fixes, and it is [P]. But the LINE itself (WHICH side a given situation is
+    on: still coherent/quantum vs already resolved/classical) is SITUATIONAL,
+    set by the actual OCCUPANCY of that situation, read off the world, never
+    derived here. Occupancy-obtains (that resolution happens at all) is
+    constitutive [P] base (v24.3.304); the occupancy-PROFILE (which interface,
+    resolved or not, its interpretation) is empirical. The mechanism is
+    settled and [P]; where the cut falls is per-situation.
+    """
+    from apf.core import check_L_irr, check_L_epsilon_star
+    from apf.operational_completeness import check_T_ledger_rent_excluded
+
+    slots, ga, gr, phi0 = 4, 1.0, 0.01, 100.0
+    tgrid = [0.0, 0.25, 0.5, 1.0, 2.0, 5.0, 20.0]
+
+    def resolves(gamma_app):
+        # structural: does a class transition COMPLETE (a resolution occur)?
+        return math.isfinite(completion_time(slots, gamma_app, phi0))
+
+    # ===== THE [P] GATE: three banked [P] theorems, no [P_structural] inside =====
+    rent_excluded_P = bool(check_T_ledger_rent_excluded().get('passed') is True)
+    irr_P = bool(check_L_irr().get('passed') is True)
+    eps_star_P = bool(check_L_epsilon_star().get('passed') is True)
+
+    # (1) FREE: rent-exclusion [P] + a non-resolving hold does not complete
+    free = rent_excluded_P and (not resolves(0.0))
+    # (2) SPEND: L_irr [P] (resolution commits) + eps_star [P] (floor > 0) +
+    #     the structural fact that a resolution occurs under drive; together
+    #     the committed cost is >= eps* > 0 (booked, not free).
+    spend = irr_P and eps_star_P and resolves(ga)
+    # (3) PERMANENT: L_irr [P] one-way; a reverse is itself a resolution
+    #     (books its own floor -- no refund), so the ledger never returns.
+    permanent = irr_P and resolves(ga)
+
+    passed = free and spend and permanent
+
+    # ===== SECONDARY (instrument-level, NON-gating): Paper 37 substrate ODE
+    phi_seq = [per_slot_phi(t, ga, gr) for t in tgrid]
+    ijc_seq = [ijc_load(t, phi0, slots, ga) for t in tgrid]
+    dyn_consistent = (all(phi_seq[i] <= phi_seq[i + 1] + 1e-12 for i in range(len(phi_seq) - 1))
+                      and all(ijc_seq[i] >= ijc_seq[i + 1] - 1e-12 for i in range(len(ijc_seq) - 1)))
+    t_trans = completion_time(slots, ga, phi0)
+
+    return {
+        'name': 'T_coherent_free_spend_permanent',
+        'epistemic': 'P',
+        'passed': passed,
+        'key_result': (
+            f'[P] composition over A1+occupancy (no [P_structural] in the gate): '
+            f'FREE = ledger_rent_excluded[P] (+ a held/non-resolving alignment '
+            f'does not complete) -> {free}; SPEND = L_irr[P] (resolution commits '
+            f'Delta>0) + L_epsilon_star[P] (floor eps*>0) => cost >= eps*>0, booked '
+            f'-> {spend}; PERMANENT = L_irr[P] one-way (reverse books its own floor) '
+            f'-> {permanent}. Secondary (non-gating): Paper 37 ODE consistent '
+            f'(phi up/IJC down = {dyn_consistent}, t_trans={t_trans:.4f}).'
+        ),
+        'dependencies': ['occupancy', 'L_irr', 'T_ledger_rent_excluded', 'L_epsilon_star'],
+        'cross_refs': ['T_realignment_floor_is_epsilon_star', 'T_class_transition',
+                       'T_second_law', 'T_delta_JR_derived'],
+        'theorem_refs': [
+            'Paper 37 Supp thm:existence / thm:uniqueness / thm:irreversibility',
+            'Paper 0 v6.2.39 (superposition/collapse: pays eps_min>0, no refund)',
+            'Paper 3 check_T_ledger_rent_excluded (held = free) [P]',
+            'check_L_irr (resolution commits Delta>0; permanent, unrecoverable) [P]',
+            'check_L_epsilon_star (the MD floor eps* > 0) [P]',
+        ],
+    }
+
+
 # ---------------------------------------------------------------------
 # Bank registration
 # ---------------------------------------------------------------------
@@ -326,6 +433,7 @@ _CHECKS = {
     'L_per_slot_capacity_flow': check_L_per_slot_capacity_flow,
     'T_class_transition_completion': check_T_class_transition_completion,
     'T_realignment_floor_is_epsilon_star': check_T_realignment_floor_is_epsilon_star,
+    'T_coherent_free_spend_permanent': check_T_coherent_free_spend_permanent,
 }
 
 
@@ -333,7 +441,7 @@ def register(registry):
     """Register the class-transition checks into the bank.
 
     4 checks total (v24.3.47 added T_realignment_floor_is_epsilon_star,
-    the kappa_min == eps*_Gamma bridge). Closes Paper 37 Supplement v0.9 Q4
+    the kappa_min == eps*_Gamma bridge). Closes Paper 37 Supplement v0.12 Q4
     (bank-side machinery for the class-transition theorem).
     """
     for name, fn in _CHECKS.items():
@@ -369,28 +477,93 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Bank-side model-integrity companion to Paper 37 (Collapse as "
-            "Realignment), closing the Supplement v0.9 Q4 flag. "
-            "check_T_class_transition verifies existence + uniqueness + "
-            "irreversibility on a worked instance (per-slot saturation depth phi "
-            "monotone and bounded by C_vacuum = 42, finite completion time, one- "
-            "way 2 x eps_min round-trip cost); check_L_per_slot_capacity_flow "
-            "verifies that the per-slot capacity-flow RHS equals the Paper 16 "
-            "v1.1 Markov-breakdown RHS exactly (max diff < 1e-12 across a "
-            "parameter grid); check_T_class_transition_completion verifies the "
-            "formula t_trans = (|S| Gamma_app)^-1 x ln(Phi_IJC(0)/eps_min) at "
-            "machine precision plus its boundary limits. "
-            "check_T_realignment_floor_is_epsilon_star banks the STRUCTURAL "
-            "identification kappa_min == eps*_Gamma -- the Paper 36 posited per- "
-            "transition floor is the already-derived marginal admissibility floor "
-            "(composed from check_L_epsilon_star, apf/core.py, and "
-            "check_T_minimum_distinction_floor_via_MD, apf/kappa_int_bounds.py); "
-            "per-module numeric normalizations differ and are explicitly NOT "
-            "asserted equal. These are executable numeric witnesses of supplement "
-            "theorems on worked instances, not independent derivations; the "
-            "derivational weight sits in the Paper 37 Supplement and the cited "
-            "floor checks. "
+            "Bank-side companion to Paper 37 (Collapse as Realignment), "
+            "closing the Supplement v0.12 Q4 flag. FIVE checks. Three are "
+            "worked-instance model-integrity witnesses of the substrate "
+            "dynamics: check_T_class_transition (per-slot saturation phi "
+            "monotone and bounded by C_vacuum = 42, finite completion time, "
+            "one-way round-trip cost); check_L_per_slot_capacity_flow (the "
+            "per-slot capacity-flow RHS equals the Paper 16 v1.1 Markov-"
+            "breakdown RHS exactly, max diff < 1e-12); "
+            "check_T_class_transition_completion (the formula t_trans = "
+            "(|S| Gamma_app)^-1 x ln(Phi_IJC(0)/eps_min) at machine precision "
+            "plus boundary limits). check_T_realignment_floor_is_epsilon_star "
+            "[P_structural] banks the identification kappa_min == eps*_Gamma "
+            "(the Paper 36 posited floor is the MD-derived marginal "
+            "admissibility floor). check_T_coherent_free_spend_permanent [P] "
+            "(v24.3.397) states the collapse triad as a COMPOSITION of banked "
+            "[P] theorems over the constitutive base (A1 + occupancy, "
+            "occupancy constitutive since v24.3.304): FREE coherent hold = "
+            "check_T_ledger_rent_excluded [P]; SPEND at the IJC->Sep "
+            "resolution = check_L_irr [P] (a resolution commits Delta>0) + "
+            "check_L_epsilon_star [P] (any committed distinction floored by "
+            "eps*>0) => cost >= eps*>0, booked not free; PERMANENT one-way = "
+            "check_L_irr [P]. The [P] is INHERITED from the three pillars; NO "
+            "[P_structural] check sits in the pass gate (the kappa_min==eps* "
+            "identification is a cross_ref only) and the substrate ODE is "
+            "reported-only. Fresh audit LAND-[P] 0.88."
         ),
-        "note": "Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade lives in prose ('model-integrity checks'), so this row bills them as worked-instance witnesses, nothing stronger.",
+        "note": (
+            "Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, "
+            "the collapse triad as a [P] composition over A1 + occupancy). "
+            "FIVE checks. check_T_coherent_free_spend_permanent [P] "
+            "(dependencies occupancy, L_irr, T_ledger_rent_excluded, "
+            "L_epsilon_star -- all banked [P]; SPEND routed via L_irr + "
+            "eps_star giving cost >= eps* > 0, so NO [P_structural] sits in "
+            "the gate; the realignment-floor identification is a cross_ref "
+            "only; substrate ODE reported-only; fresh audit LAND-[P] 0.88) "
+            "and check_T_realignment_floor_is_epsilon_star [P_structural] "
+            "carry machine epistemic fields. The other THREE "
+            "(T_class_transition, L_per_slot_capacity_flow, "
+            "T_class_transition_completion) are DELIBERATELY grade-in-prose "
+            "worked-instance witnesses of the substrate ODE, counted as "
+            "no-epistemic-field members of the full-surface grade-coverage "
+            "census (FULL_SURFACE_NO_EPISTEMIC pin, ie_export_core_census.py; "
+            "censused, not gated). Do NOT add machine grades to those three "
+            "without re-pinning that census. The phenomenological dynamics "
+            "(Gamma_app/Gamma_rel rates, timescales) are NOT [P]-from-A1 and "
+            "stay instrument-level. The [P] triad itself exports via the "
+            "dedicated foundation:collapse_triad_free_spend_permanent "
+            "input below (v24.3.398)."
+        ),
+    },
+    {
+        "input_id": "foundation:collapse_triad_free_spend_permanent",
+        "axis": "ROUTE",
+        "route": "collapse_triad",
+        "expect_export": True,
+        "payload": {
+            "name": "collapse_triad_free_spend_permanent",
+            "closure_kind": "internal_identity",
+            "identity_summary": (
+                "The collapse triad holds as a COMPOSITION of banked [P] "
+                "theorems over the constitutive base (A1 + occupancy): "
+                "(1) FREE while held -- no cost accrues to a held alignment "
+                "at fixed structure (check_T_ledger_rent_excluded [P], no "
+                "standing-rent cost kind); (2) SPEND at resolution -- a "
+                "resolution commits Delta > 0 (check_L_irr [P]) and every "
+                "committed distinction is floored by eps* > 0 "
+                "(check_L_epsilon_star [P]), so the IJC->Sep class "
+                "transition books cost >= eps* > 0, once; (3) PERMANENT -- "
+                "the committed capacity is locally unrecoverable and the "
+                "reverse transition books its own forward floor, round trip "
+                "2*eps_min > 0, no refund (check_L_irr [P]). NO "
+                "[P_structural] check sits in the gate: the kappa_min == "
+                "eps* identification is a cross_ref, and the substrate ODE "
+                "is reported-only. "
+                "(check_T_coherent_free_spend_permanent, class_transition.py)"
+            ),
+        },
+        "note": (
+            "The v24.3.398 export split: the [P] triad gets its own "
+            "exporting input, separated from the "
+            "foundation:class_transition_primitive bundle above (which "
+            "stays expect_export=False for its grade-in-prose substrate-ODE "
+            "witnesses). The quantum/classical SPLIT (the form free-hold -> "
+            "eps-spend-at-resolution -> permanent) is what exports; WHICH "
+            "side a given situation is on stays occupancy-profile, "
+            "situational, never exported. Fresh audit LAND-[P] 0.88 at "
+            "banking (v24.3.397)."
+        ),
     },
 )

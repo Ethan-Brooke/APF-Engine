@@ -347,7 +347,24 @@ def check_T_w_physical_export_lock_bank_closure():
         "status": "PASS" if p else "FAIL",
         "tier": 4,
         "epistemic": W_PHYSICAL_EXPORT_LOCK_STATUS,
-        "dependencies": [str(d.get("status")) for d in deps],
+        # BUG FIX x2 (.396 audit follow-through + the second-audit leg-9
+        # pass): originally [str(d.get("status"))] shipped six literal
+        # 'PASS' strings as the dependency list; the 22:53 repair demoted
+        # the constituents to component_checks on an "unregistered" claim
+        # that is FALSE for this module (register() ships _CHECKS: all six
+        # ARE registered under their T_-prefixed keys -- their RESULT
+        # records just carry no name field, which is what produced
+        # 'unnamed' harvests). The honest form: cite the six registered
+        # keys as dependencies; component_checks stays reserved for
+        # genuinely unregistered in-body parts (the w_os case).
+        "dependencies": [
+            "T_w_physical_export_lock_status_declared",
+            "T_w_physical_export_lock_depends_on_uncertainty_harness",
+            "T_w_physical_export_lock_schema_declared",
+            "T_w_physical_export_lock_default_locked",
+            "T_w_physical_export_lock_completion_gate_still_locked",
+            "T_w_physical_export_lock_no_physical_mass_exports",
+        ],
         "manifest": manifest(),
         "closed_now": "physical W export release predicate, required release flags, and anti-smuggling export lock",
         "not_closed": "real component rows, certified component sum, certified covariance/uncertainty, counterterm convention, numeric physical W/on-shell export",

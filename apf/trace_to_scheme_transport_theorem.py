@@ -423,6 +423,15 @@ def check_T_trace_to_scheme_transport_theorem_bank_closure() -> Dict[str, Any]:
         "status": "PASS",
         "tier": 4,
         "epistemic": THEOREM_STATUS,
+        # dependencies, NOT component_checks (.396 second-audit leg-9
+        # catch, reversing the 22:53 follow-through): this module's
+        # register() ships _collect_checks(), so all eight constituents
+        # ARE individually registered bank members -- citing them as
+        # dependencies creates NO dangling roots (each resolves), and
+        # parking them in component_checks silently dropped eight
+        # registered members (and their subtrees) from every census
+        # closure. The K3/w_os precedent applies only to UNREGISTERED
+        # in-body parts; the leg-9 lint now polices exactly this.
         "dependencies": [c["name"] for c in checks],
         "closed_now": "trace-to-scheme transport theorem form and export iff-gate",
         "still_open": "evaluated route maps and filled external/counterterm/uncertainty ledgers for any physical scheme export",
