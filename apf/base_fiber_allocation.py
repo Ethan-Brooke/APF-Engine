@@ -624,6 +624,12 @@ def check_T_across_frame_fork_localized() -> Dict:
         "gauge_quotient_ledger.py":  "GQL-2 + the two-region control (adopted, load-bearing by banked control)",
         "ym_quotient_ledger.py":     "the YM gauged-vs-global discriminating control",
         "gauge_invariant_record.py": "fenced MENTION only (loc_commut reading, [P_structural_reading])",
+        # v24.3.367 rider (2026-07-03): the solder-form no-go is a legitimate NEW
+        # fork surface -- it takes the fork object itself as its SUBJECT (certifies
+        # the frame not constructible; consumes the registered absence at Leg 0).
+        # Containment re-audited at landing: no confirmed prediction acquires a
+        # fork surface as a grade-carrying dependency through it.
+        "colour_solder_form_no_go.py": "the solder-form constructibility no-go (v24.3.367; the fork object as subject, audited surface)",
     }
     hits: Dict[str, list] = {}
     for name in sorted(os.listdir(pkg_dir)):

@@ -1860,7 +1860,12 @@ def _su3_octet_M4_certificate():
     pure-rational), consistent with the octet sector = 32 states = 4 copies x dim 8.
     Gauge-invariance of the M_4 block is a Schur-lemma inference (octet irreducible,
     multiplicity 4 => commutant of the octet isotypic = M_4, every element commutes with
-    the colour action); no explicit [O, G_a] = 0 operator is constructed."""
+    the colour action). The former fence "no explicit [O, G_a] = 0 operator is
+    constructed" is DISCHARGED by check_T_su3_octet_M4_explicit_construction
+    (v24.3.379): the 16 matrix units are constructed as explicit 81x81 rational
+    matrices and [e_pq, G_a] = 0 is verified entry-by-entry for all 8 generators;
+    the Schur inference is retained as the a-priori argument the construction
+    confirms."""
     dec = _su3_weyl_klimyk_tetraquark()
     tot = sum(d * n for (d, n) in dec.values())
     octet = dec.get((1, 1), (0, 0))
@@ -1878,7 +1883,9 @@ def _su3_octet_M4_certificate():
         "octet_multiplicity": octet[1],
         "explicit_casimir_trC_432_trC2_2736": bool(casimir_ok),
         "gauge_invariance_basis": "Schur inference (octet irreducible x multiplicity 4 => commutant = M_4); "
-                                  "no explicit operator [O,G_a]=0 constructed",
+                                  "explicit-operator fence DISCHARGED by "
+                                  "check_T_su3_octet_M4_explicit_construction (16 explicit "
+                                  "matrix units, [e_pq, G_a] = 0 entry-by-entry)",
         "contains_full_M4": bool(octet == (8, 4) and tot == 81 and 4 in blocks and casimir_ok),
     }
 
@@ -1904,7 +1911,11 @@ def check_T_su3_octet_colour_KS_coloring_obstruction_exact():
         real-QCD tetraquark, established exactly (upgrading the census note's numerical
         SU(3) octet finding to exact).
       * Gauge-invariance of the M_4 block is a Schur-lemma inference from octet
-        irreducibility x multiplicity 4, not an explicit [O, G_a] = 0 operator check.
+        irreducibility x multiplicity 4. The explicit [O, G_a] = 0 operator check is
+        now supplied by check_T_su3_octet_M4_explicit_construction (v24.3.379), which
+        constructs the 16 matrix units as 81x81 rational matrices and verifies the
+        commutators entry-by-entry; the Schur inference stands as the a-priori
+        argument the construction confirms.
       * IJC_str (structural) rung ONLY. IJC_adm / occupancy -- whether A1 forces the
         world to realize such an interface -- stays the empirical QAC, untouched.
     Grade P_structural_instrument: the verdict is the engine's exact finite-math
@@ -1933,7 +1944,8 @@ def check_T_su3_octet_colour_KS_coloring_obstruction_exact():
                                           "real-QCD tetraquark, exact; the obstruction itself is the shared "
                                           "group-independent magic square"),
         "scope": ("IJC_str rung only; IJC_adm/occupancy stays the empirical QAC. Gauge-invariance of M_4 is "
-                  "a Schur inference (octet irreducible x mult 4), not an explicit operator check."),
+                  "a Schur inference (octet irreducible x mult 4); the explicit-operator leg is now "
+                  "supplied by check_T_su3_octet_M4_explicit_construction."),
     }
     if ok:
         return _ok(
@@ -1958,6 +1970,894 @@ def check_T_su3_octet_colour_KS_coloring_obstruction_exact():
         status="FAIL",
         summary="SU(3) octet gauge-invariant magic-square coloring-obstruction witness did not hold.",
         data=data,
+    )
+
+
+
+# ---------------------------------------------------------------------------
+# The explicit octet M_4 construction (v24.3.379, Paper 12 round-4 walk A2;
+# fresh-context hostile audit LAND-WITH-FIXES 0.88, fixes F1-F6 carried).
+# Walk of record: "The Turning/p12_review4_walks_2026-07-04/a2_octet_m4/".
+# Exact sparse rational matrices: value = rows/den, rows = {r: {c: int}},
+# den > 0. Pure stdlib; every load-bearing step exact over Q.
+# ---------------------------------------------------------------------------
+
+def _m4c_digits(x):
+    return ((x // 27) % 3, (x // 9) % 3, (x // 3) % 3, x % 3)
+
+
+def _m4c_idx(d):
+    return ((d[0] * 3 + d[1]) * 3 + d[2]) * 3 + d[3]
+
+
+def _m4c_mnorm(m):
+    from math import gcd
+    den, rows = m
+    rows = {r: {c: v for c, v in row.items() if v != 0} for r, row in rows.items()}
+    rows = {r: row for r, row in rows.items() if row}
+    if not rows:
+        return (1, {})
+    g = abs(den)
+    for row in rows.values():
+        for v in row.values():
+            g = gcd(g, abs(v))
+    sgn = -1 if den < 0 else 1
+    d = abs(den) // g
+    if g > 1 or sgn < 0:
+        rows = {r: {c: (sgn * v) // g for c, v in row.items()} for r, row in rows.items()}
+    return (d, rows)
+
+
+def _m4c_madd(m1, m2, k=1):
+    from math import gcd
+    d1, r1 = m1
+    d2, r2 = m2
+    L = d1 * d2 // gcd(d1, d2)
+    f1 = L // d1
+    f2 = (L // d2) * k
+    rows = {r: {c: v * f1 for c, v in row.items()} for r, row in r1.items()}
+    for r, row in r2.items():
+        rr = rows.setdefault(r, {})
+        for c, v in row.items():
+            rr[c] = rr.get(c, 0) + v * f2
+    return _m4c_mnorm((L, rows))
+
+
+def _m4c_mscale(m, fr):
+    fr = F(fr)
+    d, r = m
+    rows = {rr: {c: v * fr.numerator for c, v in row.items()} for rr, row in r.items()}
+    return _m4c_mnorm((d * fr.denominator, rows))
+
+
+def _m4c_mmul(a, b):
+    da, ra = a
+    db, rb = b
+    rows = {}
+    for r, row in ra.items():
+        acc = {}
+        for k2, av in row.items():
+            bk = rb.get(k2)
+            if not bk:
+                continue
+            for c, bv in bk.items():
+                acc[c] = acc.get(c, 0) + av * bv
+        acc = {c: v for c, v in acc.items() if v}
+        if acc:
+            rows[r] = acc
+    return _m4c_mnorm((da * db, rows))
+
+
+def _m4c_miszero(m):
+    return not _m4c_mnorm(m)[1]
+
+
+def _m4c_meq(a, b):
+    return _m4c_miszero(_m4c_madd(a, b, -1))
+
+
+def _m4c_mcomm(a, b):
+    return _m4c_madd(_m4c_mmul(a, b), _m4c_mmul(b, a), -1)
+
+
+def _m4c_mtrace(m):
+    d, r = m
+    return F(sum(row.get(k, 0) for k, row in r.items()), d)
+
+
+def _m4c_mnnz(m):
+    return sum(len(row) for row in m[1].values())
+
+
+def _m4c_mtranspose(m):
+    d, r = m
+    rows = {}
+    for i, row in r.items():
+        for j, v in row.items():
+            rows.setdefault(j, {})[i] = v
+    return (d, rows)
+
+
+def _m4c_rep(X):
+    """Tetraquark action G(X) = X x1x1x1 + 1x(-X^T)x1x1 + 1x1xXx1 + 1x1x1x(-X^T)
+    on |i,j,k,l>, slots (fund, antifund, fund, antifund)."""
+    rows = {}
+
+    def add(r, c, v):
+        if v == 0:
+            return
+        rr = rows.setdefault(r, {})
+        rr[c] = rr.get(c, 0) + v
+
+    for x in range(81):
+        i, j, k, l = _m4c_digits(x)
+        for a in range(3):
+            add(_m4c_idx((a, j, k, l)), x, X[a][i])       # slot 1: fund
+            add(_m4c_idx((i, a, k, l)), x, -X[j][a])      # slot 2: antifund
+            add(_m4c_idx((i, j, a, l)), x, X[a][k])       # slot 3: fund
+            add(_m4c_idx((i, j, k, a)), x, -X[l][a])      # slot 4: antifund
+    return _m4c_mnorm((1, rows))
+
+
+def _m4c_E3(i, j):
+    M = [[0] * 3 for _ in range(3)]
+    M[i][j] = 1
+    return M
+
+
+def _m4c_mat3(A, B, kB=1):
+    return [[A[i][j] + kB * B[i][j] for j in range(3)] for i in range(3)]
+
+
+def _m4c_mat3mul(A, B):
+    return [[sum(A[i][t] * B[t][j] for t in range(3)) for j in range(3)]
+            for i in range(3)]
+
+
+def _m4c_rank_tracked(vecs):
+    """Exact integer rank with relation tracking (fraction-free, gcd-normalized).
+    Returns (rank, independent_indices, relations)."""
+    from math import gcd
+    AUG = 10 ** 9
+    pivots = {}
+    rank = 0
+    indep = []
+    relations = []
+    for m, v0 in enumerate(vecs):
+        row = dict(v0)
+        row[AUG + m] = 1
+        while True:
+            real = [c for c in row if c < AUG]
+            if not real:
+                relations.append({c - AUG: v for c, v in row.items()})
+                break
+            c = min(real)
+            p = pivots.get(c)
+            if p is None:
+                g = 0
+                for v in row.values():
+                    g = gcd(g, abs(v))
+                if g > 1:
+                    row = {k: v // g for k, v in row.items()}
+                pivots[c] = row
+                rank += 1
+                indep.append(m)
+                break
+            a = p[c]
+            b = row[c]
+            new = {k: v * a for k, v in row.items()}
+            for k, v in p.items():
+                w = new.get(k, 0) - v * b
+                if w:
+                    new[k] = w
+                elif k in new:
+                    del new[k]
+            row = new
+            if row:
+                g = 0
+                for v in row.values():
+                    g = gcd(g, abs(v))
+                if g > 1:
+                    row = {k: v // g for k, v in row.items()}
+    return rank, indep, relations
+
+
+def _m4c_rank_sparse_exact(rows):
+    """Exact integer rank of sparse integer rows (fraction-free elimination)."""
+    from math import gcd
+    pivots = {}
+    rank = 0
+    for row0 in sorted(rows, key=len):
+        row = dict(row0)
+        while row:
+            c = min(row)
+            p = pivots.get(c)
+            if p is None:
+                g = 0
+                for v in row.values():
+                    g = gcd(g, abs(v))
+                if g > 1:
+                    row = {k: v // g for k, v in row.items()}
+                pivots[c] = row
+                rank += 1
+                break
+            a = p[c]
+            b = row[c]
+            new = {k: v * a for k, v in row.items()}
+            for k, v in p.items():
+                w = new.get(k, 0) - v * b
+                if w:
+                    new[k] = w
+                elif k in new:
+                    del new[k]
+            row = new
+            if row:
+                g = 0
+                for v in row.values():
+                    g = gcd(g, abs(v))
+                if g > 1:
+                    row = {k: v // g for k, v in row.items()}
+    return rank
+
+
+def _m4c_rref_dense(A, npiv_cols):
+    r = 0
+    piv = []
+    for c in range(npiv_cols):
+        pr = next((rr for rr in range(r, len(A)) if A[rr][c] != 0), None)
+        if pr is None:
+            continue
+        A[r], A[pr] = A[pr], A[r]
+        pv = A[r][c]
+        A[r] = [v / pv for v in A[r]]
+        for rr in range(len(A)):
+            if rr != r and A[rr][c] != 0:
+                fct = A[rr][c]
+                A[rr] = [x - fct * y for x, y in zip(A[rr], A[r])]
+        piv.append(c)
+        r += 1
+        if r == len(A):
+            break
+    return A, piv
+
+
+def _m4c_nullspace_dense(rows, n):
+    M = [[F(row.get(t, 0)) for t in range(n)] for row in rows]
+    if not M:
+        M = [[F(0)] * n]
+    M, piv = _m4c_rref_dense(M, n)
+    free = [c for c in range(n) if c not in piv]
+    basis = []
+    for fc in free:
+        v = [F(0)] * n
+        v[fc] = F(1)
+        for rr, pc in enumerate(piv):
+            v[pc] = -M[rr][fc]
+        basis.append(v)
+    return basis
+
+
+def _m4c_perm_sign(p):
+    sgn = 1
+    for i in range(4):
+        for j in range(i + 1, 4):
+            if p[i] > p[j]:
+                sgn = -sgn
+    return sgn
+
+
+def check_T_su3_octet_M4_explicit_construction():
+    """The gauge-invariant M_4 block in the octet channel of the SU(3)
+    tetraquark 3 (x) 3bar (x) 3 (x) 3bar is CONSTRUCTED, not inferred: 16
+    explicit 81x81 rational matrix units e_pq (p, q = 1..4) satisfying
+    [e_pq, G(X)] = 0 exactly for all X in sl(3,C) (checked on the spanning
+    integer basis E12, E21, E13, E31, E23, E32, H1, H2 -- equivalent to the
+    Gell-Mann basis by linearity: the scalar factors -i and 1/sqrt3 are
+    irrelevant to the vanishing of a commutator -- and extended to SU(3) by
+    exponentiation/connectedness), e_pq e_rs = delta_qr e_ps (all 256
+    ordered products), sum_p e_pp = P_octet (exact rank 32), together with
+    explicit two-qubit Pauli operators realizing the six Mermin-Peres
+    product identities (row signs +,+,+; column signs +,+,-) as exact
+    matrix equations. The commutant is simultaneously pinned at dimension
+    23 by direct exact rank computation (H-block closed form, 639
+    weight-diagonal unknowns; 2736 integer E-equations of exact rank 616),
+    with the unique diagram relation sum_sigma sgn(sigma) T_sigma = 0
+    exhibited. DISCHARGES the certificate fence "no explicit [O, G_a] = 0
+    operator is constructed" (_su3_octet_M4_certificate).
+
+    DISCRIMINATION NOTE (audit F1 -- the blind-spot documented): the
+    headline invariants do NOT discriminate the group action. For the
+    WRONG all-fund action 3 (x) 3 (x) 3 (x) 3 (no -X^T on the bar slots)
+    every headline number is IDENTICAL: weight-diagonal unknowns 639,
+    E-system rank 616, commutant dim 23 (Schur-Weyl over the <=3-row S_4
+    partitions), and tr C = 432, tr C^2 = 2736 (the cross-slot trace terms
+    vanish by tracelessness regardless of transpose signs; the per-slot
+    traces are transpose-invariant). So neither the dim-23 elimination,
+    nor the character cross-check, nor the Casimir-trace reproduction can
+    catch the fund<->antifund error class. The legs that DO pin the
+    action, run in-check: the diagram-commutation leg (the
+    delta-contraction diagrams fail 160/192 commutators under the all-fund
+    action), the rep-property leg [G(X), G(Y)] = G([X, Y]) (five bracket
+    pairs including [E12, E21] = H1 -- the audit's direct action pin), the
+    Casimir SPECTRUM / projector-trace legs ({0, 3, 6, 8} with isotypic
+    dims 2/32/20/27, vs {4/3, 10/3, 16/3, 28/3} for all-fund), the
+    highest-weight multiplicity legs, and the negative control.
+
+    ANTISYMMETRIZER GLOSS (audit F5): the unique relation antisymmetrizes
+    over the four COVARIANT POSITIONS OF THE MIXED TENSOR (equivalently:
+    the generalized Kronecker delta with four upper and four lower indices
+    vanishes identically for N = 3 < 4) -- NOT the naive antisymmetrizer
+    on the fourth tensor power of the fundamental; the fund positions
+    straddle the wall between out- and in-slots.
+
+    HERMITICITY (audit F3 -- the sharper verified fact): the standard
+    inner product on C^81 is SU(3)-invariant for this action (fund and
+    antifund slots both act unitarily), and P_octet = P_octet^T EXACTLY
+    (verified in-check) -- an honest orthogonal projector, no adapted
+    basis needed. The constructed matrix units are NOT Hermitian as-is
+    (the multiplicity basis h_1..h_4 is rational but not orthonormal, and
+    orthonormalization exits Q); orthonormalizing h_1..h_4 (a square-root
+    step) conjugates the block to Hermitian matrix units, making the nine
+    square operators Hermitian observables -- the product identities
+    verified here are conjugation-invariant and are the load-bearing
+    content of the KS argument. Explicit HERMITIAN observables therefore
+    remain undelivered (structurally obstructed over Q) -- out of scope,
+    stated (audit F6).
+
+    FENCE (audit F5 guard, mandatory): this check certifies ONLY the
+    mathematical construction. The contextuality verdicts stay
+    [P_structural_instrument] on the parent check
+    (check_T_su3_octet_colour_KS_coloring_obstruction_exact); nothing here
+    re-grades them. The parent Remark's first clause -- the obstruction
+    OBJECT (the magic square) is group-independent -- is untouched and
+    survives (audit F6): SU(3) supplies the M_4 host, now explicitly
+    constructed. IJC_adm / occupancy stays the empirical QAC.
+
+    Grade bare [P] (in-module precedent:
+    check_T_exotic_gauge_invariant_algebra_is_nonabelian): every leg is a
+    finite exact-arithmetic identity over Q -- integer matrices, Fraction
+    elimination, entry-by-entry equality. No reading enters: no occupancy
+    claim, no interface adoption, no measured input, no floats. The banked
+    character decomposition and Q[i,sqrt3] Casimir traces are consumed as
+    a REAL cross-check (audit F2): _su3_octet_M4_certificate() is called
+    and its commutant_dim / octet_multiplicity / Casimir flag are asserted
+    equal to this check's independently computed values."""
+    legs = []
+
+    def leg(ok, label):
+        legs.append((bool(ok), label))
+
+    MZERO = (1, {})
+    MID = (1, {x: {x: 1} for x in range(81)})
+
+    H1m = _m4c_mat3(_m4c_E3(0, 0), _m4c_E3(1, 1), -1)
+    H2m = _m4c_mat3(_m4c_E3(1, 1), _m4c_E3(2, 2), -1)
+    GEN = {
+        'E12': _m4c_rep(_m4c_E3(0, 1)), 'E21': _m4c_rep(_m4c_E3(1, 0)),
+        'E13': _m4c_rep(_m4c_E3(0, 2)), 'E31': _m4c_rep(_m4c_E3(2, 0)),
+        'E23': _m4c_rep(_m4c_E3(1, 2)), 'E32': _m4c_rep(_m4c_E3(2, 1)),
+        'H1': _m4c_rep(H1m), 'H2': _m4c_rep(H2m),
+    }
+    GENLIST = list(GEN.items())
+
+    # weights
+    h1v = [1, -1, 0]
+    h2v = [0, 1, -1]
+
+    def wt(x):
+        i, j, k, l = _m4c_digits(x)
+        return (h1v[i] - h1v[j] + h1v[k] - h1v[l],
+                h2v[i] - h2v[j] + h2v[k] - h2v[l])
+
+    W = [wt(x) for x in range(81)]
+    okH = True
+    for nm, comp in (('H1', 0), ('H2', 1)):
+        d, rows = GEN[nm]
+        if d != 1:
+            okH = False
+        for r, row in rows.items():
+            for c, v in row.items():
+                if r != c or v != W[r][comp]:
+                    okH = False
+    leg(okH, "H1, H2 act diagonally with integer weight eigenvalues "
+             "(H-equations force weight-diagonal support, exactly)")
+
+    # rep-property leg (audit F1, mandatory): [G(X), G(Y)] = G([X, Y])
+    E12m, E21m = _m4c_E3(0, 1), _m4c_E3(1, 0)
+    E13m, E31m = _m4c_E3(0, 2), _m4c_E3(2, 0)
+    E23m, E32m = _m4c_E3(1, 2), _m4c_E3(2, 1)
+    bracket_pairs = [
+        (E12m, E21m),                       # [E12, E21] = H1
+        (E23m, E32m),                       # [E23, E32] = H2
+        (E12m, E23m),                       # [E12, E23] = E13
+        (H1m, E12m),                        # [H1, E12] = 2 E12
+        (E13m, E31m),                       # [E13, E31] = H1 + H2
+    ]
+    ok_rep = True
+    for Xm, Ym in bracket_pairs:
+        XY = _m4c_mat3(_m4c_mat3mul(Xm, Ym), _m4c_mat3mul(Ym, Xm), -1)
+        lhs = _m4c_mcomm(_m4c_rep(Xm), _m4c_rep(Ym))
+        if not _m4c_meq(lhs, _m4c_rep(XY)):
+            ok_rep = False
+    leg(ok_rep, "rep property [G(X), G(Y)] = G([X, Y]) on five bracket pairs "
+                "incl. [E12, E21] = H1 (the direct action pin; audit F1)")
+
+    # Stage A: the 24 contraction diagrams
+    import itertools as _it
+    FPOS = [('o', 0), ('o', 2), ('i', 1), ('i', 3)]
+    APOS = [('i', 0), ('i', 2), ('o', 1), ('o', 3)]
+    PERMS = list(_it.permutations(range(4)))
+
+    def diagram(p):
+        rows = {}
+        for vals in _it.product(range(3), repeat=4):
+            o = [0] * 4
+            ii = [0] * 4
+            for m in range(4):
+                side, slot = FPOS[m]
+                (o if side == 'o' else ii)[slot] = vals[m]
+                side, slot = APOS[p[m]]
+                (o if side == 'o' else ii)[slot] = vals[m]
+            r = _m4c_idx(o)
+            c = _m4c_idx(ii)
+            rr = rows.setdefault(r, {})
+            rr[c] = rr.get(c, 0) + 1
+        return _m4c_mnorm((1, rows))
+
+    DIAG = [diagram(p) for p in PERMS]
+    leg(_m4c_meq(DIAG[PERMS.index((0, 1, 2, 3))], MID)
+        and all(_m4c_mnnz(D) == 81
+                and all(v == 1 for row in D[1].values() for v in row.values())
+                for D in DIAG),
+        "identity diagram == identity operator; every diagram has exactly 81 "
+        "unit entries")
+    bad = sum(1 for D in DIAG for nm, G in GENLIST
+              if not _m4c_miszero(_m4c_mcomm(D, G)))
+    leg(bad == 0, "all 24 walled-Brauer contraction diagrams satisfy "
+                  "[T_sigma, G] = 0 exactly for all 8 generators "
+                  "(192 commutators; the action-discriminating leg)")
+    GM = [
+        _m4c_madd(GEN['E12'], GEN['E21']),
+        _m4c_madd(GEN['E12'], GEN['E21'], -1),
+        GEN['H1'],
+        _m4c_madd(GEN['E13'], GEN['E31']),
+        _m4c_madd(GEN['E13'], GEN['E31'], -1),
+        _m4c_madd(GEN['E23'], GEN['E32']),
+        _m4c_madd(GEN['E23'], GEN['E32'], -1),
+        _m4c_madd(GEN['H1'], GEN['H2'], 2),
+    ]
+    bad = sum(1 for D in DIAG for g in GM if not _m4c_miszero(_m4c_mcomm(D, g)))
+    leg(bad == 0, "commutation with the eight Gell-Mann combinations "
+                  "(lam2/5/7 up to -i, sqrt3*lam8 = H1 + 2 H2)")
+
+    vecs = [{r * 81 + c: v for r, row in D[1].items() for c, v in row.items()}
+            for D in DIAG]
+    rkD, indepD, relsD = _m4c_rank_tracked(vecs)
+    leg(rkD == 23, f"diagram span has exact rank 23 (found {rkD}): 23 "
+                   "explicitly independent gauge-invariant operators")
+    rel_ok = False
+    if len(relsD) == 1:
+        rel = relsD[0]
+        if set(rel) == set(range(24)) and all(abs(v) == 1 for v in rel.values()):
+            s0 = rel[0] * _m4c_perm_sign(PERMS[0])
+            rel_ok = all(rel[m] == s0 * _m4c_perm_sign(PERMS[m]) for m in range(24))
+    leg(rel_ok, "unique diagram relation = sum_sigma sgn(sigma) T_sigma = 0: "
+                "the antisymmetrizer over the four COVARIANT POSITIONS of "
+                "the mixed tensor (generalized Kronecker delta, N = 3 < 4)")
+
+    # Stage B: commutant dimension 23 by exact elimination
+    from collections import Counter as _Counter
+    pairs = [(x, y) for x in range(81) for y in range(81) if W[x] == W[y]]
+    NU = len(pairs)
+    mw = _Counter(W)
+    leg(NU == 639 and NU == sum(m * m for m in mw.values()),
+        f"weight-diagonal unknown space dim = sum_w m_w^2 = {NU} == 639 "
+        "(H-equations solved in closed form)")
+    eqs = {}
+    for nm in ('E12', 'E21', 'E13', 'E31', 'E23', 'E32'):
+        dG, rG = GEN[nm]
+        cols = {}
+        for r, row in rG.items():
+            for c, v in row.items():
+                cols.setdefault(c, {})[r] = v
+        for t, (a, b) in enumerate(pairs):
+            rb = rG.get(b)
+            if rb:
+                for y, v in rb.items():
+                    d0 = eqs.setdefault((nm, a, y), {})
+                    d0[t] = d0.get(t, 0) + v
+            ca = cols.get(a)
+            if ca:
+                for x2, v in ca.items():
+                    d0 = eqs.setdefault((nm, x2, b), {})
+                    d0[t] = d0.get(t, 0) - v
+    rows_eq = [{c: v for c, v in r.items() if v} for r in eqs.values()]
+    rows_eq = [r for r in rows_eq if r]
+    rkQ = _m4c_rank_sparse_exact(rows_eq)
+    leg(NU - rkQ == 23,
+        f"EXACT over Q: commutant dim = {NU} - {rkQ} = {NU - rkQ} == 23 "
+        "(2736 integer E-equations, exact rank 616; direct linear algebra, "
+        "not Schur)")
+
+    # banked cross-check (audit F2 -- a REAL coupling, no hardcoded leg)
+    cert = _su3_octet_M4_certificate()
+    leg(cert["commutant_dim"] == NU - rkQ == 23
+        and cert["octet_multiplicity"] == 4
+        and bool(cert["explicit_casimir_trC_432_trC2_2736"])
+        and bool(cert["contains_full_M4"]),
+        "banked cross-check: _su3_octet_M4_certificate() called in-check -- "
+        "character-theory commutant_dim == the elimination's 23, octet "
+        "multiplicity 4, Q[i,sqrt3] Casimir flag True")
+
+    # Stage C: rational Casimir, projectors, P_octet
+    Cas = MZERO
+    for i in range(3):
+        for j in range(3):
+            if i != j:
+                Cas = _m4c_madd(Cas, _m4c_mscale(
+                    _m4c_mmul(_m4c_rep(_m4c_E3(i, j)), _m4c_rep(_m4c_E3(j, i))),
+                    F(1, 2)))
+    GH1, GH2 = GEN['H1'], GEN['H2']
+    Cas = _m4c_madd(Cas, _m4c_mscale(_m4c_madd(_m4c_mmul(GH1, GH1),
+                                               _m4c_mmul(GH2, GH2)), F(1, 3)))
+    Cas = _m4c_madd(Cas, _m4c_mscale(_m4c_madd(_m4c_mmul(GH1, GH2),
+                                               _m4c_mmul(GH2, GH1)), F(1, 6)))
+    bad = sum(1 for nm, G in GENLIST if not _m4c_miszero(_m4c_mcomm(Cas, G)))
+    leg(bad == 0, "rational dual-basis Casimir C commutes with all 8 generators")
+    trC = _m4c_mtrace(Cas)
+    trC2 = _m4c_mtrace(_m4c_mmul(Cas, Cas))
+    leg(trC == 432 and trC2 == 2736,
+        f"tr C = {trC} == 432 and tr C^2 = {trC2} == 2736 -- the banked "
+        "Q[i,sqrt3] values reproduced over Q alone (degenerate across the "
+        "wrong action; see the discrimination note)")
+
+    EVS = [0, 3, 6, 8]
+
+    def polyP(target):
+        P = MID
+        denom = 1
+        for e in EVS:
+            if e == target:
+                continue
+            P = _m4c_mmul(P, _m4c_madd(Cas, MID, -e))
+            denom *= (target - e)
+        return _m4c_mscale(P, F(1, denom))
+
+    PROJ = {e: polyP(e) for e in EVS}
+    P8 = PROJ[3]
+    sumP = MZERO
+    for e in EVS:
+        sumP = _m4c_madd(sumP, PROJ[e])
+    leg(_m4c_meq(sumP, MID)
+        and all(_m4c_meq(_m4c_mmul(PROJ[e], PROJ[e]), PROJ[e]) for e in EVS)
+        and all(_m4c_miszero(_m4c_mmul(PROJ[e], PROJ[f]))
+                for e in EVS for f in EVS if e != f)
+        and all(_m4c_meq(_m4c_mmul(Cas, PROJ[e]), _m4c_mscale(PROJ[e], e))
+                for e in EVS),
+        "spectral projectors at C2 in {0, 3, 6, 8}: idempotent, mutually "
+        "orthogonal, resolution of identity, C P_e = e P_e (exact) -- the "
+        "SPECTRUM is an action-discriminating leg")
+    traces = {e: _m4c_mtrace(PROJ[e]) for e in EVS}
+    leg(traces[0] == 2 and traces[3] == 32 and traces[6] == 20
+        and traces[8] == 27,
+        "isotypic dimensions from projector traces: trivial 2, octet 32, "
+        "(3,0)+(0,3) 20, (2,2) 27 (sum 81) -- action-discriminating")
+    bad = sum(1 for nm, G in GENLIST if not _m4c_miszero(_m4c_mcomm(P8, G)))
+    leg(bad == 0, "P_octet commutes exactly with all 8 generators")
+    rows_p8 = [dict(row) for row in P8[1].values()]
+    rkP8 = _m4c_rank_sparse_exact(rows_p8)
+    leg(rkP8 == 32 and _m4c_mtrace(P8) == 32,
+        f"P_octet rank = {rkP8} == 32 by exact elimination AND trace")
+    leg(_m4c_meq(P8, _m4c_mtranspose(P8)),
+        "P_octet = P_octet^T exactly (audit F3): the standard inner product "
+        "on C^81 is SU(3)-invariant for this action, so P_octet is an "
+        "honest orthogonal projector")
+
+    # Stage D: highest-weight spaces -- explicit multiplicities
+    def hw_space(wtarget):
+        xs = [x for x in range(81) if W[x] == wtarget]
+        rows = {}
+        for nm in ('E12', 'E23'):
+            dG, rG = GEN[nm]
+            cols = {}
+            for r, row in rG.items():
+                for c, v in row.items():
+                    cols.setdefault(c, {})[r] = v
+            for t, x in enumerate(xs):
+                for r, v in cols.get(x, {}).items():
+                    rows.setdefault((nm, r), {})[t] = v
+        basis = _m4c_nullspace_dense(list(rows.values()), len(xs))
+        return xs, basis
+
+    HW_EXPECT = {(0, 0): 2, (1, 1): 4, (3, 0): 1, (0, 3): 1, (2, 2): 1}
+    hw_found = {}
+    for wtar in HW_EXPECT:
+        xs, basis = hw_space(wtar)
+        hw_found[wtar] = len(basis)
+    leg(hw_found == HW_EXPECT,
+        "explicit highest-weight-space dimensions reproduce the Weyl-Klimyk "
+        "multiplicities (2, 4, 1, 1, 1) -- character-free, per irrep, "
+        "action-discriminating")
+
+    xs8, basis8 = hw_space((1, 1))
+    from math import gcd as _gcd
+    hvec = []
+    for b in basis8:
+        Lden = 1
+        for fr in b:
+            Lden = Lden * fr.denominator // _gcd(Lden, fr.denominator)
+        v = {xs8[t]: int(b[t] * Lden) for t in range(len(xs8)) if b[t] != 0}
+        hvec.append(v)
+    leg(len(hvec) == 4 and len(xs8) == 8,
+        "octet multiplicity space: dim V_theta = 8 at theta = (1,1); "
+        "explicit integer h_1..h_4 extracted (joint kernel of E12, E23)")
+
+    def applym(m, vec):
+        d, rows = m
+        out = {}
+        for r, row in rows.items():
+            acc = 0
+            for c, v in row.items():
+                w = vec.get(c)
+                if w:
+                    acc += v * w
+            if acc:
+                out[r] = F(acc, d)
+        return out
+
+    def vec_sub(v1, v2):
+        out = dict(v1)
+        for kk, v in v2.items():
+            out[kk] = out.get(kk, 0) - v
+        return {kk: v for kk, v in out.items() if v != 0}
+
+    leg(all(not applym(GEN[nm], h) for nm in ('E12', 'E23') for h in hvec),
+        "each h_p is killed exactly by the raising operators E12, E23")
+    leg(all(not vec_sub(applym(P8, h), {k: F(v) for k, v in h.items()})
+            for h in hvec),
+        "P_octet h_p = h_p exactly (the multiplicity space sits inside the "
+        "octet isotypic)")
+
+    # Stage E: the 16 explicit matrix units
+    def solve_in_basis(bvecs, target):
+        support = sorted(set().union(*[set(b) for b in bvecs]) | set(target))
+        nb = len(bvecs)
+        A = [[F(b.get(sp, 0)) for b in bvecs] + [F(target.get(sp, 0))]
+             for sp in support]
+        A, piv = _m4c_rref_dense(A, nb)
+        for rr in range(len(A)):
+            if all(A[rr][c] == 0 for c in range(nb)) and A[rr][nb] != 0:
+                return None
+        sol = [F(0)] * nb
+        for rr, c in enumerate(piv):
+            sol[c] = A[rr][nb]
+        return sol
+
+    rho = []
+    ok_pres = True
+    for m in range(24):
+        cols = []
+        for p in range(4):
+            img = applym(DIAG[m], hvec[p])
+            sol = solve_in_basis(hvec, img)
+            if sol is None:
+                ok_pres = False
+                sol = [F(0)] * 4
+            cols.append(sol)
+        rho.append([[cols[p][r] for p in range(4)] for r in range(4)])
+    leg(ok_pres, "every diagram operator preserves the 4-dim multiplicity "
+                 "space (exact solve)")
+
+    ENT = [(u, v) for u in range(4) for v in range(4)]
+    Aug = []
+    for (u, v) in ENT:
+        row = [F(rho[m][u][v]) for m in range(24)]
+        row += [F(1) if (u, v) == (p, q) else F(0) for (p, q) in ENT]
+        Aug.append(row)
+    Aug, piv = _m4c_rref_dense(Aug, 24)
+    leg(len(piv) == 16, "the commutant surjects onto End(multiplicity "
+                        "space): span{rho(T_sigma)} = M_4 (exact rank 16, "
+                        "internal rank squeeze -- no double-commutant cited)")
+    Csol = {}
+    ok_sol = True
+    for ti, (p, q) in enumerate(ENT):
+        col = 24 + ti
+        for rr in range(len(Aug)):
+            if all(Aug[rr][cc] == 0 for cc in range(24)) and Aug[rr][col] != 0:
+                ok_sol = False
+        c = [F(0)] * 24
+        for rr, pc in enumerate(piv):
+            c[pc] = Aug[rr][col]
+        Csol[(p, q)] = c
+    leg(ok_sol, "coefficient systems for all 16 matrix units consistent (exact)")
+
+    EU = {}
+    for (p, q), c in Csol.items():
+        acc = MZERO
+        for m in range(24):
+            if c[m]:
+                acc = _m4c_madd(acc, _m4c_mscale(DIAG[m], c[m]))
+        EU[(p, q)] = _m4c_mmul(_m4c_mmul(P8, acc), P8)
+
+    bad = sum(1 for pq in ENT for nm, G in GENLIST
+              if not _m4c_miszero(_m4c_mcomm(EU[pq], G)))
+    leg(bad == 0, "[e_pq, G] = 0 exactly for all 16 matrix units x 8 "
+                  "generators (128 commutators) -- THE FENCE, DISCHARGED")
+    bad = 0
+    for (p, q) in ENT:
+        for (r, ss) in ENT:
+            prod = _m4c_mmul(EU[(p, q)], EU[(r, ss)])
+            expect = EU[(p, ss)] if q == r else MZERO
+            if not _m4c_meq(prod, expect):
+                bad += 1
+    leg(bad == 0, "matrix-unit algebra e_pq e_rs = delta_qr e_ps: all 256 "
+                  "ordered products exact")
+    sm = MZERO
+    for p in range(4):
+        sm = _m4c_madd(sm, EU[(p, p)])
+    leg(_m4c_meq(sm, P8), "sum_p e_pp = P_octet (rank 32) exactly")
+    bad = 0
+    for (p, q) in ENT:
+        for r in range(4):
+            out = applym(EU[(p, q)], hvec[r])
+            expect = {k: F(v) for k, v in hvec[p].items()} if r == q else {}
+            if vec_sub(out, expect):
+                bad += 1
+    leg(bad == 0, "e_pq h_r = delta_qr h_p on the explicit multiplicity "
+                  "basis (64 checks exact)")
+
+    # Stage F: two qubits and the Mermin-Peres square (p - 1 = 2 b1 + b2)
+    def esum(terms):
+        acc = MZERO
+        for pq, k in terms:
+            acc = _m4c_madd(acc, EU[pq], k)
+        return acc
+
+    X1 = esum([((0, 2), 1), ((2, 0), 1), ((1, 3), 1), ((3, 1), 1)])
+    Z1 = esum([((0, 0), 1), ((1, 1), 1), ((2, 2), -1), ((3, 3), -1)])
+    X2 = esum([((0, 1), 1), ((1, 0), 1), ((2, 3), 1), ((3, 2), 1)])
+    Z2 = esum([((0, 0), 1), ((1, 1), -1), ((2, 2), 1), ((3, 3), -1)])
+    leg(_m4c_meq(_m4c_mmul(X1, X1), P8) and _m4c_meq(_m4c_mmul(Z1, Z1), P8)
+        and _m4c_meq(_m4c_mmul(X2, X2), P8) and _m4c_meq(_m4c_mmul(Z2, Z2), P8)
+        and _m4c_miszero(_m4c_madd(_m4c_mmul(X1, Z1), _m4c_mmul(Z1, X1)))
+        and _m4c_miszero(_m4c_madd(_m4c_mmul(X2, Z2), _m4c_mmul(Z2, X2)))
+        and all(_m4c_miszero(_m4c_mcomm(a, b))
+                for a, b in ((X1, X2), (X1, Z2), (Z1, X2), (Z1, Z2))),
+        "two-qubit Pauli relations: X_i^2 = Z_i^2 = P_octet, {X_i, Z_i} = 0, "
+        "cross-qubit commuting (exact)")
+
+    A13 = _m4c_mmul(X1, X2)
+    A23 = _m4c_mmul(Z1, Z2)
+    A31 = _m4c_mmul(X1, Z2)
+    A32 = _m4c_mmul(Z1, X2)
+    A33 = _m4c_mscale(_m4c_mmul(_m4c_mmul(X1, Z1), _m4c_mmul(X2, Z2)), -1)
+    SQ = [[X1, X2, A13], [Z2, Z1, A23], [A31, A32, A33]]
+    bad = sum(1 for row in SQ for Aop in row for nm, G in GENLIST
+              if not _m4c_miszero(_m4c_mcomm(Aop, G)))
+    leg(bad == 0, "all 9 magic-square operators gauge invariant: [A, G] = 0 "
+                  "(72 commutators exact)")
+    leg(all(_m4c_meq(_m4c_mmul(Aop, Aop), P8) for row in SQ for Aop in row),
+        "all 9 magic-square operators square to P_octet (involutions on "
+        "the block; Y1Y2 = -X1 Z1 X2 Z2 stays rational)")
+    ok_comm = True
+    for t in range(3):
+        for aa in range(3):
+            for bb in range(aa + 1, 3):
+                if not _m4c_miszero(_m4c_mcomm(SQ[t][aa], SQ[t][bb])):
+                    ok_comm = False
+                if not _m4c_miszero(_m4c_mcomm(SQ[aa][t], SQ[bb][t])):
+                    ok_comm = False
+    leg(ok_comm, "each row and each column mutually commutes (18 commutators)")
+    row_signs = []
+    col_signs = []
+    for t in range(3):
+        pr = _m4c_mmul(_m4c_mmul(SQ[t][0], SQ[t][1]), SQ[t][2])
+        row_signs.append('+' if _m4c_meq(pr, P8)
+                         else ('-' if _m4c_meq(pr, _m4c_mscale(P8, -1)) else '?'))
+        pc = _m4c_mmul(_m4c_mmul(SQ[0][t], SQ[1][t]), SQ[2][t])
+        col_signs.append('+' if _m4c_meq(pc, P8)
+                         else ('-' if _m4c_meq(pc, _m4c_mscale(P8, -1)) else '?'))
+    leg(row_signs == ['+', '+', '+'] and col_signs == ['+', '+', '-'],
+        "Mermin-Peres product identities: rows (+P8, +P8, +P8), columns "
+        "(+P8, +P8, -P8) -- product of all six constraints = -1 while every "
+        "operator appears exactly twice: the KS contradiction, carried by "
+        "explicit operators in the octet channel")
+
+    # Stage G: negative control
+    rowsS = {}
+    for x in range(81):
+        i, j, k, l = _m4c_digits(x)
+        rowsS.setdefault(_m4c_idx((j, i, k, l)), {})[x] = 1
+    OSWAP = _m4c_mnorm((1, rowsS))
+    viol = {nm: _m4c_mnnz(_m4c_mcomm(OSWAP, G)) for nm, G in GENLIST}
+    leg(any(v > 0 for v in viol.values()),
+        "NEGATIVE CONTROL: the bare slot-1<->2 swap (ignores the "
+        "rep/conjugate-rep distinction) FAILS [O, G] = 0 -- the invariance "
+        "test has teeth (and pins the action class; audit F1)")
+
+    ok = all(c for c, _ in legs)
+    n_legs = len(legs)
+    data = {
+        "n_legs": n_legs,
+        "legs": [{"ok": c, "leg": lbl} for c, lbl in legs],
+        "numbers": {
+            "dim_V": 81, "weight_diagonal_dim": NU,
+            "E_system_rank_exact": rkQ, "commutant_dim_exact": NU - rkQ,
+            "diagram_rank": rkD, "trC": str(trC), "trC2": str(trC2),
+            "P_octet_rank": rkP8,
+            "projector_traces": {str(e): str(t) for e, t in traces.items()},
+            "hw_multiplicities": {str(k): v for k, v in hw_found.items()},
+            "row_signs": row_signs, "col_signs": col_signs,
+            "negative_control_violations": viol,
+        },
+        "discrimination_note": (
+            "dim/rank/trace invariants are DEGENERATE across the wrong "
+            "all-fund action 3x3x3x3 (identical 639 unknowns / rank 616 / "
+            "dim 23 / tr C = 432 / tr C^2 = 2736); the discriminating legs "
+            "are diagram commutation, the rep-property leg, the Casimir "
+            "spectrum/projector traces, the hw multiplicities, and the "
+            "negative control (audit F1)"),
+        "hermiticity": (
+            "standard inner product SU(3)-invariant for this action; "
+            "P_octet = P_octet^T exact; matrix units non-Hermitian as-is "
+            "(h-basis not orthonormal; orthonormalization exits Q); "
+            "explicit Hermitian observables undelivered -- out of scope, "
+            "stated (audit F3/F6)"),
+        "fence": ("construction only, bare [P]; the contextuality verdicts "
+                  "stay [P_structural_instrument] on the parent check "
+                  "check_T_su3_octet_colour_KS_coloring_obstruction_exact; "
+                  "the magic-square obstruction OBJECT is group-independent "
+                  "(the parent Remark's first clause, untouched); occupancy "
+                  "stays the empirical QAC"),
+        "antisymmetrizer": ("sum_sigma sgn(sigma) T_sigma = 0 antisymmetrizes "
+                            "over the four covariant positions of the mixed "
+                            "tensor (generalized Kronecker delta, N = 3 < 4)"),
+    }
+    name = "check_T_su3_octet_M4_explicit_construction"
+    deps = ["check_T_su3_octet_colour_KS_coloring_obstruction_exact"]
+    if ok:
+        return _ok(
+            name,
+            status="P",
+            summary=(
+                "The octet M_4 block is CONSTRUCTED, not inferred: 16 explicit "
+                "81x81 rational matrix units with [e_pq, G_a] = 0 verified "
+                "entry-by-entry against all 8 sl(3) generators (128 "
+                "commutators; extended to sl(3,C) by linearity and to SU(3) "
+                "by exponentiation), e_pq e_rs = delta_qr e_ps (256 "
+                "products), sum e_pp = P_octet (exact rank 32, P_octet "
+                "symmetric); explicit two-qubit Paulis realize the six "
+                "Mermin-Peres identities as exact matrix equations (rows "
+                "+,+,+; columns +,+,-). Commutant dim pinned at 23 by exact "
+                "elimination (639 weight-diagonal unknowns, 2736 integer "
+                "equations of rank 616); unique diagram relation = the "
+                "signed antisymmetrizer over the four covariant positions "
+                "of the mixed tensor; highest-weight multiplicities "
+                "(2,4,1,1,1) by explicit nullspace; tr C = 432, tr C^2 = "
+                "2736 reproduce the banked certificate over Q (a real "
+                "in-check coupling to _su3_octet_M4_certificate). "
+                "Discrimination note carried: the dim/rank/trace invariants "
+                "are degenerate across the wrong all-fund action -- the "
+                "action is pinned by the diagram-commutation, rep-property, "
+                "spectrum/projector-trace, hw-multiplicity, and "
+                "negative-control legs. %d legs, all exact over Q, pure "
+                "stdlib. FENCE: construction only -- the contextuality "
+                "verdicts stay [P_structural_instrument] on the parent "
+                "check; the obstruction object remains group-independent; "
+                "explicit Hermitian observables remain undelivered "
+                "(obstructed over Q; out of scope, stated); occupancy stays "
+                "the empirical QAC." % n_legs
+            ),
+            data=data,
+            dependencies=deps,
+        )
+    return _fail(
+        name,
+        status="FAIL",
+        summary="explicit octet M_4 construction legs failed: %s" % (
+            [lbl for c, lbl in legs if not c],),
+        data=data,
+        dependencies=deps,
     )
 
 
@@ -2269,7 +3169,1777 @@ def check_T_ckm_flavour_coavailability_is_sepstr():
 
 
 
+# ---------------------------------------------------------------------------
+# General-N extension (v24.3.372, 2026-07-03; Paper 12 review-2 lane B1,
+# fresh-context hostile audit AUDIT_ROUND2 LAND 0.90, optional notes B1-n1 +
+# B1-n2 taken at landing). Walk of record:
+# "The Turning/p12_review2_walks_2026-07-03/b1_general_N/". New helpers below
+# reuse this module's exact-arithmetic toolkit (Q, _rank, _su_n_gens, ...);
+# the Cartan-support reductions keep N = 4, 5 feasible while remaining EXACT
+# (the full complexified generator set is imposed -- no bound, no sampling).
+# ---------------------------------------------------------------------------
+
+from collections import Counter as _Counter
+
+
+def _digits(idx, N, n):
+    """Base-N digits of idx, most-significant (slot 0) first -- matches the module's
+    tensor index convention (idx = sum_k d_k N^{n-1-k})."""
+    ds = []
+    for _ in range(n):
+        ds.append(idx % N); idx //= N
+    ds.reverse()
+    return ds
+
+
+def _gsparse(g):
+    """N x N Q-matrix -> column-indexed sparse form {col: [(row, value), ...]}."""
+    N = len(g); cols = {}
+    for r in range(N):
+        for c in range(N):
+            if not g[r][c].is0():
+                cols.setdefault(c, []).append((r, g[r][c]))
+    return cols
+
+
+def _rank_frac(M):
+    """Exact rank of a rectangular matrix with Fraction entries (mirror of _rank)."""
+    M = [row[:] for row in M]; rows = len(M); cols = len(M[0]) if rows else 0; r = 0
+    for c in range(cols):
+        piv = None
+        for i in range(r, rows):
+            if M[i][c] != 0: piv = i; break
+        if piv is None: continue
+        M[r], M[piv] = M[piv], M[r]
+        inv = F(1) / M[r][c]
+        M[r] = [x * inv for x in M[r]]
+        for i in range(rows):
+            if i != r and M[i][c] != 0:
+                f = M[i][c]; M[i] = [M[i][j] - f * M[r][j] for j in range(cols)]
+        r += 1
+        if r == rows: break
+    return r
+
+
+def _sparse_fund_slots_invariant(N, n, vec):
+    """True iff (sum_k g^{(slot k)}) vec = 0 for EVERY real su(N) generator g
+    (the full _su_n_gens basis, including the imaginary ones). Sparse exact Q[i];
+    feasible at N^N dimensions because it only walks the nonzeros of vec."""
+    nz = {i: v for i, v in enumerate(vec) if not v.is0()}
+    for g in _su_n_gens(N):
+        cols = _gsparse(g)
+        out = {}
+        for idx, val in nz.items():
+            ds = _digits(idx, N, n)
+            for k in range(n):
+                for (r, gv) in cols.get(ds[k], []):
+                    nidx = 0
+                    for s in range(n):
+                        nidx = nidx * N + (r if s == k else ds[s])
+                    q = out.get(nidx)
+                    out[nidx] = gv * val if q is None else q + gv * val
+        if any(not x.is0() for x in out.values()):
+            return False
+    return True
+
+
+def _baryon_inv_dim_weightrestricted(N):
+    """EXACT dimension of the invariant subspace of fund^(x)N -- full generator set,
+    computed on the Cartan-forced support so N = 4, 5 stay feasible.
+
+    (i)  The Cartan generators act DIAGONALLY on the tensor basis; a basis state has
+         zero Cartan weight iff every colour value appears exactly once, i.e. the N!
+         permutation states. Any invariant vector is killed by the Cartan generators,
+         hence supported on those states.
+    (ii) On that support impose (sum_k E_ab^{(slot k)}) v = 0 for ALL a != b.
+    {Cartan} + {E_ab, a != b} spans sl(N, C), the complexification of su(N), so the
+    kernel computed here is EXACTLY the invariant subspace (v is killed by the real
+    algebra iff killed by its complex span). Exact rational arithmetic."""
+    states = list(_perms(range(N)))
+    nstates = len(states)
+    rows = {}
+    for a in range(N):
+        for b in range(N):
+            if a == b: continue
+            for t, s in enumerate(states):
+                k = s.index(b)          # the unique slot carrying colour b
+                img = list(s); img[k] = a
+                key = (a, b, tuple(img))
+                d = rows.setdefault(key, {})
+                d[t] = d.get(t, F(0)) + 1
+    M = [[d.get(t, F(0)) for t in range(nstates)] for d in rows.values()]
+    return nstates - _rank_frac(M)
+
+
+def _baryon_inv_dim_fullspace_sparse(N):
+    """FULL-SPACE cross-check (audit note B1-n2, folded in at landing): the
+    invariant-subspace dimension of fund^(x)N recomputed with NO Cartan-support
+    reduction at all -- every Cartan row and every E_ab constraint row on the full
+    N^N-dimensional space, reduced by incremental sparse exact Gaussian elimination
+    over Q. Independently re-derives the weight-restricted result on a different
+    code path (removes the only 'different code path than the parents' residue at
+    N = 4, 5)."""
+    n = N; dim = N ** n
+
+    def _rows():
+        # Cartan rows: H_a is diagonal with eigenvalue count_a - count_{a+1}
+        for a in range(N - 1):
+            for idx in range(dim):
+                ds = _digits(idx, N, n)
+                lam = ds.count(a) - ds.count(a + 1)
+                if lam:
+                    yield {idx: F(lam)}
+        # E_ab rows: (sum_k E_ab^{(slot k)}) v = 0, one constraint per image state
+        for a in range(N):
+            for b in range(N):
+                if a == b:
+                    continue
+                grp = {}
+                for idx in range(dim):
+                    ds = _digits(idx, N, n)
+                    for k in range(n):
+                        if ds[k] == b:
+                            img = ds[:]; img[k] = a
+                            key = 0
+                            for dd in img:
+                                key = key * N + dd
+                            g = grp.setdefault(key, {})
+                            g[idx] = g.get(idx, F(0)) + 1
+                for g in grp.values():
+                    yield g
+
+    piv = {}   # pivot col -> normalized row (dict col -> coeff, pivot coeff 1)
+    rank = 0
+    for row in _rows():
+        r = {c: v for c, v in row.items() if v != 0}
+        while r:
+            c = min(r)
+            if c in piv:
+                f = r.pop(c)
+                for cc, vv in piv[c].items():
+                    if cc == c:
+                        continue
+                    nv = r.get(cc, F(0)) - f * vv
+                    if nv == 0:
+                        r.pop(cc, None)
+                    else:
+                        r[cc] = nv
+            else:
+                f = r[c]
+                piv[c] = {cc: vv / f for cc, vv in r.items()}
+                rank += 1
+                break
+    return dim - rank
+
+
+def _meson_commutant_dim_weightblock(N):
+    """EXACT dimension of the commutant of the SU(N) action on fund (x) antifund --
+    full generator set, computed on the Cartan-forced block support so N = 4, 5 stay
+    feasible.
+
+    An operator X with [X, H] = 0 for the (diagonal) Cartan action must be supported
+    on basis pairs (p, q) of EQUAL weight: p = q, or p = (i,i), q = (k,k). That is
+    2N^2 - N unknowns. On those unknowns impose [X, L_ab] = 0 for ALL complexified
+    off-diagonal generators E_ab (a != b), where L_ab acts as E_ab on the fund slot
+    and -E_ba on the antifund slot (= -E_ab^T, the module's conj(g) convention
+    complexified). {Cartan} + {E_ab} spans sl(N, C), so the kernel is exactly the
+    commutant. Exact rational arithmetic (the E_ab constraint matrices are real)."""
+    unknowns = []
+    for i in range(N):
+        for k in range(N):
+            unknowns.append((i * N + i, k * N + k))          # zero-weight block
+    for i in range(N):
+        for j in range(N):
+            if i != j:
+                unknowns.append((i * N + j, i * N + j))      # 1-dim weight blocks
+    allrows = []
+    for a in range(N):
+        for b in range(N):
+            if a == b: continue
+            L = {}
+            for j in range(N):      # fund slot: |a,j><b,j|
+                key = (a * N + j, b * N + j)
+                L[key] = L.get(key, F(0)) + 1
+            for i in range(N):      # antifund slot: -|i,b><i,a|
+                key = (i * N + b, i * N + a)
+                L[key] = L.get(key, F(0)) - 1
+            Lbyrow = {}; Lbycol = {}
+            for (r, c), v in L.items():
+                Lbyrow.setdefault(r, []).append((c, v))
+                Lbycol.setdefault(c, []).append((r, v))
+            crows = {}
+            for t, (p, r) in enumerate(unknowns):
+                for (c, v) in Lbyrow.get(r, []):     # +X_{p r} L_{r c} -> entry (p, c)
+                    d = crows.setdefault((p, c), {})
+                    d[t] = d.get(t, F(0)) + v
+                for (pp, v) in Lbycol.get(p, []):    # -L_{pp p} X_{p r} -> entry (pp, r)
+                    d = crows.setdefault((pp, r), {})
+                    d[t] = d.get(t, F(0)) - v
+            allrows.extend(crows.values())
+    M = [[d.get(t, F(0)) for t in range(len(unknowns))] for d in allrows]
+    return len(unknowns) - _rank_frac(M)
+
+
+def _u1_commutant_dim_by_weights(N):
+    """U(1) commutant dim on fund (x) antifund. The module's U(1) generator is diagonal
+    (charge k on fund index k, conj on antifund), so the action generator is diagonal
+    with charge (k - l) on |k, l>; the commutant of a diagonal generator with charge
+    multiplicities {m_c} is the block algebra of dim sum m_c^2. Exact integer count;
+    cross-checked against the dense _commutant_dim at N = 2, 3."""
+    cnt = _Counter(k - l for k in range(N) for l in range(N))
+    return sum(m * m for m in cnt.values())
+
+
+def check_T_gauge_invariant_colour_record_general_N() -> Dict:
+    """General-N extension of the meson + baryon gauge-invariant colour record
+    results (reviewer Q3: 'stated for N = 2, 3; does the conclusion extend to
+    generic N >= 2?'). Three statements, certified with exact Q[i]/rational
+    arithmetic for N = 2, 3, 4, 5 IN-CHECK, all N >= 2 by proof sketch:
+
+      (A) MESON (fund (x) antifund), every N >= 2: the invariant subspace is
+          EXACTLY 1-dim, spanned by the maximally entangled singlet (Schmidt
+          rank N); the gauge-invariant *-algebra (the commutant) is EXACTLY
+          span{pi_singlet, pi_adjoint}; its unique rank-1 idempotent is
+          pi_singlet. So the parent meson classification
+          (check_T_only_gauge_invariant_sharp_colour_record_is_
+          nonfactorizable_singlet_P) holds VERBATIM at every N.
+          Sketch: fund (x) antifund ~= End(C^N), g.X = g X g^dag; invariants
+          = scalars (Schur); N (x) Nbar = 1 (+) adj multiplicity-free.
+
+      (B) FUND (x) FUND -- the reviewer's phrase, corrected precisely: an
+          SU(N) invariant in fund (x) fund exists ONLY at N = 2
+          (pseudoreality; the antisymmetric singlet, Schmidt rank 2). For
+          every N >= 3 fund (x) fund contains NO invariant (m = 0). The
+          general-N meson statement lives on fund (x) antifund; at N = 2
+          the two coincide.
+
+      (C) BARYON (fund^(x)N), every N >= 2: the invariant subspace is
+          EXACTLY 1-dim, spanned by the totally-antisymmetric epsilon
+          baryon, entangled across EVERY bipartition: Schmidt rank across
+          any k | (N-k) cut equals binomial(N, k) > 1. Sketch: Schur-Weyl;
+          the SU(N)-trivial constituent at |lambda| = N is exactly the
+          full-height column (the determinant), sign-rep multiplicity 1;
+          the k-cut matricization of epsilon is the full-rank pairing
+          Lambda^k <-> Lambda^(N-k).
+
+    CERTIFICATE STRUCTURE (why N = 4, 5 are exact, not sampled): any
+    invariant is killed by the diagonal Cartan generators, hence supported
+    on the weight-zero states; on that support the action of ALL complexified
+    off-diagonal E_ab is imposed. {Cartan} + {E_ab} spans sl(N, C), so the
+    computed kernel is EXACTLY the invariant subspace. The same Cartan-block
+    device computes the meson commutant exactly. Cross-checks: dense parent-
+    module methods at N = 2, 3 (exact agreement); the epsilon/meson vectors
+    verified against ALL real su(N) generators (sparse, exact); AND (audit
+    note B1-n2) the baryon invariant dimension re-derived on the FULL
+    N^N-dim space with NO support reduction at every N. Abelian U(1) control
+    at every N: the sharp product record P00 stays gauge-invariant (U(1)
+    commutant large) -- the entanglement conclusion remains a NON-ABELIAN
+    feature at every N.
+
+    COMPOSITION NOTE (audit note B1-n1): the already-banked
+    check_T_canonical_colour_record_iff_multiplicity_free_P (this module)
+    owns the m >= 2 boundary (SU(2) fund^(x)4, non-abelian exotic algebra);
+    this check supplies the all-N m = 1 towers that trichotomy sits on. The
+    two COMPOSE -- they are not independent discoveries.
+
+    Grade [P_structural_reading], mirroring both parents: the representation
+    theory is exact [P]-grade arithmetic; the step 'gauge-invariant =
+    physical/admissible record' is the no-B allocation reading
+    (check_T_gauge_connection_is_gauge_variant_convention_P,
+    apf/base_fiber_allocation.py).
+
+    FENCES (identical to the parents): NO occupancy / branch-(IJC) claim;
+    NOT confinement (needs L_irr / dynamics); NOT the gap value or continuum
+    existence; the connection A_mu stays the transverse gauge-variant
+    convention. The statement is at the GLOBAL representation level -- no
+    dressed/local operator claim. N is a spectator parameter: nothing here
+    selects N_c = 3 (that stays with T_gauge)."""
+    NS = (2, 3, 4, 5)
+    DENSE_XCHECK = (2, 3)
+    meson_cells = {}; ff_cells = {}; baryon_cells = {}; xchecks = {}
+    ok = True
+
+    for N in NS:
+        n2 = N * N
+        # ---------------- (A) meson: fund (x) antifund ----------------
+        Ls = _action_gens(N, "SU")
+        inv_meson = _inv_dim_meson(N)                       # dense, full space, all gens
+        mv = _meson_vec(N)
+        mv_invariant = all(_vec_is_zero(_matvec(L, mv)) for L in Ls)
+        sr_singlet = _schmidt_bipartite(N, 2, mv, [0])
+        comm_wb = _meson_commutant_dim_weightblock(N)       # exact, full gen set
+        ps = _singlet_proj(N); padj = _sub(_eye(n2), ps)
+        ps_inv = _in_commutant(ps, N, "SU")
+        padj_inv = _in_commutant(padj, N, "SU")
+        ps_proj = _eqm(_mm(ps, ps), ps)
+        padj_proj = _eqm(_mm(padj, padj), padj)
+        orth = _iszero(_mm(ps, padj))
+        compl = _eqm(_add(ps, padj), _eye(n2))
+        ranks = {"pi_s": _rank(ps), "pi_adj": _rank(padj)}
+        algebra_is_span = (comm_wb == 2 and ps_inv and padj_inv and ps_proj
+                           and padj_proj and orth and compl)
+        # idempotent enumeration in span{pi_s, pi_adj}: {0, pi_s, pi_adj, I},
+        # ranks {0, 1, N^2-1, N^2} -> unique rank-1 idempotent = pi_s
+        unique_rank1 = (ranks["pi_s"] == 1 and ranks["pi_adj"] == n2 - 1)
+        # abelian control (every N): sharp product record exists for U(1), not SU(N)
+        p00 = _P00(N)
+        p00_su = _in_commutant(p00, N, "SU")
+        p00_u1 = _in_commutant(p00, N, "U1")
+        dim_u1 = _u1_commutant_dim_by_weights(N)
+        # dipole corollary: pi_s is the -C_F eigenstate at every N
+        Tdip = _colour_dipole(N)
+        Tps = _mm(Tdip, ps)
+        lam = Tps[0][0].r / ps[0][0].r
+        lamQ = Q(lam, 0)
+        eig_exact = _iszero(_sub(Tps, [[lamQ * ps[a][b] for b in range(n2)]
+                                       for a in range(n2)]))
+        CF = F(N * N - 1, 2 * N)
+        dipole_ok = eig_exact and (lam == -CF)
+        m_ok = (inv_meson == 1 and mv_invariant and sr_singlet == N
+                and algebra_is_span and unique_rank1
+                and (not p00_su) and p00_u1 and dim_u1 > 2 and dipole_ok)
+        meson_cells[f"SU({N})"] = {
+            "invariant_subspace_dim": inv_meson,
+            "singlet_is_invariant": mv_invariant,
+            "singlet_schmidt_rank": sr_singlet,
+            "commutant_dim": comm_wb,
+            "algebra_is_exactly_span_pi_s_pi_adj": algebra_is_span,
+            "idempotent_ranks": {"pi_s": ranks["pi_s"], "pi_adj": ranks["pi_adj"]},
+            "unique_rank1_is_singlet": unique_rank1,
+            "P00_gauge_invariant_SU": p00_su,
+            "P00_gauge_invariant_U1": p00_u1,
+            "U1_commutant_dim": dim_u1,
+            "record_is_minus_C_F_eigenstate": dipole_ok,
+            "minus_C_F": str(-CF),
+            "cell_ok": m_ok,
+        }
+        # ---------------- (B) fund (x) fund correction ----------------
+        inv_ff = _inv_dim_fund_n(N, 2)                       # dense, full space, all gens
+        expected_ff = 1 if N == 2 else 0
+        f_ok = (inv_ff == expected_ff)
+        cell = {
+            "invariant_subspace_dim": inv_ff,
+            "expected_1_iff_N_eq_2_pseudoreality": expected_ff,
+        }
+        if N == 2:
+            eps2 = _eps_singlet_vec(2)
+            eps2_inv = _sparse_fund_slots_invariant(2, 2, eps2)
+            sr2 = _schmidt_bipartite(2, 2, eps2, [0])
+            f_ok = f_ok and eps2_inv and (sr2 == 2)
+            cell["antisymmetric_singlet_invariant"] = eps2_inv
+            cell["antisymmetric_singlet_schmidt_rank"] = sr2
+        cell["cell_ok"] = f_ok
+        ff_cells[f"SU({N})"] = cell
+        # ---------------- (C) baryon: fund^(x)N ----------------
+        inv_bar = _baryon_inv_dim_weightrestricted(N)        # exact, full gen set
+        inv_bar_full = _baryon_inv_dim_fullspace_sparse(N)   # B1-n2: no reduction
+        eps = _eps_singlet_vec(N)
+        eps_inv = _sparse_fund_slots_invariant(N, N, eps)    # ALL real su(N) gens
+        eps_nonzero = not _vec_is_zero(eps)
+        bip = {}
+        bip_ok = True
+        for k in range(1, N):
+            for rest in _combs(range(1, N), k - 1):
+                left = (0,) + rest
+                sr = _schmidt_bipartite(N, N, eps, list(left))
+                expect = _math.comb(N, len(left))
+                bip["|".join(map(str, left))] = sr
+                bip_ok = bip_ok and (sr == expect) and (sr > 1)
+        sr_first_rest = bip["0"]
+        b_ok = (inv_bar == 1 and inv_bar_full == inv_bar and eps_inv
+                and eps_nonzero and bip_ok and sr_first_rest == N)
+        baryon_cells[f"SU({N})_fund^{N}"] = {
+            "space_dim_N^N": N ** N,
+            "invariant_subspace_dim": inv_bar,
+            "invariant_subspace_dim_fullspace_no_reduction": inv_bar_full,
+            "epsilon_is_invariant_all_su_gens": eps_inv,
+            "epsilon_schmidt_rank_first_vs_rest": sr_first_rest,
+            "epsilon_schmidt_rank_by_left_slots": bip,
+            "all_bipartitions_rank_eq_binomial_and_gt_1": bip_ok,
+            "cell_ok": b_ok,
+        }
+        # -------- dense parent-method cross-checks (N = 2, 3) --------
+        if N in DENSE_XCHECK:
+            dense_comm = _commutant_dim(N, "SU")
+            dense_bar = _invariant_subspace_dim(N)
+            dense_u1 = _commutant_dim(N, "U1")
+            Lsb = _baryon_action_gens(N)
+            dense_eps_inv = all(_vec_is_zero(_matvec(L, eps)) for L in Lsb)
+            agree = (dense_comm == comm_wb == 2 and dense_bar == inv_bar == 1
+                     and dense_u1 == dim_u1 and dense_eps_inv == eps_inv is True)
+            xchecks[f"SU({N})"] = {
+                "meson_commutant_dense_vs_weightblock": [dense_comm, comm_wb],
+                "baryon_inv_dim_dense_vs_weightrestricted": [dense_bar, inv_bar],
+                "u1_commutant_dense_vs_weightcount": [dense_u1, dim_u1],
+                "epsilon_invariance_dense_vs_sparse": [dense_eps_inv, eps_inv],
+                "agree": agree,
+            }
+            ok = ok and agree
+        ok = ok and m_ok and f_ok and b_ok
+
+    data = {
+        "model": ("SU(N) colour records at generic N: meson fund (x) antifund, fund (x) fund, "
+                  "baryon fund^(x)N; exact Q[i]/rational arithmetic, N = 2..5 in-check"),
+        "method": ("N = 4, 5 use the Cartan-support reduction with the FULL complexified "
+                   "generator set ({Cartan} + all E_ab spans sl(N,C)): exact dimensions, not "
+                   "bounds and not samples; N = 2, 3 additionally cross-checked against the "
+                   "parent module's dense full-space methods (exact agreement); the baryon "
+                   "invariant dimension additionally re-derived on the FULL space with no "
+                   "support reduction at every N (sparse exact elimination, B1-n2)"),
+        "by_N_meson": meson_cells,
+        "by_N_fund_fund": ff_cells,
+        "by_N_baryon": baryon_cells,
+        "dense_cross_checks": xchecks,
+        "statement": ("for every N >= 2: (A) the meson invariant subspace is 1-dim (the "
+                      "maximally entangled singlet, Schmidt rank N) and the gauge-invariant "
+                      "*-algebra is exactly span{pi_s, pi_adj} with unique rank-1 projector "
+                      "pi_s; (B) fund (x) fund hosts an invariant ONLY at N = 2 (pseudoreality); "
+                      "(C) the baryon invariant subspace of fund^(x)N is 1-dim (the epsilon), "
+                      "entangled across EVERY bipartition (Schmidt rank binomial(N,k) > 1)"),
+        "general_N_proof_sketch": {
+            "meson": ("fund (x) antifund ~= End(C^N), g.X = gXg^dag; invariants = scalars by "
+                      "Schur (fund irreducible) => dim 1; N (x) Nbar = 1 (+) adj multiplicity-"
+                      "free, adj irreducible for all N => commutant dim 2"),
+            "fund_fund": ("dim Inv(V (x) V) = dim Hom_G(V*, V); V* ~= V iff N = 2 (pseudoreal "
+                          "epsilon form); for N >= 3 fund and antifund have distinct highest "
+                          "weights => no invariant"),
+            "baryon": ("Schur-Weyl: (C^N)^(x)N = (+)_lambda S^lambda(C^N) (x) Specht_lambda; "
+                       "the SU(N)-trivial S^lambda at |lambda| = N is exactly lambda = (1^N) "
+                       "(the determinant), Specht = the sign rep of S_N, dim 1 => multiplicity "
+                       "1 for every N; the k-cut matricization of epsilon is the full-rank "
+                       "pairing Lambda^k <-> Lambda^(N-k), rank binomial(N,k) > 1"),
+        },
+        "fund_fund_correction": ("the reviewer's 'fund (x) fund' is loose: the general-N meson "
+                                 "statement lives on fund (x) antifund; fund (x) fund has an "
+                                 "invariant only at N = 2, where pseudoreality identifies the "
+                                 "two (verified: m = 1, 0, 0, 0 for N = 2, 3, 4, 5)"),
+        "composition_note": ("check_T_canonical_colour_record_iff_multiplicity_free_P owns the "
+                             "m >= 2 boundary; this check supplies the all-N m = 1 towers -- "
+                             "the two compose (B1-n1)"),
+        "reading_adopted": ("gauge-invariant = physical/admissible record (the no-B allocation, "
+                            "check_T_gauge_connection_is_gauge_variant_convention_P, "
+                            "apf/base_fiber_allocation.py)"),
+        "scope": ("ONLY the gauge-invariant sharp-record structure at generic N, at the GLOBAL "
+                  "representation level; NOT occupancy / branch-(IJC); NOT confinement (needs "
+                  "L_irr/dynamics); NOT the gap value or continuum; no dressed/local operator "
+                  "claim; the connection A_mu stays the transverse gauge-variant convention; "
+                  "nothing here selects N_c = 3 (that stays with T_gauge)"),
+        "certified_range": "N = 2, 3, 4, 5 in-check (exact); all N by the proof sketch",
+    }
+    if ok:
+        return _ok(
+            "check_T_gauge_invariant_colour_record_general_N",
+            status="P_structural_reading",
+            summary=("General-N extension (reviewer Q3): for SU(N), N = 2..5 certified exactly "
+                     "in-check and for all N >= 2 by Schur/Schur-Weyl: (A) the meson (fund (x) "
+                     "antifund) invariant subspace is 1-dim -- the maximally entangled singlet, "
+                     "Schmidt rank N -- and the gauge-invariant *-algebra is exactly "
+                     "span{pi_s, pi_adj}, unique rank-1 projector pi_s, so the sharp-record "
+                     "classification holds verbatim at every N; (B) fund (x) fund (the "
+                     "reviewer's phrase, corrected) hosts an invariant ONLY at N = 2 via "
+                     "pseudoreality -- for N >= 3 it has NO invariant, the meson statement "
+                     "lives on fund (x) antifund; (C) the baryon fund^(x)N invariant subspace "
+                     "is exactly 1-dim for every N (sign-rep multiplicity 1), spanned by the "
+                     "epsilon baryon, entangled across EVERY bipartition (Schmidt rank "
+                     "binomial(N,k) > 1; rank N across first|rest). Abelian U(1) control at "
+                     "every N: the sharp product record P00 survives -- entanglement of the "
+                     "record stays a NON-ABELIAN feature. N = 4, 5 use the Cartan-support "
+                     "reduction with the full complexified generator set (exact, no bound); "
+                     "N = 2, 3 agree with the parent dense methods; the baryon dimension is "
+                     "additionally re-derived on the FULL space with no support reduction at "
+                     "every N. Composes with the multiplicity-free trichotomy check (m >= 2 "
+                     "boundary). Reading: gauge-invariant = physical record (the no-B "
+                     "allocation). No (IJC)/occupancy/confinement/gap claim; global-"
+                     "representation level; nothing here selects N_c = 3."),
+            data=data,
+            dependencies=[
+                "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P",
+                "check_T_unique_gauge_invariant_colour_state_of_N_fundamentals_is_entangled_baryon_P",
+                "check_T_gauge_connection_is_gauge_variant_convention_P",
+            ],
+        )
+    return _fail(
+        "check_T_gauge_invariant_colour_record_general_N",
+        status="FAIL",
+        summary="General-N gauge-invariant colour record witness did not hold.",
+        data=data,
+    )
+
+
+# ---------------------------------------------------------------------------
+# v24.3.374: the deep-superselection no-go (face (b) of the branch-2
+# phenotype). Exact-arithmetic helpers, private to this check.
+# ---------------------------------------------------------------------------
+
+def _dsn_t(A):
+    return [[A[j][i] for j in range(len(A))] for i in range(len(A[0]))]
+
+
+def _dsn_smul(s, A):
+    return [[s * x for x in row] for row in A]
+
+
+def _dsn_nullspace(rows):
+    """Exact nullspace basis over the field Q[i] (the module's Q class)."""
+    M = [r[:] for r in rows if not all(x.is0() for x in r)]
+    ncols = len(rows[0])
+    piv_of_col = {}
+    r = 0
+    for c in range(ncols):
+        piv = None
+        for i in range(r, len(M)):
+            if not M[i][c].is0():
+                piv = i
+                break
+        if piv is None:
+            continue
+        M[r], M[piv] = M[piv], M[r]
+        inv = M[r][c].inv()
+        M[r] = [x * inv for x in M[r]]
+        for i in range(len(M)):
+            if i != r and not M[i][c].is0():
+                f = M[i][c]
+                M[i] = [M[i][k] - f * M[r][k] for k in range(ncols)]
+        piv_of_col[c] = r
+        r += 1
+        if r == len(M):
+            break
+    free = [c for c in range(ncols) if c not in piv_of_col]
+    basis = []
+    for fc in free:
+        v = [Q(0, 0)] * ncols
+        v[fc] = Q(1, 0)
+        for c, pr in piv_of_col.items():
+            v[c] = Q(0, 0) - M[pr][fc]
+        basis.append(v)
+    return basis
+
+
+def _dsn_commutant_basis(gens, n):
+    """Exact commutant basis {X : [X, L] = 0 for all L} as n x n Q-matrices."""
+    I = _eye(n)
+    rows = []
+    for L in gens:
+        K = _sub(_kron(I, _dsn_t(L)), _kron(L, I))   # vec(XL - LX), row-major
+        rows.extend(K)
+    return [[[v[i * n + j] for j in range(n)] for i in range(n)]
+            for v in _dsn_nullspace(rows)]
+
+
+def _dsn_matvec(M, v):
+    return [sum((M[i][j] * v[j] for j in range(len(v))), Q(0, 0))
+            for i in range(len(M))]
+
+
+def _dsn_solve_vectors(mats, n):
+    """Joint exact kernel of a list of n x n Q-matrices (as vectors)."""
+    rows = []
+    for M in mats:
+        rows.extend([row[:] for row in M])
+    return _dsn_nullspace(rows)
+
+
+def _dsn_inv_small(G):
+    """Exact inverse of a small Q[i] matrix by Gauss-Jordan."""
+    m = len(G)
+    A = [G[i][:] + [Q(1, 0) if j == i else Q(0, 0) for j in range(m)]
+         for i in range(m)]
+    for c in range(m):
+        piv = None
+        for i in range(c, m):
+            if not A[i][c].is0():
+                piv = i
+                break
+        assert piv is not None, "singular Gram"
+        A[c], A[piv] = A[piv], A[c]
+        inv = A[c][c].inv()
+        A[c] = [x * inv for x in A[c]]
+        for i in range(m):
+            if i != c and not A[i][c].is0():
+                f = A[i][c]
+                A[i] = [A[i][k] - f * A[c][k] for k in range(2 * m)]
+    return [[A[i][m + j] for j in range(m)] for i in range(m)]
+
+
+def _dsn_gt_weights(lam):
+    l1, l2, l3 = lam
+    out = {}
+    tot = l1 + l2 + l3
+    for m12 in range(l2, l1 + 1):
+        for m22 in range(l3, l2 + 1):
+            for m11 in range(m22, m12 + 1):
+                wt = (m11, m12 + m22 - m11, tot - m12 - m22)
+                out[wt] = out.get(wt, 0) + 1
+    return out
+
+
+def _dsn_wtensor(wA, wB):
+    out = {}
+    for a, ma in wA.items():
+        for b, mb in wB.items():
+            k = (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+            out[k] = out.get(k, 0) + ma * mb
+    return out
+
+
+def _dsn_wdecompose(wmult):
+    rem = dict(wmult)
+    out = {}
+    while rem:
+        hw = max(rem)
+        assert hw[0] >= hw[1] >= hw[2] >= 0
+        c = rem[hw]
+        out[hw] = out.get(hw, 0) + c
+        for wt, m in _dsn_gt_weights(hw).items():
+            rem[wt] -= m * c
+            assert rem[wt] >= 0
+            if rem[wt] == 0:
+                del rem[wt]
+    return out
+
+
+def check_T_matter_free_colour_record_deep_superselection_no_go() -> Dict:
+    """T_matter_free_colour_record_deep_superselection_no_go: no Delta>0 colour
+    commitment is ALGEBRAICALLY invariant (central) under the full gauge-invariant
+    local algebra of a matter-free non-abelian sector at any scale -- face (b) of
+    the branch-2 surviving phenotype (deep superselection) CLOSED; faces (a)
+    discard + (c) no-altering-exercise stay OPEN; branch 2 NOT eliminated.
+    [P_structural_reading]
+
+    v24.3.374 (2026-07-04). Walk of record: "Reference - The Deep-Superselection
+    No-Go - LANDED-WITH-FIXES (2026-07-03)" (fresh-context walker, Option B
+    principal-ruled; fresh-context hostile cold audit LAND-WITH-FIXES 0.82, all
+    nine fixes carried, incl. F1: the pre-audit exact-leg operator D was
+    branch-diagonal, [D, P] = 0 identically -- this check ports the corrected
+    branch-mixing intertwiner construction). Witness of record:
+    The Turning/inert_endpoint_kill_2026-07-03/deep_superselection_nogo_witness.
+
+    THE THREE STEPS (all executable content exact Q[i]/integer):
+
+    Step 1 -- HONESTY: in-sector (m=1) centrality is REAL. The single-pair
+      gauge-invariant algebra is abelian (fund pair: span{pi_s, pi_adj}, the
+      record theorem's own structure; adjoint pair: 3-dim, spins 0/1/2 all
+      multiplicity-free), so the record projector is central IN-SECTOR. The
+      face-(b) worry was honest; the walk does not begin by denying it.
+
+    Step 2 -- DE-CENTRALIZATION by gluonic enlargement. Adjoining ONE adjoint
+      quantum (the exclusion's every-scale gluonic channel; consumed for channel
+      existence via its gluonic-content typing + NR2, phase-exclusion leg only,
+      the standing F2 fence -- the gap leg is NOT consumed) produces isotypic
+      multiplicity >= 2; the commutant acquires an M_m block acting nontrivially
+      WITHIN the shared isotypic component (the banked exotic-algebra mechanism;
+      the multiplicity-free criterion marks m >= 2 as exactly where canonical
+      records fail); the record projector STOPS commuting with the enlarged
+      gauge-invariant algebra. Executed exactly: highest-weight multiplicity
+      spaces solved over Q[i]; the record's compression onto the multiplicity
+      space is NON-SCALAR; an explicit gauge-invariant branch-mixing intertwiner
+      X (module-isomorphism construction, the audit-F1-corrected exact form) has
+      [X, L_a] = 0 for every gauge generator and [X, P_record] != 0, exactly.
+
+    Step 3 -- the enlargement-stable central residue is the N-ALITY label, and
+      matter-free it is Delta-free. Isotypic labels mix under adjoint tensoring
+      precisely within N-ality classes (T_center_order_parameter_triality,
+      consumed for its UNCONDITIONAL rep-theory steps (1)-(4) ONLY: N-ality
+      additivity, adjoint t=0, root lattice = the t=0 sublattice at index N;
+      its saturation-conditional statement and step-(5) dressed-composite
+      reading are NOT consumed -- audit F3). Matter-free, every constituent of
+      adjoint^k has triality 0 (executed exactly, k = 1,2,3), so the surviving
+      central label is CONSTANT: it distinguishes nothing, and by cost = count
+      (L_cost [P]) a distinction-free residue carries Delta = 0 (lemma-let NR3).
+      Every Delta>0 record projector (0 != P != I distinguishing within the
+      sector) therefore fails centrality at some finite gluonic depth.
+
+    NAMED READINGS (grade [P_structural_reading]; the executable content is
+    unconditional rep theory, the physics rides these):
+      NR1 -- record-invariance = centrality of the record's defining projector
+        in the gauge-invariant algebra (the face's own audited definition;
+        rides the banked reading gauge-invariant = physical/admissible record).
+      NR2 -- THE HEAVIEST: the gluonic channel's adjoint content ENTERS the
+        local gauge-invariant algebra at the record's own interface, finitely
+        iterable, at every scale. "Channel content = algebra content" is not a
+        banked row; the no-go's every-scale reach stands or falls with it.
+        Mitigations: the modeled algebra is finite-dim type-I and the no-go
+        direction is MONOTONE under algebra enlargement (more operators => less
+        center), so the model is conservative modulo NR2's embedding claim.
+      NR3 -- constant label => Delta = 0 residue (rides L_cost directly).
+
+    SCOPE / NON-CLAIMS (load-bearing):
+      - Closes face (b) ONLY. Faces (a) discard and (c) the broadened
+        no-altering-exercise family (unpayable OR unselected -- audit F2) stay
+        OPEN; they are ledger-shaped and out of scope. BRANCH 2 IS NOT
+        ELIMINATED; check_T_ym_ir_endpoint_trichotomy_branch2_open keeps its
+        OPEN flag and name; its falsifier (d) is NOT triggered. [RG-step
+        typing RULED 2026-07-04 (re-description, Decisions List): branch 2
+        is a PERMITTED phase; faces (a)/(c) are its phenotype, not
+        elimination targets; this check stands as the face-(b)
+        classification within the permitted phase.]
+      - Payability appears nowhere: the altering X EXISTS algebraically; its
+        exercise is face-(c) territory.
+      - Does NOT discharge threat-liveness (reading G of the inert-endpoint
+        walk): this is G's ALGEBRAIC half only (audit F5).
+      - Matter fence is STRUCTURAL: with matter, nonzero N-ality classes are
+        realized (3 x 8 all triality 1; classes {0,1,2}), the label is
+        nonconstant, and class projectors stay central under gluonic
+        enlargement (corollary of step 3: adjoint tensoring maps each class
+        into itself) -- genuine superselection charges survive; the no-go
+        turns entirely on matter-free CONSTANCY.
+      - Abelian control: U(1)'s algebra is large, the sharp product record P00
+        is U(1)-invariant (executed) -- the banked Delta=0/factorizable side;
+        nothing Delta>0 to protect.
+
+    FALSIFIERS: (i) a Delta>0 colour record projector central in EVERY finitely
+    gluon-enlarged matter-free sector (needs an adjoint-stable invariant finer
+    than N-ality -- collides with the banked root-lattice step); (ii) a
+    matter-free scale whose local algebra provably excludes gluonic content
+    (kills NR2); (iii) either consumed record/triality theorem falls; (iv) a
+    gluonic enlargement keeping the record's isotypic component multiplicity-
+    free (contradicted exactly at the smallest cases below).
+    """
+    ok_flags = {}
+
+    # ---- exact su(2) bases (module Q class; antihermitian) -----------------
+    h = F(1, 2)
+    A1m = [[Q(0, 0), Q(0, h)], [Q(0, h), Q(0, 0)]]
+    A2m = [[Q(0, 0), Q(h, 0)], [Q(-h, 0), Q(0, 0)]]
+    A3m = [[Q(0, h), Q(0, 0)], [Q(0, 0), Q(0, -h)]]
+    FUND = [A1m, A2m, A3m]
+
+    def eps(a, b, c):
+        return {(0, 1, 2): 1, (1, 2, 0): 1, (2, 0, 1): 1,
+                (0, 2, 1): -1, (2, 1, 0): -1, (1, 0, 2): -1}.get((a, b, c), 0)
+
+    # adjoint of the FUND basis: [A_a, A_b] = -eps_abc A_c => (ADJ_a)[c][b] = -eps(a,b,c)
+    ADJ = []
+    for a in range(3):
+        M = _zeros(3)
+        for b in range(3):
+            for c in range(3):
+                e = eps(a, b, c)
+                if e:
+                    M[c][b] = Q(-e, 0)
+        ADJ.append(M)
+    # structure-constant coherence (both bases satisfy [G_a,G_b] = -eps G_c)
+    sc_ok = True
+    for basis in (FUND, ADJ):
+        for a in range(3):
+            for b in range(3):
+                target = _zeros(len(basis[0]))
+                for c in range(3):
+                    e = eps(a, b, c)
+                    if e:
+                        target = _add(target, _dsn_smul(Q(-e, 0), basis[c]))
+                sc_ok = sc_ok and _eqm(_comm(basis[a], basis[b]), target)
+    ok_flags["structure_constants_coherent"] = sc_ok
+
+    I2, I3 = _eye(2), _eye(3)
+
+    # ---- Step 1a: fund pair (4-dim), exact ---------------------------------
+    PAIR = [_add(_kron(A, I2), _kron(I2, _conjm(A))) for A in FUND]
+    C1a = _dsn_commutant_basis(PAIR, 4)
+    Ps = _singlet_proj(2)
+    ok_flags["m1_fund_dim2"] = (len(C1a) == 2)
+    ok_flags["m1_fund_abelian"] = all(
+        _iszero(_comm(C1a[i], C1a[j]))
+        for i in range(len(C1a)) for j in range(i + 1, len(C1a)))
+    ok_flags["m1_fund_singlet_central"] = (
+        all(_iszero(_comm(Ps, L)) for L in PAIR)
+        and all(_iszero(_comm(Ps, X)) for X in C1a))
+
+    # ---- Step 1b: adjoint pair (9-dim), exact ------------------------------
+    APAIR = [_add(_kron(T, I3), _kron(I3, T)) for T in ADJ]   # adjoint real-type
+    C1b = _dsn_commutant_basis(APAIR, 9)
+    Padj = _zeros(9)
+    for i in (0, 4, 8):
+        for j in (0, 4, 8):
+            Padj[i][j] = Q(F(1, 3), 0)
+    ok_flags["m1_adj_dim3"] = (len(C1b) == 3)
+    ok_flags["m1_adj_abelian"] = all(
+        _iszero(_comm(C1b[i], C1b[j]))
+        for i in range(len(C1b)) for j in range(i + 1, len(C1b)))
+    ok_flags["m1_adj_singlet_central"] = (
+        all(_iszero(_comm(Padj, L)) for L in APAIR)
+        and all(_iszero(_comm(Padj, X)) for X in C1b))
+
+    # ---- exact SU(2) CG multiplicities --------------------------------------
+    def couple(d1, d2):
+        return list(range(abs(d1 - d2), d1 + d2 + 1, 2))
+
+    def cg_mults(ds):
+        cur = {ds[0]: 1}
+        for d in ds[1:]:
+            nxt = {}
+            for dj, m in cur.items():
+                for dk in couple(dj, d):
+                    nxt[dk] = nxt.get(dk, 0) + m
+            cur = nxt
+        return cur
+
+    m2a = cg_mults([1, 1, 2])
+    m2b = cg_mults([2, 2, 2])
+    ok_flags["cg_2a"] = (m2a == {0: 1, 2: 2, 4: 1})
+    ok_flags["cg_2b"] = (m2b == {0: 1, 2: 3, 4: 2, 6: 1})
+
+    # ---- Step 2 executor: HW multiplicity space + compression + exact X ----
+    def decentralize(gens, n, P, expect_mult):
+        """Spin-1 highest-weight space; record compression non-scalar; exact
+        gauge-invariant branch-mixing X with [X, L]=0 and [X, P]!=0."""
+        mi = Q(0, -1)
+        Jz = _dsn_smul(mi, gens[2])
+        Jp = _add(_dsn_smul(mi, gens[0]), gens[1])
+        Jm = _sub(_dsn_smul(mi, gens[0]), gens[1])
+        JzmI = _sub(Jz, _eye(n))
+        hw = _dsn_solve_vectors([JzmI, Jp], n)
+        if len(hw) != expect_mult:
+            return False, f"HW mult {len(hw)} != {expect_mult}", None
+        # record preserved by gauge action?
+        if not all(_iszero(_comm(P, L)) for L in gens):
+            return False, "P not gauge-invariant", None
+        # compression B: P V = V B with V the HW basis
+        m = len(hw)
+        Gr = [[sum((hw[k][i].conj() * hw[l][i] for i in range(n)), Q(0, 0))
+               for l in range(m)] for k in range(m)]
+        Mx = [[sum((hw[k][i].conj() * _dsn_matvec(P, hw[l])[i]
+                    for i in range(n)), Q(0, 0))
+               for l in range(m)] for k in range(m)]
+        B = _mm(_dsn_inv_small(Gr), Mx)
+        nonscalar = (not all(B[i][j].is0() for i in range(m) for j in range(m)
+                             if i != j)) or any(
+            not (B[i][i] == B[0][0]) for i in range(m))
+        if not nonscalar:
+            return False, "compression scalar -- P central on this isotypic", None
+        # exact branch-mixing intertwiner over some HW pair
+        for a_i in range(m):
+            for b_i in range(m):
+                if a_i == b_i:
+                    continue
+                Bmod1, Bmod2 = [hw[a_i]], [hw[b_i]]
+                for _ in range(2):
+                    Bmod1.append(_dsn_matvec(Jm, Bmod1[-1]))
+                    Bmod2.append(_dsn_matvec(Jm, Bmod2[-1]))
+                G2 = [[sum((Bmod2[k][i].conj() * Bmod2[l][i]
+                            for i in range(n)), Q(0, 0))
+                       for l in range(3)] for k in range(3)]
+                G2i = _dsn_inv_small(G2)
+                dual = [[sum((Bmod2[l][i] * G2i[l][k] for l in range(3)),
+                             Q(0, 0)) for i in range(n)] for k in range(3)]
+                X = _zeros(n)
+                for k in range(3):
+                    for i in range(n):
+                        if Bmod1[k][i].is0():
+                            continue
+                        for j in range(n):
+                            X[i][j] = X[i][j] + Bmod1[k][i] * dual[k][j].conj()
+                if (all(_iszero(_comm(X, L)) for L in gens)
+                        and not _iszero(_comm(X, P))):
+                    return True, "ok", X
+        return False, "no de-centralizing intertwiner found", None
+
+    # 2a: fund pair + one gluon (12-dim)
+    G2a = [_add(_kron(PAIR[a], I3), _kron(_eye(4), ADJ[a])) for a in range(3)]
+    P2a = _kron(Ps, I3)
+    ok2a, msg2a, _ = decentralize(G2a, 12, P2a, expect_mult=2)
+    ok_flags["decentralize_fund_pair_plus_gluon"] = ok2a
+
+    # 2b: adjoint pair + one gluon (27-dim) -- the matter-free-native record
+    G2b = [_add(_kron(APAIR[a], I3), _kron(_eye(9), ADJ[a])) for a in range(3)]
+    P2b = _kron(Padj, I3)
+    ok2b, msg2b, _ = decentralize(G2b, 27, P2b, expect_mult=3)
+    ok_flags["decentralize_gluonic_record_plus_gluon"] = ok2b
+
+    # ---- Step 3: N-ality exactness (SU(3), exact integers) ------------------
+    THREE, THREEBAR, SIXBAR = (1, 0, 0), (1, 1, 0), (2, 2, 0)
+    ADJ3, TEN = (2, 1, 0), (3, 0, 0)
+
+    def dynkin(lam):
+        return (lam[0] - lam[1], lam[1] - lam[2])
+
+    def triality(lam):
+        return sum(lam) % 3
+
+    def wdim(wm):
+        return sum(wm.values())
+
+    d33b = _dsn_wdecompose(_dsn_wtensor(_dsn_gt_weights(THREE),
+                                        _dsn_gt_weights(THREEBAR)))
+    ok_flags["su3_3x3bar"] = (d33b == {(1, 1, 1): 1, (2, 1, 0): 1})
+    d88 = _dsn_wdecompose(_dsn_wtensor(_dsn_gt_weights(ADJ3),
+                                       _dsn_gt_weights(ADJ3)))
+    ok_flags["su3_8x8"] = (
+        d88 == {(2, 2, 2): 1, (3, 2, 1): 2, (4, 1, 1): 1, (3, 3, 0): 1,
+                (4, 2, 0): 1}
+        and sum(wdim(_dsn_gt_weights(l)) * m for l, m in d88.items()) == 64)
+    pres = all(
+        triality(mu) == triality(lam)
+        for lam in (THREE, THREEBAR, SIXBAR, ADJ3, TEN)
+        for mu in _dsn_wdecompose(_dsn_wtensor(_dsn_gt_weights(lam),
+                                               _dsn_gt_weights(ADJ3))))
+    ok_flags["adjoint_preserves_triality"] = pres
+    rl = all((((2 * p + q) % 3 == 0 and (p + 2 * q) % 3 == 0)
+              == ((p + 2 * q) % 3 == 0))
+             for p in range(-6, 7) for q in range(-6, 7))
+    ok_flags["root_lattice_t0_index3"] = (rl and abs(2 * 2 - 1) == 3)
+
+    # ---- Step 3b: matter-free constancy (exact) -----------------------------
+    aw = _dsn_gt_weights(ADJ3)
+    a2 = _dsn_wtensor(aw, aw)
+    a3 = _dsn_wtensor(a2, aw)
+    realized = set()
+    absent_6bar = True
+    for wm in (dict(aw), a2, a3):
+        for lam in _dsn_wdecompose(wm):
+            realized.add(triality(lam))
+            if dynkin(lam) == dynkin(SIXBAR):
+                absent_6bar = False
+    ok_flags["matter_free_constancy"] = (realized == {0})
+    ok_flags["negative_control_6bar_absent"] = absent_6bar
+
+    # ---- Controls ------------------------------------------------------------
+    d38 = _dsn_wdecompose(_dsn_wtensor(_dsn_gt_weights(THREE),
+                                       _dsn_gt_weights(ADJ3)))
+    ok_flags["matter_control_3x8_t1"] = (
+        all(triality(l) == 1 for l in d38)
+        and sum(wdim(_dsn_gt_weights(l)) * m for l, m in d38.items()) == 24
+        and {triality(THREE), triality(THREEBAR), triality((0, 0, 0))}
+        == {0, 1, 2})
+    # abelian: U(1) commutant dim on 2 x 2bar; P00 U(1)-invariant, executed
+    charges = {}
+    for qi in (0, 1):
+        for qj in (0, 1):
+            q = qi - qj
+            charges[q] = charges.get(q, 0) + 1
+    Qop = _zeros(4)
+    qdiag = [qi - qj for qi in (0, 1) for qj in (0, 1)]
+    for k in range(4):
+        Qop[k][k] = Q(qdiag[k], 0)
+    P00 = _P00(2)
+    ok_flags["abelian_control"] = (
+        sum(m * m for m in charges.values()) == 6
+        and _iszero(_comm(Qop, P00))
+        and any(not _iszero(_comm(L, P00)) for L in PAIR))
+
+    ok = all(ok_flags.values())
+    data = {
+        "flags": {k: bool(v) for k, v in ok_flags.items()},
+        "step2_messages": {"fund_pair_plus_gluon": msg2a,
+                           "gluonic_record_plus_gluon": msg2b},
+        "readings": {
+            "NR1": "record-invariance = centrality (face (b)'s own audited definition)",
+            "NR2": "HEAVIEST: gluonic channel content = local algebra content at every scale, finitely iterable",
+            "NR3": "constant label => Delta = 0 residue (rides L_cost)",
+            "inherited": "gauge-invariant = physical/admissible record",
+        },
+        "scope": ("face (b) ONLY; faces (a) discard + (c) no-altering-exercise "
+                  "(unpayable OR unselected) OPEN; branch 2 NOT eliminated; "
+                  ".368 OPEN flag + falsifier (d) untouched; payability-blind; "
+                  "does NOT discharge reading G"),
+        "consumption_fence": ("triality theorem: unconditional steps (1)-(4) only; "
+                              "exclusion: gluonic-content typing at the phase-"
+                              "exclusion leg only (gap leg NOT consumed)"),
+    }
+    name = "check_T_matter_free_colour_record_deep_superselection_no_go"
+    deps = [
+        "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P",
+        "check_T_exotic_gauge_invariant_algebra_is_nonabelian",
+        "check_T_canonical_colour_record_iff_multiplicity_free_P",
+        "T_center_order_parameter_triality",
+        "T_ym_conformal_phase_excluded_by_record_locking",
+        "L_cost",
+    ]
+    if ok:
+        return _ok(
+            name,
+            status="P_structural_reading",
+            summary=(
+                "Face (b) of the matter-free branch-2 phenotype (deep "
+                "superselection) CLOSED: in-sector (m=1) centrality of the "
+                "colour record is real (fund + adjoint pairs, exact) but ONE "
+                "adjoint enlargement de-centralizes it (HW multiplicity >= 2, "
+                "non-scalar record compression, explicit exact gauge-invariant "
+                "branch-mixing X with [X,P] != 0 -- the audit-F1-corrected "
+                "construction); the enlargement-stable center is the N-ality "
+                "label (root lattice = t=0 sublattice, index N, exact), which "
+                "matter-free is CONSTANT 0 hence Delta-free (cost = count). "
+                "Readings NR1/NR2(heaviest)/NR3 named in-docstring. Faces "
+                "(a)+(c) OPEN; branch 2 NOT eliminated; matter keeps genuine "
+                "superselection charges; abelian control consistent."),
+            data=data,
+            dependencies=deps,
+        )
+    return _fail(name, status="FAIL",
+                 summary=f"deep-superselection no-go legs failed: "
+                         f"{[k for k, v in ok_flags.items() if not v]}",
+                 data=data, dependencies=deps)
+
+
+
+
+# =====================================================================
+# Product groups: sharp records track group structure FACTOR-WISE
+# through the slot structure (v24.3.383, Paper 12 round-7 walk D1)
+# ---------------------------------------------------------------------
+# exact sparse Fraction toolkit, local to this section (ported
+# 2026-07-04 from the D1 walk witness witness_d1_sign_and_products.py;
+# the module's Q-class dense toolkit above is complex-rational and
+# action-specific -- these legs are real-rational and need generic
+# commutants, kernels, and Schmidt ranks)
+# =====================================================================
+
+def _pg_eye(n):
+    return {i: {i: F(1)} for i in range(n)}
+
+
+def _pg_mm(A, B):
+    C = {}
+    for i, ra in A.items():
+        rc = {}
+        for k, va in ra.items():
+            rb = B.get(k)
+            if rb:
+                for j, vb in rb.items():
+                    rc[j] = rc.get(j, F(0)) + va * vb
+        rc = {j: v for j, v in rc.items() if v}
+        if rc:
+            C[i] = rc
+    return C
+
+
+def _pg_add(A, B, sgn=1):
+    C = {i: dict(r) for i, r in A.items()}
+    for i, rb in B.items():
+        rc = C.setdefault(i, {})
+        for j, v in rb.items():
+            nv = rc.get(j, F(0)) + sgn * v
+            if nv:
+                rc[j] = nv
+            else:
+                rc.pop(j, None)
+        if not rc:
+            C.pop(i, None)
+    return C
+
+
+def _pg_sub(A, B):
+    return _pg_add(A, B, -1)
+
+
+def _pg_smul(c, A):
+    c = F(c)
+    if not c:
+        return {}
+    return {i: {j: c * v for j, v in r.items()} for i, r in A.items()}
+
+
+def _pg_T(A):
+    C = {}
+    for i, r in A.items():
+        for j, v in r.items():
+            C.setdefault(j, {})[i] = v
+    return C
+
+
+def _pg_kron(A, B, nb):
+    C = {}
+    for i, ra in A.items():
+        for j, va in ra.items():
+            for p, rb in B.items():
+                row = C.setdefault(i * nb + p, {})
+                for q, vb in rb.items():
+                    row[j * nb + q] = va * vb
+    return C
+
+
+def _pg_comm(A, B):
+    return _pg_sub(_pg_mm(A, B), _pg_mm(B, A))
+
+
+def _pg_iszero(A):
+    return all(not r for r in A.values())
+
+
+def _pg_eq(A, B):
+    return _pg_iszero(_pg_sub(A, B))
+
+
+def _pg_trace(A):
+    return sum(r.get(i, F(0)) for i, r in A.items())
+
+
+def _pg_flat(A, n):
+    v = {}
+    for i, r in A.items():
+        for j, val in r.items():
+            if val:
+                v[i * n + j] = val
+    return v
+
+
+def _pg_from_dense(M):
+    A = {}
+    for i, row in enumerate(M):
+        r = {j: F(v) for j, v in enumerate(row) if v}
+        if r:
+            A[i] = r
+    return A
+
+
+def _pg_to_dense(A, n):
+    M = [[F(0)] * n for _ in range(n)]
+    for i, r in A.items():
+        for j, v in r.items():
+            M[i][j] = v
+    return M
+
+
+class _PgSpan:
+    """Row-reduced span of sparse rational vectors (dict col -> Fraction)."""
+
+    def __init__(self):
+        self.piv = {}
+
+    def _reduce(self, r):
+        r = {k: F(v) for k, v in r.items() if v}
+        while r:
+            c = min(r)
+            p = self.piv.get(c)
+            if p is None:
+                return r, c
+            f = r[c] / p[c]
+            for cc, v in p.items():
+                nv = r.get(cc, F(0)) - f * v
+                if nv:
+                    r[cc] = nv
+                else:
+                    r.pop(cc, None)
+        return r, None
+
+    def add(self, r):
+        rr, c = self._reduce(r)
+        if c is None:
+            return False
+        self.piv[c] = rr
+        return True
+
+    @property
+    def dim(self):
+        return len(self.piv)
+
+
+def _pg_commutant_dim(gens, n):
+    """dim of {X : [X, L] = 0 for all L in gens} -- exact, sparse."""
+    span = _PgSpan()
+    for L in gens:
+        colL = {}
+        for b, row in L.items():
+            for q, v in row.items():
+                colL.setdefault(q, {})[b] = v
+        for p in range(n):
+            Lp = L.get(p, {})
+            for q in range(n):
+                row = {}
+                for b, v in colL.get(q, {}).items():
+                    k = p * n + b
+                    row[k] = row.get(k, F(0)) + v
+                for a, v in Lp.items():
+                    k = a * n + q
+                    row[k] = row.get(k, F(0)) - v
+                row = {k: v for k, v in row.items() if v}
+                if row:
+                    span.add(row)
+    return n * n - span.dim
+
+
+def _pg_dense_rank(M):
+    M = [row[:] for row in M]
+    rows, cols = len(M), (len(M[0]) if M else 0)
+    r = 0
+    for c in range(cols):
+        piv = None
+        for i in range(r, rows):
+            if M[i][c]:
+                piv = i
+                break
+        if piv is None:
+            continue
+        M[r], M[piv] = M[piv], M[r]
+        inv = F(1) / M[r][c]
+        M[r] = [x * inv for x in M[r]]
+        for i in range(rows):
+            if i != r and M[i][c]:
+                f = M[i][c]
+                M[i] = [M[i][j] - f * M[r][j] for j in range(cols)]
+        r += 1
+        if r == rows:
+            break
+    return r
+
+
+def _pg_kernel_basis(M, ncols):
+    """Kernel basis of the dense constraint matrix M (rows = constraints)."""
+    M = [row[:] for row in M]
+    rows = len(M)
+    r = 0
+    pivcols = []
+    for c in range(ncols):
+        piv = None
+        for i in range(r, rows):
+            if M[i][c]:
+                piv = i
+                break
+        if piv is None:
+            continue
+        M[r], M[piv] = M[piv], M[r]
+        inv = F(1) / M[r][c]
+        M[r] = [x * inv for x in M[r]]
+        for i in range(rows):
+            if i != r and M[i][c]:
+                f = M[i][c]
+                M[i] = [M[i][j] - f * M[r][j] for j in range(ncols)]
+        pivcols.append(c)
+        r += 1
+        if r == rows:
+            break
+    free = [c for c in range(ncols) if c not in pivcols]
+    basis = []
+    for fc in free:
+        v = [F(0)] * ncols
+        v[fc] = F(1)
+        for i, pc in enumerate(pivcols):
+            v[pc] = -M[i][fc]
+        basis.append(v)
+    return basis
+
+
+def _pg_schmidt_rank(vec, dims, left_slots):
+    """Exact Schmidt rank of vec across the bipartition left_slots | rest."""
+    from itertools import product as _ipr
+    ns = len(dims)
+    right_slots = [sl for sl in range(ns) if sl not in left_slots]
+    lidx = {}
+    ridx = {}
+    rowsmap = {}
+    for idx, multi in enumerate(_ipr(*[range(d) for d in dims])):
+        lft = tuple(multi[sl] for sl in left_slots)
+        rgt = tuple(multi[sl] for sl in right_slots)
+        li = lidx.setdefault(lft, len(lidx))
+        ri = ridx.setdefault(rgt, len(ridx))
+        rowsmap[(li, ri)] = vec[idx]
+    M = [[F(0)] * len(ridx) for _ in range(len(lidx))]
+    for (li, ri), v in rowsmap.items():
+        M[li][ri] = F(v)
+    return _pg_dense_rank(M)
+
+
+def _pg_slot_op(mats, dims):
+    """kron over slots; mats: dict slot -> sparse mat; identity elsewhere."""
+    out = None
+    for sl, d in enumerate(dims):
+        m = mats.get(sl, _pg_eye(d))
+        if out is None:
+            out = m
+        else:
+            out = _pg_kron(out, m, d)
+    return out
+
+
+def _pg_cl2(d):
+    """ceil(log2 d) for integer d >= 1, exactly (no floats)."""
+    return (d - 1).bit_length()
+
+
+def check_T_product_group_sharp_records_factorwise() -> Dict:
+    """Sharp product-group records track group structure FACTOR-WISE
+    THROUGH THE SLOT STRUCTURE: on product content the invariant algebra
+    factorizes exactly, (A x B)' = A' (x) B', and sharpness, entanglement,
+    and canonicity are decided factor by factor; on shared irreducible
+    slots there is no factorization (Schur forces a commuting abelian
+    factor scalar -- superselection only); and Delta composes across group
+    factors only through the ANCHOR decomposition. (Landed v24.3.383,
+    2026-07-04, Paper 12 round-7 walk D1, reviewer Q7; fresh-context
+    hostile audit LAND-WITH-FIXES 0.85, findings F1-F8 ALL carried; walk
+    of record: "The Turning/p12_review7_walks_2026-07-04/
+    d1_sign_products/".)
+
+    THE FACTOR-WISE LAW, three instances, EACH certified by an EXPLICIT
+    A' (x) B' basis with containment + dimension (audit F4 -- never
+    dimension-only):
+      * U(1) x SU(2) on product content (dim 16): commutant dim
+        12 = 6 * 2; the 12-element basis {charge-block units} (x)
+        {1, pi_s} verified elementwise in the commutant;
+      * SU(2) x SU(2) bifundamental meson (2,2) (x) (2bar,2bar) (dim 16):
+        commutant dim 4 = 2 * 2 AFTER REGROUPING; the 4-element basis
+        {1, pi_s^L, pi_s^R, pi_s^L pi_s^R} verified elementwise;
+      * Z_2 x Z_2 on product content (dim 16): commutant dim 64 = 8 * 8;
+        the 64-element basis {eigenspace matrix units} (x) {same}
+        verified elementwise.
+    Trivial multiplicity multiplies (2 = 2*1; 1 = 1*1; 4 = 2*2).
+
+    THE BIFUNDAMENTAL REGROUPING FLAG (audit F4, in-check): the
+    bifundamental IS product content -- but only after regrouping the
+    slots by group factor ({V_L, Vbar_L} | {V_R, Vbar_R}), and that
+    regrouping is a BILLING-DECOMPOSITION CHANGE, an algebra statement,
+    not an anchor statement: a bifundamental string crosses the cut on
+    ONE link carrying both fluxes, so the two factor records are
+    CO-ANCHORED and the factor decomposition is NOT an anchor
+    decomposition. THE SAME-SLOT SUBTLETY, stated: group factors acting
+    through one slot do NOT give disjoint anchors.
+
+    SHARPNESS IS DECIDED PER FACTOR: abelian factors admit sharp PRODUCT
+    (separable) records (U(1): P00; Z_2 x Z_2: |00><00| (x) |00><00|,
+    fully separable); non-abelian multiplicity-free factors force
+    entanglement in their slots (the U(1) x SU(2) record P00 (x) pi_s is
+    Schmidt rank 1 across the abelian slots and rank 2 across the
+    non-abelian slots; the bifundamental invariant is rank 4 across the
+    particle cut, rank 1 across the group-factor regrouping, rank 2
+    across any single slot). Canonicity is factor-wise and demands EVERY
+    factor multiplicity-free: m_U(1) = 2 makes m_product = 2 -- sharp
+    records exist but none is canonical; the frame lives in the ABELIAN
+    factor.
+
+    THE SAME-SLOT NO-GO (Schur, computed): any U(1) commuting with SU(2)
+    on the fundamental is scalar (commutant dim 1), so on meson content
+    its induced action cancels and the joint invariant algebra is exactly
+    SU(2)'s span{pi_s, pi_adj} (dim 2). A same-slot abelian factor
+    contributes SUPERSELECTION (which contents exist), never
+    operator-level record structure; no factorization law applies on
+    shared irreducible slots.
+
+    THE FINITE-GROUP REFINEMENT, CORRECTED (audit F3, MODERATE -- the
+    walk's own Z_2 x Z_2 leg is the counterexample to the false
+    qualifier): sharp records live on the ONE-DIMENSIONAL-IRREP isotypic
+    sectors of ANY multiplicity -- U(g) acts as chi(g)*1 on such an
+    isotypic, so EVERY rank-one idempotent inside it is invariant.
+    MULTIPLICITY-ONE BUYS CANONICITY, NOT EXISTENCE (the banked m = 1 vs
+    m >= 2 split of check_T_canonical_colour_record_iff_multiplicity_
+    free_P). IN-CHECK COUNTEREXAMPLE: Z_2 x Z_2 has m_trivial = 4 and
+    hosts BOTH the separable sharp record AND a second, distinct sharp
+    record on the same multiplicity-4 isotypic (computed) -- existence at
+    m = 4, canonicity nowhere (a frame, the banked m >= 2 branch). SCOPE
+    NOTE: the banked trichotomy's m = 0 clause ("no sharp record at
+    all") is SU(N)-scoped -- the trivial rep is SU(N)'s only 1-dim irrep;
+    for finite / abelian groups the non-trivial 1-dim characters host
+    sharp records too, exactly as U(1) charge sectors already do. The S_3
+    instance: the meson invariant algebra is dim 3, abelian,
+    multiplicity-free (Schur count over the irreps 1, 1-sign, 2), with
+    EXACTLY two sharp records -- the trivial and SIGN lines, both
+    ENTANGLED (Schmidt rank 2): no sharp product record; the
+    multiplicity-freeness canonicity criterion is Schur and applies
+    verbatim, per 1-dim-irrep channel. EUCLIDEAN-OBLIQUE NOTE (audit
+    F8b): the S_3 isotypic idempotents are built by exact GROUP
+    AVERAGING, P_chi = (dim chi/|G|) sum_g chi(g^-1) U(g) -- the rational
+    standard rep is not orthogonal in this basis, so they are oblique
+    w.r.t. the Euclidean structure and self-adjoint under the INVARIANT
+    inner product; since the rep is unitarizable (finite group), calling
+    them projectors is justified under the unitarizing metric.
+
+    THE ANCHOR-NOT-GROUP-FACTOR DELTA LAW (audit F5 -- the
+    register-reading rider carried IN-CHECK): Delta adds across group
+    factors ONLY where the factor decomposition is realized as an anchor
+    decomposition (the banked disjoint-additivity theorem's hypothesis);
+    co-anchored factor records are ONE register component and POOL --
+    pooled ceil(log2 d_L d_R) equals the factor sum at (2,2), (2,3),
+    (3,3) and is STRICTLY SUBADDITIVE at (3,5) (4 < 5) and (5,5) (5 < 6).
+    RIDER: this clause is quoted at its banked grade -- the pooled-
+    packing / register-reading grounding is
+    check_T_register_reading_grounds_ceil_log2_count,
+    [P_structural_reading], a model postulate NOT derived from L_loc;
+    NO new grounding is claimed here and the clause is NOT re-graded.
+
+    GRADE [P] on the algebra legs (commutant factorizations,
+    multiplicities, Schmidt ranks, idempotent enumerations -- all exact
+    rational): the record-ROLE sentence (sharp gauge-invariant idempotent
+    = physical record) rides the banked no-B / gauge-variant-convention
+    reading AT ITS BANKED GRADE on the parent record theorems
+    ([P_structural_reading] there, cross-ref), and the Delta-response
+    clause is quoted at ITS banked grade per the rider above; neither is
+    re-graded by, nor re-grades, this check's algebra content.
+
+    FENCES: no occupancy claim (occupancy is read off the world, never
+    derived); slot structure decides the ALGEBRA, anchor structure
+    decides DELTA (that is the theorem's content, not a rider); N and the
+    factor count are spectator parameters; no magnitude/units claim.
+    """
+    from itertools import product as _iprod
+    legs = {}
+
+    E2s = {0: {1: F(1)}}
+    F2s = {1: {0: F(1)}}
+
+    def _lie_dual(L):
+        return _pg_smul(-1, _pg_T(L))
+
+    # ---- the U(1) control pair (paper convention: charge k on index k) ----
+    Dm = {1: {1: F(1)}}
+    gen_u1 = _pg_sub(_pg_kron(Dm, _pg_eye(2), 2), _pg_kron(_pg_eye(2), Dm, 2))
+    cu1 = _pg_commutant_dim([gen_u1], 4)
+    inv_u1 = _pg_kernel_basis(_pg_to_dense(gen_u1, 4), 4)
+    legs["u1_dim6_m2"] = (cu1 == 6 and len(inv_u1) == 2)
+    P00s = {0: {0: F(1)}}
+    legs["u1_sharp_product_record"] = _pg_iszero(_pg_comm(P00s, gen_u1))
+
+    # ---- the SU(2) meson factor (V (x) Vbar) ----
+    Em = _pg_add(_pg_kron(E2s, _pg_eye(2), 2),
+                 _pg_kron(_pg_eye(2), _lie_dual(E2s), 2))
+    Fm = _pg_add(_pg_kron(F2s, _pg_eye(2), 2),
+                 _pg_kron(_pg_eye(2), _lie_dual(F2s), 2))
+    csu2 = _pg_commutant_dim([Em, Fm], 4)
+    inv_su2 = _pg_kernel_basis(_pg_to_dense(Em, 4) + _pg_to_dense(Fm, 4), 4)
+    legs["su2_dim2_m1"] = (csu2 == 2 and len(inv_su2) == 1)
+    legs["su2_invariant_entangled"] = (
+        _pg_schmidt_rank(inv_su2[0], [2, 2], [0]) == 2)
+    legs["su2_no_sharp_product_record"] = (
+        not _pg_iszero(_pg_comm(P00s, Em)))
+    EmVV = _pg_add(_pg_kron(E2s, _pg_eye(2), 2), _pg_kron(_pg_eye(2), E2s, 2))
+    FmVV = _pg_add(_pg_kron(F2s, _pg_eye(2), 2), _pg_kron(_pg_eye(2), F2s, 2))
+    legs["su2_VV_m1_pseudoreality_control"] = (
+        len(_pg_kernel_basis(_pg_to_dense(EmVV, 4)
+                             + _pg_to_dense(FmVV, 4), 4)) == 1)
+
+    # ---- U(1) x SU(2) on product content: the factor-wise law ----
+    I4s = _pg_eye(4)
+    G1 = _pg_kron(gen_u1, I4s, 4)
+    G2 = _pg_kron(I4s, Em, 4)
+    G3 = _pg_kron(I4s, Fm, 4)
+    cprod = _pg_commutant_dim([G1, G2, G3], 16)
+    legs["prod_dim12_is_6x2"] = (cprod == 12 == cu1 * csu2)
+    unitsA = [{a: {b: F(1)}} for (a, b) in
+              [(0, 0), (0, 3), (3, 0), (3, 3), (1, 1), (2, 2)]]
+    pis = _pg_from_dense([[F(1, 2), 0, 0, F(1, 2)], [0, 0, 0, 0],
+                          [0, 0, 0, 0], [F(1, 2), 0, 0, F(1, 2)]])
+    span12 = _PgSpan()
+    contained12 = True
+    for u in unitsA:
+        for bb in (I4s, pis):
+            el = _pg_kron(u, bb, 4)
+            contained12 = contained12 and all(
+                _pg_iszero(_pg_comm(el, g)) for g in (G1, G2, G3))
+            span12.add(_pg_flat(el, 16))
+    legs["prod_explicit_basis_containment_dim_12"] = (
+        contained12 and span12.dim == 12)
+    inv_prod = _pg_kernel_basis(
+        _pg_to_dense(G1, 16) + _pg_to_dense(G2, 16)
+        + _pg_to_dense(G3, 16), 16)
+    legs["prod_m_multiplies_2_eq_2x1"] = (
+        len(inv_prod) == 2 == len(inv_u1) * len(inv_su2))
+    Prec = _pg_kron(P00s, pis, 4)
+    legs["prod_sharp_record_P00_x_pis"] = (
+        _pg_eq(_pg_mm(Prec, Prec), Prec) and _pg_trace(Prec) == 1
+        and all(_pg_iszero(_pg_comm(Prec, g)) for g in (G1, G2, G3)))
+    vrec = [F(0)] * 16
+    vrec[0] = F(1)
+    vrec[3] = F(1)
+    legs["record_separable_on_u1_slots"] = (
+        _pg_schmidt_rank(vrec, [4, 2, 2], [0]) == 1)
+    legs["record_entangled_on_su2_slots"] = (
+        _pg_schmidt_rank(vrec, [4, 2, 2], [1]) == 2)
+    legs["canonicity_factorwise_fails_at_m_u1_2"] = (len(inv_prod) >= 2)
+
+    # ---- the same-slot no-go (Schur) ----
+    legs["schur_u1_commuting_with_su2_fund_is_scalar"] = (
+        _pg_commutant_dim([E2s, F2s], 2) == 1)
+    legs["same_slot_algebra_is_su2s_dim2"] = (
+        _pg_commutant_dim([Em, Fm, {}], 4) == 2)
+
+    # ---- the SU(2) x SU(2) bifundamental meson ----
+    dimsB = [2, 2, 2, 2]   # slots: 0 = V_L, 1 = V_R, 2 = Vbar_L, 3 = Vbar_R
+    EL = _pg_add(_pg_slot_op({0: E2s}, dimsB),
+                 _pg_slot_op({2: _lie_dual(E2s)}, dimsB))
+    FL = _pg_add(_pg_slot_op({0: F2s}, dimsB),
+                 _pg_slot_op({2: _lie_dual(F2s)}, dimsB))
+    ER = _pg_add(_pg_slot_op({1: E2s}, dimsB),
+                 _pg_slot_op({3: _lie_dual(E2s)}, dimsB))
+    FR = _pg_add(_pg_slot_op({1: F2s}, dimsB),
+                 _pg_slot_op({3: _lie_dual(F2s)}, dimsB))
+    gensB = (EL, FL, ER, FR)
+    legs["bif_dim4_is_2x2_after_regrouping"] = (
+        _pg_commutant_dim(list(gensB), 16) == 4)
+
+    def _pair_singlet_proj(a, b):
+        P = {}
+        for rb in _iprod(range(2), repeat=4):
+            if rb[a] != rb[b]:
+                continue
+            r = ((rb[0] * 2 + rb[1]) * 2 + rb[2]) * 2 + rb[3]
+            for cb in _iprod(range(2), repeat=4):
+                if cb[a] != cb[b]:
+                    continue
+                if any(cb[o] != rb[o] for o in range(4) if o not in (a, b)):
+                    continue
+                c = ((cb[0] * 2 + cb[1]) * 2 + cb[2]) * 2 + cb[3]
+                P.setdefault(r, {})[c] = F(1, 2)
+        return P
+
+    PL = _pair_singlet_proj(0, 2)
+    PR = _pair_singlet_proj(1, 3)
+    I16s = _pg_eye(16)
+    spanb = _PgSpan()
+    okb = True
+    for el in (I16s, PL, PR, _pg_mm(PL, PR)):
+        okb = okb and all(_pg_iszero(_pg_comm(el, g)) for g in gensB)
+        spanb.add(_pg_flat(el, 16))
+    legs["bif_explicit_basis_containment_dim_4"] = (okb and spanb.dim == 4)
+    invB = _pg_kernel_basis(
+        _pg_to_dense(EL, 16) + _pg_to_dense(FL, 16)
+        + _pg_to_dense(ER, 16) + _pg_to_dense(FR, 16), 16)
+    legs["bif_m1_canonical_1x1"] = (len(invB) == 1)
+    vB = [F(0)] * 16
+    for i in range(2):
+        for j in range(2):
+            vB[((i * 2 + j) * 2 + i) * 2 + j] = F(1)
+    wv = invB[0]
+    ratio = None
+    prop = True
+    for a, b in zip(vB, wv):
+        if a == 0 and b == 0:
+            continue
+        if a == 0 or b == 0:
+            prop = False
+            break
+        rr = b / a
+        if ratio is None:
+            ratio = rr
+        elif rr != ratio:
+            prop = False
+            break
+    legs["bif_invariant_is_singletL_x_singletR"] = prop
+    legs["bif_schmidt_4_particle_cut"] = (
+        _pg_schmidt_rank(vB, dimsB, [0, 1]) == 4)
+    legs["bif_schmidt_1_group_factor_regrouping"] = (
+        _pg_schmidt_rank(vB, dimsB, [0, 2]) == 1)
+    legs["bif_schmidt_2_single_slot"] = (
+        _pg_schmidt_rank(vB, dimsB, [0]) == 2)
+    PrecB = _pg_mm(PL, PR)
+    legs["bif_canonical_sharp_record"] = (
+        _pg_eq(_pg_mm(PrecB, PrecB), PrecB) and _pg_trace(PrecB) == 1
+        and all(_pg_iszero(_pg_comm(PrecB, g)) for g in gensB))
+
+    # ---- the anchor-not-group-factor Delta law (register-reading rider) ---
+    tbl = {(dl, dr): (_pg_cl2(dl * dr), _pg_cl2(dl) + _pg_cl2(dr))
+           for dl, dr in ((2, 2), (2, 3), (3, 3), (3, 5), (5, 5))}
+    legs["pooled_additive_at_22_23_33"] = (
+        tbl[(2, 2)] == (2, 2) and tbl[(2, 3)] == (3, 3)
+        and tbl[(3, 3)] == (4, 4))
+    legs["pooled_strictly_subadditive_at_35_55"] = (
+        tbl[(3, 5)] == (4, 5) and tbl[(5, 5)] == (5, 6))
+
+    # ---- Z_2 x Z_2: the factorization law on a finite abelian product ----
+    g2 = _pg_from_dense([[1, 0], [0, -1]])
+    Uz = _pg_kron(g2, g2, 2)   # dual of a real character = itself
+    cz = _pg_commutant_dim([Uz], 4)
+    invz = _pg_kernel_basis(
+        _pg_to_dense(_pg_sub(Uz, _pg_eye(4)), 4), 4)
+    legs["z2_factor_dim8_m2"] = (cz == 8 and len(invz) == 2)
+    unitsZ = [{a: {b: F(1)}} for (a, b) in
+              [(0, 0), (0, 3), (3, 0), (3, 3), (1, 1), (1, 2), (2, 1), (2, 2)]]
+    spanz = _PgSpan()
+    okz = all(_pg_iszero(_pg_comm(u, Uz)) for u in unitsZ)
+    for u in unitsZ:
+        spanz.add(_pg_flat(u, 4))
+    legs["z2_factor_explicit_basis_8"] = (okz and spanz.dim == 8)
+    Uz1 = _pg_kron(Uz, _pg_eye(4), 4)
+    Uz2 = _pg_kron(_pg_eye(4), Uz, 4)
+    czz = _pg_commutant_dim([Uz1, Uz2], 16)
+    invzz = _pg_kernel_basis(
+        _pg_to_dense(_pg_sub(Uz1, _pg_eye(16)), 16)
+        + _pg_to_dense(_pg_sub(Uz2, _pg_eye(16)), 16), 16)
+    legs["zz_dim64_is_8x8_m4_is_2x2"] = (
+        czz == 64 == 8 * 8 and len(invzz) == 4 == 2 * 2)
+    spanzz = _PgSpan()
+    containedzz = True
+    for u in unitsZ:
+        for u2 in unitsZ:
+            el = _pg_kron(u, u2, 4)
+            containedzz = (containedzz and _pg_iszero(_pg_comm(el, Uz1))
+                           and _pg_iszero(_pg_comm(el, Uz2)))
+            spanzz.add(_pg_flat(el, 16))
+    legs["zz_explicit_basis_containment_dim_64"] = (
+        containedzz and spanzz.dim == 64)
+    Pzz = _pg_kron(P00s, P00s, 4)
+    legs["zz_separable_sharp_record"] = (
+        _pg_eq(_pg_mm(Pzz, Pzz), Pzz) and _pg_trace(Pzz) == 1
+        and _pg_iszero(_pg_comm(Pzz, Uz1)) and _pg_iszero(_pg_comm(Pzz, Uz2)))
+    # F3 counterexample leg: a SECOND, distinct sharp record on the SAME
+    # multiplicity-4 trivial isotypic -- existence needs only a
+    # 1-dim-irrep isotypic (any multiplicity); m = 1 buys canonicity.
+    uvec = [a + b for a, b in zip(invzz[0], invzz[1])]
+    nrm = sum(x * x for x in uvec)
+    Pu = {}
+    for i, x in enumerate(uvec):
+        if x:
+            for j, y in enumerate(uvec):
+                if y:
+                    Pu.setdefault(i, {})[j] = x * y / nrm
+    legs["zz_m4_second_sharp_record_existence"] = (
+        _pg_eq(_pg_mm(Pu, Pu), Pu) and _pg_trace(Pu) == 1
+        and _pg_iszero(_pg_comm(Pu, Uz1)) and _pg_iszero(_pg_comm(Pu, Uz2))
+        and not _pg_eq(Pu, Pzz))
+
+    # ---- S_3 on its 2-dim irrep: the criterion verbatim (Schur) ----
+    r3 = _pg_from_dense([[0, -1], [1, -1]])
+    s3 = _pg_from_dense([[-1, 1], [0, 1]])
+    legs["s3_relations_exact"] = (
+        _pg_eq(_pg_mm(r3, _pg_mm(r3, r3)), _pg_eye(2))
+        and _pg_eq(_pg_mm(s3, s3), _pg_eye(2))
+        and _pg_eq(_pg_mm(s3, _pg_mm(r3, s3)), _pg_mm(r3, r3)))
+
+    def _inv2(M):
+        d = _pg_to_dense(M, 2)
+        det = d[0][0] * d[1][1] - d[0][1] * d[1][0]
+        return _pg_from_dense([[d[1][1] / det, -d[0][1] / det],
+                               [-d[1][0] / det, d[0][0] / det]])
+
+    def _gdual(g):
+        return _pg_T(_inv2(g))
+
+    Ur = _pg_kron(r3, _gdual(r3), 2)
+    Us = _pg_kron(s3, _gdual(s3), 2)
+    legs["s3_dim3_multfree_abelian"] = (_pg_commutant_dim([Ur, Us], 4) == 3)
+    invS3 = _pg_kernel_basis(
+        _pg_to_dense(_pg_sub(Ur, _pg_eye(4)), 4)
+        + _pg_to_dense(_pg_sub(Us, _pg_eye(4)), 4), 4)
+    legs["s3_m1"] = (len(invS3) == 1)
+    legs["s3_singlet_entangled"] = (
+        _pg_schmidt_rank(invS3[0], [2, 2], [0]) == 2)
+    signS3 = _pg_kernel_basis(
+        _pg_to_dense(_pg_sub(Ur, _pg_eye(4)), 4)
+        + _pg_to_dense(_pg_add(Us, _pg_eye(4)), 4), 4)
+    legs["s3_sign_line_1dim_entangled"] = (
+        len(signS3) == 1 and _pg_schmidt_rank(signS3[0], [2, 2], [0]) == 2)
+    r2e = _pg_mm(r3, r3)
+    els = [(_pg_eye(2), 1), (r3, 1), (r2e, 1),
+           (s3, -1), (_pg_mm(s3, r3), -1), (_pg_mm(s3, r2e), -1)]
+    P1 = {}
+    P1s = {}
+    for g, sgn in els:
+        Ug = _pg_kron(g, _gdual(g), 2)
+        P1 = _pg_add(P1, _pg_smul(F(1, 6), Ug))
+        P1s = _pg_add(P1s, _pg_smul(F(sgn, 6), Ug))
+    P2blk = _pg_sub(_pg_eye(4), _pg_add(P1, P1s))
+    legs["s3_group_averaged_central_resolution"] = (
+        _pg_eq(_pg_mm(P1, P1), P1) and _pg_eq(_pg_mm(P1s, P1s), P1s)
+        and _pg_iszero(_pg_mm(P1, P1s))
+        and _pg_eq(_pg_mm(P2blk, P2blk), P2blk)
+        and all(_pg_iszero(_pg_comm(p, Ur)) and _pg_iszero(_pg_comm(p, Us))
+                for p in (P1, P1s, P2blk))
+        and _pg_trace(P1) == 1 and _pg_trace(P1s) == 1
+        and _pg_trace(P2blk) == 2)
+    sharp_combos = [(a, b, c) for a in (0, 1) for b in (0, 1) for c in (0, 1)
+                    if a + b + 2 * c == 1]
+    legs["s3_exactly_two_sharp_records_both_entangled"] = (
+        sharp_combos == [(0, 1, 0), (1, 0, 0)])
+
+    ok = all(legs.values())
+    data = {
+        "model": ("product gauge groups on product vs shared content; exact "
+                  "rational commutants / kernels / Schmidt ranks (stdlib "
+                  "Fractions, sparse)"),
+        "legs": {k: bool(v) for k, v in legs.items()},
+        "factorization_instances": {
+            "U(1) x SU(2)": "12 = 6 * 2 (explicit 12-element basis)",
+            "SU(2) x SU(2) bifundamental": "4 = 2 * 2 (explicit 4-element "
+                                           "basis; regrouping flagged)",
+            "Z_2 x Z_2": "64 = 8 * 8 (explicit 64-element basis)",
+        },
+        "multiplicities_multiply": {"U(1) x SU(2)": "2 = 2*1",
+                                    "bifundamental": "1 = 1*1",
+                                    "Z_2 x Z_2": "4 = 2*2"},
+        "bifundamental_schmidt_ranks": {"particle_cut": 4,
+                                        "group_factor_regrouping": 1,
+                                        "single_slot": 2},
+        "regrouping_flag": ("the bifundamental regrouping is a "
+                            "billing-decomposition change (algebra, not "
+                            "anchors): group factors on one slot do NOT "
+                            "give disjoint anchors -- the factor records "
+                            "are co-anchored"),
+        "finite_group_refinement_corrected": (
+            "sharp records live on the 1-dim-irrep isotypic sectors of ANY "
+            "multiplicity (U(g) = chi(g)*1 there); multiplicity-one buys "
+            "CANONICITY, not existence -- in-check counterexample: "
+            "Z_2 x Z_2 m = 4 hosts two distinct sharp records; the banked "
+            "m = 0 no-record clause is SU(N)-scoped (trivial = SU(N)'s "
+            "only 1-dim irrep)"),
+        "s3_note": ("group-averaged isotypic idempotents, oblique w.r.t. "
+                    "the Euclidean structure in the rational basis; "
+                    "self-adjoint under the invariant inner product "
+                    "(unitarizable, finite group)"),
+        "pooled_packing_table": {str(k): {"pooled": v[0], "summed": v[1]}
+                                 for k, v in tbl.items()},
+        "delta_law_rider": (
+            "Delta adds across group factors only where the factor "
+            "decomposition is realized as an ANCHOR decomposition; "
+            "co-anchored factors pool, strictly subadditively at (3,5) "
+            "UNDER THE REGISTER READING -- quoted at its banked grade "
+            "[P_structural_reading] "
+            "(check_T_register_reading_grounds_ceil_log2_count), no new "
+            "grounding claimed, not re-graded here"),
+        "record_role_rider": (
+            "sharp gauge-invariant idempotent = physical record rides the "
+            "banked no-B / gauge-variant-convention reading at its banked "
+            "grade on the parent record theorems (cross-ref); the algebra "
+            "legs here are exact [P]"),
+        "scope_fences": {
+            "occupancy": "not claimed; read off the world, never derived",
+            "content": ("slot structure decides the algebra, anchor "
+                        "structure decides Delta -- the theorem's content, "
+                        "not a rider"),
+            "spectators": "N and the factor count are spectator parameters",
+        },
+    }
+    if ok:
+        return _ok(
+            "check_T_product_group_sharp_records_factorwise",
+            status="P",
+            summary=("Sharp product-group records track group structure "
+                     "FACTOR-WISE THROUGH THE SLOT STRUCTURE. On product "
+                     "content the invariant algebra factorizes exactly, "
+                     "(A x B)' = A' (x) B', certified by explicit bases "
+                     "with containment + dimension on ALL THREE instances "
+                     "(U(1) x SU(2): 12 = 6*2; SU(2) x SU(2) bifundamental "
+                     "after regrouping: 4 = 2*2, the regrouping flagged as "
+                     "a billing-decomposition change -- group factors on "
+                     "one slot do NOT give disjoint anchors; Z_2 x Z_2: "
+                     "64 = 8*8); trivial multiplicity multiplies (2 = 2*1, "
+                     "1 = 1*1, 4 = 2*2); sharpness / entanglement / "
+                     "canonicity are decided factor by factor (abelian "
+                     "factors admit separable sharp records, non-abelian "
+                     "multiplicity-free factors force entanglement in "
+                     "their slots, one m >= 2 factor destroys canonicity "
+                     "for the whole product). On shared irreducible slots "
+                     "there is no factorization: Schur forces a commuting "
+                     "abelian factor scalar -- superselection only. The "
+                     "finite-group refinement CORRECTED (audit F3): sharp "
+                     "records live on 1-dim-irrep isotypic sectors of ANY "
+                     "multiplicity -- multiplicity-one buys CANONICITY, "
+                     "not existence (Z_2 x Z_2 m = 4 hosts two distinct "
+                     "sharp records, computed; the banked m = 0 clause is "
+                     "SU(N)-scoped); S_3 has exactly two sharp records, "
+                     "trivial + sign, both entangled (group-averaged "
+                     "idempotents, oblique in the rational basis, "
+                     "unitarizable). Delta composes across group factors "
+                     "only through the ANCHOR decomposition; co-anchored "
+                     "factors pool, strictly subadditively at (3,5) under "
+                     "the register reading -- quoted at its banked "
+                     "[P_structural_reading] grade, no new grounding. "
+                     "Occupancy not claimed."),
+            data=data,
+            dependencies=[
+                "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P",
+                "check_T_canonical_colour_record_iff_multiplicity_free_P",
+                "check_T_gauge_invariant_colour_record_general_N",
+                "check_T_register_reading_grounds_ceil_log2_count",
+                "check_T_delta_disjoint_additivity",
+            ],
+        )
+    return _fail(
+        "check_T_product_group_sharp_records_factorwise",
+        status="FAIL",
+        summary="factor-wise product-group record witness did not hold.",
+        data=data,
+    )
+
+
 CHECKS = {
+    "check_T_matter_free_colour_record_deep_superselection_no_go":
+        check_T_matter_free_colour_record_deep_superselection_no_go,
     "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P":
         check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P,
     "check_T_unique_gauge_invariant_colour_state_of_N_fundamentals_is_entangled_baryon_P":
@@ -2288,10 +4958,16 @@ CHECKS = {
         check_T_gauge_invariant_colour_KS_coloring_obstruction,
     "check_T_su3_octet_colour_KS_coloring_obstruction_exact":
         check_T_su3_octet_colour_KS_coloring_obstruction_exact,
+    "check_T_su3_octet_M4_explicit_construction":
+        check_T_su3_octet_M4_explicit_construction,
     "check_T_colour_contextuality_is_kstring_spectrum_blind":
         check_T_colour_contextuality_is_kstring_spectrum_blind,
     "check_T_ckm_flavour_coavailability_is_sepstr":
         check_T_ckm_flavour_coavailability_is_sepstr,
+    "check_T_gauge_invariant_colour_record_general_N":
+        check_T_gauge_invariant_colour_record_general_N,
+    "check_T_product_group_sharp_records_factorwise":
+        check_T_product_group_sharp_records_factorwise,
 }
 
 

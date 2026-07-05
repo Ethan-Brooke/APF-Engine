@@ -425,6 +425,11 @@ def check_T_confinement():
     (yang_mills_md_bridge.py), which closes the saturation-vs-IR-fixed-point
     fork through the record-locking layer. This limitation predates that
     closure and is scoped to T_confinement's own {A1,MD,PLEC,L_epsilon*} reading.
+    RG-step typing RULED 2026-07-04 (re-description; Decisions List): the
+    non-saturating inert endpoint is a PERMITTED matter-free phase of the
+    ledger formalism, so the Step-2 antecedent is genuinely empirical for
+    the physical sector -- confirmed, not a gap awaiting a ledger driver;
+    endpoint typing: check_T_ym_ir_endpoint_trichotomy_branch2_open.
     """
     from fractions import Fraction
 
@@ -452,11 +457,17 @@ def check_T_confinement():
         tier=1,
         epistemic='P',
         summary=(
-            'SU(3) AF (m=8>0, L_AF_capacity) => IR coupling growth => '
-            'saturation (T4F + A1) => slack < epsilon => '
-            'non-singlet states inadmissible (L_epsilon*: color distinction '
-            'costs >= epsilon). Only singlets survive. '
-            'Derives mechanism class, not scale (Lambda_QCD requires T6B).'
+            'SU(3) AF (m=8>0, L_AF_capacity) => IR coupling growth; AT IR '
+            'capacity-saturation (the Step-2 CARRIED PREMISE -- not derived '
+            'here; T4F is flavor/EW-side only, per the HONEST LIMITATION; '
+            'endpoint typing: check_T_ym_ir_endpoint_trichotomy_branch2_open, '
+            'yang_mills_md_bridge.py) slack < epsilon => non-singlet states '
+            'inadmissible (L_epsilon*: color distinction costs >= epsilon). '
+            'Only singlets survive. Derives the mechanism class (the '
+            'conditional), not saturation-occurrence, not the scale '
+            '(Lambda_QCD requires T6B). [v24.3.368 corrigendum: the prior '
+            'summary read "saturation (T4F + A1)", contradicting the '
+            'docstring; fixed count-neutral.]'
         ),
         key_result='Color confinement: non-singlets excluded at IR saturation [P]',
         dependencies=['L_AF_capacity', 'T4F', 'L_epsilon*', 'L_nc'],

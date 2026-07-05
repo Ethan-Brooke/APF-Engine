@@ -10550,8 +10550,15 @@ def check_L_mu_mc_unified():
 
     GRADE CAVEAT (2026-06-07, Higgs-record re-grounding): the m_u/m_c ratio MECHANISM (rank breaking +
     Gram crossing self-energy, additive subtraction / Schur) is [P], but its VALUE 0.0017 is evaluated at
-    xi = w2* = 5/4 -- the T21b fixed-point LOCATION set by the load gamma = (1, 17/4), which is
-    [P_structural] (T27d/T24 audit 2026-06-06). So the m_u/m_c VALUE inherits [P_structural] (was [P]); see
+    xi = w2* = 5/4 -- the T21b fixed-point LOCATION set by the load gamma = (1, 17/4).
+    [ANNOTATION 2026-07-03: the load gamma is now [P] (T27d re-anchored on the
+    placement close, check_T_ew_load_placement_P); the m_u/m_c VALUE keeps its
+    [P_structural] inheritance PENDING its own adjudication of whether the
+    xi = w2* = 5/4 location-reading crosses the w~g^2 dictionary
+    (T_sin2theta, Wall B -- the fence home since the 2026-07-03 split;
+    T24 carries the value [P]). NO grade change here.] Pre-annotation record: the
+    load was [P_structural] (T27d/T24 audit 2026-06-06), so the m_u/m_c VALUE
+    inherited [P_structural] (was [P]); see
     L_crossing_self_energy / L_crossing_depletion_capacity_measure.
 
     v6.5 NEW.  Resolves inventory item #2 (m_u/m_c ratio).

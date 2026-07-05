@@ -1,0 +1,425 @@
+[
+ {
+  "version": "24.3.364",
+  "ts": "2026-07-04 (seed)",
+  "expected": 3841,
+  "spine_nodes": 262,
+  "sub_p_count": 38,
+  "bare_p": 224,
+  "grade_counts": {
+   "P": 221,
+   "P_structural_reading": 9,
+   "P_structural": 8,
+   "P+IJC": 7,
+   "P_structural_seam": 5,
+   "[P_structural]": 4,
+   "P_regime": 2,
+   "P_structural_exhaustive": 2,
+   "AXIOM": 1,
+   "AXIOM_COROLLARY": 1,
+   "[P]": 1,
+   "P_comp": 1
+  },
+  "ledger": {
+   "T24": {
+    "grade": "P_structural_seam",
+    "desc": 168,
+    "betw": 0.0054
+   },
+   "T_branch_taxonomy_inclusions": {
+    "grade": "P_regime",
+    "desc": 10,
+    "betw": 0.0001
+   },
+   "T_no_IJC_no_noncommutativity": {
+    "grade": "P_structural_reading",
+    "desc": 10,
+    "betw": 0.0001
+   },
+   "L_singlet_Gram": {
+    "grade": "P_structural",
+    "desc": 9,
+    "betw": 0.002
+   },
+   "T_quantum_admissibility_condition": {
+    "grade": "P_regime",
+    "desc": 9,
+    "betw": 0.0
+   },
+   "T_inseparable_IJC": {
+    "grade": "P+IJC",
+    "desc": 8,
+    "betw": 0.0004
+   },
+   "L_Pi": {
+    "grade": "P+IJC",
+    "desc": 6,
+    "betw": 0.0002
+   },
+   "T_trivial_alignment_is_Type_II": {
+    "grade": "P_structural_reading",
+    "desc": 4,
+    "betw": 0.0001
+   },
+   "T_sin2theta": {
+    "grade": "P_structural_seam",
+    "desc": 3,
+    "betw": 0.0009
+   },
+   "T_type_II_resolution_under_L_irr": {
+    "grade": "P_structural_reading",
+    "desc": 3,
+    "betw": 0.0001
+   },
+   "L_MD_extension": {
+    "grade": "P_structural_reading",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "T_FormalKernel_VLambda_uniqueness": {
+    "grade": "[P_structural]",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "T_alg_FPi": {
+    "grade": "P+IJC",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "L_singlet_Gram_exchangeable_form": {
+    "grade": "P_structural",
+    "desc": 2,
+    "betw": 0.0004
+   },
+   "T_vacuum_content_typing_status": {
+    "grade": "P_structural",
+    "desc": 2,
+    "betw": 0.0004
+   },
+   "T_IJC_dichotomy": {
+    "grade": "P_structural_reading",
+    "desc": 2,
+    "betw": 0.0001
+   },
+   "L_crossing_self_energy": {
+    "grade": "P_structural_seam",
+    "desc": 2,
+    "betw": 0.0
+   },
+   "L_threat_substrate_realization": {
+    "grade": "P_structural_reading",
+    "desc": 2,
+    "betw": 0.0
+   },
+   "T_alg": {
+    "grade": "P+IJC",
+    "desc": 1,
+    "betw": 0.0003
+   },
+   "T_sin2theta_higgs_record": {
+    "grade": "P_structural_seam",
+    "desc": 1,
+    "betw": 0.0003
+   },
+   "L_common_demand_iff_degenerate": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "L_crossing_depletion_capacity_measure": {
+    "grade": "P_structural_seam",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_vglobal_offdiagonal_blocks_scalar_typed": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_which_v_no_registered_interior_reader": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_cosmogenic_lattice_ordering": {
+    "grade": "P_structural_reading",
+    "desc": 1,
+    "betw": 0.0
+   },
+   "T_four_input_declaration": {
+    "grade": "[P_structural]",
+    "desc": 1,
+    "betw": 0.0
+   },
+   "T_FD1_substrate_distinctions_capacity": {
+    "grade": "[P_structural]",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_IJC_from_partition_structure": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_PLEC_derived_from_spine": {
+    "grade": "[P_structural]",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_capacity_redistribution_unification": {
+    "grade": "P_comp",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_config_demand_register_split_bank_respected": {
+    "grade": "P_structural",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_load_form_selected_by_alpha_s": {
+    "grade": "P_structural_exhaustive",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_mode_partition_conservation": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_omega_gamma_max_symmetry_group": {
+    "grade": "P_structural_reading",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_partition_rigidity_coverage_v69": {
+    "grade": "P_structural_exhaustive",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_v_global_accumulation_from_type_II_resolutions": {
+    "grade": "P_structural_reading",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_vglobal_slot_identification_no_go": {
+    "grade": "P_structural",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "state_sensitivity": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   }
+  }
+ },
+ {
+  "version": "24.3.369",
+  "ts": "2026-07-03T22:02:08",
+  "expected": 3845,
+  "spine_nodes": 262,
+  "sub_p_count": 37,
+  "bare_p": 225,
+  "grade_counts": {
+   "P": 222,
+   "P_structural_reading": 9,
+   "P_structural": 8,
+   "P+IJC": 7,
+   "[P_structural]": 4,
+   "P_structural_seam": 4,
+   "P_regime": 2,
+   "P_structural_exhaustive": 2,
+   "AXIOM": 1,
+   "AXIOM_COROLLARY": 1,
+   "[P]": 1,
+   "P_comp": 1
+  },
+  "ledger": {
+   "T_branch_taxonomy_inclusions": {
+    "grade": "P_regime",
+    "desc": 10,
+    "betw": 0.0001
+   },
+   "T_no_IJC_no_noncommutativity": {
+    "grade": "P_structural_reading",
+    "desc": 10,
+    "betw": 0.0001
+   },
+   "L_singlet_Gram": {
+    "grade": "P_structural",
+    "desc": 9,
+    "betw": 0.002
+   },
+   "T_quantum_admissibility_condition": {
+    "grade": "P_regime",
+    "desc": 9,
+    "betw": 0.0
+   },
+   "T_inseparable_IJC": {
+    "grade": "P+IJC",
+    "desc": 8,
+    "betw": 0.0004
+   },
+   "L_Pi": {
+    "grade": "P+IJC",
+    "desc": 6,
+    "betw": 0.0002
+   },
+   "T_trivial_alignment_is_Type_II": {
+    "grade": "P_structural_reading",
+    "desc": 4,
+    "betw": 0.0001
+   },
+   "T_sin2theta": {
+    "grade": "P_structural_seam",
+    "desc": 3,
+    "betw": 0.0009
+   },
+   "T_type_II_resolution_under_L_irr": {
+    "grade": "P_structural_reading",
+    "desc": 3,
+    "betw": 0.0001
+   },
+   "L_MD_extension": {
+    "grade": "P_structural_reading",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "T_FormalKernel_VLambda_uniqueness": {
+    "grade": "[P_structural]",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "T_alg_FPi": {
+    "grade": "P+IJC",
+    "desc": 3,
+    "betw": 0.0
+   },
+   "L_singlet_Gram_exchangeable_form": {
+    "grade": "P_structural",
+    "desc": 2,
+    "betw": 0.0004
+   },
+   "T_vacuum_content_typing_status": {
+    "grade": "P_structural",
+    "desc": 2,
+    "betw": 0.0004
+   },
+   "T_IJC_dichotomy": {
+    "grade": "P_structural_reading",
+    "desc": 2,
+    "betw": 0.0001
+   },
+   "L_crossing_self_energy": {
+    "grade": "P_structural_seam",
+    "desc": 2,
+    "betw": 0.0
+   },
+   "L_threat_substrate_realization": {
+    "grade": "P_structural_reading",
+    "desc": 2,
+    "betw": 0.0
+   },
+   "T_alg": {
+    "grade": "P+IJC",
+    "desc": 1,
+    "betw": 0.0003
+   },
+   "T_sin2theta_higgs_record": {
+    "grade": "P_structural_seam",
+    "desc": 1,
+    "betw": 0.0003
+   },
+   "L_common_demand_iff_degenerate": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "L_crossing_depletion_capacity_measure": {
+    "grade": "P_structural_seam",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_vglobal_offdiagonal_blocks_scalar_typed": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_which_v_no_registered_interior_reader": {
+    "grade": "P_structural",
+    "desc": 1,
+    "betw": 0.0001
+   },
+   "T_cosmogenic_lattice_ordering": {
+    "grade": "P_structural_reading",
+    "desc": 1,
+    "betw": 0.0
+   },
+   "T_four_input_declaration": {
+    "grade": "[P_structural]",
+    "desc": 1,
+    "betw": 0.0
+   },
+   "T_FD1_substrate_distinctions_capacity": {
+    "grade": "[P_structural]",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_IJC_from_partition_structure": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_PLEC_derived_from_spine": {
+    "grade": "[P_structural]",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_capacity_redistribution_unification": {
+    "grade": "P_comp",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_config_demand_register_split_bank_respected": {
+    "grade": "P_structural",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_load_form_selected_by_alpha_s": {
+    "grade": "P_structural_exhaustive",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_mode_partition_conservation": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_omega_gamma_max_symmetry_group": {
+    "grade": "P_structural_reading",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_partition_rigidity_coverage_v69": {
+    "grade": "P_structural_exhaustive",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_v_global_accumulation_from_type_II_resolutions": {
+    "grade": "P_structural_reading",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "T_vglobal_slot_identification_no_go": {
+    "grade": "P_structural",
+    "desc": 0,
+    "betw": 0.0
+   },
+   "state_sensitivity": {
+    "grade": "P+IJC",
+    "desc": 0,
+    "betw": 0.0
+   }
+  }
+ }
+]

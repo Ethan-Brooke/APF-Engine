@@ -1453,7 +1453,7 @@ def check_T_config_demand_register_split_bank_respected():
         # file: (hit count, disposition)  -- recorded human judgment,
         # per-candidate verdicts in the walk record of 2026-07-02;
         # counts pinned at scan time 2026-07-02 (post-.353 tree)
-        '_module_manifest.py': (3, 'infra: changelog prose (3rd hit = the 192891d narrative-merge race, same event as the .321 pin re-pin of 2026-07-02; verified changelog-narrative, no reader)'),
+        '_module_manifest.py': (2, 'infra: changelog prose (re-pinned 3->2 2026-07-03 v24.3.363: the 192891d merge-race 3rd hit no longer exists -- its narrative line was rewritten during the .358-.362 multi-lane manifest restructuring; verified comment-line churn only, already absent at HEAD 7ab46f2, no reader/writer involved; found by the IP-review lane running the sentinel after landing -- the red-bank lesson applied)'),
         'acc_reading_selection.py': (1, 'fence: referent-3 corrigendum comment'),
         'bank.py': (1, 'infra: changelog prose (EXPECTED_THEOREM_COUNT line)'),
         'cosmology.py': (30, 'register-home: .517/.330/.338 family + this '
@@ -1577,6 +1577,7 @@ def check_T_config_demand_register_split_bank_respected():
         'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
         'descent_obstruction_calculus.py', 'ew_branch_incidence_density.py',
         'extensions.py', 'fibration_census.py', 'foundation_inputs.py',
+        'gamma_c_carrier_program.py',  # v24.3.374-landing disposition (2026-07-04): the concurrent .375 gamma_C-program module caught live by net-0 at the .374 landing (with the which-v clause-(b) catch, same scan; .360/.373 precedent -- the landing lane dispositions the concurrent module); carrier-fork/no-trace instruments over Paper 9 conventions, no vacuum-42 register reader/writer
         'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
         'generations.py', 'gravity.py', 'ie_atlas_verdict_pin.py',
         'ie_onboarding_registry.py', 'interface_atlas.py',
@@ -1592,6 +1593,7 @@ def check_T_config_demand_register_split_bank_respected():
         'unification.py', 'unification_three_levels.py',
         'universality_forcing.py', 'vacuum_label_code.py',
         'vacuum_o1_fork.py',
+        'vacuum_scheme_covariance.py',  # v24.3.373 (2026-07-03): the S_42-covariant fence split; abstract covariant-scheme instrument on banked constants, no register reader/writer; dispositioned at landing per the .352/.355 pattern
         'w_trace_denner_diagram_coefficient_table_closeout.py',
         'w_trace_denner_formula_import_native_assembly.py',
         'w_trace_denner_ward_identity_counterterm_import.py',

@@ -443,7 +443,16 @@ def check_L_irr():
         By L_cost (cost = count * epsilon), the joint-vs-sum residual is a
         counting identity: Delta(S1,S2) = epsilon * (# irreducibly-joint
         distinctions the joint carries - # reducible shared anchors). L_cost
-        fixes the FORM; it does not fix the sign. Delta > 0 IFF the shared
+        fixes the FORM; it does not fix the sign.
+        (2026-07-04 R-convention disambiguation, Paper 12 round-6 C1
+        landing: 'reducible shared anchors' in this identity means shared
+        CHANNELS -- shared billed distinctions -- NOT shared loci. Every
+        banked witness implements the channel convention and is
+        convention-degenerate (shared channel <=> shared locus, 1:1),
+        which is why the wording was ambiguous; the locus reading
+        provably breaks the identity. See check_T_delta_JR_derived,
+        apf/delta_calculus.py, where the identity is derived and the two
+        conventions are separated by finite instances.) Delta > 0 IFF the shared
         interface carries an irreducibly-joint distinction (a correlation not
         reducible to either marginal) -- the OCCUPANCY feature. A1 alone admits
         both Delta = 0 (the unoccupied limit below) and Delta > 0; occupancy is
@@ -788,6 +797,269 @@ def check_L_nc():
     )
 
 
+def check_L_col():
+    """L_col: Minimality / Capacity Optimization (the admissibility argmin).
+
+    FOUNDING-CHAIN LEMMA (registered 2026-07-04, closing the named
+    registration debt in apf/ie_export_core_census.py EXPORT_ROOT_INVENTORY;
+    the census root pin re-pin is owed by the landing pass). Chain position:
+        A1 -> {L_nc, L_irr, L_col} -> Theorem_R -> L_gauge_template_uniqueness
+    (bank edge: L_gauge_template_uniqueness dependencies, apf/gauge.py).
+
+    STATEMENT (Paper 13 v8.22, Lemma L_col (Minimality / Capacity
+    Optimization), body section "L_col: Minimality --- the admissibility set
+    is an argmin" + Appendix A.4 full proof):
+
+        "Among all structures consistent with A1, the realized structure is
+        the one that minimizes total admissibility overhead:
+            G_realized = argmin_{G in viable} dim(G)."
+
+    PROOF (Paper 13 Appendix A.4, verbatim spine): "A1 bounds the total
+    realignment cost. Any structure with overhead exceeding the minimum
+    leaves less capacity for physical distinctions, making it strictly
+    dominated: an alternative exists that enforces the same distinctions at
+    lower cost. A dominated structure is inadmissible when the dominating
+    alternative is available. The admissible structure is therefore the one
+    with minimum overhead." The uniqueness of dim(G) as the cost measure is
+    L_cost's content (C1 completeness, C2 additive independence, GP
+    generator primitivity, C3 Cauchy uniqueness), consumed here as a
+    dependency, not re-proved.
+
+    COMPANION FORM (Paper 18 v3.20, Derivation Sketches, "L_col
+    (Collapse)"): "Premise: A1 + L_irr. Irreversible records accumulate.
+    Because capacity is finite (A1), the number of simultaneously
+    enforceable distinctions is bounded. As records lock states, the
+    available admissible set contracts. This bounded refinement must
+    terminate: the system reaches a state from which no further refinement
+    is possible. This is collapse --- forced simplification under finite
+    resources. The termination argument requires only finiteness (A1) and
+    the existence of irreversible transitions (L_irr)."
+
+    RECONCILIATION: the identification of the two forms is carried by
+    PAPER 18 (same label L_col for its collapse sketch, with "the lemma
+    derivations are proved in full in [Paper0, Paper13]" pointing the full
+    proof at Paper 13's argmin form); Paper 13's own text is argmin-only
+    ("L_col gives middle-regime minimality / argmin selection", and its
+    App. A.4 proof does not contain the termination argument). The
+    collapse/termination form is the process-level reading; the argmin
+    form is the structural content. Both are witnessed below.
+
+    SELECTION-COMPONENT CAVEAT (Paper 13, "Note on PLEC alignment",
+    recorded here exactly as the source records it): the argmin FEATURE is
+    PLEC component A2 (argmin selection), which is structurally necessary
+    in its own right and not implied by A1 alone -- the current canonical
+    statement is Paper 1 Supplement v8.43: "A2's selection content (argmin
+    among admissible alternatives) is a named certificate target, not a
+    theorem." (Paper 13's older note cites a supplement countermodel that
+    the v8.43 supplement no longer carries; the graded-reduction sentence
+    above is the live authority.) Paper 13 phrases L_col in
+    "derived from A1" shorthand because the downstream content (gauge
+    group, dim-G cost, N_c=3) is unchanged either way. This check
+    certifies the STRUCTURE (domination arithmetic, argmin
+    well-definedness and uniqueness under non-degenerate costs, and the
+    A1 + L_irr termination argument) on finite witnesses; the selection of
+    the minimum-cost member as the realized one is the PLEC A2 component
+    reading that structure.
+
+    WITNESS LEGS:
+      1. Domination (Paper 13 App. A.4): at every finite capacity C large
+         enough to host either candidate, the higher-overhead structure
+         leaves strictly fewer channels for physical distinctions. Worked
+         pair from the source: dim = 12 vs dim = 28 (Paper 13: "SU(3) has
+         strictly lower cost than SU(5) (dim G = 12 vs. 28)").
+      2. Argmin well-defined + unique: a finite nonempty viable set of
+         positive overheads has a minimum; with non-degenerate costs the
+         argmin is unique.
+      3. Termination (Paper 18 form): finite C + positive floor epsilon +
+         irreversible record locking ==> the refinement sequence reaches a
+         terminal state (no admissible successor) in exactly
+         floor(C/epsilon) steps.
+      4. Countermodel (finiteness necessary): with capacity allowed to grow,
+         the termination bound floor(C/epsilon) diverges --- no forced
+         terminal stage.
+      5. Countermodel (irreversibility necessary): if records unlock
+         (reversible world), lock/unlock cycles return to the initial
+         state; the admissible set does not contract and no termination
+         is forced.
+
+    STATUS: [P] (relative to the PLEC constitutive base; see the
+    selection-component caveat above --- the caveat is Paper 13's own and
+    changes no downstream content). Dependencies: A1 (finiteness), L_irr
+    (Paper 18 premise; chain predecessor, Paper 13 lemma chain
+    A1 -> L_loc -> L_nc -> L_irr -> L_col), L_cost (dim(G) unique cost
+    measure read by the argmin).
+    """
+    # ================================================================
+    # LEG 1: Domination arithmetic (Paper 13 Appendix A.4)
+    # ================================================================
+    # Two viable structures enforcing the SAME required distinction set,
+    # overheads 12 vs 28 (the source's worked pair). At any finite C
+    # hosting both, the dominated one leaves strictly fewer channels.
+    epsilon = Fraction(1)      # per-distinction floor (L_epsilon* > 0)
+    dim_min = 12               # minimal viable overhead (source pair)
+    dim_alt = 28               # dominated alternative (source pair)
+    check(dim_min < dim_alt, "Worked pair: 12 < 28 (Paper 13 App. A.4)")
+
+    for C in (Fraction(29), Fraction(61), Fraction(100)):
+        channels_min = int((C - dim_min) / epsilon)
+        channels_alt = int((C - dim_alt) / epsilon)
+        check(channels_min > channels_alt, (
+            f"Domination at C={C}: minimal overhead leaves {channels_min} "
+            f"channels > {channels_alt} (dominated structure strictly "
+            "dominated -> inadmissible when the alternative is available)"
+        ))
+
+    # At C = 61 (the derived C_total, cited as the source's own instance):
+    check(int((Fraction(61) - dim_min) / epsilon) == 49, "C=61: 49 channels")
+    check(int((Fraction(61) - dim_alt) / epsilon) == 33, "C=61: 33 channels")
+
+    # ================================================================
+    # LEG 2: The argmin is well-defined and unique
+    # ================================================================
+    viable = {'G_min': dim_min, 'G_alt': dim_alt}
+    check(len(viable) >= 1, "Viable set nonempty and finite")
+    costs = sorted(viable.values())
+    check(costs[0] > 0, "All overheads positive (L_cost floor)")
+    # Finite nonempty set of positive integers attains its minimum:
+    argmin_cost = min(viable.values())
+    argmins = [g for g, d in viable.items() if d == argmin_cost]
+    check(len(argmins) == 1, (
+        f"Argmin unique under non-degenerate costs (got {argmins})"
+    ))
+    check(argmins[0] == 'G_min' and argmin_cost == 12,
+          "argmin_{G in viable} dim(G) attained at the minimal structure")
+
+    # ================================================================
+    # LEG 3: Termination (Paper 18 collapse form: A1 + L_irr)
+    # ================================================================
+    # Records lock irreversibly at cost epsilon_r each; capacity C_r.
+    # Refinement r -> r+1 admissible iff (r+1)*epsilon_r <= C_r.
+    # L_irr forbids r -> r-1 (records do not unlock).
+    C_r = Fraction(10)
+    epsilon_r = Fraction(2)
+    N_max = int(C_r / epsilon_r)          # = 5, the A1 bound
+    check(N_max == 5, "A1 bound: floor(C/epsilon) = 5")
+
+    r = 0
+    steps = 0
+    trajectory = [0]
+    while (r + 1) * epsilon_r <= C_r:     # admissible refinement exists
+        r += 1                            # lock one more record
+        steps += 1
+        trajectory.append(r)
+        check(steps <= N_max + 1, "Termination: must stop within the bound")
+    # Terminal state reached: no admissible successor.
+    check((r + 1) * epsilon_r > C_r,
+          f"Terminal state r={r}: no further refinement admissible")
+    check(steps == N_max,
+          f"Termination in exactly floor(C/epsilon) = {N_max} steps")
+    # Monotone contraction: locked capacity non-decreasing along the path
+    # (the admissible set contracts as records lock).
+    locked = [ri * epsilon_r for ri in trajectory]
+    check(all(locked[i] < locked[i + 1] for i in range(len(locked) - 1)),
+          "Admissible set contracts monotonically (records lock)")
+
+    # ================================================================
+    # LEG 4 (countermodel): finiteness (A1) is necessary
+    # ================================================================
+    # With capacity allowed to grow, the bound diverges: for every n there
+    # is a capacity C_n = n*epsilon under which n further lockings are
+    # admissible. No C-independent terminal stage exists.
+    for n in (1, 5, 50):
+        C_n = Fraction(n) * epsilon_r
+        check(n * epsilon_r <= C_n,
+              f"Unbounded capacity: {n} lockings admissible at C={C_n}")
+    check(int((Fraction(50) * epsilon_r) / epsilon_r) == 50,
+          "Bound floor(C/epsilon) diverges with C -> no forced termination")
+
+    # ================================================================
+    # LEG 5 (countermodel): irreversibility (L_irr) is necessary
+    # ================================================================
+    # Reversible world: unlocking is admissible at zero net cost. Then
+    # lock; unlock returns to the initial state: the refinement relation
+    # has a cycle, the admissible set does not contract, and no terminal
+    # state is forced.
+    r0 = 0
+    r1 = r0 + 1                            # lock (admissible: 2 <= 10)
+    check(r1 * epsilon_r <= C_r, "Reversible world: lock admissible")
+    r2 = r1 - 1                            # unlock (admissible if reversible)
+    check(r2 == r0, "Reversible world: state revisited (cycle exists)")
+    # With a cycle, strict monotone contraction fails:
+    locked_rev = [r0 * epsilon_r, r1 * epsilon_r, r2 * epsilon_r]
+    check(not all(locked_rev[i] < locked_rev[i + 1]
+                  for i in range(len(locked_rev) - 1)),
+          "Without L_irr the contraction premise fails -> no forced collapse")
+
+    return _result(
+        name='L_col: Minimality / Capacity Optimization (admissibility argmin)',
+        tier=0,
+        epistemic='P',
+        summary=(
+            'Founding-chain lemma (A1 -> {L_nc, L_irr, L_col} -> Theorem_R). '
+            'Structural content: under A1 the admissibility set is an argmin '
+            'of the derived cost functional dim(G) (Paper 13 v8.22 App. A.4); '
+            'process reading: A1 + L_irr force bounded refinement to '
+            'terminate (Paper 18 v3.20 collapse sketch). Witnessed: '
+            'domination arithmetic on the source pair dim 12 vs 28 (at C=61: '
+            '49 vs 33 free channels; dominated structure inadmissible when '
+            'the alternative is available); argmin well-defined and unique '
+            'under non-degenerate costs; termination in exactly '
+            'floor(C/epsilon)=5 steps on the C=10, epsilon=2 witness with a '
+            'verified terminal state; countermodels confirm both finiteness '
+            '(bound diverges with C) and irreversibility (reversible world '
+            'cycles, no contraction) are necessary. Selection-component '
+            'caveat recorded per Paper 13: the argmin feature is PLEC '
+            'component A2, not implied by A1 alone.'
+        ),
+        key_result=(
+            'A1 + L_irr + L_cost derive the STRUCTURE: strict domination '
+            '(higher-overhead structures leave strictly fewer channels at '
+            'every hosting capacity), argmin well-definedness + uniqueness '
+            'under non-degenerate costs, and bounded-refinement termination '
+            '(collapse). The SELECTION of the argmin member as the realized '
+            'structure is PLEC component A2 (constitutive, listed as a '
+            'dependency) reading that structure -- not derived here. '
+            'Founding-chain root converted to graded node.'
+        ),
+        dependencies=['A1', 'A2', 'L_irr', 'L_cost'],
+        cross_refs=['Theorem_R', 'T_gauge', 'L_gauge_template_uniqueness'],
+        artifacts={
+            'statement': 'G_realized = argmin_{G in viable} dim(G)',
+            'source': {
+                'canonical': 'Paper 13 v8.22, Lemma L_col (Minimality / '
+                             'Capacity Optimization), App. A.4 full proof',
+                'companion': 'Paper 18 v3.20, Derivation Sketches, '
+                             'L_col (Collapse): premise A1 + L_irr',
+                'identification': 'Paper 13: "L_col gives middle-regime '
+                                  'minimality / argmin selection"',
+            },
+            'domination_witness': {
+                'pair': 'dim 12 vs dim 28 (source worked pair)',
+                'at_C_61': 'free channels 49 vs 33',
+                'checked_capacities': [29, 61, 100],
+            },
+            'termination_witness': {
+                'C': '10', 'epsilon': '2', 'bound': 5,
+                'steps_to_terminal': 5,
+                'terminal': 'r=5, next locking costs 12 > 10',
+            },
+            'countermodels': {
+                'no_A1': 'bound floor(C/epsilon) diverges with C',
+                'no_L_irr': 'lock/unlock cycle revisits initial state; '
+                            'no monotone contraction, no forced collapse',
+            },
+            'plec_alignment': 'argmin feature = PLEC component A2 '
+                              '(constitutive; P1 Supp v8.43: selection '
+                              'content is a named certificate target, '
+                              'not a theorem)',
+            'registration': 'closes the L_col registration debt in '
+                            'ie_export_core_census.py EXPORT_ROOT_INVENTORY '
+                            '(root -> graded node; census re-pin owed by '
+                            'the landing pass)',
+        },
+    )
+
+
 def check_L_loc():
     """L_loc: Locality from Admissibility Physics.
 
@@ -1051,6 +1323,14 @@ def check_L_cost():
     (operational_completeness.py) is its completeness companion -- the
     ledger books transition commitments and per-activation charges only,
     no standing rent (Paper 0 row 9).
+
+    CROSS-REF (v24.3.376): the monotonicity hypothesis in L_cost_MAIN is
+    shown REDUNDANT on N -- derivable from C2 + f(1) = epsilon, with
+    monotonicity returned as a corollary -- by
+    check_T_cost_count_characterization (delta_calculus.py). Conclusion
+    unchanged; the hypothesis set shrinks. (Contrast the CONTINUUM leg
+    L_Cauchy_uniqueness, F: R+ -> R+, where Darboux monotonicity IS
+    load-bearing; on N it is not. Do not conflate the two legs.)
     """
 
     # ================================================================
@@ -6649,6 +6929,7 @@ _CHECKS = {
     'L_nc': check_L_nc,
     'L_cost': check_L_cost,
     'L_irr': check_L_irr,
+    'L_col': check_L_col,
     'L_irr_uniform': check_L_irr_uniform,
     'L_Omega_sign': check_L_Omega_sign,
     'L_Pi': check_L_Pi,

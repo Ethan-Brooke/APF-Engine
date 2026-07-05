@@ -1,8 +1,7 @@
 """The strong-CP completion is content-blind on the angle: a no-go certificate.
 
-STAGED (v24.3.35x candidate, 2026-07-03; NOT yet registered in
-_module_manifest.py -- a sibling lane held the manifest/setup dirty at walk
-time, so registration + EXPECTED bump is the native landing step). Walk of
+BANKED v24.3.359 (2026-07-03; commit 7ab46f2; registered in
+_module_manifest.py). Walk of
 record: "Reference - Can the Transport Half of NRDT Reach [P] - The
 Rent-Exclusion Kill and the Completion-Functor Route (2026-07-03)" v0.3,
 hostile-audited. Parent: "Reference - The Native Measure-Angle Walk"
@@ -263,3 +262,43 @@ if __name__ == '__main__':
         print(('PASS' if _r.get('passed', True) else 'FAIL'), _n)
         print('  grade:', _r['epistemic'], '| tier', _r['tier'])
         print('  ', _r['key_result'])
+
+
+# ---------------------------------------------------------------------------
+# Interface Engine onboarding (Full Bank Onboarding wave, 2026-07-04)
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "strong:strong_cp_transport_content_blind",
+        "axis": "ROUTE",
+        "route": "strong_cp_transport",
+        "expect_export": False,
+        "payload": {
+            "name": "strong_cp_transport_content_blind",
+            "closure_kind": "obstruction_named",
+            "obstruction_class": "COMPLETION_CONTENT_BLIND_ON_ANGLE",
+            "knockout_summary": (
+                "The transport half of the strong-CP closure cannot reach "
+                "[P]: the alpha-completion's action on theta-bar is NOT a "
+                "function of the native data -- the completion is "
+                "CONTENT-BLIND on the angle (record partition: theta-bar "
+                "types NO-RECORD, zero native capacity gain; delta_CKM "
+                "types RECORD-BEARING on the same partition). The native "
+                "half stays banked [P] (T_theta_QCD + "
+                "L_mass_texture_det_real); NRDT stays HOLD-NAMED (ruled "
+                "2026-07-03), its ceiling certified here at "
+                "[P_structural_reading]. "
+                "(check_L_completion_angle_content_blind_native, "
+                "strong_cp_completion_no_go.py)"
+            ),
+        },
+        "note": (
+            "Onboards the .359 transport-half no-go onto the ROUTE axis as "
+            "a closure-by-design obstruction. Paper 46 anchors this ceiling; "
+            "a future lane claiming the PLEC/cost route to theta-bar = 0 "
+            "(killed by T_ledger_rent_excluded) or content-forces-angle "
+            "fails the pin."
+        ),
+    },
+)

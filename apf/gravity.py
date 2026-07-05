@@ -2148,6 +2148,14 @@ def check_T_which_v_no_registered_interior_reader():
         'gauge_beta_capacity_tiling.py': ('VL', 'consumer'),
         'gauge_invariant_record.py': ('V', 'fence'),
         'gauge_quotient_ledger.py': ('L', 'fence'),
+        # v24.3.374-landing disposition (2026-07-04): the concurrent .375
+        # gamma_C-program module caught by this net's clause (b) live at the
+        # .374 landing (the net's FIFTH live catch; .360 precedent -- the
+        # landing lane dispositions the concurrent module). Class 'L' as
+        # reported by the net: lambda_s/lambda_t response-token consumer
+        # (Paper 9 Theta_s convention, carrier-fork instruments); a fence/
+        # instrument module, no interior which-v reader.
+        'gamma_c_carrier_program.py': ('L', 'fence'),
         'generations.py': ('VL', 'consumer'),
         'gravity.py': ('VLD', 'consumer'),
         'horizon_joint_bridge.py': ('VL', 'consumer'),
@@ -2161,6 +2169,7 @@ def check_T_which_v_no_registered_interior_reader():
         'lambda_absolute.py': ('VL', 'consumer'),
         'lambda_operator_derivation.py': ('VL', 'consumer'),
         'light_quark_real_adapter.py': ('L', 'fence'),
+        'mcross_planck_ratio_composition.py': ('VH', 'consumer'),  # dispositioned at the .365 landing: count-level capacity composition (C_vacuum comment vocab + ln 102 arithmetic); no interior mode-label read
         'operational_completeness.py': ('V', 'fence'),
         'phase_14d3_completions.py': ('VL', 'consumer'),
         'photon_commitment_profile.py': ('L', 'consumer'),
@@ -2169,6 +2178,7 @@ def check_T_which_v_no_registered_interior_reader():
         'planck_magnitude_single_anchor.py': ('VL', 'consumer'),
         'plec.py': ('V', 'fence'),
         'quantum_operator_derivation.py': ('V', 'consumer'),
+        'reading_functional_census.py': ('L', 'analysis'),  # dispositioned at the .369 landing (2026-07-03, the reading-exhaustiveness split landing): analysis-layer census table (the .353 crystal_ledger pattern, NOT bank-registered); the literal-42 class is census-row arithmetic (the equipartition residual-partition rows); no interior mode-label read
         'recruitment.py': ('V', 'fence'),
         'red_team.py': ('VLH', 'infra'),
         'representation_descent_kernel_adversarial_audit.py': ('L', 'consumer'),
@@ -2182,6 +2192,7 @@ def check_T_which_v_no_registered_interior_reader():
         'supplements.py': ('VLH', 'consumer'),
         'test_no_smuggling.py': ('VL', 'infra'),
         'thermal_absolute.py': ('VL', 'consumer'),
+        'strong_cp_completion_no_go.py': ('V', 'fence'),  # dispositioned 2026-07-03 (the .360 lane's repair pass, per the .318 clause-(b) live catch on the concurrent .359 landing): NRDT transport-half no-go module -- the single class-V token is a U(1)-completion prose line ('compact with a unique vacuum and NO topological sectors', L58), count-level lattice-of-completions context; no mode-label read anywhere in the module
         'thooft_anomaly_matching_chiral.py': ('V', 'fence'),  # re-dispositioned .334: chiral-VACUUM sense (symmetric-vacuum no-go), no 42-sector content
         'thermo_four_laws_synthesis.py': ('VL', 'consumer'),
         'unification.py': ('VL', 'consumer'),
@@ -2190,6 +2201,7 @@ def check_T_which_v_no_registered_interior_reader():
         'universality_forcing.py': ('L', 'fence'),
         'vacuum_o1_fork.py': ('VL', 'consumer'),
         'vacuum_label_code.py': ('VL', 'consumer'),  # v24.3.NEW: the route-(b) P1 witness; V from vacuum-mode vocabulary, L from ALPHABET = 42; constructs NO interior reader (its negative control is a counterfactual encoding exhibit) -- the module certifies reader-absence in-model
+        'vacuum_scheme_covariance.py': ('VL', 'consumer'),  # v24.3.373 (2026-07-03): the S_42-covariant fence split; V/L from the vacuum-mode scheme vocabulary; abstract covariant-scheme mathematics on the banked constants -- constructs NO interior reader of physical Sector-B content (its twirl block is a negative control on an abstract encoding); disposition per the .352 precedent
         'validation.py': ('VL', 'consumer'),
         'w_trace_apf_native_one_loop_evaluator.py': ('V', 'fence'),
         'w_trace_denner_diagram_coefficient_table_closeout.py': ('V', 'fence'),
@@ -2514,7 +2526,7 @@ def check_T_vacuum_content_typing_status():
         'formal_kernel.py': 4,
         'gravity.py': 38,
         'test_no_smuggling.py': 7,
-        '_module_manifest.py': 3,  # re-pinned 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
+        '_module_manifest.py': 5,  # re-pinned 2026-07-04 (the .394 full-surface census pass; the census's out-of-order walk executed this sentinel and scored the catch): +2 hit lines, BOTH verified changelog-narrative from the 2026-07-03 sibling landings -- the .363 knee-design line (Paper 26 App. A 'Eq. 27' citation) and the .362 'T27d REWIRING' header, each pulled into scope by vacuum-family words on adjacent narrative lines (the window is +/-2). No rogue characterization. Prior re-pin 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
     }
     offenders = {}
     for root, dirs, files in _os.walk(pkg_dir):

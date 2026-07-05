@@ -140,6 +140,7 @@ def _walk_vev_fixing_surface():
         "sigma_scale_capacity_formula_gate.py": "reservoir_family",  # gate/disposition of the same route
         "lambda_absolute.py": "reservoir_family",           # unified-suppression sibling
         "confinement_scale_single_anchor.py": "reservoir_family",
+        "mcross_planck_ratio_composition.py": "reservoir_family",  # the composed ratio (v24.3.365)
         "acc_reading_selection.py": "reservoir_family",
         "ew_pre_branch_reservoir_ordering.py": "reservoir_family",
         # (ii) measurement-completion routes (consume measured inputs; not base-resting)

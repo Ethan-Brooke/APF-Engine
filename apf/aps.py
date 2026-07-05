@@ -165,6 +165,7 @@ def check_T_APS_construction():
 
     return {
         "name": "T_APS_construction",
+        "epistemic": "P_structural",
         "passed": True,
         "key_result": (
             f"APS witness '{A.name}': |X|={len(A.substrate)}, "

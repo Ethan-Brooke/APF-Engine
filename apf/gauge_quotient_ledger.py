@@ -2235,7 +2235,15 @@ def check_T_orientation_ew_route_priced():
     lem1 = "L_defended_fact" + "_is_template_invariant"
     lem2 = "L_gauge_orbit" + "_unpinnable"
     QUARANTINE_EXPECTED = {
-        lem1: {"gauge_quotient_ledger.py": 11, "ym_quotient_ledger.py": 1},
+        # v24.3.367 re-adjudication rider (2026-07-03, the solder-form no-go
+        # landing): colour_solder_form_no_go.py carries ONE hit on lem1 -- a
+        # cross_refs entry naming GQL-1 as the RECORD-SIDE SIBLING of the
+        # constructibility no-go (the H3 seam of the walk note; landing audit
+        # F1). It is NOT a new consumer of the block-D/E adjudication: it
+        # consumes no orbit-pricing content, only cites the lemma as the
+        # storable-vs-constructible counterpart. Re-pinned by hand.
+        lem1: {"colour_solder_form_no_go.py": 1,
+               "gauge_quotient_ledger.py": 11, "ym_quotient_ledger.py": 1},
         lem2: {"gauge_quotient_ledger.py": 13, "ym_quotient_ledger.py": 2},
     }
     quarantine_hits = {}
@@ -2252,7 +2260,16 @@ def check_T_orientation_ew_route_priced():
     tok_shadow = "Goldstone " + "shadow"
     tok_pseudo = "pseudo-" + "Goldstone"
     TOKEN_EXPECTED = {
-        tok_orient: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 5},
+        # v24.3.367 rider (2026-07-03): colour_solder_form_no_go.py carries the
+        # orientation token ONCE, in the H3 seam sentence of its docstring
+        # (the "unpinnable AS A MAINTAINED RECORD" clause citing GQL-1's
+        # two-region control as the record-side sibling). Not a new
+        # orientation-vocabulary consumer; re-pinned by hand with the
+        # quarantine rider above. (This comment deliberately avoids the
+        # contiguous token -- the needles are runtime-assembled for a reason.)
+        tok_orient: {"base_fiber_allocation.py": 1,
+                     "colour_solder_form_no_go.py": 1,
+                     "gauge_quotient_ledger.py": 5},
         tok_theta: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 1},
         tok_shadow: {"base_fiber_allocation.py": 1, "gauge_quotient_ledger.py": 3},
         tok_pseudo: {"confinement_scale_single_anchor.py": 4},

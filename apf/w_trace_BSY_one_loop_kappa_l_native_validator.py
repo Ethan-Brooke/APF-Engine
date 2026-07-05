@@ -16,8 +16,10 @@ What it certifies, at Denner-validated inputs:
    g_V/g_A finite and real-dominated, sin²θ_eff in physical band [0.20, 0.25].
 
 2. The 3-pt function piece F_V^Zℓ from v24.3.107 (Eqs 166/167) sits at
-   |F_V| ~ 10^-2 with α/(4π) prefactor and bracket ~ 18 — matching the
-   working-doc target.
+   |F_V| ~ 2.2e-3 with α/(4π) prefactor and in-bracket |F_L^ℓ| = 3.546 on
+   the v24.3.360 sign-corrected Lambda_3. (The pre-.360 "|F_V| ~ 10^-2,
+   bracket ~ 18" figures — and the working-doc "~18" target itself — were
+   artifacts of the defective printed Lambda_3; target retired.)
 
 3. The renormalized Π̂^γZ_R(M_Z²) from v24.3.99 self-energies + EWWGR
    counterterm chain (counterm L5827-5852 + rself) is finite and lies
@@ -51,7 +53,9 @@ This module is the bank-side companion to today's session work:
 Honest non-claims (all preserved at this validator):
 
 - Export_BSY_one_loop_assembly_consistency_at_Denner_set = 1   (this validator)
-- Export_BSY_kappa_l_PDG_canonical_one_loop = 0   (open; +1.7×10^-2 gap to DFGRU)
+- Export_BSY_kappa_l_PDG_canonical_one_loop = 0   (open; the pre-.360
+  '+1.7e-2 gap to DFGRU' figure was defective-formula-era — re-measure
+  post-corrigendum before quoting any gap)
 - Export_BSY_kappa_l_all_orders = 0    (open; two-loop EW gate, multi-session)
 - Export_BSY_kappa_l_physical_final = 0  (no [P_physical_final])
 - Export_two_loop_EW_complete = 0     (open arc, scoping brief filed)
@@ -90,6 +94,22 @@ for Real (2026-07-02).md"):
    [P_structural_instrument]; retires the [C] slot check's
    "UNBENCHMARKED" clause the hard way. The M_H-shape PASS
    simultaneously benchmark-validates the oblique sector.
+
+v24.3.360 (2026-07-03) — THE +0.019 FOUND AND FIXED. The M_H-flat excess
+the .358 ACFW instrument recorded was a SIGN ERROR in the PUBLISHED
+CERN-95-03 closed form of Lambda_3 (corrigendum + three-witness
+certification in apf.w_trace_pv_lambda_bhm_vertex; walker + fresh-context
+hostile audit SOUND-WITH-CORRECTIONS 0.97). Post-corrigendum this module's
+composition PASSES the ACFW absolute benchmark: gaps +9.8e-5/+9.3e-5/
++8.3e-5/+8.1e-5 at M_H = 100/200/600/1000 (mean +8.9e-5, spread 1.7e-5),
+shape ≤1.7e-5. The ACFW check below is re-cut from FAIL-recording to
+PASS-certifying, keeping the pre-.360 FAIL history on the record.
+Denner-deck values post-.360: Δκ_ℓ = 0.028229 (sin²θ_eff = 0.229644),
+|F_V^Zℓ| = 2.2e-3; check-1's bands re-priced accordingly. The .358-era
+"assembly-sector defect" attribution is RESOLVED — it was the published-
+formula defect, not a composition error; the one-loop machine and the
+oblique sector are now simultaneously validated at a published benchmark
+to ~1e-4.
 """
 from __future__ import annotations
 
@@ -211,7 +231,17 @@ def _bsy_compose(sW2: float, alpha: float, mu2: float = None) -> Dict[str, Any]:
 def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs_P() -> Dict[str, Any]:
     """T: v24.3.107 + v24.3.99 + v24.3.106 BSY composition is structurally
     consistent at Denner-validated inputs; one-loop κ_ℓ assembly stands
-    [P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_consistency]."""
+    [P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_consistency].
+
+    Token note (v24.3.361): the bespoke grade token is retained-as-identifier
+    per the '_bare_' registry-stability precedent; it describes THIS check's
+    claim (assembly consistency at one validated input set), which is still
+    exactly what this check certifies. The same composition is now
+    published-benchmark-VALIDATED — that stronger claim belongs to, and is
+    banked at, the companion check
+    T_w_trace_kappa_l_ACFW_published_one_loop_benchmark
+    [P_structural_instrument] (cross-ref'd both ways).
+    """
 
     result = _bsy_compose(_sW2_BANKED_OS, _ALPHA_MZ)
 
@@ -233,9 +263,12 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
           f"g_V/g_A not well-defined: gV={gV}, gA={gA}")
 
     # (2) v24.3.107 3-pt function piece is at expected scale
+    # (band re-priced v24.3.360: on the sign-corrected Lambda_3 the honest
+    #  scale is |F_V| ~ 2.2e-3; the pre-.360 band [5e-3, 2e-2] bracketed the
+    #  defective printed-formula value)
     mag_FV = abs(F_V)
-    check(5.0e-3 < mag_FV < 2.0e-2,
-          f"|F_V^Zell| = {mag_FV:.4e} outside expected one-loop band [5e-3, 2e-2]")
+    check(1.0e-3 < mag_FV < 5.0e-3,
+          f"|F_V^Zell| = {mag_FV:.4e} outside post-.360 one-loop band [1e-3, 5e-3]")
     check(F_V.imag > 0.0,
           f"Im F_V^Zell must be positive (absorptive), got {F_V.imag:.2e}")
 
@@ -252,12 +285,12 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
           f"by rel {rel_drho:.4f}")
 
     # (5) Δκ_ℓ at Denner-validated inputs lands in the one-loop SM band.
-    # Acceptance criterion: [0.040, 0.055]. Tight bounds reflect Denner-
-    # set's known one-loop range; the 2026-05-27 matched-inputs result was
-    # 0.0475 (Case B α(M_Z)); post-.358 corrigendum it is 0.04854 — still
-    # comfortably in-band.
-    check(0.040 <= Dkl <= 0.055,
-          f"Δκ_ℓ = {Dkl:.6f} outside Denner-validated one-loop band [0.040, 0.055]")
+    # Band history: [0.040, 0.055] pre-.360 bracketed the defective-Lambda_3
+    # composition (0.0475 at 2026-05-27; 0.04854 post-.358 Pi_gZ corrigendum).
+    # v24.3.360 (sign-corrected Lambda_3): Δκ_ℓ = 0.028229 — the value now
+    # ACFW-benchmark-validated at the published one-loop; band re-priced.
+    check(0.022 <= Dkl <= 0.035,
+          f"Δκ_ℓ = {Dkl:.6f} outside post-.360 Denner-deck band [0.022, 0.035]")
 
     # (6) Honest non-claim guard
     check(EXPORT_FLAGS["Export_BSY_kappa_l_PDG_canonical_one_loop"] == 0,
@@ -300,10 +333,12 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
             f"(2026-05-26).md`). The PDG-canonical reading (m_t=173.2, M_H=125) shows a "
             f"+1.7×10⁻² gap to DFGRU, previously identified as the leading-Δρ_top one-loop "
             f"content that DFGRU's all-orders fit absorbs via two-loop EW + α_s + "
-            f"reducible-term resummation — ATTRIBUTION SUPERSEDED at .358: the ACFW "
-            f"published-one-loop benchmark (check_T_w_trace_kappa_l_ACFW_published_"
-            f"one_loop_benchmark) shows the dominant excess is an M_H-flat "
-            f"ASSEMBLY-SECTOR defect, not two-loop content. Today's executable witnesses preserved at "
+            f"reducible-term resummation — ATTRIBUTION SUPERSEDED at .358 (M_H-flat "
+            f"assembly-sector excess, not two-loop content) and RESOLVED at .360: "
+            f"the defect was the SIGN ERROR in the published CERN-95-03 Lambda_3 "
+            f"closed form; post-corrigendum the ACFW benchmark (check_T_w_trace_"
+            f"kappa_l_ACFW_published_one_loop_benchmark) PASSES shape AND absolute "
+            f"at ~1e-4, and pre-.360 gap figures are defective-formula-era. Today's executable witnesses preserved at "
             f"`outputs/kappa_l_BSY_*.py`; findings at "
             f"`APF Reference Docs/Reference - Q2 Empirical sW2 BSY Probe Findings "
             f"(2026-05-27).md`."
@@ -317,7 +352,7 @@ def check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs
         dependencies=[
             "T_w_trace_pv_ewwgr_bare_subgate_partial",
             "T_w_trace_pv_lambda_bhm_subgate_partial",
-            "T_w_trace_native_delta_r_assembly",
+            "T_w_trace_native_delta_r_assembly_scope_partial",
         ],
         cross_refs=[
             "T_sin2_theta_W_OS_capacity_counting_value",
@@ -378,39 +413,39 @@ def _acfw_benchmark_rows():
 
 def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, Any]:
     """T: the native BSY κ_ℓ assembly against a PUBLISHED full one-loop Δκ
-    comparator — M_H-shape PASS / absolute FAIL, recorded [P_structural_instrument].
+    comparator — shape AND absolute PASS post-.360 [P_structural_instrument].
 
-    FAIL-recording instrument (established precedent). Comparator: ACFW
-    PRL 93 (2004) 201805 Table II — one-loop O(α) Δκ with M_W input, α(0)
-    expansion, at M_H = 100/200/600/1000. The check calls the BANKED
-    _bsy_compose (post-.358 source-exact eq-rself transcription) — the walk
-    harness re-implemented the composition; a banked check must exercise
-    the banked object (audit fix 1 of the landing).
+    Comparator: ACFW PRL 93 (2004) 201805 Table II — one-loop O(α) Δκ with
+    M_W input, α(0) expansion, at M_H = 100/200/600/1000. The check calls
+    the BANKED _bsy_compose — a banked check must exercise the banked
+    object (audit fix 1 of the .358 landing).
 
-    What it certifies:
+    HISTORY (the instrument's finding of record): banked at .358 as a
+    FAIL-recording instrument — shape PASS ≤1.7e-4 / absolute FAIL +0.0194
+    M_H-FLAT — which localized the defect to the M_H-independent sector and
+    triggered the 2026-07-03 defect hunt. The hunt found the +0.019: a SIGN
+    ERROR in the PUBLISHED CERN-95-03 closed form of Lambda_3 (corrigendum
+    v24.3.360, three-witness certification in w_trace_pv_lambda_bhm_vertex).
+
+    What it certifies post-.360:
       (a) SHAPE PASS — native M_H-differences track the published one-loop
-          to ≤5e-4 (measured ≤1.7e-4) over an 8.0e-3 published swing: the
+          to ≤1e-4 (measured ≤1.7e-5) over an 8.0e-3 published swing: the
           oblique (Higgs self-energy) sector is benchmark-validated.
-      (b) ABSOLUTE FAIL — the native assembly overshoots the published
-          one-loop by ~+0.0194 at EVERY M_H, M_H-flat (spread <20% of the
-          mean; measured 0.9%). One-loop vs one-loop: the overshoot is an
-          ASSEMBLY DEFECT in the M_H-independent sector, not two-loop
-          truncation.
-      (c) LOCALIZATION, stated at its honest strength: the attribution of
-          the M_H-flat excess to the proper-vertex filler SPECIFICALLY is
-          inference (literature-scale ~+0.0025 lepton vertex + the
-          independent Δρ/Δr validations), CONDITIONAL on the effva booking
-          of the γZ term and a defect-free oblique sector — not proof.
-          The γZ booking collision is ADJUDICATED (principal ruling
-          2026-07-03: the effva booking is CANONICAL); ruling recorded in
-          the Decisions List, dual-booking machine-pinned at the slot check
-          in w_trace_native_zll_kappa_l_oblique.
+      (b) ABSOLUTE PASS — |gap| < 5e-4 at every M_H (measured mean +8.9e-5,
+          spread 1.7e-5). The native one-loop machine reproduces a
+          published full one-loop Δκ at the 1e-4 level, answer-free.
+      (c) The residual +0.9e-4 is UNATTRIBUTED but bounded within the
+          measured frame budget (light-quark masses ±20% → ≤1.5e-5;
+          BW→pole M_Z → +3.0e-5; stale .99-deck M_Z = 91.177; scalar-
+          substrate M_W² in the F's ~3e-6). If deck systematics are ever
+          driven down and the residual persists, the external-WF-leg
+          question re-opens at that scale — priced, not hidden.
 
-    Frame-sensitivity budget (measured by the walk audit, cited not
-    re-derived): light-quark masses ±20% → ≤1.5e-5; BW→pole M_Z → +3.0e-5;
-    stale .99-deck M_Z = 91.177 inherited. All ≥2 orders below the signal.
-    No published value is consumed as a fit target: the comparator enters
-    only as a benchmark and the absolute comparison is recorded as FAIL.
+    The γZ booking is ADJUDICATED (principal ruling 2026-07-03: effva
+    canonical; Decisions List of record; dual-booking machine-pinned at the
+    slot check in w_trace_native_zll_kappa_l_oblique). No published value
+    is consumed as a fit target: the Lambda_3 correction is derived from
+    Denner/TOPAZ0 sources; ACFW enters only as the gate.
     """
     rows, saved = _acfw_benchmark_rows()
 
@@ -429,16 +464,20 @@ def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, A
     # (a) SHAPE PASS
     check(pub_swing > 5.0e-3,
           f"published M_H swing {pub_swing:.6f} too small to discriminate shape")
-    check(all(abs(sd) < 5.0e-4 for sd in shape_diffs),
-          f"M_H-shape does not track the published one-loop: {shape_diffs}")
+    check(all(abs(sd) < 1.0e-4 for sd in shape_diffs),
+          f"M_H-shape does not track the published one-loop: {shape_diffs} "
+          f"(post-.360 measured <= 1.7e-5)")
 
-    # (b) ABSOLUTE FAIL — recorded, with the defect band pinned
-    check(all(g > 5.0e-3 for g in gaps),
-          f"absolute overshoot no longer present: gaps={gaps} (re-price the slot!)")
-    check(all(0.015 < g < 0.024 for g in gaps),
-          f"gap left the pinned defect band [0.015, 0.024]: {gaps}")
-    check(spread < 0.20 * abs(mean_gap),
-          f"gap not M_H-flat: spread {spread:.6f} vs mean {mean_gap:.6f}")
+    # (b) ABSOLUTE PASS (v24.3.360, post Lambda_3 sign corrigendum).
+    # History: pre-.360 this clause RECORDED the FAIL (+0.0194 M_H-flat,
+    # pinned band [0.015, 0.024]) — the instrument that caught the published-
+    # formula defect. Post-corrigendum the composition matches the published
+    # one-loop at ~1e-4; the clause now certifies the PASS.
+    check(all(abs(g) < 5.0e-4 for g in gaps),
+          f"absolute benchmark FAILS post-.360: gaps={gaps} "
+          f"(the Lambda_3 corrigendum chain is broken — re-open the defect hunt)")
+    check(spread < 1.0e-4,
+          f"gap spread {spread:.2e} exceeds the post-.360 flatness band 1e-4")
 
     # (c) honest non-claims
     check(EXPORT_FLAGS["Export_BSY_kappa_l_PDG_canonical_one_loop"] == 0,
@@ -448,9 +487,9 @@ def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, A
 
     return _result(
         name=("T_w_trace_kappa_l_ACFW_published_one_loop_benchmark: native BSY "
-              "assembly vs ACFW PRL 93 (2004) Table II — M_H-shape PASS "
-              "≤5e-4 / absolute FAIL +0.0194 M_H-flat, recorded "
-              "[P_structural_instrument]"),
+              "assembly vs ACFW PRL 93 (2004) Table II — shape AND absolute "
+              "PASS at ~1e-4 post-.360 (the .358 FAIL found the published "
+              "Lambda_3 defect) [P_structural_instrument]"),
         tier=4,
         epistemic="P_structural_instrument",
         summary=(
@@ -465,22 +504,27 @@ def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, A
             + f"Mean gap {mean_gap:+.6f}, spread {spread:.6f} "
             f"({spread/abs(mean_gap)*100:.1f}% — M_H-FLAT); shape diffs "
             f"{[round(sd, 7) for sd in shape_diffs]} vs published swing "
-            f"{pub_swing:.4f}. VERDICT: the oblique sector is benchmark-"
-            f"validated at ≤5e-4 (shape PASS); the assembly carries an "
-            f"M_H-independent defect of ~+0.019 (absolute FAIL, recorded). "
-            f"One-loop vs one-loop — NOT two-loop truncation. The implied "
-            f"true one-loop vertex-sector content ≈ +0.0025 is INFERENCE, "
-            f"conditional on the effva booking (ADJUDICATED canonical, "
-            f"ruling 2026-07-03, pinned at the slot check) and a defect-free "
-            f"oblique sector. This check retires "
-            f"the slot check's UNBENCHMARKED clause; it does NOT fill the "
-            f"slot. Frame budget: light-quark ±20% ≤1.5e-5, BW→pole M_Z "
-            f"+3.0e-5, stale .99 M_Z=91.177 — all far below the signal."
+            f"{pub_swing:.4f}. VERDICT (post-.360): shape AND absolute PASS — "
+            f"the native one-loop machine reproduces the published full "
+            f"one-loop Δκ at ~1e-4, answer-free, at all four Higgs masses. "
+            f"HISTORY: this instrument banked at .358 recording absolute FAIL "
+            f"+0.0194 M_H-flat; that recorded FAIL localized the defect and "
+            f"the 2026-07-03 hunt found it — the SIGN ERROR in the published "
+            f"CERN-95-03 Lambda_3 closed form (corrigendum v24.3.360, "
+            f"three-witness certification at w_trace_pv_lambda_bhm_vertex; "
+            f"the vertex-sector content on the corrected form is +0.0032). "
+            f"The γZ booking is ADJUDICATED effva-canonical (ruling "
+            f"2026-07-03, pinned at the slot check). This check does NOT "
+            f"close the [C] slot (Δα legs stay named-open). Residual "
+            f"+0.9e-4 unattributed but bounded within the measured frame "
+            f"budget: light-quark ±20% ≤1.5e-5, BW→pole M_Z +3.0e-5, stale "
+            f".99 M_Z=91.177, scalar-substrate M_W² ~3e-6."
         ),
         key_result=(
-            f"ACFW published-one-loop benchmark: shape PASS (≤5e-4), absolute "
-            f"FAIL ({mean_gap:+.4f} M_H-flat) — κ_ℓ overshoot is an assembly "
-            f"defect, not two-loop content. [P_structural_instrument]"
+            f"ACFW published-one-loop benchmark: shape AND absolute PASS "
+            f"(mean gap {mean_gap:+.1e}) post-.360 Lambda_3 corrigendum — "
+            f"the .358 FAIL this instrument recorded found a published-"
+            f"source defect. [P_structural_instrument]"
         ),
         dependencies=[
             "T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_validated_inputs",
@@ -488,6 +532,7 @@ def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, A
         cross_refs=[
             "L_w_trace_native_kappa_l_proper_vertex_open",
             "T_w_trace_native_kappa_l_gammaZ_mixing",
+            "T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor",
         ],
         artifacts={
             "acfw_rows_MH_pub_native": [(MH, pub, round(dk, 9))
@@ -497,8 +542,10 @@ def check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P() -> Dict[str, A
             "gap_spread": round(spread, 9),
             "shape_diffs": [round(sd, 9) for sd in shape_diffs],
             "benchmark_shape": "PASS",
-            "benchmark_absolute": "FAIL_RECORDED",
-            "implied_true_vertex_content_conditional": 0.0025,
+            "benchmark_absolute": "PASS_post_360",
+            "benchmark_absolute_history": ("FAIL_RECORDED at .358 (+0.0194 M_H-flat) "
+                                           "-> defect found: published Lambda_3 sign"),
+            "vertex_sector_content_post_360": 0.003247,
             "comparator": "ACFW PRL 93 (2004) 201805 Table II, O(alpha), M_W input",
             "export_flags": dict(EXPORT_FLAGS),
         },
@@ -538,35 +585,33 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Banked check check_T_BSY_one_loop_kappa_l_assembly_"
-            "consistency_at_Denner_validated_inputs_P (tier 4, bespoke machine grade "
-            "P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_consistency) "
-            "certifying that the native one-loop substrate (v24.3.99 self- "
-            "energies + v24.3.107 3-pt F_V/F_A) composed via EWWGR Eq 175 (BSY "
-            "recipe) yields a structurally consistent one-loop kappa_l assembly "
-            "at Denner-validated inputs (sW^2 = 0.223339, alpha(M_Z) = 1/128.21, "
-            "m_t = 140 GeV, M_H = 100 GeV): g_V/g_A finite and real-dominated, "
-            "sin^2 theta_eff in the physical band [0.20, 0.25], renormalized Pi- "
-            "hat^gammaZ_R(M_Z^2) in the one-loop band, Delta_rho_OS reproducing "
-            "Denner's published 0.00780 to ~1e-3 relative, and Delta_kappa_l in "
-            "[0.040, 0.055]. This is assembly CONSISTENCY at a validated input "
-            "set, nothing more: PDG-canonical one-loop kappa_l closure stays OPEN "
-            "(+1.7e-2 gap to DFGRU), all-orders/two-loop EW closure stays OPEN "
-            "(scoping brief filed), no physical-final kappa_l or sin^2 theta_eff "
-            "is exported, and no DFGRU/Awramik target is consumed -- all enforced "
-            "by explicit export-flag guards inside the check. "
+            "Two banked checks (post v24.3.361). "
+            "check_T_BSY_one_loop_kappa_l_assembly_consistency_at_Denner_"
+            "validated_inputs_P (tier 4, bespoke machine grade "
+            "P_one_loop_BSY_3pt_at_Denner_validated_inputs_assembly_"
+            "consistency, token retained-as-identifier) certifies that the "
+            "banked one-loop machinery composed via EWWGR Eq 175 (BSY "
+            "recipe) is structurally consistent at Denner-validated inputs "
+            "(sW^2 = 0.223339, alpha(M_Z) = 1/128.21, m_t = 140, M_H = 100): "
+            "g_V/g_A finite, sin^2 theta_eff in the physical band, "
+            "Delta_rho_OS reproducing Denner's published 0.00780, and "
+            "Delta_kappa_l = 0.028229 in the post-corrigendum band "
+            "[0.022, 0.035] (|F_V| in [1e-3, 5e-3]) on the v24.3.360 "
+            "sign-corrected Lambda_3. "
+            "check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P "
+            "(tier 4, P_structural_instrument) certifies the same "
+            "composition against ACFW PRL 93 (2004) Table II: M_H-shape AND "
+            "absolute PASS at about 1e-4 across four Higgs masses (the .358 "
+            "FAIL this instrument recorded found the published CERN-95-03 "
+            "Lambda_3 sign defect, corrected at .360). PDG-canonical and "
+            "all-orders kappa_l closure stay OPEN; no physical-final kappa_l "
+            "or sin^2 theta_eff is exported; no DFGRU/Awramik target is "
+            "consumed -- enforced by export-flag guards in-check. "
         ),
-        "note": ("Wave 7; bespoke grade token quoted verbatim; opens stated as "
-                 "banked. NOTE (v24.3.358): the module now carries a SECOND "
-                 "banked check, T_w_trace_kappa_l_ACFW_published_one_loop_"
-                 "benchmark [P_structural_instrument] (ACFW PRL 93 (2004) "
-                 "Table II published-one-loop benchmark: M_H-shape PASS / "
-                 "absolute FAIL +0.0194 M_H-flat, FAIL-recording), and the "
-                 "eq-rself +2->+1 SgZ0 corrigendum in _bsy_compose: "
-                 "Delta_kappa_l at the Denner set is +0.04854 post-corrigendum "
-                 "(claim text's 0.0475-era band [0.040, 0.055] unchanged and "
-                 "still met); the claim text's two-loop-gate attribution for "
-                 "the PDG-canonical gap is superseded by the benchmark "
-                 "finding (assembly-sector defect)."),
+        "note": ("Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 "
+                 "(the Wave-7 snapshot described the pre-.358 state and its "
+                 "0.0475-era bands; verdict-tested through summarize_input "
+                 "before landing, token unchanged "
+                 "SOLVED_LOCAL_HELD_FOR_REPAIR)."),
     },
 )

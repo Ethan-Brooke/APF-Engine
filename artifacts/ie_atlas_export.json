@@ -1,20 +1,20 @@
 {
- "generated": "2026-07-02",
- "pin_version": "24.3.348",
+ "generated": "2026-07-04",
+ "pin_version": "24.3.389",
  "coverage_summary": {
-  "modules_total": 449,
-  "modules_onboarded": 203,
-  "modules_onboarded_direct": 144,
+  "modules_total": 462,
+  "modules_onboarded": 216,
+  "modules_onboarded_direct": 157,
   "modules_onboarded_via_covers": 59,
-  "target_surface_total": 247,
+  "target_surface_total": 260,
   "target_surface_plumbing": 85,
   "target_surface_open": 0,
   "target_open_modules": [],
-  "target_surface_onboarded": 162,
+  "target_surface_onboarded": 175,
   "modules_by_axis": {
-   "ROUTE": 130,
+   "ROUTE": 143,
    "CODOMAIN": 7,
-   "CONTEXTUALITY": 6,
+   "CONTEXTUALITY": 7,
    "READOUT": 1
   },
   "declaration_modules": [
@@ -24,6 +24,9 @@
    "apf.acc_unification_all_p",
    "apf.acc_unification_no_imports",
    "apf.admissible_representation_stack",
+   "apf.amount_graded_testedness",
+   "apf.anchor_center_correspondence",
+   "apf.anchor_support_algebra",
    "apf.base_fiber_allocation",
    "apf.bottom_msbar_export_candidate",
    "apf.bottom_msbar_transport",
@@ -31,7 +34,9 @@
    "apf.class_transition",
    "apf.closed_world_completeness",
    "apf.cmb_finite_mode_covariance",
+   "apf.colour_solder_form_no_go",
    "apf.confinement_scale_single_anchor",
+   "apf.continuation_calculus",
    "apf.continuation_sum_measure",
    "apf.core",
    "apf.cosmology",
@@ -43,6 +48,7 @@
    "apf.delta_alpha_capacity_density",
    "apf.delta_alpha_leptonic",
    "apf.delta_alpha_pqcd_m_z",
+   "apf.delta_calculus",
    "apf.delta_rho_leading_distinction",
    "apf.down_lepton_trace",
    "apf.drawn_content_readings",
@@ -61,6 +67,7 @@
    "apf.formal_kernel",
    "apf.foundation_inputs",
    "apf.fractional_reading",
+   "apf.gamma_c_carrier_program",
    "apf.gauge",
    "apf.gauge_beta_capacity_tiling",
    "apf.gauge_invariant_record",
@@ -82,6 +89,7 @@
    "apf.lambda_absolute",
    "apf.lambda_operator_derivation",
    "apf.majorana",
+   "apf.mcross_planck_ratio_composition",
    "apf.mw_value_from_equilibrium_and_custodial",
    "apf.negative_temperature_ceiling",
    "apf.neutrino_mbb_reconciliation",
@@ -102,6 +110,8 @@
    "apf.sin2theta_eff_kappa_l_decomposition",
    "apf.sin2theta_w_OS_capacity_counting",
    "apf.spacetime",
+   "apf.strong_cp_completion_no_go",
+   "apf.su2_string_cut_testbed",
    "apf.subspace_functors",
    "apf.symmetry_contextuality_independence",
    "apf.tail_center_trivial_native",
@@ -116,7 +126,9 @@
    "apf.unification_three_levels",
    "apf.universality_forcing",
    "apf.up_family_trace",
+   "apf.vacuum_label_code",
    "apf.vacuum_o1_fork",
+   "apf.vacuum_scheme_covariance",
    "apf.w_os_route_terminal_closure",
    "apf.w_trace_BSY_one_loop_kappa_l_native_validator",
    "apf.w_trace_mw_from_effective_angle",
@@ -124,6 +136,7 @@
    "apf.w_trace_native_two_loop_phase2_master_interface_router",
    "apf.w_trace_native_zll_R2_counterterm_pieces",
    "apf.w_trace_native_zll_kappa_l_oblique",
+   "apf.wg2_dictionary_typing_no_go",
    "apf.yang_mills_gap",
    "apf.yang_mills_kappa3",
    "apf.yang_mills_md_bridge",
@@ -171,7 +184,7 @@
    "apf.dark_posterior_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']",
    "apf.ew_trace_to_scheme_real_adapter": "missing atlas-contract attributes: ['ATLAS_INPUT_ID', 'ATLAS_ROUTE', 'ATLAS_PAYLOAD_NAME', 'build_live_atlas_payload']"
   },
-  "onboarded_module_floor": 144,
+  "onboarded_module_floor": 157,
   "target_module_types": [
    "spine",
    "sector",
@@ -403,6 +416,28 @@
    ]
   },
   {
+   "input_id": "contextuality:native_ladder_bell_local",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "GLOBAL_SECTION_EXPORTED",
+   "export_global_P": true,
+   "owner_module": "apf.fencea_hinge_trichotomy",
+   "expect_export": true,
+   "note": "the exact-rational native-family ENTANGLED-but-Bell-local state |S| = 707/515 < 2 (delta = ln102) -> SepStr, a global section exported; the entanglement < CHSH gap; check_T_correlation_ladder_exact_rational_chsh_witness",
+   "covers": []
+  },
+  {
+   "input_id": "contextuality:native_ladder_chsh_violation",
+   "axis": "CONTEXTUALITY",
+   "route": "CONTEXTUALITY_SEP_IJC",
+   "solver_status": "IJC_OBSTRUCTION",
+   "export_global_P": false,
+   "owner_module": "apf.fencea_hinge_trichotomy",
+   "expect_export": false,
+   "note": "the exact-rational native-family CHSH violation |S| = 202/75 > 2 (entangled state at eps,mu,delta = -ln102,ln102,2ln102; 3-4-5 settings) -> IJCStr; check_T_correlation_ladder_exact_rational_chsh_witness",
+   "covers": []
+  },
+  {
    "input_id": "contextuality:pr_box",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC",
@@ -565,6 +600,17 @@
    "owner_module": "apf.delta_rho_leading_distinction",
    "expect_export": false,
    "note": "Wave 7; grade rider (modulo scale and convention) carried in the bespoke token",
+   "covers": []
+  },
+  {
+   "input_id": "ew:mcross_planck_ratio_reading",
+   "axis": "ROUTE",
+   "route": "dark",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.mcross_planck_ratio_composition",
+   "expect_export": false,
+   "note": "Onboards the .365 M_cross collapse onto the ROUTE axis as a held claim at [P_structural_reading]. The never-promote and never-numerologize clauses are frozen in the claim text; a future lane exporting the ratio at bare [P] fails the pin.",
    "covers": []
   },
   {
@@ -745,6 +791,17 @@
    "owner_module": "apf.u1y_landau_pole",
    "expect_export": false,
    "note": "Wave 6",
+   "covers": []
+  },
+  {
+   "input_id": "ew:wg2_dictionary_typing_no_go",
+   "axis": "ROUTE",
+   "route": "wg2_dictionary",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.wg2_dictionary_typing_no_go",
+   "expect_export": false,
+   "note": "Onboards the .364 dictionary fence onto the ROUTE axis as a closure-by-design obstruction. A future lane reading the measured weak mixing angle through the dictionary at bare [P] fails the pin.",
    "covers": []
   },
   {
@@ -979,6 +1036,28 @@
    "covers": []
   },
   {
+   "input_id": "foundation:agt_encoding_wall",
+   "axis": "ROUTE",
+   "route": "amount_graded_testedness",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.amount_graded_testedness",
+   "expect_export": false,
+   "note": "Onboards the .378 encoding wall onto the ROUTE axis as a closure-by-design obstruction. The AGT-par non-adoption and the single-[C] discipline are frozen in the knockout text; a future lane deriving amount-graded testedness inside the formalized corpus, or citing AGT-par as a second [C], fails the pin.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:anchor_support_formalization",
+   "axis": "ROUTE",
+   "route": "anchor_support_algebra",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.anchor_support_algebra",
+   "expect_export": true,
+   "note": "Onboards the Paper 12 round-6 algebraic-anchor formalization onto the ROUTE axis as a structural identity. The two-clause honesty is frozen into the identity text: a future flattening to a clean operator-algebraic biconditional fails the pin.",
+   "covers": []
+  },
+  {
    "input_id": "foundation:base_fiber_allocation",
    "axis": "ROUTE",
    "route": "cstar",
@@ -1023,6 +1102,17 @@
    "covers": []
   },
   {
+   "input_id": "foundation:continuation_capacity_floor_bound",
+   "axis": "ROUTE",
+   "route": "continuation_capacity_floor",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.continuation_calculus",
+   "expect_export": true,
+   "note": "Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid structural theorem [P_structural] in place of the toy capacity-overspend scenario probe; verdict is a structural identity, no physics import.",
+   "covers": []
+  },
+  {
    "input_id": "foundation:d4_unique",
    "axis": "ROUTE",
    "route": "generic",
@@ -1031,6 +1121,17 @@
    "owner_module": "apf.spacetime",
    "expect_export": false,
    "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:delta_calculus_derived_identities",
+   "axis": "ROUTE",
+   "route": "delta_calculus_identities",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.delta_calculus",
+   "expect_export": true,
+   "note": "Onboards the Paper 12 Delta-calculus onto the ROUTE axis as a structural identity: the derived ledger identities are the codomain by construction, no evaluator transport, no physics import. The ledger-relativity clause and the non-monotonicity no-go ride in the identity text so a future flattening ('derived' without ledger-relativity, or 'Delta is monotone') fails the pin.",
    "covers": []
   },
   {
@@ -1287,6 +1388,17 @@
    "covers": []
   },
   {
+   "input_id": "gauge:anchor_electric_center_correspondence",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.anchor_center_correspondence",
+   "expect_export": false,
+   "note": "Onboards the Paper 12 round-4/6 anchor--electric-centre correspondence onto the ROUTE axis as a held claim at its banked grades. The vertex-disjoint rider and the anti-ordering are frozen in the claim text (the do-not-re-flatten list, mechanized).",
+   "covers": []
+  },
+  {
    "input_id": "gauge:beta_capacity_tiling",
    "axis": "ROUTE",
    "route": "horizon",
@@ -1295,6 +1407,17 @@
    "owner_module": "apf.gauge_beta_capacity_tiling",
    "expect_export": false,
    "note": "Wave 7 abelian beta-tiling + leading-log identity; field P_structural_seam vs docstring [P_structural] flagged",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:colour_solder_form_no_go",
+   "axis": "ROUTE",
+   "route": "colour_solder_form",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.colour_solder_form_no_go",
+   "expect_export": false,
+   "note": "Onboards the solder-form no-go (v24.3.367) onto the ROUTE axis as a closure-by-design obstruction. The route is structurally closed; a future lane claiming a derived across-region frame fails the pin.",
    "covers": []
   },
   {
@@ -1328,6 +1451,17 @@
    "owner_module": "apf.gauge",
    "expect_export": false,
    "note": "Wave 3 spine probe; dispositions per the banked checks (Theorem_R, L_count, T_ew_load_placement_P, T_abelian_coupling_fixed_by_rank1_capacity_count)",
+   "covers": []
+  },
+  {
+   "input_id": "gauge:su2_string_cut_four_clause_verdict",
+   "axis": "ROUTE",
+   "route": "gauge",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.su2_string_cut_testbed",
+   "expect_export": false,
+   "note": "Onboards the Paper 12 worked-example testbed onto the ROUTE axis as a held claim; the four-clause split is frozen in the claim text (do-not-re-flatten, mechanized). A CONTEXTUALITY-axis onboarding of the KCBS/Yu-Oh native-algebra legs was ASSESSED and DEFERRED pending an exact-rational scenario extraction conforming to the contextuality adapter contract (the seam-3 faithfulness discipline; no vacuous or float-fudged scenario rows).",
    "covers": []
   },
   {
@@ -1372,6 +1506,17 @@
    "owner_module": "apf.fractional_reading",
    "expect_export": false,
    "note": "Wave 7; fork-conformed surfaces (v24.3.320) respected, row is branch-neutral; the L_Lambda [P] is gate-passage-only by its own corrected header",
+   "covers": []
+  },
+  {
+   "input_id": "gravity:gammaC_carrier_watch",
+   "axis": "ROUTE",
+   "route": "capacity",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.gamma_c_carrier_program",
+   "expect_export": false,
+   "note": "Onboards the gamma_C carrier program onto the ROUTE axis as a WATCH. The verdict is held (not exported); pinning it puts the signed Cassini one-sided tension under the verdict-drift tripwire, so any future re-derivation that flips the sign or promotes the route to an export fails the bank loudly. No physics import; inherits [P_structural].",
    "covers": []
   },
   {
@@ -1814,6 +1959,28 @@
    "covers": []
   },
   {
+   "input_id": "quantum:vacuum_label_code_p1_witness",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.vacuum_label_code",
+   "expect_export": false,
+   "note": "Onboards the ICL_vac route-(b) witness family (.352/.356/.357) onto the ROUTE axis as a held claim at [P_structural_instrument]. The three-pronged closure discipline is frozen in the claim text; a future lane citing the sector-aligned question closed simpliciter fails the pin.",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:vacuum_scheme_covariance_split",
+   "axis": "ROUTE",
+   "route": "generic",
+   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
+   "export_global_P": false,
+   "owner_module": "apf.vacuum_scheme_covariance",
+   "expect_export": false,
+   "note": "Onboards the .373 covariance split onto the ROUTE axis as a held claim at [P_structural_instrument]. The F1/F2 never-conflate discipline and the open full-S_42 status are frozen in the claim text.",
+   "covers": []
+  },
+  {
    "input_id": "readout:su2_diquark",
    "axis": "READOUT",
    "route": "READOUT_COMMUTANT_CLASSIFICATION",
@@ -1971,6 +2138,17 @@
    "covers": []
   },
   {
+   "input_id": "strong:strong_cp_transport_content_blind",
+   "axis": "ROUTE",
+   "route": "strong_cp_transport",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.strong_cp_completion_no_go",
+   "expect_export": false,
+   "note": "Onboards the .359 transport-half no-go onto the ROUTE axis as a closure-by-design obstruction. Paper 46 anchors this ceiling; a future lane claiming the PLEC/cost route to theta-bar = 0 (killed by T_ledger_rent_excluded) or content-forces-angle fails the pin.",
+   "covers": []
+  },
+  {
    "input_id": "strong:tetraquark_kcbs",
    "axis": "CONTEXTUALITY",
    "route": "CONTEXTUALITY_SEP_IJC_SCENARIO",
@@ -2094,12 +2272,12 @@
   {
    "input_id": "wtrace:bsy_one_loop_kappa_l_assembly_consistency",
    "axis": "ROUTE",
-   "route": "ew",
+   "route": "generic",
    "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
    "export_global_P": false,
    "owner_module": "apf.w_trace_BSY_one_loop_kappa_l_native_validator",
    "expect_export": false,
-   "note": "Wave 7; bespoke grade token quoted verbatim; opens stated as banked",
+   "note": "Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 (the Wave-7 snapshot described the pre-.358 state and its 0.0475-era bands; verdict-tested through summarize_input before landing, token unchanged SOLVED_LOCAL_HELD_FOR_REPAIR).",
    "covers": []
   },
   {
@@ -2190,7 +2368,7 @@
    "export_global_P": false,
    "owner_module": "apf.w_trace_native_zll_kappa_l_oblique",
    "expect_export": false,
-   "note": "Wave 7; mixed-grade module, per-check grades listed from machine fields",
+   "note": "Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 (the Wave-7 snapshot described the pre-.358 state; verdict-tested through summarize_input before landing, token unchanged SOLVED_LOCAL_HELD_FOR_REPAIR per the generic ledger-solver vocabulary -- kappa_l not closed, no global-P export).",
    "covers": []
   },
   {

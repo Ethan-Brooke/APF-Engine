@@ -292,7 +292,12 @@ def source_local_component_sum_certificate() -> Dict[str, Any]:
     printed_sum = extracted_row_sum_x1e4()
     value_sum = extracted_row_sum()
     return {
-        "source_local_component_sum_certified": abs(value_sum - printed_sum * ACFW_TABLE1_SCALE) < 1e-18,
+        # 2026-07-03: certificate tolerance was 1e-18, below double resolution
+        # at |0.0355| (ulp ~ 6.9e-18); the summation error is ulp-scale and
+        # order-dependent; widened to 1e-16 (audit-verified: actual error
+        # 6.94e-18). Certifies the same source-locality; a REAL extraction
+        # defect is orders larger.
+        "source_local_component_sum_certified": abs(value_sum - printed_sum * ACFW_TABLE1_SCALE) < 1e-16,
         "printed_sum_x1e4": printed_sum,
         "dimensionless_sum": value_sum,
         "row_count": len(rows),

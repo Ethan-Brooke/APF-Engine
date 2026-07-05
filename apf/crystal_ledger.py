@@ -6,11 +6,15 @@ ranking over the CORE (spine) view. Dashboard data source (Wave 8+,
 NOT a bank module (no register()): analysis layer over apf.crystal +
 apf.crystal_metrics. The disposition map below is CURATED (2026-07-02,
 the strengthening-ledger session): sub-[P] on the spine is not a defect
-list -- most entries are deliberate fences (the T27d seam / the w~g^2
-dictionary), bespoke tokens, or the permanent IJC empirical import. The
+list -- most entries are deliberate fences (the w~g^2 dictionary, Wall B;
+T27d itself re-anchored [P] 2026-07-03), bespoke tokens, or the permanent
+IJC empirical import. The
 ledger exists to separate those from the genuine strengthening programs:
-(1) the T27d seam -> the effective-angle transport program (the largest
-single grade-uplift available; 64% of the spine downstream);
+(1) the w~g^2 dictionary fence (Wall B) -> the effective-angle transport
+program, measured-angle half (QFT half closed .358-.361; T27d re-anchored
+[P] .362; T24 re-scoped to the value claim [P] 2026-07-03 -- the fence home
+is T_sin2theta, downstream footprint desc = 3; the residual sub-[P] rides
+its own tokens);
 (2) L_singlet_Gram -> the a=b common-demand identity [C];
 (3, candidate) the IJC reading-exhaustiveness walk.
 """
@@ -19,22 +23,32 @@ import collections
 from typing import Dict, List
 
 LEDGER_DISPOSITIONS_EXACT = {
-    'T27d': ('THE PRIZE: 64% of the spine downstream; seam fence by design '
-             '(w~g^2 dictionary, Paper 42); promotion = the effective-angle '
-             'transport program'),
-    'T24': 'seam fence by design; rides the T27d program',
-    'T_sin2theta': ('seam fence by design (the ledger share is [P] via '
-                    'check_T_ew_load_placement_P); rides the T27d program'),
-    'T_sin2theta_higgs_record': 'seam family; rides the T27d program',
-    'L_crossing_self_energy': 'seam family; rides the T27d program',
-    'L_crossing_depletion_capacity_measure': 'seam family; rides the T27d program',
+    'T_sin2theta': ('the dictionary fence home (w~g^2, Paper 42; Wall B; the measured-angle reading '
+                    'consolidated here 2026-07-03; the ledger share is [P] '
+                    'via check_T_ew_load_placement_P; T27d re-anchored [P] '
+                    '.362; T24 re-scoped to the value claim [P] 2026-07-03); '
+                    'rides Wall B'),
+    'T_sin2theta_higgs_record': ('dictionary-fence family (Wall B); rides the '
+                                 'measured-angle half of the transport program'),
+    'L_crossing_self_energy': ('dictionary-fence family (Wall B); rides the '
+                               'measured-angle half of the transport program'),
+    'L_crossing_depletion_capacity_measure': ('dictionary-fence family (Wall '
+                                              'B); rides the measured-angle '
+                                              'half of the transport program'),
     'L_singlet_Gram': ('NAMED ROUTE: prove the a=b common-demand identity [C] '
                        '(open kernel, .330/.338)'),
     'L_singlet_Gram_exchangeable_form': ('the .330 witness at its natural grade; '
                                          'promotion rides the a=b identity'),
-    'T_no_IJC_no_noncommutativity': ('CANDIDATE WALK: no-third-reading '
-                                     'exhaustiveness (the .284 pattern)'),
-    'T_IJC_dichotomy': 'candidate walk: rides the reading-exhaustiveness family',
+    'T_no_IJC_no_noncommutativity': ('exhaustive-by-logic on the FD5 '
+                                     'set-inclusion vocabulary; residual = '
+                                     'vocabulary robustness (graded threat '
+                                     'structures), named-open; not the .284 '
+                                     'pattern -- see '
+                                     'apf/reading_functional_census.py '
+                                     '(2026-07-03)'),
+    'T_IJC_dichotomy': ('rides the reading-functional census (2026-07-03): '
+                        'exhaustion is logic on the vocabulary; no '
+                        'within-vocabulary gap'),
     'T_which_v_no_registered_interior_reader': 'drift-net instrument at natural grade (.318)',
     'T_vglobal_slot_identification_no_go': 'no-go at natural grade (.326); never cite as open',
     'T_vglobal_offdiagonal_blocks_scalar_typed': 'drift-net instrument at natural grade (.339)',
@@ -56,7 +70,8 @@ def _disposition(nid: str, grade: str) -> str:
     if grade == 'P_structural_reading':
         return 'reading grade; exhaustiveness open (candidate-walk family)'
     if grade == 'P_structural_seam':
-        return 'seam family; rides the T27d program'
+        return ('dictionary-fence family (Wall B); rides the measured-angle '
+                'half of the transport program')
     if grade in ('P_comp', 'P_structural_exhaustive'):
         return 'bespoke composition/exhaustive token by design'
     return 'structural grade; no named promotion route (disposition owed)'
@@ -122,7 +137,7 @@ def crystal_dashboard_section(preset: str = 'CORE') -> Dict:
         'grade_counts': dict(grades.most_common()),
         'sub_p_count': len(rows),
         'strengthening_programs': [
-            'T27d seam -> the effective-angle transport program (167 spine descendants)',
+            'the w~g^2 dictionary fence (Wall B) -> the effective-angle transport program, measured-angle half (QFT half closed .358-.361; T27d re-anchored [P] .362; T24 re-scoped to the value claim [P] 2026-07-03 -- the fence home is T_sin2theta, downstream footprint desc = 3)',
             'L_singlet_Gram -> the a=b common-demand identity [C]',
             'candidate: the IJC reading-exhaustiveness walk',
         ],

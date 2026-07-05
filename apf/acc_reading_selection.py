@@ -484,7 +484,10 @@ def check_T_acc_reading_selection():
               "Omega_Lambda = 42/61 [P]. [P_structural] overall -- the single open instance is the "
               "EW-floor type clause"),
         tier=4,
-        epistemic='P_structural_exhaustive',
+        # 2026-07-03 PRINCIPAL RULING: field conformed to the docstring headline --
+        # 'P_structural_exhaustive' -> 'P_structural' (the token mismatch flagged by the
+        # reading-functional census, NEEDS-PRINCIPAL row; ruled [P_structural], v24.3.370).
+        epistemic='P_structural',
         summary=(
             "One capacity ledger -- C_total = 61 slots at per-slot degeneracy d_eff = 102 -- read four "
             "ways. The Reading-Selection Rule: a resolving structure reads the ACC scalar fixed by its "
@@ -843,6 +846,200 @@ def check_T_gauge_value_chain_is_P():
         ),
     )
 
+
+def check_L_abelian_support_openness_pins():
+    """L_abelian_support_openness_pins: the .284 abelian support-openness pinned in BOTH directions [P_structural_instrument].
+
+    v24.3.369 (2026-07-03): the reading-exhaustiveness walk's SPLIT landing --
+    a hostile audit adjudicated the walk's census/classification content into
+    the analysis layer (apf/reading_functional_census.py, deliberately NOT
+    bank-registered, the .353 crystal_ledger precedent) and this narrow
+    registered sentinel. The sentinel does three jobs and nothing else:
+
+      (1) PIN THE .284 OPENNESS, both directions (the .314 pin pattern): the
+          openness flags are read LIVE from this module's EXPORT_FLAGS at
+          call time -- a silent CLOSURE (the exhaustiveness flag flipping to
+          closed) or a silent PROMOTION (the support-uniqueness flag flipping
+          to proved) FAILS this check until re-adjudicated by hand.
+
+      (2) THE NOT-A-STATE-FUNCTION COROLLARY (the walk's one genuinely new
+          named obstruction, audit-verified, class-level): the abelian (61)
+          and the non-abelian (B = C_total/6 running modes, value S_dS/6 =
+          47.02) readings consume the SAME horizon S_dS = 61 ln 102 = 282.12
+          and return DIFFERENT values -- both recomputed in-check -- so a
+          gauge reading is provably NOT a function of the horizon state
+          alone, and NO state-side argument can select the abelian support.
+          This upgrades the walk's round-3 kill from a stamped route to a
+          class-level fence: any future "derive the 61 from the state"
+          proposal is in the fenced class before it starts.
+
+      (3) THE TWO-PRONGED 45-KILL, RECOMPUTED (not pinned): the banked
+          forward solve (apf/abelian_coupling_capacity_count), run
+          support-parametrized, at support 45 returns alpha_s(M_Z) ~ 0.49
+          (absurd, >4x the 61-reading value 0.1179) AND a super-Planckian
+          M_cross ~ 2.6 M_Pl; at support 61 it returns 0.1179 (0.11 sigma)
+          with M_cross ~ 9.6e16 GeV < M_Pl. Corroboration of the adopted
+          reading, not a derivation of it.
+
+    Plus a GRADE PIN: this module's own dichotomy/abelian surfaces are run
+    live and must stay at their post-.284/.325 tokens.
+
+    HONEST NON-CLAIMS: this sentinel CLOSES NOTHING and MOVES NO GRADE. The
+    correct scope wording (audit F2): the reading VALUE carries no support
+    information; the banked structure list supplies no selector (the proved
+    sub-fact [P], L_abelian_no_ledger_channel_structure); the structure-list
+    exhaustiveness stays OPEN (.284). 1/alpha_Y = 61 stays
+    [P_structural_reading], alpha_s-corroborated, adopted not derived.
+    """
+    import math as _math
+    from apf.abelian_coupling_capacity_count import (
+        SIN2_THETA_W as _SIN2,
+        _alpha_s_forward as _banked_forward,
+    )
+    from apf.mcross_planck_ratio_composition import (
+        M_PL as _M_PL,         # GeV; the ONE external dimensional anchor (route-b) -- imported, not redeclared
+        M_Z_MEASURED as _M_Z,  # physical on-shell M_Z (external_input; comparator scale only)
+    )
+
+    # ---- (1) the .284 openness flags, LIVE (a flag flip FAILS; .314 pattern) ----
+    check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 1,
+          "PIN (.284, no silent CLOSURE): the structure-list exhaustiveness is OPEN -- "
+          "the charge-indicator [Y!=0] (trace 45) survives every banked filter")
+    check(EXPORT_FLAGS["Export_support_uniqueness_proved"] == 0,
+          "PIN (.284, no silent PROMOTION): the full-support reading 1/alpha_Y = 61 is "
+          "ADOPTED, alpha_s-corroborated, not derived")
+    check(EXPORT_FLAGS["Export_gauge_reading_dichotomy_closed_P"] == 0,
+          "PIN (.284): the no-third-reading exhaustiveness is NOT closed to [P]")
+    check(EXPORT_FLAGS["Export_rank_field_selector_P"] == 0,
+          "PIN (.284): the rank-clause support-uniqueness stays sub-[P]")
+    check(EXPORT_FLAGS["Export_abelian_structures_miss_ledger_proved"] == 1,
+          "PIN: the proved SUB-FACT stands -- the reading value carries no support "
+          "information; the banked structure list supplies no selector "
+          "(L_abelian_no_ledger_channel_structure [P] sub-fact); list-exhaustiveness "
+          "OPEN (.284)")
+
+    # ---- (2) the not-a-state-function corollary, recomputed in-check ----
+    s_ds = C_total * SIGMA
+    check(abs(s_ds - 282.12) < 5e-3, f"S_dS = 61 ln 102 = {s_ds:.2f} recomputed")
+    abelian_val = s_ds / SIGMA
+    non_abelian_val = s_ds / 6.0
+    check(abs(abelian_val - C_total) < 1e-9
+          and abs(non_abelian_val - (C_total / 6) * SIGMA) < 1e-9,
+          "both gauge readings recomputed: abelian = S_dS/sigma = 61; "
+          "non-abelian = S_dS/6 = B*sigma = 47.02")
+    check(abs(6 * non_abelian_val - s_ds) < 1e-9
+          and abs(abelian_val * SIGMA - s_ds) < 1e-9,
+          "SAME STATE: 6 * 47.02 = S_dS = 61 * sigma -- the two readings consume "
+          "the same horizon scalar")
+    check(abs(abelian_val - non_abelian_val) > 10.0,
+          "NOT-A-STATE-FUNCTION COROLLARY: the same horizon state returns 61 AND "
+          "47.02 -- a gauge reading is not a function of the horizon state alone; "
+          "NO state-side argument can select the abelian support (class-level fence)")
+
+    # ---- (3) the two-pronged 45-kill, recomputed forward ----
+    def _forward_at_support(inv_alpha_Y_cross):
+        # the banked solve of apf/abelian_coupling_capacity_count._alpha_s_forward
+        # with the rank-1 capacity count as an explicit parameter; every other
+        # constant is this module's own banked |beta| structure (L_beta_capacity
+        # [P]) or the imported SIN2_THETA_W = 3/13 (Paper 18)
+        K = (C_total / 6) * SIGMA
+        ratio = (1 - _SIN2) / _SIN2
+        t = (ratio * K - inv_alpha_Y_cross) / (
+            BY / (2 * _math.pi) + ratio * B2 / (2 * _math.pi))
+        return 1.0 / (K - (B3 / (2 * _math.pi)) * t), t
+
+    a61, t61 = _forward_at_support(C_total)
+    a61_banked, _inv_a2, t61_banked = _banked_forward()
+    check(abs(a61 - a61_banked) < 1e-12 and abs(t61 - t61_banked) < 1e-12,
+          "anchor: the support-parametrized solve reproduces the BANKED forward "
+          "solve exactly at support 61 (imported, not redeclared)")
+    m_cross_61 = _M_Z * _math.exp(t61)
+    check(abs(a61 - 0.1179) < 5e-4,
+          f"prong 0 (support 61): alpha_s(M_Z) = {a61:.5f} -- the 0.11-sigma prediction")
+    check(9.5e16 < m_cross_61 < 9.8e16 and m_cross_61 < _M_PL,
+          f"prong 0 (support 61): M_cross = {m_cross_61:.3e} GeV, sub-Planckian")
+
+    a45, t45 = _forward_at_support(45)
+    m_cross_45 = _M_Z * _math.exp(t45)
+    check(abs(a45 - 0.49) < 0.02 and a45 > 4 * a61,
+          f"prong 1 (support 45): alpha_s(M_Z) = {a45:.4f} -- absurd (>4x the "
+          f"61-reading value; PDG-2024 world average 0.1180)")
+    check(m_cross_45 > _M_PL and 2.0 < m_cross_45 / _M_PL < 3.2,
+          f"prong 2 (support 45): M_cross = {m_cross_45 / _M_PL:.2f} M_Pl -- "
+          f"super-Planckian (the 61 reading gives {m_cross_61 / _M_PL:.4f} M_Pl)")
+
+    # ---- grade pin: the module's own surfaces at their post-.284/.325 tokens ----
+    for _nm, _fn, _want in (
+            ("T_gauge_reading_dichotomy", check_T_gauge_reading_dichotomy,
+             "P_structural_reading"),
+            ("T_rank_field_selector", check_T_rank_field_selector,
+             "P_structural_reading"),
+            ("L_abelian_no_ledger_channel_structure",
+             check_L_abelian_no_ledger_channel_structure, "P_structural_reading"),
+            ("T_acc_reading_selection", check_T_acc_reading_selection,
+             "P_structural"),  # re-pinned 2026-07-03: principal ruling, field conformed to docstring (v24.3.370)
+    ):
+        _r = _fn()
+        _got = str(_r.get("epistemic", "")).strip("[]")
+        check(bool(_r.get("passed", True)) and _got == _want,
+              f"GRADE PIN: {_nm} runs green at its post-.284/.325 token "
+              f"[{_want}] (got [{_got}])")
+
+    check(EXPORT_FLAGS["target_consumed"] == 0, "no measured target consumed")
+
+    return _result(
+        name=("L_abelian_support_openness_pins: the .284 abelian support-openness "
+              "pinned in both directions (no silent closure, no silent promotion; "
+              "flags read live), carrying the NOT-A-STATE-FUNCTION corollary as a "
+              "named class-level obstruction -- the abelian (61) and non-abelian "
+              "(47.02) readings consume the SAME horizon S_dS = 282.12 and return "
+              "different values, so a gauge reading is not a function of the "
+              "horizon state alone and no state-side argument can select the "
+              "abelian support -- and recomputing the two-pronged 45-corroboration "
+              "(alpha_s = 0.49 absurd; M_cross super-Planckian at ~2.6 M_Pl)"),
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            "The reading-exhaustiveness walk's registered sentinel (2026-07-03, "
+            "split landing, hostile-audited). Pins the .284 openness in both "
+            "directions with live flag reads (the .314 pin pattern: a flag flip "
+            "fails this check until re-adjudicated); recomputes the "
+            "not-a-state-function corollary -- same horizon scalar, two values, "
+            "so state-side selection of the abelian support is fenced at class "
+            "level, upgrading the walk's round-3 kill from a stamped route to a "
+            "fence over the whole class; and recomputes the two-pronged 45-kill "
+            "forward from the banked solve (support 45: alpha_s = 0.49 and "
+            "M_cross ~ 2.6 M_Pl super-Planckian; support 61: alpha_s = 0.1179 at "
+            "0.11 sigma, M_cross = 9.6e16 GeV). NON-CLAIMS: closes nothing; moves "
+            "no grade; the reading value carries no support information; the "
+            "banked structure list supplies no selector (sub-fact [P]); "
+            "list-exhaustiveness OPEN (.284). The census/classification content "
+            "of the walk lives in apf/reading_functional_census.py, deliberately "
+            "NOT bank-registered (the .353 precedent)."
+        ),
+        key_result=(
+            ".284 openness pinned both ways (live flags); NOT-A-STATE-FUNCTION: "
+            "61 != S_dS/6 = 47.02 on the same S_dS = 282.12, so no state-side "
+            "argument selects the abelian support (class-level fence); 45-kill "
+            "recomputed (alpha_s 0.49 absurd + M_cross ~ 2.6 M_Pl super-Planckian)"
+        ),
+        dependencies=['T_gauge_reading_dichotomy', 'T_rank_field_selector',
+                      'L_abelian_no_ledger_channel_structure',
+                      'L_reading_profile_blind', 'T_acc_reading_selection',
+                      'T_abelian_coupling_fixed_by_rank1_capacity_count',
+                      'L_coupling_capacity_id', 'L_sigma_intensive'],
+        cross_refs=['T_gauge_value_chain_is_P',
+                    'T_ew_scale_functional_independence_no_go'],
+        artifacts=dict(
+            openness_pins="live EXPORT_FLAGS: exhaustiveness_open=1, support_uniqueness_proved=0, dichotomy_closed_P=0, rank_selector_P=0",
+            not_a_state_function="same S_dS = 282.12: abelian 61 vs non-abelian 47.02 -- a gauge reading is not a state function; state-side support selection fenced (class-level)",
+            kill_45=f"support 45: alpha_s = {a45:.4f}, M_cross = {m_cross_45 / _M_PL:.2f} M_Pl; support 61: alpha_s = {a61:.5f}, M_cross = {m_cross_61:.3e} GeV",
+            analysis_layer="apf/reading_functional_census.py (NOT registered; the .353 pattern)",
+            grade_pins="dichotomy/selector/sub-fact at [P_structural_reading]; top rule at [P_structural] (live fields; ruled 2026-07-03)",
+        ),
+    )
+
+
 _CHECKS = {
     "T_abelian_matter_enters_via_trace": check_T_abelian_matter_enters_via_trace,
     "L_reading_profile_blind": check_L_reading_profile_blind,
@@ -851,6 +1048,7 @@ _CHECKS = {
     "T_rank_field_selector": check_T_rank_field_selector,
     "T_acc_reading_selection": check_T_acc_reading_selection,
     "T_gauge_value_chain_is_P": check_T_gauge_value_chain_is_P,
+    "L_abelian_support_openness_pins": check_L_abelian_support_openness_pins,
 }
 
 
@@ -881,8 +1079,8 @@ IE_DECLARATIONS = (
             "four bank-[P] links while the abelian arm 1/alpha_Y = 61 "
             "inherits the open support-uniqueness "
             "(check_T_gauge_value_chain_is_P [P_structural_reading]); the "
-            "top rule (check_T_acc_reading_selection) stands at its bespoke "
-            "token [P_structural_exhaustive] -- open instances: the EW-floor "
+            "top rule (check_T_acc_reading_selection) stands at "
+            "[P_structural] (field conformed to the docstring, principal ruling 2026-07-03) -- open instances: the EW-floor "
             "type clause and the abelian sub-support exhaustiveness. "
         ),
         "note": "Wave 6",

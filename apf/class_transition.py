@@ -299,6 +299,7 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
 
     return {
         'name': 'T_realignment_floor_is_epsilon_star',
+        'epistemic': 'P_structural',
         'passed': identified,
         'key_result': (
             f'kappa_min == eps*_Gamma (structural identification): '

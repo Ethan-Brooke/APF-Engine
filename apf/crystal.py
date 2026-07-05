@@ -207,6 +207,8 @@ _DEP_ALIASES: dict[str, str] = {
     "L_epsilon":  "L_epsilon*",      # legacy
     "Lε*":         "L_epsilon*",     # unicode legacy
     "L_ε*":        "L_epsilon*",     # unicode legacy
+    "L_epsilon_star": "L_epsilon*",  # ascii legacy (census root repair, v24.3.391)
+    "T12_partition":  "T12",         # partition alias (census root repair, v24.3.391)
 }
 
 

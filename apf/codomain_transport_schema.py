@@ -749,14 +749,14 @@ def sin2theta_w_ledger_to_measured_transport() -> CodomainTransport:
             coupling_provenance=_slot('coupling_provenance', SLOT_CLOSED, 'ledger share 3/13 APF-derived [P] over FD1 structural completeness; ZERO measured coupling consumed (alpha_s only corroborates)'),
             threshold_rule=_slot('threshold_rule', SLOT_EXTERNAL, 'SM thresholds in the comparison continuation'),
             subtraction_rule=_slot('subtraction_rule', SLOT_EXTERNAL, 'MSbar / effective-scheme; standard'),
-            finite_part_rule=_slot('finite_part_rule', SLOT_PARTIAL, 'THE DICTIONARY FENCE: the w-propto-g^2 correspondence (coupling = enforcement amplitude) carries the ledger share to a physical coupling ratio; reserved at [P_structural] by design -- the deliberately open slot'),
+            finite_part_rule=_slot('finite_part_rule', SLOT_PARTIAL, 'THE DICTIONARY FENCE: the w-propto-g^2 correspondence (coupling = enforcement amplitude) carries the ledger share to a physical coupling ratio; reserved at [P_structural] by design -- the deliberately open slot (ceiling certified v24.3.364: the two wg2_dictionary_typing_no_go checks)'),
             anomalous_dimension_rule=_slot('anomalous_dimension_rule', SLOT_EXTERNAL, 'gauge beta coefficients in the comparison running'),
             uncertainty_pushforward=_slot('uncertainty_pushforward', SLOT_CLOSED, 'effective continuation 3/13 + 4/5063 = 0.231559 vs PDG 0.23154(6), 0.008%'),
         ),
         forbidden_inputs=frozenset({
             'target_sin2theta_measured', 'observed_weak_angle_as_input', 'target_fitted_load_ratio',
         }),
-        notes='The dictionary-fence transport: the ledger share 3/13 is [P] (check_T_ew_load_placement_P, over FD1 structural completeness; the sin^2theta_W close 2026-06-12); reading it as the physical angle crosses the w-propto-g^2 correspondence, reserved at [P_structural] by design. status PARTIAL = export-locked by the fence, not by a missing derivation -- the first transport that is SOURCE-CLOSED but TARGET-RESERVED on purpose.',
+        notes='The dictionary-fence transport: the ledger share 3/13 is [P] (check_T_ew_load_placement_P, over FD1 structural completeness; the sin^2theta_W close 2026-06-12); reading it as the physical angle crosses the w-propto-g^2 correspondence, reserved at [P_structural] by design (ceiling certified v24.3.364: the two wg2_dictionary_typing_no_go checks). status PARTIAL = export-locked by the fence, not by a missing derivation -- the first transport that is SOURCE-CLOSED but TARGET-RESERVED on purpose.',
         codomain_type=CODOMAIN_NUMERICAL,
     )
 

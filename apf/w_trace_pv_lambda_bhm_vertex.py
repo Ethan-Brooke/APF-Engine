@@ -12,9 +12,54 @@ the explicit Feynman iepsilon prescription:
                        + 2 (1 + w)^2 [ Li_2(1 + 1/w) - pi^2 / 6 ] ,
 
     Lambda_3(s, M^2) = 5/6 - 2 w / 3
-                       + (2 w + 1) / 3 * sqrt(1 - 4 w) * log(x)
+                       - (2 w + 1) / 3 * sqrt(1 - 4 w) * log(x)
                        + 2/3 * w (w + 2) * log(x)^2 ,
     with x = (sqrt(1 - 4 w) - 1) / (sqrt(1 - 4 w) + 1) .
+
+SIGN CORRIGENDUM (v24.3.360, 2026-07-03) -- THE PUBLISHED FORMULA IS WRONG.
+EWWGR.tex L6067-6072 (and the 1995 CERN-95-03 print edition, glyph-verified)
+prints the single-log term with a PLUS sign. That printed closed form is
+defective: (i) it carries an unphysical 1/s pole (Lambda_3_printed -> -8w/3
+- 10/9 as s -> 0; no s-independent renormalization can produce a massless
+pole in a weak form factor whose defining diagram class is finite there),
+while the corrected form vanishes at s = 0 identically, parallel to the
+validated Lambda_2; (ii) the corrected form equals the zero-momentum-
+subtracted Denner generic, Lambda_3 = (1/3)[V_b^-(0,s,0,0,M,M) - V_b^-(0)]
+with V_b^-(0) = 3 ln(mu^2/M^2) - 1/2 (Denner, Fortschr. Phys. 41 (1993) 307
+= arXiv:0709.1075, hab6/haba3), to <= 5e-6 over spacelike AND timelike
+grids incl. s = M_Z^2, where the printed form fails by O(1)-O(16) swings;
+(iii) a from-scratch Passarino-Veltman evaluation of the SAME Yellow
+Report's TOPAZ0-chapter F_3 combination (EWWGR.tex ~L7060-7105, an
+independent group and formalism) matches the corrected form at quadrature
+precision with the parameter-free coupling cross-ratio 23.993 vs the
+predicted 24, and rejects the printed form at O(1) even granted a free
+affine calibration. Note sqrt(1-4w)*log(x) is branch-EVEN (sqrt -> -sqrt
+sends x -> 1/x in both log factors; log^2 even), so this is a genuine
+function difference, not a branch convention. The correction collapses the
+ACFW published-one-loop benchmark gap from +0.0194 M_H-flat to <= 1.0e-4 at
+all four Table-II Higgs masses (see the BSY validator module).
+
+PROVENANCE SETTLED (2026-07-03, same landing; both originals acquired into
+the Lit Review and read): the sign error is ORIGINAL TO CERN-95-03. BHM
+1986 (Boehm-Hollik-Spiesberger, Fortschr. Phys. 34 (1986) 687, eq. B.5
+region p. 748) prints the CORRECT function -- their log argument is the
+INVERSE of EWWGR's x, i.e. ln[(sqrt(1-4w)+1)/(sqrt(1-4w)-1)] = -ln(x), so
+their '+' single-log term equals the corrected '-' in EWWGR's convention;
+they also state Lambda_3(0, M) = 0 explicitly (the boundary property the
+analytic leg demanded). Hollik DESY 88-188 (= Fortschr. Phys. 38 (1990)
+165), Appendix C eq. (C.5) p. 105, prints the timelike arctan form -- 
+machine-verified IDENTICAL to the corrected function at float precision
+(legs 4-5 of the corrigendum check below). THE MECHANISM: when the report
+recast the formula into x = (sqrt(1-4w)-1)/(sqrt(1-4w)+1), the even log^2
+term survived the inversion unchanged while the odd single-log term needed
+a sign flip it never received -- a convention-recast transcription slip,
+which is exactly the asymmetric error the corrigendum reverses. The
+corrected function is derived, not fitted (ACFW enters only as the gate). Witnesses: The Turning/zll_defect_hunt_2026-07-03/ (three walker
+stages + the auditor's TOPAZ0 script, pinned offline); walker + fresh-
+context hostile audit SOUND-WITH-CORRECTIONS 0.97. LESSON OF RECORD: the
+mpmath dps=40 anchor validated TRANSCRIPTION of the printed formula, not
+its physics -- the published-benchmark instrument class (ACFW, .358) is
+what caught this.
 
 These combine with the SM gauge couplings to build F_L^f, F_V^Zf, F_A^Zf -- the
 proper-vertex form factors entering the on-shell effective leptonic mixing
@@ -117,7 +162,29 @@ def Lambda_2(s: float, M2: float, eps: float = _DEFAULT_EPS) -> complex:
 
 
 def Lambda_3(s: float, M2: float, eps: float = _DEFAULT_EPS) -> complex:
-    """BHM Lambda_3(s, M^2) with Feynman iepsilon prescription w = M^2/(s + i eps)."""
+    """Lambda_3(s, M^2), SIGN-CORRECTED (v24.3.360) vs the printed EWWGR form.
+
+    Feynman iepsilon prescription w = M^2/(s + i eps). The single-log term
+    carries a MINUS sign; EWWGR.tex L6067-6072 prints '+', which is a source
+    defect (see the module-docstring corrigendum). Corrected form verified
+    three independent ways; equals (1/3)[V_b^-(s) - V_b^-(0)] of the Denner
+    generics (machine-checked in check_T_w_trace_pv_lambda3_sign_corrigendum
+    _denner_anchor below).
+    """
+    w = M2 / complex(s, eps)
+    sq = cmath.sqrt(1.0 - 4.0 * w)
+    x = (sq - 1.0) / (sq + 1.0)
+    lx = cmath.log(x)
+    return (5.0 / 6.0 - 2.0 * w / 3.0
+            - (2.0 * w + 1.0) / 3.0 * sq * lx
+            + 2.0 / 3.0 * w * (w + 2.0) * lx * lx)
+
+
+def Lambda_3_printed_defective(s: float, M2: float,
+                               eps: float = _DEFAULT_EPS) -> complex:
+    """The DEFECTIVE closed form as printed in EWWGR.tex L6067-6072 ('+' on
+    the single-log term). Retained ONLY as the negative control for the
+    corrigendum check below; never use in physics composition."""
     w = M2 / complex(s, eps)
     sq = cmath.sqrt(1.0 - 4.0 * w)
     x = (sq - 1.0) / (sq + 1.0)
@@ -134,13 +201,16 @@ _REF_VALUES: Dict[str, complex] = {
     # Lambda_2(M_Z^2, M_W^2) -- ν/W/W triangle at the Z pole
     "L2_MZ2_MW2":  complex( 1.1805183681875155,  2.1068900271751924),
     # Lambda_3(M_Z^2, M_W^2) -- real (2 M_W threshold closed at s = M_Z^2)
-    "L3_MZ2_MW2":  complex(-3.2679780980165249,  0.0),
+    # (re-anchored v24.3.360 to the SIGN-CORRECTED form; the pre-.360 value
+    #  -3.2679780980165249 anchored the defective printed formula)
+    "L3_MZ2_MW2":  complex(-0.28695288568781208,  0.0),
     # Lambda_2(M_Z^2, M_Z^2) -- Z exchange
     "L2_MZ2_MZ2":  complex( 1.0797362673929057,  1.7127254544798509),
     # Lambda_2(-M_Z^2, M_W^2) -- spacelike, must be real
     "L2_neg_MZ2_MW2": complex(-1.7719799883977947, 0.0),
     # Lambda_3(-M_Z^2, M_W^2) -- spacelike, must be real
-    "L3_neg_MZ2_MW2": complex( 1.0147076906274485, 0.0),
+    # (re-anchored v24.3.360; pre-.360 defective-formula value +1.0147076906274485)
+    "L3_neg_MZ2_MW2": complex( 0.20642869687946931, 0.0),
 }
 
 
@@ -208,7 +278,7 @@ def check_T_w_trace_pv_lambda_bhm_Li2_abel_identity_P() -> Dict[str, Any]:
         tier=4, epistemic="P",
         summary=(
             f"The pure-Python Li_2 satisfies the Abel identity "
-            f"Li_2(z) + Li_2(1 - z) + log(z) log(1 - z) = pi^2 / 6 on seven "
+            f"Li_2(z) + Li_2(1 - z) + log(z) log(1 - z) = pi^2 / 6 on six "
             f"complex test points (real + complex, |z| < 1 + |z| > 1) to max "
             f"abs err {mx:.1e} -- a target-free validation across the full "
             f"branch structure of the implementation."
@@ -321,7 +391,199 @@ def check_T_w_trace_pv_lambda_bhm_subgate_partial_P() -> Dict[str, Any]:
     )
 
 
+# ===========================================================================
+# v24.3.360 -- the sign-corrigendum certification (Denner anchor + s->0)
+# ===========================================================================
+def _denner_pv_pieces(s_val: float, M2: float, n: int = 20000):
+    """From-scratch 1D-reduced Feynman-parameter PV finite parts (mu^2 = MU2).
+
+    Independent of the closed forms under test; midpoint mesh n = 2e4 gives
+    ~1e-5 accuracy -- five orders below the O(1)-O(16) discriminating signal.
+    Valid for s < 4 M^2 (includes the physical s = M_Z^2). Full-precision
+    version (n = 2.5e5) pinned offline: The Turning/zll_defect_hunt_2026-07-03/
+    stage2_denner_route_proof_witness.py.
+    """
+    from apf.w_trace_pv_scalar_integral_substrate import MU2 as _MU2
+    h = 1.0 / n
+    # B0_fin(s, M, M)
+    b0_sMM = -h * sum(
+        math.log((M2 - ((i + 0.5) * h) * (1.0 - (i + 0.5) * h) * s_val) / _MU2)
+        for i in range(n))
+    b0_00M = 1.0 - math.log(M2 / _MU2)
+    # C0(0,s,0; 0,M,M): inner x3-integral analytic
+    acc = 0.0
+    for i in range(n):
+        x2 = (i + 0.5) * h
+        a = x2 * M2
+        b = M2 - x2 * s_val
+        acc += math.log1p(b * (1.0 - x2) / a) / b
+    c0 = -acc * h
+    return b0_sMM, b0_00M, c0
+
+
+def _V_b_minus(s_val: float, M2: float, n: int = 20000) -> float:
+    """Denner V_b^-(0,s,0,0,M,M) (arXiv:0709.1075 hab6/haba3, massless
+    external fermions, equal internal boson masses), from first-principles
+    PV pieces."""
+    b0_sMM, b0_00M, c0 = _denner_pv_pieces(s_val, M2, n)
+    return (2.0 * (2.0 * M2 + M2 * M2 / s_val) * c0
+            - (1.0 + 2.0 * M2 / s_val) * b0_sMM
+            + 2.0 * (2.0 + M2 / s_val) * b0_00M)
+
+
+def check_T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor_P() -> Dict[str, Any]:
+    """T: the v24.3.360 Lambda_3 sign corrigendum is certified against the
+    Denner generic V_b^- (independent source) + the s->0 boundary property;
+    the printed EWWGR form fails both as the pinned negative control;
+    provenance SETTLED against both originals [P].
+
+    Five in-check legs (the TOPAZ0 sixth leg is pinned offline):
+      (1) s->0: Lambda_3_corrected(s->0) -> 0 (like the validated Lambda_2);
+          the printed form diverges as -8w/3 - 10/9 (negative control; the
+          -10/9 constant is the audit-corrected value).
+      (2) Denner anchor: Lambda_3_corr(s) = (1/3)[V_b^-(s) - V_b^-(0)] with
+          V_b^-(0) = 3 ln(mu^2/M^2) - 1/2, constant over a spacelike AND
+          timelike grid incl. s = M_Z^2; the printed form fails the same
+          identity with O(1) swings (negative control).
+      (3) The physical point pins the corrected value -0.2869528856878121
+          (mpmath dps=40).
+      (4) PROVENANCE (settled 2026-07-03): BHM 1986 p. 748 -- the ORIGIN
+          paper's spacelike closed form (log argument inverted vs EWWGR's
+          x) equals the corrected function at 1e-12; BHM also states
+          Lambda_3(0, M) = 0 explicitly.
+      (5) PROVENANCE: Hollik DESY 88-188 eq (C.5) p. 105 -- the timelike
+          arctan form equals the corrected function at 1e-12.
+      Both originals correct => the sign error is ORIGINAL TO CERN-95-03
+      (a convention-recast slip: the even log^2 term survived the x ->
+      inverse-argument rewrite, the odd single-log term lost its flip).
+    """
+    from apf.w_trace_pv_scalar_integral_substrate import MU2 as _MU2
+    M2 = MW2
+
+    # --- leg 1: s -> 0 boundary ---
+    s_tiny = -MZ2 / 7766.6
+    w_tiny = M2 / s_tiny
+    l3c_0 = Lambda_3(s_tiny, M2)
+    l3p_0 = Lambda_3_printed_defective(s_tiny, M2)
+    check(abs(l3c_0) < 5e-3,
+          f"corrected Lambda_3 must vanish as s->0: |{l3c_0}|")
+    div_pred = -8.0 * w_tiny / 3.0 - 10.0 / 9.0   # audit-corrected constant
+    check(abs(l3p_0.real - div_pred) < abs(div_pred) * 1e-3,
+          f"printed-form negative control: expected divergence {div_pred:.3f}, "
+          f"got {l3p_0.real:.3f}")
+
+    # --- leg 2: Denner anchor over the grid ---
+    const_b = math.log(_MU2 / M2) - 1.0 / 6.0   # (1/3) V_b^-(0)
+    grid = (-4.0 * MZ2, -MZ2, 0.5 * MZ2, MZ2)
+    dev_corr, resid_printed = [], []
+    for s_val in grid:
+        vb3 = _V_b_minus(s_val, M2) / 3.0
+        dev_corr.append(abs(vb3 - Lambda_3(s_val, M2).real - const_b))
+        resid_printed.append(vb3 - Lambda_3_printed_defective(s_val, M2).real)
+    check(max(dev_corr) < 5e-4,
+          f"Denner anchor failed for corrected Lambda_3: max dev {max(dev_corr):.2e}")
+    swing = max(resid_printed) - min(resid_printed)
+    check(swing > 1.0,
+          f"printed-form negative control unexpectedly passes: swing {swing:.3f}")
+
+    # --- leg 3: physical-point pin ---
+    l3_phys = Lambda_3(MZ2, M2)
+    check(abs(l3_phys.real - (-0.28695288568781208)) < 1e-12,
+          f"physical-point pin drifted: {l3_phys.real}")
+    check(abs(l3_phys.imag) < 1e-12,
+          "Lambda_3(M_Z^2, M_W^2) must be real (2 M_W threshold closed)")
+
+    # --- legs 4+5 (provenance, settled 2026-07-03): the ORIGINALS are correct ---
+    # Leg 4: BHM 1986 p. 748 spacelike form -- log argument INVERTED vs EWWGR's
+    # x, so BHM's '+' single-log = the corrected '-' in x-convention.
+    dev_bhm = 0.0
+    for s_sp in (-4.0 * MZ2, -MZ2, -0.25 * MZ2):
+        w = M2 / s_sp
+        sq = math.sqrt(1.0 - 4.0 * w)                  # real, spacelike
+        ln_inv = math.log((sq + 1.0) / (sq - 1.0))     # BHM's log argument
+        bhm = (5.0 / 6.0 - 2.0 * w / 3.0
+               + (2.0 * w + 1.0) / 3.0 * sq * ln_inv
+               + 2.0 / 3.0 * w * (w + 2.0) * ln_inv * ln_inv)
+        dev_bhm = max(dev_bhm, abs(bhm - Lambda_3(s_sp, M2).real))
+    check(dev_bhm < 1e-12,
+          f"BHM 1986 (B.5) spacelike form != corrected Lambda_3: {dev_bhm:.2e}")
+    # Leg 5: Hollik DESY 88-188 eq (C.5) timelike arctan form (0 < s < 4M^2).
+    dev_hol = 0.0
+    for s_tl in (0.5 * MZ2, MZ2, 2.0 * MZ2):
+        w = M2 / s_tl
+        r = math.sqrt(4.0 * w - 1.0)
+        at = math.atan(1.0 / r)
+        hol = (5.0 / 6.0 - 2.0 * w / 3.0
+               + (2.0 / 3.0) * (2.0 * w + 1.0) * r * at
+               - (8.0 / 3.0) * w * (w + 2.0) * at * at)
+        dev_hol = max(dev_hol, abs(hol - Lambda_3(s_tl, M2).real))
+    check(dev_hol < 1e-12,
+          f"Hollik (C.5) arctan form != corrected Lambda_3: {dev_hol:.2e}")
+
+    return _result(
+        name=("T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor: the "
+              "corrected Lambda_3 equals (1/3)[V_b^- - V_b^-(0)] (Denner) and "
+              "vanishes at s=0; the printed EWWGR form fails both (pinned "
+              "negative control) [P]"),
+        tier=4, epistemic="P",
+        summary=(
+            f"The v24.3.360 sign corrigendum certified in-check: (1) s->0 -- "
+            f"corrected Lambda_3({s_tiny/MZ2:.2e}*M_Z^2) = {abs(l3c_0):.2e} "
+            f"(vanishes, like the validated Lambda_2), while the printed form "
+            f"tracks its unphysical divergence -8w/3 - 10/9 = {div_pred:.1f} "
+            f"(negative control); (2) the Denner anchor -- Lambda_3_corr(s) = "
+            f"(1/3)[V_b^-(0,s,0,0,M_W,M_W) - V_b^-(0)] with V_b^-(0) = "
+            f"3 ln(mu^2/M_W^2) - 1/2, holds over spacelike AND timelike grid "
+            f"points incl. s = M_Z^2 to max dev {max(dev_corr):.1e} (from-"
+            f"scratch 1D-reduced PV integrals, mesh 2e4), while the printed "
+            f"form fails the same identity with an O({swing:.0f}) swing; "
+            f"(3) the physical point pins Lambda_3(M_Z^2, M_W^2) = "
+            f"{l3_phys.real:.13f} (mpmath dps=40 anchored); "
+            f"(4)+(5) PROVENANCE SETTLED against both acquired originals -- "
+            f"BHM 1986 p. 748 spacelike form (inverse log argument; max dev "
+            f"{dev_bhm:.1e}) and Hollik DESY 88-188 eq C.5 timelike arctan "
+            f"form (max dev {dev_hol:.1e}) BOTH equal the corrected function "
+            f"at machine precision: the sign error is ORIGINAL TO CERN-95-03, "
+            f"a convention-recast slip (BHM's ln[(sq+1)/(sq-1)] = -ln x; the "
+            f"even log^2 term survived the rewrite, the odd single-log term "
+            f"lost its flip). The formalism-independent TOPAZ0 leg (ratio-24 "
+            f"coupling coherence) is pinned offline at The Turning/"
+            f"zll_defect_hunt_2026-07-03/audit_topaz0_pv_independent_witness.py. "
+            f"This check is the bank-permanent record that the PUBLISHED "
+            f"CERN-95-03 closed form is defective and the corrected form is "
+            f"derived, not fitted."
+        ),
+        key_result=(
+            f"Lambda_3 sign corrigendum certified: Denner anchor holds at "
+            f"{max(dev_corr):.1e}; printed form fails at O({swing:.0f}); "
+            f"s->0 + physical pin green; PROVENANCE SETTLED -- both originals "
+            f"(BHM 1986, Hollik 1990) correct at 1e-12, the error is original "
+            f"to CERN-95-03. [P]"
+        ),
+        dependencies=["T_w_trace_pv_lambda_bhm_physical_values"],
+        cross_refs=["T_w_trace_kappa_l_ACFW_published_one_loop_benchmark",
+                    "T_w_trace_pv_ewwgr_bare_reference_values"],
+        artifacts={
+            "L3_corrected_MZ2_MW2": l3_phys.real,
+            "L3_printed_defective_MZ2_MW2": -3.2679780980165249,
+            "denner_anchor_max_dev": max(dev_corr),
+            "printed_negative_control_swing": swing,
+            "s_to_0_corrected": abs(l3c_0),
+            "s_to_0_printed_divergence_predicted": div_pred,
+            "topaz0_leg": "pinned offline (audit_topaz0_pv_independent_witness.py)",
+            "provenance": ("SETTLED 2026-07-03: BHM 1986 + Hollik DESY 88-188 "
+                           "both CORRECT at machine precision (legs 4-5); the "
+                           "sign error is ORIGINAL TO CERN-95-03 "
+                           "(convention-recast slip)"),
+            "bhm_1986_form_max_dev": dev_bhm,
+            "hollik_C5_form_max_dev": dev_hol,
+        },
+    )
+
+
 _CHECKS = {
+    "T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor":
+        check_T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor_P,
     "T_w_trace_pv_lambda_bhm_Li2_reference_values": check_T_w_trace_pv_lambda_bhm_Li2_reference_values_P,
     "T_w_trace_pv_lambda_bhm_Li2_abel_identity":   check_T_w_trace_pv_lambda_bhm_Li2_abel_identity_P,
     "T_w_trace_pv_lambda_bhm_spacelike_real":      check_T_w_trace_pv_lambda_bhm_spacelike_real_P,

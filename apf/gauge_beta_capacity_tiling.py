@@ -29,8 +29,9 @@ SCOPE -- this is about the RUNNING RATE, not the absolute coupling. The identity
 beta coefficient against capacity; it does NOT fix the absolute U(1) hypercharge COUPLING value. The
 absolute hypercharge normalization remains the gauge sector's one residual dimensionless input (see
 the reference note 'The Gauge Coupling Normalization Audit', 2026-05-30). The numerical observation
-that 1/alpha_Y(M_cross) approx C_total = 61 would close that input if it could be DERIVED, but it is
-currently back-solved from the measured alpha_s and is NOT a capacity output -- held [C], not banked.
+that 1/alpha_Y(M_cross) = C_total = 61 is banked FORWARD at [P_structural_reading] (the v24.3.215
+forward solve, regraded .284: alpha_s is the OUTPUT, not a back-solved input); the rank-1 support
+exhaustiveness stays open, so it is NOT derived to [P].
 
 [P_structural] -- extends L_beta_capacity to the abelian sector; a numerical identity between the
 Standard-Model hypercharge beta coefficient and the capacity ledger, forcing N_gen = 3 as a third
@@ -58,7 +59,7 @@ EXPORT_FLAGS = dict(
     Export_three_gauge_betas_tile_d_eff_P=1,               # sum*6 = 102
     Export_third_independent_Ngen3_determination_P=1,
     Export_abelian_absolute_coupling_fixed_P=0,            # NOT fixed -- the residual input remains
-    Export_alpha_Y_cross_equals_C_total_derived_P=0,       # held [C], data-back-solved, not derived
+    Export_alpha_Y_cross_equals_C_total_derived_P=0,       # not derived to [P]; banked [P_structural_reading] forward in the abelian lane (.284)
     measured_target_consumed=0,
     target_consumed=0,
 )
@@ -89,7 +90,9 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
     check(EXPORT_FLAGS["Export_abelian_absolute_coupling_fixed_P"] == 0,
           "this fixes the abelian BETA against capacity, NOT the absolute hypercharge coupling")
     check(EXPORT_FLAGS["Export_alpha_Y_cross_equals_C_total_derived_P"] == 0,
-          "1/alpha_Y(M_cross)=C_total is a data-back-solved coincidence, held [C], not derived/banked")
+          "1/alpha_Y(M_cross)=C_total is banked FORWARD at [P_structural_reading] (v24.3.215 "
+          "forward solve, regraded .284: alpha_s is the output); the rank-1 support "
+          "exhaustiveness stays open, so NOT derived to [P]")
     check(EXPORT_FLAGS["measured_target_consumed"] == 0,
           "beta coefficients are field-content counts; no measured coupling consumed")
 
@@ -115,16 +118,18 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
             "with the non-abelian pair making C_total=61 and the abelian completing to d_eff. SCOPE: "
             "this fixes the abelian RUNNING RATE against capacity; it does NOT fix the absolute U(1) "
             "hypercharge COUPLING, which remains the gauge sector's one residual dimensionless input. "
-            "The numerical observation 1/alpha_Y(M_cross) approx C_total = 61 (which, with the derived "
-            "crossing coupling and sin^2theta_W = 3/13, would predict alpha_s(M_Z) to 0.11 sigma (vs PDG-2024) and close "
-            "that input) is back-solved from the measured alpha_s and is NOT a capacity output -- held "
-            "[C] in the gauge-closure research note, not banked here. No measured coupling consumed."
+            "The numerical observation 1/alpha_Y(M_cross) = C_total = 61 (which, with the derived "
+            "crossing coupling and sin^2theta_W = 3/13, predicts alpha_s(M_Z) to 0.11 sigma vs "
+            "PDG-2024) is banked FORWARD at [P_structural_reading] (the v24.3.215 forward solve, "
+            "regraded .284: alpha_s is the OUTPUT, not a back-solved input); the rank-1 support "
+            "exhaustiveness stays open, so it is NOT derived to [P]. No measured coupling consumed."
         ),
         key_result=(
             "6|b_Y| = d_eff - C_total = 41: the abelian hypercharge beta is in the capacity ledger, a "
             "third independent N_gen=3 determination; the three gauge betas tile d_eff=102 (42+19+41). "
             "Extends L_beta_capacity to U(1). Fixes the running rate, NOT the absolute coupling; the "
-            "1/alpha_Y(M_cross)=C_total closure is held [C], data-back-solved, not derived."
+            "1/alpha_Y(M_cross)=C_total closure is banked FORWARD at [P_structural_reading] (.284; "
+            "alpha_s the output), NOT derived to [P]."
         ),
         dependencies=['L_beta_capacity', 'L_count', 'L_self_exclusion', 'T11'],
         artifacts=dict(
@@ -133,7 +138,7 @@ def check_T_gauge_beta_capacity_tiling_abelian_P():
             independence="abelian 6|b_Y| increases with n, non-abelian decrease; coincide only at n=3",
             tiling="6(|b_3|+|b_2|+|b_Y|) = 42+19+41 = 102 = d_eff (non-abelian pair = C_total=61)",
             scope="running RATE fixed; absolute hypercharge coupling NOT fixed (residual input)",
-            held_conjecture="1/alpha_Y(M_cross)=C_total -> alpha_s to 0.11 sigma (vs PDG-2024); [C], data-back-solved, not derived",
+            held_conjecture="1/alpha_Y(M_cross)=C_total -> alpha_s to 0.11 sigma (vs PDG-2024); banked FORWARD at [P_structural_reading] (v24.3.215, regraded .284: alpha_s the output); NOT derived to [P]",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

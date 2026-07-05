@@ -58,12 +58,14 @@ the wavefunction handled by the common [(1 - Delta r)/(1 + Pi_hat^Z)]^{1/2}
 factor that cancels in the g_V / g_A ratio entering sin^2 theta_eff.
 
 With APF's native sin^2 theta_W = 3/13 and alpha = alpha(0) = 1/137.0359895,
-|F_L^ell| ~ 17.77 at s = M_Z^2 -- matching the working-doc "F_L ~ 18"
-target. |F_L| ~ 18 is the kinematic-function magnitude INSIDE the
-EWWGR Eq.166/167 bracket; the alpha/(4 pi) prefactor outside the bracket
-already makes F_V^Zell, F_A^Zell ~ 10^-2. Other channels reach |F_L| in
-the same ballpark (charged fermions ~17-18; G_L^ell ~ 10.6) consistent
-with the gauge-theoretic structure.
+|F_L^ell| = 3.546 at s = M_Z^2 on the v24.3.360 SIGN-CORRECTED Lambda_3
+(see the corrigendum in apf.w_trace_pv_lambda_bhm_vertex: the CERN-95-03
+printed Lambda_3 closed form is defective). The pre-.360 figure ~17.77 and
+the working-doc "F_L ~ 18" target were artifacts of the defective printed
+formula -- the target was SELF-REFERENTIAL and is retired (2026-07-03
+hostile audit). The alpha/(4 pi) prefactor outside the bracket puts
+F_V^Zell, F_A^Zell ~ 1.5e-3; the corrected vertex sector passes the ACFW
+published-one-loop benchmark to <= 1.0e-4 (see the BSY validator module).
 
 Retraction of earlier framing (2026-05-27, wiki/Log.md LATER-17 +4).
 Prior versions of this docstring described F_V / F_A as "BARE" form
@@ -71,7 +73,8 @@ factors and asserted a "WWZ counterterm cancellation taking |F_L| from
 ~18 down to |Lambda_hat| ~ 1e-4" at the R2 gate. That framing was a
 misreading: there is no factor-10^5 counterterm cancellation in EWWGR's
 one-loop bookkeeping; F_V / F_A as defined here are already the
-renormalized 3-pt objects, the |F_L| ~ 18 is in-bracket kinematics, and
+renormalized 3-pt objects, the pre-.360 |F_L| ~ 17.77 was in-bracket
+kinematics of the defective printed Lambda_3 (post-corrigendum 3.546), and
 the small |Lambda_hat| ~ 1e-4 the original brief invoked does not
 correspond to a counterterm-subtracted version of these objects. The
 "_bare_" infix in the check function names and the "bare_proper_vertex"
@@ -80,8 +83,8 @@ framing they describe is the one in this docstring.
 
 Self-validation (no fitted/measured target)
 -------------------------------------------
-  * F_L^ell sanity: |F_L^ell|(s=M_Z^2, sin^2 theta_W = 3/13) ~ 17.77,
-    within 1% of the working-doc "~18" target.
+  * F_L^ell sanity: |F_L^ell|(s=M_Z^2, sin^2 theta_W = 3/13) = 3.546
+    post-corrigendum (the pre-.360 "~18" target retired as self-referential).
   * neutrino consistency: F_V^Zν = F_A^Zν per EWWGR.
   * spacelike reality: F's real for s < 0.
   * physical-kinematics reference: F_V^Zell, F_A^Zell, F_L^ell, F_L^u,
@@ -229,18 +232,22 @@ def F_A_gamma(fermion: str, s: float, sW2: float,
 # Reference values via mpmath dps=40 with the SAME conventions (Lambda from
 # polylog(2, .) and Feynman iepsilon). Computed for sW2 = 3/13 (APF native)
 # at s = M_Z^2 with alpha = 1/137.0359895.
+# RE-ANCHORED v24.3.360 on the SIGN-CORRECTED Lambda_3 (see the corrigendum
+# in apf.w_trace_pv_lambda_bhm_vertex): Lambda_3 is real at s = M_Z^2, so the
+# imaginary parts are unchanged; every real part carrying Lambda_3 moves.
+# Pre-.360 values (defective printed Lambda_3) kept in git history.
 _REF: Dict[str, complex] = {
-    "F_L_ell":   complex( 17.61878538895243,    2.282464196106458),
-    "F_L_u":     complex(-17.42203232758785,   -1.931315858243926),
-    "F_L_d":     complex( 17.22527926622326,    1.580167520381394),
-    "G_L_ell":   complex( 10.62092881855371,    0.0),
-    "G_L_u":     complex(-11.04722711817698,   -0.7608213987021528),
-    "G_L_d":     complex( 11.47352541780024,    1.521642797404306),
-    "F_Znu":     complex(-0.009447030488981557, -1.334170007260984e-5),
-    "F_V_Zell":  complex( 0.01020579268465159,   0.001284953323720006),
-    "F_A_Zell":  complex( 0.0101189761717406,    0.00114724112860142),
-    "F_V_gell":  complex( 0.005945560096394528, -0.0003522499435324951),
-    "F_A_gell":  complex( 0.006133662541034999, -5.387352077555808e-5),
+    "F_L_ell":   complex( 2.7136593273088689,   2.2824641961064584),
+    "F_L_u":     complex(-2.516906265944283,   -1.9313158582439264),
+    "F_L_d":     complex( 2.320153204579697,    1.5801675203813943),
+    "G_L_ell":   complex( 0.93259687848538927,  0.0),
+    "G_L_u":     complex(-1.3588951781086588,  -0.76082139870215281),
+    "G_L_d":     complex( 1.7851934777319282,   1.5216427974043056),
+    "F_Znu":     complex(-0.00079155064469434681, -1.3341700072609844e-5),
+    "F_V_Zell":  complex( 0.001550312840364375,   0.0012849533237200059),
+    "F_A_Zell":  complex( 0.0014634963274533881,  0.0011472411286014195),
+    "F_V_gell":  complex( 0.00031949819760784123, -0.00035224994353249512),
+    "F_A_gell":  complex( 0.00050760064224831292, -5.3873520775558077e-5),
 }
 
 _sW2_APF = 3.0 / 13.0
@@ -258,31 +265,46 @@ EXPORT_FLAGS: Dict[str, int] = {
 # checks
 # ===========================================================================
 def check_T_w_trace_pv_ewwgr_bare_F_L_ell_target_P() -> Dict[str, Any]:
-    """T: |F_L^ell|(s = M_Z^2, sW2 = 3/13) is the working-doc "~18" target [P]."""
+    """T: |F_L^ell|(s = M_Z^2, sW2 = 3/13) = 3.546 post-corrigendum; the
+    pre-.360 "~18" working-doc target is RETIRED as self-referential [P].
+
+    The "~18" figure was computed FROM the defective printed Lambda_3
+    (|F_L^ell| = 17.77 pre-.360) and then adopted as the target -- a target
+    self-referential to the defect, invisible to any transcription anchor.
+    Post-corrigendum the honest in-bracket magnitude is 3.546. Retired as a
+    target per the 2026-07-03 hostile audit; this check now pins the
+    corrected value and keeps the retirement on the record.
+    """
     F = F_L("lepton", MZ2, _sW2_APF)
     mag = abs(F)
-    # working doc target: F_L ≈ 18
-    check(17.0 < mag < 18.5, f"|F_L^ell| = {mag:.4f} outside [17, 18.5]")
+    # post-corrigendum band around |F_L^ell| = 3.546 (sW2 = 3/13, alpha(0))
+    check(3.0 < mag < 4.0, f"|F_L^ell| = {mag:.4f} outside post-.360 band [3.0, 4.0]")
     check(F.imag > 0.0, f"Im F_L^ell must be positive (absorptive), got {F.imag:.2e}")
     return _result(
         name=("T_w_trace_pv_ewwgr_bare_F_L_ell_target: "
-              "|F_L^ell|(M_Z^2, sW2=3/13) ~ 18 (working-doc target) [P]"),
+              "|F_L^ell|(M_Z^2, sW2=3/13) = 3.546 post-corrigendum; the "
+              "pre-.360 '~18' target RETIRED as self-referential [P]"),
         tier=4, epistemic="P",
         summary=(
             f"At the Z pole with the APF-native sin^2 theta_W = 3/13, the "
             f"channel-specific F_L^ell = (1/4 sW^2) Lambda_2(M_W^2) - "
             f"(3 cW^2/2 sW^2) Lambda_3(M_W^2) evaluates to {F.real:.4f} + "
-            f"{F.imag:.4f}i, |F_L^ell| = {mag:.4f}. This is the kinematic-"
-            f"function magnitude INSIDE the EWWGR Eq.166/167 bracket; with the "
-            f"alpha/(4 pi) prefactor outside the bracket, the renormalized "
-            f"F_V^Zell / F_A^Zell are ~ 10^-2. The working-doc 'F_L ~ 18' "
-            f"target refers to this in-bracket kinematic piece (per the "
-            f"corrected 2026-05-27 framing in the module docstring), not a "
-            f"counterterm-cancellation scale."
+            f"{F.imag:.4f}i, |F_L^ell| = {mag:.4f}, on the v24.3.360 SIGN-"
+            f"CORRECTED Lambda_3. The pre-.360 working-doc target '~18' is "
+            f"RETIRED, not re-banded: it was derived from the defective "
+            f"printed Lambda_3 and functioned as a self-referential anchor -- "
+            f"the class of target a transcription-level check can never "
+            f"catch (lesson of record at the corrigendum check in "
+            f"w_trace_pv_lambda_bhm_vertex). The alpha/(4 pi) prefactor "
+            f"puts the renormalized F_V^Zell / F_A^Zell at ~ 1.5e-3."
         ),
-        key_result=f"|F_L^ell|(M_Z^2, sW2=3/13) = {mag:.4f} (~18 target). [P]",
-        dependencies=["T_w_trace_pv_lambda_bhm_physical_values"],
-        artifacts={"F_L_ell": F, "magnitude": mag},
+        key_result=(f"|F_L^ell|(M_Z^2, sW2=3/13) = {mag:.4f} post-corrigendum; "
+                    f"'~18' target retired. [P]"),
+        dependencies=["T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor",
+                      "T_w_trace_pv_lambda_bhm_physical_values"],
+        artifacts={"F_L_ell": F, "magnitude": mag,
+                   "pre_360_self_referential_target": 17.77,
+                   "target_retired": True},
     )
 
 
@@ -405,8 +427,8 @@ def check_T_w_trace_pv_ewwgr_bare_subgate_partial_P() -> Dict[str, Any]:
             "fermion wavefunction renormalization (framing corrected 2026-05-27 "
             "per module docstring; check identifiers retain '_bare_' for bank-"
             "registry stability). With APF's sin^2 theta_W = 3/13 and "
-            "alpha = 1/137.0359895, |F_L^ell| = 17.77 matches the working-doc "
-            "in-bracket kinematic target. Still OPEN toward kappa_l: R2 "
+            "alpha = 1/137.0359895, |F_L^ell| = 3.546 on the v24.3.360 sign-"
+            "corrected Lambda_3 (pre-.360 '~18' retired as self-referential). Still OPEN toward kappa_l: R2 "
             "(full vertex composition including external fermion wavefunction "
             "renormalization per EWWGR Eqs 248-249; the 3-pt piece here is one "
             "of the inputs, with the wavefunction handled by the common "

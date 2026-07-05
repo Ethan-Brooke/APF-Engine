@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-04 against verdict pin v24.3.389. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3824 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3876 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 203 of 449 loaded modules onboarded (144 directly), 162 of 247 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 216 of 462 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -17,11 +17,15 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `foundation:acc_three_level_identities` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grades from the epistemic fields (17 x 'P'); the promotion history is stated, not laundered |
 | `foundation:acc_unification_all_p_categorical_closure` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: header docstring advertises plain 'P' per piece and check names end in _P, but the machine status tokens are the bespoke P_... |
 | `foundation:acc_unification_no_imports_provenance_gate` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grades are the bespoke P_provenance/P_audit/P_cat_fully_closed_no_imports tokens read from the status= fields. |
+| `foundation:agt_encoding_wall` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Onboards the .378 encoding wall onto the ROUTE axis as a closure-by-design obstruction. The AGT-par non-adoption and the single-[C] disci... |
+| `foundation:anchor_support_formalization` | ROUTE | **EXPORT** | Onboards the Paper 12 round-6 algebraic-anchor formalization onto the ROUTE axis as a structural identity. The two-clause honesty is froz... |
 | `foundation:base_fiber_allocation` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 4 probe; the no-B row's OPEN status stated honestly |
 | `foundation:billed_vs_derived_register_criterion` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 depth; the B5 close (.332) |
 | `foundation:class_transition_primitive` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the four checks carry NO machine epistemic field (return dicts have only name/passed/key_result/theorem_refs) -- grade live... |
 | `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2... |
+| `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid s... |
 | `foundation:d4_unique` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 5 probe; all-[P] verified per epistemic fields |
+| `foundation:delta_calculus_derived_identities` | ROUTE | **EXPORT** | Onboards the Paper 12 Delta-calculus onto the ROUTE axis as a structural identity: the derived ledger identities are the codomain by cons... |
 | `foundation:fencea_hinge_trichotomy_ladder` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched |
 | `foundation:forced_universality_classes` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider. |
 | `foundation:formal_kernel_theorem11_and_slot_no_go` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 6; spine; never cite slot-level V_global identification as an open lead |
@@ -51,12 +55,16 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `contextuality:chsh_local` | CONTEXTUALITY | **EXPORT** | local interior point (all CHSH sign choices /S/=6/5<=2) -> SepStr export |
 | `contextuality:consistent_cycle` | CONTEXTUALITY | **EXPORT** | even 4-cycle (consistent GF(2) system) -> SepStr export |
 | `contextuality:magic_square_parity` | CONTEXTUALITY | IJC_OBSTRUCTION | Mermin-Peres magic square (GF(2) 0=1) -> IJCStr named obstruction |
+| `contextuality:native_ladder_bell_local` | CONTEXTUALITY | **EXPORT** | the exact-rational native-family ENTANGLED-but-Bell-local state /S/ = 707/515 < 2 (delta = ln102) -> SepStr, a global section exported; t... |
+| `contextuality:native_ladder_chsh_violation` | CONTEXTUALITY | IJC_OBSTRUCTION | the exact-rational native-family CHSH violation /S/ = 202/75 > 2 (entangled state at eps,mu,delta = -ln102,ln102,2ln102; 3-4-5 settings) ... |
 | `contextuality:pr_box` | CONTEXTUALITY | IJC_OBSTRUCTION | PR box (S=4) -> IJCStr named obstruction (CHSH/Fine separator) |
 | `quantum:ghz_mermin_state_independent` | CONTEXTUALITY | IJC_OBSTRUCTION | the GHZ/Mermin state-independent scenario (empty global-section support, brute-forced 0/64 -- six observables, 2^6 global sections -- in ... |
 | `quantum:i3_operator_self_identification` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; P_comp on the top check quoted as-is (composed status, distinct from plain P). |
 | `quantum:magic_square_threshold_robust` | CONTEXTUALITY | IJC_OBSTRUCTION | sign-equivalent textbook encoding of the v24.3.297 scenario (the banked check uses column parities (1,1,1); flipping two row signs gives ... |
 | `quantum:qutrit_noncontextual_control` | CONTEXTUALITY | **EXPORT** | the qutrit noncontextual control scenario -> SepStr export (a faithful global hidden-variable section exists) |
 | `quantum:symmetry_contextuality_orthogonal` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe; the four-cell witness content stays with the banked check |
+| `quantum:vacuum_label_code_p1_witness` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the ICL_vac route-(b) witness family (.352/.356/.357) onto the ROUTE axis as a held claim at [P_structural_instrument]. The thre... |
+| `quantum:vacuum_scheme_covariance_split` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the .373 covariance split onto the ROUTE axis as a held claim at [P_structural_instrument]. The F1/F2 never-conflate discipline ... |
 | `spine:inseparable_ijc_345_witness` | CONTEXTUALITY | IJC_OBSTRUCTION | the v24.3.288 exact singlet realization of the 3-4-5 geometry (constructive companion to T_inseparable_IJC's inline +-12/25 codespace wit... |
 
 ## Paper 18 + Paper 42 + Paper 28 (EW sector)
@@ -72,6 +80,7 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `ew:delta_alpha_leptonic` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; mixed-grade module, per-check grades listed from machine fields |
 | `ew:delta_alpha_pqcd_m_z` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; bespoke grade token quoted verbatim from the machine field |
 | `ew:delta_rho_leading_distinction` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grade rider (modulo scale and convention) carried in the bespoke token |
+| `ew:mcross_planck_ratio_reading` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the .365 M_cross collapse onto the ROUTE axis as a held claim at [P_structural_reading]. The never-promote and never-numerologiz... |
 | `ew:mw_distinction_decomposition` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 head 4: the distinction-picture M_W head; no in-family covers |
 | `ew:mw_from_3_13_effective_angle` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 8; classified physics_claim in the plumbing pass (the only one in the 86-module pool); absolute-scale discipline: M_Z anchor named, ... |
 | `ew:native_oblique_close` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 head 5: the oblique family head; covers = the cross-composed native oblique modules |
@@ -87,15 +96,16 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `ew:sin2theta_w_os_capacity_counting_gh_codomain` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; docstring headline P_full_structural vs value-check machine fields P_attractor_structural_GH_OS_codomain flagged, fields quoted |
 | `ew:sqrtNc_carrier_forced` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 5 Group B leaf probe |
 | `ew:u1y_landau_pole_trans_planckian` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 |
+| `ew:wg2_dictionary_typing_no_go` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Onboards the .364 dictionary fence onto the ROUTE axis as a closure-by-design obstruction. A future lane reading the measured weak mixing... |
 | `ew_eigenscreen:coupled_channel_disposition` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | provenance: APF_INTERFACE_ENGINE_EW_COUPLED_CHANNEL_EIGENSCREEN_SYMBOLIC_GATE_v1 + EW_PARTIAL_WAVE_ANALYTIC_SCREEN_v1 (held, not banked);... |
 | `ew_eigenscreen:goldstone_boundary_disposition` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | provenance: APF_INTERFACE_ENGINE_GOLDSTONE_EQUIVALENCE_BOUNDARY_v1 + EW_SCATTERING_UNITARITY_SYMBOLIC_GATE_v1 + EW_TREE_AMPLITUDE_CUSTODI... |
 | `payload:ew_dizet_real_adapter_live` | ROUTE | **EXPORT** | live adapter payload (swap of mass:route11_mw_on_shell_dizet); imported/banked content and grades per its adapter module |
 | `payload:ew_transport_open` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR |  |
-| `wtrace:bsy_one_loop_kappa_l_assembly_consistency` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; bespoke grade token quoted verbatim; opens stated as banked |
+| `wtrace:bsy_one_loop_kappa_l_assembly_consistency` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 (the Wave-7 snapshot described the pre-.358 state and its 0.0475-era bands; verdi... |
 | `wtrace:native_one_loop_mw_close` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 head 1: the one-loop native close; covers = the dependency-verified composition fan; Wave 7 covers extension: +11 stages, criterio... |
 | `wtrace:os_route_terminal_closure_open_export` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 head 2: the export-status head -- the honest OPEN statement; covers = the import-verified closure surface; Wave 7 covers extension... |
 | `wtrace:two_loop_phase2_router` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 head 3: the two-loop program head; covers = its promoted-lane composition only |
-| `wtrace:zll_kappa_l_oblique` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; mixed-grade module, per-check grades listed from machine fields |
+| `wtrace:zll_kappa_l_oblique` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 (the Wave-7 snapshot described the pre-.358 state; verdict-tested through summari... |
 | `wtrace:zll_r2_counterterm_pieces` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; plumbing-with-a-theorem: banked content = finiteness + the delta_Z2_gamma = -Pi_AA(0) identity + delta_Z_AZ self-consistency + st... |
 
 ## Papers 29/30/31 (YM trilogy) + the gauge sector
@@ -105,10 +115,13 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `claim:gauge_fiber` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR |  |
 | `gauge:abelian_rank1_capacity_count` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 item (a); the check name's _P suffix is historical -- the operative grade is the declared [P_structural_reading] |
 | `gauge:acc_reading_selection_map` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 |
+| `gauge:anchor_electric_center_correspondence` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the Paper 12 round-4/6 anchor--electric-centre correspondence onto the ROUTE axis as a held claim at its banked grades. The vert... |
 | `gauge:beta_capacity_tiling` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 abelian beta-tiling + leading-log identity; field P_structural_seam vs docstring [P_structural] flagged |
+| `gauge:colour_solder_form_no_go` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Onboards the solder-form no-go (v24.3.367) onto the ROUTE axis as a closure-by-design obstruction. The route is structurally closed; a fu... |
 | `gauge:photon_slot4_c4_keystone` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; docstring [P_structural] vs machine epistemic=P_structural_reading flagged, field wins |
 | `gauge:quotient_pinned_demand` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe |
 | `gauge:spine_disposition` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 3 spine probe; dispositions per the banked checks (Theorem_R, L_count, T_ew_load_placement_P, T_abelian_coupling_fixed_by_rank1_capa... |
+| `gauge:su2_string_cut_four_clause_verdict` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the Paper 12 worked-example testbed onto the ROUTE axis as a held claim; the four-clause split is frozen in the claim text (do-n... |
 | `readout:su2_diquark` | READOUT | **EXPORT** | m=1 -> canonical record EXPORTED |
 | `readout:su2_fund4` | READOUT | READOUT_OBSTRUCTION | m=2 -> named obstruction: multiplicity-frame required |
 | `readout:su3_baryon` | READOUT | **EXPORT** | m=1 -> canonical record EXPORTED (the epsilon baryon) |
@@ -121,6 +134,7 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `strong:lattice_gap_candidate` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe; the candidate framing is the banked framing |
 | `strong:pentaquark_magic_square` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.295 banked scenario: SU(2) pentaquark M4 hosts the Mermin-Peres magic square (empty global-section support) -> IJCStr; the physical... |
 | `strong:pi0_anomaly_width_row` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; scorecard row 49 (49 total / 40 tested / 33 consistent at the .341 landing) |
+| `strong:strong_cp_transport_content_blind` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Onboards the .359 transport-half no-go onto the ROUTE axis as a closure-by-design obstruction. Paper 46 anchors this ceiling; a future la... |
 | `strong:tetraquark_kcbs` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.293 banked scenario: gauge-invariant tetraquark M3 KCBS -> IJCStr |
 | `strong:tetraquark_yuoh_state_independent` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.294 banked scenario: Yu-Oh 13-ray on the tetraquark M3, state-independent -> IJCStr |
 | `strong:vacuum_realization_triptych` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6: the 2026-07-02 vacuum-realization arc (.335/.337/.341-.343); no [P] claimed anywhere in this row |
@@ -153,6 +167,7 @@ Generated 2026-07-02 against verdict pin v24.3.348. Every row below is produced 
 | `gravity:evaporation_microtransport_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; data-field 'P / regime' prose vs status='P_conditional' token flagged (token wins) |
 | `gravity:evaporation_quartet_page_derived` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 5 probe; grade lives in the status field in this module |
 | `gravity:fre_and_lambda_absolute` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; fork-conformed surfaces (v24.3.320) respected, row is branch-neutral; the L_Lambda [P] is gate-passage-only by its own corrected ... |
+| `gravity:gammaC_carrier_watch` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the gamma_C carrier program onto the ROUTE axis as a WATCH. The verdict is held (not exported); pinning it puts the signed Cassi... |
 | `gravity:i1_bridge_at_joint_k42` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; single-check module, bridge grade is joint-point-only per its own artifacts |
 | `gravity:lambda_operator_level_derivation` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; composed check field 'P' is over-[C]-ansatz per its own docstring (flagged); row is fork-branch-neutral |
 | `gravity:observable_transport_gr_nonclaims` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Phase 2 disposition gravity residue; pack transport-ledger rows consolidated |

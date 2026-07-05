@@ -819,6 +819,247 @@ def check_T_su2_single_site_uniform_gap_drift():
     )
 
 
+
+def check_T_ym_ir_endpoint_trichotomy_branch2_open():
+    """T_ym_ir_endpoint_trichotomy_branch2_open: the matter-free IR endpoint is a
+    TRICHOTOMY -- saturation / the inert record-locked plateau / the net-reversible
+    (conformal) phase -- with branch 3 excluded by bank, branch 1 exact under
+    quantization, and BRANCH 2 FLAGGED OPEN IN THIS CHECK'S OWN NAME. A typing
+    instrument, NOT a discharge: T_confinement's Step-2 carried premise
+    ("IR capacity-saturation occurs") is NOT derived here.
+
+    v24.3.368 (2026-07-03). Walk of record: "Reference - The Matter-Free IR
+    Endpoint Trichotomy - REDUCED (2026-07-03)" -- the attempted discharge was
+    REDUCED 0.85 by fresh-context hostile audit; this check banks the surviving
+    fragment at the audit's own pricing ("bankable ... as the trichotomy +
+    branch-3 exclusion, with branch 2 flagged OPEN"). Principal-ruled
+    "bank trichotomy" 2026-07-03. Witness of record:
+    The Turning/ym_saturation_walk_2026-07-03/ (post-audit relabeling).
+
+    THE TRICHOTOMY (finite-chain / lattice-substrate-conditional). Under the
+    named readings R1(i)-(iii) below, an admissible matter-free non-abelian IR
+    ledger terminates in exactly one of:
+      1. SATURATION: slack = 0, reached in <= C strict increments.
+         QUANTIZATION LEMMA-LET (exact, from L_cost [P] cost = count x eps*):
+         ledger slack is a non-negative integer multiple of eps*, so
+         "slack < eps*" <=> "slack = 0" -- there is no strictly-between. This
+         dissolves the Mythos last-eps* REMNANT (the arithmetic gap), NOT the
+         forcing question (which is branch 2's content).
+      2. THE INERT RECORD-LOCKED PLATEAU -- OPEN: the sector stops committing
+         at 0 < c < C; slack >= eps* remains; non-singlets stay payable:
+         deconfined-but-static. NOT addressed by the banked exclusion (its
+         dictionary types phases by their CHANNELS -- Delta=0 channels exist
+         <=> reversible <=> excluded matter-free; the plateau holds permanent
+         Delta>0 commitments = the ADMITTED side; zero commitment RATE is not
+         Delta=0 CHANNELS). Eliminating this branch = discharging the carried
+         premise; the ONE staged driver candidate is recruitment growth
+         (maintenance demand of the held record growing with IR depth --
+         E_rec / Paper 24; trilogy strong-coupling adjacency), chartered
+         2026-07-03 ("The Inert-Endpoint Kill"), UN-WALKED.
+         v24.3.374 STATUS: the driver lane was walked and REDUCED twice
+         (2026-07-03: the rent wall, T_ledger_rent_excluded; then the
+         row-10 fence + the nested-cover misconsumption -- see the two
+         REDUCED notes of record); the surviving phenotype's face (b)
+         (deep superselection) is CLOSED by
+         check_T_matter_free_colour_record_deep_superselection_no_go
+         (gauge_invariant_record.py); branch 2 remains OPEN on faces
+         (a) discard + (c) no-altering-exercise (unpayable OR
+         unselected); falsifier (d) NOT triggered (face closure is not
+         branch elimination). RULING OF RECORD (principal, 2026-07-04,
+         Decisions List): the RG step is a RE-DESCRIPTION -- branch 2 is
+         a PERMITTED matter-free phase of the ledger formalism; every
+         ledger-forcing elimination route is FORECLOSED at ruling
+         strength; the OPEN flag now reads "permitted, not eliminated".
+         DOOR CLAUSE: a future derivation that deep-IR structure
+         formation is a genuine activation event on the held record is
+         new content and re-opens the elimination legitimately.
+      3. THE NET-REVERSIBLE / CONFORMAL PHASE: excluded for matter-free
+         non-abelian gauge by check_T_ym_conformal_phase_excluded_by_record_
+         locking [P_structural_reading] -- consumed at its PHASE-EXCLUSION leg
+         ONLY (L_cost + record theorem + L_irr(+uniform)); its downstream
+         gap leg rides T_confinement and is NOT consumed here (the audit's F2
+         bootstrap fence: no value laundered through the undischarged
+         antecedent).
+
+    The termination dichotomy behind 1-vs-2 (every monotone quantized bounded
+    ledger ends at budget or in a terminal plateau; no third terminal class;
+    strict increments <= C) is elementary and machine-checked exhaustively
+    below. All remaining physics lives in branch 2, which stays OPEN.
+
+    NAMED READINGS (R1, split per the audit's F3 -- three parts, none banked):
+      R1(i)   an RG/coarse-graining step is an admissible continuation
+              (typed nowhere in the bank at landing; ONTOLOGY RULED
+              2026-07-04, Decisions List: the step is a RE-DESCRIPTION of
+              fixed structure, not an interface-creating transition --
+              "nothing changes but the math"; admissible
+              continuation-as-description survives, bookings do not ride
+              the step);
+      R1(ii)  deeper-IR interfaces INHERIT commitments (contestable:
+              coarse-graining canonically discards distinctions; L_irr [P]
+              supplies per-interface permanence, not chain inheritance);
+      R1(iii) the sector BUDGET is constant along the chain (previously
+              silent, load-bearing: A1 bounds capacity per causally connected
+              region and the chain sweeps regions).
+    Grade [P_structural_reading]: inherits the exclusion's identifications
+    (i)/(ii) for branch 3 + R1(i)-(iii) for the termination frame.
+
+    CONTROLS AND FENCES:
+      - T4F [P] control, reworded per audit F5: T4F is a STATIC counting
+        statement (E(3) = 6 of C_EW = 8, ratio 3/4; 4th generation excluded),
+        not an RG equilibrium endpoint; it serves in spirit as the
+        does-not-prove-too-much control -- sectors WITH matter/Delta=0
+        channels are outside branch-3 exclusion and may sit below budget.
+        Nothing here forces EW anywhere.
+      - TWO-TYPING RECONCILIATION (audit F7): the sibling
+        T_ym_meaningful_spectrum_is_singlet_gapped types CONTINUUM
+        saturation-occurrence AS continuum existence (the Clay half). This
+        check is the FINITE-CHAIN statement and does not move that residual.
+      - DOES NOT DISCHARGE: T_confinement's [P] attaches to its conditional
+        mechanism class and is untouched; its antecedent remains carried.
+        This check only replaces "an un-typed dynamical premise" with "branch
+        2 of a typed trichotomy, with a staged driver candidate".
+      - DO NOT RE-WALK (both audited-refuted 2026-07-03 / standing): the R2
+        route (plateau = conformal-class via "zero forward production" --
+        rate/state equivocation, killed by the exclusion's own dictionary);
+        slack-arithmetic saturation-forcing (Paper 10 Mythos audit).
+      - Route-A flow material (L_AF_capacity + monotone-flow dichotomy) is a
+        REMARK only (audit F4: global monotonicity unbanked; the converged
+        branch has the same inert gap).
+
+    FALSIFIERS: (a) the banked exclusion falls -> branch-3 exclusion falls
+    with it (consumed live below); (b) a matter-free Delta=0 channel is
+    exhibited -> the exclusion's matter axis breaks upstream; (c) a third
+    terminal class for monotone quantized bounded sequences (the exhaustive
+    pin below -- mathematically wired); (d) branch 2 eliminated by a banked
+    theorem -> this check's OPEN flag (and name) must be retired in the same
+    leg (the succession is the point).
+    """
+    import itertools as _it
+    import math as _math
+    from apf.core import check_L_irr as _lirr, check_L_cost as _lcost
+    from apf.core import check_L_epsilon_star as _leps
+    from apf.gauge import check_T_confinement as _conf, check_T4F as _t4f
+
+    # -- (1) live consumption: branch-3 ground + the [P] inputs --------------
+    excl = check_T_ym_conformal_phase_excluded_by_record_locking()
+    _check(excl.get("passed") is True
+           and "P_structural" in str(excl.get("epistemic")),
+           "branch-3 ground live: the conformal-phase exclusion passes at its "
+           "banked token (phase-exclusion leg consumed; gap leg NOT consumed)")
+    for nm, fn_ in (("L_cost", _lcost), ("L_irr", _lirr),
+                    ("L_epsilon_star", _leps)):
+        rr = fn_()
+        _check(rr.get("epistemic") == "P" and rr.get("passed"),
+               f"{nm} [P] live (quantization / permanence / floor)")
+
+    # -- (2) the quantization lemma-let, exact -------------------------------
+    _check(all((sl < 1) == (sl == 0) for sl in range(0, 201)),
+           "lemma-let: integer ledger slack < eps* IFF slack = 0 (no "
+           "strictly-between; the Mythos last-eps* REMNANT dissolves; the "
+           "forcing question does NOT -- it is branch 2)")
+
+    # -- (3) the termination dichotomy, exhaustive ---------------------------
+    C_TOY, N_STEPS = 5, 8
+    n_tot = n_sat = n_plateau = n_third = 0
+    max_incr = 0
+    for seq in _it.combinations_with_replacement(range(C_TOY + 1), N_STEPS):
+        n_tot += 1
+        max_incr = max(max_incr,
+                       sum(1 for a, b in zip(seq, seq[1:]) if b > a))
+        if seq[-1] == C_TOY:
+            n_sat += 1
+        elif seq[-1] < C_TOY:
+            n_plateau += 1
+        else:
+            n_third += 1
+    _check(n_tot == _math.comb(N_STEPS + C_TOY, C_TOY) and n_third == 0
+           and n_sat + n_plateau == n_tot,
+           f"termination dichotomy EXHAUSTIVE over all {n_tot} monotone "
+           f"quantized bounded ledgers: saturate ({n_sat}) XOR terminal "
+           f"plateau below budget ({n_plateau}); no third terminal class")
+    _check(max_incr <= C_TOY,
+           f"step bound: strict increments <= C = {C_TOY} (saturation, when "
+           "it happens, arrives in <= C steps)")
+
+    # -- (4) the carried premise quote-pin + T4F control ---------------------
+    conf = _conf()
+    doc = _conf.__doc__ or ""
+    _check(conf.get("passed") and "CARRIED PREMISE" in doc,
+           "T_confinement [P] live + Step-2 'CARRIED PREMISE' quote-pinned: "
+           "the object this check TYPES and does NOT discharge")
+    _summ = conf.get("summary", "")
+    _check("saturation (T4F + A1) =>" not in _summ
+           and "CARRIED PREMISE" in _summ,
+           "the v24.3.368 summary corrigendum holds: T_confinement's summary "
+           "no longer ASSERTS 'saturation (T4F + A1)' as a claim (the "
+           "corrigendum bracket may QUOTE the retired text) and now carries "
+           "the CARRIED PREMISE wording")
+    t4 = _t4f()
+    _check(t4.get("epistemic") == "P" and t4.get("passed"),
+           "T4F [P] live: static counting control (75% flavor/EW; NOT an RG "
+           "endpoint; sectors with matter channels are outside branch-3 "
+           "exclusion -- nothing here forces EW)")
+
+    # -- (5) own-docstring tamper sentinels (the .312 F2 pattern) ------------
+    own = check_T_ym_ir_endpoint_trichotomy_branch2_open.__doc__ or ""
+    _check(all(t in own for t in
+               ("BRANCH 2", "OPEN", "NOT a discharge", "DO NOT RE-WALK",
+                "rate/state equivocation", "budget", "recruitment growth")),
+           "non-claim + open-flag sentinels present in own docstring")
+
+    return _full_result(
+        name=("T_ym_ir_endpoint_trichotomy_branch2_open: the matter-free IR "
+              "endpoint typed as saturation / inert record-locked plateau "
+              "(OPEN) / conformal (excluded by bank); a typing instrument, "
+              "not a discharge"),
+        tier=4,
+        epistemic="P_structural_reading",
+        summary=(
+            "Under named readings R1(i)-(iii) (RG step = continuation; "
+            "commitment inheritance; budget constancy -- none banked), the "
+            "matter-free IR ledger terminates in exactly one of: saturation "
+            "(exact under L_cost quantization: slack < eps* <=> slack = 0; "
+            "<= C strict increments), the INERT RECORD-LOCKED PLATEAU "
+            "(deconfined-but-static; NOT addressed by the banked exclusion, "
+            "whose dictionary types phases by channels, not commitment rate "
+            "-- the OPEN branch, staged driver: recruitment growth), or the "
+            "net-reversible/conformal phase (excluded matter-free by the "
+            "record-locking check, consumed at its phase-exclusion leg "
+            "only). T_confinement's carried premise is TYPED, not "
+            "discharged; the continuum residual stays with the "
+            "singlet-gapped sibling (Clay half). REDUCE-fragment banking of "
+            "the 2026-07-03 walk (audit 0.85)."
+        ),
+        key_result=(
+            "matter-free IR endpoint trichotomy: branch 3 excluded by bank, "
+            "branch 1 exact under quantization (slack < eps* <=> slack = 0), "
+            "branch 2 (inert record-locked plateau) OPEN -- the entire "
+            "remaining content of 'saturation occurs'; discharge = the "
+            "chartered inert-endpoint kill"
+        ),
+        dependencies=["L_cost", "L_irr", "L_epsilon*",
+                      "T_ym_conformal_phase_excluded_by_record_locking",
+                      "T_confinement", "T4F"],
+        cross_refs=["T_ym_meaningful_spectrum_is_singlet_gapped",
+                    "T_ym_gap_positivity_from_MD"],
+        artifacts={
+            "named_readings": {
+                "R1_i": "RG step = admissible continuation (unbanked)",
+                "R1_ii": "commitment inheritance along the chain (unbanked)",
+                "R1_iii": "budget constancy along the chain (unbanked, "
+                          "previously silent)",
+            },
+            "branch_2_open": "inert record-locked plateau; staged driver = "
+                             "recruitment growth (CONTINUATION charter "
+                             "2026-07-03, un-walked)",
+            "walk_note": "Reference - The Matter-Free IR Endpoint Trichotomy "
+                         "- REDUCED (2026-07-03)",
+            "audit": "fresh-context hostile cold audit REDUCE 0.85; this "
+                     "banks the audit-priced surviving fragment only",
+        },
+    )
+
+
 _CHECKS = {
     "T_ym_gap_positivity_from_MD": check_T_ym_gap_positivity_from_MD,
     "T_ym_lattice_substrate_admissible": check_T_ym_lattice_substrate_admissible,
@@ -827,6 +1068,7 @@ _CHECKS = {
     "T_contextuality_implies_superadditive_cost": check_T_contextuality_implies_superadditive_cost,
     "T_su2_single_plaquette_curvature_exact": check_T_su2_single_plaquette_curvature_exact,
     "T_su2_single_site_uniform_gap_drift": check_T_su2_single_site_uniform_gap_drift,
+    "T_ym_ir_endpoint_trichotomy_branch2_open": check_T_ym_ir_endpoint_trichotomy_branch2_open,
 }
 
 

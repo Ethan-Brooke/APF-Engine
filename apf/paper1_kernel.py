@@ -490,8 +490,9 @@ def check_T_FD1_substrate_distinctions_capacity():
             f'states enumerated, all satisfy A1; K1+K2+K3 certified on '
             f'perturbation set; SP certified on substrate.'
         ),
-        dependencies=['A1', 'MD', 'FD1', 'FD2', 'FD4', 'SP', 'K3_theorem'],
-        cross_refs=['T_FormalKernel_VLambda_uniqueness',
+        dependencies=['A1', 'MD', 'FD1', 'FD2', 'FD4', 'SP'],
+        cross_refs=['K3_theorem (Paper 1 Supplement forced-additivity; certified in-body by this check, leg k3_ok)',
+                    'T_FormalKernel_VLambda_uniqueness',
                     'L_epsilon_star',
                     'T_form',
                     'T_embed'],

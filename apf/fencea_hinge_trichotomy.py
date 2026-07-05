@@ -471,11 +471,265 @@ def check_T_correlation_hierarchy_ladder():
     )
 
 
+def check_T_correlation_ladder_exact_rational_chsh_witness():
+    """Exact-rational CHSH witnesses inside the native correlation family.
+
+    The ladder's Gibbs populations are e^{-k ln102} = 102^{-k} -- exact
+    rationals -- so native rung points carry exact-rational correlators. Using
+    rational Pythagorean (3-4-5) measurement settings in place of the
+    Horodecki-optimal (irrational) ones yields an exact-rational CHSH value the
+    Boole-polytope engine (feasbool) can consume with NO float in the
+    certificate. This is what lets the native family reach the IE CONTEXTUALITY
+    axis, whose Sep/IJC decider requires exact rationals.
+
+    Two native members at (eps, mu) = (-ln102, +ln102), differing only in the
+    two-cell interaction cost delta, straddle the CHSH boundary -- BOTH
+    entangled (the PPT test z^2 > p00*p11 is an exact rational comparison):
+      delta = 2 ln102 : c1 = c2 = c3 = -101/105, |S| = 202/75  > 2  -> IJCStr
+      delta = 1 ln102 : c1 = c2 = -101/206, c3 = 0, |S| = 707/515 < 2 -> SepStr
+    The interaction cost delta alone tunes the family across the Bell boundary
+    while both states remain entangled -- the entanglement < CHSH strict gap of
+    the ladder, in exact arithmetic. The IJC value sits below the family ceiling
+    2 sqrt2 * 102/103 (exact |S|^2 = 40804/5625 < 83232/10609). The construction
+    cross-checks against the module's own float family functions (_corr_diag,
+    _ppt_margin).
+
+    Grade P_structural tier 4: exact Fraction arithmetic + the exact
+    Boole-polytope LP; floats appear only as an independent cross-check.
+    """
+    from fractions import Fraction as F
+    from apf.ijc_feasbool_engine import _chsh_correlator_scenario, feasbool
+
+    def rpops(a, b, c):
+        # energies (0, a+b, a, 2a+c) in units of ln102; weight = 102^{-(E-min)}
+        Es = (F(0), F(a + b), F(a), F(2 * a + c))
+        m = min(Es)
+        w = [F(102) ** int(-(e - m)) for e in Es]
+        Z = sum(w)
+        return [x / Z for x in w]
+
+    def rcorr(a, b, c):
+        p00, pp, pm, p11 = rpops(a, b, c)
+        return pp - pm, pp - pm, p00 + p11 - pp - pm
+
+    def e_table(a, b, c):
+        # settings a=(1,0,0), a'=(0,1,0), b=(3/5,4/5,0), b'=(3/5,-4/5,0);
+        # E(u,v) = c1 ux vx + c2 uy vy + c3 uz vz for T = diag(c1,c2,c3).
+        c1, c2, _c3 = rcorr(a, b, c)
+        return [c1 * F(3, 5), c1 * F(3, 5), c2 * F(4, 5), c2 * F(-4, 5)]
+
+    def entangled_exact(a, b, c):
+        p00, pp, pm, p11 = rpops(a, b, c)
+        z = (pp - pm) / 2
+        # PT min-eigenvalue < 0  <=>  z^2 > p00*p11: an EXACT rational
+        # comparison (the sqrt in the margin never needs to be taken).
+        return z * z > p00 * p11
+
+    ceil_sq = F(8) * F(102, 103) ** 2  # (2 sqrt2 * 102/103)^2, the family ceiling
+
+    # ---- IJC witness: delta = 2 ln102 -----------------------------------
+    a, b, c = -1, 1, 2
+    check(rpops(a, b, c) == [F(1, 105), F(1, 105), F(102, 105), F(1, 105)],
+          "IJC witness populations exact: (1/105, 1/105, 102/105, 1/105)")
+    c1, c2, c3 = rcorr(a, b, c)
+    check(c1 == c2 == F(-101, 105) and c3 == F(-101, 105),
+          "IJC witness correlators c1 = c2 = c3 = -101/105")
+    check(entangled_exact(a, b, c), "IJC witness is entangled (exact PPT margin)")
+    e_ijc = e_table(a, b, c)
+    s_ijc = e_ijc[0] + e_ijc[1] + e_ijc[2] - e_ijc[3]
+    check(abs(s_ijc) == F(202, 75),
+          "IJC witness CHSH |S| = 202/75, exact (3-4-5 rational settings)")
+    check(abs(s_ijc) > 2, "IJC witness violates CHSH: |S| > 2")
+    check(abs(s_ijc) ** 2 < ceil_sq,
+          "IJC witness below the family ceiling 2 sqrt2 * 102/103 "
+          "(exact |S|^2 = 40804/5625 < 83232/10609)")
+    check(feasbool(_chsh_correlator_scenario(tuple(e_ijc)))["branch"] == "IJCStr",
+          "IJC witness: the Boole-polytope engine returns IJCStr (named Bell obstruction)")
+
+    # ---- SepStr control: delta = 1 ln102 (entangled but Bell-local) -----
+    a2, b2, c2p = -1, 1, 1
+    check(rpops(a2, b2, c2p) == [F(1, 206), F(1, 206), F(51, 103), F(51, 103)],
+          "Sep witness populations exact: (1/206, 1/206, 51/103, 51/103)")
+    d1, d2, d3 = rcorr(a2, b2, c2p)
+    check(d1 == d2 == F(-101, 206) and d3 == 0,
+          "Sep witness correlators c1 = c2 = -101/206, c3 = 0")
+    check(entangled_exact(a2, b2, c2p),
+          "Sep witness is ENTANGLED (exact PPT margin) -- the entanglement < CHSH gap")
+    e_sep = e_table(a2, b2, c2p)
+    s_sep = e_sep[0] + e_sep[1] + e_sep[2] - e_sep[3]
+    check(abs(s_sep) == F(707, 515), "Sep witness CHSH |S| = 707/515, exact")
+    check(abs(s_sep) < 2, "Sep witness does NOT violate CHSH: |S| < 2 (Bell-local)")
+    check(feasbool(_chsh_correlator_scenario(tuple(e_sep)))["branch"] == "SepStr",
+          "Sep witness: the Boole-polytope engine EXPORTS a global section (SepStr)")
+
+    # ---- delta tunes the family across the boundary at fixed (eps, mu) --
+    check((a, b) == (a2, b2) and c != c2p,
+          "both witnesses share (eps, mu) = (-ln102, +ln102); only delta differs "
+          "(2 ln102 vs ln102) -- the interaction cost alone tunes the entangled "
+          "family across the CHSH boundary")
+
+    # ---- cross-check the exact construction vs the module's float family
+    for (aa, bb, cc), rc1, rc3 in (((-1, 1, 2), c1, c3), ((-1, 1, 1), d1, d3)):
+        eps, mu, delta = aa * _LN102, bb * _LN102, cc * _LN102
+        fc1, fc2, fc3 = _corr_diag(eps, mu, delta)
+        check(abs(float(rc1) - fc1) < 1e-12 and abs(float(rc3) - fc3) < 1e-12,
+              "exact-rational correlators reproduce the module's float _corr_diag")
+        check((_ppt_margin(eps, mu, delta) > 0) == entangled_exact(aa, bb, cc),
+              "exact PPT entanglement verdict matches the module's float _ppt_margin")
+
+    return _result(
+        name='T_correlation_ladder_exact_rational_chsh_witness - exact-rational '
+             'CHSH witnesses inside the native correlation family, straddling '
+             'the Bell boundary, feasbool-certified for the IE CONTEXTUALITY axis',
+        tier=4,
+        epistemic='P_structural',
+        summary=(
+            'The native two-cell Gibbs family has populations 102^{-k} (exact '
+            'rational at the ln102 rungs), so its correlators are exact '
+            'rationals; rational Pythagorean (3-4-5) measurement settings give '
+            'an exact-rational CHSH the Boole-polytope engine consumes with no '
+            'float. Two entangled members at (eps, mu) = (-ln102, +ln102) '
+            'differing only in the interaction cost delta straddle the CHSH '
+            'boundary: delta = 2 ln102 gives |S| = 202/75 > 2 (IJCStr, below the '
+            '2 sqrt2 * 102/103 ceiling), delta = ln102 gives |S| = 707/515 < 2 '
+            '(SepStr) -- the entanglement < CHSH gap, exact. Both branches '
+            'certified by feasbool; correlators and PPT verdicts cross-checked '
+            'against the module float family functions.'
+        ),
+        key_result=(
+            'Native exact-rational CHSH witnesses: IJCStr at |S| = 202/75 (delta '
+            '= 2 ln102) and SepStr at |S| = 707/515 (delta = ln102), both '
+            'entangled (p00 = p11, exact PPT), tuned by delta alone. Puts the '
+            'native family on the IE CONTEXTUALITY axis without any float.'
+        ),
+        dependencies=['T_correlation_hierarchy_ladder', 'T_inseparable_IJC'],
+        cross_refs=['T_Tsirelson', 'L_loc'],
+    )
+
+
+def check_T_ladder_ceiling_calibration_from_saturation():
+    """The ladder Bell-ceiling calibration eps = ln(d_eff) IS the banked
+    per-type saturation cost -- so the sub-Tsirelson ceiling reads off framework
+    quantities, not a tuned constant.
+
+    The correlation-hierarchy ladder fixes its Bell ceiling
+    2 sqrt2 * d_eff/(d_eff+1) at the calibration beta*|eps| = ln 102. Prior to
+    this check that 102 was an inserted constant. Here it is identified with
+    quantities that are already [P]:
+      - d_eff = (C_total - 1) + C_vacuum = 60 + 42 = 102, the interface-stratum
+        dimension / per-type microstate count at saturation
+        (check_T_interface_sector_bridge, check_L_self_exclusion + T11 [P]);
+      - sigma = S_dS / C_total = ln(d_eff), the intensive entropy per capacity
+        type at saturation (check_L_sigma_intensive [P], from
+        check_T_deSitter_entropy S_dS = C_total ln(d_eff) = 61 ln102 = 282.1
+        nats, the observed de Sitter entropy).
+    With beta = 1 the calibration is EXACTLY e^{-beta*eps} = e^{-sigma} =
+    1/d_eff: exciting one FENCE-A cell costs one distinction against the
+    saturated maximally-mixed background rho = I/d_eff (check_L_KMS_trace_state).
+    So beta*eps = sigma = ln(d_eff), and the ceiling 2 sqrt2 * 102/103
+    (fractional deficit 1/(d_eff+1) = 1/103 -- the finite-d_eff sub-Tsirelson
+    gap) is a framework value.
+
+    NAMED READING (load-bearing, honestly graded P_structural_reading): this
+    reads the two-cell FENCE-A model's per-cell excitation cost eps as the
+    per-type saturation cost sigma -- the two cells as capacity types at the
+    SATURATED interface. The two-cell model does NOT internally force saturation
+    (its own 4-dim max-entropy state is rho = I/4, eps -> 0); the ln(d_eff)
+    scale is inherited from the ambient saturated interface via
+    L_sigma_intensive. The calibration is forced GIVEN the saturation reading,
+    not unconditionally. FALSIFIER: a physical shared-causal interface carrying
+    the correlation family that is NOT at saturation (per-type cost != ln d_eff),
+    or a FENCE-A cell that is not one capacity type, breaks the identification
+    and the 2 sqrt2 * 102/103 value does not follow.
+    """
+    import math as _m
+    from apf.apf_utils import dag_get
+
+    C_total = dag_get('C_total', default=61,
+                      consumer='T_ladder_ceiling_calibration_from_saturation')
+    C_vacuum = 42  # T11 [P]
+    d_eff = (C_total - 1) + C_vacuum
+    check(d_eff == 102,
+          "d_eff = (C_total-1)+C_vacuum = %d+%d = %d" % (C_total - 1, C_vacuum, d_eff))
+
+    # sigma = ln(d_eff): the per-type saturation cost [L_sigma_intensive, P]
+    sigma = _m.log(d_eff)
+    S_dS = C_total * sigma
+    check(abs(S_dS - 282.12) < 0.02,
+          "S_dS = C_total ln(d_eff) = 61 ln102 = %.3f nats reproduces the "
+          "observed dS entropy ~282.1 [T_deSitter_entropy]" % S_dS)
+
+    # the ladder calibration eps IS sigma (beta = 1)
+    eps = _LN102
+    check(abs(_BETA * eps - sigma) < 1e-15,
+          "beta*eps = sigma = ln(d_eff): the ladder calibration is the banked "
+          "per-type saturation cost, not an inserted constant")
+    check(abs(_m.exp(-_BETA * eps) - 1.0 / d_eff) < 1e-15,
+          "e^{-beta*eps} = 1/d_eff: one distinction against the saturated "
+          "rho = I/d_eff background [L_KMS_trace_state]")
+
+    # the Bell ceiling reads off framework quantities
+    ceiling = 2.0 * _m.sqrt(2.0) * d_eff / (d_eff + 1)
+    check(abs(1.0 / (d_eff + 1) - 1.0 / 103) < 1e-15,
+          "fractional deficit 1/(d_eff+1) = 1/103")
+    # cross-check against the ladder's own deep-limit CHSH (occupied -eps branch)
+    ladder_ceiling = 2.0 * _m.sqrt(_horodecki_M(-_LN102, 60.0, 60.0))
+    check(abs(ceiling - ladder_ceiling) < 1e-6,
+          "framework ceiling 2 sqrt2 * d_eff/(d_eff+1) = %.4f matches the ladder "
+          "deep-limit CHSH %.4f" % (ceiling, ladder_ceiling))
+    check(ceiling < 2.0 * _m.sqrt(2.0),
+          "strictly inside Tsirelson 2 sqrt2: the sub-Tsirelson gap is exactly "
+          "the finite-d_eff deficit 2 sqrt2 / (d_eff+1)")
+
+    return _result(
+        name='T_ladder_ceiling_calibration_from_saturation - the ladder Bell-'
+             'ceiling calibration eps = ln(d_eff) identified with the banked '
+             'per-type saturation cost sigma = S_dS/C_total, so 2 sqrt2 * 102/103 '
+             'reads off framework quantities (named saturation reading)',
+        tier=4,
+        epistemic='P_structural_reading',
+        summary=(
+            'The correlation-hierarchy ladder ceiling 2 sqrt2 * d_eff/(d_eff+1) '
+            'sat at an inserted calibration beta*|eps| = ln 102. This check '
+            'identifies that calibration with the banked per-type saturation '
+            'cost: sigma = S_dS/C_total = ln(d_eff) [L_sigma_intensive, P], with '
+            'd_eff = (C_total-1)+C_vacuum = 60+42 = 102 the interface-stratum '
+            'dimension [T_interface_sector_bridge, P] and S_dS = 61 ln102 = 282.1 '
+            'nats the observed de Sitter entropy [T_deSitter_entropy, P]. With '
+            'beta = 1 the calibration is exactly e^{-eps} = 1/d_eff -- one '
+            'distinction against the saturated rho = I/d_eff background -- so '
+            'beta*eps = sigma = ln(d_eff) is the interface saturation cost, and '
+            'the sub-Tsirelson ceiling (deficit 1/(d_eff+1) = 1/103) is a '
+            'framework value rather than a tuned one. Graded P_structural_reading '
+            'over the named reading that the two FENCE-A cells are capacity types '
+            'at the saturated interface (the two-cell model does not internally '
+            'force saturation; the scale is inherited via L_sigma_intensive).'
+        ),
+        key_result=(
+            'beta*eps = sigma = ln(d_eff) = ln 102 (exact): the ladder Bell '
+            'ceiling 2 sqrt2 * 102/103 = 2.8010 < Tsirelson is read off the '
+            'framework d_eff = 60+42 and the banked per-type saturation cost, '
+            'not a free calibration. Sub-Tsirelson gap = the finite-d_eff '
+            'deficit 2 sqrt2/(d_eff+1). Named saturation reading; falsifier: a '
+            'non-saturated carrying interface, or cell != type.'
+        ),
+        dependencies=['L_sigma_intensive', 'T_deSitter_entropy',
+                      'T_correlation_hierarchy_ladder'],
+        cross_refs=['T_interface_sector_bridge', 'L_self_exclusion',
+                    'L_KMS_trace_state', 'T_Tsirelson',
+                    'T_correlation_ladder_exact_rational_chsh_witness'],
+    )
+
+
 _CHECKS = {
     'T_fencea_hinge_coupling_trichotomy':
         check_T_fencea_hinge_coupling_trichotomy,
     'T_correlation_hierarchy_ladder':
         check_T_correlation_hierarchy_ladder,
+    'T_correlation_ladder_exact_rational_chsh_witness':
+        check_T_correlation_ladder_exact_rational_chsh_witness,
+    'T_ladder_ceiling_calibration_from_saturation':
+        check_T_ladder_ceiling_calibration_from_saturation,
 }
 
 
@@ -520,5 +774,25 @@ IE_DECLARATIONS = (
             "claim. "
         ),
         "note": "Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched",
+    },
+    {
+        "input_id": "contextuality:native_ladder_chsh_violation",
+        "expect_export": False,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["-101/175", "-101/175", "-404/525", "404/525"]},
+        "note": "the exact-rational native-family CHSH violation |S| = 202/75 > 2 "
+                "(entangled state at eps,mu,delta = -ln102,ln102,2ln102; 3-4-5 "
+                "settings) -> IJCStr; check_T_correlation_ladder_exact_rational_chsh_witness",
+    },
+    {
+        "input_id": "contextuality:native_ladder_bell_local",
+        "expect_export": True,
+        "axis": "CONTEXTUALITY",
+        "payload": {"contextuality_kind": "chsh_correlators",
+                    "E": ["-303/1030", "-303/1030", "-202/515", "202/515"]},
+        "note": "the exact-rational native-family ENTANGLED-but-Bell-local state |S| = "
+                "707/515 < 2 (delta = ln102) -> SepStr, a global section exported; the "
+                "entanglement < CHSH gap; check_T_correlation_ladder_exact_rational_chsh_witness",
     },
 )

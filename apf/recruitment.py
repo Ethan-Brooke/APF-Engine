@@ -1,6 +1,6 @@
 """APF v7.7 — Recruitment-radius extension module.
 
-Implements ten bank-registered checks closing the recruitment-radius
+Implements twelve bank-registered checks closing the recruitment-radius
 content across the corpus updates and Papers 24/25:
 
     check_H1_continuum_from_anchor_profile      — Paper 6 H1 closure (Wave 1)
@@ -9,6 +9,13 @@ content across the corpus updates and Papers 24/25:
                                                   Part II: closed-form Einstein A
     check_T_master_equation_form                — Paper 24 §4 master equation
     check_T_three_regimes_tau_rec               — Paper 24 §4 three regimes
+    check_T_tls_capacity_budget_knee_design_corollary — Paper 26 App. A knee
+                                                  pin + corrected design
+                                                  corollary (v24.3.362)
+    check_T_tls_transduction_class_discriminator_rule_D — Rule D: coverage
+                                                  below T_sat necessary +
+                                                  canonical-STM exclusion
+                                                  only (v24.3.371)
     check_T_substrate_anchor_entangled_state    — Paper 24 supp Part I: IJC
     check_T_cross_branch_matrix_element_form    — Paper 24 supp Part I: M_mn
     check_T_sixteen_case_unification_structural — Paper 24 §5 meta-check
@@ -801,6 +808,557 @@ def check_T_three_regimes_tau_rec():
 
 
 # =============================================================================
+# T_tls_capacity_budget_knee_design_corollary: the T_knee pin + the corrected
+# design corollary (v24.3.362 corrigendum instrument)
+# =============================================================================
+
+def check_T_tls_capacity_budget_knee_design_corollary():
+    """T_tls_capacity_budget_knee_design_corollary: the TLS Capacity-Budget
+    Knee Formula Pinned + the Design Corollary CORRECTED [P_structural_instrument].
+
+    STATEMENT: The capacity-budget threshold temperature
+        T_knee = h f / (r_th k_B),   r_th = kappa x n in {1, 2, 4}
+    (the QC-specific instance of the recruitment-radius master equation,
+    T_master_equation_form + T_three_regimes_tau_rec, at the lossless->lossy
+    QV-regime boundary; Paper 26 Appendix A Eq. 27) is pinned against its
+    seven-dataset validation table, and the DESIGN COROLLARY drawn from it in
+    Paper 26 v23 / Paper 23 v1.0 / the AT-001 v19 patent spec is CORRECTED:
+
+      (i)  r_th = 2 (active TLS recording) at T_base = 20 mK gives the
+           TLS-decoupling gap threshold f > 2 k_B T_base / h = 833.5 MHz
+           (margined target ~926 MHz at -10 percent device spread), NOT the
+           printed 420 MHz. The printed number is the r_th = 1 value: 420 MHz
+           is (to 0.8 percent) the equality point h f = k_B T_base -- the
+           onset of the Boltzmann knee, carrying no r_th = 2 threshold status.
+      (ii) The thermal-occupation companion (Paper 23 v1.0): n_th(420 MHz,
+           20 mK) = 0.575, NOT the printed 0.003 (a ~190x defect; the 0.003
+           value belongs to f ~ 2.42 GHz -- a GHz-scale occupation number
+           transplanted onto the gap). The honest n_th < 0.01 threshold at
+           20 mK is f > ln(101) k_B T / h = 1.92 GHz.
+      (iii) The crossover form (Paper 26 v23 Eq. 30) placed 1/r_th where
+           consistency with Eq. 27 requires r_th: the corrected reduced
+           variable is r_th k_B T/(hbar Delta) - 1, whose zero crossing is
+           exactly T_knee; the printed placement crosses at r_th^2 T_knee
+           (factor 4 at r_th = 2). Pinned as negative control.
+
+    The seven-dataset validation layer (five groups, 2014-2025, spanning
+    3.64-22 GHz) is SOUND: all six numeric T_knee predictions
+    reproduce from the formula to < 0.5 percent, and the two parameter-free
+    scaling checks (frequency ratio 6.3/4.0 = 1.575; noise-vs-T1 2:1
+    configuration ratio) hold. The defect was confined to the design-
+    application layer -- the .358/.360 lesson again: transcription-level
+    self-consistency validates transcription, not application; independent
+    re-evaluation of a formula's own printed corollaries is what catches
+    design-criterion defects.
+
+    OBSERVED values in the dataset table are literature-quoted (de Rooij
+    2024, Tai 2024, Burnett 2014, Jin 2015, Anferov 2024, Lvov 2025,
+    Kouwenhoven 2024; the span is 2014-2025 -- an earlier '2008-2025'
+    phrase counted the Kumar 2008 APL 92,123503 noise measurements,
+    which are anomaly-context, not a pinned dataset; candidate 8th row); this check pins the PREDICTED column arithmetic and
+    the corollary arithmetic only -- instrument grade, no empirical claim
+    beyond the banked anchors.
+
+    CORRIGENDUM RECORD (2026-07-03): defects found during the IP holding-up
+    review (Papers 23/26 + AT-001 vs the 2026-06/07 gauge-connection
+    results); independently audited fresh-context (steelman attempted and
+    failed: no reading rescues 420-as-r_th=2-threshold jointly with
+    n_th = 0.003). Corrected surfaces: Paper 26 v24 (Eq. 28, Eq. 30, the
+    "begin decoupling" claim), Paper 23 v1.1 (n_th equation + Gen-3 claims),
+    AT-001 v20 draft (spec Sections V, VI.G(f), VI.H) with the change logged
+    in the Patent Change Register. Falsifier hooks: this check FAILS if the
+    pinned arithmetic drifts (constants, formula, defect-signature identities,
+    dataset predicted-column values); surface regressions (a document
+    re-printing 420 MHz as the r_th = 2 threshold) are policed editorially
+    against this pin, not scanned by the check.
+
+    STATUS: [P_structural_instrument]. Dependencies: T_master_equation_form;
+    T_three_regimes_tau_rec.
+    """
+    h = 6.62607015e-34
+    hbar = 1.054571817e-34
+    kB = 1.380649e-23
+
+    def T_knee(f_hz, r_th):
+        return h * f_hz / (r_th * kB)
+
+    # ---- (A) the seven-dataset PREDICTED column reproduces from Eq. 27 ----
+    # (freq_GHz, kappa, n, predicted_mK_as_printed)
+    table = (
+        ('deRooij_noise', 4.00, 1, 1, 192.0),
+        ('Tai_loss', 3.64, 2, 1, 87.0),
+        ('Burnett_noise', 6.30, 1, 1, 303.0),
+        ('Jin_population', 5.50, 2, 1, 132.0),
+        ('Anferov_T1_Nb', 22.0, 2, 2, 264.0),
+        ('Lvov_T1_Al', 5.50, 2, 1, 132.0),
+    )
+    preds = {}
+    for name, f_ghz, kappa, n, printed_mk in table:
+        t_mk = T_knee(f_ghz * 1e9, kappa * n) * 1e3
+        check(abs(t_mk - printed_mk) / printed_mk < 5e-3,
+              f"dataset {name}: predicted T_knee {t_mk:.2f} mK vs "
+              f"printed {printed_mk} mK (>0.5% off)")
+        preds[name] = t_mk
+    # parameter-free scaling pins
+    ratio_freq = preds['Burnett_noise'] / preds['deRooij_noise']
+    check(abs(ratio_freq - 6.30 / 4.00) < 1e-9,
+          "frequency scaling must be exactly linear in f")
+    check(abs(preds['Burnett_noise'] / (T_knee(6.30e9, 2) * 1e3) - 2.0) < 1e-9,
+          "noise-vs-T1 configuration ratio must be exactly r_th ratio 2:1")
+
+    # ---- (B) the corrected r_th = 2 design threshold at 20 mK ------------
+    T_base = 0.020
+    f_thresh_2 = 2 * kB * T_base / h          # r_th = 2 decoupling gap
+    check(abs(f_thresh_2 - 833.46e6) / 833.46e6 < 1e-3,
+          f"r_th=2 threshold must be 833.5 MHz, got {f_thresh_2/1e6:.2f} MHz")
+    f_margined = f_thresh_2 / 0.9             # -10% device spread margin
+    check(925e6 < f_margined < 927e6,
+          f"margined target must be ~926 MHz, got {f_margined/1e6:.1f} MHz")
+
+    # ---- (C) negative controls: the printed 420 MHz corollary ------------
+    # (c1) 420 MHz is NOT the r_th=2 threshold: it is the factor-2 defect
+    check(abs(420e6 / f_thresh_2 - 0.5) < 0.01,
+          "the printed 420 MHz must sit at exactly half the r_th=2 threshold "
+          "(the defect signature)")
+    # (c2) 420 MHz IS the r_th=1 equality point h f = kB T to < 1%
+    f_equal = kB * T_base / h
+    check(abs(420e6 - f_equal) / f_equal < 0.01,
+          f"420 MHz must be the r_th=1 equality point ({f_equal/1e6:.1f} MHz)")
+    # (c3) under Eq. 27 the 420 MHz gap is NOT protected at 20 mK
+    check(T_knee(420e6, 2) < T_base,
+          "T_knee(420 MHz, r_th=2) must sit BELOW the 20 mK base "
+          "(no protection) -- the corrigendum's core content")
+
+    # ---- (D) thermal-occupation companion (Paper 23 corrigendum) ---------
+    def n_th(f_hz, T):
+        return 1.0 / (_math.exp(h * f_hz / (kB * T)) - 1.0)
+    n420 = n_th(420e6, T_base)
+    check(0.55 < n420 < 0.60,
+          f"n_th(420 MHz, 20 mK) must be ~0.575, got {n420:.4f}")
+    check(abs(n420 / 0.003 - 191.7) / 191.7 < 0.02,
+          "the printed 0.003 must be ~190x below the true value "
+          "(the defect signature)")
+    f_001 = _math.log(101.0) * kB * T_base / h
+    check(abs(f_001 - 1.923e9) / 1.923e9 < 1e-3,
+          f"n_th<0.01 threshold must be 1.92 GHz, got {f_001/1e9:.3f} GHz")
+    check(n_th(f_001, T_base) < 0.0101,
+          "the 1.92 GHz threshold must actually deliver n_th <= 0.01")
+    # sound Gen-1/Gen-2 companions stay pinned (they were correct)
+    check(abs(n_th(84e6, T_base) - 4.478) < 0.01, "n_th(84 MHz) pin")
+    check(abs(n_th(210e6, T_base) - 1.526) < 0.01, "n_th(210 MHz) pin")
+
+    # ---- (E) Eq. 30 r_th placement: corrected vs printed ------------------
+    # corrected reduced variable r_th*kB*T/(hbar*Delta) - 1 crosses zero at
+    # exactly T_knee; the printed (1/r_th) placement crosses at r_th^2*T_knee
+    r_th = 2
+    hbar_exact = h / (2 * _math.pi)           # exact h-consistent hbar
+    Delta = 2 * _math.pi * 1.0e9              # angular, 1 GHz ordinary
+    T_cross_corrected = hbar_exact * Delta / (r_th * kB)
+    T_cross_printed = r_th * hbar_exact * Delta / kB
+    T_knee_eq27 = T_knee(1.0e9, r_th)
+    check(abs(T_cross_corrected - T_knee_eq27) / T_knee_eq27 < 1e-9,
+          "corrected Eq. 30 crossing must equal Eq. 27 T_knee exactly")
+    check(abs(T_cross_printed / T_knee_eq27 - r_th ** 2) < 1e-9,
+          "printed Eq. 30 crossing must sit at r_th^2 x T_knee "
+          "(the inconsistency signature, factor 4 at r_th=2)")
+
+    return _result(
+        name='T_tls_capacity_budget_knee_design_corollary',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            'The TLS capacity-budget knee T_knee = h f/(r_th kB) pinned '
+            'against its seven-dataset validation table (all six numeric '
+            'predictions < 0.5%, both parameter-free scalings exact), and '
+            'the design corollary corrected: the r_th = 2 TLS-decoupling '
+            'gap at 20 mK base is 833.5 MHz (margined ~926 MHz), not the '
+            'printed 420 MHz (= the r_th = 1 equality point h f = kB T); '
+            'n_th(420 MHz, 20 mK) = 0.575, not 0.003 (the n_th < 0.01 '
+            'threshold is 1.92 GHz); Eq. 30 r_th placement corrected '
+            '(printed form crossed at r_th^2 T_knee). Defects held as '
+            'negative controls; corrected surfaces Paper 26 v24 / Paper 23 '
+            'v1.1 / AT-001 v20 (Patent Change Register logged).'
+        ),
+        key_result=('T_knee pinned; r_th=2 design gap = 833.5 MHz at 20 mK '
+                    '(420 MHz corollary retired to r_th=1 equality point)'),
+        dependencies=['T_master_equation_form', 'T_three_regimes_tau_rec'],
+        cross_refs=['T_quantum_anchor_einstein_A',
+                    'T_sixteen_case_unification_structural'],
+        artifacts={
+            'f_threshold_rth2_20mK_MHz': f_thresh_2 / 1e6,
+            'f_threshold_margined_MHz': f_margined / 1e6,
+            'f_equality_rth1_20mK_MHz': f_equal / 1e6,
+            'n_th_420MHz_20mK': n420,
+            'f_nth_below_001_GHz': f_001 / 1e9,
+            'dataset_predictions_mK': preds,
+        },
+    )
+
+
+# =============================================================================
+# T_tls_transduction_class_discriminator_rule_D: Rule D — coverage below
+# T_sat necessary for class adjudication; sufficient only for canonical-STM
+# exclusion (the O6 walk banked, v24.3.371)
+# =============================================================================
+
+def check_T_tls_transduction_class_discriminator_rule_D():
+    """T_tls_transduction_class_discriminator_rule_D: Coverage Below T_sat Is
+    Necessary for Transduction-Class Adjudication and Sufficient Only for
+    Canonical-STM Exclusion [P_structural_instrument].
+
+    STATEMENT (Rule D, rescoped per the O6 hostile audit): for a TLS-bath
+    noise-vs-T sweep read through a resonator at frequency f, coverage below
+
+        T_sat = h f / (2 k_B) = T_knee(r_th = 2)
+
+    (the r_th = 2 member of the banked knee family T_knee = h f/(r_th k_B),
+    T_tls_capacity_budget_knee_design_corollary -- the discriminator is
+    anchored to the SAME banked boundary, read at its saturation value) is
+
+      (i)  NECESSARY for any transduction-class adjudication: a sweep with
+           zero coverage below T_sat is class-UNDECIDABLE and abstention is
+           forced under EVERY class. Kumar 2008 (4.35 GHz, 120-1200 mK):
+           T_min = 120 mK > T_sat = 104.4 mK -- zero coverage; the smooth
+           sweep is the predicted outcome of BOTH classes.
+      (ii) SUFFICIENT only for CANONICAL-STM (cubic-vanishing) EXCLUSION at
+           design SNR >= 3 for the below-T_sat divergence. Burnett 2014
+           (6.30 GHz, 60-500 mK): canonical STM excluded at >= 6.3 sigma at
+           the worst scatter reading (per-mu honest divergences ln 3.90 /
+           4.03). NOT sufficient to separate the interacting T^-(1+mu) form
+           from the tanh^2(hf/2kBT) x T^beta saturation member: that pair's
+           pattern SNR over Burnett's window is 1.0-2.0 -- computed in-body
+           as a NAMED NEGATIVE (the check certifies the rule does NOT
+           overclaim).
+
+    F1 DISSOLUTION (the prior knee-visibility lemma's killing finding): the
+    per-device transduction-class assignment (Kumar = STM, Burnett =
+    interacting) was contradicted by the sources; no in-paper observable
+    assigns the pair different classes. Under Rule D no assignment is
+    needed: Kumar is class-UNDECIDABLE, predicted-abstain under every
+    class -- the audit's V_K = 3-5 falsified band dissolves with the raw
+    per-point-scatter denominator that produced it, held in-body as a
+    retired-premise reductio (one shared interacting numerator a = 0.3
+    gives V_Kumar = 3.0-5.0 'falsified' while V_Burnett = 0.47-1.08
+    'blind' -- the OPPOSITE of the observed pair in both directions).
+    Kumar stays a NON-VALIDATION row.
+
+    DENOMINATOR AMENDMENT: the design-resolvable amplitude is
+        a_min = 3 sigma_pt / ||v_perp||
+    (onset template projected against the smooth null on the ACTUAL grid;
+    conventions DISCLOSED: q = 3 detection, null family {1, ln T}),
+    computable pre-sweep from protocol facts -- NOT raw per-point scatter.
+    c_reg = 1 is the MANDATORY PRE-COMMITTED default for declared-broad
+    baths; fragmentation (c_reg < 1) requires independent advance evidence.
+    This clause is load-bearing for falsifier liveness: without it any
+    field device at computed design SNR >= 3 could be deflated post hoc.
+
+    SPEC-(c) VACANCY: spec (c)'s visible half is vacant pending O3; the
+    bankable object is the discriminator, not the visibility lemma.
+
+    NAMED PREMISES (inputs, not derivations):
+      Q1 [figure-level]: grid readings -- Kumar ~26-28 points (linear-vs-log
+         both carried); Burnett N = 8-12 (parameterized; conclusions stable).
+      Q2 [banked-quoted]: Burnett f = 6.30 GHz (body says only "4-8 GHz
+         band"; the banked seven-dataset row value).
+      Q3 [in-paper-anchored modeling]: template families -- STM in-window
+         tanh^2(hf/2kBT) x T^beta [Kumar Eq. 3]; interacting T^-(1+mu)
+         [Burnett]; STM low-T cubic vanishing [Burnett's in-paper STM
+         statement].
+      Q4 (estimator identity): sigma_pt = sigma_slope x L x sqrt(N/12),
+         applied identically to both devices.
+      Q5 (conventions): q = 3 detection; V < 1 / V >= 3 bands.
+      Q6 (banked reading): r_th assignments as banked (r_th = 1 for the
+         onset rows; r_th = 2 as the saturation/decidability boundary -- an
+         extrapolation of the banked per-mode formula, caveat carried).
+
+    NAMED OPENS: O1 -- c_reg has no derived form (the c_reg = 1 pre-commit
+    is the fix, not a derivation). O2 -- window half-width eta underived.
+    O3 -- THE NAMED NEXT LEMMA: per-resonator amended-a_min execution on
+    Kouwenhoven 2024 (PRApplied 21, 044036; 56 resonators, a-SiC:H PPCs,
+    4.0-8.45 GHz, sweeps below every T_sat; Zenodo 10.5281/zenodo.10159731;
+    items beyond count/frequency band are pending-verification) -- the only
+    route back to a computed visible pin. O6a -- the Paper 26 Burnett
+    OBSERVED wording, RESERVED for the principal (no paper surface touched
+    by this landing).
+
+    PROVENANCE: the 2026-07-03 O6 walk (note_o6_discriminator_v0.2.md +
+    o6_discriminator_witness.py 9/9 pins, The Turning/
+    knee_visibility_walk_2026-07-03/) + fresh-context hostile audit REDUCE
+    0.85 (2026-07-03); this landing implements the audit's rescope. Prior
+    lemma audit REDUCE 0.85 same day; principal ruling HOLD-FOR-O6, then
+    BANK-RULE-D.
+
+    STATUS: [P_structural_instrument]. Dependencies:
+    T_tls_capacity_budget_knee_design_corollary; T_master_equation_form;
+    T_three_regimes_tau_rec.
+    """
+    h = 6.62607015e-34    # J s  [exact SI]
+    kB = 1.380649e-23     # J/K  [exact SI]
+
+    def T_knee(f_hz, r_th):
+        return h * f_hz / (r_th * kB)
+
+    def grid_lin(a, b, n):
+        return [a + (b - a) * i / (n - 1) for i in range(n)]
+
+    def grid_log(a, b, n):
+        return [a * _math.exp(_math.log(b / a) * i / (n - 1))
+                for i in range(n)]
+
+    def shape_sep(Ts, mu, f_hz):
+        """Residuals |ln S_INT - ln S_tanh2fit| after fitting the tanh^2
+        member's free (level, index) to the interacting curve on the grid
+        [Q3 template families]. Returns (max residual, L2 pattern norm)."""
+        y = [-(1.0 + mu) * _math.log(t) for t in Ts]
+        g = [2.0 * _math.log(_math.tanh(h * f_hz / (2 * kB * t)))
+             for t in Ts]
+        z = [yy - gg for yy, gg in zip(y, g)]
+        x = [_math.log(t) for t in Ts]
+        n = len(Ts)
+        mx, mz = sum(x) / n, sum(z) / n
+        b = (sum((a - mx) * (c - mz) for a, c in zip(x, z))
+             / sum((a - mx) ** 2 for a in x))
+        res = [c - (mz + b * (a - mx)) for a, c in zip(x, z)]
+        return (max(abs(r) for r in res),
+                _math.sqrt(sum(r * r for r in res)))
+
+    def orth_norm(Ts, v):
+        """L2 norm of template v after projecting out span{1, ln T} (the
+        disclosed smooth-null family, convention Q5)."""
+        n = len(Ts)
+        x = [_math.log(t) for t in Ts]
+        mx = sum(x) / n
+        mv = sum(v) / n
+        sxx = sum((a - mx) ** 2 for a in x)
+        sxy = sum((a - mx) * (b - mv) for a, b in zip(x, v))
+        c1 = sxy / sxx
+        res = [b - (mv + c1 * (a - mx)) for a, b in zip(x, v)]
+        return _math.sqrt(sum(r * r for r in res))
+
+    def onset_template(Ts, Tk):
+        """ln-space onset template: flat above T_knee, rise ln(Tk/T) below,
+        normalized to 1 at the window base (orientation: noise UP below the
+        boundary -- Burnett's in-paper mechanism)."""
+        raw = [_math.log(Tk / t) if t < Tk else 0.0 for t in Ts]
+        base = max(raw)
+        return [r / base for r in raw]
+
+    # ---- (1) boundary arithmetic: T_sat / T_knee per protocol ------------
+    # frequencies: Kumar 4.35 GHz [in-paper p.1]; Burnett 6.30 GHz [banked
+    # row, Q2]; Kouwenhoven band edges 4.0 / 8.45 GHz [in-paper]
+    freq_pins = (
+        ('Kumar', 4.35e9, 104.38, 208.767),
+        ('Burnett', 6.30e9, 151.18, 302.35),
+        ('Kouwenhoven_lo', 4.00e9, 96.0, 192.0),
+        ('Kouwenhoven_hi', 8.45e9, 202.8, 405.5),
+    )
+    bounds_mK = {}
+    for name, f_hz, tsat_pin, tknee_pin in freq_pins:
+        tsat = T_knee(f_hz, 2) * 1e3
+        tknee = T_knee(f_hz, 1) * 1e3
+        check(abs(tsat - tsat_pin) / tsat_pin < 1e-3,
+              f"{name}: T_sat {tsat:.3f} mK must pin {tsat_pin} mK")
+        check(abs(tknee - tknee_pin) / tknee_pin < 1e-3,
+              f"{name}: T_knee {tknee:.3f} mK must pin {tknee_pin} mK")
+        bounds_mK[name] = (tsat, tknee)
+
+    # ---- (2) Kumar zero-coverage verdict + margin-sensitivity sweep ------
+    TMIN_K, TMAX_K = 0.120, 1.200   # K [Kumar p.1 sweep range]
+    check(TMIN_K * 1e3 > bounds_mK['Kumar'][0],
+          "Kumar T_min = 120 mK must sit ABOVE T_sat = 104.4 mK "
+          "(zero coverage -> class-UNDECIDABLE, the F1 dissolution)")
+    # sigma_slope = 0.02 [Kumar p.2: beta = -0.14 +/- 0.02, the JOINT
+    # 7-power fit]; L = ln 10 [window 120-1200 mK]; N_eff ~ 182 [joint-fit
+    # self-consistent reading, audit re-computation record]; identity Q4
+    sig_joint = 0.02 * _math.log(10.0) * _math.sqrt(182 / 12.0)
+    check(abs(sig_joint - 0.179) < 2e-3,
+          "joint-fit self-consistent per-point scatter must be 0.179")
+    # in-window class-shape separation over Kumar's window (grids per Q1;
+    # mu readings 0.22 / 0.36 in-paper [Burnett])
+    kumar_seps = []
+    for grid in (grid_lin(TMIN_K, TMAX_K, 28), grid_lin(TMIN_K, TMAX_K, 26),
+                 grid_log(TMIN_K, TMAX_K, 26)):
+        for mu in (0.22, 0.36):
+            kumar_seps.append(shape_sep(grid, mu, 4.35e9))
+    worst_maxres_K = max(t[0] for t in kumar_seps)
+    worst_l2_K = max(t[1] for t in kumar_seps)
+    check(worst_maxres_K < 0.20,
+          "Kumar in-window max ln-separation must stay < 0.20 "
+          "(reproduces the in-paper 'cannot distinguish ... T^-1.73')")
+    check(worst_l2_K / sig_joint < 3.0,
+          "Kumar in-window pattern SNR must stay below the q = 3 gate at "
+          "the self-consistent sigma (no exclusion from inside the window)")
+    # margin-sensitivity: the physical crossover boundary may sit anywhere
+    # in the transition band h f/(4 k_B) .. h f/k_B [Q6 caveat: r_th in
+    # [1, 4]]; the abstention verdict must not flip anywhere in the band
+    flips = 0
+    for i in range(31):
+        r_b = 1.0 + 3.0 * i / 30.0             # boundary r_th in [1, 4]
+        T_b_mK = T_knee(4.35e9, r_b) * 1e3     # candidate boundary
+        if T_b_mK <= TMIN_K * 1e3:
+            abstain = True    # zero coverage below the candidate boundary
+        else:
+            # partial coverage exists, but the whole-window shapes stay
+            # fit-degenerate below the q = 3 gate -> still abstain
+            abstain = (worst_l2_K / sig_joint) < 3.0
+        if not abstain:
+            flips += 1
+    check(flips == 0,
+          "Kumar abstention must hold for a boundary ANYWHERE in the "
+          "transition band hf/4kB..hf/kB (margin-sensitivity leg)")
+
+    # ---- (3) Burnett canonical-STM exclusion at design SNR >= 3 ----------
+    TMIN_B, TMAX_B = 0.060, 0.500   # K [Burnett body: 60-500 mK]
+    L_B = _math.log(TMAX_B / TMIN_B)
+    Tsat_B = T_knee(6.30e9, 2)      # K
+    excl_snrs = []
+    for N in (8, 10, 12):                       # Q1 grid readings [fig]
+        for mu, sig_mu in ((0.22, 0.16), (0.36, 0.30)):
+            # in-paper mu +/- sigma pairs [Burnett]; estimator Q4
+            sig_pt = sig_mu * L_B * _math.sqrt(N / 12.0)
+            # cubic vanishing (3) + interacting rise (1 + mu) below T_sat;
+            # per-mu honest divergence (the F-D fix): ln 3.90 at mu = 0.22,
+            # ln 4.03 at mu = 0.36
+            div_ln = (3.0 + 1.0 + mu) * _math.log(Tsat_B / TMIN_B)
+            excl_snrs.append(div_ln / sig_pt)
+    worst_excl = min(excl_snrs)
+    check(worst_excl >= 3.0,
+          "Burnett canonical-STM exclusion must clear the design SNR >= 3 "
+          "gate at EVERY scatter reading")
+    check(6.2 < worst_excl < 6.5,
+          f"worst-reading exclusion must be ~6.3 sigma, got {worst_excl:.2f}")
+    check(13.5 < max(excl_snrs) < 14.5,
+          "best-reading exclusion must be ~14.1 sigma (per-mu honest "
+          "pairing; the 14.5 cross-pairing value is retired)")
+
+    # ---- (4) the tanh^2-member NAMED NEGATIVE ----------------------------
+    # interacting T^-(1+mu) vs tanh^2(hf/2kBT) x T^beta (free level+index)
+    # over Burnett's own window: NOT separable at q = 3 -- the check
+    # certifies Rule D does NOT overclaim beyond canonical-STM exclusion
+    neg_stats = []
+    for N in (8, 10, 12):
+        grid = grid_log(TMIN_B, TMAX_B, N)
+        for mu, sig_mu in ((0.22, 0.16), (0.36, 0.30)):
+            mr, l2 = shape_sep(grid, mu, 6.30e9)
+            sig_pt = sig_mu * L_B * _math.sqrt(N / 12.0)
+            neg_stats.append((mr, l2, l2 / sig_pt))
+    check(max(t[2] for t in neg_stats) < 3.0,
+          "NAMED NEGATIVE: the interacting-vs-tanh^2 pair must NOT be "
+          "separable at the q = 3 gate (no overclaim)")
+    check(0.9 < min(t[2] for t in neg_stats)
+          and max(t[2] for t in neg_stats) < 2.1,
+          "tanh^2-member pattern SNR must sit in the audit band 1.0-2.0")
+    check(0.30 < min(t[0] for t in neg_stats)
+          and max(t[0] for t in neg_stats) < 0.36,
+          "tanh^2-member max residual must sit in the band 0.32-0.34 ln")
+    check(0.55 < min(t[1] for t in neg_stats)
+          and max(t[1] for t in neg_stats) < 0.67,
+          "tanh^2-member pattern L2 must sit in the band 0.57-0.65")
+
+    # ---- (5) design-resolvable amplitude a_min for both windows ----------
+    q = 3.0    # detection convention [Q5]
+    Tk_K = T_knee(4.35e9, 1)   # K, Kumar onset scale (r_th = 1) [bank]
+    a_mins_K = []
+    for grid in (grid_lin(TMIN_K, TMAX_K, 28), grid_log(TMIN_K, TMAX_K, 26)):
+        vn = orth_norm(grid, onset_template(grid, Tk_K))
+        for sig in (0.0595, 0.10):
+            # sigma readings: 0.0595 single-curve floor / 0.10 Fig. 3
+            # central [Kumar p.2 + audit record]
+            a_mins_K.append(q * sig / vn)
+    check(0.15 < min(a_mins_K) and max(a_mins_K) < 0.40,
+          "Kumar a_min must land in 0.17-0.36 ln units")
+    Tk_B = T_knee(6.30e9, 1)   # K, Burnett onset scale (r_th = 1) [bank]
+    a_mins_B, onset_pinnable = [], []
+    for N in (8, 10, 12):
+        grid = grid_log(TMIN_B, TMAX_B, N)
+        vn = orth_norm(grid, onset_template(grid, Tk_B))
+        for mu, sig_mu in ((0.22, 0.16), (0.36, 0.30)):
+            sig_pt = sig_mu * L_B * _math.sqrt(N / 12.0)
+            a_min_B = q * sig_pt / vn
+            # physical amplitude available for onset localization
+            a_phys_B = (1.0 + mu) * _math.log(Tk_B / TMIN_B)
+            a_mins_B.append(a_min_B)
+            onset_pinnable.append(a_min_B <= a_phys_B)
+    check(4.0 < min(a_mins_B) and max(a_mins_B) < 8.3,
+          "Burnett a_min must land in 4.1-8.1 ln units")
+    check(not any(onset_pinnable),
+          "Burnett must NOT be able to pin an onset temperature "
+          "(a_min > a_phys in every reading) -- the exclusion is the "
+          "decidable object, not the onset location")
+
+    # ---- (6) reductio: the retired raw-sigma_rel denominator -------------
+    # one shared interacting numerator a = 0.3 [the prior audit's own
+    # adversarial value], c_reg = 1; per-point scatter as denominator
+    a_shared = 0.3
+    V_K_lo = a_shared / 0.10     # Kumar central sigma reading
+    V_K_hi = a_shared / 0.0595   # Kumar floor sigma reading
+    sig_B_lo = 0.16 * L_B * _math.sqrt(8 / 12.0)    # Burnett scatter floor
+    sig_B_hi = 0.30 * L_B * _math.sqrt(12 / 12.0)   # Burnett scatter ceiling
+    V_B_lo = a_shared / sig_B_hi
+    V_B_hi = a_shared / sig_B_lo
+    check(V_K_lo >= 3.0 - 1e-9 and 5.0 < V_K_hi < 5.1,
+          "raw-denominator functional must put Kumar at V = 3.0-5.0 "
+          "(the prior audit's falsified band)")
+    check(0.45 < V_B_lo < 0.50 and 1.0 < V_B_hi < 1.15,
+          "raw-denominator functional must put Burnett at V = 0.47-1.08 "
+          "(below marginal)")
+    check(V_B_hi < 3.0 < V_K_lo + 1e-9,
+          "the raw denominator MISORDERS the pair (Kumar-visible/"
+          "Burnett-blind, the opposite of observation) -- retired-premise "
+          "record; the design denominator a_min replaces it")
+
+    return _result(
+        name='T_tls_transduction_class_discriminator_rule_D',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            'Rule D (transduction-class discriminator, rescoped per the O6 '
+            'hostile audit): coverage below T_sat = h f/(2 kB) = '
+            'T_knee(r_th = 2) is NECESSARY for any transduction-class '
+            'adjudication (Kumar 2008: T_min 120 mK > T_sat 104.4 mK -> '
+            'zero coverage, class-UNDECIDABLE, abstention forced under '
+            'every class; boundary-anywhere-in-band sweep does not flip '
+            'it; the prior lemma audit F1 dissolves; Kumar stays a '
+            'non-validation row) and SUFFICIENT only for CANONICAL-STM '
+            '(cubic-vanishing) EXCLUSION at design SNR >= 3 (Burnett 2014: '
+            'excluded at >= 6.3 sigma at the worst scatter reading; the '
+            'interacting-vs-tanh^2 x T^beta pair NOT separable, pattern '
+            'SNR 1.0-2.0, named negative). Design-resolvable denominator '
+            'a_min = 3 sigma_pt/||v_perp|| (q = 3, null {1, ln T} '
+            'disclosed); c_reg = 1 mandatory pre-committed default for '
+            'declared-broad baths (falsifier liveness). Spec (c) visible '
+            'half vacant pending O3 (Kouwenhoven 2024, the named next '
+            'lemma).'
+        ),
+        key_result=('Rule D: coverage below T_sat = T_knee(r_th=2) '
+                    'necessary for class adjudication; sufficient only '
+                    'for canonical-STM exclusion at design SNR >= 3'),
+        dependencies=['T_tls_capacity_budget_knee_design_corollary',
+                      'T_master_equation_form',
+                      'T_three_regimes_tau_rec'],
+        cross_refs=['T_sixteen_case_unification_structural'],
+        artifacts={
+            'T_sat_mK': {k: v[0] for k, v in bounds_mK.items()},
+            'T_knee_mK': {k: v[1] for k, v in bounds_mK.items()},
+            'kumar_lever_below_Tsat': 0.0,
+            'kumar_sigma_joint_selfconsistent': sig_joint,
+            'kumar_inwindow_max_ln_separation': worst_maxres_K,
+            'kumar_inwindow_pattern_snr_at_sigma_joint':
+                worst_l2_K / sig_joint,
+            'burnett_exclusion_snr_worst': worst_excl,
+            'burnett_exclusion_snr_best': max(excl_snrs),
+            'tanh2_member_pattern_snr_range':
+                (min(t[2] for t in neg_stats),
+                 max(t[2] for t in neg_stats)),
+            'a_min_kumar_ln_range': (min(a_mins_K), max(a_mins_K)),
+            'a_min_burnett_ln_range': (min(a_mins_B), max(a_mins_B)),
+            'reductio_V_kumar_range': (V_K_lo, V_K_hi),
+            'reductio_V_burnett_range': (V_B_lo, V_B_hi),
+        },
+    )
+
+
+# =============================================================================
 # T_substrate_anchor_entangled_state: IJC structure of substrate-anchor combined state
 # =============================================================================
 
@@ -1531,6 +2089,10 @@ _CHECKS = {
     'T_quantum_anchor_einstein_A': check_T_quantum_anchor_einstein_A,
     'T_master_equation_form': check_T_master_equation_form,
     'T_three_regimes_tau_rec': check_T_three_regimes_tau_rec,
+    'T_tls_capacity_budget_knee_design_corollary':
+        check_T_tls_capacity_budget_knee_design_corollary,
+    'T_tls_transduction_class_discriminator_rule_D':
+        check_T_tls_transduction_class_discriminator_rule_D,
     'T_substrate_anchor_entangled_state': check_T_substrate_anchor_entangled_state,
     'T_cross_branch_matrix_element_form': check_T_cross_branch_matrix_element_form,
     'T_sixteen_case_unification_structural': check_T_sixteen_case_unification_structural,

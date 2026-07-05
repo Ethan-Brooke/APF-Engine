@@ -1,7 +1,9 @@
 """L_Cauchy_uniqueness: F(d) = d is the UNIQUE Realignment Cost Function [P].
 
-Strengthens T27d (gamma = d + 1/d = 17/4) by replacing the "representation
-principles" R1-R4 with Cauchy's functional equation (1821) + monotonicity.
+Strengthens the F(d)=d leg of T27d's HISTORICAL d + 1/d construction by
+replacing the "representation principles" R1-R4 with Cauchy's functional
+equation (1821) + monotonicity. (T27d's VALUE gamma = (1, 17/4) is [P] via
+the placement close since 2026-07-03; this lemma serves the mechanism arc.)
 
 This makes the derivation of sin²θ_W = 3/13 rest on a 200-year-old
 mathematical uniqueness theorem rather than framework-specific axioms.
@@ -34,6 +36,16 @@ ATTACK SURFACE REDUCTION:
   After:  "Why F(d) = d? Because Cauchy's functional equation (1821)
            has a unique monotone solution, and admissibility is monotone
            and additive from A1."
+
+CROSS-REF (v24.3.376): this is the CONTINUUM-domain leg (F: R+ -> R+),
+where the monotonicity axiom C2 (Darboux 1875) genuinely carries load --
+Cauchy's equation on R has pathological non-measurable solutions without
+a regularity condition. The COUNT-domain sibling is
+check_T_cost_count_characterization (apf/delta_calculus.py): on N,
+forced discrete by the MD floor, the same additivity + normalization
+determine f(n) = n*epsilon by induction ALONE, with NO monotonicity
+hypothesis (it returns as a corollary). Do not conflate the two legs:
+the R+ leg needs the regularity axiom; the N leg does not.
 """
 
 import math
@@ -111,9 +123,11 @@ def check_L_Cauchy_uniqueness():
     # Step 4: Verify sin^2 theta_W = 3/13 follows
     # GRADE CAVEAT (2026-06-07): F(d)=d (Cauchy) is [P]; but gamma = F(d)+F(1/d) = 17/4
     #   adds the reciprocal F(1/d)=1/d term, which equals the overlap x^2 only by the
-    #   x = 1/sqrt(d) accident at d=4 -- the refuted d+1/d grounding. The load gamma=17/4 and
-    #   hence sin^2 theta_W = 3/13 are [P_structural], not [P] (re-grounded on the radial Higgs
-    #   record 2026-06-07; see generations.check_T27d). F(d)=d on N stays [P].
+    #   x = 1/sqrt(d) accident at d=4 -- the refuted d+1/d grounding.
+    # The load gamma=(1,17/4) is [P] via the placement close
+    # (check_T_ew_load_placement_P, v24.3.247; T27d re-anchored 2026-07-03);
+    # the MEASURED sin^2 theta_W stays [P_structural_seam] behind the w~g^2
+    # dictionary (T_sin2theta; T24 value-scoped [P] 2026-07-03). F(d)=d on N stays [P].
     # ================================================================
     x = Fraction(1, 2)  # T27c [P]
     m = 3               # dim(su(2))

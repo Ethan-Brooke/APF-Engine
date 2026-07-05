@@ -207,9 +207,9 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
     theoretical minimum (the magnitude itself un-derivable, the no-go of
     T_planck_magnitude_single_dimensional_anchor). The lone remaining un-collapsed ratio is M_cross / M_Pl, and its open content is the DIMENSIONAL
     hierarchy, equivalently v_H / M_Pl. The crossing scale RELATIVE to M_Z is NOT open: it is
-    zero-input [P] (1/alpha_Y(M_cross) = C_total = 61, the rank-1 capacity count, forward-predicts
+    zero-input [P_structural_reading] (1/alpha_Y(M_cross) = C_total = 61, the rank-1 capacity count, forward-predicts
     alpha_s(M_Z) = 0.1179 at 0.11 sigma and t = ln(M_cross/M_Z) with no measured coupling --
-    T_abelian_coupling_fixed_by_rank1_capacity_count_P -- [P_structural], v24.3.215: forward-PREDICTED and corroborated at 0.11 sigma, but the rank-1 no-third-reading exhaustiveness is open, NOT clean [P]; a grade contradiction with the check's epistemic field is owed to the principal). So M_cross/M_Pl =
+    T_abelian_coupling_fixed_by_rank1_capacity_count_P -- [P_structural], v24.3.215: forward-PREDICTED and corroborated at 0.11 sigma, but the rank-1 no-third-reading exhaustiveness is open, NOT clean [P]; all surfaces conformed to [P_structural_reading] at the v24.3.325 fix-down). So M_cross/M_Pl =
     (zero-input M_cross/M_Z [P]) x (M_Z/v_H [P]) x (v_H/M_Pl), and the only open piece is the
     absolute hierarchy v_H/M_Pl -- the same open frontier Paper 44 sec.10 names. (The earlier
     'sin^2theta_W -> [P] gate' parenthetical is superseded for alpha_s and the crossing-to-M_Z
@@ -259,8 +259,11 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
               "dimensionless (m_f/M_Pl rescaling-invariant); the top mass m_t = y_t*v_H (y_t=0.991) "
               "is no exception, dissolving the 'top mass is a new scale' loophole; Lambda_QCD rides "
               "the same anchor by dimensional transmutation (v24.3.188). Every SM mass scale rides "
-              "the ONE Planck anchor -- the one-input theoretical minimum. Lone open ratio: "
-              "M_cross/M_Pl (the sin^2theta_W->[P] gate; the crossing scale)"),
+              "the ONE Planck anchor -- the one-input theoretical minimum. M_cross/M_Pl is "
+              "composed to a pure capacity number under the named readings "
+              "(mcross_planck_ratio_composition, v24.3.365); the measured-angle reading stays "
+              "capped behind the dictionary seam (check_T_mcross_gate_dictionary_conditional, "
+              "v24.3.364)"),
         tier=4,
         epistemic='P_structural_convention',
         summary=(
@@ -275,15 +278,21 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
             "Lambda_QCD, charged fermions) is certified to ride the ONE Planck anchor, and the "
             "framework sits at its one-input theoretical minimum -- the magnitude itself un-derivable "
             "by the no-go of T_planck_magnitude_single_dimensional_anchor. The lone remaining "
-            "un-collapsed ratio is M_cross/M_Pl, the same quantity as the sin^2theta_W->[P] gate, "
-            "named here as the honest open frontier (distinct from the banked low-scale seesaw "
+            "un-collapsed ratio is M_cross/M_Pl, composed to a pure capacity number under the "
+            "named readings (mcross_planck_ratio_composition, v24.3.365), with the "
+            "measured-angle reading capped behind the dictionary seam "
+            "(check_T_mcross_gate_dictionary_conditional, v24.3.364) -- the open frontier is "
+            "GRADE, not value (distinct from the banked low-scale seesaw "
             "M_R=[31,60,174] GeV of majorana.py; no high-scale seesaw identification is claimed)."
         ),
         key_result=(
             "Fermion + strong sectors add NO dimensional anchor beyond M_Pl: m_f = y_f*v_H "
             "(y_f dimensionless, m_f/M_Pl invariant); top mass no exception (y_t=0.991, m_t~172.5 GeV); "
             "Lambda_QCD by transmutation (v24.3.188). Every SM mass scale rides the ONE Planck anchor "
-            "(one-input theoretical minimum). Lone open ratio: M_cross/M_Pl (sin^2theta_W->[P] gate)."
+            "(one-input theoretical minimum). M_cross/M_Pl composed to a pure capacity number "
+            "under the named readings (mcross_planck_ratio_composition, v24.3.365); the "
+            "measured-angle reading stays capped behind the dictionary seam "
+            "(check_T_mcross_gate_dictionary_conditional, v24.3.364)."
         ),
         dependencies=['T_planck_magnitude_single_dimensional_anchor',
                       'confinement_scale_single_anchor',
@@ -293,7 +302,7 @@ def check_T_fermion_strong_no_new_dimensional_anchor_P():
             top_mass="m_t = y_t * v_H/sqrt(2), y_t=0.991 -> ~172.5 GeV (not a new scale)",
             strong="Lambda_QCD rides the anchor by dimensional transmutation (v24.3.188)",
             all_sm_scales="EW vev + Lambda + Lambda_QCD + charged fermions ride ONE anchor",
-            lone_open_ratio="M_cross/M_Pl = (zero-input M_cross/M_Z [P], abelian count) x (v_H/M_Pl); open content = the dimensional hierarchy v_H/M_Pl",
+            lone_open_ratio="M_cross/M_Pl = (zero-input M_cross/M_Z [P_structural_reading], abelian count) x (v_H/M_Pl); open content = GRADE not value: the .284 support reading + the EW-floor readings (v_H/M_Pl composable at reading grade, not base-derivable per the .314 no-go)",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )

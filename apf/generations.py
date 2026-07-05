@@ -805,23 +805,56 @@ def check_T23():
 
 
 def check_T24():
-    """T24: sin^2theta_W = 3/13 E" structurally derived (0.19% from experiment).
-    
-    DERIVATION CHAIN (no witness parameters):
-      T_channels -> d = 4 EW channels
-      T27c: x = 1/2 [P_structural] (S0 closed by T_S0)
-      T27d: gamma2/gamma1 = d + 1/d = 17/4 [P_structural | load UNFORCED; R NOT closed -- see T27d audit]
-      T22: a11=1, a12=1/2, a22=13/4 [P_structural]
-      T23: r* = 3/10 -> sin^2theta_W = 3/13 [P_structural]
-    
-    GRADE: [P_structural]. The LEDGER SHARE 3/13 closes to [P]: the load
-      placement gamma=(1,17/4) is forced by FD1 structural completeness + the
-      Schur asymmetry (check_T_ew_load_placement_P, gauge_quotient_ledger.py).
-      T24 stays [P_structural] because it reads that ledger share as the MEASURED
-      sin^2 theta_W through the w propto g^2 correspondence -- the load-bearing
-      residual is that dictionary fence, NOT the retired load-form / x=1/2
-      accident (Delta_geo / owner-erasure / d+1/d-by-the-x=1/sqrt(d)-accident are
-      refuted groundings). NOT [P_physical_final].
+    """T24: sin^2theta_W = 3/13 -- THE VALUE: the exact ledger share at the
+    crossing, [P], anchored on the placement close (2026-07-03 value/reading
+    split; the .362 pattern one node over).
+
+    DERIVATION CHAIN (no witness parameters; grades = the live tokens):
+      T_channels -> d = 4 EW channels [P]
+      T27c: x = 1/2 [P] (S0 closed by T_S0)
+      T27d: gamma2/gamma1 = 17/4 [P] (re-anchored on the placement close, 2026-07-03)
+      T22: a11=1, a12=1/2, a22=13/4 [P]
+      T23: r* = 3/10 -> sin^2theta_W = 3/13 [P] (exact rational arithmetic)
+
+    GRADE: [P] -- THE VALUE CLAIM ONLY. sin^2 theta_W = 3/13 as the exact
+    ledger share at the crossing rests on the placement close
+    check_T_ew_load_placement_P (tier 4 [P], v24.3.247, re-killed .327):
+    gamma = (1, 17/4) with the +1 the single radial Higgs record billed to
+    SU(2) by FD1 structural completeness + the Schur asymmetry, and the
+    close's own executable content lands 3/13 in exact rationals
+    (artifacts['ledger_fraction']). That anchor is named in dependencies
+    and asserted LIVE in-body below.
+
+    SCOPE -- THE READING IS NOT HERE. Reading the ledger share 3/13 as the
+    MEASURED weak mixing angle crosses the w propto g^2 dictionary and stays
+    [P_structural] at T_sin2theta (the dictionary fence, by design -- Wall B,
+    its own adjudication lane). [Adjudicated 2026-07-03: certified ceiling,
+    check_L_wg2_dictionary_index_content_blind_native.] The five seam kwargs
+    and the R2 leading-log record (2026-06-22) ride T_sin2theta, the
+    reading's home; the measured-angle comparison lives in validation.py
+    (L_prediction_catalog, source theorem T_sin2theta).
+
+    WHY THE ANCHORING IS SOUND (non-viciousness; the ruling of record is
+    the .362 one, extended 2026-07-03): T24 sits inside the same SM-core
+    mutual-definition SCC as T27d and the placement close (71 members,
+    measured; the cluster PRE-DATES this lane), and the new edge
+    T24 -> T_ew_load_placement_P adds NO SCC member. The cycle cannot
+    launder a wrong value: (i) the placement close consumes NO output of
+    T24 -- T24 publishes no DAG key at all (the numeric exports
+    sin2_theta_W / r_star are T23's); (ii) the loop's value-consumption
+    edges are L_AF_capacity (gamma_2 at INEQUALITY strength, the .362
+    record) and T21b (the only in-SCC direct child of T24, which recomputes
+    its content from dag x_overlap plus the literal 17/4 and consumes
+    nothing T24 computes -- narrative-strength). Per-node adjudication +
+    Phase 14c SCC condensation is the bank's established discipline for
+    this cluster.
+
+    PRE-SPLIT GRADE RECORD: [P_structural_seam] (R2 2026-06-22) -- the seam
+    token priced the CROSSING READING, which now lives wholly at
+    T_sin2theta. The retired load-form / x=1/2-accident groundings
+    (Delta_geo / owner-erasure / d+1/d-by-the-x=1/sqrt(d)-accident) remain
+    refuted; the kill records (.247/.327 and the 2026-06 audits) live in
+    the T27d docstring, cited not re-litigated.
     """
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='T24',
                 expected_source='T27c')
@@ -843,43 +876,62 @@ def check_T24():
     
     sin2 = r_star / (1 + r_star)
     check(sin2 == Fraction(3, 13))
-    
+
+    # -- LIVE CROSS-ANCHOR (2026-07-03 value/reading split): the VALUE
+    # rests on the placement close; executable and binding at every call --
+    from apf.gauge_quotient_ledger import check_T_ew_load_placement_P as _ewp
+    _r = _ewp()
+    check(_r.get('passed') and _r.get('epistemic') == 'P',
+          "anchor: T_ew_load_placement_P must pass at [P]")
+    check(_r['artifacts']['gamma'] == '(1, 17/4)',
+          "anchor: the placement close's gamma must be (1, 17/4)")
+    check(_r['artifacts']['ledger_fraction'] == '3/13' and sin2 == Fraction(3, 13),
+          "anchor: the placement close's own arithmetic and T24's arithmetic "
+          "must both land 3/13 (exact)")
+
     # empirical comparison moved to validation.py
     predicted = float(sin2)
 
     return _result(
-        name='T24: sin^2theta_W = 3/13',
+        name=('T24: sin^2theta_W = 3/13 -- the VALUE (exact ledger share '
+              'at the crossing) [P], anchored on the placement close'),
         tier=3,
-        epistemic='P_structural_seam',
-        leading_log_exact_at_crossing=True,
-        two_loop_angle_gap_pct=0.032,
-        two_loop_angle_gap_bounded=True,
-        scale_fenced=True,
-        leading_log_note=(
-            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
-            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
-            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
-            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
-            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
-            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
-        ),
+        epistemic='P',
         summary=(
-            f'sin^2theta_W = 3/13 ~= {predicted:.6f}. '
-            'DERIVED (not witnessed): x = 1/2 from T27c (gauge redundancy), '
-            'gamma2/gamma1 = 17/4 from T27d (SU(2) load = self-competition + the radial-Higgs record). '
-            'The ledger share 3/13 is [P] (T_ew_load_placement_P, via FD1 structural completeness); '
-            'T24 stays [P_structural] reading it as the measured angle through the w propto g^2 dictionary fence. '
-            'Comparison to PDG sin^2theta_W in validation.py.'
+            f'sin^2theta_W = 3/13 ~= {predicted:.6f} -- THE VALUE CLAIM '
+            f'ONLY, [P]: exact rational arithmetic over T22/T23/T27c/T27d '
+            f'(x = 1/2, gamma2/gamma1 = 17/4, r* = 3/10), anchored on the '
+            f'placement close check_T_ew_load_placement_P (tier 4 [P], '
+            f'v24.3.247) -- named in dependencies and asserted LIVE '
+            f'in-body (the anchor must pass at [P] with gamma == (1, 17/4) '
+            f'and its own arithmetic landing 3/13, exact). Reading the '
+            f'ledger share 3/13 as the MEASURED weak mixing angle crosses '
+            f'the w propto g^2 dictionary and stays [P_structural] at '
+            f'T_sin2theta (the dictionary fence, by design -- Wall B, its '
+            f'own adjudication lane; ceiling certified v24.3.364). '
+            f'Non-viciousness of the anchoring audited 2026-07-03: same '
+            f'SM-core SCC, no new member from the edge; T24 publishes no '
+            f'DAG key; the loop value-edges are inequality-strength '
+            f'(L_AF_capacity) or narrative (T21b). Comparison to PDG '
+            f'sin^2theta_W in validation.py (source theorem T_sin2theta).'
         ),
-        key_result=f'sin^2theta_W = 3/13 ~= {predicted:.4f}',
-        dependencies=['T23', 'T27c', 'T27d', 'T22', 'T_S0'],
+        key_result=(f'sin^2theta_W = 3/13 [P] -- the exact ledger share at '
+                    f'the crossing, anchored on the placement close; the '
+                    f'measured-angle reading lives at T_sin2theta behind '
+                    f'the w propto g^2 fence'),
+        dependencies=['T23', 'T27c', 'T27d', 'T22', 'T_S0',
+                      'T_ew_load_placement_P'],
         artifacts={
             'sin2': float(sin2), 'fraction': '3/13',
             'x': '1/2 (T27c)', 'gamma_ratio': '17/4 (T27d)',
-            'derivation_status': 'ledger share 3/13 is [P] (T_ew_load_placement_P); measured angle held [P_structural] by the w propto g^2 dictionary fence',
+            'claim_scope': 'THE VALUE ONLY: the exact ledger share at the crossing',
+            'grade_ground': ('T_ew_load_placement_P [P] (v24.3.247), '
+                             'anchored live in-body; value/reading split '
+                             '2026-07-03'),
+            'reading_home': ('T_sin2theta [P_structural_seam]: the '
+                             'measured-angle reading behind the w propto '
+                             'g^2 dictionary fence (Wall B; ceiling '
+                             'certified v24.3.364)'),
             'gate_S0': 'CLOSED by T_S0 (interface schema invariance proved)',
         },
     )
@@ -929,7 +981,13 @@ def check_T21b():
     (T27d/T24 audit 2026-06-06; re-grounded on the radial Higgs record
     2026-06-07). So: attractor EXISTENCE/uniqueness [P]; attractor
     COORDINATES [P_structural]. epistemic='P' below tags the stability
-    theorem; the location/angle carry the [P_structural] caveat.
+    theorem; the location/angle carry the [P_structural] caveat. [ANNOTATION
+    2026-07-03: the load gamma is now [P] (T27d re-anchored .362; T24
+    value-scoped [P] 2026-07-03 -- both on the placement close), so the
+    COORDINATES as ledger values are [P]; reading them as measured
+    couplings crosses the w propto g^2 dictionary and stays fenced at
+    T_sin2theta (Wall B). epistemic='P' below tags the stability theorem,
+    unchanged.]
     
     ANALYTIC PROOF (replaces numerical verification):
     
@@ -1271,9 +1329,54 @@ def check_T27c():
 
 
 def check_T27d():
-    """T27d: gamma_2/gamma_1 = d + 1/d from Representation Principles.
-    
-    GRADE: [P_structural] -- the load ratio is an UNFORCED structural input.
+    """T27d: gamma_2/gamma_1 = (1, 17/4) -- [P], re-anchored on the placement
+    close (2026-07-03 rewiring; principal-ruled).
+
+    GRADE: [P]. The VALUE gamma = (1, 17/4) rests on the placement close
+    check_T_ew_load_placement_P (tier 4 [P], v24.3.247, re-killed .327):
+    gamma_2 = a_22 + n_radial = 13/4 + 1, from the T22 Gram self-competition
+    + the single radial Higgs record billed to SU(2) by FD1 structural
+    completeness + the Schur asymmetry. That anchor is named in dependencies
+    and asserted LIVE in-body below.
+
+    WHY THE ANCHORING IS SOUND (the non-viciousness record, audited
+    2026-07-03): the placement close's transitive ancestry reaches T27d
+    through three of its four direct dependencies (T_Higgs; T22 via T_gauge;
+    T_alpha_gamma via T_Higgs), all converging on T_gauge -> T4 ->
+    L_AF_capacity -> {T27d; T21b -> T24 -> T23 -> T27d} -- the SM-core
+    mutual-definition cluster, which PRE-DATES this rewiring (the .247 [P]
+    was adjudicated on a graph already containing the route). The cycle
+    cannot launder a wrong value: (i) the placement close consumes NO output
+    of T27d (no dag_get in its body; it constructs 17/4 from non-T27d
+    inputs); (ii) the loop's only value-consumption edge, L_AF_capacity,
+    uses gamma_2 at INEQUALITY strength (its conclusions hold for any
+    gamma_2 in (1/2, 13/2)), so a wrong gamma fed around the loop would not
+    certify itself. Per-node adjudication + Phase 14c SCC condensation is
+    the bank's established discipline for this cluster (T_gauge, T4,
+    T_Higgs, L_AF_capacity all carry [P] inside the same SCC).
+
+    SCOPE -- THE LEDGER VALUE ONLY. Reading the ledger share 3/13 as the
+    MEASURED weak mixing angle crosses the w propto g^2 dictionary and stays
+    [P_structural] at T_sin2theta (the dictionary fence, by design; T24 value-scoped [P] 2026-07-03 --
+    Wall B, its own adjudication lane). [Adjudicated 2026-07-03: certified
+    ceiling, check_L_wg2_dictionary_index_content_blind_native.]
+
+    MECHANISM-OPEN [C_shared_channel_collapse_direction], re-scoped
+    2026-07-03: the VALUE no longer rides the d + 1/d mechanism; the
+    surviving named-open is whether the collapse-direction story ALSO
+    derives 17/4. The 2026-06 audits' grounded lean AGAINST 3/13 stands as
+    a statement about that mechanism -- unchanged, never silenced.
+
+    R2 RECORD (2026-06-22, retained as history; the kwargs it rode are
+    retired with this re-grade): the crossing reading is leading-log-exact
+    (one-loop beta a pure count, T6B_beta_one_loop [P]); the two-loop
+    continuation on the angle is bounded and small (~0.03% at the crossing);
+    the MEASURED value at M_Z stays seam-fenced on the scale
+    t = ln(M_cross/M_Z), which the counts do not supply. That pricing now
+    lives wholly at T_sin2theta (Wall B; T24 re-scoped to the value claim 2026-07-03).
+
+    PRE-REWIRING GRADE RECORD: [P_structural] -- "the load ratio is an
+    UNFORCED structural input" -- superseded by the placement anchoring.
     AUDIT (2026-06-06): the prior "R-gate R1-R4 closed" justification did NOT hold.
       R3 (refinement covariance) is proved nowhere for the channel space; Delta_geo
       is a spacetime-manifold theorem and is NOT in this check's dependency graph;
@@ -1301,7 +1404,9 @@ def check_T27d():
       Grounded lean (source-exclusivity) is AGAINST 3/13. See 'Reference -
       Direct Pursuit of the EW Dissipation Load via L_irr (2026-06-07).md'.
     
-    DERIVATION OF gamma_2/gamma_1 = d + 1/d:
+    HISTORICAL ARC -- THE d + 1/d CONSTRUCTION (demoted 2026-07-03 to the
+    pedagogical/historical record; precedent: Paper 20 v3.1 Finding-1
+    demotion, Phase 14b anchor rewiring. NOT the load-bearing ground):
     
       Let F(d) be the per-channel realignment cost function.
       
@@ -1411,49 +1516,69 @@ def check_T27d():
         err = _sin2_err(gr)
     # Empirical sin2θ_W comparison (informational — validation gates in validation.py)
 
+    # -- LIVE CROSS-ANCHOR (2026-07-03 rewiring): the value rests on the
+    # placement close; this makes the anchoring executable and binding --
+    from apf.gauge_quotient_ledger import check_T_ew_load_placement_P as _ewp
+    _r = _ewp()
+    check(_r.get('passed') and _r.get('epistemic') == 'P',
+          "anchor: T_ew_load_placement_P must pass at [P]")
+    check(_r['artifacts']['gamma'] == '(1, 17/4)',
+          "anchor: the placement close's gamma must be (1, 17/4)")
+    check(gamma_ratio == Fraction(17, 4),
+          "anchor: T27d gamma_ratio == the placement gamma_2 (exact)")
+
     # ── Export to DAG ──
     dag_put('gamma_ratio', gamma_ratio, source='T27d',
-            derivation=f'd + 1/d = {d} + 1/{d} = {gamma_ratio}')
+            derivation=(f'gamma = (1, 17/4) anchored on the placement close '
+                        f'(a_22 + n_radial, T_ew_load_placement_P [P]); the '
+                        f'd + 1/d = {d} + 1/{d} construction retained as the '
+                        f'historical arc'))
 
     return _result(
-        name='T27d: gamma_2/gamma_1 = d + 1/d',
+        name=('T27d: gamma_2/gamma_1 = (1, 17/4) [P], anchored on the '
+              'placement close (the d + 1/d construction retained as the '
+              'historical arc)'),
         tier=3,
-        epistemic='P_structural_seam',
-        leading_log_exact_at_crossing=True,
-        two_loop_angle_gap_pct=0.032,
-        two_loop_angle_gap_bounded=True,
-        scale_fenced=True,
-        leading_log_note=(
-            'R2 (2026-06-22): grade stays P_structural_seam (weakest link = the scale). '
-            'Ledger share 3/13 is [P] (T_ew_load_placement_P). The crossing reading is '
-            'leading-log-exact: the one-loop beta is a pure count (T6B_beta_one_loop [P]); '
-            'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
-            'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
-            'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
-        ),
+        epistemic='P',
         summary=(
-            f'gamma_2/gamma_1 = d + 1/d = {d} + 1/{d} = {gamma_ratio} '
-            f'with d = {d} EW channels (from T_channels, NOT spacetime dims). '
-            'Derivation: Theorem A (F(d)=d from R1+R2+unit), '
-            'Theorem B (F(1/d)=1/d from R3 covariance), '
-            'Theorem C (gamma=sum from R4 non-cancellation). '
-            'NORMALIZATION: d+1/d IS the ratio directly. '
-            'U(1) has d_1=1 with 1/d_1=d_1 (no separate reciprocal). '
-            'Radial-Higgs record placed on SU(2) by FD1 structural completeness + Schur (T_ew_load_placement_P [P]); ledger share 3/13 [P], measured angle [P_structural] (w propto g^2 fence). '
-            'Robustness: 6 alternative formulas ALL fail by >2.5%.'
+            f'gamma_2/gamma_1 = {gamma_ratio}, [P]: the value rests on the '
+            f'placement close check_T_ew_load_placement_P (tier 4 [P], '
+            f'v24.3.247) -- gamma_2 = a_22 + n_radial = 13/4 + 1 from the '
+            f'T22 Gram self-competition + the single radial Higgs record '
+            f'billed to SU(2) by FD1 structural completeness + Schur -- '
+            f'named in dependencies and asserted LIVE in-body (the anchor '
+            f'must pass at [P] with gamma == (1, 17/4), exact rational '
+            f'identity). SCOPE: the LEDGER value only; reading the share as '
+            f'the MEASURED angle crosses the w propto g^2 dictionary and '
+            f'stays [P_structural] at T_sin2theta (the fence, by '
+            f'design). The d + 1/d = {d} + 1/{d} construction (Theorems '
+            f'A/B/C over d = {d} EW channels from T_channels) is the '
+            f'HISTORICAL ARC, demoted 2026-07-03: the 2026-06 audits showed '
+            f'it does not force 17/4; the mechanism-open '
+            f'[C_shared_channel_collapse_direction] (whether that story '
+            f'ALSO derives 17/4; grounded lean AGAINST) survives as a '
+            f'named-open about the mechanism, not the value. Non-viciousness '
+            f'of the anchoring audited 2026-07-03 (see docstring: the '
+            f'placement close consumes no T27d output; the loop value-edge '
+            f'is inequality-strength). Robustness scan retained: 6 '
+            f'alternative formulas ALL fail by >2.5%.'
         ),
-        key_result=f'gamma_2/gamma_1 = {gamma_ratio} [uniquely selected, 6 alternatives fail]',
-        dependencies=['T_channels', 'L_irr', 'L_epsilon*'],
+        key_result=(f'gamma_2/gamma_1 = {gamma_ratio} [P] (anchored on the '
+                    f'placement close; ledger value only -- the measured '
+                    f'angle stays behind the w propto g^2 fence)'),
+        dependencies=['T_channels', 'L_irr', 'L_epsilon*',
+                      'T_ew_load_placement_P'],
         cross_refs=['T26'],  # exact value within T26 bounds (consistency check)
         artifacts={
             'gamma_ratio': float(gamma_ratio), 'd': d,
             'd_source': 'T_channels (EW channels, not spacetime)',
+            'grade_ground': ('T_ew_load_placement_P [P] (v24.3.247): '
+                             'gamma_2 = a_22 + n_radial; anchored live '
+                             'in-body; rewired 2026-07-03'),
             'placement': 'radial-Higgs record on SU(2), forced by FD1 structural completeness + Schur (T_ew_load_placement_P [P]); ledger share 3/13 [P]; measured angle [P_structural] (w propto g^2 fence)',
-            'normalization': 'gamma_1==1 (unit), gamma_2/gamma_1 = d+1/d (ratio formula)',
+            'normalization': 'gamma_1==1 (unit), gamma_2/gamma_1 = 17/4 (value; d+1/d = the historical construction)',
             'cross_check_sin2': '3/13 verified',
+            'mechanism_open': 'C_shared_channel_collapse_direction (mechanism only; value anchored)',
             'robustness': '6 alternatives tested, all >2.5% error; d+1/d unique at 0.19%',
         },
     )
@@ -1462,13 +1587,22 @@ def check_T27d():
 def check_T_sin2theta():
     """T_sin2theta: Weinberg Angle -- structurally derived from fixed point.
     
-    Full derivation chain:
+    Full derivation chain (grades = the live tokens):
       T_channels -> 4 EW channels [P]
-      T22: competition matrix [P_structural]
-      T23: fixed-point formula [P_structural]
-      T27c: x = 1/2 [P_structural] (S0 closed by T_S0)
-      T27d: gamma_2/gamma_1 = 17/4 [P_structural] (SU(2) load = self + radial-Higgs record)
+      T22: competition matrix [P]
+      T23: fixed-point formula [P]
+      T27c: x = 1/2 [P] (S0 closed by T_S0)
+      T27d: gamma_2/gamma_1 = 17/4 [P] (re-anchored on the placement close, 2026-07-03)
+      T24: the VALUE (exact ledger share at the crossing) [P] (value/reading split, 2026-07-03)
       -> sin^2theta_W = 3/13 -- ledger share [P], measured angle [P_structural]
+
+    THE READING'S HOME (2026-07-03 split): the measured-angle reading is
+    consolidated HERE. This node keeps the P_structural_seam token, the
+    five seam kwargs, the reworded leading_log_note (R2 2026-06-22 +
+    .364), and the certified ceiling
+    (check_L_wg2_dictionary_index_content_blind_native /
+    check_T_mcross_gate_dictionary_conditional, v24.3.364) -- the fence at
+    full strength, Wall B.
     
     GRADE: [P_structural]. The LEDGER SHARE 3/13 closes to [P] -- the placement
     gamma=(1,17/4) is forced by FD1 structural completeness + the Schur asymmetry
@@ -1510,9 +1644,16 @@ def check_T_sin2theta():
             'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
             'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
             'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
+            'window). The MEASURED value at M_Z stays seam-fenced on the w propto g^2 '
+            'dictionary index: the forward solve supplies t = ln(M_cross/M_Z) natively, but '
+            'index-conditionally (t(n) spans 12.4-69.0 across the probed power family) -- the '
+            'scale seam is nested inside the dictionary seam '
+            '(check_T_mcross_gate_dictionary_conditional, v24.3.364). Under the .354/.359 '
+            'record-partition typing, no native [P] route to the measured angle exists, '
+            'leading-log included -- the D1 double-HOLD stands '
+            '(check_L_wg2_dictionary_index_content_blind_native); NRDT stays OPEN, NAMED, NOT '
+            'ADOPTED. The fence ceiling is [P_structural_reading] with the falsifier named: a '
+            'native structure whose capacity depends on the index.'
         ),
         summary=(
             f'sin^2theta_W = {sin2} ~= {predicted:.6f}. '
@@ -9175,7 +9316,11 @@ def check_L_crossing_self_energy():
     FORM (additive subtraction + Schur uniqueness + type-exclusion) is [P] -- every step traces to [P]/A1;
     but the VALUE xi = w2* = 5/4 is the T21b fixed-point LOCATION set by the load gamma = (1, 17/4), which is
     [P_structural] (T27d/T24 audit 2026-06-06, Higgs-record re-grounding 2026-06-07), so the depletion VALUE
-    5/256 inherits [P_structural]. (i) depletion = c_Hu^2 * (sink capacity), additive
+    5/256 inherits [P_structural]. [ANNOTATION 2026-07-03: the load gamma
+    is now [P] (placement close; T27d .362, T24 value-scoped 2026-07-03); what holds THIS
+    node's token is its own location/crossing reading behind the w propto g^2 fence
+    (T_sin2theta, Wall B), pending the named grade-reconciliation rollout. NO grade
+    change here.] (i) depletion = c_Hu^2 * (sink capacity), additive
     capacity conservation, A1; (ii) xi = w2* = 5/4 forced by TYPE-EXCLUSION -- the enforced SU(2) allocation
     (solution of A w*=gamma), not a competition input (bare dim adj=3 / a22=13/4 / gamma2=17/4 are inputs,
     excluded with no m_u); (iii) coupling uniform by Schur (unique eps_ab invariant). The former [P_structural]
@@ -9223,9 +9368,16 @@ def check_L_crossing_self_energy():
             'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
             'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
             'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
+            'window). The MEASURED value at M_Z stays seam-fenced on the w propto g^2 '
+            'dictionary index: the forward solve supplies t = ln(M_cross/M_Z) natively, but '
+            'index-conditionally (t(n) spans 12.4-69.0 across the probed power family) -- the '
+            'scale seam is nested inside the dictionary seam '
+            '(check_T_mcross_gate_dictionary_conditional, v24.3.364). Under the .354/.359 '
+            'record-partition typing, no native [P] route to the measured angle exists, '
+            'leading-log included -- the D1 double-HOLD stands '
+            '(check_L_wg2_dictionary_index_content_blind_native); NRDT stays OPEN, NAMED, NOT '
+            'ADOPTED. The fence ceiling is [P_structural_reading] with the falsifier named: a '
+            'native structure whose capacity depends on the index.'
         ),
         summary=(
             'The depletion weight xi in the up-G00 H-tilde crossing self-energy is the SU(2)_L-sector '
@@ -9317,9 +9469,16 @@ def check_L_crossing_depletion_capacity_measure():
             'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
             'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
             'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
+            'window). The MEASURED value at M_Z stays seam-fenced on the w propto g^2 '
+            'dictionary index: the forward solve supplies t = ln(M_cross/M_Z) natively, but '
+            'index-conditionally (t(n) spans 12.4-69.0 across the probed power family) -- the '
+            'scale seam is nested inside the dictionary seam '
+            '(check_T_mcross_gate_dictionary_conditional, v24.3.364). Under the .354/.359 '
+            'record-partition typing, no native [P] route to the measured angle exists, '
+            'leading-log included -- the D1 double-HOLD stands '
+            '(check_L_wg2_dictionary_index_content_blind_native); NRDT stays OPEN, NAMED, NOT '
+            'ADOPTED. The fence ceiling is [P_structural_reading] with the falsifier named: a '
+            'native structure whose capacity depends on the index.'
         ),
         summary=(
             'The up-G00 H-tilde crossing depletion factor (1 - c_Hu^2 * w2*) = 251/256 is EXACT, not '
@@ -9414,9 +9573,16 @@ def check_T_sin2theta_higgs_record():
             'the two-loop continuation on the angle is bounded and small (~0.03% at the crossing '
             'scale, a ratio cancellation between the numerator and denominator two-loop shifts; '
             'it grows mildly and monotonically with run distance but stays O(0.01-0.1)% across the '
-            'window). The MEASURED value at M_Z stays seam-fenced on the scale t=ln(M_cross/M_Z), '
-            'which the counts do not supply. A future [P] promotion must come from the M_cross scale '
-            'gate, not from leading-log.'
+            'window). The MEASURED value at M_Z stays seam-fenced on the w propto g^2 '
+            'dictionary index: the forward solve supplies t = ln(M_cross/M_Z) natively, but '
+            'index-conditionally (t(n) spans 12.4-69.0 across the probed power family) -- the '
+            'scale seam is nested inside the dictionary seam '
+            '(check_T_mcross_gate_dictionary_conditional, v24.3.364). Under the .354/.359 '
+            'record-partition typing, no native [P] route to the measured angle exists, '
+            'leading-log included -- the D1 double-HOLD stands '
+            '(check_L_wg2_dictionary_index_content_blind_native); NRDT stays OPEN, NAMED, NOT '
+            'ADOPTED. The fence ceiling is [P_structural_reading] with the falsifier named: a '
+            'native structure whose capacity depends on the index.'
         ),
         summary=(
             'The electroweak load gamma = (1, 17/4) read as gamma_i = self-competition a_ii + the '

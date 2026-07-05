@@ -19,7 +19,11 @@ closure: support-alignment EXISTS at exact fill (share dim exactly
 42, check 4), the carrier reading dissolves (type mismatch), and the
 registration reading closes negatively at coherent strength (the
 classical-record ceiling F_e <= 1/42, check 5); the S_42-covariant
-refinement stays open. Hostile cold audits 2026-07-02: LAND-WITH-FIXES
+refinement is SPLIT at v24.3.373 (vacuum_scheme_covariance.py):
+subgroup covariance G_0 = S_2 x S_3 x AGL(1,7) closed EXISTS on this
+construction (F2 as built, F1 after the D_4 dressing) and full-S_q F1
+witnesses exist at exact fill for q = 2, 3 -- covariance does not force
+classicality anywhere computed; full S_42 at (61, 42) stays open. Hostile cold audits 2026-07-02: LAND-WITH-FIXES
 0.80 (checks 1-2, all eight fixes), 0.88 (check 3, all seven fixes;
 independent re-derivation), and 0.88 (checks 4-5, all eight fixes;
 independent re-implementation, incl. the red-bank repair of the
@@ -1354,9 +1358,15 @@ def check_T_vacuum_sector_aligned_scheme_share_dim_42():
     supported on it" is not well-typed; its subspace-coherent
     version is already killed by check 2); the registration reading
     closes NEGATIVELY at coherent strength (check 5). (3) The
-    S_42-covariant refinement is OPEN (the 2x3x7 factorization is
-    not mode-permutation covariant; no continuous-symmetry
-    obstruction is available for a finite group; priced note-only).
+    S_42-covariant refinement is SPLIT (v24.3.373,
+    check_T_vacuum_scheme_product_affine_covariance): (a) this
+    construction is not covariant under FULL S_42 as built (true a
+    fortiori: even its G_0 covariance is F2 as built, F1 only after
+    the D_4 dressing); (b) existence of some fully S_42-covariant
+    scheme at (61, 42) stays OPEN -- but covariance does NOT force
+    classicality at exact fill anywhere computable (full-S_q F1
+    witnesses at q = 2, 3; no continuous-symmetry obstruction for a
+    finite group).
     (4) n = 61 is not directly simulated: the ((3,3))/((5,5)) full
     scans + the reduced ((7,7)) hard-case scan are computed here;
     the FULL ((7,7)) 126-subset scan is pinned offline (The
@@ -1519,7 +1529,7 @@ def check_T_vacuum_sector_aligned_scheme_share_dim_42():
             'reading dissolved (type mismatch), registration reading '
             'negative at coherent strength (check 5). Support-alignment '
             'is NOT realization; ICL_vac stays named [C]; the '
-            'S_42-covariant refinement stays open.'
+            'S_42-covariant refinement is split at v24.3.373 (subgroup EXISTS; full S_42 open).'
         ),
         key_result=(
             'Share dimension exactly 42 = the Sector-B block, exact '
@@ -1549,7 +1559,7 @@ def check_T_vacuum_sector_aligned_scheme_share_dim_42():
                                'witness_2026-07-02.py (full ((7,7)) '
                                'scan)',
             'alignment_ledger': 'support EXISTS / carrier dissolved / '
-                                'registration no-go / covariant open',
+                                'registration no-go / covariant SPLIT at .373 (subgroup EXISTS; full S_42 open)',
         },
     )
 
@@ -1838,3 +1848,39 @@ def run_all():
 if __name__ == '__main__':
     for _n, _r in run_all().items():
         print(('PASS' if _r.get('passed', True) else 'FAIL'), _n)
+
+
+# ---------------------------------------------------------------------------
+# Interface Engine onboarding (Full Bank Onboarding wave, 2026-07-04)
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:vacuum_label_code_p1_witness",
+        "axis": "ROUTE",
+        "expect_export": False,
+        "claim_text": (
+            "The constructed P1 witness at computed strength "
+            "[P_structural_instrument]: vacuum no-leakage realized by a "
+            "CLASSICAL 42-label code on the banked second-epsilon skeleton "
+            "-- the maximum at subspace-coherent (pure-isometric) form; the "
+            "42-dim vacuum logical sector is UNCONSTRUCTIBLE as a "
+            "subspace-coherent sector. The fit question is CLOSED EXISTS at "
+            "abstract-encoding strength (a perfect ((61,61)) mixed scheme "
+            "carries a coherent 42-dim secret at share dimension 43); the "
+            "sector-aligned question is CLOSED THREE-PRONGED (exact fill "
+            "EXISTS via [[5,1,3]] at share dim exactly 42; the carrier "
+            "reading dissolves by type mismatch; registration closes "
+            "negatively at the classical-record ceiling F_e <= 1/42) -- "
+            "NEVER cited closed simpliciter. Realization/identification "
+            "remains the open reading. (5 checks, vacuum_label_code.py)"
+        ),
+        "note": (
+            "Onboards the ICL_vac route-(b) witness family (.352/.356/.357) "
+            "onto the ROUTE axis as a held claim at "
+            "[P_structural_instrument]. The three-pronged closure discipline "
+            "is frozen in the claim text; a future lane citing the "
+            "sector-aligned question closed simpliciter fails the pin."
+        ),
+    },
+)

@@ -48,8 +48,8 @@ inputs.
 
 ## Prediction scorecard
 
-48 quantitative predictions, zero free dimensionless parameters (one dimensional anchor).
-39 tested; 32/39 within 3σ; mean error 3.83%, median 0.37%.
+49 quantitative predictions, zero free dimensionless parameters (one dimensional anchor).
+40 tested; 33/40 within 3σ; mean error 3.77%, median 0.51%.
 
 ## The corpus
 

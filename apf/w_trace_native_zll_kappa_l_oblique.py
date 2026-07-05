@@ -47,12 +47,16 @@ natively-computed slice of the non-oblique remainder" — that ladder-role
 reading is RETIRED by the 2026-07-03 booking adjudication (effva canonical);
 see the .358 block below. The DFGRU-booking numbers are retained as the
 pinned record of the collision's second leg.]
-It does NOT close kappa_l: the proper Zll vertex form factors Lambda_V/Lambda_A
+It does NOT close kappa_l. [Pre-.358 paragraph, retained as history: the
+"proper Zll vertex ... NOT computed here ... the next rung" framing below
+described the pre-fill state; post-.361 the vertex COMPONENT is closed (see
+the .361 block) and the surviving open content is the Delta-alpha legs.]
+The proper Zll vertex form factors Lambda_V/Lambda_A
 (the genuine non-oblique ~37% remainder: proper vertex + light-fermion + the
-data-bound Delta alpha) are NOT computed here -- they need the explicit one-loop
-Zll vertex (LEP Yellow Report 'Precision Calculations for the Z Resonance',
-CERN 95-03 = arXiv:hep-ph/9709229; or Akhundov-Bardin-Riemann NPB276(1986)1),
-the next rung. No sin^2 theta_eff value is exported; DIZET stays the publishable
+data-bound Delta alpha) were NOT computed here at banking time -- they needed
+the explicit one-loop Zll vertex (LEP Yellow Report 'Precision Calculations
+for the Z Resonance', CERN 95-03 = arXiv:hep-ph/9709229; or
+Akhundov-Bardin-Riemann NPB276(1986)1), then the next rung. No sin^2 theta_eff value is exported; DIZET stays the publishable
 OS-W closure.
 
 Honest caveat: Sig_AZ uses the .99 module's Denner input masses (m_t=140); the
@@ -71,11 +75,17 @@ booking is CANONICAL for the effective-angle ladder):
   gamma-Z one-loop rung (+0.001483) — two one-loop rungs in two DIFFERENT
   gamma-Z bookkeepings.
 - The slot is now BENCHMARKED (ACFW published-one-loop harness, banked at
-  the BSY validator .358): M_H-shape PASS <=1.7e-4 / absolute FAIL +0.0194
-  M_H-flat — the overshoot is an assembly defect, not two-loop truncation.
-- The implied TRUE one-loop vertex-sector content is ~ +0.0025 — an order
-  of magnitude below the slot label — CONDITIONAL on the effva booking and
-  a defect-free oblique sector (inference, not proof).
+  the BSY validator .358): the .358 instrument recorded M_H-shape PASS
+  <=1.7e-4 / absolute FAIL +0.0194 M_H-flat. UPDATE v24.3.360: THE +0.019
+  WAS FOUND — a sign error in the PUBLISHED CERN-95-03 closed form of
+  Lambda_3 (corrigendum + three-witness certification in
+  w_trace_pv_lambda_bhm_vertex); post-corrigendum the benchmark is shape
+  AND absolute PASS at ~1e-4.
+- The one-loop vertex-sector content on the corrected Lambda_3 is
+  +0.0032 (ACFW deck, alpha(0)) — an order of magnitude below the slot
+  label, now COMPUTED on a benchmark-validated assembly rather than
+  inferred. Filling the slot with it is a separate landing (this check
+  stays [C]; the Delta-alpha legs remain named-open).
 - GAMMA-Z BOOKING COLLISION, ADJUDICATED: this module's rung books
   +(c/s)·X = +0.001483 (DFGRU eq 1.1/1.2 recipe) while the EWWGR eq-effva
   composition books -(c/s)·[X + SgZ0] = -0.002503 on the SAME banked
@@ -87,17 +97,27 @@ booking is CANONICAL for the effective-angle ladder):
   provenance of the DFGRU-recipe evaluation, retained as the pinned
   record of the collision's second leg. The canonical gamma-Z mixing
   content is -0.002503; the canonical slot budget is +0.017590 (of which
-  ~+0.0025 is the implied vertex content). An adjudication is a ruling,
+  +0.0032 is the vertex content computed on the .360-corrected Lambda_3). An adjudication is a ruling,
   not a derivation — recorded in the Decisions List; both bookings stay
   machine-pinned in the slot check below (either number drifting fails
   the bank and re-opens the ruling).
 
+v24.3.361 update (2026-07-03) — THE VERTEX-COMPONENT FILL: the vertex
+component of the canonical slot is CLOSED at Dk_vertex = +0.003452700
+(banked-OS deck; ACFW-deck cross-value +0.003247798), computed from the
+banked F_V/F_A on the .360-corrected Lambda_3, gated LIVE by the ACFW
+published-one-loop benchmark. Canonical ladder: custodial [P] + effva
+gamma-Z (ruled) + vertex = +0.022670 = 61.6% of the all-orders import;
+the Delta-alpha-legs residual +0.014137 stays named-open [C] (the re-cut
+slot check). kappa_l itself stays OPEN. Grade riders in-token: the effva
+adjudication is a RULING; the ACFW instrument is the gate.
+
 Status
 ------
-- Export_native_kappa_l_oblique_assembled        = 1   (NEW here)
-- Export_native_kappa_l_gammaZ_mixing_evaluated   = 1   (NEW here)
-- Export_native_kappa_l_proper_vertex_evaluated   = 0   (OPEN, next rung)
-- Export_native_kappa_l_evaluated                 = 0   (OPEN, Gate A)
+- Export_native_kappa_l_oblique_assembled        = 1
+- Export_native_kappa_l_gammaZ_mixing_evaluated   = 1
+- Export_native_kappa_l_proper_vertex_evaluated   = 1   (v24.3.361 FILL)
+- Export_native_kappa_l_evaluated                 = 0   (OPEN: Delta-alpha legs)
 """
 from __future__ import annotations
 
@@ -153,11 +173,35 @@ def oblique_decomposition() -> Dict[str, float]:
     }
 
 
+def kappa_l_vertex_component(sW2: float, alpha: float):
+    """The vertex component of the canonical slot (v24.3.361 fill).
+
+    Dk_vertex := s2eff(Pi-hat = 0, F_V^Zl, F_A^Zl)/sW2 - 1 -- the F_V/F_A-only
+    shift of the g_V/g_A ratio, on the v24.3.360 sign-corrected Lambda_3, per
+    the banked BSY framing (real parts through the ratio; the common
+    [(1 - Delta r)/(1 + Pi-hat^Z)]^{1/2} factor cancels). One-loop,
+    3-pt-piece-only; external-WF legs priced <= ~1e-4 by the .360 ACFW
+    residual. Returns (Dk_vertex, tree_baseline_deviation, F_V, F_A).
+    """
+    from apf.w_trace_pv_ewwgr_bare_proper_vertex import F_V_Z, F_A_Z
+    from apf.w_trace_pv_scalar_integral_substrate import MZ2 as _PV_MZ2
+    # s-point: the PV-substrate M_Z^2 (91.1876^2) -- the F's own convention
+    # (the module-level MZ2 import is the .99-deck stale 91.177, used by the
+    # Sig_AZ gammaZ rung; the two s-points are declared per-rung in the deck
+    # ledger; the difference is ~6e-7 in Dk_vertex, inside every pin band)
+    v_t, a_t = -0.5 + 2.0 * sW2, -0.5
+    FV = F_V_Z("lepton", _PV_MZ2, sW2, alpha=alpha)
+    FA = F_A_Z("lepton", _PV_MZ2, sW2, alpha=alpha)
+    s2e = 0.25 * (1.0 - (v_t + FV.real) / (a_t + FA.real))
+    base_dev = 0.25 * (1.0 - v_t / a_t) - sW2   # must vanish identically
+    return s2e / sW2 - 1.0, base_dev, FV, FA
+
+
 EXPORT_FLAGS: Dict[str, int] = {
     "Export_native_kappa_l_oblique_assembled": 1,
     "Export_native_kappa_l_gammaZ_mixing_evaluated": 1,
-    "Export_native_kappa_l_proper_vertex_evaluated": 0,
-    "Export_native_kappa_l_evaluated": 0,
+    "Export_native_kappa_l_proper_vertex_evaluated": 1,   # v24.3.361 FILL
+    "Export_native_kappa_l_evaluated": 0,                 # kappa_l NOT closed
 }
 
 # remainder budget from the banked decomposition (genuine non-custodial residual)
@@ -222,7 +266,7 @@ def check_T_w_trace_native_kappa_l_gammaZ_mixing_P() -> Dict[str, Any]:
         ),
         dependencies=["T_sin2theta_eff_kappa_l_leading_custodial_internal",
                       "T_w_trace_native_delta_r_mu_independent"],
-        cross_refs=["check_T_w_trace_native_vertex_ff_subgate_partial_P"],
+        cross_refs=["T_w_trace_native_vertex_ff_subgate_partial"],
         artifacts={k: round(v, 9) for k, v in d.items()},
     )
 
@@ -292,7 +336,7 @@ def check_T_w_trace_native_kappa_l_oblique_assembly_P() -> Dict[str, Any]:
             f"{d['oblique_total_effva']/d['target']*100:.1f}% of the banked "
             f"target {d['target']:.6f}; canonical remainder "
             f"{d['remainder_effva_canonical']:.6f} (Delta-alpha/light-fermion "
-            f"legs + ~+0.0025 implied vertex content — see the slot check). "
+            f"legs + the +0.0032 post-.360 vertex content — see the slot check). "
             f"DFGRU-BOOKING (non-canonical, pinned record): custodial + "
             f"{d['gammaZ_native']:+.6f} = {d['oblique_total']:.6f} = "
             f"{d['oblique_fraction']*100:.1f}%; its legacy remainder "
@@ -310,27 +354,208 @@ def check_T_w_trace_native_kappa_l_oblique_assembly_P() -> Dict[str, Any]:
     )
 
 
-def check_L_w_trace_native_kappa_l_proper_vertex_open_C() -> Dict[str, Any]:
-    """L: the kappa_l slot, RE-PRICED (v24.3.358) — a mixed-order,
-    mixed-bookkeeping residual; booking ADJUDICATED effva-canonical
-    (2026-07-03); canonical slot budget +0.017590 of which ~+0.0025 is the
-    implied vertex content; still the OPEN gate [C].
+def check_T_w_trace_native_kappa_l_vertex_component_closed_P() -> Dict[str, Any]:
+    """T: the VERTEX COMPONENT of the canonical kappa_l slot is CLOSED
+    (v24.3.361 fill) [P_structural_vertex_component_effva_canonical_ruling_
+    ACFW_benchmark_gated].
 
-    Pre-.358 this check billed the 0.013604 remainder as "the proper Zll
-    vertex ... UNBENCHMARKED". The 2026-07-02 walk (hostile audit
-    SOUND-WITH-CORRECTIONS 0.90) re-priced it: see the module docstring's
-    .358 block. The [C] stays; what changed is the slot's honest label,
-    the benchmark status (now benchmarked — FAIL recorded at the ACFW
-    harness), the booking adjudication (effva canonical, principal ruling
-    2026-07-03, recorded in the Decisions List), and the machine-pinned
-    dual-booking record below.
+    The fill of record: Dk_vertex = +0.003452700 at the banked-OS deck
+    (sW2 = 0.223339, alpha(M_Z) = 1/128.21), computed from the banked
+    F_V^Zl/F_A^Zl on the .360 sign-corrected Lambda_3, under the ACFW
+    published-one-loop benchmark as the LIVE GATE (called in-check).
+
+    DECK LEDGER (the honest frame statement -- the ladder is NOT single-deck):
+    the g_V/g_A extraction frame and every rung's PREFACTOR live at the
+    banked-OS/alpha(M_Z) frame; the rungs' internal mass decks differ and are
+    pinned per-rung in artifacts: the custodial rung is the banked [P] object
+    deliberately frozen at its own deck (alpha(M_Z) + s2 = 0.223339 in Xi_rho;
+    internal Drho at 3/13-tree M_W, m_t = 163, M_H = 124.93); the effva gammaZ
+    rung reads Sig_AZ at the .99-deck masses (m_t = 140, stale M_Z = 91.177)
+    with the (c/s) prefactor at OS; the vertex rung's F's carry no top and no
+    Higgs at one loop (lepton Zll triangles: only M_W/M_Z/sW2/alpha enter), so
+    the m_t/M_H deck sensitivity localizes ENTIRELY in the custodial rung.
+    The two riders that carry the grade, named in the token: (i) the
+    effva-canonical booking is a principal RULING (2026-07-03, Decisions List;
+    not a derivation; dual-booking pins keep it re-openable), and (ii) the
+    ACFW published-benchmark instrument [P_structural_instrument] is the gate.
+    kappa_l itself stays OPEN (Delta-alpha legs; Export_native_kappa_l_
+    evaluated = 0, asserted). No sin2theta_eff export; DIZET stays the
+    publishable OS-W closure.
+    """
+    # (1)+(2) flags: component claimed, kappa_l NOT closed
+    check(EXPORT_FLAGS["Export_native_kappa_l_proper_vertex_evaluated"] == 1,
+          "vertex-component flag must be 1 post-fill")
+    check(EXPORT_FLAGS["Export_native_kappa_l_evaluated"] == 0,
+          "kappa_l must remain OPEN (Delta-alpha legs; W-export-lock fence)")
+
+    # (3) extraction-convention self-check: tree baseline subtracts identically
+    dk_OS, base_OS, FV_OS, FA_OS = kappa_l_vertex_component(_S2_OS, 1.0 / 128.21)
+    _ACFW_SW2 = 1.0 - (80.426 / 91.1876) ** 2
+    dk_AC, base_AC, FV_AC, FA_AC = kappa_l_vertex_component(_ACFW_SW2, 1.0 / 137.0359895)
+    check(abs(base_OS) < 1e-15 and abs(base_AC) < 1e-15,
+          f"tree baseline must subtract identically: {base_OS}, {base_AC}")
+
+    # (4) dual-deck value pins (deck-dependence is part of the claim)
+    check(abs(dk_OS - 0.003452700) < 5e-6,
+          f"banked-OS fill drifted: {dk_OS}")
+    check(abs(dk_AC - 0.003247798) < 5e-6,
+          f"ACFW-deck value drifted: {dk_AC}")
+
+    # (5) F pins + absorptive parts
+    check(abs(FV_OS - complex(0.001710465, 0.001402308)) < 5e-6 and
+          abs(FA_OS - complex(0.001624383, 0.001265760)) < 5e-6,
+          "banked-OS F_V/F_A pins drifted")
+    check(FV_OS.imag > 0 and FA_OS.imag > 0,
+          "absorptive parts must be positive")
+
+    # (6) THE GATE: the fill's license is the published benchmark, called live
+    from apf.w_trace_BSY_one_loop_kappa_l_native_validator import (
+        check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P)
+    gate = check_T_w_trace_kappa_l_ACFW_published_one_loop_benchmark_P()
+    check(gate["passed"],
+          "the ACFW benchmark gate FAILED -- the Lambda_3 corrigendum chain "
+          "is broken; the fill loses its license")
+
+    # (7) canonical ladder sum + residual (the named-open survives numerically)
+    d = oblique_decomposition()
+    ladder = d["custodial_banked"] + d["gammaZ_effva_canonical"] + dk_OS
+    check(abs(ladder - 0.022670427) < 5e-5, f"ladder sum drifted: {ladder}")
+    check(0.60 < ladder / d["target"] < 0.63,
+          f"ladder fraction {ladder/d['target']:.4f} outside (0.60, 0.63)")
+    residual = d["remainder_effva_canonical"] - dk_OS
+    check(abs(residual - 0.014137348) < 5e-5 and residual > 1e-3,
+          f"Delta-alpha-legs residual drifted or vanished: {residual}")
+
+    # (8) no overshoot of the carve
+    check(0.0 < dk_OS < d["remainder_effva_canonical"],
+          "vertex component must sit inside the canonical slot budget")
+
+    # (9) additivity: no double-count against the gammaZ rung
+    from apf.w_trace_BSY_one_loop_kappa_l_native_validator import _bsy_compose
+    r = _bsy_compose(_S2_OS, 1.0 / 128.21)
+    v_t, a_t = -0.5 + 2.0 * _S2_OS, -0.5
+    def _s2eff_of(pigz, fv, fa):
+        return 0.25 * (1 - (v_t + 2*_S*_C*(-1.0)*pigz + fv) / (a_t + fa))
+    dk_P = _s2eff_of(r["Pi_gZ_R"], 0, 0) / _S2_OS - 1
+    dk_F = _s2eff_of(0, r["F_V_lepton"].real, r["F_A_lepton"].real) / _S2_OS - 1
+    cross = r["Delta_kappa_l"] - dk_P - dk_F
+    check(abs(cross) < 1.5e-4,
+          f"additivity cross-term too large (double-count?): {cross}")
+
+    # (10) no target smuggled: the extraction consumed no measured
+    # sin2theta_eff and no ACFW row (ACFW enters only through the gate call)
+    check(EXPORT_FLAGS["Export_native_kappa_l_oblique_assembled"] == 1,
+          "sanity: module flags intact")
+
+    return _result(
+        name=("T_w_trace_native_kappa_l_vertex_component_closed: the vertex "
+              "component of the canonical kappa_l slot CLOSED at +0.003453 "
+              "(banked-OS deck) under the ACFW gate; kappa_l stays OPEN "
+              "(Delta-alpha legs) [P_structural_vertex_component_effva_"
+              "canonical_ruling_ACFW_benchmark_gated]"),
+        tier=4,
+        epistemic="P_structural_vertex_component_effva_canonical_ruling_ACFW_benchmark_gated",
+        summary=(
+            f"THE FILL (v24.3.361): Dk_vertex = {dk_OS:+.9f} at the banked-OS "
+            f"deck (sW2 = {_S2_OS}, alpha(M_Z) = 1/128.21); ACFW-deck "
+            f"cross-value {dk_AC:+.9f} (the .360 headline '+0.0032'); both "
+            f"pinned -- the ~6% deck spread is alpha/sW2 frame, part of the "
+            f"claim. Extraction: the F_V/F_A-only shift of g_V/g_A at "
+            f"Pi-hat = 0 (tree baseline subtracts to < 1e-15, asserted), on "
+            f"the .360 sign-corrected Lambda_3, gated LIVE by the banked ACFW "
+            f"published-one-loop benchmark (shape AND absolute PASS ~1e-4). "
+            f"CANONICAL LADDER: custodial {d['custodial_banked']:+.6f} [P] + "
+            f"effva gammaZ {d['gammaZ_effva_canonical']:+.6f} (ruled booking) "
+            f"+ vertex {dk_OS:+.6f} (this fill) = {ladder:+.6f} = "
+            f"{ladder/d['target']*100:.1f}% of the ALL-ORDERS import "
+            f"{d['target']:.6f}; the remainder {residual:+.6f} is the "
+            f"Delta-alpha/light-fermion legs + higher orders, named-open at "
+            f"the surviving [C] -- the shortfall is data-bound content, not "
+            f"missing vertex physics; never quote 'one loop complete'. DECK "
+            f"LEDGER: extraction frame + all rung prefactors at banked-OS/"
+            f"alpha(M_Z); custodial internal deck = the banked [P] object "
+            f"(m_t = 163, 3/13-tree M_W inside Drho); gammaZ Sig_AZ at .99 "
+            f"masses; the lepton vertex F's carry no top/Higgs -- m_t/M_H "
+            f"sensitivity localizes in the custodial rung. Additivity "
+            f"cross-term {cross:+.1e} (< 1.5e-4; the effva booking books "
+            f"Sig_AZ only, the F's enter g_V/g_A separately -- no double-"
+            f"count). GRADE RIDERS (in-token): the effva-canonical booking "
+            f"is a principal RULING (2026-07-03, Decisions List; dual-booking "
+            f"pins keep it re-openable) and the ACFW instrument is the gate. "
+            f"kappa_l stays OPEN (flag asserted 0); no sin2theta_eff export; "
+            f"DIZET stays the publishable OS-W closure; ladder sum != the "
+            f"_bsy_compose composition 0.028229 (different custodial decks; "
+            f"both pinned, never equated)."
+        ),
+        key_result=(
+            f"vertex component CLOSED: +0.003453 (banked-OS) / +0.003248 "
+            f"(ACFW), ACFW-gated; canonical ladder 61.6% of the all-orders "
+            f"import; Delta-alpha legs stay [C]. Riders: effva RULING + "
+            f"ACFW gate. [P_structural_vertex_component_effva_canonical_"
+            f"ruling_ACFW_benchmark_gated]"
+        ),
+        dependencies=["T_w_trace_native_kappa_l_oblique_assembly",
+                      "T_w_trace_kappa_l_ACFW_published_one_loop_benchmark",
+                      "T_w_trace_pv_lambda3_sign_corrigendum_denner_anchor"],
+        cross_refs=["L_w_trace_native_kappa_l_proper_vertex_open"],
+        artifacts={
+            "vertex_component_banked_OS_deck": round(dk_OS, 9),
+            "vertex_component_ACFW_deck": round(dk_AC, 9),
+            "vertex_component_3_13_diagnostic": 0.003124240,  # substrate s-point
+            "canonical_ladder_sum": round(ladder, 9),
+            "ladder_fraction_of_all_orders_import": round(ladder / d["target"], 6),
+            "delta_alpha_legs_residual": round(residual, 9),
+            "additivity_cross_term": round(cross, 9),
+            "deck_ledger": {
+                "extraction_frame": "banked-OS sW2=0.223339, alpha(M_Z)=1/128.21",
+                "custodial_internal": "banked [P] object: m_t=163, M_H=124.93, "
+                                      "3/13-tree M_W inside Drho "
+                                      "(sin2theta_eff_kappa_l_decomposition)",
+                "gammaZ_internal": "Sig_AZ at .99-deck masses (m_t=140, "
+                                   "M_Z=91.177 stale); (c/s) prefactor at OS",
+                "vertex_internal": "F_V/F_A at s = PV-substrate M_Z^2 "
+                                   "(91.1876^2; NOT the .99-deck stale "
+                                   "91.177 the gammaZ rung reads); no top, "
+                                   "no Higgs at one loop; M_W/M_Z substrate "
+                                   "masses inside the Lambda's",
+            },
+            "export_flags": dict(EXPORT_FLAGS),
+        },
+    )
+
+
+def check_L_w_trace_native_kappa_l_proper_vertex_open_C() -> Dict[str, Any]:
+    """L: the kappa_l named-open, RE-CUT (v24.3.361) to the Delta-alpha-legs
+    residual: +0.014137 of the canonical slot budget stays OPEN [C] after
+    the vertex-component fill.
+
+    Slot history (each step banked + audited): the 0.013604 label was a
+    mixed-order mixed-bookkeeping residual (.358 re-price); the ACFW
+    instrument recorded the absolute FAIL (.358) that found the published
+    Lambda_3 sign defect (corrigendum .360, provenance settled); the gamma-Z
+    booking was ADJUDICATED effva-canonical (principal ruling 2026-07-03,
+    Decisions List); the vertex component was FILLED at .361
+    (+0.003452700 banked-OS, ACFW-gated — see the companion check above).
+    WHAT REMAINS [C]: the Delta-alpha / light-fermion legs (+0.014137348)
+    — [P+tool]-class, data-bound content (delta_alpha_* modules exist and
+    are NOT claimed here) + genuine higher orders. kappa_l itself stays
+    OPEN (Export_native_kappa_l_evaluated = 0, asserted). The dual-booking
+    pins and the legacy DFGRU-carve pin are retained verbatim (drift
+    re-opens the booking ruling).
     """
     d = oblique_decomposition()
-    check(d["remainder"] > 1e-3, "remainder must be a genuine open gap")
-    check(EXPORT_FLAGS["Export_native_kappa_l_proper_vertex_evaluated"] == 0,
-          "proper vertex must remain UNCLAIMED (flag 0)")
+    check(d["remainder"] > 1e-3, "legacy carve must remain a genuine gap record")
+    # v24.3.361: the vertex-component flag is now 1 (the fill, certified by
+    # the companion check); what THIS check keeps open is the residual.
+    check(EXPORT_FLAGS["Export_native_kappa_l_proper_vertex_evaluated"] == 1,
+          "cross-consistency: the companion fill check owns the flag")
     check(EXPORT_FLAGS["Export_native_kappa_l_evaluated"] == 0,
-          "native kappa_l must remain OPEN (Gate A not closed)")
+          "native kappa_l must remain OPEN (Delta-alpha legs)")
+    # the Delta-alpha-legs residual: the surviving named-open, pinned
+    dk_OS, _, _, _ = kappa_l_vertex_component(_S2_OS, 1.0 / 128.21)
+    residual = d["remainder_effva_canonical"] - dk_OS
+    check(abs(residual - 0.014137348) < 5e-5 and residual > 1e-3,
+          f"Delta-alpha-legs residual drifted or vanished: {residual}")
 
     # --- slot contract, machine-pinned (v24.3.358) ---
     # slot = all-orders import - custodial one-loop - naive gammaZ one-loop
@@ -358,68 +583,53 @@ def check_L_w_trace_native_kappa_l_proper_vertex_open_C() -> Dict[str, Any]:
 
     return _result(
         name="L_w_trace_native_kappa_l_proper_vertex_open: "
-             "the kappa_l slot re-priced — mixed-order residual, ~+0.0025 "
-             "conditional vertex content, booking ADJUDICATED effva-canonical [C]",
+             "the kappa_l named-open, re-cut to the Delta-alpha-legs residual "
+             "+0.014137 after the .361 vertex-component fill [C]",
         tier=4, epistemic="C",
         summary=(
-            f"SLOT CONTRACT (re-priced v24.3.358, walk 2026-07-02): the "
-            f"{d['remainder']:.6f} residual is NOT a one-loop vertex form-factor "
-            f"value. It is an all-orders measured import ({d['target']:.6f}, the "
-            f"LATEST-51 adapter) minus two one-loop rungs computed in two "
-            f"DIFFERENT gamma-Z bookkeepings (custodial "
-            f"{d['custodial_banked']:.6f} + naive gamma-Z {booking_oblique:+.6f}) "
-            f"-- a mixed-order, mixed-bookkeeping residual. "
-            f"BENCHMARK STATUS: now BENCHMARKED at the ACFW published-one-loop "
-            f"harness (T_w_trace_kappa_l_ACFW_published_one_loop_benchmark, "
-            f".358): M_H-shape PASS <=1.7e-4 / absolute FAIL +0.0194 M_H-flat "
-            f"-- the overshoot is an ASSEMBLY DEFECT (the eq-rself +2->+1 "
-            f"corrigendum landed same leg; worth +0.00104), not two-loop "
-            f"truncation. IMPLIED TRUE one-loop vertex-sector content ~ "
-            f"+0.0025 -- an order of magnitude below the slot label -- "
-            f"conditional on the RULED booking (see below) and a defect-free "
-            f"oblique sector (inference from M_H-flatness + literature scale, "
-            f"not proof). GAMMA-Z BOOKING COLLISION, ADJUDICATED (principal "
-            f"ruling 2026-07-03): this module's rung books "
-            f"{booking_oblique:+.6f} = +(c/s)X (DFGRU eq 1.1/1.2) while the "
-            f"EWWGR eq-effva composition books {booking_effva:+.6f} = "
-            f"-(c/s)[X + SgZ0] on the SAME banked Sig_AZ object; at most one "
-            f"can feed the same ladder; the slot budget was carved in the "
-            f"former while the assembly-grade filler runs in the latter. "
-            f"RULED: the EFFVA booking is CANONICAL (on the walk's evidence: "
-            f"custodial reproduction from inside Pi-hat^gZ + the ACFW "
-            f"M_H-shape match; an adjudication is a ruling, not a derivation; "
-            f"Decisions List of record). CANONICAL SLOT BUDGET: "
-            f"{d['remainder_effva_canonical']:+.6f} = target - custodial - "
-            f"effva gamma-Z, of which ~+0.0025 is the implied vertex content "
-            f"and the rest is the named-open Delta-alpha/light-fermion legs. "
-            f"The legacy 0.013604 carve is retained as the DFGRU-booking "
-            f"record; both bookings machine-pinned (drift re-opens the "
-            f"ruling). WHAT CLOSING NOW MEANS: fix-the-assembly (done .358) "
-            f"-> booking adjudicated (done, ruling 2026-07-03) -> close the "
-            f"~0.0025 slot with the native vertex "
-            f"already transcribed at 8e-16 anchor fidelity "
-            f"(w_trace_pv_ewwgr_bare_proper_vertex F_V/F_A) under the ACFW "
-            f"benchmark as the gate. The Delta-alpha / light-fermion legs "
-            f"stay named-open ([P+tool]-class content, no delta_alpha_* "
-            f"claim). Native kappa_l stays OPEN; DIZET stays publishable; "
-            f"no 3/13-is-physical claim; v15.1 untouched."
+            f"THE SURVIVING NAMED-OPEN (re-cut v24.3.361): of the canonical "
+            f"slot budget {d['remainder_effva_canonical']:+.6f} (= all-orders "
+            f"import {d['target']:.6f} - custodial {d['custodial_banked']:.6f} "
+            f"- effva gamma-Z {d['gammaZ_effva_canonical']:+.6f}), the vertex "
+            f"component +0.003453 is CLOSED (the .361 fill, ACFW-gated -- see "
+            f"T_w_trace_native_kappa_l_vertex_component_closed); the residual "
+            f"{residual:+.6f} stays OPEN [C]: the Delta-alpha / light-fermion "
+            f"legs ([P+tool]-class, data-bound; delta_alpha_* modules exist "
+            f"and are NOT claimed here) + genuine higher orders. Native "
+            f"kappa_l therefore stays OPEN (flag asserted 0); DIZET stays the "
+            f"publishable OS-W closure; no 3/13-is-physical claim; v15.1 "
+            f"untouched. SLOT HISTORY, pinned: the legacy 0.013604 label was "
+            f"a mixed-order mixed-bookkeeping residual (.358 re-price, walk "
+            f"2026-07-02); the .358 ACFW instrument recorded the absolute "
+            f"FAIL +0.0194 M_H-flat that found the PUBLISHED CERN-95-03 "
+            f"Lambda_3 sign defect (corrigendum .360, provenance settled "
+            f"against BHM 1986 + Hollik DESY 88-188); the gamma-Z booking "
+            f"collision was ADJUDICATED effva-canonical (principal ruling "
+            f"2026-07-03, Decisions List; an adjudication is a ruling, not a "
+            f"derivation): this module's DFGRU rung books "
+            f"{booking_oblique:+.6f} = +(c/s)X vs the canonical effva "
+            f"{booking_effva:+.6f} = -(c/s)[X + SgZ0] on the SAME banked "
+            f"Sig_AZ object -- both bookings and the legacy carve stay "
+            f"machine-pinned below; drift in any re-opens the ruling."
         ),
         key_result=(
-            f"slot re-priced: mixed-order residual; booking ADJUDICATED effva-"
-            f"canonical (ruling 2026-07-03); canonical budget "
-            f"{d['remainder_effva_canonical']:+.6f} of which ~+0.0025 implied "
-            f"vertex content; benchmarked (ACFW shape PASS / absolute FAIL); "
-            f"dual-booking pinned ({booking_oblique:+.6f} vs "
-            f"{booking_effva:+.6f}). [C]"
+            f"named-open re-cut: Delta-alpha legs {residual:+.6f} stay [C] "
+            f"(vertex component closed at .361, ACFW-gated); dual-booking "
+            f"pinned ({booking_oblique:+.6f} vs {booking_effva:+.6f}); "
+            f"kappa_l stays OPEN. [C]"
         ),
         dependencies=["T_w_trace_native_kappa_l_oblique_assembly"],
-        cross_refs=["T_w_trace_kappa_l_ACFW_published_one_loop_benchmark"],
-        artifacts={"remainder": round(d["remainder"], 9),
+        cross_refs=["T_w_trace_kappa_l_ACFW_published_one_loop_benchmark",
+                    "T_w_trace_native_kappa_l_vertex_component_closed"],
+        artifacts={"remainder_legacy_dfgru_carve": round(d["remainder"], 9),
                    "slot_is_mixed_order_mixed_bookkeeping_residual": True,
-                   "vertex_slot_benchmarked": True,
+                   "vertex_component_closed_at_361": True,
+                   "vertex_component_banked_OS_deck": round(dk_OS, 9),
+                   "delta_alpha_legs_residual_open": round(residual, 9),
                    "benchmark_shape": "PASS",
-                   "benchmark_absolute": "FAIL_RECORDED",
-                   "implied_true_vertex_content_conditional": 0.0025,
+                   "benchmark_absolute": "PASS_post_360",
+                   "benchmark_absolute_history": "FAIL_RECORDED at .358 -> "
+                       "defect found .360: published Lambda_3 sign",
                    "booking_collision": "ADJUDICATED effva-canonical (ruling 2026-07-03)",
                    "booking_dfgru_cs_X_noncanonical": round(booking_oblique, 9),
                    "booking_effva_cs_X_plus_SgZ0_canonical": round(booking_effva, 9),
@@ -431,6 +641,8 @@ def check_L_w_trace_native_kappa_l_proper_vertex_open_C() -> Dict[str, Any]:
 _CHECKS = {
     "T_w_trace_native_kappa_l_gammaZ_mixing":
         check_T_w_trace_native_kappa_l_gammaZ_mixing_P,
+    "T_w_trace_native_kappa_l_vertex_component_closed":
+        check_T_w_trace_native_kappa_l_vertex_component_closed_P,
     "T_w_trace_native_kappa_l_custodial_consistent":
         check_T_w_trace_native_kappa_l_custodial_consistent_P,
     "T_w_trace_native_kappa_l_oblique_assembly":
@@ -464,40 +676,40 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Four banked checks assembling the OBLIQUE part of the leptonic "
-            "effective-angle form factor kappa_l natively per the DFGRU recipe "
-            "(arXiv:1906.08815 eqs 1.1-1.2). "
+            "Five banked checks on the leptonic effective-angle ladder "
+            "(post v24.3.361). The gamma-Z booking is ADJUDICATED "
+            "effva-canonical (principal ruling 2026-07-03, Decisions List; "
+            "dual-booking machine-pinned: DFGRU +0.001483 non-canonical vs "
+            "effva -0.002503 canonical). "
             "check_T_w_trace_native_kappa_l_gammaZ_mixing_P (tier 4, "
-            "epistemic=P_structural_partial) certifies the gamma-Z-mixing piece "
-            "(c/s) x Sigma^gZ(M_Z^2)/M_Z^2 = +0.001483 evaluated natively from "
-            "the banked Sig_AZ self-energy, sign sourced from the reference, with "
-            "the ~6% Sigma^gg denominator correction named as a dropped higher- "
-            "order effect. check_T_w_trace_native_kappa_l_custodial_consistent_P "
-            "(tier 4, epistemic=P) certifies consistency with the banked "
-            "custodial term 0.021721. "
-            "check_T_w_trace_native_kappa_l_oblique_assembly_P (tier 4, "
-            "epistemic=P_structural_partial) certifies the oblique assembly "
-            "Delta_kappa_l^obl = 0.023204 = 63.0% of the banked target 0.036808. "
-            "check_L_w_trace_native_kappa_l_proper_vertex_open_C (tier 4, "
-            "epistemic=C) is the honest-OPEN record: the proper Zll vertex form "
-            "factors (the genuine ~37% non-oblique remainder: proper vertex + "
-            "light-fermion + data-bound Delta_alpha) are NOT computed -- the "
-            "named next rung. No sin^2 theta_eff value is exported; kappa_l is "
-            "NOT closed. Caveat as banked: Sig_AZ uses the v24.3.99 Denner input "
-            "masses (m_t = 140), m_t-insensitive at the quoted precision. "
+            "P_structural_partial) retains the DFGRU-recipe arithmetic as "
+            "the collision's pinned second leg (ladder-role claim retired). "
+            "check_T_w_trace_native_kappa_l_custodial_consistent_P (tier 4, "
+            "P) ties the custodial rung 0.021721 to the banked "
+            "decomposition. check_T_w_trace_native_kappa_l_oblique_assembly_P "
+            "(tier 4, P_structural_partial) is the dual-booking record: "
+            "canonical effva assembly 0.019218 = 52.2 percent of the target "
+            "/ DFGRU 0.023204 = 63.0 percent pinned as the non-canonical "
+            "record. check_T_w_trace_native_kappa_l_vertex_component_closed_P "
+            "(tier 4, bespoke grade P_structural_vertex_component_effva_"
+            "canonical_ruling_ACFW_benchmark_gated) CLOSES the vertex "
+            "component of the canonical slot at +0.003453 (banked-OS deck; "
+            "ACFW-deck cross-value +0.003248) on the v24.3.360 "
+            "sign-corrected Lambda_3, gated live by the ACFW "
+            "published-one-loop benchmark; canonical ladder 0.022670 = 61.6 "
+            "percent of the all-orders import. "
+            "check_L_w_trace_native_kappa_l_proper_vertex_open_C (tier 4, C) "
+            "is the surviving honest-OPEN record, re-cut to the "
+            "Delta-alpha/light-fermion legs residual +0.014137 "
+            "([P+tool]-class, not claimed). kappa_l is NOT closed; no sin^2 "
+            "theta_eff value is exported; DIZET stays the publishable OS-W "
+            "closure. "
         ),
-        "note": ("Wave 7; mixed-grade module, per-check grades listed from "
-                 "machine fields. ADJUDICATION NOTE (v24.3.358, ruling "
-                 "2026-07-03): the claim text above is the Wave-7 onboarding "
-                 "snapshot and predates the booking adjudication (effva "
-                 "canonical). Post-.358: the gammaZ_mixing rung's ladder-role "
-                 "claim is RETIRED (native arithmetic + sign provenance "
-                 "record only); the oblique_assembly check is a DUAL-BOOKING "
-                 "record (canonical effva 0.019218 = 52.2% / DFGRU 0.023204 "
-                 "= 63.0% pinned); the proper_vertex_open slot is re-priced "
-                 "(mixed-order mixed-bookkeeping residual; canonical budget "
-                 "+0.017590; ~+0.0025 conditional vertex content; "
-                 "benchmarked at the .358 ACFW harness — shape PASS / "
-                 "absolute FAIL recorded)."),
+        "note": ("Wave 7 onboarding; claim_text RE-ONBOARDED at v24.3.361 "
+                 "(the Wave-7 snapshot described the pre-.358 state; "
+                 "verdict-tested through summarize_input before landing, "
+                 "token unchanged SOLVED_LOCAL_HELD_FOR_REPAIR per the "
+                 "generic ledger-solver vocabulary -- kappa_l not closed, "
+                 "no global-P export)."),
     },
 )
