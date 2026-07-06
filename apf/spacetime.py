@@ -78,7 +78,13 @@ def check_T8():
             'classification are external GR results, not derived from A1.'
         ),
         key_result='d = 4 uniquely selected (2 DOF, Lovelock unique)',
-        dependencies=['A1', 'L_irr', 'T_gauge'],
+        # SCC-hygiene adjudication 2026-07-05 (D3): 'T_gauge' moved to
+        # cross_refs -- the d=4 selection proof (Lovelock + DOF + hyperbolicity)
+        # is gauge-free; the former deps entry was the check's only gauge
+        # reference. (If the mixed-load premise is later ruled to import a
+        # non-gravitational sector, the right key is T7B, not T_gauge.)
+        dependencies=['A1', 'L_irr'],
+        cross_refs=['T_gauge (subject cross-reference only; SCC-hygiene move 2026-07-05)'],
         artifacts={
             'dof_by_dim': dof,
             'lovelock_unique': {k: v for k, v in lovelock_unique.items()},
@@ -220,7 +226,11 @@ def check_Delta_particle():
             'Follows from T_particle embedded in geometric framework.'
         ),
         key_result='Particles = quantum modes of admissibility potential',
-        dependencies=['A1', 'L_irr', 'L_epsilon*', 'T_M', 'T_S0'],
+        # SCC-hygiene adjudication 2026-07-05 (D2): 'T_S0' was a mis-keyed
+        # resolution -- the docstring names T_particle ("Follows from
+        # T_particle"); the registered T_S0 is the generations label-swap
+        # schema, unrelated. Retargeted to the key the proof consumes.
+        dependencies=['A1', 'L_irr', 'L_epsilon*', 'T_M', 'T_particle'],
         artifacts={
             'mechanism': 'SSB of admissibility potential -> quantized excitations',
         },
@@ -654,14 +664,32 @@ def register(registry):
 IE_DECLARATIONS = (
     {
         "input_id": "foundation:d4_unique",
-        "expect_export": False,
+        # Promoted expect_export False -> True 2026-07-05 (the .401 wall-shadow
+        # audit's m4 promotion candidate discharged, the .398/.400 pattern):
+        # all eight module checks re-verified [P] against live records, and the
+        # export-core census legs run on the module closure BEFORE declaring --
+        # ROOT leg: 10 roots, all in EXPORT_ROOT_INVENTORY (premise-class only,
+        # no named-unregistered debt); NO-CONJECTURE leg: zero [C] members;
+        # reading boundary: UB_usage_billing_adopted already in the pinned set.
+        "expect_export": True,
         "axis": "ROUTE",
-        "claim_text": (
-            "Spacetime dimension d = 4 is derived uniquely (check_T8 [P]: d "
-            "<= 3 admits no propagating gravitational DOF, d >= 5 loses "
-            "Lovelock uniqueness); all eight module checks -- T8, the six "
-            "Delta closure checks, and T_Coleman_Mandula -- are banked [P]. "
-        ),
-        "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+        "route": "d4_unique",
+        "payload": {
+            "name": "d4_unique",
+            "closure_kind": "internal_identity",
+            "identity_summary": (
+                "Spacetime dimension d = 4 is selected uniquely at [P]: "
+                "d <= 3 admits no propagating gravitational DOF (linearized "
+                "count d(d-3)/2) and d >= 5 loses Lovelock uniqueness of "
+                "the response law (check_T8, spacetime.py); the Lorentzian "
+                "signature is fixed separately (check_Delta_signature, "
+                "spacetime.py). The claim is the selection statement only; "
+                "the DOF formula and Lovelock classification are declared "
+                "external GR imports in the banked record. All eight "
+                "module checks -- T8, the six Delta closure checks, "
+                "T_Coleman_Mandula -- are banked [P]."
+            ),
+        },
+        "note": "Wave 5 probe; all-[P] verified per epistemic fields; export-declared 2026-07-05 (census legs clean)",
     },
 )

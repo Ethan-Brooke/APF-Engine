@@ -1,6 +1,6 @@
 {
  "generated": "2026-07-05",
- "pin_version": "24.3.400",
+ "pin_version": "24.3.403",
  "coverage_summary": {
   "modules_total": 464,
   "modules_onboarded": 216,
@@ -1126,12 +1126,12 @@
   {
    "input_id": "foundation:d4_unique",
    "axis": "ROUTE",
-   "route": "generic",
-   "solver_status": "SOLVED_LOCAL_HELD_FOR_REPAIR",
-   "export_global_P": false,
+   "route": "d4_unique",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
    "owner_module": "apf.spacetime",
-   "expect_export": false,
-   "note": "Wave 5 probe; all-[P] verified per epistemic fields",
+   "expect_export": true,
+   "note": "Wave 5 probe; all-[P] verified per epistemic fields; export-declared 2026-07-05 (census legs clean)",
    "covers": []
   },
   {

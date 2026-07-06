@@ -490,7 +490,10 @@ UNSHADOWED: Dict[str, str] = {
     "foundation:billed_vs_derived_register_criterion": "grade_mirror",
     "foundation:class_transition_primitive": "grade_mirror",
     "foundation:closed_world_regime_gates": "grade_mirror",
-    "foundation:d4_unique": "grade_mirror",  # .401 audit m4 (2026-07-05): PROMOTION CANDIDATE -- the atlas note says all-[P]; a .398-style export re-declaration candidate, not a grade hold (kept in this pin this leg by design)
+    # "foundation:d4_unique" PROMOTED OUT 2026-07-05 (v24.3.403): the .401 audit m4
+    # candidate discharged -- now an INTERNAL_IDENTITY_GLOBAL_P export row, no longer
+    # in the held/obstructed class (unshadowed 135 -> 134, grade_mirror 79 -> 78,
+    # held partition 156 -> 155). The set-exact tripwire enforces this exit.
     "foundation:forced_universality_classes": "grade_mirror",
     "foundation:geometric_symmetry_internalization": "grade_mirror",
     "foundation:import_internalization_extensions": "grade_mirror",

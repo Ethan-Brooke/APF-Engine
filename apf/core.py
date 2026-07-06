@@ -272,7 +272,8 @@ def check_L_NT_derived():
 
       Concretely: the SU(3)xSU(2)xU(1) gauge algebra has generators of
       dimension 8, 3, 1 respectively. Realignment cost scales with the
-      dimension of the local algebra block (L_cost: C(G) = dim(G) * eps*).
+      dimension of the local algebra block (L_cost + L_cost_gauge:
+      C(G) = dim(G) * eps*).
       Since 8 != 3 != 1, at least two distinct realignment costs exist
       among the gauge-boson distinctions alone.
 
@@ -323,7 +324,7 @@ def check_L_NT_derived():
             f"eps(SU3)={eps_su3} != eps(SU2)={eps_su2} != eps(U1)={eps_u1}: "
             "NT (distinction-cost form) derived from field content"
         ),
-        dependencies=["A1", "L_epsilon*", "L_cost", "T_field"],
+        dependencies=["A1", "L_epsilon*", "L_cost", "L_cost_gauge", "T_field"],
         artifacts={
             "gauge_dims": [dim_su3, dim_su2, dim_u1],
             "realignment_costs": [str(eps_su3), str(eps_su2), str(eps_u1)],
@@ -413,13 +414,23 @@ def check_L_irr():
 
     CLAIM: A1 + occupancy + L_loc + L_cost ==> A4 (irreversibility).
 
-    Occupancy (Delta>0 somewhere) is a constitutive feature of the referent,
-    co-equal with A1's finiteness: the world the framework studies is
-    instantiated -- drawn with irreducible jointness -- not the separable
-    Delta=0 limit. It is declared, not derived (Paper 0, referent/A1 chapter),
-    and is therefore part of the [P] base, carried here as the dependency
-    'occupancy' rather than a grade rider. The Delta=0 world is the unoccupied
-    limit, not an alternative physics.
+    Occupancy (Delta>0 somewhere) is the framework's INITIAL DATUM -- the
+    OCCUPANT -- not a fifth constitutive feature. A1/MD/A2/BW fix the RULES of
+    the field (what is admissible, what jointness costs); occupancy is the
+    contingent fact that the world is actually drawn, and drawn with irreducible
+    jointness somewhere, rather than sitting in the separable Delta=0 limit. A1
+    admits both the occupied and the unoccupied world and is silent on which:
+    the Delta=0 world is fully consistent -- the classical world was available,
+    and we are simply not in it. Occupancy is read from the world and supplied
+    at the origin (the Big Bang launches the occupant's continuation journey;
+    each committed distinction is one step in it), declared not derived (Paper 0,
+    referent/A1 chapter). It is carried here as the named dependency 'occupancy'
+    and is part of the [P] base for consumers that need it: being an initial
+    condition rather than a law does not change what rests on it -- only its
+    modal status (a contingent datum, not a necessary truth). This is the
+    law-plus-initial-condition structure of any physical theory; the arrow is
+    [P] GIVEN the occupant, as planetary orbits are lawful given initial
+    positions.
 
     FACTORING: the witness below establishes two separable contents.
       (i)  an occupancy-FREE structural core -- monotonicity (L3), all subsets
@@ -456,9 +467,10 @@ def check_L_irr():
         interface carries an irreducibly-joint distinction (a correlation not
         reducible to either marginal) -- the OCCUPANCY feature. A1 alone admits
         both Delta = 0 (the unoccupied limit below) and Delta > 0; occupancy is
-        the declared constitutive feature fixing the sign, co-equal with A1 and
-        not an A1 theorem -- A1 bounds what is admissible, occupancy is that the
-        admitted structure is drawn with irreducible jointness. (L_nc, the
+        the declared INITIAL DATUM fixing the sign -- a contingent input
+        alongside A1, not an A1 theorem -- A1 bounds what is admissible,
+        occupancy is that the admitted structure is actually drawn with
+        irreducible jointness. (L_nc, the
         sum-vs-budget non-closure lemma E1+E2 > C, plays no role here: it never
         compares joint vs sum and supplies no Delta.) This is the SAME
         occupancy bit that branch (IJC) names on the quantum axis (L_Pi
@@ -705,7 +717,7 @@ def check_L_irr():
             'fully reversible, (2) single-interface => fully reversible. '
             'Both occupancy (Delta>0) and L_loc are necessary.'
         ),
-        key_result='A1 + occupancy + L_loc + L_cost ==> A4 (irreversibility, given the constitutive occupancy feature Delta>0; the Delta=0 world is the unoccupied limit, not an alternative)',
+        key_result='A1 + occupancy + L_loc + L_cost ==> A4 (irreversibility, given occupancy Delta>0 as a declared initial datum; the Delta=0 world is the consistent unoccupied limit -- available, but not the one instantiated)',
         dependencies=['A1', 'occupancy', 'L_loc', 'L_cost'],
         artifacts={
             'witness': {
@@ -821,8 +833,9 @@ def check_L_col():
     lower cost. A dominated structure is inadmissible when the dominating
     alternative is available. The admissible structure is therefore the one
     with minimum overhead." The uniqueness of dim(G) as the cost measure is
-    L_cost's content (C1 completeness, C2 additive independence, GP
-    generator primitivity, C3 Cauchy uniqueness), consumed here as a
+    L_cost's content (C1 completeness, C2 additive independence, C3 Cauchy
+    uniqueness) + L_cost_gauge's gauge clause (generator primitivity,
+    n(G) = dim(G); split v24.3.404), consumed here as a
     dependency, not re-proved.
 
     COMPANION FORM (Paper 18 v3.20, Derivation Sketches, "L_col
@@ -886,7 +899,7 @@ def check_L_col():
     selection-component caveat above --- the caveat is Paper 13's own and
     changes no downstream content). Dependencies: A1 (finiteness), L_irr
     (Paper 18 premise; chain predecessor, Paper 13 lemma chain
-    A1 -> L_loc -> L_nc -> L_irr -> L_col), L_cost (dim(G) unique cost
+    A1 -> L_loc -> L_nc -> L_irr -> L_col), L_cost + L_cost_gauge (dim(G) unique cost
     measure read by the argmin).
     """
     # ================================================================
@@ -1021,7 +1034,7 @@ def check_L_col():
             'dependency) reading that structure -- not derived here. '
             'Founding-chain root converted to graded node.'
         ),
-        dependencies=['A1', 'A2', 'L_irr', 'L_cost'],
+        dependencies=['A1', 'A2', 'L_irr', 'L_cost', 'L_cost_gauge'],
         cross_refs=['Theorem_R', 'T_gauge', 'L_gauge_template_uniqueness'],
         artifacts={
             'statement': 'G_realized = argmin_{G in viable} dim(G)',
@@ -1261,10 +1274,18 @@ def check_L_cost():
     """L_cost: Cost Functional Uniqueness (v3.1).
 
     STATEMENT: The realignment cost of any structure E under A1 is
-    uniquely C(E) = n(E) * epsilon. For a gauge group G, n(G) = dim(G).
-    No alternative cost functional compatible with A1 exists.
+    uniquely C(E) = n(E) * epsilon. No alternative cost functional
+    compatible with A1 exists.
 
-    PROOF STRUCTURE (4 sub-lemmas, all [P]):
+    SPLIT (2026-07-06, v24.3.404, principal ruling on the SCC hygiene
+    report's edge A1, option (c)): the gauge clause -- for a gauge group G,
+    n(G) = dim(G), hence C(G) = dim(G) * epsilon -- and its generator-
+    primitivity proofs now live in L_cost_gauge (this module), downstream
+    of T3. L_cost states and proves the abstract functional only; it no
+    longer depends on T3 or L_nc. Consumers of the gauge clause cite
+    L_cost_gauge; consumers of the abstract form cite this lemma.
+
+    PROOF STRUCTURE (3 sub-lemmas, all [P]):
 
     L_cost_C1 (Ledger Completeness):
       A1's universal quantifier 'any S' means the capacity ledger is
@@ -1280,42 +1301,21 @@ def check_L_cost():
       budgets preclude synergy/interference. Therefore:
         f(n1 + n2) = f(n1) + f(n2).
 
-    L_cost_GP (Generator Primitivity):
-      PROOF A (Topological, primary):
-        T3: gauge group = Aut(M_n), a d-dimensional manifold.
-        Orbit-separation lemma: enforcing G-equivariance requires
-        distinguishing automorphisms that act differently on observables
-        (alpha_g1(A) != alpha_g2(A)). Conflating distinct actions enforces
-        only a quotient, not full G.
-        Invariance of domain (Brouwer 1911, local form): if U is open in
-        R^d and f: U -> R^k is continuous and injective, then k >= d.
-        Since G is locally R^d, resolving a neighborhood requires d
-        independent distinctions. Resolution rank = dim(G).
-
-      PROOF B (Non-closure, confirmatory):
-        Bracket [T_a, T_b] is composition (4 exponentials). L_nc:
-        composition is non-free (interaction cost I >= 0, generically
-        positive). Each bracket-generated direction costs >= epsilon
-        (L_epsilon*). After closure: all dim(G) directions populated,
-        each costing >= epsilon. Total >= dim(G)*epsilon.
-
-      Both proofs: n(G) = dim(G), no reduction possible.
-
     L_cost_MAIN (Cauchy Uniqueness):
       C1 + C2 + monotonicity (L_epsilon*) + normalization (f(1) = epsilon)
       -> Cauchy functional equation on N -> f(n) = n*epsilon uniquely.
-      GP + Cauchy -> C(G) = dim(G)*epsilon [FORCED].
 
-    RIVALS DEFEATED: dim^alpha (C2), rank (C1+GP), Casimir (C1+C4),
-      dim+lambda*rank (C1), Dynkin (C4), 2-generation trick (GP: gen!=res),
-      bracket closure (GP: L_nc), coarser invariants (GP: quotients lose
-      equivariance).
+    RIVALS DEFEATED (functional form): f(n) = n^alpha (violates C2:
+      additivity). The gauge-invariant rivals (rank, Casimir,
+      dim+lambda*rank, Dynkin, 2-generation trick, bracket closure,
+      coarser invariants) are defeated in L_cost_gauge, where the
+      generator-primitivity content lives.
 
-    CONSEQUENCE: T_gauge annotation 'modeling choice' upgrades to
-    'forced by L_cost.' Cost functional freedom under A1 is ZERO.
+    CONSEQUENCE: cost functional freedom under A1 is ZERO. The downstream
+    'forced by L_cost' upgrade on T_gauge routes through L_cost_gauge.
 
-    STATUS: [P]. One import: Brouwer invariance of domain (1911).
-    Dependencies: A1, L_epsilon*, L_loc, L_nc, T_M, T3.
+    STATUS: [P]. No external imports (Brouwer rides L_cost_gauge).
+    Dependencies: A1, L_epsilon*, L_loc, T_M.
     
 
     CROSS-REF (v24.3.243): L_cost fixes the unique realignment functional
@@ -1341,48 +1341,9 @@ def check_L_cost():
     # Cost = f(n(E)) where n(E) = channel count.
 
     # ================================================================
-    # Stage 2: Channel Correspondence -- n(G) = dim(G)
-    # ================================================================
-
-    gauge_factors = {
-        'SU(3)': {'dim': 8, 'rank': 2, 'generators': 8},
-        'SU(2)': {'dim': 3, 'rank': 1, 'generators': 3},
-        'U(1)':  {'dim': 1, 'rank': 1, 'generators': 1},
-    }
-
-    for name, data in gauge_factors.items():
-        check(data['generators'] == data['dim'], (
-            f"{name}: generators must equal dim"
-        ))
-        if name.startswith('SU'):
-            check(data['rank'] < data['dim'], (
-                f"{name}: rank < dim (non-abelian)"
-            ))
-
-    dim_SM = sum(d['dim'] for d in gauge_factors.values())
-    check(dim_SM == 12, f"dim(G_SM) = 12, got {dim_SM}")
-
-    # ================================================================
-    # Stage 3: Generator Primitivity -- gen rank != res rank
-    # ================================================================
-
-    # Simple Lie algebras are 2-generated but require dim(G) to resolve.
-    gp_data = {
-        'su(2)': {'gen_rank': 2, 'res_rank': 3, 'gap': 1},
-        'su(3)': {'gen_rank': 2, 'res_rank': 8, 'gap': 6},
-        'su(5)': {'gen_rank': 2, 'res_rank': 24, 'gap': 22},
-    }
-
-    for name, gp in gp_data.items():
-        check(gp['res_rank'] > gp['gen_rank'], (
-            f"{name}: resolution rank must exceed generation rank"
-        ))
-        check(gp['gap'] == gp['res_rank'] - gp['gen_rank'], (
-            f"{name}: gap consistency"
-        ))
-
-    # ================================================================
-    # Stage 4: Cauchy uniqueness -- f(n) = n*epsilon
+    # Stage 2: Cauchy uniqueness -- f(n) = n*epsilon
+    # (Stages on the gauge clause -- channel correspondence and generator
+    #  primitivity -- moved to check_L_cost_gauge at the v24.3.404 split.)
     # ================================================================
 
     epsilon = Fraction(1)  # normalized units
@@ -1414,8 +1375,164 @@ def check_L_cost():
         lhs = Fraction(n1 + n2) ** int(alpha) if alpha == Fraction(2) else float(n1 + n2) ** float(alpha)
         rhs_val = float(n1) ** float(alpha) + float(n2) ** float(alpha)
         check(abs(float(lhs) - rhs_val) > 0.01, (
-            f"dim^{alpha} must violate additivity"
+            f"n^{alpha} must violate additivity"
         ))
+
+    rivals_defeated = [
+        'f(n) = n^alpha (violates C2: additivity)',
+        'gauge-invariant rivals (rank/Casimir/dim+lambda*rank/Dynkin/'
+        '2-generation/bracket-closure/coarser invariants): defeated in '
+        'L_cost_gauge',
+    ]
+
+    sub_lemmas = {
+        'L_cost_C1': {
+            'name': 'Ledger Completeness',
+            'status': 'P',
+            'mechanism': 'A1 universal quantifier -> exhaustive ledger',
+        },
+        'L_cost_C2': {
+            'name': 'Additive Independence',
+            'status': 'P',
+            'mechanism': 'T_M disjoint anchors + L_loc factorization',
+        },
+        'L_cost_MAIN': {
+            'name': 'Cauchy Uniqueness',
+            'status': 'P',
+            'mechanism': 'Cauchy on N + monotonicity + normalization -> f(n) = n*epsilon',
+        },
+    }
+
+    return _result(
+        name='L_cost: Cost Functional Uniqueness',
+        tier=0,
+        epistemic='P',
+        summary=(
+            'A1 cardinality bound + Cauchy functional equation -> '
+            'the UNIQUE realignment cost is C(E) = n(E)*epsilon. '
+            'Functional-form rival defeated: n^alpha (C2 additivity). '
+            'The gauge clause n(G) = dim(G) and the generator-primitivity '
+            'proofs live in L_cost_gauge (v24.3.404 split); gauge-invariant '
+            'rivals are defeated there. '
+            'Cost functional freedom under A1 is ZERO.'
+        ),
+        key_result='C(E) = n(E)*epsilon is FORCED (unique cost under A1)',
+        dependencies=['A1', 'L_epsilon*', 'L_loc', 'T_M'],
+        cross_refs=['L_cost_gauge (the gauge clause n(G)=dim(G); '
+                    'split out 2026-07-06 per the principal ruling, '
+                    'SCC hygiene report edge A1 option (c))'],
+        artifacts={
+            'sub_lemmas': sub_lemmas,
+            'rivals_defeated': rivals_defeated,
+            'endgame': 'A (full lock on the functional form): zero free '
+                       'functional choices; C(G) = dim(G)*epsilon rides '
+                       'L_cost_gauge',
+        },
+    )
+
+
+
+def check_L_cost_gauge():
+    """L_cost_gauge: The Gauge Clause -- n(G) = dim(G).
+
+    STATEMENT: For a gauge group G, the channel count read by the unique
+    cost functional (L_cost: C(E) = n(E) * epsilon) is the group dimension:
+    n(G) = dim(G), hence C(G) = dim(G) * epsilon [FORCED].
+
+    SCOPE: 'gauge group' means T3's realization -- the Aut(M_n) = PU(n)
+    automorphism group and its closed subgroups. Closed subgroups of a Lie
+    group are Lie (Cartan's closed-subgroup theorem) -- an internalized
+    import of the same class as Brouwer below; the local-R^d step in
+    Proof A holds on exactly this class, not for arbitrary compact groups.
+
+    PROVENANCE: split out of L_cost 2026-07-06 (v24.3.404) by principal
+    ruling (SCC hygiene report, edge A1, option (c)). L_cost's abstract
+    claim is T3-free; this lemma is where the cost functional meets the
+    gauge sector, and its T3 dependency is the honest home of the former
+    L_cost -> T3 edge. Content unchanged from the pre-split L_cost_GP
+    sub-lemma + gauge stages; no new derivation.
+
+    PROOF (generator primitivity, two independent routes):
+
+      PROOF A (Topological, primary):
+        T3: gauge group = Aut(M_n), a d-dimensional manifold.
+        Orbit-separation lemma: enforcing G-equivariance requires
+        distinguishing automorphisms that act differently on observables
+        (alpha_g1(A) != alpha_g2(A)). Conflating distinct actions enforces
+        only a quotient, not full G.
+        Invariance of domain (Brouwer 1911, local form): if U is open in
+        R^d and f: U -> R^k is continuous and injective, then k >= d.
+        Since G is locally R^d, resolving a neighborhood requires d
+        independent distinctions. Resolution rank = dim(G).
+
+      PROOF B (Non-closure, confirmatory):
+        Bracket [T_a, T_b] is composition (4 exponentials). L_nc:
+        composition is non-free (interaction cost I >= 0, generically
+        positive). Each bracket-generated direction costs >= epsilon
+        (L_epsilon*). After closure: all dim(G) directions populated,
+        each costing >= epsilon. Total >= dim(G)*epsilon.
+
+      Both proofs: n(G) = dim(G), no reduction possible. With L_cost's
+      Cauchy uniqueness: C(G) = dim(G)*epsilon.
+
+    RIVALS DEFEATED (gauge invariants): rank (undercounts channels, GP),
+      Casimir C2_fund (rep-dependent), dim+lambda*rank (double-counts),
+      Dynkin index (rep-dependent), 2-generation trick (gen rank != res
+      rank), bracket closure (L_nc at admissibility level), coarser
+      invariants (quotients lose equivariance).
+
+    CONSEQUENCE: T_gauge's routing-overhead objective dim(G) is FORCED,
+    not a modeling choice.
+
+    STATUS: [P]. One import: Brouwer invariance of domain (1911) --
+    internalized for the finite-dim smooth case (full-rank Jacobian).
+    Dependencies: A1, L_epsilon*, L_nc, T3, L_cost.
+    """
+
+    # ================================================================
+    # Stage 1: Channel Correspondence -- n(G) = dim(G)
+    # ================================================================
+
+    gauge_factors = {
+        'SU(3)': {'dim': 8, 'rank': 2, 'generators': 8},
+        'SU(2)': {'dim': 3, 'rank': 1, 'generators': 3},
+        'U(1)':  {'dim': 1, 'rank': 1, 'generators': 1},
+    }
+
+    for name, data in gauge_factors.items():
+        check(data['generators'] == data['dim'], (
+            f"{name}: generators must equal dim"
+        ))
+        if name.startswith('SU'):
+            check(data['rank'] < data['dim'], (
+                f"{name}: rank < dim (non-abelian)"
+            ))
+
+    dim_SM = sum(d['dim'] for d in gauge_factors.values())
+    check(dim_SM == 12, f"dim(G_SM) = 12, got {dim_SM}")
+
+    # ================================================================
+    # Stage 2: Generator Primitivity -- gen rank != res rank
+    # ================================================================
+
+    # Simple Lie algebras are 2-generated but require dim(G) to resolve.
+    gp_data = {
+        'su(2)': {'gen_rank': 2, 'res_rank': 3, 'gap': 1},
+        'su(3)': {'gen_rank': 2, 'res_rank': 8, 'gap': 6},
+        'su(5)': {'gen_rank': 2, 'res_rank': 24, 'gap': 22},
+    }
+
+    for name, gp in gp_data.items():
+        check(gp['res_rank'] > gp['gen_rank'], (
+            f"{name}: resolution rank must exceed generation rank"
+        ))
+        check(gp['gap'] == gp['res_rank'] - gp['gen_rank'], (
+            f"{name}: gap consistency"
+        ))
+
+    # ================================================================
+    # Stage 3: Gauge-invariant rival elimination
+    # ================================================================
 
     rank_su3 = 2
     dim_su3 = 8
@@ -1432,8 +1549,13 @@ def check_L_cost():
             ))
 
     # ================================================================
-    # ENDGAME: full chain is deterministic
+    # ENDGAME: C(G) = dim(G)*epsilon, additive over factors (L_cost)
     # ================================================================
+
+    epsilon = Fraction(1)  # normalized units (L_cost's Cauchy form)
+
+    def f_unique(n):
+        return n * epsilon
 
     cost_su3_forced = f_unique(8)
     cost_su2_forced = f_unique(3)
@@ -1445,65 +1567,36 @@ def check_L_cost():
     ))
 
     rivals_defeated = [
-        'dim(G)^alpha (violates C2: additivity)',
-        'rank(G) (violates C1+GP: undercounts channels)',
-        'C2_fund(G) (violates C1+C4: rep-dependent)',
-        'dim(G)+lambda*rank(G) (violates C1: double-counts)',
-        'Dynkin index (violates C4: rep-dependent)',
-        '2-generation trick (GP: gen rank != res rank)',
-        'bracket closure (GP: L_nc at admissibility level)',
-        'coarser invariants (GP: quotients lose equivariance)',
+        'rank(G) (undercounts channels: GP)',
+        'C2_fund(G) (rep-dependent)',
+        'dim(G)+lambda*rank(G) (double-counts)',
+        'Dynkin index (rep-dependent)',
+        '2-generation trick (gen rank != res rank)',
+        'bracket closure (L_nc at admissibility level)',
+        'coarser invariants (quotients lose equivariance)',
     ]
 
-    sub_lemmas = {
-        'L_cost_C1': {
-            'name': 'Ledger Completeness',
-            'status': 'P',
-            'mechanism': 'A1 universal quantifier -> exhaustive ledger',
-        },
-        'L_cost_C2': {
-            'name': 'Additive Independence',
-            'status': 'P',
-            'mechanism': 'T_M disjoint anchors + L_loc factorization',
-        },
-        'L_cost_GP': {
-            'name': 'Generator Primitivity',
-            'status': 'P',
-            'mechanism': (
-                'Proof A: orbit-separation + invariance of domain (Brouwer '
-                '1911, local form: injective map from open R^d into R^k '
-                'requires k >= d). Resolution rank = dim(G). '
-                'Proof B: L_nc (bracket closure non-free) + L_epsilon* '
-                '(positive marginal cost). Both independent; either suffices.'
-            ),
-        },
-        'L_cost_MAIN': {
-            'name': 'Cauchy Uniqueness',
-            'status': 'P',
-            'mechanism': 'Cauchy on N + monotonicity + normalization -> f(n) = n*epsilon',
-        },
-    }
-
     return _result(
-        name='L_cost: Cost Functional Uniqueness',
+        name='L_cost_gauge: The Gauge Clause -- n(G) = dim(G)',
         tier=0,
         epistemic='P',
         summary=(
-            'A1 cardinality bound + Cauchy functional equation -> '
-            'the UNIQUE realignment cost is C(E) = n(E)*epsilon. '
-            'For gauge groups: n(G) = dim(G) (generator primitivity: '
-            'orbit-separation + Brouwer invariance of domain; independently '
-            'L_nc + L_epsilon*). '
-            'Rivals defeated: dim^alpha (C2), rank (C1+GP), Casimir (C1+C4), '
-            'dim+lambda*rank (C1), Dynkin (C4), 2-gen trick (GP). '
-            'CONSEQUENCE: T_gauge "modeling choice" -> "forced by L_cost." '
-            'Cost functional freedom under A1 is ZERO.'
+            'For a gauge group G the channel count is the group dimension: '
+            'n(G) = dim(G) (generator primitivity -- Proof A: '
+            'orbit-separation + Brouwer invariance of domain on Aut(M_n) '
+            '[T3]; Proof B: L_nc bracket-closure + L_epsilon* marginal '
+            'cost; either suffices). With L_cost\'s unique functional: '
+            'C(G) = dim(G)*epsilon [FORCED]. Gauge-invariant rivals '
+            '(rank, Casimir, dim+lambda*rank, Dynkin, 2-gen trick) '
+            'defeated. Split out of L_cost at v24.3.404 (principal '
+            'ruling); content unchanged, address corrected.'
         ),
-        key_result='C(G) = dim(G)*epsilon is FORCED (unique cost under A1)',
-        dependencies=['A1', 'L_epsilon*', 'L_loc', 'L_nc', 'T_M', 'T3'],
+        key_result='n(G) = dim(G), hence C(G) = dim(G)*epsilon is FORCED',
+        dependencies=['A1', 'L_epsilon*', 'L_nc', 'T3', 'L_cost'],
+        cross_refs=['T_gauge (primary consumer: the routing-overhead '
+                    'objective)'],
         artifacts={
-            'brouwer_status': 'INTERNALIZED: in finite dim, injective smooth map has full-rank Jacobian → k ≥ d (elementary linear algebra)',
-            'sub_lemmas': sub_lemmas,
+            'brouwer_status': 'INTERNALIZED: in finite dim, injective smooth map has full-rank Jacobian -> k >= d (elementary linear algebra)',
             'generator_primitivity': {
                 'proof_A': 'Topological (orbit-separation + invariance of domain)',
                 'proof_B': 'Non-closure (L_nc): bracket closure costs capacity',
@@ -1515,10 +1608,9 @@ def check_L_cost():
                 'gen_vs_res': gp_data,
             },
             'rivals_defeated': rivals_defeated,
-            'endgame': 'A (full lock): zero free functional choices',
+            'endgame': 'C(G) = dim(G)*epsilon; SM cost additive over factors',
         },
     )
-
 
 def check_L_irr_uniform():
     """L_irr_uniform: Sector-Uniform Irreversibility.
@@ -1973,8 +2065,12 @@ def check_M_Omega():
             'refinement-invariant assignment forced by A1 at saturation.'
         ),
         key_result='p(s) = 1/|Omega| is FORCED at Bekenstein saturation (not assumed) [P]',
-        dependencies=['A1', 'L_epsilon*', 'T_Bek'],
-        cross_refs=['L_equip', 'T11'],
+        # SCC-hygiene adjudication 2026-07-05 (D4): 'T_Bek' moved to cross_refs --
+        # the proof runs on any fully saturated interface (saturation is an
+        # A1-level concept); T_Bek supplies the named regime, not a premise.
+        dependencies=['A1', 'L_epsilon*'],
+        cross_refs=['L_equip', 'T11',
+                    'T_Bek (names the saturation regime; not a premise; SCC-hygiene move 2026-07-05)'],
     )
 
 
@@ -5652,7 +5748,12 @@ def check_worked_example():
                 f'{{d2,d3}} inadmissible (residual {sigma_23}). '
                 f'T1 witness: order-dependent admissibility outcomes.',
         key_result='Explicit P1-P4, L_Delta, T1 verification [P]',
-        dependencies=['A1', 'L_Delta', 'T1'],
+        dependencies=['A1', 'L_Delta'],
+        # SCC-hygiene adjudication 2026-07-05 (D1): 'T1' moved to cross_refs --
+        # the example ILLUSTRATES T1's order-dependence witness, it does not
+        # consume the theorem; worked_example is the BW PLEC anchor and an
+        # anchor with a derivational in-edge inverts root semantics.
+        cross_refs=['T1 (illustrated by this example, not consumed; SCC-hygiene move 2026-07-05)'],
     )
 
 
@@ -6863,14 +6964,15 @@ def check_T_inseparable_IJC():
       per-interface empirical contact.  A1 admits BOTH branches at any one
       interface (Sep interfaces exist), so WHICH interfaces are occupied is
       NOT an A1 consequence and the marginal table IS an external datum.
-      OBTAINS/PROFILE SPLIT (constitutive ruling v24.3.304, 2026-07-01;
-      docstring reconciled 2026-07-05, R2): that occupancy OBTAINS at all --
+      OBTAINS/PROFILE SPLIT (ruling v24.3.304, 2026-07-01; docstring
+      reconciled 2026-07-05, R2): that occupancy OBTAINS at all --
       the world drawn somewhere, some interface in branch (IJC), Delta > 0
-      somewhere -- is CONSTITUTIVE, adopted co-equal with A1's finiteness
-      and folded into the [P] base (bank.py legend; Paper 0
-      sec:three_term_foundation); the fully classical all-Sep world is the
-      unoccupied limit, not a live alternative.  Everything per-interface
-      in this paragraph is the PROFILE and stays empirical.
+      somewhere -- is a DECLARED INITIAL DATUM (the occupant), folded into
+      the [P] base as a named dependency (bank.py legend; Paper 0
+      sec:three_term_foundation); it is contingent, not a fifth constitutive
+      feature -- the fully classical all-Sep world is the consistent
+      unoccupied limit, available but not the one instantiated.  Everything
+      per-interface in this paragraph is the PROFILE and stays empirical.
       NOT supplied by cosmogenesis: Paper 37's 'IJC-side of the trivial
       alignment' is a whole-substrate maximal-symmetry / empty-distinction-
       family descriptor on which the Boolean-defender dichotomy is
@@ -7535,6 +7637,7 @@ _CHECKS = {
     'L_loc': check_L_loc,
     'L_nc': check_L_nc,
     'L_cost': check_L_cost,
+    'L_cost_gauge': check_L_cost_gauge,
     'L_irr': check_L_irr,
     'L_col': check_L_col,
     'L_irr_uniform': check_L_irr_uniform,

@@ -111,7 +111,10 @@ PINNED_VERDICTS = {
     "foundation:closed_world_regime_gates": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "foundation:collapse_triad_free_spend_permanent": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "foundation:continuation_capacity_floor_bound": ("INTERNAL_IDENTITY_GLOBAL_P", True),
-    "foundation:d4_unique": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    # Promoted 2026-07-05 (v24.3.403): the .401 wall-shadow audit m4 candidate
+    # discharged -- re-declared internal-identity on apf.spacetime (all-[P]
+    # re-verified; census legs run pre-declaration, clean); observed live.
+    "foundation:d4_unique": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "foundation:delta_calculus_derived_identities": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "foundation:fencea_hinge_trichotomy_ladder": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "foundation:forced_universality_classes": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
@@ -229,4 +232,4 @@ PINNED_VERDICTS = {
     "wtrace:zll_r2_counterterm_pieces": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
 }
 
-PIN_VERSION = "24.3.400"
+PIN_VERSION = "24.3.403"  # d4_unique promotion (44 -> 45 exports); prior 24.3.400

@@ -257,11 +257,12 @@ def check_T_gauge():
             f'N_c=5 viable but costs dim={candidates[5]["dim"]}. '
             f'Selection is by OPTIMIZATION, not by fiat. '
             f'Objective: routing overhead measured by dim(G) '
-            f'[forced: L_cost proves dim(G) is the unique cost under A1]. '
+            f'[forced: L_cost (unique functional) + L_cost_gauge (n(G)=dim(G)) '
+            f'under A1]. '
             f'Carrier requirements from Theorem_R.'
         ),
         key_result=f'SU({winner})*SU(2)*U(1) = capacity-optimal (dim={candidates[winner]["dim"]})',
-        dependencies=['T4', 'T5', 'A1', 'L_cost', 'Theorem_R', 'B1_prime',
+        dependencies=['T4', 'T5', 'A1', 'L_cost', 'L_cost_gauge', 'Theorem_R', 'B1_prime',
                       'L_gauge_template_uniqueness'],
         artifacts={
             'winner_N_c': winner,

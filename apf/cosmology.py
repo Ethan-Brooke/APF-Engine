@@ -1263,9 +1263,9 @@ def check_T_config_demand_register_split_bank_respected():
           finds no demand off-diagonal writer AT ALL, in either
           direction. a = b stays OPEN [C].
       (2) It does NOT decide the S2D cost-or-idle trichotomy horn.
-      (3) It does NOT touch occupancy. Occupancy is CONSTITUTIVE
-          (v24.3.304, co-equal with A1); it is cited here only to
-          fence it.
+      (3) It does NOT touch occupancy. Occupancy is a declared INITIAL
+          DATUM (v24.3.304 ruling; contingent, carried as a named
+          dependency, not derived); it is cited here only to fence it.
       (4) It is BANK-CLOSED-WORLD, and says so in its name: a
           statement about registered surfaces, not about the world.
           The WORLD-strength register split (that the physical demand
@@ -1785,8 +1785,8 @@ def check_T_config_demand_register_split_bank_respected():
                 'diagonal writer in either direction; a = b stays OPEN [C]'),
             'scope_fence_trichotomy': 'the S2D cost-or-idle horn is NOT decided here',
             'scope_fence_occupancy': (
-                'occupancy is CONSTITUTIVE (v24.3.304, co-equal with A1); '
-                'cited only to fence it; not open'),
+                'occupancy is a declared initial datum (v24.3.304; contingent, '
+                'carried as a named dependency); cited only to fence it; not open'),
             'scope_fence_closed_world': (
                 'bank-closed-world, carried in the name: a statement about '
                 'registered surfaces, not the world; the WORLD-strength '
@@ -3232,10 +3232,12 @@ def check_L_bridges_closed():
     proofs. ALL FIVE are now [P] theorems.
 
     BRIDGE A: dim(G) = realignment cost
-      STATUS: CLOSED by L_cost [P] (core.py).
+      STATUS: CLOSED by L_cost + L_cost_gauge [P] (core.py; the gauge
+      clause split to L_cost_gauge at v24.3.404, content unchanged).
       Chain: A1 → L_cost_C1 (ledger completeness) → L_cost_C2 (additivity)
-        → L_cost_GP (generator primitivity: orbit-separation + Brouwer
-        invariance of domain) → L_cost_MAIN (Cauchy uniqueness).
+        → L_cost_MAIN (Cauchy uniqueness) → L_cost_gauge (generator
+        primitivity: orbit-separation + Brouwer invariance of domain;
+        the former L_cost_GP sub-lemma, split out at v24.3.404).
       Result: C(G) = dim(G)×ε is the UNIQUE cost functional under A1.
       No alternatives exist.
 
@@ -3338,7 +3340,7 @@ def check_L_bridges_closed():
             f'connections are [P] theorems.'
         ),
         dependencies=[
-            'L_cost', 'L_equip', 'L_self_exclusion', 'T_Bek',
+            'L_cost', 'L_cost_gauge', 'L_equip', 'L_self_exclusion', 'T_Bek',
             'T_entropy', 'T11', 'T27c', 'L_Gram',
         ],
         cross_refs=[

@@ -82,8 +82,11 @@ from apf.apf_utils import check, _result
 
 #: Leg 2 -- the reading-graded boundary of the export core (SET ONLY, no
 #: dispositions; principal ruling 2026-07-04). Measured at v24.3.400 tree
-#: state; 44 export-core inputs (40 -> 43 at the .398 export wave; 43 -> 44
-#: at the .400 Tsirelson re-declaration); reading boundary 16 -> 19 at .400
+#: state, re-measured at v24.3.403; 45 export-core inputs (40 -> 43 at the .398 export wave; 43 -> 44
+#: at the .400 Tsirelson re-declaration; 44 -> 45 at the .403 d4_unique
+#: promotion -- apf.spacetime's closure adds NO new roots, conjectures, or
+#: reading members: 10 roots all premise-genre already in the inventory,
+#: UB_usage_billing_adopted already in the boundary set); reading boundary 16 -> 19 at .400
 #: (the three core IJC-sector reading members the .398 decline kept out
 #: enter with apf.core's module closure -- exactly the three the .398
 #: narrative predicted); union-closure roots 14 -> 22 at .400 (see the

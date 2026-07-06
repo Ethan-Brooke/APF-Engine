@@ -19,10 +19,10 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     full-strength reading -- structural completeness, "a
                     physical object is its continuation profile and nothing
                     beyond it"); Assumption 2 (cost-bearing distinction);
-                    Assumption 3 (structural commitment); finiteness.  Co-equal
-                    with the finiteness clause is OCCUPANCY: that the world is
+                    Assumption 3 (structural commitment); finiteness.  Alongside
+                    the finiteness clause is OCCUPANCY: that the world is
                     instantiated -- drawn, with irreducible jointness (Delta>0
-                    somewhere) -- a constitutive feature of the referent, declared
+                    somewhere) -- the contingent INITIAL DATUM (the occupant), declared
                     not derived (Paper 0, sec:three_term_foundation), carried in
                     dependency lists as 'occupancy' (see the retired [P+occupancy]
                     entry below).  What
@@ -111,9 +111,9 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     Dichotomy Theorem and the Quantum-Interface Bridge
                     (2026-04-26).md.
   [P+occupancy]     RETIRED 2026-07-01 -> folded into [P].  Occupancy (the
-                    world is drawn, with irreducible jointness, Delta>0) is now a
-                    CONSTITUTIVE feature of the referent, co-equal with A1's
-                    finiteness and part of the [P] base -- not a per-interface rider.
+                    world is drawn, with irreducible jointness, Delta>0) is now
+                    folded into the [P] base as a declared INITIAL DATUM (the
+                    occupant) -- a contingent input alongside A1, not a per-interface rider.
                     A result consuming it is [P] with 'occupancy' named in its
                     dependency list (as using A1 gives [P], not '[P+A1]').  This
                     ratifies what the corpus already did: L_irr's transitive consumers

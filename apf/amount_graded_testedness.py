@@ -1460,8 +1460,8 @@ def check_T_contention_law_granularity_occupancy_fork():
           "the L_nc fence is banked text (L_irr Step 1: L_nc never "
           "compares joint vs sum and supplies no Delta): (c1) may not be "
           "sourced from L_nc -- the phase-21 stamped category error, now "
-          "a banked sentence; occupancy fixes Delta's sign, constitutive "
-          "co-equal with A1")
+          "a banked sentence; occupancy fixes Delta's sign, a declared "
+          "initial datum alongside A1")
     import apf.delta_calculus as _dc
     rdc = _dc.check_T_delta_JR_derived()
     check('Delta = eps*(J - R)' in rdc['name']

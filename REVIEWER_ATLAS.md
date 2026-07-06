@@ -1,6 +1,6 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-05 against verdict pin v24.3.400. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-05 against verdict pin v24.3.403. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
 **How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3888 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
@@ -25,7 +25,7 @@ Generated 2026-07-05 against verdict pin v24.3.400. Every row below is produced 
 | `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2... |
 | `foundation:collapse_triad_free_spend_permanent` | ROUTE | **EXPORT** | The v24.3.398 export split: the [P] triad gets its own exporting input, separated from the foundation:class_transition_primitive bundle a... |
 | `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid s... |
-| `foundation:d4_unique` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 5 probe; all-[P] verified per epistemic fields |
+| `foundation:d4_unique` | ROUTE | **EXPORT** | Wave 5 probe; all-[P] verified per epistemic fields; export-declared 2026-07-05 (census legs clean) |
 | `foundation:delta_calculus_derived_identities` | ROUTE | **EXPORT** | Onboards the Paper 12 Delta-calculus onto the ROUTE axis as a structural identity: the derived ledger identities are the codomain by cons... |
 | `foundation:fencea_hinge_trichotomy_ladder` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched |
 | `foundation:forced_universality_classes` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider. |
