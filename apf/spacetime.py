@@ -21,6 +21,167 @@ from apf.apf_utils import (
 )
 
 
+def check_L_gr_dof_lovelock_witness():
+    """L_gr_dof_lovelock_witness [P_math]: T8's GR imports witnessed exactly.
+
+    check_T8's d = 4 selection consumes two external GR results, disclosed
+    in its record but (pre-.405) structurally invisible to the export-core
+    census's ROOT leg -- no dependency token, no graded node (audit rider
+    m3, v24.3.403). This check converts both imports into a machine-verified
+    node on the Maschke pattern (.391): the MECHANISM of each import is
+    witnessed in exact integer arithmetic; the general classification
+    statement remains a cited import, named below.
+
+      1. DOF COUNT, TWO INDEPENDENT ROUTES (exact, d = 2..9):
+         Route A (little-group): a massless graviton is a symmetric
+         traceless rep of SO(d-2): (d-2)(d-1)/2 - 1 components.
+         Route B (covariant): h_munu has d(d+1)/2 components minus 2d
+         gauge functions (diffeomorphism choice + residual):
+         d(d+1)/2 - 2d. Both routes equal d(d-3)/2 at every d -- the
+         imported formula is re-derived twice over, and the sign pattern
+         gives T8's exclusions: d <= 3 admits no propagating DOF
+         (count <= 0), d = 4 gives exactly 2.
+      2. LOVELOCK MECHANISM (generalized Kronecker delta): the k-th
+         Lovelock EOM tensor is the rank-(2k+1) generalized Kronecker
+         delta contracted with k Riemann tensors; the delta vanishes
+         identically iff 2k+1 > d (pigeonhole through antisymmetry),
+         which is the dimensional obstruction mechanism. Witnessed exactly:
+         the delta is DEFINED here as det[(delta^{a_i}_{b_j})_{ij}]
+         (antisymmetry structural: equal indices = equal rows/columns =
+         zero determinant, verified on explicit swaps), and
+           - d = 4, k = 2 (Gauss-Bonnet): no strictly increasing 5-tuple
+             exists in a 4-element index set (C(4,5) = 0), so every
+             canonical component vanishes -- the GB term is
+             non-dynamical in d = 4 and Einstein (k = 1, rank 3 <= 4,
+             canonical component det(I_3) = 1) is the UNIQUE dynamical
+             Lovelock term: T8's d = 4 uniqueness mechanism.
+           - d = 5, k = 2: canonical component det(I_5) = 1 != 0 -- the
+             dimensional obstruction lifts (that the GB term is then
+             generically dynamical consumes the converse identification,
+             named as an import below): T8's d >= 5 exclusion mechanism.
+           - d = 2, k = 1 control: rank 3 > 2, Einstein non-dynamical
+             in d = 2 (the known topological limit) -- the identity is
+             d-sensitive, not vacuous.
+      3. WHAT REMAINS IMPORTED (named, not witnessed): the Lovelock
+         classification statement itself -- that Lovelock densities
+         EXHAUST the divergence-free second-order rank-2 tensors built
+         from the metric (Lovelock 1971) -- the identification of
+         route-A/B counting with linearized GR, and the converse
+         identification that a non-vanishing delta makes the k = 2 EOM
+         contribution generically non-zero in d >= 5. Both are of the same
+         import class as Brouwer in L_cost_gauge: mechanism witnessed,
+         general theorem cited.
+
+    Dependencies: none (pure mathematics). This node exists so check_T8's
+    import surface resolves to a graded check instead of prose disclosure.
+    """
+    from itertools import permutations, combinations
+
+    # ---- Leg 1: DOF count, two routes ----
+    def route_A(d):   # little group SO(d-2), symmetric traceless
+        m = d - 2
+        return m * (m + 1) // 2 - 1
+
+    def route_B(d):   # covariant: components minus 2d gauge
+        return d * (d + 1) // 2 - 2 * d
+
+    for d in range(2, 10):
+        target = d * (d - 3) // 2 if (d * (d - 3)) % 2 == 0 else None
+        check(target is not None, f"d={d}: d(d-3) must be even")
+        check(route_A(d) == target, f"d={d}: little-group route must give d(d-3)/2")
+        check(route_B(d) == target, f"d={d}: covariant route must give d(d-3)/2")
+    check(route_A(3) <= 0 and route_A(2) <= 0, "d <= 3: no propagating DOF")
+    check(route_A(4) == 2, "d = 4: exactly 2 propagating DOF")
+
+    # ---- Leg 2: generalized Kronecker delta mechanism ----
+    def gdelta(upper, lower):
+        # det of the 0/1 matrix M_ij = [upper_i == lower_j], exact ints
+        n = len(upper)
+        m = [[1 if upper[i] == lower[j] else 0 for j in range(n)]
+             for i in range(n)]
+        det = 0
+        for perm in permutations(range(n)):
+            # permutation sign by counting inversions
+            inv = sum(1 for i in range(n) for j in range(i + 1, n)
+                      if perm[i] > perm[j])
+            sgn, prod = (-1 if inv % 2 else 1), 1
+            for i in range(n):
+                prod *= m[i][perm[i]]
+                if prod == 0:
+                    break
+            det += sgn * prod
+        return det
+
+    # antisymmetry is structural (equal rows), verified on explicit swaps
+    check(gdelta((0, 0, 1, 2, 3), (0, 1, 2, 3, 0)) == 0,
+          "repeated upper index must kill the delta (equal rows)")
+    check(gdelta((0, 1, 2), (0, 1, 2)) == -gdelta((1, 0, 2), (0, 1, 2)),
+          "upper-index swap must flip the sign")
+
+    # d = 4, k = 2: rank-5 delta -- no increasing 5-tuple in range(4)
+    check(len(list(combinations(range(4), 5))) == 0,
+          "d=4: no strictly increasing 5-tuple exists (C(4,5) = 0)")
+    # spot-exact: arbitrary rank-5 components in d = 4 vanish
+    for up, lo in (((0, 1, 2, 3, 0), (0, 1, 2, 3, 1)),
+                   ((0, 1, 2, 3, 2), (3, 2, 1, 0, 2)),
+                   ((1, 1, 2, 3, 0), (0, 1, 2, 3, 3))):
+        check(gdelta(up, lo) == 0, f"d=4 rank-5 delta component {up}|{lo} must vanish")
+
+    # d = 4, k = 1: Einstein dynamical (rank-3 canonical component = 1)
+    check(gdelta((0, 1, 2), (0, 1, 2)) == 1, "d=4: Einstein (k=1) dynamical")
+    # d = 5, k = 2: GB dynamical (rank-5 canonical component = 1)
+    check(gdelta((0, 1, 2, 3, 4), (0, 1, 2, 3, 4)) == 1,
+          "d=5: Gauss-Bonnet (k=2) turns dynamical -- uniqueness fails")
+    # d = 2 control: Einstein non-dynamical (rank 3 > 2)
+    check(len(list(combinations(range(2), 3))) == 0 and
+          gdelta((0, 1, 0), (0, 1, 1)) == 0,
+          "d=2: Einstein non-dynamical (the topological limit)")
+
+    return _result(
+        name='L_gr_dof_lovelock_witness: T8 GR imports witnessed exactly',
+        tier=4,
+        epistemic='P_math',
+        summary=(
+            'check_T8\'s two external GR imports converted to a '
+            'machine-verified node (the Maschke .391 pattern). DOF count '
+            'd(d-3)/2 re-derived by two independent exact routes '
+            '(little-group symmetric-traceless count; covariant '
+            'gauge-fixing count) for d = 2..9 (d = 2 rides the formal '
+            'polynomial identity), giving T8\'s exclusions '
+            '(d <= 3: no propagating DOF; d = 4: exactly 2). Lovelock '
+            'mechanism witnessed via the generalized Kronecker delta '
+            '(exact determinant form): rank-(2k+1) delta vanishes iff '
+            '2k+1 > d, so in d = 4 Gauss-Bonnet (k = 2, rank 5) is '
+            'non-dynamical and Einstein (k = 1) is the unique dynamical '
+            'Lovelock term, while in d = 5 the canonical rank-5 '
+            'component equals 1 and the dimensional obstruction lifts '
+            '(uniqueness failure rides the named converse import); '
+            'd = 2 topological '
+            'control included. Named residual imports: the Lovelock '
+            'exhaustiveness classification (Lovelock 1971) and the '
+            'linearized-GR reading of the counts -- same import class '
+            'as Brouwer in L_cost_gauge.'
+        ),
+        key_result='d(d-3)/2 by two exact routes; Lovelock d=4 uniqueness / d>=5 failure mechanism exact (rank-(2k+1) delta)',
+        dependencies=[],
+        cross_refs=['T8 (the consumer: d = 4 selection)',
+                    'L_cost_gauge (the sibling internalized-import pattern)'],
+        artifacts={
+            'dof_table': {d: d * (d - 3) // 2 for d in range(2, 10)},
+            'lovelock_delta': {
+                'd4_k2_gauss_bonnet': 'identically zero (rank 5 > 4)',
+                'd5_k2_gauss_bonnet': 'canonical component 1 (dynamical)',
+                'd4_k1_einstein': 'canonical component 1 (dynamical)',
+                'd2_k1_einstein': 'identically zero (topological limit)',
+            },
+            'residual_imports': ['Lovelock 1971 exhaustiveness classification',
+                                 'linearized-GR identification of the counts',
+                                 'converse identification: nonzero delta -> generically dynamical k=2 EOM in d>=5'],
+        },
+    )
+
+
+
 def check_T8():
     """T8: Spacetime Dimension d = 4 from Admissibility.
 
@@ -75,7 +236,10 @@ def check_T8():
             '(D8.3) hyperbolic propagation. '
             'd <= 3 excluded (0 DOF), d >= 5 excluded (higher Lovelock). '
             'IMPORTS: linearized GR DOF formula d(d-3)/2 and Lovelock '
-            'classification are external GR results, not derived from A1.'
+            'classification are external GR results, not derived from A1; '
+            'both mechanisms witnessed exactly in L_gr_dof_lovelock_witness '
+            '[P_math] (v24.3.405); the exhaustiveness classification and '
+            'the linearized-GR identification stay cited imports.'
         ),
         key_result='d = 4 uniquely selected (2 DOF, Lovelock unique)',
         # SCC-hygiene adjudication 2026-07-05 (D3): 'T_gauge' moved to
@@ -83,7 +247,7 @@ def check_T8():
         # is gauge-free; the former deps entry was the check's only gauge
         # reference. (If the mixed-load premise is later ruled to import a
         # non-gravitational sector, the right key is T7B, not T_gauge.)
-        dependencies=['A1', 'L_irr'],
+        dependencies=['A1', 'L_irr', 'L_gr_dof_lovelock_witness'],
         cross_refs=['T_gauge (subject cross-reference only; SCC-hygiene move 2026-07-05)'],
         artifacts={
             'dof_by_dim': dof,
@@ -640,6 +804,7 @@ def check_T_Coleman_Mandula():
 
 _CHECKS = {
     'T8': check_T8,
+    'L_gr_dof_lovelock_witness': check_L_gr_dof_lovelock_witness,
     'Delta_ordering': check_Delta_ordering,
     'Delta_fbc': check_Delta_fbc,
     'Delta_particle': check_Delta_particle,
@@ -685,7 +850,9 @@ IE_DECLARATIONS = (
                 "signature is fixed separately (check_Delta_signature, "
                 "spacetime.py). The claim is the selection statement only; "
                 "the DOF formula and Lovelock classification are declared "
-                "external GR imports in the banked record. All eight "
+                "external GR imports in the banked record, their mechanisms "
+                "witnessed at [P_math] (L_gr_dof_lovelock_witness, "
+                "v24.3.405). The eight claim-bearing "
                 "module checks -- T8, the six Delta closure checks, "
                 "T_Coleman_Mandula -- are banked [P]."
             ),

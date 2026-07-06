@@ -1,8 +1,8 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-05 against verdict pin v24.3.403. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-06 against verdict pin v24.3.403. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3888 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3890 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
