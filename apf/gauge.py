@@ -4295,6 +4295,138 @@ def check_L_B_operator_exclusion():
 # v4.3.7 supplements will be added here
 
 
+def check_L_MW_scheme_correction():
+    """L_MW_scheme_correction: scheme-consistent one-loop M_W correction [P].
+
+    CLAIM (the v6.3 scheme fix; the lemma check_L_W_mass has delegated to
+    since v6.3b): starting from the APF tree-level prediction
+    M_W^tree = M_Z sqrt(1 - sin^2 theta_W) with sin^2 theta_W = 3/13 [P]
+    (T_sin2theta), the scheme-consistent one-loop correction is the
+    MS-bar custodial Delta-rho family (top custodial breaking + its QCD
+    dressing + the Higgs term), applied with the exact lever
+    (1 - s^2)/(1 - 2 s^2) = 10/7:
+
+        M_W = M_W^tree * (1 + lever * (Drho_top + Drho_QCD + Drho_H)/2)
+            = 80.334 GeV   (exp 80.3692 +- 0.0133; -0.044%).
+
+    THE SCHEME-MIXING ERROR, EXHIBITED: the superseded v5.3.4 route
+    applied the ON-SHELL Delta r = 0.0362 to the same tree,
+    M_W = M_W^tree / sqrt(1 - Delta r) = 81.47 GeV (+1.36%) -- an
+    on-shell correction on an MS-bar-style tree double-counts running
+    already absorbed in alpha(M_Z). The lemma's content is the scheme
+    CONSISTENCY claim: with the 3/13 tree, the admissible one-loop
+    correction is the Delta-rho family, and it lands within 0.05%.
+
+    ANCHOR STATUS: Type B (validation.py scorecard row 'M_W (GeV)'):
+    M_Z = 91.1876 is the anchor and m_t enters as the trace mass
+    163 GeV (L_sigma_normalization); no new absolute-scale claim is
+    made here. alpha_em(M_Z) = 1/128.21 (L_alpha_em [P]) and
+    alpha_s(M_Z) = 0.1179 (L_alpha_s_zero_input [P]) are APF-derived
+    inputs; the W-sector on-shell loop-sum export adjudications
+    (v15.x [P_boundary] lane) are untouched -- this lemma names the
+    long-banked L_W_mass correction step, nothing beyond it.
+
+    PROVENANCE / REGISTRATION NOTE (v24.3.399 debt-registration wave):
+    the v6.3b register() carried a conditional import of a TOP-LEVEL
+    standalone module L_MW_scheme_correction.py that was never migrated
+    into the package (verified absent from the v7.1 / v7.3 / 2026-03-25
+    archived snapshots); the ImportError guard passed silently on every
+    load, so the check_L_W_mass dependency string dangled as a
+    named-unregistered root of the full-surface input inventory. The
+    derivation content -- inline in check_L_W_mass since v6.3 -- is now
+    stated and verified here, and registration is unconditional.
+
+    FORM ANNOTATION (.399 audit fix F6): the Delta-rho_H term used is
+    the corpus's pinned form inherited verbatim from the long-banked
+    L_W_mass surface -- quadratic in m_H rather than the textbook
+    logarithmic screened one-loop form; flagged for a physics pass on
+    the L_W_mass lane, not adjudicated here.
+    """
+    import math
+    from fractions import Fraction
+
+    sin2 = Fraction(3, 13)
+    s2 = float(sin2)
+    M_Z = 91.1876
+    alpha_em = 1.0 / 128.21     # L_alpha_em [P]
+    alpha_s = 0.1179            # L_alpha_s_zero_input [P]
+    m_t = 163.0                 # trace mass, L_sigma_normalization [P]
+    m_H = 124.93                # L_Higgs_2loop [P]
+
+    # Exact lever
+    lever_exact = (1 - sin2) / (1 - 2 * sin2)
+    check(lever_exact == Fraction(10, 7),
+          "lever (1 - s^2)/(1 - 2 s^2) = 10/7 exact at sin^2 = 3/13")
+
+    M_W_tree = M_Z * math.sqrt(1.0 - s2)
+
+    # The exhibited scheme-mixing error (superseded v5.3.4 route)
+    Dr_onshell = 0.0362
+    M_W_mixed = M_W_tree / math.sqrt(1.0 - Dr_onshell)
+    M_W_exp, M_W_err = 80.3692, 0.0133
+    err_mixed = abs(M_W_mixed - M_W_exp) / M_W_exp * 100
+    check(abs(M_W_mixed - 81.47) < 0.02,
+          f"mixed-scheme route reproduces the recorded 81.47 GeV failure "
+          f"({M_W_mixed:.3f})")
+    check(err_mixed > 1.0,
+          f"scheme mixing exhibited: {err_mixed:.2f}% error > 1%")
+
+    # The scheme-consistent Delta-rho correction (the L_W_mass logic)
+    Drho_top = 3 * alpha_em * m_t**2 / (16 * math.pi * M_W_tree**2 * s2)
+    Drho_QCD = -2 * alpha_s / math.pi * Drho_top
+    Drho_H = -11 * alpha_em * m_H**2 / (192 * math.pi * M_W_tree**2 * s2)
+    lever = float(lever_exact)
+    M_W_corr = M_W_tree + M_W_tree * (Drho_top + Drho_QCD + Drho_H) / 2 * lever
+
+    err_corr = abs(M_W_corr - M_W_exp) / M_W_exp * 100
+    check(abs(M_W_corr - 80.334) < 0.01,
+          f"M_W = {M_W_corr:.4f} GeV (pinned 80.334)")
+    check(err_corr < 0.1,
+          f"scheme-consistent error {err_corr:.3f}% < 0.1%")
+    check(err_corr < err_mixed / 10,
+          "consistent scheme beats the mixed scheme by more than 10x")
+
+    return _result(
+        name='L_MW_scheme_correction: scheme-consistent one-loop M_W from '
+             'sin^2 theta_W = 3/13',
+        tier=4,
+        epistemic='P',
+        summary=(
+            f'Scheme-consistency lemma for the W mass: with the 3/13 tree '
+            f'M_W^tree = {M_W_tree:.3f} GeV, the MS-bar custodial Delta-rho '
+            f'family (top {Drho_top:.5f}, QCD {Drho_QCD:.6f}, Higgs '
+            f'{Drho_H:.6f}) with exact lever 10/7 gives '
+            f'M_W = {M_W_corr:.4f} GeV (exp {M_W_exp}, {err_corr:.3f}%). '
+            f'The superseded mixed-scheme route (on-shell Delta r = 0.0362 '
+            f'on the MS-bar-style tree) is exhibited: {M_W_mixed:.2f} GeV, '
+            f'{err_mixed:.2f}% -- excluded. Type B anchor (M_Z anchored; '
+            f'm_t as trace mass). Registered at v24.3.399 '
+            f'(debt-registration wave); previously a dangling '
+            f'named-unregistered dependency of L_W_mass behind a dead '
+            f'conditional import.'
+        ),
+        key_result=(
+            f'M_W = {M_W_corr:.4f} GeV (exp {M_W_exp} +- {M_W_err}, '
+            f'{err_corr:.3f}%); mixed-scheme 81.47 GeV exhibit excluded. [P]'
+        ),
+        dependencies=['T_sin2theta', 'L_alpha_em', 'L_sigma_normalization',
+                      'L_alpha_s_zero_input', 'L_Higgs_2loop'],
+        cross_refs=['L_W_mass'],
+        artifacts={
+            'sin2_W': f'{sin2} = {s2:.6f}',
+            'lever': '10/7 exact',
+            'M_W_tree_GeV': round(M_W_tree, 4),
+            'M_W_mixed_GeV': round(M_W_mixed, 4),
+            'M_W_corr_GeV': round(M_W_corr, 4),
+            'M_W_exp_GeV': M_W_exp,
+            'Drho_top': round(Drho_top, 6),
+            'Drho_QCD': round(Drho_QCD, 6),
+            'Drho_H': round(Drho_H, 6),
+            'anchor_type': 'B (M_Z anchor; m_t trace mass)',
+        },
+    )
+
+
 def check_L_W_mass():
     """L_W_mass: W Boson Mass from sin²θ_W [P].
 
@@ -4466,11 +4598,14 @@ def register(registry):
     registry['L_W_mass'] = check_L_W_mass
     registry['L_baryogenesis_NNLO'] = check_L_baryogenesis_NNLO
     # v6.3b additions
-    try:
-        from L_MW_scheme_correction import check_L_MW_scheme_correction
-        registry['L_MW_scheme_correction'] = check_L_MW_scheme_correction
-    except ImportError:
-        pass
+    # v24.3.399 debt-registration wave: the v6.3b conditional here imported
+    # a top-level standalone module (L_MW_scheme_correction.py) that was
+    # never migrated into the package -- absent from every archived
+    # snapshot checked (v7.1, v7.3, 2026-03-25 engine) -- so the
+    # ImportError guard passed silently on every load and the citing
+    # dependency (check_L_W_mass) dangled as a named-unregistered root.
+    # The lemma now lives in this module; registration is unconditional.
+    registry['L_MW_scheme_correction'] = check_L_MW_scheme_correction
     try:
         from L_nucleon_mass_difference import check_L_nucleon_mass_difference
         registry['L_nucleon_mass_difference'] = check_L_nucleon_mass_difference

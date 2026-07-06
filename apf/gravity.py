@@ -2164,6 +2164,14 @@ def check_T_which_v_no_registered_interior_reader():
         'i4_composition.py': ('VL', 'consumer'),  # re-dispositioned 2026-07-02 (vacuum_label_code landing pass): L appeared at e0b1ff8 -- the Wave-7 IE declaration note string 'at the K = 42 joint point only' (count-level prose, no reader); latent until the owed native verify_all; first surfaced by this landing's walker run
         'ie_atlas_verdict_pin.py': ('L', 'infra'),
         'ie_onboarding_registry.py': ('L', 'fence'),
+        # v24.3.401 (2026-07-05, the wall-shadow census): fires V (the
+        # \bvacuum\b vocab -- verdict-pin row ids quantum:vacuum_* /
+        # strong:vacuum_realization_triptych pinned in its SHADOW_MAP)
+        # + L (the literal 42 inside 'S_42-covariant' in an ICL_vac
+        # shadow comment). Pure instrument prose/pins; constructs no
+        # reader; index-symbol-free by construction (see the wg2 Level-S
+        # disposition of the same file).
+        'ie_wall_shadow_census.py': ('VL', 'infra'),
         'interface_atlas_v02_inputs.py': ('VLD', 'consumer'),
         'internalization_geo.py': ('L', 'fence'),
         'kappa_int_bounds.py': ('L', 'fence'),

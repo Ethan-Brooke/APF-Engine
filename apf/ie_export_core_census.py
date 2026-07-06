@@ -38,10 +38,11 @@ WHAT THE CHECK CERTIFIES (tier 4, [P_structural_instrument]) -- four legs:
   3. THE ROOT INVENTORY. The unresolved dependency names (after canonical
      normalization and non-dependency-string filtering) are exactly the
      pinned EXPORT_ROOT_INVENTORY: the constitutive premises (A2, BW, MD,
-     FD1, FD2, FD4, SP, Paper0_row6), and the empirical bit (occupancy)
-     with its cost face (L_Delta).
-     Note occupancy appears BY NAME: the QAC empirical bit is a declared
-     root of the export core, not smuggled content.
+     FD1, FD2, FD4, SP, Paper0_row6), and occupancy (constitutive since
+     v24.3.304; the per-interface profile is the QAC) with its cost face
+     (L_Delta).
+     Note occupancy appears BY NAME: a declared root of the export core,
+     not smuggled content.
 
   4. CLOSURE INTEGRITY. No closure member raised at run time; every
      dependency name either resolves to a registered check, normalizes to a
@@ -80,8 +81,16 @@ from apf.apf_utils import check, _result
 # ---------------------------------------------------------------------------
 
 #: Leg 2 -- the reading-graded boundary of the export core (SET ONLY, no
-#: dispositions; principal ruling 2026-07-04). Measured at v24.3.389 tree
-#: state, 40 export-core inputs; union closure since the v24.3.393 L_col registration: 10 roots (see the inventory comments; .396 audit m7 de-staled this line).
+#: dispositions; principal ruling 2026-07-04). Measured at v24.3.400 tree
+#: state; 44 export-core inputs (40 -> 43 at the .398 export wave; 43 -> 44
+#: at the .400 Tsirelson re-declaration); reading boundary 16 -> 19 at .400
+#: (the three core IJC-sector reading members the .398 decline kept out
+#: enter with apf.core's module closure -- exactly the three the .398
+#: narrative predicted); union-closure roots 14 -> 22 at .400 (see the
+#: inventory comments; all eight entrants premise-genre); roots 22 -> 21
+#: at v24.3.401 (audit M1, 2026-07-05: D-quotient left -- it is DERIVED,
+#: aliased to the registered check_D_quotient_forced [P] in
+#: crystal._DEP_ALIASES, the .396 A4 precedent).
 EXPORT_READING_BOUNDARY = frozenset({
     "T_no_IJC_no_noncommutativity",
     "UB_usage_billing_adopted",
@@ -103,15 +112,28 @@ EXPORT_READING_BOUNDARY = frozenset({
     "check_T_matter_free_colour_record_deep_superselection_no_go",
     "check_T_only_gauge_invariant_sharp_colour_record_is_nonfactorizable_singlet_P",
     "check_T_unique_gauge_invariant_colour_state_of_N_fundamentals_is_entangled_baryon_P",
+    # the apf.core IJC-sector reading members (entered at v24.3.400 with
+    # the Tsirelson re-declaration -- module-level granularity pulls
+    # core's full closure; these are the three the .398 decline comment
+    # said "never enter", entering now DELIBERATELY with the declared
+    # input; SET-only, no dispositions, per the standing ruling):
+    # .401 audit m5 (dialect note, 2026-07-05): these three entrants carry
+    # epistemic='P_structural_reading' but their key_result strings say
+    # "[P_structural]" -- a pre-existing dialect mismatch; candidate lint
+    # extension per the .392 pattern (the status-field lint does not
+    # cover key_result).
+    "L_MD_extension",
+    "L_threat_substrate_realization",
+    "T_IJC_dichotomy",
 })
 
 #: Leg 3 -- the named roots the export core bottoms out in: axioms and
 #: constitutive premises (A2/BW/MD/FD*/SP), structural imports
 #: (Maschke_semisimplicity, K3_theorem), named lemma/partition aliases not
 #: registered under these strings (L_col, L_epsilon_star, L_Delta,
-#: T12_partition, Paper0_row6_operational_completeness), and the QAC
-#: empirical bit (occupancy) -- a declared root, exactly as the framework
-#: bills it.
+#: T12_partition, Paper0_row6_operational_completeness), and the
+#: occupancy root (constitutive since v24.3.304; the per-interface
+#: profile is the QAC) -- declared exactly as the framework bills it.
 EXPORT_ROOT_INVENTORY = frozenset({
     # the referent's constitutive premises (Paper 0 / Paper 1 kernel)
     "A2", "BW", "MD", "FD1", "FD2", "FD4", "SP",
@@ -127,7 +149,10 @@ EXPORT_ROOT_INVENTORY = frozenset({
     # Tsirelson bound on apf.core at this ROOT leg (the module closure
     # carries the named-unregistered tokens T_adj / T_sep / T2b, which
     # would have re-introduced non-premise debt and broken the .393
-    # certified sentence)). The landed inputs bottom out in four
+    # certified sentence; those three tokens were REGISTERED at
+    # v24.3.399, the debt-registration wave -- whether to re-declare
+    # the Tsirelson export on apf.core is a future leg's decision,
+    # deliberately not made there)). The landed inputs bottom out in four
     # additional constitutive-premise tokens only, each already
     # genre-typed "premise" in FULL_SURFACE_TYPED_ROOTS at the .396
     # full-surface adjudication (the Paper 0 loads-table rows 7a/7b/9/10
@@ -138,6 +163,32 @@ EXPORT_ROOT_INVENTORY = frozenset({
     "Paper0_row7b_defense_billing_locus",
     "Paper0_row9_cost_kind_dichotomy",
     "Paper0_row10_observer_reading",
+    # the v24.3.400 Tsirelson re-declaration (the decision the .398 wave
+    # deliberately left open, taken 2026-07-05): quantum:tsirelson_bound
+    # declared on apf.core, expect_export=True, landed
+    # INTERNAL_IDENTITY_GLOBAL_P. The .398 decline reason is DISCHARGED:
+    # T_adj / T_sep / T2b were registered at v24.3.399, so core's module
+    # closure now bottoms out in premise-genre tokens only. Measured on
+    # the .400 cold walk: exactly eight roots entered, ALL already
+    # genre-typed "premise" in FULL_SURFACE_TYPED_ROOTS at the .396
+    # adjudication (the Paper 1 kernel operational-requirement rows and
+    # foundation premises core's spine cites); NOTHING left; ZERO
+    # conjecture-class members entered any closure. The certified
+    # sentence keeps its shape: constitutive premises + occupancy +
+    # L_Delta, NO non-premise debts. Roots 14 -> 22.
+    # (D-quotient REMOVED at v24.3.401, audit M1 (2026-07-05) -- roots
+    #  22 -> 21: it is DERIVED, not premised; core.py's registered
+    #  check_D_quotient_forced [P] pins "D-quotient derived from A1 + K1",
+    #  so the dep string is aliased to the registered key in
+    #  crystal._DEP_ALIASES per the .396 A4 precedent. The certified
+    #  sentence gets STRONGER: one fewer premise, same shape.)
+    "D_positivity",
+    "FD3",
+    "K1",
+    "O4",
+    "OR0",
+    "OR2",
+    "SC",
 })
 # (The L_col registration debt was PAID at v24.3.393: check_L_col banked
 # in apf/core.py from Paper 13 App. A.4 + Paper 18's collapse sketch,
@@ -590,9 +641,13 @@ def check_T_ie_export_core_dependency_census():
 # The full-surface input inventory (v24.3.396)
 # =============================================================================
 
-#: Typed root inventory for the FULL surface (scope="full", all 196 pinned
-#: atlas inputs): 67 names, 7 genres; every unresolved dependency name the
-#: full walk produces is pinned here BY NAME with its adjudicated genre.
+#: Typed root inventory for the FULL surface (scope="full", all 200 pinned
+#: atlas inputs since v24.3.400): 61 names, 7 genres (67 -> 62 at
+#: v24.3.399, the debt-registration wave; 62 -> 61 at v24.3.401, the
+#: audit-M1 D-quotient de-premising -- premise genre 23 -> 22); every
+#: unresolved dependency name the full walk produces is pinned here BY
+#: NAME with its
+#: adjudicated genre.
 #: Landings that add/remove roots re-pin by hand (the EXPECTED discipline).
 FULL_SURFACE_TYPED_ROOTS = {
     # -- premise: constitutive/foundational premise rows (Paper 0 referent
@@ -606,7 +661,11 @@ FULL_SURFACE_TYPED_ROOTS = {
     "A2": "premise", "BW": "premise", "MD": "premise",
     "FD1": "premise", "FD2": "premise", "FD3": "premise", "FD4": "premise",
     "K1": "premise", "SP": "premise", "SC": "premise",
-    "D-quotient": "premise", "D_positivity": "premise",
+    # (D-quotient is NOT here since v24.3.401, audit M1 (2026-07-05):
+    #  it is DERIVED -- check_D_quotient_forced [P], "A1 + K1 ==>
+    #  D-quotient"; aliased in crystal._DEP_ALIASES like A4 -> L_irr.
+    #  Premise genre 23 -> 22, typed roots 62 -> 61.)
+    "D_positivity": "premise",
     "finite_physical_regime": "premise",
     "occupancy": "premise",  # the empirical bit (QAC); constitutive per the 2026-07-01 ruling
     "L_Delta": "premise",    # the cost face
@@ -627,16 +686,21 @@ FULL_SURFACE_TYPED_ROOTS = {
     #    with NO registered surface (the L_col genre pre-.393 -- honest debt
     #    rows; each is a candidate for its own registration leg, none is
     #    silently promoted by appearing here).
-    "T_adj": "named_unregistered",    # the adjunction theorem; its banked corollary surface is T_adj_commutes
-    "T_sep": "named_unregistered",    # disjoint-mechanism separation; banked consequence surface kappa_zero_Tsep
-    "T2b": "named_unregistered",
+    # Re-pinned 10 -> 5 at v24.3.399 (the debt-registration wave,
+    # 2026-07-05): T_adj, T_sep, T2b registered in apf/core.py (exact
+    # finite witnesses of the Paper 1 spine-era statements, [P]);
+    # L_MW_scheme_correction written + registered unconditionally in
+    # apf/gauge.py (the dead v6.3b conditional import removed);
+    # L_spectral_action_coefficients registered in apf/supplements.py
+    # at its existing docstring grade [P]. Measured post-wave: exactly
+    # those five names left the root set, NOTHING entered (the new
+    # checks' dependencies are registered checks + already-pinned
+    # premise rows only); all other pins byte-stable.
     "T10_grav": "named_unregistered",
     "L_x_half": "named_unregistered",
     "L_rec_loc": "named_unregistered",
     "L_hierarchy": "named_unregistered",
     "L_crossing_correction": "named_unregistered",
-    "L_MW_scheme_correction": "named_unregistered",  # gauge.py registration is a DEAD conditional (try-import of an absent top-level module); the citing dep dangles
-    "L_spectral_action_coefficients": "named_unregistered",  # check EXISTS in supplements.py, never registered -- nearest-to-registration debt row
     # -- named_internal: module-internal clause/quantity names used as dep
     #    strings (kappa_int bound clauses; ledger quantities).
     "C1": "named_internal", "C2": "named_internal", "C3": "named_internal",
@@ -768,25 +832,33 @@ def check_T_ie_full_surface_input_inventory():
     """T_ie_full_surface_input_inventory: The Full-Surface Input Inventory [P_structural_instrument].
 
     v24.3.396 (2026-07-04). The full-surface companion to the banked
-    export-core census (.390): the SAME walk, over ALL 196 pinned atlas
-    inputs rather than the 40 export-class ones, with every category of
+    export-core census (.390): the SAME walk, over ALL pinned atlas
+    inputs (196 at .396; 199 at the .398 export wave; 200 since the .400
+    Tsirelson re-declaration) rather than the export-class ones (40 at
+    .396; 43 at .398; 44 since .400), with every category of
     input the framework consumes pinned BY NAME. What is banked is the
     measurement plus its tripwires -- the sentence this check certifies:
 
         A1 + the named premises + 13 declared external ledgers
         + 23 pinned conjectures, full surface, machine-verified.
 
+    (One premise FEWER since v24.3.401, audit M1: D-quotient left the
+    premise genre -- it is DERIVED, check_D_quotient_forced [P] from
+    A1 + K1; the certified sentence got strictly stronger.)
+
     (A1 itself is a REGISTERED bank member -- it appears inside the walk,
     never as an unresolved root. The roots below are what the walk could
     NOT resolve, each one adjudicated and typed.)
 
     LEGS:
-      0. SCOPE: all 196 pinned inputs walked; the 15 engine-native
+      0. SCOPE: all 200 pinned inputs walked; the 15 engine-native
          no-bank-home inputs are exactly the pinned named class.
       1. INTEGRITY: zero run errors (a cached error entry from a stale
          seeding cache FAILS here -- the cache-honesty design of .390/.395).
       2. TYPED ROOTS: the unresolved-name set is EXACTLY the typed
-         inventory (67 names, 7 genres). Set-only tripwire: a new root,
+         inventory (61 names, 7 genres; 67 -> 62 at v24.3.399, the
+         debt-registration wave; 62 -> 61 at v24.3.401, the audit-M1
+         D-quotient de-premising). Set-only tripwire: a new root,
          a vanished root, or an unadjudicated genre fails the bank
          (fired live twice in-session: the audit-M1 A4 de-premising and
          the audit-m3 reachability growth were both leg-2 catches).
@@ -832,14 +904,14 @@ def check_T_ie_full_surface_input_inventory():
     rep = run_census(scope="full")
 
     # Leg 0: scope + the engine-native named class.
-    check(rep["n_export_inputs"] == 199,
-          f"full scope: 199 pinned inputs walked (got {rep['n_export_inputs']})"
-          " -- re-pinned 196->199 at v24.3.398 (the quantum-spine export"
-          " wave: collapse triad split + rent exclusion + Born trace rule"
-          " declared as exporting inputs; two more intended exports"
-          " DECLINED by this census's own legs -- the second law on"
-          " apf.supplements at NO-CONJECTURE, the Tsirelson bound on"
-          " apf.core at the ROOT leg / named-unregistered debt)")
+    check(rep["n_export_inputs"] == 200,
+          f"full scope: 200 pinned inputs walked (got {rep['n_export_inputs']})"
+          " -- re-pinned 199->200 at v24.3.400 (the Tsirelson re-declaration:"
+          " the .398-declined export on apf.core re-declared after the"
+          " v24.3.399 debt-registration wave registered T_adj/T_sep/T2b;"
+          " landed INTERNAL_IDENTITY_GLOBAL_P; the .398 second-law decline"
+          " on apf.supplements STANDS at the NO-CONJECTURE leg). Prior"
+          " re-pin 196->199 at v24.3.398 (the quantum-spine export wave)")
     um = set(rep["unmapped"])
     check(um == FULL_SURFACE_ENGINE_NATIVE,
           "engine-native class: unmapped inputs are exactly the 15 pinned "
@@ -919,9 +991,9 @@ def check_T_ie_full_surface_input_inventory():
         tier=4,
         epistemic="P_structural_instrument",
         summary=(
-            "The full-surface input inventory over all 196 pinned atlas "
+            "The full-surface input inventory over all 200 pinned atlas "
             "inputs: every unresolved dependency name typed and pinned "
-            "(62 roots / 7 genres), the declared external-ledger surface "
+            "(61 roots / 7 genres), the declared external-ledger surface "
             "pinned (13), the [C]-reachable surface pinned (23), the heavy "
             "skip set pinned and disclosed (13), the engine-native class "
             "pinned (15). Set-exact tripwires throughout; genre "
@@ -929,7 +1001,7 @@ def check_T_ie_full_surface_input_inventory():
         ),
         key_result=(
             "A1 + the named premises + 13 declared external ledgers + 23 "
-            "pinned conjectures, full surface, machine-verified: 196 inputs; "
+            "pinned conjectures, full surface, machine-verified: 200 inputs; "
             f"{len(FULL_SURFACE_TYPED_ROOTS)} typed roots ({n_by_genre['premise']} premise / "
             f"{n_by_genre['named_unregistered']} named-unregistered debt / "
             f"{n_by_genre['named_internal']} internal / "

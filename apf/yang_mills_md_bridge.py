@@ -608,8 +608,10 @@ def check_T_contextuality_implies_superadditive_cost():
 
     SCOPE / NON-CLAIMS. A structural IMPLICATION between structural properties; it
     does NOT (a) fix the gap VALUE (Lambda_QCD stays open -- Delta >= log(27/4) is
-    the trilogy's), (b) force OCCUPANCY (that Delta > 0 is realized is the
-    per-interface input; A1 admits the Delta = 0 reversible world), nor (c)
+    the trilogy's), (b) force OCCUPANCY at this interface (that Delta > 0 is
+    realized HERE is the per-interface profile input; that Delta > 0 obtains
+    SOMEWHERE is constitutive, [P] base since v24.3.304 -- the all-Delta=0
+    reversible world is the unoccupied limit, not a live alternative), nor (c)
     replace the gap's footing (the entangled colour singlet, weaker than
     contextuality, is already sufficient for confinement). Grade
     P_structural_reading: composes the engine's Boolean (global-section) verdict +

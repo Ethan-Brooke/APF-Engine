@@ -45,3 +45,6 @@ DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/
 /phase5_theorem_R_edits.py
 /interface_atlas_v02_result.json
 verify_full.txt
+# v24.3.401 audit M3 (2026-07-05): session verify transcripts, keep local
+verify_run_2026-07-05.txt
+verify_full_2026-07-05.txt

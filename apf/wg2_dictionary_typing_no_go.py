@@ -721,6 +721,11 @@ def check_T_wg2_dictionary_index_no_native_consumer_census():
         'codomain_transport_schema.py': (3,
             'the dictionary-fence transport schema strings; the pre-.364 '
             'ruling this census strengthens'),
+        'ie_wall_shadow_census.py': (2,
+            'v24.3.401 wall-shadow census: the two hits are the W1 '
+            'certificate NAMES pinned in its WALL_REGISTRY (that census '
+            'RUNS this fence as a wall certificate; it consumes no '
+            'index); its prose is index-symbol-free by construction'),
         'abelian_coupling_capacity_count.py': (1,
             'F1, THE ONE KNOWN IMPLICIT MEMBER: the hardwired n=2 ratio '
             '(1-s)/s -- fires ZERO of the eight vocabulary fingerprints; '

@@ -192,6 +192,7 @@ PINNED_VERDICTS = {
     "quantum:magic_square_threshold_robust": ("IJC_OBSTRUCTION", False),
     "quantum:qutrit_noncontextual_control": ("GLOBAL_SECTION_EXPORTED", True),
     "quantum:symmetry_contextuality_orthogonal": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "quantum:tsirelson_bound": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:vacuum_label_code_p1_witness": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "quantum:vacuum_scheme_covariance_split": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "readout:su2_diquark": ("CANONICAL_RECORD_EXPORTED", True),
@@ -228,4 +229,4 @@ PINNED_VERDICTS = {
     "wtrace:zll_r2_counterterm_pieces": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
 }
 
-PIN_VERSION = "24.3.398"
+PIN_VERSION = "24.3.400"

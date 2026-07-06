@@ -510,6 +510,14 @@ def _run_bank_audit(args) -> int:
 
 
 def main():
+    # v24.3.401 audit M3 (2026-07-05): some host consoles (Windows cp1252)
+    # cannot encode the box-drawing characters in the scorecard; reconfigure
+    # to UTF-8 with replacement rather than crash. No-op on healthy streams.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except AttributeError:
+        pass
     parser = argparse.ArgumentParser(description="APF Full Verification")
     parser.add_argument("--module", help="Run only checks matching this string (e.g. 'core')")
     parser.add_argument("--verbose", "-v", action="store_true", help="Print full tracebacks on failure")

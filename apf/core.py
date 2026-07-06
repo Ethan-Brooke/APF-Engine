@@ -1655,6 +1655,14 @@ def check_L_Omega_sign():
     Import: Subadditivity of von Neumann entropy (Lieb-Ruskai 1973).
 
     STATUS: [P] for (1a), (2)-(6). [Operational] for (1b).
+
+    OMEGA_INTER FENCE (2026-07-05, R2): the negative Omega_inter here
+    (an entropy/mutual-information quantity, the entanglement
+    diagnostic) and the capacity surplus Delta > 0 are DIFFERENT
+    OBJECTS -- proven different by
+    check_T_delta_not_an_information_functional [P] (delta_calculus.py);
+    never quote them side by side unfenced -- a sign comparison between
+    them is a category error, not a tension.
     """
     # ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ helpers ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
     def S_vn(rho):
@@ -2900,6 +2908,16 @@ def check_T_canonical():
     All [P] from A1, L_eps*, L_loc, L_nc, T_Bek, T_tensor.
 
     STATUS: [P] -- CLOSED.
+
+    OMEGA_INTER FENCE (2026-07-05, R2): entanglement diagnosed as
+    NEGATIVE Omega_inter (the entropy/mutual-information quantity of
+    L_Omega_sign: Omega_inter = -I(A:B) <= 0 in the quantum regime) and
+    the capacity surplus Delta > 0 (the superadditive enforcement-cost
+    gap; this check's discrete witness has Omega_inter > 0 in the COST
+    reading) are DIFFERENT OBJECTS -- proven different by
+    check_T_delta_not_an_information_functional [P] (delta_calculus.py).
+    The two must never be quoted side by side unfenced; a sign
+    comparison between them is a category error, not a tension.
     """
     from fractions import Fraction
     from itertools import combinations
@@ -3853,6 +3871,585 @@ def check_T_alg():
             'residual_d1_d3': str(residual_after_d1_d3),
             'residual_d2_d3': 'bot (< 0)',
             'note': '[E_d1,F_Pi]!=0 is proved directly in check_T_alg_FPi (no GNS needed)',
+        },
+    )
+
+
+def check_T_sep():
+    """T_sep: Sector decomposition -- disjoint anchors iff additive costs [P].
+
+    CLAIM (Paper 1 Technical Supplement, spine-era statement: Theorem
+    T_sep^op "Operational Sector Decomposition" + Theorem T_sep "Linear
+    Representation of the Sector Decomposition"; archived source of
+    record: Papers/Paper 01/Old/Paper_1_Enforceability_of_Distinction_
+    Supplement_v6_pre-v7.0.tex, thm:Tsep_op / thm:Tsep -- the live v8.x
+    supplement restates the same content in the Sep/IJC architecture):
+
+      (a) Cost criterion: distinctions d1, d2 at an interface Gamma are
+          independently enforceable iff their joint enforcement cost is
+          exactly additive:
+
+              M_d1 cap M_d2 = {0}  <=>  eps({d1,d2}) = eps(d1) + eps(d2).
+
+      (b) Sector decomposition: any maximal antichain B of pairwise
+          independently enforceable distinctions partitions the substrate
+          as a pre-metric algebraic direct sum
+
+              S_Gamma = (+)_{d in B} M_d  (+)  Pi,
+
+          with Pi the residual pool (shared-substrate sector; source of
+          the superadditivity face L_Delta and the scope condition of
+          A1's exact-accounting regime, check_A1_disjoint_scope).
+
+    PROOF (supplement): forward -- disjoint anchors mean the perturbation
+    classes separate (FD3 anchor-set locality), the joint defense
+    decomposes, and costs add by K3 (FD4 additivity on disjoint
+    supports). Converse, contrapositive -- a shared direction v is
+    defended twice separately but once jointly; by SP + K2 (FD4) the
+    shared commitment has strictly positive cost, so anchor overlap
+    forces strict subadditivity.
+
+    WITNESS (exact rational, finite): a 6-direction substrate with
+    per-direction costs c_i in Q_{>0} (SP/K2), the K3-additive cost
+    functional kappa(S) = sum_{i in S} c_i, anchors M_d1 = {0,1},
+    M_d2 = {2}, an overlapping distinction M_d3 = {1,3}, and pool
+    Pi = {3,4,5} relative to the antichain {d1,d2}. Verifies exactly:
+    K3 additivity on disjoint supports; the forward direction; strict
+    subadditivity under overlap with deficit == kappa(shared) > 0; the
+    full biconditional on all three pairs; the partition
+    S = M_d1 (+) M_d2 (+) Pi; and the A1 budget bound.
+
+    REGISTRATION NOTE (v24.3.399 debt-registration wave): retires the
+    named-unregistered debt row "T_sep" of the full-surface input
+    inventory. Long-standing citation sites: T_adj_commutes,
+    kappa_zero_Tsep (the banked consequence surface), A1_disjoint_scope,
+    P_tom, P_cls. The K3 forced-additivity theorem is independently
+    certified on a finite substrate in paper1_kernel
+    (T_FD1_substrate_distinctions_capacity) -- a registered bank
+    DEPENDENCY here, load-bearing for the [P] grade (moved from
+    cross-ref at the .399 audit fix F5a); here K3 additionally holds
+    by construction of the witness cost functional and is verified
+    in-body.
+
+    SCOPE OF THE WITNESS (.399 audit fix F5b): the witness instantiates
+    the OPERATIONAL form (thm:Tsep_op); the linear-representation leg
+    (thm:Tsep) additionally rides T_embed in the archived source,
+    cited not witnessed.
+
+    COMPANION SURFACES (.399 audit fix F3): top-level paper1.py and
+    supplement.py carry pre-existing UNREGISTERED companion
+    instantiations of the same spine name (strictly weaker toy
+    surfaces: no biconditional, no skewed-idempotent contrast),
+    pointed at by the Paper 1 main v5.5 theorem register; the bank key
+    registered here is the canonical certified surface.
+    """
+    from fractions import Fraction as _F
+
+    # -- Substrate: 6 directions, exact positive per-direction costs (SP/K2)
+    c = {0: _F(1), 1: _F(3, 2), 2: _F(2), 3: _F(1, 2), 4: _F(1), 5: _F(5, 4)}
+    S = frozenset(c)
+    check(all(v > 0 for v in c.values()),
+          "SP/K2: every substrate direction carries strictly positive cost")
+
+    def kappa(sub):
+        return sum(c[i] for i in sub)
+
+    # -- K3: additivity on disjoint supports (verified in-body, exact)
+    A_, B_ = frozenset({0, 1}), frozenset({2, 4})
+    check(not (A_ & B_) and kappa(A_ | B_) == kappa(A_) + kappa(B_),
+          "K3: kappa additive on disjoint supports (exact)")
+
+    # -- Distinctions: anchors + costs; joint cost = kappa(union of anchors)
+    M = {'d1': frozenset({0, 1}), 'd2': frozenset({2}), 'd3': frozenset({1, 3})}
+    eps = {d: kappa(M[d]) for d in M}
+    check(all(e > 0 for e in eps.values()), "A1/MD: eps(d) > 0 for all d")
+
+    def eps_joint(d, e):
+        return kappa(M[d] | M[e])
+
+    # (a) forward: disjoint anchors => exact additivity
+    check(not (M['d1'] & M['d2']), "M_d1 cap M_d2 = empty (disjoint anchors)")
+    check(eps_joint('d1', 'd2') == eps['d1'] + eps['d2'],
+          "forward: eps({d1,d2}) = eps(d1) + eps(d2) exactly (K3)")
+
+    # (a) converse, contrapositive: overlap => strict subadditivity
+    shared = M['d1'] & M['d3']
+    check(shared == frozenset({1}), "d1, d3 share exactly direction 1")
+    check(eps_joint('d1', 'd3') < eps['d1'] + eps['d3'],
+          "overlap: eps({d1,d3}) < eps(d1) + eps(d3) (strict subadditivity)")
+    check(eps['d1'] + eps['d3'] - eps_joint('d1', 'd3') == kappa(shared),
+          "subadditivity deficit == kappa(shared direction) > 0 (SP+K2)")
+
+    # (a) the biconditional, all three pairs
+    for x, y in (('d1', 'd2'), ('d1', 'd3'), ('d2', 'd3')):
+        disjoint = not (M[x] & M[y])
+        additive = (eps_joint(x, y) == eps[x] + eps[y])
+        check(disjoint == additive,
+              f"T_sep biconditional on ({x},{y}): disjoint <=> additive")
+
+    # (b) sector decomposition for the maximal antichain B = {d1, d2}
+    Pi = S - (M['d1'] | M['d2'])
+    check(Pi == frozenset({3, 4, 5}), "pool Pi = S minus (M_d1 cup M_d2)")
+    check(not (M['d1'] & M['d2']) and not (M['d1'] & Pi) and not (M['d2'] & Pi),
+          "sectors pairwise disjoint: direct sum M_d1 (+) M_d2 (+) Pi")
+    check(M['d1'] | M['d2'] | Pi == S, "sectors exhaust the substrate")
+
+    # A1 budget bound over the full substrate
+    C = _F(10)
+    check(kappa(S) <= C, "A1: total enforcement cost within capacity")
+
+    return _result(
+        name='T_sep: Sector decomposition -- disjoint anchors iff additive costs',
+        tier=0,
+        epistemic='P',
+        summary=(
+            'Paper 1 Technical Supplement (spine-era T_sep^op / T_sep): '
+            'independently enforceable distinctions have disjoint anchors '
+            'iff joint enforcement cost is exactly additive; a maximal '
+            'antichain induces the pre-metric direct sum '
+            'S_Gamma = (+)_d M_d (+) Pi. Forward: FD3 locality + K3 '
+            'additivity. Converse: a shared direction is defended once '
+            'jointly, twice separately; SP/K2 make the deficit strictly '
+            'positive. Exact-rational finite witness verifies K3, both '
+            'directions, the biconditional, the partition, and the A1 '
+            'bound. Registered at v24.3.399 (debt-registration wave); '
+            'previously a named-unregistered root of the full-surface '
+            'inventory.'
+        ),
+        key_result='M_d1 cap M_d2 = {0} <=> eps({d1,d2}) = eps(d1)+eps(d2); '
+                   'S_Gamma = (+)_d M_d (+) Pi [P]',
+        dependencies=['A1', 'FD3', 'FD4', 'SP',
+                      'T_FD1_substrate_distinctions_capacity'],
+        cross_refs=['kappa_zero_Tsep', 'A1_disjoint_scope', 'L_Delta'],
+        artifacts={
+            'costs': {str(k): str(v) for k, v in c.items()},
+            'eps': {d: str(e) for d, e in eps.items()},
+            'deficit_d1_d3': str(kappa(shared)),
+            'pool': sorted(Pi),
+            'provenance': 'Paper 1 Technical Supplement (spine era), '
+                          'thm:Tsep_op / thm:Tsep',
+        },
+    )
+
+
+def check_T_adj():
+    """T_adj: Self-adjointness of sector projections [P].
+
+    CLAIM (Paper 1 Technical Supplement, spine-era statement: Theorem
+    T_adj "Self-Adjointness of Sector Projections"; archived source of
+    record: Papers/Paper 01/Old/Paper_1_Enforceability_of_Distinction_
+    Supplement_v6_pre-v7.0.tex, thm:Tadj_sector): with respect to the
+    block-orthogonal bilinear form B forced by the sector decomposition
+    (L_omega, a SUPPLEMENT-CITED RIDER: that K3 FORCES inter-sector
+    orthogonality of any admissible cost bilinear form rests on the
+    archived supplement's lem:Lomega, cited not witnessed), each
+    sector map E_d is the B-orthogonal
+    projection onto its anchor M_d:
+
+        E_d^2 = E_d,   E_d^dagger = E_d,
+        ker(E_d) = (+)_{d' != d} M_{d'} (+) Pi.
+
+    The kernel identification is a THEOREM, not a definition (supplement
+    FD5a vs FD5b): an idempotent with range M_d is constrained only by
+    E_d restricted to M_d = id; that its kernel is the T_sep complement
+    is what T_adj proves. Structural invariance (SUPPLEMENT-CITED
+    RIDER): that any cost function satisfying K1--K3 produces the same
+    inter-sector orthogonality pattern, hence the same projections
+    (the kappa-class invariance), rests on the archived supplement's
+    prop:kappa_class, cited not witnessed. What the in-body witness
+    VERIFIES is the orthogonality PATTERN and the projection theorem
+    (E^T B = B E + the kernel identification) on the witness form.
+
+    PROOF (supplement): M_d perp ker(E_d) w.r.t. B by the sector
+    decomposition; for u = u_d + u_perp, v = v_d + v_perp:
+    B(E_d u, v) = B(u_d, v_d) = B(u, E_d v). QED.
+
+    WITNESS (exact rational): V = Q^4 with sectors M_d1 = span{e0,e1},
+    M_d2 = span{e2}, Pi = span{e3}; B block-diagonal with a NON-trivial
+    positive-definite block [[2,1],[1,2]] on M_d1 and weights 3, 5 on
+    M_d2, Pi (within-sector normalization freedom: the kappa-class
+    point). Verifies exactly: B symmetric positive-definite (leading
+    principal minors 2, 3, 9, 45); inter-sector B-orthogonality (the
+    L_omega pattern, instantiated in-body); E_d1^2 = E_d1; the exact
+    matrix identity E^T B = B E (B-self-adjointness); ker(E_d1) =
+    M_d2 (+) Pi; and the CONTRAST: a skewed idempotent F with the same
+    range but a tilted kernel satisfies F^2 = F yet F^T B != B F --
+    self-adjointness fails exactly where the kernel identification
+    fails. Also E_d2 self-adjoint and E_d1 E_d2 = 0 (the hook
+    T_adj_commutes builds on).
+
+    REGISTRATION NOTE (v24.3.399 debt-registration wave): retires the
+    named-unregistered debt row "T_adj". Long-standing citation sites:
+    T_adj_commutes (the banked corollary surface), T_inseparable_IJC,
+    T1b. L_omega remains an unregistered spine name; its orthogonality
+    PATTERN is instantiated and verified in-body on the witness form
+    (v24.3.391 K3 precedent), while the FORCING and kappa-class
+    INVARIANCE clauses are supplement-cited riders (lem:Lomega +
+    prop:kappa_class), cited not witnessed (.399 audit fix F4).
+
+    COMPANION SURFACES (.399 audit fix F3): top-level paper1.py and
+    supplement.py carry pre-existing UNREGISTERED companion
+    instantiations of the same spine name (strictly weaker toy
+    surfaces: no biconditional, no skewed-idempotent contrast),
+    pointed at by the Paper 1 main v5.5 theorem register; the bank key
+    registered here is the canonical certified surface.
+    """
+    from fractions import Fraction as _F
+    import itertools as _it
+
+    n = 4
+    B = [[_F(2), _F(1), _F(0), _F(0)],
+         [_F(1), _F(2), _F(0), _F(0)],
+         [_F(0), _F(0), _F(3), _F(0)],
+         [_F(0), _F(0), _F(0), _F(5)]]
+
+    def mm(X, Y):
+        return [[sum(X[i][k] * Y[k][j] for k in range(n)) for j in range(n)]
+                for i in range(n)]
+
+    def mT(X):
+        return [[X[j][i] for j in range(n)] for i in range(n)]
+
+    # B symmetric, positive definite (leading principal minors, exact)
+    check(B == mT(B), "B symmetric")
+
+    def minor_det(k):
+        d = _F(0)
+        for perm in _it.permutations(range(k)):
+            inv = sum(1 for a in range(k) for b in range(a + 1, k)
+                      if perm[a] > perm[b])
+            prod = _F(1)
+            for r in range(k):
+                prod *= B[r][perm[r]]
+            d += (_F(-1) ** inv) * prod
+        return d
+
+    minors = [minor_det(k) for k in range(1, 5)]
+    check(minors == [_F(2), _F(3), _F(9), _F(45)],
+          "B positive definite: leading principal minors 2, 3, 9, 45 > 0")
+
+    # Inter-sector orthogonality (L_omega content, instantiated in-body)
+    sectors = {'M_d1': [0, 1], 'M_d2': [2], 'Pi': [3]}
+    for s1 in sectors:
+        for s2 in sectors:
+            if s1 == s2:
+                continue
+            for i in sectors[s1]:
+                for j in sectors[s2]:
+                    check(B[i][j] == 0,
+                          f"B({s1},{s2}) = 0: inter-sector orthogonality")
+
+    # E_d1: projection onto M_d1 along M_d2 (+) Pi
+    E = [[_F(1), _F(0), _F(0), _F(0)],
+         [_F(0), _F(1), _F(0), _F(0)],
+         [_F(0), _F(0), _F(0), _F(0)],
+         [_F(0), _F(0), _F(0), _F(0)]]
+    check(mm(E, E) == E, "E_d1 idempotent: E^2 = E (exact)")
+    check(mm(mT(E), B) == mm(B, E),
+          "T_adj: E^T B = B E -- E_d1 is B-self-adjoint (exact)")
+
+    # kernel = M_d2 (+) Pi; identity on M_d1
+    for j in (2, 3):
+        check(all(E[i][j] == 0 for i in range(n)),
+              f"E_d1 e{j} = 0: e{j} in ker(E_d1) = M_d2 (+) Pi")
+    for j in (0, 1):
+        check(all(E[i][j] == (_F(1) if i == j else _F(0)) for i in range(n)),
+              f"E_d1 e{j} = e{j}: identity on M_d1")
+
+    # Contrast: same range, skewed kernel => idempotent, NOT B-self-adjoint
+    Fsk = [[_F(1), _F(0), _F(0), _F(1)],
+           [_F(0), _F(1), _F(0), _F(0)],
+           [_F(0), _F(0), _F(0), _F(0)],
+           [_F(0), _F(0), _F(0), _F(0)]]
+    check(mm(Fsk, Fsk) == Fsk, "skewed idempotent: F^2 = F, range = M_d1")
+    check(mm(mT(Fsk), B) != mm(B, Fsk),
+          "FD5a/FD5b: skewed kernel breaks B-self-adjointness -- the kernel "
+          "identification is the theorem, not the definition")
+
+    # Corollary hook: E_d2 self-adjoint, and E_d1 E_d2 = 0
+    E2 = [[_F(0)] * n for _ in range(n)]
+    E2[2][2] = _F(1)
+    check(mm(mT(E2), B) == mm(B, E2), "E_d2 B-self-adjoint (exact)")
+    Z = [[_F(0)] * n for _ in range(n)]
+    check(mm(E, E2) == Z and mm(E2, E) == Z,
+          "E_d1 E_d2 = 0 = E_d2 E_d1 (the T_adj_commutes hook)")
+
+    return _result(
+        name='T_adj: Self-adjointness of sector projections',
+        tier=0,
+        epistemic='P',
+        summary=(
+            'Paper 1 Technical Supplement (spine-era T_adj, '
+            'thm:Tadj_sector): each sector map E_d is the B-orthogonal '
+            'projection onto its anchor M_d w.r.t. the block-orthogonal '
+            'bilinear form forced by the sector decomposition (L_omega '
+            'content, instantiated in-body): E_d^2 = E_d, E_d^dagger = '
+            'E_d, ker(E_d) = the T_sep complement. The kernel '
+            'identification is the theorem (FD5a vs FD5b); a skewed '
+            'idempotent with the same range fails B-self-adjointness '
+            '(verified exactly). Structurally invariant across the '
+            'admissible kappa-class. Registered at v24.3.399 '
+            '(debt-registration wave); previously a named-unregistered '
+            'root of the full-surface inventory.'
+        ),
+        key_result='E_d^T B = B E_d and E_d^2 = E_d exactly; '
+                   'ker(E_d) = (+)_{d\' != d} M_{d\'} (+) Pi [P]',
+        dependencies=['T_sep', 'FD4'],
+        cross_refs=['T_adj_commutes', 'kappa_zero_Tsep',
+                    'T_FD1_substrate_distinctions_capacity'],
+        artifacts={
+            'B_minors': [str(m) for m in minors],
+            'sectors': {k: v for k, v in sectors.items()},
+            'skewed_contrast': 'F^2=F with tilted kernel fails E^T B = B E',
+            'provenance': 'Paper 1 Technical Supplement (spine era), '
+                          'thm:Tadj_sector',
+        },
+    )
+
+
+def check_T2b():
+    """T2b: Complexification and Wedderburn decomposition [P].
+
+    CLAIM (Paper 1 spine, archived 180p supplement, subsection "T2b:
+    Complexification and Wedderburn decomposition"; archived source of
+    record: Papers/Paper 01/Old/Brooke_EnforceabilityOfDistinction_180 p
+    version.tex): the enforcement algebra A -- a finite-dimensional real
+    *-algebra carrying a faithful positive normalized state omega (O4)
+    and the *-involution (OR2) -- complexifies to a finite-dimensional
+    SEMISIMPLE complex *-algebra, and by Wedderburn--Artin
+
+        A_C := A (x)_R C  ~=  (+)_k M_{n_k}(C),
+
+    acting faithfully on H = (+)_k C^{n_k}: the Hilbert-space
+    representation consumed by the field-selection step T2c and by
+    T_Born downstream. Field SELECTION (C over R, H) is T2c's content
+    and is NOT claimed here (P_tom / P_cls carry those exclusions).
+
+    PROOF (supplement): Step 1, complexification preserves the
+    *-algebra axioms (symbolic identities; the involution extends
+    conjugate-linearly). Step 2, semisimplicity survives: for N in
+    rad(A_C), N*N is nilpotent and PSD under the GNS form of omega, so
+    N*N = 0, so N = 0 by faithfulness. Step 3, Wedderburn--Artin over
+    the algebraically closed field C forces full matrix blocks
+    M_{n_k}(C). Step 4, the block sum acts faithfully on (+)_k C^{n_k},
+    consistently with the GNS inner product <a,b> = omega(a* b).
+
+    WITNESS (exact, two algebras):
+      (1) One-block: A = the real *-algebra generated by the
+          self-adjoint enforcement generators sigma_z, sigma_x (the
+          T_alg / L_T2 witness pair) inside M_2(R). Verified exactly:
+          basis {I, sz, sx, sz sx} has full rank 4 = dim M_2(R) (so the
+          algebra is multiplicatively closed and unital by dimension);
+          transpose is a *-involution (generators fixed, (sz sx)^T =
+          -sz sx in the span; anti-multiplicativity verified); omega =
+          tr/2 is a faithful positive state -- the Gram matrix
+          G_ij = omega(b_i^T b_j) is EXACTLY the identity (GNS form
+          positive-definite, the L_T2 positivity leg, here exact);
+          A is SIMPLE: the two-sided ideal generated by every basis
+          element has rank 4 (exact), so rad(A) = 0; the four real
+          matrices stay C-linearly independent (real/imaginary split:
+          C-independence of real matrices reduces to R-independence,
+          rank 4), so A_C = M_2(C) with dim_C = 4 = 2^2; the
+          commutant/centre system [X, sz] = [X, sx] = 0 has nullity 1
+          (exact elimination; structure constants are real, so the
+          complex dimensions coincide) => ONE Wedderburn block,
+          n_1 = 2, and the defining action on C^2 is irreducible
+          (Schur: commutant = C I) and faithful.
+      (2) Two-block: A' = R (+) M_2(R) embedded block-diagonally in
+          M_3(R), dim 5. Verified exactly: the centre system over the
+          5-element basis has nullity 2; p1 = diag(1,0,0) and
+          p2 = diag(0,1,1) are central orthogonal idempotents with
+          p1 + p2 = 1; the corner ranks are rank(p1 A' p1) = 1 and
+          rank(p2 A' p2) = 4 => blocks (n_1, n_2) = (1, 2) with
+          1^2 + 2^2 = 5 = dim A'.
+
+    GRADE AND DEPENDENCIES: [P]. Rests on the registered finite GNS
+    surface L_T2 (concrete state + constructive GNS representation,
+    [P]) and the kernel premise rows O4 (faithful positive state) and
+    OR2 (*-involution), both pinned premise roots of the full-surface
+    inventory. T2a's abstract construction of A as a real *-algebra is
+    instantiated in-body on the witness algebras; Wedderburn--Artin is
+    applied CONSTRUCTIVELY (centre / central-idempotent / corner-rank
+    computation on the witnesses), not cited as an unregistered
+    dependency.
+
+    REGISTRATION NOTE (v24.3.399 debt-registration wave): retires the
+    named-unregistered debt row "T2b". Citation site: P_cls
+    (compositional closure, H-exclusion) cites T2b for the Wedderburn
+    class structure its argument runs over; T_alg's docstring cites the
+    Wedderburn (T2a) -> GNS (T2b-c) chain.
+
+    COMPANION SURFACES (.399 audit fix F3): top-level paper1.py and
+    supplement.py carry pre-existing UNREGISTERED companion
+    instantiations of the same spine name (strictly weaker toy
+    surfaces: no biconditional, no skewed-idempotent contrast),
+    pointed at by the Paper 1 main v5.5 theorem register; the bank key
+    registered here is the canonical certified surface.
+    """
+    from fractions import Fraction as _F
+
+    def mm(X, Y):
+        k = len(Y)
+        return [[sum(X[i][t] * Y[t][j] for t in range(k))
+                 for j in range(len(Y[0]))] for i in range(len(X))]
+
+    def mT(X):
+        return [[X[j][i] for j in range(len(X))] for i in range(len(X[0]))]
+
+    def msub(X, Y):
+        return [[X[i][j] - Y[i][j] for j in range(len(X[0]))]
+                for i in range(len(X))]
+
+    def flat(X):
+        return [x for row in X for x in row]
+
+    def rank(rows):
+        rows = [[_F(x) for x in r] for r in rows if any(r)]
+        r = 0
+        ncols = len(rows[0]) if rows else 0
+        for cid in range(ncols):
+            piv = next((i for i in range(r, len(rows))
+                        if rows[i][cid] != 0), None)
+            if piv is None:
+                continue
+            rows[r], rows[piv] = rows[piv], rows[r]
+            pv = rows[r][cid]
+            for i in range(len(rows)):
+                if i != r and rows[i][cid] != 0:
+                    f = rows[i][cid] / pv
+                    rows[i] = [a - f * b for a, b in zip(rows[i], rows[r])]
+            r += 1
+        return r
+
+    # ------- Witness 1: one block, A = <sigma_z, sigma_x> in M_2(R) -------
+    I2 = [[_F(1), _F(0)], [_F(0), _F(1)]]
+    sz = [[_F(1), _F(0)], [_F(0), _F(-1)]]
+    sx = [[_F(0), _F(1)], [_F(1), _F(0)]]
+    szsx = mm(sz, sx)
+    basis = [I2, sz, sx, szsx]
+
+    # R-linear independence: rank 4 = dim M_2(R) => A = M_2(R), unital,
+    # multiplicatively closed by dimension. C-independence of REAL
+    # matrices reduces to R-independence (split a complex relation into
+    # real and imaginary parts), so dim_C A_C = 4 = 2^2.
+    check(rank([flat(b) for b in basis]) == 4,
+          "basis {I, sz, sx, sz sx} has rank 4 = dim M_2(R): A = M_2(R), "
+          "and A_C = M_2(C) (real/imaginary split)")
+
+    # *-involution (transpose): generators self-adjoint, span *-closed,
+    # anti-multiplicativity on a generic pair (OR2 instantiated).
+    check(mT(sz) == sz and mT(sx) == sx, "generators self-adjoint (T_adj/OR2)")
+    neg_szsx = [[-x for x in row] for row in szsx]
+    check(mT(szsx) == neg_szsx, "(sz sx)^T = -sz sx: span is *-closed")
+    check(mT(mm(sz, sx)) == mm(mT(sx), mT(sz)),
+          "anti-multiplicativity: (XY)^T = Y^T X^T (exact)")
+
+    # O4: omega = tr/2 faithful positive; GNS Gram matrix exactly I_4.
+    def omega(X):
+        return sum(X[i][i] for i in range(len(X))) / _F(2)
+
+    G = [[omega(mm(mT(a), b)) for b in basis] for a in basis]
+    I4 = [[_F(1) if i == j else _F(0) for j in range(4)] for i in range(4)]
+    check(G == I4,
+          "GNS Gram matrix G_ij = omega(b_i^T b_j) = I_4 exactly: "
+          "faithful positive state, positive-definite GNS form (L_T2 leg)")
+
+    # Simplicity => rad(A) = 0: the two-sided ideal generated by every
+    # basis element has full rank 4 (exact).
+    for bi, b in enumerate(basis):
+        ideal = [flat(mm(mm(x, b), y)) for x in basis for y in basis]
+        check(rank(ideal) == 4,
+              f"two-sided ideal generated by basis element {bi} is all of A: "
+              "A simple, rad(A) = 0 (Step 2, semisimplicity)")
+
+    # Wedderburn block count: solve [X, sz] = [X, sx] = 0 for X in M_2.
+    # 4 unknowns (E-basis coords); structure constants are real, so the
+    # complex solution space has the same dimension.
+    Ebas = [[[_F(1 if (i, j) == (r, c) else 0) for j in range(2)]
+             for i in range(2)] for r in range(2) for c in range(2)]
+    # For each generator g and matrix entry e, the coefficient of unknown
+    # c is the e-th entry of [E_c, g].
+    sysm = []
+    for g in (sz, sx):
+        cols = [flat(msub(mm(Ebas[c], g), mm(g, Ebas[c]))) for c in range(4)]
+        for e in range(4):
+            sysm.append([cols[c][e] for c in range(4)])
+    nullity = 4 - rank(sysm)
+    check(nullity == 1,
+          "commutant of {sz, sx} in M_2 is 1-dimensional (= C I after "
+          "complexification): ONE Wedderburn block, n_1 = 2; the action "
+          "on C^2 is irreducible (Schur) and faithful")
+
+    # ------- Witness 2: two blocks, A' = R (+) M_2(R) in M_3(R) -------
+    def E3(r, c):
+        return [[_F(1 if (i, j) == (r, c) else 0) for j in range(3)]
+                for i in range(3)]
+
+    basis2 = [E3(0, 0), E3(1, 1), E3(1, 2), E3(2, 1), E3(2, 2)]
+    check(rank([flat(b) for b in basis2]) == 5, "dim A' = 5 = 1^2 + 2^2")
+
+    # centre: X = sum t_j b_j with [X, b] = 0 for all basis b => nullity 2
+    sysm2 = []
+    for g in basis2:
+        cols = [flat(msub(mm(bj, g), mm(g, bj))) for bj in basis2]
+        for e in range(9):
+            sysm2.append([cols[c][e] for c in range(5)])
+    nullity2 = 5 - rank(sysm2)
+    check(nullity2 == 2,
+          "centre of A' is 2-dimensional: TWO Wedderburn blocks")
+
+    # central orthogonal idempotents p1 + p2 = 1, block sizes (1, 2)
+    p1 = E3(0, 0)
+    p2 = [[_F(0)] * 3 for _ in range(3)]
+    p2[1][1] = _F(1)
+    p2[2][2] = _F(1)
+    I3 = [[_F(1 if i == j else 0) for j in range(3)] for i in range(3)]
+    check(mm(p1, p1) == p1 and mm(p2, p2) == p2, "p1, p2 idempotent")
+    Z3 = [[_F(0)] * 3 for _ in range(3)]
+    check(mm(p1, p2) == Z3, "p1 p2 = 0 (orthogonal)")
+    check([[p1[i][j] + p2[i][j] for j in range(3)] for i in range(3)] == I3,
+          "p1 + p2 = 1")
+    for p in (p1, p2):
+        check(all(mm(p, b) == mm(b, p) for b in basis2), "p central in A'")
+    corner1 = rank([flat(mm(mm(p1, b), p1)) for b in basis2])
+    corner2 = rank([flat(mm(mm(p2, b), p2)) for b in basis2])
+    check(corner1 == 1 and corner2 == 4,
+          "corner ranks (1, 4): blocks M_1(C) (+) M_2(C), 1^2 + 2^2 = 5")
+
+    return _result(
+        name='T2b: Complexification and Wedderburn decomposition',
+        tier=0,
+        epistemic='P',
+        summary=(
+            'Paper 1 spine (archived 180p supplement, T2b): the '
+            'enforcement algebra -- finite-dimensional real *-algebra '
+            'with faithful positive state omega (O4) and *-involution '
+            '(OR2) -- complexifies to a semisimple complex *-algebra; '
+            'Wedderburn--Artin gives A_C ~= (+)_k M_{n_k}(C) acting '
+            'faithfully on (+)_k C^{n_k}, consistent with the GNS form '
+            '(L_T2). Two exact witnesses: the sigma_z/sigma_x algebra '
+            '(one block, n=2: Gram = I_4, simple, commutant nullity 1) '
+            'and R (+) M_2(R) (two blocks (1,2): centre nullity 2, '
+            'central idempotents, corner ranks 1 and 4). Field selection '
+            'is T2c, not claimed here. Registered at v24.3.399 '
+            '(debt-registration wave); previously a named-unregistered '
+            'root of the full-surface inventory.'
+        ),
+        key_result='A_C = A (x)_R C ~= (+)_k M_{n_k}(C), semisimple, '
+                   'faithful on (+)_k C^{n_k} [P]',
+        dependencies=['L_T2', 'O4', 'OR2'],
+        cross_refs=['T_alg', 'T2', 'T_Born',
+                    'L_maschke_semisimplicity_witness', 'P_cls'],
+        artifacts={
+            'one_block': 'A = <sz, sx> = M_2(R); A_C = M_2(C); Gram = I_4; '
+                         'commutant nullity 1',
+            'two_block': "A' = R (+) M_2(R); centre nullity 2; corner ranks "
+                         '(1, 4); dims 1^2 + 2^2 = 5',
+            'not_claimed': 'field selection (T2c) and noncommutativity '
+                           '(T_alg) are separate surfaces',
+            'provenance': 'Paper 1 archived 180p supplement, subsection '
+                          '"T2b: Complexification and Wedderburn '
+                          'decomposition"',
         },
     )
 
@@ -6257,15 +6854,23 @@ def check_T_inseparable_IJC():
       quantity.  Bell / CHSH / Fine / Kochen-Specker are RECOVERED special
       cases of this internal criterion, NOT imported ('the bridge is not
       an intuition imported from CHSH or Fine's theorem').
-      OCCUPANCY (that a PHYSICAL interface IS in branch (IJC)): NOT
-      derived.  It is the Quantum Admissibility Condition (QAC, Paper 5
+      OCCUPANCY-PROFILE (that THIS physical interface is in branch (IJC)):
+      NOT derived.  It is the Quantum Admissibility Condition (QAC, Paper 5
       supp v6.8 Def QAC): some physical interface presents two co-available,
       record-incompatible distinction families.  This is an INDEPENDENTLY-
       WITNESSED per-interface input -- read off the records (the measured
       correlation table lying outside the Boole polytope) -- the framework's
-      single irreducible empirical contact.  A1 admits BOTH branches (Sep
-      interfaces exist), so occupancy is NOT an A1 consequence and the
-      marginal table IS an external datum.
+      per-interface empirical contact.  A1 admits BOTH branches at any one
+      interface (Sep interfaces exist), so WHICH interfaces are occupied is
+      NOT an A1 consequence and the marginal table IS an external datum.
+      OBTAINS/PROFILE SPLIT (constitutive ruling v24.3.304, 2026-07-01;
+      docstring reconciled 2026-07-05, R2): that occupancy OBTAINS at all --
+      the world drawn somewhere, some interface in branch (IJC), Delta > 0
+      somewhere -- is CONSTITUTIVE, adopted co-equal with A1's finiteness
+      and folded into the [P] base (bank.py legend; Paper 0
+      sec:three_term_foundation); the fully classical all-Sep world is the
+      unoccupied limit, not a live alternative.  Everything per-interface
+      in this paragraph is the PROFILE and stays empirical.
       NOT supplied by cosmogenesis: Paper 37's 'IJC-side of the trivial
       alignment' is a whole-substrate maximal-symmetry / empty-distinction-
       family descriptor on which the Boolean-defender dichotomy is
@@ -6873,10 +7478,12 @@ def check_T_quantum_admissibility_condition():
         "name": "T_quantum_admissibility_condition",
         "passed": True,
         # Phase 21 graph rewire (2026-06-29): contract-normalized to a tagged
-        # root. Occupancy (that a physical interface IS in branch IJC) is the
-        # QAC -- the framework's irreducible empirical contact, explicitly NOT
-        # an A1 consequence (A1 admits both branches); hence an empirical root
-        # with no upstream dependency, never rooted on A1.
+        # root. Occupancy-PROFILE (that a given physical interface IS in
+        # branch IJC) is the QAC -- the per-interface empirical contact, not
+        # an A1 consequence (A1 admits both branches at any one interface);
+        # hence an empirical root with no upstream dependency, never rooted
+        # on A1.  That occupancy OBTAINS somewhere is constitutive, part of
+        # the [P] base (v24.3.304; comment reconciled 2026-07-05, R2).
         "epistemic": "P_regime",
         "dependencies": [],
         "key_result": (
@@ -6945,6 +7552,10 @@ _CHECKS = {
     'T1b': check_T1b,
     'T_alg': check_T_alg,
     'T_alg_FPi': check_T_alg_FPi,
+    # v24.3.399 debt-registration wave: spine-era named theorems registered
+    'T_sep': check_T_sep,
+    'T_adj': check_T_adj,
+    'T2b': check_T2b,
     'T_adj_commutes': check_T_adj_commutes,
     # Main theorems
     'T2': check_T2,
@@ -7014,6 +7625,39 @@ if __name__ == '__main__':
 # ---------------------------------------------------------------------------
 
 IE_DECLARATIONS = (
+    {
+        "input_id": "quantum:tsirelson_bound",
+        "axis": "ROUTE",
+        "route": "tsirelson_bound",
+        "expect_export": True,
+        "payload": {
+            "name": "tsirelson_bound",
+            "closure_kind": "internal_identity",
+            "identity_summary": (
+                "The Tsirelson bound holds at math strength with no "
+                "quantum postulate beyond the admissibility-derived "
+                "Hilbert-space carrier: for dichotomic observables "
+                "(a^2 = I) the Cirelson operator identity "
+                "S^2 = 4I - [a1,a2] x [b1,b2] plus the commutator norm "
+                "bound ||[a,a']|| <= 2 gives |<CHSH>| <= 2*sqrt(2), "
+                "unconditional [P], saturated by the maximally "
+                "entangled state and strictly above the classical "
+                "bound 2. (check_T_Tsirelson, core.py)"
+            ),
+        },
+        "note": (
+            "v24.3.400: the .398-declined Tsirelson export, re-declared. "
+            "The v24.3.398 quantum-spine export wave INTENDED this input "
+            "and the export-core census DECLINED it at the ROOT leg: "
+            "apf.core's module closure carried the named-unregistered "
+            "tokens T_adj / T_sep / T2b, which would have re-introduced "
+            "non-premise debt into EXPORT_ROOT_INVENTORY and broken the "
+            ".393 certified sentence. The v24.3.399 debt-registration "
+            "wave REGISTERED all three (exact finite witnesses, [P]); "
+            "this declaration is the deliberate re-walk of that decline, "
+            "re-measured by the same census legs that declined it."
+        ),
+    },
     {
         "input_id": "spine:inseparable_ijc_345_witness",
         "expect_export": False,

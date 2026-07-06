@@ -217,6 +217,7 @@ _DEP_ALIASES: dict[str, str] = {
     "T_w_trace_native_bosonic_photon_vp_pole": "T_w_trace_native_bosonic_photon_vp_pole_minus3",  # the -3 pole check's registered key
     "L_mc_mt_RG": "L_mc_mt_twoloop_RG",  # SUBSUMED, not a spelling variant: the two-loop witness's Step 1 carries the cited one-loop content (.396 audit m7 wording fix)
     "A4": "L_irr",  # .396 audit M1: A4 (irreversibility) is DERIVED, not premised -- core.py's registered L_irr [P] states "A1 + occupancy + L_loc + L_cost ==> A4" and pins the derivation order; citing A4 as a premise root contradicted the corpus headline chain
+    "D-quotient": "D_quotient_forced",  # .401 audit M1 (2026-07-05): the D-quotient is DERIVED, not premised -- core.py's registered check_D_quotient_forced [P] pins "D-quotient derived from A1 + K1"; citing D-quotient as a premise root contradicted the bank's own derivation (the .396 A4 precedent)
 }
 
 

@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-05 against verdict pin v24.3.398. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-05 against verdict pin v24.3.400. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3882 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3888 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 216 of 463 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 216 of 464 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -65,6 +65,7 @@ Generated 2026-07-05 against verdict pin v24.3.398. Every row below is produced 
 | `quantum:magic_square_threshold_robust` | CONTEXTUALITY | IJC_OBSTRUCTION | sign-equivalent textbook encoding of the v24.3.297 scenario (the banked check uses column parities (1,1,1); flipping two row signs gives ... |
 | `quantum:qutrit_noncontextual_control` | CONTEXTUALITY | **EXPORT** | the qutrit noncontextual control scenario -> SepStr export (a faithful global hidden-variable section exists) |
 | `quantum:symmetry_contextuality_orthogonal` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe; the four-cell witness content stays with the banked check |
+| `quantum:tsirelson_bound` | ROUTE | **EXPORT** | v24.3.400: the .398-declined Tsirelson export, re-declared. The v24.3.398 quantum-spine export wave INTENDED this input and the export-co... |
 | `quantum:vacuum_label_code_p1_witness` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the ICL_vac route-(b) witness family (.352/.356/.357) onto the ROUTE axis as a held claim at [P_structural_instrument]. The thre... |
 | `quantum:vacuum_scheme_covariance_split` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Onboards the .373 covariance split onto the ROUTE axis as a held claim at [P_structural_instrument]. The F1/F2 never-conflate discipline ... |
 | `spine:inseparable_ijc_345_witness` | CONTEXTUALITY | IJC_OBSTRUCTION | the v24.3.288 exact singlet realization of the 3-4-5 geometry (constructive companion to T_inseparable_IJC's inline +-12/25 codespace wit... |

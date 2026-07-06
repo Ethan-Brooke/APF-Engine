@@ -4553,8 +4553,10 @@ def check_T_product_group_sharp_records_factorwise() -> Dict:
     clause is quoted at ITS banked grade per the rider above; neither is
     re-graded by, nor re-grades, this check's algebra content.
 
-    FENCES: no occupancy claim (occupancy is read off the world, never
-    derived); slot structure decides the ALGEBRA, anchor structure
+    FENCES: no occupancy claim (the occupancy PROFILE -- which interface
+    is occupied -- is read off the world, never derived; that occupancy
+    OBTAINS at all is constitutive, [P] base since v24.3.304); slot
+    structure decides the ALGEBRA, anchor structure
     decides DELTA (that is the theorem's content, not a rider); N and the
     factor count are spectator parameters; no magnitude/units claim.
     """

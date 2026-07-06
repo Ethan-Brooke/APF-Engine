@@ -1,8 +1,8 @@
 {
  "generated": "2026-07-05",
- "pin_version": "24.3.398",
+ "pin_version": "24.3.400",
  "coverage_summary": {
-  "modules_total": 463,
+  "modules_total": 464,
   "modules_onboarded": 216,
   "modules_onboarded_direct": 157,
   "modules_onboarded_via_covers": 59,
@@ -12,7 +12,7 @@
   "target_open_modules": [],
   "target_surface_onboarded": 175,
   "modules_by_axis": {
-   "ROUTE": 144,
+   "ROUTE": 145,
    "CODOMAIN": 7,
    "CONTEXTUALITY": 7,
    "READOUT": 1
@@ -1978,6 +1978,17 @@
    "owner_module": "apf.symmetry_contextuality_independence",
    "expect_export": false,
    "note": "Wave 4 probe; the four-cell witness content stays with the banked check",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:tsirelson_bound",
+   "axis": "ROUTE",
+   "route": "tsirelson_bound",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.core",
+   "expect_export": true,
+   "note": "v24.3.400: the .398-declined Tsirelson export, re-declared. The v24.3.398 quantum-spine export wave INTENDED this input and the export-core census DECLINED it at the ROOT leg: apf.core's module closure carried the named-unregistered tokens T_adj / T_sep / T2b, which would have re-introduced non-premise debt into EXPORT_ROOT_INVENTORY and broken the .393 certified sentence. The v24.3.399 debt-registration wave REGISTERED all three (exact finite witnesses, [P]); this declaration is the deliberate re-walk of that decline, re-measured by the same census legs that declined it.",
    "covers": []
   },
   {

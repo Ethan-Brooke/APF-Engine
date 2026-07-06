@@ -10813,6 +10813,12 @@ def register(registry):
     registry['L_spatial_factorization'] = check_L_spatial_factorization
     registry['L_spacetime_emergence'] = check_L_spacetime_emergence
     # P3 resolution + P1 zero-input alpha_s (v5.3.6)
+    # v24.3.399 debt-registration wave: check existed in this module
+    # (v6.x era, full [P] docstring + result record) but was never added
+    # to any registration path -- the nearest-to-registration debt row of
+    # the full-surface input inventory. Registered as-is at its docstring
+    # grade [P]; body untouched.
+    registry['L_spectral_action_coefficients'] = check_L_spectral_action_coefficients
     registry['L_epsilon_star_Planck']        = check_L_epsilon_star_Planck
     registry['L_P3_interface']               = check_L_P3_interface
     registry['L_alpha_s_zero_input']         = check_L_alpha_s_zero_input

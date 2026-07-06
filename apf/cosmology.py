@@ -1584,7 +1584,9 @@ def check_T_config_demand_register_split_bank_respected():
         'gamma_c_carrier_program.py',  # v24.3.374-landing disposition (2026-07-04): the concurrent .375 gamma_C-program module caught live by net-0 at the .374 landing (with the which-v clause-(b) catch, same scan; .360/.373 precedent -- the landing lane dispositions the concurrent module); carrier-fork/no-trace instruments over Paper 9 conventions, no vacuum-42 register reader/writer
         'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
         'generations.py', 'gravity.py', 'ie_atlas_verdict_pin.py',
-        'ie_onboarding_registry.py', 'interface_atlas.py',
+        'ie_onboarding_registry.py',
+        'ie_wall_shadow_census.py',  # v24.3.401-landing disposition (2026-07-05): the wall-shadow census pins vacuum-adjacent verdict-pin row ids (quantum:vacuum_* / strong:vacuum_realization_triptych) + ICL_vac shadow prose; instrument pins only, no demand read/write; net-0 broad-set entry
+        'interface_atlas.py',
         'interface_atlas_v02_inputs.py', 'kappa_int_bounds.py',
         'lambda_absolute.py', 'majorana.py', 'operational_completeness.py',
         'phase_14d3_completions.py', 'photon_masslessness.py',
