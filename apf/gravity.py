@@ -2895,4 +2895,28 @@ def register(registry):
 
 # ---------------------------------------------------------------------------
 # IE onboarding declaration (v24.3.313, Full Bank Onboarding Wave 3). The
-# gravity observable-transport non-claim rows from 
+# gravity observable-transport non-claim rows from the Phase 2 disposition
+# (source pack APF_INTERFACE_ENGINE_GRAVITY_SECTOR_SCHEME_EXPORT_BINDING_v1,
+# IE_GRAVITY_OBSERVABLE_TRANSPORT_LEDGER), consolidated to ONE claim-grade
+# probe rather than three padded rows: the transport surface is GR with the
+# named non-claims explicit. expect_export pinned by the observed verdict.
+# ---------------------------------------------------------------------------
+
+IE_DECLARATIONS = (
+    {
+        "input_id": "gravity:observable_transport_gr_nonclaims",
+        "expect_export": False,
+        "axis": "ROUTE",
+        "claim_text": (
+            "Gravitational observable transport is GR across the banked "
+            "surface with the non-claims explicit: FRW expansion (Friedmann; "
+            "no modified-gravity export), metric redshift (no residual fit), "
+            "lensing (no dark-particle ID), GW propagation (no non-GR "
+            "speed/damping export), ringdown (GR baseline + capacity schema, "
+            "no APF non-GR numeric); the growth route stays gate-ready with "
+            "full growth likelihood P = 0 pending Gates 3+4 (DESI "
+            "full-shape runtime, then the full-growth likelihood)."
+        ),
+        "note": "Phase 2 disposition gravity residue; pack transport-ledger rows consolidated",
+    },
+)

@@ -87,9 +87,15 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     Source-of-record: APF Reference Docs/Reference - Corpus Audit
                     of the Completion Seam (2026-06-22).md + the CONTINUATION
                     grade-split note.  Pure relabel: no math, no count change,
-                    EXPECTED unchanged.  The IJC dichotomy checks are now
-                    P_structural_reading; check_T_crystal_* are
-                    P_structural_instrument.
+                    EXPECTED unchanged.  (v24.3.410 UPDATE, principal ruling
+                    2026-07-07: the v24.3.271 mass-tag on the IJC-sector
+                    checks was re-adjudicated per-check -- T_IJC_dichotomy,
+                    T_no_IJC_no_noncommutativity, L_MD_extension are
+                    P_structural (no named reading; FD5b primitivity ruled
+                    constitutive); L_threat_substrate_realization stays
+                    P_structural_reading with its reading NAMED, the
+                    section-3.3 converse clause, HOLD-NAMED.)
+                    check_T_crystal_* are P_structural_instrument.
   [P+lattice]       Proved from PLEC + lattice-QCD numerical input.  Used
                     where the framework's structural derivation reduces a
                     physical observable to a lattice-QCD computation.  The

@@ -95,7 +95,8 @@ from apf.apf_utils import check, _result
 #: aliased to the registered check_D_quotient_forced [P] in
 #: crystal._DEP_ALIASES, the .396 A4 precedent).
 EXPORT_READING_BOUNDARY = frozenset({
-    "T_no_IJC_no_noncommutativity",
+    # T_no_IJC_no_noncommutativity left at the v24.3.410 re-pin (lifted to
+    # P_structural per the 2026-07-07 ruling; see the re-pin comment below).
     "UB_usage_billing_adopted",
     "check_T_register_reading_grounds_ceil_log2_count",
     "check_T_su2_string_cut_comovement",  # registry key carries the check_ prefix
@@ -125,9 +126,14 @@ EXPORT_READING_BOUNDARY = frozenset({
     # "[P_structural]" -- a pre-existing dialect mismatch; candidate lint
     # extension per the .392 pattern (the status-field lint does not
     # cover key_result).
-    "L_MD_extension",
+    # v24.3.410 re-pin (2026-07-07 principal ruling, the IJC-sector
+    # grade re-examination): T_IJC_dichotomy, T_no_IJC_no_noncommutativity,
+    # L_MD_extension lifted to P_structural (the v24.3.271 mass-lint tags
+    # re-adjudicated per-check; FD5b primitivity ruled constitutive) and
+    # LEAVE the boundary, 19 -> 16. L_threat_substrate_realization STAYS
+    # (its section-3.3 converse reading is HOLD-NAMED, now named at
+    # source). Deliberate re-pin per the tripwire discipline.
     "L_threat_substrate_realization",
-    "T_IJC_dichotomy",
 })
 
 #: Leg 3 -- the named roots the export core bottoms out in: axioms and

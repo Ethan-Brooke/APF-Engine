@@ -5795,6 +5795,16 @@ def check_T_no_IJC_no_noncommutativity():
     noncommutativity" or "PLEC alone yields the quantum bridge" can
     be redirected to this check, which exhibits an explicit model
     falsifying both claims.
+
+    GRADE NOTE (2026-07-07 ruling, the IJC-sector grade re-examination):
+    lifted [P_structural_reading] -> [P_structural]. The _reading tag was
+    a v24.3.271 mass-lint field flip (0eb9bd8) with no per-check
+    adjudication and no named reading. This check is a COUNTERMODEL
+    ABOUT the constitutive base -- A1/MD/A2/BW all named and verified on
+    the spectator model -- and names no reading among alternatives.
+    ([P] was considered and DECLINED per the docket audit; the
+    countermodel's substrate encoding keeps it at structural strength.)
+    Docket + audit: The Turning/kappa_master_knob_2026-07-07/.
     """
     from fractions import Fraction
 
@@ -5868,7 +5878,7 @@ def check_T_no_IJC_no_noncommutativity():
     return _result(
         name='T_no_IJC_no_noncommutativity: spectator-countermodel falsification test [P_structural]',
         tier=4,
-        epistemic='P_structural_reading',
+        epistemic='P_structural',
         summary=(
             'Spectator countermodel: V = M_d1 (+) M_d2 (+) Pi with Pi inert. '
             'A1 + MD + A2 + BW all PASS. Pair {d1, d2} in branch (Sep) of the '
@@ -5953,6 +5963,20 @@ def check_T_IJC_dichotomy():
     Companion to check_T_no_IJC_no_noncommutativity (19a, branch (Sep)
     falsification anchor) and check_L_Pi (current branch-(IJC) witness
     pending Phase 19e refactor).
+
+    GRADE NOTE (2026-07-07 ruling, the IJC-sector grade re-examination):
+    lifted [P_structural_reading] -> [P_structural]. The _reading tag was
+    a v24.3.271 mass-lint field flip (0eb9bd8, 2026-06-23) with no
+    per-check adjudication and no named reading; this check's exhaustion
+    is logic on the FD5 set-inclusion vocabulary over the constitutive
+    base (named), and it asserts no occupancy (whether branch-(IJC)
+    pairs OBTAIN is the QAC, untouched). The QUANTUM-CAPABLE /
+    CLASSICALLY-SEPARABLE interface-typing gloss above is a REMARK
+    outside the graded claim (it names the downstream reading, it is not
+    a premise of the dichotomy). The graded-threat robustness lemma
+    (L_graded_threat_collapses_to_crisp [P_structural], v24.3.408)
+    corroborates this grade from above. Docket + audit: The
+    Turning/kappa_master_knob_2026-07-07/.
     """
 
     # ============================================================
@@ -6046,7 +6070,7 @@ def check_T_IJC_dichotomy():
     return _result(
         name='T_IJC_dichotomy: the IJC Dichotomy Theorem on test interfaces [P_structural]',
         tier=4,
-        epistemic='P_structural_reading',
+        epistemic='P_structural',
         summary=(
             'Theorem 1 of the IJC reference doc: for any pair {d1, d2} of '
             'jointly meaningful distinctions at an interface, exactly one of '
@@ -6115,6 +6139,17 @@ def check_L_MD_extension():
     argue that the dichotomy's branch (IJC) is empty in any cost-frugal
     model -- joint defenders use the active pool but at zero cost.
     Lemma 1 forecloses that route.
+
+    GRADE NOTE (2026-07-07 ruling, the IJC-sector grade re-examination):
+    lifted [P_structural_reading] -> [P_structural]. The _reading tag was
+    a v24.3.271 mass-lint field flip (0eb9bd8) with no per-check
+    adjudication and no named reading. Principal ruling 1a (2026-07-07):
+    the Phase-19i FD5b primitivity clause -- threat-defense acts inside
+    FD5's scope -- is CONSTITUTIVE, FD5 read at full strength (the FD1
+    structural-completeness precedent, check_FD1_structural_completeness);
+    MD is a constitutive feature, NAMED. Route A vs Route B is
+    presentation, not a reading. Docket + audit: The
+    Turning/kappa_master_knob_2026-07-07/.
     """
     from fractions import Fraction
 
@@ -6175,7 +6210,7 @@ def check_L_MD_extension():
     return _result(
         name='L_MD_extension: MD extends to threat-defense acts (Route A) [P_structural]',
         tier=4,
-        epistemic='P_structural_reading',
+        epistemic='P_structural',
         summary=(
             'Lemma 1 of the IJC reference doc: any nonempty perturbation '
             'class T admitting a minimal defense act delta_T has cost '
@@ -6252,6 +6287,21 @@ def check_L_threat_substrate_realization():
     "L_blk" theorem name surfaced by the cheerleading audit on
     2026-04-26 night with a derived lemma anchored in Lemma 1's cost
     floor.
+
+    GRADE NOTE (2026-07-07 ruling, the IJC-sector grade re-examination):
+    grade STAYS [P_structural_reading], and the reading is now NAMED
+    (it never was before -- the _reading tag was a v24.3.271 mass-lint
+    field flip): THE NAMED READING is the Phase-19i reference doc's
+    section-3.3 converse/sector-characterization clause -- that
+    substrate-level active-pool engagement CHARACTERIZES branch-(IJC)
+    (the converse direction this lemma's Step 2 consumes) -- which that
+    doc itself flags as "an additional reasonable framework commitment."
+    Principal ruling 1b (2026-07-07): HOLD-NAMED, not adopted (the
+    ICL/LSC pattern). Reopener: derive the converse clause; the grade
+    then lifts to [P_structural] for free. The name/key_result strings
+    are relabeled to match the held grade (the .401 m5 direction,
+    applied to this check ONLY; declined for the three lifted siblings).
+    Docket + audit: The Turning/kappa_master_knob_2026-07-07/.
     """
     from fractions import Fraction
 
@@ -6334,7 +6384,7 @@ def check_L_threat_substrate_realization():
           f"F_Pi_scale = {F_Pi_scale:.6f} > 0 (substrate-realized active pool)")
 
     return _result(
-        name='L_threat_substrate_realization: branch-(IJC) ⇒ W_{12} ⊄ M_d1 (+) M_d2 [P_structural]',
+        name='L_threat_substrate_realization: branch-(IJC) ⇒ W_{12} ⊄ M_d1 (+) M_d2 [P_structural_reading]',
         tier=4,
         epistemic='P_structural_reading',
         summary=(
@@ -6351,7 +6401,7 @@ def check_L_threat_substrate_realization():
             'engagement; replaces the fabricated "L_blk" theorem name with '
             'a derived lemma.'
         ),
-        key_result='Branch-(IJC) ⇒ W_{12} engages Pi_{12} disjoint from M_{d1} (+) M_{d2} [P_structural]',
+        key_result='Branch-(IJC) ⇒ W_{12} engages Pi_{12} disjoint from M_{d1} (+) M_{d2} [P_structural_reading]',
         # Phase 21 graph rewire (2026-06-29): the proof reconstructs the L_Pi
         # F_Pi witness and invokes L_MD_extension's mu* floor, so it cites those
         # lemmas (not their parents) through the bridge. Cycle-safe: neither
