@@ -1,4 +1,4 @@
-"""Formal Kernel — Theorem 1.1 executable witness (Phase 22.2.a).
+r"""Formal Kernel — Theorem 1.1 executable witness (Phase 22.2.a).
 
 The review finding that triggered this module:
 
@@ -29,7 +29,7 @@ Scope / honest limits
 ---------------------
 
 This is a **structural witness** at the representation-theoretic level.
-We do not reconstruct the full $SU(3) \\times SU(2) \\times U(1)$
+We do not reconstruct the full $SU(3) \times SU(2) \times U(1)$
 representation-theoretic calculation with every Clebsch-Gordan
 coefficient — that would be hundreds of lines and duplicate standard
 references. Instead we use a simplified but structurally-faithful
@@ -45,7 +45,7 @@ model:
   components.
 
 This suffices to certify the three properties above. The full
-$SU(3) \\times SU(2) \\times U(1)$ representation theory is imported
+$SU(3) \times SU(2) \times U(1)$ representation theory is imported
 from Paper 4 / Paper 2 / the standard references (Hall 2015,
 cited in Supplement §1.5).
 
@@ -316,7 +316,7 @@ def _canonical_V_local_content(irrep_dims):
 # ═══════════════════════════════════════════════════════════════════
 
 def check_T_FormalKernel_VLambda_uniqueness():
-    """T_FormalKernel_VLambda_uniqueness — executable witness for Theorem 1.1.
+    r"""T_FormalKernel_VLambda_uniqueness — executable witness for Theorem 1.1.
 
     Phase 22.2.a: constructs V_61 with explicit irrep structure, builds
     a representative G_SM action, and certifies:

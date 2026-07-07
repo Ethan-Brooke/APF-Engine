@@ -6891,7 +6891,7 @@ def check_T_IJC_from_partition_structure():
 # Phase 21: T_inseparable_IJC --- the strengthened Dichotomy
 # =====================================================================
 def check_T_inseparable_IJC():
-    """T_inseparable_IJC: substrate-factorizability Dichotomy + bridge to noncommutativity.
+    r"""T_inseparable_IJC: substrate-factorizability Dichotomy + bridge to noncommutativity.
 
     PHASE 21 STRENGTHENING (2026-04-26 NIGHT-LATER): the Phase 19 IJC
     Dichotomy, stated at the threat-set-cardinality level

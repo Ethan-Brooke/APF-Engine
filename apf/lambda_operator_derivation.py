@@ -1,4 +1,4 @@
-"""APF v6.9+ — Phase 14d.2 operator-level Lambda-absolute derivation.
+r"""APF v6.9+ — Phase 14d.2 operator-level Lambda-absolute derivation.
 
 Goal of this module. Upgrade the Lambda-absolute derivation chain
 

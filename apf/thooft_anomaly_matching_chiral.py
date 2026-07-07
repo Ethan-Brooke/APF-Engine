@@ -537,7 +537,7 @@ def _sl_ad_matrices(n):
 
 
 def check_T_vafa_witten_selects_su3v_pattern_conditional():
-    """Vafa-Witten pattern selection: H = SU(3)_V x U(1)_B, five-rider
+    r"""Vafa-Witten pattern selection: H = SU(3)_V x U(1)_B, five-rider
     conditional [P_structural_instrument].
 
     THE TARGET. Upgrades the sibling check's conclusion from "chiral symmetry
