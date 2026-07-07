@@ -203,12 +203,182 @@ def check_T_vacuum_o1_reading_fork():
     )
 
 
+def check_T_cc_comparator_registry():
+    """T_cc_comparator_registry [P_structural_instrument] -- the CC / de
+    Sitter magnitude comparators pinned in one place, with per-observable
+    tolerance and adopted-vs-derived status (comparator-hygiene closure,
+    v24.3.407).
+
+    MOTIVATION. Three surfaces quoted three different observed values and
+    tolerances for the cosmological-constant magnitude:
+      * T10 (gravity.py): Lambda*G, formerly obs -122.2 with NO comparator
+        assertion -- the apparent ~0.65-decade "residual" was a CURRENCY
+        ARTIFACT (Lambda*G vs rho/M_Pl^4 differ by 8*pi ~ 1.40 decades);
+        corrigendum applied at v24.3.407, residual now 0.007 decades;
+      * check_T_vacuum_o1_reading_fork (this module): rho/M_Pl^4, obs
+        -122.944 (Planck 2018), a 0.05-decade gate -- the RIGOROUS one;
+      * fractional_reading.py: rho/M_Pl^4, obs -122.90, a 0.37-decade band
+        (a looser, legacy-Planck surface).
+    Plus two genuinely different observables with their own tolerances:
+    S_dS (0.007%, log-space count pin, NO O(1)) and the DESI neutrino-sum
+    bound (x1.2 envelope). This check registers all four, asserts the
+    currency bridge that reconciles T10 to the canonical comparator, and
+    localizes the magnitude looseness to the reading-conditional O(1).
+
+    CERTIFIES (all computed live):
+
+    (a) CURRENCY BRIDGE. Lambda*G = 8*pi * (rho_Lambda/M_Pl^4). Composing
+        the canonical obs -122.944 gives obs(Lambda*G) = -121.544; T10's
+        count=area prediction log10(3*pi) - 61*log10(102) = -121.550 matches
+        to 0.007 decades -- inside the 0.05-decade gate, NOT the phantom
+        0.65 decades the stale -122.2 implied.
+
+    (b) COUNT PIN, O(1)-FREE. S_dS = 61*ln(102) = 282.123 nats vs observed
+        282.102: residual 0.0074% -- the count Omega = 102^61 is pinned to
+        entropy-grade precision with no O(1) prefactor.
+
+    (c) LOOSENESS LOCALIZES TO THE O(1). The magnitude comparator carries a
+        reading-conditional O(1) (the 3/8 vs 42/102 fork, ratio 56/51,
+        spread ~0.041 decades) while the SAME count is entropy-pinned to
+        0.0074%. So the decade-level looseness in the CC magnitude is
+        entirely the O(1) reading fork -- not slack in the exponent.
+
+    (d) PER-OBSERVABLE, NOT ONE CANONICAL BAND. CC magnitude (decades,
+        reading-forked), dS entropy (%, count-pinned), and the neutrino sum
+        (x-factor envelope) test different observables at different
+        precisions; forcing one tolerance across them would be dishonest.
+        The canonical CC-magnitude comparator is this module's 0.05-decade
+        gate at -122.944; fractional_reading's 0.37-decade / -122.90 surface
+        is the superseded legacy pin (consistent within the canonical gate:
+        |-122.90 - (-122.944)| = 0.044 < 0.05), flagged not re-banked.
+
+    STATUS. [P_structural_instrument]: an arithmetic hygiene registry over
+    banked surfaces. It certifies the currency bridge, the count pin, and
+    the O(1) localization, and pins the canonical comparator so the three
+    observed values cannot silently drift apart again.
+
+    DEPENDENCIES: T10, T_deSitter_entropy, T11, T_vacuum_o1_reading_fork
+    (T10 is the resolving registry key; the sibling fork check's 'T10_grav'
+    is a pre-existing DAG-tolerated non-resolving dep name).
+    """
+    log10_exponent = -_K_SM * _math.log10(_D_EFF)            # -122.525
+
+    # (a) currency bridge -------------------------------------------------
+    log10_8pi = _math.log10(8 * _math.pi)                    # 1.4008
+    obs_LG = _LOG10_OBS + log10_8pi                          # -121.544
+    pred_LG = _math.log10(3 * _math.pi) + log10_exponent     # -121.550
+    res_LG = abs(pred_LG - obs_LG)
+    check(res_LG < 0.05,
+          f"currency-bridged Lambda*G residual {res_LG:.4f} dec exceeds the "
+          f"0.05-decade gate (T10 corrigendum, v24.3.407)")
+    check(abs(res_LG - 0.007) < 0.004,
+          f"Lambda*G residual {res_LG:.4f} off the expected 0.007 decades")
+
+    # (b) count pin, O(1)-free --------------------------------------------
+    S_dS = _K_SM * _math.log(_D_EFF)                         # 282.123
+    S_dS_obs = 282.102
+    frac_err = abs(S_dS - S_dS_obs) / S_dS_obs
+    check(frac_err < 1e-4,
+          f"S_dS count pin {frac_err*100:.4f}% exceeds 0.01% (obs 282.102)")
+
+    # (c) looseness localizes to the O(1) ---------------------------------
+    # The O(1) reading fork (3/8 vs 42/102) spreads the magnitude by
+    # log10(56/51) ~ 0.041 decades; the count (entropy) is pinned to 0.0074%.
+    o1_spread_dec = abs(_math.log10(float(Fraction(_C_VACUUM, _D_EFF)))
+                        - _math.log10(3.0 / 8.0))            # ~0.041
+    check(frac_err * 100 < 0.01 and 0.03 < o1_spread_dec < 0.05,
+          f"localization failed: count pin {frac_err*100:.4f}% (<0.01% "
+          f"expected), O(1) spread {o1_spread_dec:.4f} dec (0.03-0.05 "
+          f"expected)")
+
+    # (d) legacy CC surface consistent within the canonical gate ----------
+    log10_obs_legacy = -122.90   # fractional_reading.py (legacy-Planck pin)
+    legacy_gap = abs(log10_obs_legacy - _LOG10_OBS)
+    check(legacy_gap < 0.05,
+          f"legacy CC obs {log10_obs_legacy} inconsistent with canonical "
+          f"{_LOG10_OBS} by {legacy_gap:.3f} dec (> 0.05 gate)")
+
+    comparators = {
+        'CC_magnitude': {
+            'observable': 'rho_Lambda/M_Pl^4 (equiv Lambda*G via 8*pi)',
+            'canonical_obs_log10': _LOG10_OBS,
+            'tolerance': '0.05 decades (count=area gate)',
+            'status': 'adopted; O(1) reading-conditional (fork 56/51)',
+            'home': 'check_T_vacuum_o1_reading_fork',
+        },
+        'dS_entropy': {
+            'observable': 'S_dS = 61*ln(102) nats',
+            'canonical_obs': 282.102,
+            'tolerance': '0.0074% (log-space, count-pinned, no O(1))',
+            'status': 'derived count pin',
+            'home': 'check_T_horizon_reciprocity / T_deSitter_entropy',
+        },
+        'neutrino_sum': {
+            'observable': 'sum m_nu',
+            'tolerance': 'x1.2 DESI envelope',
+            'status': 'adopted (separate observable)',
+            'home': 'cosmology.py',
+        },
+        'CC_magnitude_legacy': {
+            'observable': 'rho_Lambda/M_Pl^4',
+            'obs_log10': log10_obs_legacy,
+            'tolerance': '0.37 decades',
+            'status': 'superseded legacy pin (consistent within canonical gate)',
+            'home': 'fractional_reading.py',
+        },
+    }
+
+    return _result(
+        name='T_cc_comparator_registry -- the CC / de Sitter magnitude '
+             'comparators pinned per-observable (hygiene closure)',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            f"Comparator-hygiene registry. Currency bridge: Lambda*G = "
+            f"8*pi*(rho/M_Pl^4), so T10's count=area prediction {pred_LG:.3f} "
+            f"matches obs {obs_LG:.3f} to {res_LG:.3f} decades -- the prior "
+            f"-122.2 in T10 was a currency artifact (phantom ~0.65 dec). The "
+            f"count Omega=102^61 is entropy-pinned to {frac_err*100:.4f}% by "
+            f"S_dS (no O(1)); the magnitude looseness is the reading-"
+            f"conditional O(1) fork alone ({o1_spread_dec:.3f}-decade spread, "
+            f"ratio 56/51). The four comparators are per-observable, not one "
+            f"canonical band: CC magnitude (0.05-dec gate at -122.944, "
+            f"canonical) / dS entropy (0.007%, count pin) / neutrino sum "
+            f"(x1.2 DESI) / the fractional_reading 0.37-dec legacy pin "
+            f"(consistent within the canonical gate, {legacy_gap:.3f} dec)."
+        ),
+        key_result=(
+            'Lambda*G = 8*pi*(rho/M_Pl^4): T10 matches obs to 0.007 dec '
+            '(phantom 0.65-dec residual was a currency artifact); count '
+            'entropy-pinned to 0.0074%, looseness localizes to the O(1) '
+            'fork (56/51); comparators are per-observable, canonical CC gate '
+            '= 0.05 dec at -122.944.'
+        ),
+        dependencies=['T10', 'T_deSitter_entropy', 'T11',
+                      'T_vacuum_o1_reading_fork'],
+        cross_refs=['T_horizon_reciprocity',
+                    'L_Lambda_absolute_numerical_formula'],
+        artifacts={
+            'currency_bridge': 'Lambda*G = 8*pi * (rho_Lambda/M_Pl^4)',
+            'obs_Lambda_G_log10': round(obs_LG, 3),
+            'pred_Lambda_G_log10': round(pred_LG, 3),
+            'Lambda_G_residual_decades': round(res_LG, 4),
+            'S_dS_count_pin_pct': round(frac_err * 100, 4),
+            'O1_reading_spread_decades': round(o1_spread_dec, 4),
+            'canonical_cc_obs_log10': _LOG10_OBS,
+            'legacy_cc_gap_decades': round(legacy_gap, 3),
+            'comparators': comparators,
+        },
+    )
+
+
 # =============================================================================
 # Registration
 # =============================================================================
 
 _CHECKS = {
     'T_vacuum_o1_reading_fork': check_T_vacuum_o1_reading_fork,
+    'T_cc_comparator_registry': check_T_cc_comparator_registry,
 }
 
 

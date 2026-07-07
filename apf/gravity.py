@@ -209,7 +209,22 @@ def check_T10():
     # The dimensionless CC relation
     # Lambda * G = 3*pi / d_eff^C_total
     log10_LG = _math.log10(3 * _math.pi) - C_total * _math.log10(d_eff)
-    log10_LG_obs = -122.2  # observed Lambda * G_N in natural units
+    # Observed Lambda*G_N. CURRENCY NOTE (comparator-hygiene corrigendum,
+    # v24.3.407): the canonical CC magnitude comparator is banked in
+    # rho_Lambda/M_Pl^4 currency (check_T_vacuum_o1_reading_fork, obs
+    # log10 = -122.944, Planck 2018). Since rho_Lambda = Lambda/(8*pi*G) and
+    # M_Pl^2 = 1/G (non-reduced), Lambda*G = 8*pi * (rho_Lambda/M_Pl^4), so
+    # obs(Lambda*G) = -122.944 + log10(8*pi) = -121.544. The prior hardcoded
+    # -122.2 silently compared a Lambda*G prediction against a
+    # rho/M_Pl^4-flavored number (an 8*pi ~ 1.40-decade currency offset) and
+    # manufactured a phantom ~0.65-decade residual; in the correct currency
+    # the count=area reading matches to 0.007 decades.
+    log10_LG_obs = -122.944 + _math.log10(8 * _math.pi)   # = -121.544
+    _residual_dec = abs(log10_LG - log10_LG_obs)
+    check(_residual_dec < 0.05,
+          f"Lambda*G magnitude residual {_residual_dec:.3f} decades exceeds "
+          f"the 0.05-decade count=area gate (canonical CC comparator: "
+          f"check_T_vacuum_o1_reading_fork / check_T_cc_comparator_registry)")
     # dimensional anchoring moved to validation.py
     # The upgrade: kappa ~ 1/C_* is now QUANTIFIED
     # C_* in the sense of total microstate count = 102^61
@@ -237,8 +252,12 @@ def check_T10():
                       'L_self_exclusion'],
         artifacts={
             'formula': 'Lambda * G = 3*pi / 102^61',
-            'log10_LG_predicted': round(log10_LG, 1),
-            'log10_LG_observed': round(log10_LG_obs, 1),
+            'log10_LG_predicted': round(log10_LG, 2),
+            'log10_LG_observed': round(log10_LG_obs, 2),
+            'magnitude_residual_decades': round(_residual_dec, 3),
+            'cc_magnitude_comparator': (
+                'check_T_vacuum_o1_reading_fork (0.05-dec gate, obs -122.944 '
+                'in rho/M_Pl^4); registry: check_T_cc_comparator_registry'),
             'd_eff': d_eff,
             'C_total': C_total,
             'CC_resolved': True,
@@ -2876,28 +2895,4 @@ def register(registry):
 
 # ---------------------------------------------------------------------------
 # IE onboarding declaration (v24.3.313, Full Bank Onboarding Wave 3). The
-# gravity observable-transport non-claim rows from the Phase 2 disposition
-# (source pack APF_INTERFACE_ENGINE_GRAVITY_SECTOR_SCHEME_EXPORT_BINDING_v1,
-# IE_GRAVITY_OBSERVABLE_TRANSPORT_LEDGER), consolidated to ONE claim-grade
-# probe rather than three padded rows: the transport surface is GR with the
-# named non-claims explicit. expect_export pinned by the observed verdict.
-# ---------------------------------------------------------------------------
-
-IE_DECLARATIONS = (
-    {
-        "input_id": "gravity:observable_transport_gr_nonclaims",
-        "expect_export": False,
-        "axis": "ROUTE",
-        "claim_text": (
-            "Gravitational observable transport is GR across the banked "
-            "surface with the non-claims explicit: FRW expansion (Friedmann; "
-            "no modified-gravity export), metric redshift (no residual fit), "
-            "lensing (no dark-particle ID), GW propagation (no non-GR "
-            "speed/damping export), ringdown (GR baseline + capacity schema, "
-            "no APF non-GR numeric); the growth route stays gate-ready with "
-            "full growth likelihood P = 0 pending Gates 3+4 (DESI "
-            "full-shape runtime, then the full-growth likelihood)."
-        ),
-        "note": "Phase 2 disposition gravity residue; pack transport-ledger rows consolidated",
-    },
-)
+# gravity observable-transport non-claim rows from 
