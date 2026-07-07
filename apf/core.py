@@ -36,7 +36,7 @@ in the LaTeX point here.  All arithmetic uses fractions.Fraction (exact).
 import math as _math
 from fractions import Fraction
 from dataclasses import dataclass
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Optional
 
 from apf.apf_utils import (
     check, CheckFailure,
@@ -7178,15 +7178,23 @@ def check_T_inseparable_IJC():
           "IJC witness: admissibility algebra noncommutative — quantum-capable regime")
 
     # ============================================================
-    # PHASE 21 TASK B (staged): the ported Boolean-defender engine
-    # (apf.ijc_boolean_defender_bridge) CORROBORATES this bridge's
-    # structural-layer verdict -- it computes Boole-polytope (FeasBool)
-    # feasibility and the polytope-exclusion fact (no faithful all-
-    # commuting realization).  The inline 3-4-5 witness above remains the
-    # proof of record; [E_di, P_*] != 0 is established here, not by the
-    # engine.  These are consistency cross-checks, not a relocation of the
-    # proof into the engine.  (Engine staged, not bank-registered;
-    # consumed as functions, count-neutral.)
+    # PHASE 21 TASK B: the banked Boolean-defender engine
+    # (apf.ijc_boolean_defender_bridge, check_T_ijc_boolean_defender_bridge,
+    # v24.3.291) is the SOURCE of the SepStr/IJCStr branch CLASSIFICATION --
+    # the structural verdict is computed from Boole-polytope (FeasBool)
+    # feasibility (see QueryInterface.has_structural_commuting_defender and
+    # _branch_taxonomy_witnesses, where three of the four canonical witnesses
+    # carry an explicit (2,2,2) behaviour classified by the engine).  What
+    # stays inline and is NOT relocated: the [E_di, P_*] != 0 PROOF.  The
+    # engine gives polytope EXCLUSION (no faithful all-commuting realization);
+    # the step to a nonzero commutator is the Paper 5 supp bridge theorem, and
+    # the inline 3-4-5 witness below remains the proof of record for the
+    # existence side.  Classification relocated; proof kept.  (Engine is
+    # bank-registered; consumed here as functions, count-neutral.)
+    # Graded-threat through-line: L_graded_threat_collapses_to_crisp
+    # (graded_threat_robustness.py) reduces a graded threat to a
+    # threshold-stack of crisp IJC-dichotomy instances, each classified by
+    # this engine -- graded -> per-cut crisp -> FeasBool -> noncommutativity.
     # ============================================================
     from apf.ijc_boolean_defender_bridge import (
         reproduce_inline_345_commutator,
@@ -7199,10 +7207,12 @@ def check_T_inseparable_IJC():
           'with the inline [E_d1, pi_W*] = +-12/25 witness (cross-check)')
     _br = bridge_noncommutativity((Fraction(1), Fraction(1), Fraction(1), Fraction(-1)))
     check(_br['commuting_implies_local'] and _br['no_all_commuting_realization'],
-          'Task B: PR-box lies outside the Boole polytope (IJCStr); every '
-          'Boolean atom obeys the CHSH facets, so NO faithful all-commuting '
-          'realization exists ([a,b]!=0 then follows by the Paper 5 supp '
-          'bridge theorem)')
+          'Task B: the PR-box branch CLASSIFICATION is engine-computed -- it '
+          'lies outside the Boole polytope (IJCStr); every Boolean atom obeys '
+          'the CHSH facets, so NO faithful all-commuting realization exists. '
+          'This engine call is the SOURCE of the SepStr/IJCStr classification '
+          '(relocated from hand-set flags); [a,b]!=0 itself follows by the '
+          'Paper 5 supp bridge theorem (inline witness above = proof of record)')
 
     # ============================================================
     # Cross-witness consistency: dichotomy is exhaustive + exclusive
@@ -7285,11 +7295,12 @@ def check_T_inseparable_IJC():
             'bridge_theorem_status': 'closed: inseparable IJC ⇒ noncommutativity',
             'empirical_inheritance': 'Bell (locality) + Kochen-Specker (non-contextuality)',
             'phase_21_task_B_engine': (
-                'apf.ijc_boolean_defender_bridge: FeasBool Boole-polytope '
-                'feasibility corroborates the branch verdict + the no-all-'
-                'commuting-realization fact; [a,b]!=0 is the supplement '
-                'theorem; inline 3-4-5 witness re-derived as a cross-check '
-                '(staged; engine not yet bank-registered)'
+                'apf.ijc_boolean_defender_bridge (banked, v24.3.291): FeasBool '
+                'Boole-polytope feasibility is the SOURCE of the SepStr/IJCStr '
+                'branch classification + the no-all-commuting-realization fact; '
+                '[a,b]!=0 is the Paper 5 supp bridge theorem (inline 3-4-5 '
+                'witness = proof of record). graded->per-cut crisp->FeasBool '
+                'through-line via L_graded_threat_collapses_to_crisp.'
             ),
             'phase_21_refdoc': (
                 'Reference - Phase 21 Workplan - Inseparable IJC and '
@@ -7317,18 +7328,52 @@ class CommutingDefender:
 
 @dataclass(frozen=True)
 class QueryInterface:
-    """A finite robust query interface (Definition 3.1)."""
+    """A finite robust query interface (Definition 3.1).
+
+    ``structural_behaviour`` (Phase 21 Task B relocation, 2026-07-06): the
+    (2,2,2) Bell-CHSH correlator 4-vector E = (E00,E01,E10,E11) that faithfully
+    represents this interface's structural factorizability. When present, the
+    SepStr/IJCStr verdict is COMPUTED from Boole-polytope feasibility
+    (``apf.ijc_boolean_defender_bridge.feasbool_structural``) rather than read
+    off the hand-set ``commutes`` flags -- SepStr <=> the table lies in the
+    Boole polytope (a faithful common Boolean defender exists), IJCStr <=> it
+    is excluded by a CHSH/Fine facet. When ``None``, the interface is not a
+    (2,2,2) CHSH scenario (e.g. the vacuous no-candidate-defenders case) and
+    the structural verdict falls back to the hand-set flags with a documented
+    reason (see ``_branch_taxonomy_witnesses``). Only the STRUCTURAL verdict
+    relocates; the admissibility/capacity level (``...apf_admissible...``) keeps
+    reading ``commutes`` + cost <= capacity, unchanged.
+    """
     name: str
     queries: Tuple[str, ...]
     candidate_defenders: Tuple[CommutingDefender, ...]
     capacity: float
+    structural_behaviour: Optional[Tuple[Fraction, ...]] = None
 
     def has_structural_commuting_defender(self) -> bool:
-        """SepStr: at least one candidate commutes (regardless of cost)."""
+        """SepStr: a faithful common Boolean defender exists (regardless of cost).
+
+        Relocated (Phase 21 Task B): when a (2,2,2) ``structural_behaviour`` is
+        attached, the verdict is COMPUTED by the banked Boolean-defender engine
+        -- SepStr iff the correlator table lies in the Boole polytope. The
+        direction is core-check -> engine-function (never engine -> this
+        output), so no DAG cycle is introduced. Without a behaviour (vacuous
+        no-defender interfaces), the verdict falls back to ``any(d.commutes)``.
+        """
+        if self.structural_behaviour is not None:
+            from apf.ijc_boolean_defender_bridge import feasbool_structural
+            return feasbool_structural(self.structural_behaviour)["branch"] == "SepStr"
         return any(d.commutes for d in self.candidate_defenders)
 
     def has_apf_admissible_commuting_defender(self) -> bool:
-        """SepAdm: some candidate commutes AND has cost <= capacity."""
+        """SepAdm: some candidate commutes AND has cost <= capacity.
+
+        Capacity/admissibility level -- unchanged by the Task B relocation. This
+        reads the hand-set ``commutes`` flag deliberately: the FeasBool engine
+        computes only the STRUCTURAL (Boole-polytope) verdict, and does not see
+        the capacity budget. Keeping this on the flags preserves the
+        SepStr =/=> SepAdm anti-smuggling separation.
+        """
         return any(
             d.commutes and d.realignment_cost <= self.capacity
             for d in self.candidate_defenders
@@ -7341,8 +7386,38 @@ class QueryInterface:
         return not self.has_apf_admissible_commuting_defender()
 
 def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
-    """Construct the four canonical witness interfaces for the taxonomy."""
-    # Witness 1: classical bit pair -- both Sep branches hold
+    """Construct the four canonical witness interfaces for the taxonomy.
+
+    Phase 21 Task B relocation (2026-07-06): three of the four witnesses carry
+    an explicit (2,2,2) Bell-CHSH ``structural_behaviour`` from which the
+    SepStr/IJCStr verdict is COMPUTED by the banked Boolean-defender engine
+    (``feasbool_structural``), rather than asserted via the ``commutes`` flags.
+    Step-0 feasibility census:
+
+      * classical_bit_pair  -> SepStr : a classical bit pair IS a local
+        behaviour; the deterministic table E=(1,1,1,1) lies in the Boole
+        polytope. Faithful (2,2,2).
+      * capacity_limited_sep -> SepStr : structurally a commuting Boolean
+        defender exists (it is merely too expensive -- a capacity fact, not a
+        structural one). The strictly-interior local table E=(1/2,1/2,1/2,1/2)
+        represents "Boolean defender exists structurally". Faithful (2,2,2);
+        the capacity failure lives on the orthogonal admissibility axis
+        (``has_apf_admissible_commuting_defender``), untouched.
+      * structural_ijc -> IJCStr : no commuting defender at all; the PR-box
+        E=(1,1,1,-1), S=4, is the canonical Boole-polytope exclusion (CHSH/Fine
+        facet violation). Faithful (2,2,2).
+      * no_candidates -> IJCStr *vacuously* : zero candidate defenders, so
+        "no commuting defender" is trivially true -- there is NO correlator
+        table at all. This is NOT a (2,2,2) CHSH scenario; a FeasBool IJCStr
+        requires a physical table that violates a facet, which the empty
+        interface does not have. Forcing a PR-box embedding here would change
+        the witness's meaning (empty-candidate-set -> nonlocal-table), so this
+        one witness stays flag-carried (``structural_behaviour=None``) with
+        this documented reason. Honest partial relocation (note Step 0 (b)).
+    """
+    # Witness 1: classical bit pair -- both Sep branches hold.
+    # Behaviour: deterministic perfect-correlation local table (in Boole
+    # polytope) -> engine computes SepStr.
     classical_bit_pair = QueryInterface(
         name="classical_bit_pair",
         queries=("X1", "X2"),
@@ -7351,9 +7426,13 @@ def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
             CommutingDefender("D_offdiag", realignment_cost=4.0, commutes=False),
         ),
         capacity=10.0,
+        structural_behaviour=(Fraction(1), Fraction(1), Fraction(1), Fraction(1)),
     )
 
-    # Witness 2: capacity-limited Sep -- SepStr holds, SepAdm fails
+    # Witness 2: capacity-limited Sep -- SepStr holds, SepAdm fails.
+    # Behaviour: strictly-interior local table (Boolean defender exists
+    # structurally) -> engine computes SepStr; capacity blocks SepAdm on the
+    # separate admissibility axis.
     capacity_limited_sep = QueryInterface(
         name="capacity_limited_sep",
         queries=("Q1", "Q2"),
@@ -7362,9 +7441,12 @@ def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
             CommutingDefender("D_cheap_noncomm", realignment_cost=1.0, commutes=False),
         ),
         capacity=10.0,
+        structural_behaviour=(Fraction(1, 2), Fraction(1, 2),
+                              Fraction(1, 2), Fraction(1, 2)),
     )
 
-    # Witness 3: structural IJC interface (no commuting defender at all)
+    # Witness 3: structural IJC interface (no commuting defender at all).
+    # Behaviour: PR-box (S=4) -> engine computes IJCStr via CHSH/Fine facet.
     structural_ijc = QueryInterface(
         name="structural_ijc",
         queries=("A", "B"),
@@ -7373,9 +7455,12 @@ def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
             CommutingDefender("D_b", realignment_cost=5.0, commutes=False),
         ),
         capacity=20.0,
+        structural_behaviour=(Fraction(1), Fraction(1), Fraction(1), Fraction(-1)),
     )
 
-    # Witness 4: degenerate (no defenders at all -- vacuous IJCStr)
+    # Witness 4: degenerate (no defenders at all -- vacuous IJCStr).
+    # NOT a (2,2,2) scenario (no correlator table); stays flag-carried with the
+    # documented reason above. structural_behaviour left None.
     no_defenders = QueryInterface(
         name="no_candidates",
         queries=("U",),
@@ -7456,6 +7541,15 @@ def check_T_branch_taxonomy_inclusions():
       (ii) IJCStr => IJCAdm (forward Lemma 4.6).
       (iii) SepStr =/=> SepAdm (capacity_limited_sep counterexample).
       (iv) The two regimes are properly disjoint at each level.
+
+    Grade note (v24.3.408): the STRUCTURAL SepStr/IJCStr verdict is now
+    COMPUTED from the banked Boolean-defender engine (feasbool_structural,
+    Boole-polytope membership) on an attached (2,2,2) behaviour, not carried
+    on a hand-set flag, for every witness admitting a faithful correlator
+    representation (3 of 4; no_candidates is vacuously IJCStr with no table).
+    This strengthens the evidence (assertion -> computation) but does not move
+    the grade: [P_regime] reflects what the theorem proves (the regime
+    inclusions), not how the witness verdict is obtained.
     """
     witnesses = _branch_taxonomy_witnesses()
 
@@ -7491,13 +7585,19 @@ def check_T_branch_taxonomy_inclusions():
         ijc_adm = w.is_apf_admissible_IJC()
         assert sep_adm != ijc_adm, f"{name}: SepAdm/IJCAdm not disjoint"
 
-    # PHASE 21 TASK B corroboration (staged): the SepStr/IJCStr verdict is
-    # no longer only a hand-set ``commutes`` flag -- it is computable from
-    # Boole-polytope feasibility.  Corroborate on the canonical (2,2,2)
-    # witnesses: a local behaviour is SepStr; the PR-box is IJCStr.
-    # (Engine staged, not bank-registered; corroboration, not a dependency.
-    # The full refactor making every abstract witness's commutes flag
-    # engine-computed is the remaining Task B step.)
+    # PHASE 21 TASK B (banked engine): the SepStr/IJCStr verdict is COMPUTED
+    # from Boole-polytope feasibility, not a hand-set ``commutes`` flag. Three
+    # of the four witnesses above carry an explicit (2,2,2) behaviour and their
+    # branch is classified by apf.ijc_boolean_defender_bridge (banked, v24.3.291
+    # -- check_T_ijc_boolean_defender_bridge). The direct assertions below pin
+    # the two canonical endpoints: a local behaviour is SepStr; the PR-box is
+    # IJCStr. (Consumed as functions; direction core-check -> engine-function,
+    # no DAG cycle. The one witness (no_candidates) that is not a (2,2,2)
+    # scenario stays flag-carried by documented design -- honest partial
+    # relocation.) Graded-threat through-line:
+    # L_graded_threat_collapses_to_crisp (graded_threat_robustness.py) reduces a
+    # graded threat to a threshold-stack of crisp instances, each of which this
+    # engine classifies -- graded -> per-cut crisp -> FeasBool.
     from apf.ijc_boolean_defender_bridge import feasbool_structural as _feasbool
     from fractions import Fraction as _F
     assert _feasbool((_F(1), _F(1), _F(1), _F(1)))['branch'] == 'SepStr', \

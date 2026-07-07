@@ -175,14 +175,18 @@ CENSUS_ROWS = {
         support="{Sep, IJC} branches",
         closure="dichotomy exhaustive BY LOGIC on the vocabulary; no "
                 "within-vocabulary gap",
-        openness="vocabulary robustness (graded threat structures) is the "
-                 "named residual -- constitutive, NOT the .284 pattern"),
+        openness="vocabulary robustness CLOSED (L_graded_threat_collapses_to_"
+                 "crisp, v24.3.408 [P_structural]): graded threat structures "
+                 "collapse to a threshold-stack of crisp Sep/IJC; third branch "
+                 "<=> graded-FD5 violation (excluded); fence = commensurable "
+                 "grading (well-typing precondition)"),
     "T_no_IJC_no_noncommutativity": dict(
         cls="RC", module="core",
         functional="branch-(Sep) countermodel",
         support="same vocabulary",
         closure="countermodel EXISTENCE [computed]",
-        openness="rides the same vocabulary-robustness residual"),
+        openness="vocabulary-robustness residual CLOSED with the dichotomy "
+                 "(L_graded_threat_collapses_to_crisp, v24.3.408)"),
     # -- class HR: horizon/holographic readings of a [P] identity ---------
     "L_RT_capacity": dict(
         cls="HR", module="supplements",

@@ -1,6 +1,12 @@
 """Boolean-defender bridge engine: FeasBool feasibility -> noncommutativity.
 
-Phase 21 Task B (staged, NOT yet bank-registered).
+Phase 21 Task B. Banked (check_T_ijc_boolean_defender_bridge, v24.3.291;
+in BANK_REGISTRY_MODULES + MODULE_TYPES, IE-onboarded to the CONTEXTUALITY
+axis). This engine is the SOURCE of the structural SepStr/IJCStr branch
+CLASSIFICATION consumed by core.py (has_structural_commuting_defender /
+_branch_taxonomy_witnesses): the verdict is computed from Boole-polytope
+feasibility, not hand-set flags. The direction is core-check -> engine-
+function (no DAG cycle back).
 
 This module ports the Paper 5 Supplement v6.8 bridge *engine* into the
 codebase. The existing ``check_T_inseparable_IJC`` (core.py) asserts the
@@ -61,10 +67,15 @@ an empirical per-interface input, unchanged by this module. This engine
 supplies only the *math* bridge (defender-failure => noncommutativity),
 which the supplement grades P_math + P_APF.
 
-Proposed bank grade (pending fresh hostile audit + native verify_all +
-principal sign-off): the derived bridge would lift ``T_inseparable_IJC``'s
-self-contained inline witness to a computed certificate; staged here at
-``P_structural`` conservatively until audited.
+Bank grade ``P_structural_instrument`` (v24.3.291): the engine computes the
+Boole-membership / facet-violation (math) half and is the source of the
+SepStr/IJCStr classification core.py consumes. It does NOT discharge the
+Paper 5 supp bridge theorem's [a,b]!=0 step (kept inline as proof of record)
+nor the APF-side hypotheses -- so the grade stays P_structural_instrument,
+not [P+IJC]. Graded-threat through-line: L_graded_threat_collapses_to_crisp
+(graded_threat_robustness.py) reduces a graded threat to a threshold-stack of
+crisp IJC-dichotomy instances, each classified by this engine (graded ->
+per-cut crisp -> FeasBool -> noncommutativity).
 """
 
 from __future__ import annotations
@@ -283,7 +294,7 @@ def reproduce_inline_345_commutator() -> Dict:
 
 
 # =====================================================================
-# Bank check (staged; not yet registered)
+# Bank check (registered; v24.3.291)
 # =====================================================================
 
 def check_T_ijc_boolean_defender_bridge() -> Dict:
@@ -299,8 +310,10 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
       * the core.py inline witness [E_d1, pi_W] = +-12/25 is recovered as
         the constructive quantum-IJC existence side.
 
-    Proposed grade P_structural (pending fresh hostile audit). Occupancy
-    stays the QAC; this is the math bridge only. The engine discharges the
+    Grade P_structural_instrument (v24.3.291). This engine is the SOURCE of
+    the SepStr/IJCStr branch classification consumed by core.py (relocated
+    from hand-set flags, Phase 21 Task B). Occupancy stays the QAC; this is
+    the math bridge only. The engine discharges the
     Boole-membership / facet-violation (math) half; it does NOT discharge
     the Paper 5 supp bridge theorem's APF-side hypotheses (word adequacy,
     finite repeatable record partitions, overlap coherence, bridge-
@@ -356,7 +369,7 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
     return {
         "name": (
             "T_ijc_boolean_defender_bridge: FeasBool infeasibility derives "
-            "noncommutativity [P_structural, staged Phase 21 Task B]"
+            "noncommutativity [P_structural_instrument, Phase 21 Task B]"
         ),
         "passed": passed,
         "epistemic": "P_structural_instrument",
@@ -364,6 +377,12 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
             "T_branch_taxonomy_inclusions",
             "T_quantum_admissibility_condition",
             "T_inseparable_IJC",
+        ],
+        "cross_refs": [
+            # graded -> per-cut crisp -> FeasBool -> noncommutativity through-line:
+            # the graded lemma reduces a graded threat to a threshold-stack of
+            # crisp IJC-dichotomy instances, each classified by this engine.
+            "L_graded_threat_collapses_to_crisp",
         ],
         "failures": failures,
         "key_result": (
@@ -388,9 +407,10 @@ _CHECKS = {
 def register(registry):
     """Register the Boolean-defender bridge engine into the global bank.
 
-    STAGED: not yet listed in apf/_module_manifest.py BANK_REGISTRY_MODULES
-    and EXPECTED_REGISTRY_SIZE is not yet bumped. Finalize only behind a
-    fresh hostile audit + native verify_all + principal sign-off.
+    Bank-registered (v24.3.291): listed in apf/_module_manifest.py
+    BANK_REGISTRY_MODULES + MODULE_TYPES and counted in
+    EXPECTED_REGISTRY_SIZE. This engine is the source of the SepStr/IJCStr
+    branch classification consumed by core.py.
     """
     registry.update(_CHECKS)
 

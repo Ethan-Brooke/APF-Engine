@@ -42,10 +42,12 @@ LEDGER_DISPOSITIONS_EXACT = {
     'T_no_IJC_no_noncommutativity': ('exhaustive-by-logic on the FD5 '
                                      'set-inclusion vocabulary; residual = '
                                      'vocabulary robustness (graded threat '
-                                     'structures), named-open; not the .284 '
-                                     'pattern -- see '
-                                     'apf/reading_functional_census.py '
-                                     '(2026-07-03)'),
+                                     'structures), CLOSED at v24.3.408 '
+                                     '(L_graded_threat_collapses_to_crisp '
+                                     '[P_structural]: grading collapses to a '
+                                     'threshold-stack of crisp Sep/IJC); not '
+                                     'the .284 pattern -- see '
+                                     'apf/graded_threat_robustness.py'),
     'T_IJC_dichotomy': ('rides the reading-functional census (2026-07-03): '
                         'exhaustion is logic on the vocabulary; no '
                         'within-vocabulary gap'),
