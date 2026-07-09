@@ -5183,6 +5183,14 @@ def check_L_beta_capacity():
     The system is overdetermined (2 equations, 1 unknown). Consistency
     is NOT guaranteed a priori and provides an independent cross-check
     on N_gen = 3 (separate from T4F).
+
+    COMPOSITION NOTE (2026-07-09): this family + the abelian third
+    (check_T_gauge_beta_capacity_tiling_abelian) + the rival kill
+    (check_R_Ngen_neq_3_killed) carry the generation FLOOR that
+    check_T_field's uniform x3 consumes -- the equations solve to n = 3 in
+    both directions (n = 1, 2, 4 fail all three). Paper homes: Paper 2 main
+    v6.6 sec:generations + supp v3.9 sec:three_generation_scope + Example 4.
+    Lane record: The Turning (parked)/fermion_gauge_seam_2026-07-09/.
     """
     # Capacity counts (all [P])
     C_total = dag_get('C_total', default=61, consumer='L_beta_capacity')

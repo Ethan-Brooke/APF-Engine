@@ -2680,9 +2680,13 @@ def check_T_Born():
     p2 = _tr(_mm(rho, E2)).real
     check(abs(p1 + p2 - 1.0) < 1e-12, "Additivity for general POVM")
 
-    # Step 7: Gleason dimension check -- dim=2 would allow non-Born measures
-    # In dim=2, frame functions exist that are NOT trace-form.
-    # This is WHY d >= 3 is required for Gleason.
+    # Step 7: Gleason dimension check for THIS witness (projective route).
+    # In dim=2, PROJECTIVE frame functions exist that are not trace-form, so
+    # projective Gleason needs d >= 3 -- the requirement of this witness, NOT
+    # of the framework's Born forcing. CORRIGENDUM (2026-07-09): the corpus's
+    # primary Born route is Busch/positive-functional (Paper 1 v5.0 Route B,
+    # dim >= 2; Paper 5 supp v5.97 is Gleason-free, dim >= 1), so no dimension
+    # floor rides on d >= 3. Audit record: fermion_gauge_seam lane, AUDIT 2.
     check(d >= 3, "Gleason's theorem requires dim >= 3")
 
     return _result(

@@ -1217,7 +1217,15 @@ def check_T_field():
     Phase 2: 5 closed-form proofs that ALL categories outside Phase 1
              are excluded:
              P1. SU(3) reps >= 10: single field exceeds AF budget (15 > 11)
-             P2. Colored SU(2) reps >= 3: single field exceeds SU(2) AF (12 > 7.3)
+             P2. Colored SU(2) reps >= 3: AF-excluded AT N_gen=3 replication
+                 ((2/3)*T(3)*dim(3)*Ng = 12 > 22/3). At ONE copy the same
+                 field is AF-clean (4 < 22/3): the exclusion rides the
+                 generation replication imposed on every template (T7).
+                 The floor (why replication is forced) is BANKED in the
+                 capacity-beta family: L_beta_capacity +
+                 check_T_gauge_beta_capacity_tiling_abelian (three equations,
+                 unique common solution n = 3). This scan's uniform x3 cites
+                 that family; lane record 2026-07-09.
              P3. Colorless SU(2) reps >= 3: DOF >= 48 > 45 (minimality)
              P4. Multi-colored-multiplet: min DOF = 81 > 45 (minimality)
              P5. > 5 field types: each type adds >= 3 DOF (minimality)
@@ -1335,6 +1343,14 @@ def check_T_field():
 
     # P2: Colored SU(2) triplets/quartets AF-excluded
     #     Minimum SU(2) AF cost: T_2(rep) x dim(SU(3)_fund) x N_gen
+    #     NOTE (2026-07-09): the exclusion fires only WITH the Ng=3 factor.
+    #     A single unreplicated colored weak-triplet is AF-clean (4 < 22/3);
+    #     the 18-Weyl (3,3,0)+3x(3b,1,Y) content passes every filter at one
+    #     copy and dies here at x3 (12 > 22/3, cost 72 > 61). The x3 is
+    #     carried by the banked capacity-beta floor (L_beta_capacity + the
+    #     abelian tiling, n = 3 over-determined); whether the correspondence
+    #     binds CANDIDATE templates (the exotic's own tiling) is the named
+    #     follow-on in the 2026-07-09 lane record.
     for r2 in ['3', '4']:
         check(_c23 * _SU2[r2]['T'] * 3 * Ng > _AF2, f"P2: SU(2) {r2} not excluded")
 
@@ -1393,6 +1409,8 @@ def check_T_field():
         key_result=f'SM fermions UNIQUE within SU(3) reps <= dim 10 (Phase 1: {tested} templates) + analytic exclusion for higher reps (Phase 2: 5 proofs)',
         dependencies=['T_gauge', 'T7', 'T5', 'A1', 'L_nc', 'T_tensor',
                       'L_AF_capacity', 'T6B_beta_one_loop'],
+        cross_refs=['L_beta_capacity', 'T_gauge_beta_capacity_tiling_abelian',
+                    'R_Ngen_neq_3_killed'],  # the multiplicity floor the scan's x3 consumes (2026-07-09)
         artifacts={
             'phase1_scanned': tested, 'phase1_survivors': len(survivors),
             'phase2_proofs': 5, 'winner_dof': w_dof, 'winner_desc': wd,
@@ -1538,6 +1556,21 @@ def check_T7():
     """T7: Generation Bound N_gen = 3 [P].
     
     E(N) = N*eps + N(N-1)*eta/2.  E(3) = 6 <= 8 < 10 = E(4).
+
+    SELECTOR NOTE (2026-07-09, corrected same day): the code takes
+    N_gen = max{N : E(N) <= C_EW} -- an argmax; as written this check carries
+    the CEILING only (why not 4; T4F is its shadow). The FLOOR (why not 1 or
+    2) is banked ELSEWHERE and this check should be read alongside it:
+    L_beta_capacity (generations.py) -- 6|b_3| = C_vacuum and 6|b_2| =
+    C_matter, two independent linear equations each solving uniquely to
+    n = 3 -- and check_T_gauge_beta_capacity_tiling_abelian
+    (gauge_beta_capacity_tiling.py, v24.3.190) -- the abelian third,
+    (40/3)n + 1 = 9n + 14 -> n = 3. Three equations, one solution,
+    over-determined; equations carry both directions (floor + ceiling).
+    Lane record: The Turning (parked)/fermion_gauge_seam_2026-07-09/.
+    RIDER (audit M3, docstring-corrigenda batch): the line "minimum cost at
+    eta = eps" below is backwards -- eta = eps is the cost MAXIMUM of the
+    admissible schedule family.
     """
     # From T_kappa and T_channels:
     kappa = 2
