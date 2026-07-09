@@ -123,17 +123,26 @@ G-HOLD-EXACT -- THE NAMED GRANT (status block):
   is 0 in every world by the [P] FREE leg, no mechanism books below 0, and
   every standing-consult exact mechanism ties it 0-vs-0).
 
-THE R7 WIDTH DIAL (NEEDS-ETHAN; recorded, ruling pending): the
-fused-computation convention (fused computation free -- the pricing audit's
-own construction) is the single dial deciding the theorem's practical width.
-As-is, a classical zero-marginal exact route exists at every choice event
-(fresh formation never forced) and the practical content is the indifference
-clause plus conditional fresh-side dominance; reversed (computation books),
-R7/R4/R9 migrate toward bin (i) and the strict leg widens, at the price of
-overturning the pricing audit's M2 counter-world.  Every statement
-registered here is STABLE under either ruling (verified clause-by-clause,
-stage-2 surface 4); the eventual ruling lands as corrigendum-plus-rewalk of
-widths, never a retraction of the split.
+THE R7 WIDTH DIAL -- RULED AS-IS (Ethan, 2026-07-09; ruling-of-record, this
+corrigendum): the fused-computation convention (fused computation free --
+the pricing audit's own construction) STANDS as the convention-of-record.
+Grounds recorded with the ruling: (1) the pricing lemma's M2 counter-world
+(the default-coded register at zero booking) is walked, audited arithmetic
+-- reversing would overturn a counter-world, not reinterpret it (pricing-
+not-forbidding discipline, the 2026-07-08 re-target ruling); (2) billing
+locus: L_cost [P] attaches cost to committed realignment per transition,
+uniquely -- a pure read realigns nothing; conditioning is not a transition;
+(3) the strict claims the reversed setting would manufacture globally are
+available structurally on frustrated sub-families (the slack-run-minimizer
+lane, 2026-07-09) without touching the convention.  PRACTICAL CONTENT NOW
+UNCONDITIONAL: a classical zero-marginal exact route exists at every choice
+event (fresh formation never forced); the theorem's practical width is the
+indifference clause plus conditional fresh-side dominance.  The reversed
+branch (computation books; R7/R4/R9 migrate toward bin (i), strict leg
+widens) is RETAINED as the recorded road-not-taken, no longer a pending
+ruling.  All statements were verified STABLE under either ruling
+(clause-by-clause, stage-2 surface 4), so this ruling lands as this
+corrigendum alone -- no width rewalk owed.
 
 FENCES (all mandatory): NO FORBIDDING (every classical exact mechanism ran
 and was priced or zero-priced -- computed fence; nothing blocked or
@@ -202,7 +211,7 @@ HOLD_EXEMPTION_BUNDLE = ('K1_UT_committed_scope_exempt',
                          'Omega_conditioning_exempt')
 M4_STATUS = 'NAMED_READING'   # R-A2-mech: named reading, never banked content
 TRICHOTOMY_EXHAUSTIVENESS = 'FAITHFUL_REPRESENTATION_READING_WORLD_UNIFORM'
-R7_WIDTH_DIAL = 'NEEDS_ETHAN_FUSED_COMPUTATION_CONVENTION'
+R7_WIDTH_DIAL = 'RULED_AS_IS_FUSED_READS_FREE_2026_07_09'  # was NEEDS_ETHAN_...; ruled by Ethan 2026-07-09
 
 
 def _cost(S):
@@ -1086,9 +1095,10 @@ def check_T_hold_cost_dominance_split():
        "which worlds host holds; no forcing anywhere")
 
     # ---- flags + registry ---------------------------------------------------
-    ck(R7_WIDTH_DIAL == 'NEEDS_ETHAN_FUSED_COMPUTATION_CONVENTION',
-       "R7 WIDTH DIAL recorded (NEEDS-ETHAN; statements stable under either "
-       "ruling; a reversal lands as corrigendum, never retraction)")
+    ck(R7_WIDTH_DIAL == 'RULED_AS_IS_FUSED_READS_FREE_2026_07_09',
+       "R7 WIDTH DIAL RULED AS-IS (Ethan 2026-07-09): fused reads free is "
+       "the convention-of-record; statements verified stable, widths "
+       "unchanged; the reversed branch retained as road-not-taken")
     ck(M['occupancy_reads'] == ['hold_availability'],
        "occupancy consumed exactly once, at hold-AVAILABILITY only")
 
@@ -1144,15 +1154,15 @@ def check_T_hold_cost_dominance_split():
                              'discharge graveyarded => possibly permanent; '
                              'capability-shaped not price-shaped (withheld '
                              'hold: bin (iii), price unchanged -- computed)'),
-            'r7_dial': ('NEEDS-ETHAN: the fused-computation convention '
-                        '(fused computation free, per the pricing audit\'s '
-                        'own construction) is the single width dial; as-is '
-                        'the practical content is the indifference clause + '
-                        'conditional fresh-side dominance; reversed, R7/R4/R9 '
-                        'migrate toward bin (i) and the strict leg widens; '
-                        'statements STABLE under either ruling -- the ruling '
-                        'lands as corrigendum-plus-rewalk of widths, never a '
-                        'retraction of the split'),
+            'r7_dial': ('RULED AS-IS (Ethan 2026-07-09): fused reads free '
+                        'is the convention-of-record; practical content now '
+                        'unconditional -- the indifference clause + '
+                        'conditional fresh-side dominance; the reversed '
+                        'branch (R7/R4/R9 migrate to bin (i), strict leg '
+                        'widens) retained as the recorded road-not-taken; '
+                        'grounds: the M2 counter-world arithmetic, the '
+                        'L_cost per-transition billing locus, and the '
+                        'frustrated-family structural route to strictness'),
             'may_not_cite': ('"A2 selects the hold" simpliciter (computed '
                              'FALSE -- the guard); clause 1 grant-free; the '
                              'split without the indifference clause; strict '
