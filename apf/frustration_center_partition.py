@@ -95,6 +95,36 @@ admissible defence").
 With rulings 3a and 4a on record the door to a future reading charter is
 OPEN; this module licenses NO reading sentence.
 
+THE READING ADOPTION (Ethan, 2026-07-11; ruling-of-record, this module
+-- the R7/3a/4a corrigendum pattern, count-neutral): the composed
+confinement-reading R1-R5 (READING NOTE of record: 'Reference - The
+Composed Confinement Reading (2026-07-11).md', APF Reference Docs;
+hostile audit LAND-WITH-FIXES 0.85, door mechanics CONFIRMED -- rulings
+3a/4a ARE the two adjudications the parent closure barred behind) is
+ADOPTED as the reading-of-record.  The previously barred bare sentence
+(its exact wording is pinned, deliberately unspelled here, in this
+module's barred-sentence scan below) is RETIRED PERMANENTLY, with R5
+registered as its SOLE LICENSED REPLACEMENT.  R5, quoted in full (the
+v0.2 text of record): "Within these fences, the confinement-shaped
+phenomenology of the walked model -- unpassivatable center charge
+forcing billed structure at every boundary at every walked depth,
+passivatable charge held at bounded, depth-constant bill exactly where
+geometry supports a screen, and the frustration partition landing on
+the center partition -- is a computed kinematic shape in the
+admissibility ledger: computed on the walked graphs at the stated
+caps, conditional on the nine-item composed stack as re-typed under
+rulings 3a/4a, and readable at [P_structural_reading] and no higher."
+THE UNIT RULE (of record, with the adoption): R1-R5 travel together --
+R4 may not be separated from R1-R3 in any placement, and R5 may NEVER
+be quoted without R4 (this docstring quotes R5 only INSIDE the ruling
+that registers it; the citable unit lives in the READING NOTE).
+CEILING: every sentence of the reading reads at [P_structural_reading]
+and no higher -- a ceiling, not a grade; the adoption moves no banked
+grade anywhere.  The door-open clause above and the 'NO reading
+sentence' MAY-NOT-CITE bullet below are henceforth read UNDER this
+ruling: the charter has landed; the licensed form is
+R5-under-the-unit-rule, and only that.
+
 PREMISE STACK (the nine-item composed stack AS RE-TYPED under rulings
 3a/4a; the grade line's conditioning bar):
   1. P-dangling (INHERITED, ADJUDICATED): configuration-dependent
@@ -150,6 +180,11 @@ inventories; citation without the premise stack is misciting):
   - NOTHING beyond the walked graphs and stated caps: screen existence,
     degeneration, and the partition are instance facts; no graph-class
     characterization theorem exists anywhere in the bank.
+    (per-instance CONTAINMENT is characterized on a stated exhaustive
+    labeled family by check_T_screen_containment_characterization,
+    v24.3.421; the family-level SCREEN-SUPPORTING predicate --
+    depth-constant, cut-free -- remains without a general
+    characterization; farcyc separates the two.)
   - The FIXED-L partition claim is BARRED (dead; the two named rules
     provably disagree at fixed budgets on the even side -- re-fired in
     this battery).  Class separation only in the every-budget/L-scaling

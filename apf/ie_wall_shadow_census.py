@@ -233,9 +233,14 @@ WALL_REGISTRY: Dict[str, dict] = {
         "type": "ruling",
         "module": None,
         "certificates": (),
-        "source": ("ICL_vac adoption ruling pending (route-(b) witness "
-                   "family banked .352/.356/.357; adoption is "
-                   "principal-ruling-shaped); record: Reference - Decisions "
+        "source": ("ICL_vac RULED HOLD-NAMED 2026-07-04 (principal): "
+                   "ICL_vac stays a named, open, falsifiable seam "
+                   "commitment -- not adopted, not declined; the honest "
+                   "base stays three-term; reopeners named. Route-(b) "
+                   "witness family banked .352/.356/.357; the wall stays "
+                   "ruling-typed, never adjudicated by this census; "
+                   "records: the 2026-07-04 decision notes (wiki Log + "
+                   "Reference decision records) + Reference - Decisions "
                    "List - Consolidation of the 2026-07-02 Threads.md"),
     },
     "R_LSC": {

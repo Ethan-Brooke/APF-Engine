@@ -89,6 +89,74 @@ PREMISE STACK (the granted grade line's conditioning bar):
      hypothesis beyond them.  The grade line's conditioning bar prices
      exactly this.
 
+THE PREREQUISITE-(b) RULING (Ethan, 2026-07-11; ruling-of-record, this
+module -- the R7/3a/4a corrigendum pattern; branch (ii) REGISTER of the
+prereq_b re-scope lane): the identification "per-vertex-singlet
+admissibility = lattice Gauss law / interior gauge invariance" (premise
+stack item 2), carrying the electric-basis frame convention as its
+named frame (home: check_T_su2_string_cut_comovement, stack item 1), is
+RULED a REGISTERED BASE-RESTING VALUE-SUPPLIER of the lattice
+colour-record reading -- a convention-of-record with grounds, NOT a
+derivation.  The identification stays computed nowhere: the
+registration RECORDS that it is an input, it does not compute it.
+Grounds recorded with the ruling (verbatim from the lane record, WALK
+NOTE section 5): (1) the lane's localization computation (the chain
+leaves exactly one open identification); (2) FD1-sc supplies the
+negative half at [P] (no-fiat), so the registered content is only the
+positive selection; (3) the banked family-relativity verdict + the
+six-audit refusal show the positive selection is not currently
+derivable -- naming it is the honest bookkeeping.  FALSIFIER OF RECORD
+(verbatim, ibid.): an in-model computation exhibiting an admissible
+configuration (per-vertex-singlet holds) whose physical colour-record
+content provably differs from its invariant content at a
+vertex-disjoint cut -- or an in-bank derivation of the electric-frame
+selection from the four (which would retire the registration in favour
+of branch (i)).  RECORD: prerequisite (b) of the ym_conformal_phase
+promotion docket is RE-SCOPED to this identification, NOT discharged
+("(b) discharged" stays an unlicensed sentence); every downstream grade
+is UNCHANGED (every consumer stays at its banked grade; this lemma's
+grade line below is untouched); promotion of
+check_T_ym_conformal_phase_excluded_by_record_locking stays gated on
+prerequisites (a)/(d) -- "Not promotable now" stands verbatim; the
+FD1-sc negative half stands at [P]; the derive branch (branch (i)) was
+PRICED AND DECLINED (zero grade movement against two banked walls); the
+6-audit A1-internal forcing bar (2026-06-29, do-not-re-walk) is
+untouched.  Lane record: prereq_b_rescope_2026-07-11/ (WALK_NOTE.md
+sections 3/5/6; walker run of record in RUN_LOG.txt).
+
+THE ICL PATTERN-INSTANTIATION (corrigendum of record, Ethan,
+2026-07-11, chartered narrow -- the .416/.417 P-dangling
+instantiation-corrigendum form, count-neutral; registered against the
+ICL name): under this lemma's premise stack, the ICL conjecture's
+boundary-billing PATTERN has a computed gauge-side instance -- an
+unpassivatable (N-ality != 0) source forces >= 1 billed link across
+every interior bipartition cut (the cut law: the crossing content's
+center-charge shadow is pinned to the enclosed source charge), and the
+passivatable branch exhibits nothing-need-cross (a bounded screen,
+geometry-conditional) -- under THREE NAMED IDENTIFICATIONS: (i)
+per-vertex-singlet = Gauss (REGISTERED above, the prerequisite-(b)
+ruling); (ii) bipartition cut = causal boundary -- NEW, NAMED HERE,
+owned by no prior record; a possible category-error adjudication is a
+LIVE KILL; (iii) charge-nonzero link = billed structure, via the
+support-reading residue of record (ruled convention-of-record
+2026-07-10; its ceiling and vertex-disjoint rider carried).  MANDATORY
+HONESTY CLAUSES: the instance reading's grade ceiling is
+[P_structural_reading] -- NOTHING HERE LIFTS ANY GRADE; the ICL
+conjecture stays [C], open and named; the 2026-07-04 HOLD-NAMED
+principal ruling (ICL_vac a named, open, falsifiable seam commitment --
+not adopted, not declined) is UNTOUCHED and cited here; this is an
+instance of ICL's PATTERN at billing granularity -- NEVER the ceiling
+("only scalar crosses" is NOT shown: the forced crossers are
+irrep-labelled links) and NOT floor-redundant (the sector-typed
+surplus: N-ality granularity + both branches computed); the V2
+two-family fence travels verbatim (boost == no-B family (i) ONLY; no
+YM gap-occurrence sweep-in); this instance may NEVER be cited as
+adoption pressure on ICL or as moving the R_ICL_vac wall.  KILL MODES:
+an H-hom failure at any computed instance; the cut-as-causal-boundary
+identification (ii) adjudicated a category error; any drift to ceiling
+phrasing (dies on the floor/ceiling adjudication) or to floor-only
+phrasing (dies as redundant).
+
 DEPENDENCY CHOICE (argued): dependencies list ONLY
 T_su2_string_cut_comovement -- the frame convention's home check,
 consumed live.  A1 is EXCLUDED deliberately: this lemma is pure model
