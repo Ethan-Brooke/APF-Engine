@@ -77,6 +77,26 @@ are to WITNESS_NOTE_v0.2.md, carried verbatim from its Section 0 item 1):
      is a distinct, unbanked, unadjudicated door (Section 7.2) -- same
      epistemic class as P-dangling, named here, not absorbed.  This is
      the open blade -- see the kill condition below.
+     INSTANTIATED (corrigendum of record, 2026-07-10, principal-directed,
+     count-neutral; v24.3.416/.417 anchors): the premise's pattern is now
+     COMPUTED in a banked physical-model sector -- check_L_center_flux_exit
+     [P_math | model conventions + H-hom]: the same colour threat of an
+     N-ality-nonzero source has minimal admissible defence {contained
+     pairing} with the partner present and {>= L boundary-reaching links}
+     with the partner absent, forced by Gauss-parity kinematics; this
+     module's own control leg supplies necessity (configuration-
+     independent billing can never frustrate, so any faithful codef
+     encoding of that sector MUST use this premise's shape); and FD5
+     containment itself bars the rival encoding (a partner-killed threat
+     is anti-monotone membership, the barred branch) -- within FD5,
+     P-dangling is the UNIQUE legal encoding of the computed gauge
+     behaviour.  The model-to-calculus bridge is the support-reading
+     residue, RULED convention-of-record (principal, 2026-07-10; ceiling
+     P_structural_reading carried; recorded in
+     frustration_center_partition.py).  Status: OPEN premise, derivation
+     barred (the two [P] bars above), instantiation computed, bridge
+     ruled -- adjudicated to its floor, instantiated at its ceiling.
+     NOTHING HERE LIFTS THE GRADE; the premise stays open and named.
   2. The codef support-billing convention (CONSUMED, BANKED):
      bill(S) = cost(anchor union) + cost(escaped threat directions),
      escape billed as cost(W - M-union) at plain direction cost, shared
