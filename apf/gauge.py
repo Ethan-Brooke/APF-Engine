@@ -645,12 +645,19 @@ def check_Theorem_R():
       NOTE: SU(N_c) x SU(2) is anomaly-free without U(1). All cubic
       anomalies cancel, Witten anomaly is safe, gravitational mixed
       anomalies vanish. Therefore R3 CANNOT be derived from anomaly
-      cancellation. The correct argument is admissibility completeness:
+      cancellation. The argument runs through the admissibility-
+      completeness READING (corrigendum 2026-07-13, below):
 
-      (a) A1 requires the gauge structure to distinguish all physically
-          distinct states (admissibility completeness). If two states
-          have identical gauge quantum numbers but are physically
-          distinct, the admissibility structure is incomplete.
+      (a) Under the admissibility-completeness READING (R-EC-inv:
+          kinematic type-distinctness is exhausted by the interface's
+          counted labels -- A1-MOTIVATED via the enforcement referent,
+          NOT A1-derived; reading's home: apf/ec_inventory_reading.py
+          check_L_EC_inventory_reading [P_structural_reading | R-EC-inv
+          + I-typing]), with the entry-typed inventory (I-typing: the
+          five multiplets are ANTECEDENTLY distinct types, u^c != d^c
+          prior to any abelian label) as NAMED INPUT: if two entry-types
+          have identical gauge quantum numbers, the labeling conflates
+          the typed inventory.
       (b) Without U(1), SU(N_c) x SU(2) conflates matter representations:
           u^c and d^c both map to (N_c-bar, 1) -> indistinguishable.
           e^c and nu_R both map to (1, 1) -> indistinguishable.
@@ -662,8 +669,28 @@ def check_Theorem_R():
       (e) Therefore: exactly one U(1) is required.
 
       The matter content (5 multiplets per generation) is derived from
-      the spectral triple (T_field [P]), not assumed. This makes the
-      admissibility completeness argument non-circular.
+      the spectral triple (T_field [P]), not assumed; its ANTECEDENT
+      type-distinctness is the named input I-typing (an input here, not
+      a consequence of the labels). This keeps the completeness-reading
+      argument non-circular.
+
+    CORRIGENDUM (2026-07-13, count-neutral; principal ruling 'bank'
+    2026-07-13): the R3 wording "A1 requires the gauge structure to
+    distinguish all physically distinct states (admissibility
+    completeness)" is RE-TYPED throughout this check to the named
+    reading form: R3 holds under the reading R-EC-inv (kinematic
+    type-inventory completeness -- A1-motivated via the enforcement
+    referent, NOT A1-derived) with the entry-typed inventory I-typing
+    as named input. Source: Paper 2 supp v4.0 review 4.0.01 (items
+    6/10; tracker in Papers/Paper 02/Reviews/); the EC lane The Turning
+    (parked)/ec_derivation_2026-07-13/ (walker of record 95 exact
+    checks exit 0; stage-1 hostile audit LAND-WITH-FIXES 0.86, all
+    fixes carried); the reading's home is apf/ec_inventory_reading.py
+    (v24.3.423, where the non-derivability counter-construction is
+    owned in-check). The u^c/d^c conflation arithmetic below
+    (4 distinguishable for 5 states; one U(1) resolves 5) SURVIVES
+    unchanged -- it is the one-U(1) NECESSITY leg, now conditional on
+    the reading + input.
 
     STATUS: [P]. Dependencies: A1, L_nc, L_irr, L_irr_uniform, B1_prime,
     T3, T_M, T_field, T_confinement.
@@ -691,7 +718,9 @@ def check_Theorem_R():
     min_pseudoreal_dim = 2
     check(min_pseudoreal_dim == 2, "Minimal pseudoreal dim must be 2")
 
-    # R3: Single abelian grading (admissibility completeness)
+    # R3: Single abelian grading -- under the admissibility-completeness
+    # READING R-EC-inv + the named input I-typing (corrigendum 2026-07-13;
+    # apf/ec_inventory_reading.py is the reading's home).
     # WITHOUT U(1): SU(N_c) x SU(2) is anomaly-free but conflates reps.
     # u^c and d^c both map to (N_c-bar, 1) — indistinguishable.
     # e^c and nu_R both map to (1, 1) — indistinguishable.
@@ -699,13 +728,14 @@ def check_Theorem_R():
     n_distinguishable_no_U1 = 4 # (N_c,2), (N_c-bar,1), (1,2), (1,1)
     check(n_distinguishable_no_U1 < n_physical_multiplets,
           f"Without U(1): only {n_distinguishable_no_U1} distinguishable "
-          f"for {n_physical_multiplets} physical states (admissibility incomplete)")
+          f"for {n_physical_multiplets} physical states (typed inventory "
+          f"conflated -- under R-EC-inv + I-typing)")
 
     n_U1_needed = 1
     n_distinguishable_with_U1 = 5  # all hypercharges distinct
     check(n_distinguishable_with_U1 == n_physical_multiplets,
           f"With 1 U(1): {n_distinguishable_with_U1} distinguishable "
-          f"(admissibility complete)")
+          f"(typed inventory resolved under the reading)")
     check(n_U1_needed == 1, "Exactly one U(1) (A1 minimality)")
 
     # Combined: the three requirements are independent
@@ -714,7 +744,9 @@ def check_Theorem_R():
     # R3 comes from admissibility completeness + A1 minimality
     r1_source = 'L_nc + T_M + B1_prime'
     r2_source = 'L_irr + L_irr_uniform + T_M'
-    r3_source = 'admissibility completeness + A1 minimality'
+    # corrigendum 2026-07-13: reading-typed (was 'admissibility
+    # completeness + A1 minimality')
+    r3_source = 'R-EC-inv reading + I-typing (named input) + A1 minimality'
 
     return _result(
         name='Theorem_R: Representation Requirements from Admissibility',
@@ -727,14 +759,20 @@ def check_Theorem_R():
             'R2 (faithful pseudoreal 2-dim carrier from L_irr + T_M: '
             'admissibility independence requires intrinsic gauge irreversibility, '
             'which excludes vector-like theories [CPT-symmetric, 0 CP phases]), '
-            'R3 (single abelian grading from admissibility completeness + '
-            'A1 minimality: SU(N_c)xSU(2) is anomaly-free without U(1) but '
+            'R3 (single abelian grading under the admissibility-completeness '
+            'READING R-EC-inv + the named input I-typing (corrigendum '
+            '2026-07-13; A1-motivated, not A1-derived) + A1 minimality: '
+            'SU(N_c)xSU(2) is anomaly-free without U(1) but '
             'conflates u^c/d^c and e^c/nu_R; one U(1) resolves all '
             f'{n_physical_multiplets} multiplets). '
             'No reference to any specific Lie group. '
             'v6.7: R1/R2 sharpened, R3 rewritten (Phase 5 audit).'
         ),
-        key_result='Three carrier requirements (R1+R2+R3) derived from A1 alone [P]',
+        key_result=('Three carrier requirements: R1+R2 derived from A1 [P]; '
+                    'R3 under the admissibility-completeness reading '
+                    'R-EC-inv + named input I-typing (A1-motivated, NOT '
+                    'A1-derived; corrigendum 2026-07-13, reading home '
+                    'apf/ec_inventory_reading.py)'),
         dependencies=['A1', 'L_nc', 'L_irr', 'L_irr_uniform', 'B1_prime', 'T3',
                       'T_M', 'T_field', 'T_confinement', 'Regime_R'],
         artifacts={
@@ -760,13 +798,17 @@ def check_Theorem_R():
                 'name': 'Abelian grading',
                 'dim': 1,
                 'type': 'U(1)',
-                'source': ('Admissibility completeness (A1): SU(N_c)xSU(2) conflates '
+                'source': ('The admissibility-completeness READING R-EC-inv + '
+                           'the named input I-typing (corrigendum 2026-07-13): '
+                           'SU(N_c)xSU(2) conflates '
                            'u^c/d^c as (N_c-bar,1) and e^c/nu_R as (1,1). One U(1) '
                            'with distinct charges resolves all 5 multiplets. '
                            'A1 minimality: one U(1) suffices.'),
                 'note': ('SU(N_c)xSU(2) is anomaly-free without U(1). R3 is NOT '
-                         'derivable from anomaly cancellation. The driver is '
-                         'admissibility completeness.'),
+                         'derivable from anomaly cancellation. The driver is the '
+                         'admissibility-completeness reading R-EC-inv '
+                         '(A1-motivated, NOT A1-derived) with I-typing as named '
+                         'input; home: apf/ec_inventory_reading.py (v24.3.423).'),
             },
             'no_lie_group_referenced': True,
             'logical_position': 'Bridge between structural lemmas and T_gauge',
@@ -838,13 +880,17 @@ def check_L_gauge_template_uniqueness():
       2-dim rep. All others have min faithful dim >= 3.
 
     Step 4 [Abelian factor = U(1)]:
-      R3 (admissibility completeness): without an abelian grading,
+      R3 (the admissibility-completeness READING; corrigendum
+      2026-07-13, below): without an abelian grading,
       SU(N_c) x SU(2) conflates matter multiplets (e.g. u^c and d^c
       are both (N_c-bar, 1)). One U(1) with distinct charges resolves
       all degeneracies. Note: anomaly cancellation does NOT require
-      U(1) — SU(N_c) x SU(2) is anomaly-free. The driver is A1's
-      requirement that the gauge structure distinguish all physical
-      states. Multiple U(1)s excluded by capacity minimality (A1).
+      U(1) — SU(N_c) x SU(2) is anomaly-free. The driver is the
+      admissibility-completeness reading R-EC-inv (A1-motivated via the
+      enforcement referent, NOT A1-derived) with the entry-typed
+      inventory I-typing as named input (Theorem_R R3 as corrigendized;
+      reading's home: apf/ec_inventory_reading.py).
+      Multiple U(1)s excluded by capacity minimality (A1).
       U(1) is the unique connected compact 1-dim abelian Lie group.
 
     Step 5 [Witten anomaly excludes even N_c]:
@@ -860,6 +906,17 @@ def check_L_gauge_template_uniqueness():
       AS2: Lie classification is imported math (same status as
            Piron-Soler for T1).
       AS3: Faithfulness excludes SO(3) (mitigated by A1:NT).
+
+    CORRIGENDUM (2026-07-13, count-neutral; principal ruling 'bank'
+    2026-07-13): Step 4's former sentence "The driver is A1's
+    requirement that the gauge structure distinguish all physical
+    states" is RE-TYPED to the named reading form: the driver is the
+    reading R-EC-inv (A1-motivated via the enforcement referent, NOT
+    A1-derived) with the entry-typed inventory I-typing as named input.
+    Source: Paper 2 supp v4.0 review 4.0.01 (items 6/10); the EC lane
+    The Turning (parked)/ec_derivation_2026-07-13/; reading's home:
+    apf/ec_inventory_reading.py (v24.3.423). The conflation arithmetic
+    and the Lie-classification steps are untouched.
 
     STATUS: [P]. Lie classification is established math (imported).
     All physical requirements from [P] theorems.
