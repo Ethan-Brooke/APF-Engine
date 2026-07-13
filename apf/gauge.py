@@ -4170,15 +4170,36 @@ _CHECKS = {
 
 
 def check_L_B_operator_exclusion():
-    """L_B_operator_exclusion: No B-Violating Operators at Any Dimension [P].
+    """L_B_operator_exclusion: No B-Violating Operator Generated at Any Dimension [P].
+
+    CORRIGENDUM (2026-07-13, count-neutral, principal ruling Option A --
+    Paper 2 supp v3.9 review 3.9.02 item 27; tracker in
+    Papers/Paper 02/Reviews/Paper_2_..._Supplement_v3.9/): the prior
+    STATEMENT line claimed no gauge-invariant B-violating operator "can
+    be constructed" at any dimension. That wording was FALSE and is
+    withdrawn: the Delta-B=1 dim-6 operators O1-O4 enumerated in Step 2
+    below ARE gauge-invariant constructions under SU(3)xSU(2)xU(1)
+    (standard SMEFT basis, arXiv:1405.0486). What the proof body
+    establishes -- and what the statement now says -- is that no such
+    operator is GENERATED within the derived particle content (no
+    mediator with leptoquark/X-Y quantum numbers exists; L_no_BSM
+    excludes loop generation). The stability conclusion is accordingly
+    CONDITIONAL on the completeness of the derived content: UV degrees
+    of freedom outside it could source these operators while
+    respecting the gauge group. Constructed != generated; the check's
+    computed content was always the latter.
 
     v5.3.4 NEW.  Phase 4: III.1 (proton decay sharpening).
 
     STATEMENT: Within the APF capacity budget (C_total = 61), no
-    gauge-invariant operator violating baryon number B can be
-    constructed at ANY mass dimension d ≥ 4. This strengthens
-    T_proton [P] from "B is conserved by the partition" to
-    "no B-violating operator exists to write down."
+    operator violating baryon number B is GENERATED within the derived
+    particle content at ANY mass dimension d ≥ 4: the gauge-invariant
+    Delta-B operators of the SMEFT basis exist as constructions, but
+    the derived content contains no mediator to generate them at tree
+    level and no BSM states to generate them in loops. This
+    strengthens T_proton [P] from "B is conserved by the partition" to
+    "no B-violating operator is sourced by anything the framework
+    derives."
 
     PROOF (4 steps):
 
@@ -4225,10 +4246,15 @@ def check_L_B_operator_exclusion():
       No intermediate scale exists (T_gauge: no GUT scale).
       All higher-dim operators vanish as Λ → M_Pl: τ → ∞.
 
-    CONCLUSION: The APF contains NO mechanism, at any loop order
-    or operator dimension, to generate ΔB ≠ 0 processes. Proton
-    stability is not just "practically infinite" but "structurally
-    impossible" — there is no operator to write down.
+    CONCLUSION: The derived APF content contains NO mechanism, at any
+    loop order or operator dimension, to generate ΔB ≠ 0 processes.
+    The gauge-invariant ΔB operators of the SMEFT basis can be written
+    down (they exist as constructions); within the derived content
+    there is nothing to source them. Proton stability at tau_p =
+    infinity is therefore CONDITIONAL on the completeness of the
+    derived particle content (L_no_BSM's exclusion strength): UV
+    degrees of freedom outside the derived content could generate
+    these operators while respecting SU(3)xSU(2)xU(1).
 
     STATUS: [P]. Uses T_gauge [P], L_no_BSM [P], T_proton [P],
     L_anomaly_nonpert [P].
@@ -4294,7 +4320,7 @@ def check_L_B_operator_exclusion():
     tau_exp = 2.4e34  # years, Super-K p → e⁺π⁰
 
     return _result(
-        name='L_B_operator_exclusion: No B-Violating Operators at Any Dimension',
+        name='L_B_operator_exclusion: No B-Violating Operator Generated at Any Dimension',
         tier=4, epistemic='P',
         summary=(
             f'No B-violating operator exists at any mass dimension within '
