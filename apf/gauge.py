@@ -1259,11 +1259,19 @@ def check_B1_prime():
 
 
 def check_T_field():
-    """T_field: SM Fermion Content -- Exhaustive Derivation.
+    """T_field: SM Fermion Content -- Declared-Ansatz Classification.
 
-    GIVEN: SU(3)x SU(2)x U(1) (T_gauge), N_gen=3 (T7).
+    GIVEN: SU(3)x SU(2)x U(1) (T_gauge), N_gen=3 (T7), and the declared
+           finite ansatz (representation list + multiplicity caps).
     DERIVE: {Q(3,2), L(1,2), u(3b,1), d(3b,1), e(1,1)} is the UNIQUE
-            chiral fermion content satisfying all admissibility constraints.
+            minimum among the enumerated candidates.  Scope corrigendum
+            of record 2026-07-14 (review 5.1.01 item .11, ruling 'do
+            both'): the enumeration is complete RELATIVE to the declared
+            list and caps; multiplicity-cap completeness remains OPEN.
+            The five closed-form proofs below exclude the ENUMERATED
+            enlargement directions (P1-P2 unconditionally; P3 by the
+            F2+F5 joint budget argument, computed below; P4-P5 by
+            dominance), not every conceivable category.
 
     Phase 1: Scan 4680 templates built from SU(3) reps {3,3b,6,6b,8}
              x SU(2) reps {1,2}, up to 5 field types, 3 colored singlets,
@@ -1283,7 +1291,12 @@ def check_T_field():
                  check_T_gauge_beta_capacity_tiling_abelian (three equations,
                  unique common solution n = 3). This scan's uniform x3 cites
                  that family; lane record 2026-07-09.
-             P3. Colorless SU(2) reps >= 3: DOF >= 48 > 45 (minimality)
+             P3. Colorless SU(2) reps >= 3: excluded a priori by F2+F5
+                 jointly (review 5.1.01's proof, verified + adopted
+                 2026-07-14): one colored doublet (3) + colorless
+                 triplet (4) leaves 1/3 of the SU(2) AF budget, odd
+                 Witten parity forces a further colorless doublet (1),
+                 total 8 > 22/3. Computed below in exact Fractions.
              P4. Two-colored-doublet class: min DOF = 54 > 45 (class
                  dominance). Corrected enumeration of record 2026-07-14
                  (review 5.0.01 counterexample ACCEPTED): the class
@@ -1297,7 +1310,9 @@ def check_T_field():
                  multiplicity -- Witten-ODD, never admissible).
              P5. > 5 field types: each type adds >= 3 DOF (minimality)
 
-    STATUS: [P] -- scan + exclusion proofs cover all representations.
+    STATUS: [P] -- for the computed content: the declared-ansatz scan +
+            the exclusion proofs at their stated scopes. Caps-
+            completeness is open by declaration (not covered by [P]).
     """
     from itertools import product as _product
 
@@ -1422,10 +1437,25 @@ def check_T_field():
         check(_c23 * _SU2[r2]['T'] * 3 * Ng > _AF2, f"P2: SU(2) {r2} not excluded")
 
     # P3: Colorless SU(2) triplets/quartets excluded by minimality
-    #     Replacing (1,2) doublet with (1,3) or (1,4) adds DOF
+    #     STRENGTHENED 2026-07-14 (review 5.1.01 item .09/.11, ruling
+    #     'do both'): the a-priori F2+F5 joint budget argument replaces
+    #     the dominance comparison. In units of (2/3)*T(r2)*dim(r3)*Ng:
+    _p3_cd = Fraction(2, 3) * Fraction(1, 2) * 3 * Ng   # colored doublet
+    _p3_tr = Fraction(2, 3) * Fraction(2) * 1 * Ng       # colorless triplet, T(3)=2
+    _p3_ld = Fraction(2, 3) * Fraction(1, 2) * 1 * Ng   # parity-restoring colorless doublet
+    check(_p3_cd == 3 and _p3_tr == 4 and _p3_ld == 1,
+          "P3: budget terms must be 3 (colored doublet), 4 (triplet), 1 (doublet)")
+    check(Fraction(22, 3) - _p3_cd - _p3_tr == Fraction(1, 3),
+          "P3: doublet+triplet leave 1/3 of the SU(2) AF budget")
+    check(3 % 2 == 1,
+          "P3: one colored doublet alone is Witten-ODD (3 doublets w/ color mult)")
+    check(_p3_cd + _p3_tr + _p3_ld == 8 and 8 > Fraction(22, 3),
+          "P3: parity repair busts the budget -- 8 > 22/3, F2 fails")
+    #     (two-colored-doublet templates are P4-dominated; zero fail F3.
+    #      The old dominance rider still holds and is kept as a check:)
     for r2 in ['3', '4']:
         extra_dof = (_SU2[r2]['dim'] - 2) * Ng
-        check(45 + extra_dof > 45, f"P3: SU(2) {r2} lepton not excluded")
+        check(45 + extra_dof > 45, f"P3-rider: SU(2) {r2} lepton adds DOF")
 
     # P4: Two-colored-doublet class dominated (class minimum 54 > 45).
     #     Ruling of record 2026-07-14 (option: strengthen the executed
@@ -1483,21 +1513,24 @@ def check_T_field():
             derivation=f'{Ng} gen * 15 = {w_dof}')
 
     return _result(
-        name='T_field: Fermion Content (Exhaustive Derivation)',
+        name='T_field: Fermion Content (Declared-Ansatz Classification)',
         tier=2, epistemic='P',
         summary=(
-            f'Phase 1: scanned {tested} standard templates (7 filters) -> '
-            f'1 unique survivor = SM. Phase 2: 5 closed-form proofs exclude '
-            f'all non-standard categories (reps 10/15 AF-killed, colored SU(2) '
-            f'triplets AF-killed, colorless triplets DOF-killed, multi-doublet '
+            f'Phase 1: scanned {tested} declared-ansatz templates (7 filters) '
+            f'-> 1 unique minimum = SM (five feasible classes post-CPT; '
+            f'minimality selects 45). Phase 2: 5 closed-form proofs exclude '
+            f'the ENUMERATED enlargement directions (reps 10/15 AF-killed, '
+            f'colored SU(2) triplets AF-killed, colorless triplets killed '
+            f'a priori by F2+F5 jointly (8 > 22/3, computed), multi-doublet '
             f'class min 54 > 45 (dominance; corrected enumeration of record, '
-            f'2026-07-14), extra types DOF>=48). '
+            f'2026-07-14), extra types DOF>=48 (dominance)). Caps-'
+            f'completeness OPEN by declaration. '
             f'v4.3.2: AF property now derived (L_AF_capacity). '
             f'Remaining import: one-loop beta coefficient FORMULA (verifiable). '
             f'Hypercharges derived: Y_Q=1/6, Y_u=2/3, Y_d=-1/3, '
             f'Y_L=-1/2, Y_e=-1.'
         ),
-        key_result=f'SM fermions UNIQUE within SU(3) reps <= dim 10 (Phase 1: {tested} templates) + analytic exclusion for higher reps (Phase 2: 5 proofs)',
+        key_result=f'SM template = the unique 45-DOF minimum within the DECLARED ansatz (Phase 1: {tested} templates, 5 feasible classes) + exclusion of the enumerated enlargements (Phase 2: 5 proofs at stated scopes); caps-completeness open',
         dependencies=['T_gauge', 'T7', 'T5', 'A1', 'L_nc', 'T_tensor',
                       'L_AF_capacity', 'T6B_beta_one_loop'],
         cross_refs=['L_beta_capacity', 'T_gauge_beta_capacity_tiling_abelian',
