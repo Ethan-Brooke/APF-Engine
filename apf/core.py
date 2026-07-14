@@ -1445,6 +1445,30 @@ def check_L_cost_gauge():
     import of the same class as Brouwer below; the local-R^d step in
     Proof A holds on exactly this class, not for arbitrary compact groups.
 
+    PREMISES (the operational cost premise pair -- named, ruling of
+    record 2026-07-14, option (a): count-neutral corrigendum, tag stays
+    [P]; converged via Paper 2 reviews 4.0.01.05 / 4.1.01.07 /
+    5.0.01.06):
+      (i)  OPERATIONAL ENCODING (lower bound): invariance of domain in
+           Proof A applies to a continuous injective operational
+           encoding of the local group action. That such an encoding is
+           what enforcement physically realizes is a named operational
+           premise, not a derived fact.
+      (ii) DISJOINT-ANCHOR REALIZABILITY (upper bound): C(G) <= dim(G)
+           * epsilon needs the dim(G) resolution channels to be
+           separated interfaces (Delta = 0 across channels, C1
+           additivity). Independence of group coordinates does not by
+           itself deliver physical disjointness of anchor supports;
+           realizability of a disjointly anchored channel family is the
+           named construction premise the upper bound consumes.
+    The check below verifies the stated dimensions and arithmetic of
+    both proof routes; it does not (and cannot) verify the encoding or
+    realizability premises. Paper-side the pair is named at statement
+    level: Supp I Prop (generator separation) + the front-matter
+    imported-ingredient ledger; TSII Lemma 2.22 carries the
+    encoding premise for the lower bound. Same internalized-import
+    class as Cartan/Brouwer above (the e38beeb corrigendum pattern).
+
     PROVENANCE: split out of L_cost 2026-07-06 (v24.3.404) by principal
     ruling (SCC hygiene report, edge A1, option (c)). L_cost's abstract
     claim is T3-free; this lemma is where the cost functional meets the
@@ -1485,7 +1509,10 @@ def check_L_cost_gauge():
     not a modeling choice.
 
     STATUS: [P]. One import: Brouwer invariance of domain (1911) --
-    internalized for the finite-dim smooth case (full-rank Jacobian).
+    internalized for the finite-dim smooth case (full-rank Jacobian) --
+    plus the two named operational premises above (operational
+    encoding; disjoint-anchor realizability), carried as premises of
+    the statement, not as derivations.
     Dependencies: A1, L_epsilon*, L_nc, T3, L_cost.
     """
 

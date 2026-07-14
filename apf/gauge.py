@@ -1284,7 +1284,17 @@ def check_T_field():
                  unique common solution n = 3). This scan's uniform x3 cites
                  that family; lane record 2026-07-09.
              P3. Colorless SU(2) reps >= 3: DOF >= 48 > 45 (minimality)
-             P4. Multi-colored-multiplet: min DOF = 81 > 45 (minimality)
+             P4. Two-colored-doublet class: min DOF = 54 > 45 (class
+                 dominance). Corrected enumeration of record 2026-07-14
+                 (review 5.0.01 counterexample ACCEPTED): the class
+                 minimum is the conjugate-pair witness
+                 (3,2)_{Y1}+(3b,2)_{-Y1}+(3,1)_{Y2}+(3b,1)_{-Y2} at
+                 (6+6+3+3)*3 = 54, anomaly-free for ANY rational
+                 (Y1,Y2), no leptons required. The old prose constants
+                 are WITHDRAWN: 'min 81' (covered only a same-chirality
+                 pair + smuggled lepton content) and the 63-DOF
+                 'tightest' witness (7 doublet components with color
+                 multiplicity -- Witten-ODD, never admissible).
              P5. > 5 field types: each type adds >= 3 DOF (minimality)
 
     STATUS: [P] -- scan + exclusion proofs cover all representations.
@@ -1417,10 +1427,33 @@ def check_T_field():
         extra_dof = (_SU2[r2]['dim'] - 2) * Ng
         check(45 + extra_dof > 45, f"P3: SU(2) {r2} lepton not excluded")
 
-    # P4: Multi-colored-multiplet excluded by minimality
-    #     Two (3,2) doublets need 4 anti-fund sings for [SU(3)]^3
-    #     Min DOF = (2*6 + 4*3 + 2 + 1) * 3 = 81
-    check((2*6 + 4*3 + 2 + 1) * Ng > 45, "P4: multi-doublet not excluded")
+    # P4: Two-colored-doublet class dominated (class minimum 54 > 45).
+    #     Ruling of record 2026-07-14 (option: strengthen the executed
+    #     check to the corrected class bound with the witness; review
+    #     5.0.01 item .02, counterexample accepted in exact arithmetic).
+    #     Witness = the conjugate-pair template, Y1=1, Y2=2:
+    _p4w = [('3', 2, Fraction(1)), ('3b', 2, Fraction(-1)),
+            ('3', 1, Fraction(2)), ('3b', 1, Fraction(-2))]
+    _p4_dof = sum(_SU3[r3]['dim'] * d2 for r3, d2, _ in _p4w) * Ng
+    check(_p4_dof == 54, "P4: witness DOF must be 54")
+    _p4_b3 = 11 - Fraction(2, 3) * sum(
+        _SU3[r3]['T'] * d2 for r3, d2, _ in _p4w) * Ng
+    _p4_b2 = Fraction(22, 3) - Fraction(2, 3) * sum(
+        Fraction(1, 2) * _SU3[r3]['dim'] for r3, d2, _ in _p4w if d2 == 2) * Ng
+    check(_p4_b3 == 5 and _p4_b2 == Fraction(4, 3),
+          "P4: witness must be AF in both factors (b3=5, b2=4/3)")
+    check(sum(_SU3[r3]['A'] * d2 for r3, d2, _ in _p4w) == 0,
+          "P4: witness [SU(3)]^3 must cancel")
+    check(sum(_SU3[r3]['dim'] for r3, d2, _ in _p4w if d2 == 2) % 2 == 0,
+          "P4: witness Witten parity must be even (6 doublets)")
+    _p4_a2u1 = sum(Fraction(1, 2) * _SU3[r3]['dim'] * y
+                   for r3, d2, y in _p4w if d2 == 2)
+    _p4_a3u1 = sum(_SU3[r3]['T'] * d2 * y for r3, d2, y in _p4w)
+    _p4_gru1 = sum(_SU3[r3]['dim'] * d2 * y for r3, d2, y in _p4w)
+    _p4_u1c = sum(_SU3[r3]['dim'] * d2 * y**3 for r3, d2, y in _p4w)
+    check(_p4_a2u1 == 0 and _p4_a3u1 == 0 and _p4_gru1 == 0 and _p4_u1c == 0,
+          "P4: witness full anomaly system must vanish (any conjugate Y-pair)")
+    check(_p4_dof > 45, "P4: two-doublet class minimum must dominate 45")
 
     # P5: > 5 field types adds >= 1 DOF/gen = 3 DOF total
     check(45 + 1 * Ng > 45, "P5: extra field types not excluded")
