@@ -399,8 +399,294 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
     }
 
 
+# =====================================================================
+# Paper 1 Technical Supplement v9.18 anchors (v24.3.424)
+#   - raw-count CHSH confidence-box local-polytope exclusion
+#   - Boolean defender => feasible diagonal (classical) NPA moment matrix
+# =====================================================================
+
+def check_T_chsh_raw_count_confidence_box_local_exclusion() -> Dict:
+    """Raw-count CHSH confidence-box excludes the local polytope (Paper 1 supp v9.18).
+
+    Anchors the Paper 1 Technical Supplement v9.18 end-to-end walk integer-count
+    realization (Example ex:end-to-end-walk) + Remark rem:boundary-safe-delta, in
+    exact rational arithmetic (no float in the load-bearing path).
+
+    Content:
+      * INTEGER COUNTS. N = 4000 per context; observed (n++,n+-,n-+,n--) =
+        (1650,350,350,1650) for (0,0),(0,1),(1,0) and (350,1650,1650,350) for
+        (1,1). Empirical correlators E_ij = (n++ + n-- - n+- - n-+)/N are exactly
+        (13/20,13/20,13/20,-13/20), one-site marginals exactly 1/2, and the CHSH
+        functional S = E00+E01+E10-E11 = 13/5.
+      * CONFIDENCE BOX. For a per-correlator half-width t, the local (Boole)
+        polytope obeys the Fine facet c.E <= 2, c = (+1,+1,+1,-1). The MINIMUM of
+        c.E over the box [E_ij - t, E_ij + t] is S - 4t, so 4t < S - 2 = 3/5 puts
+        the ENTIRE box strictly above the facet bound: box disjoint from the local
+        polytope, defender LP infeasible, margin (S-2) - 4t, Fine facet the separator.
+      * HOEFFDING INSTANCE. t = 58/1000 is a certified over-estimate of the
+        Hoeffding half-width sqrt(2 ln(2/alpha')/N) at alpha'=1/400, N=4000
+        (~0.05781); exact margin (S-2) - 4t = 3/5 - 232/1000 = 368/1000, matching
+        the supplement's ~0.369.
+      * FEASIBLE CONTROL. Replacing 0.65 by 0.40 gives S = 8/5; the box centre is
+        itself local, so no exclusion witness -- not itself a Static-Sep proof.
+
+    Grade P_math (exact finite LP / facet geometry; the confidence interpretation
+    is the empirical layer). Companion to
+    check_T_correlation_ladder_exact_rational_chsh_witness -- its raw-count counterpart.
+    """
+    failures: List[str] = []
+    N = 4000
+    counts = {
+        (0, 0): (1650, 350, 350, 1650),
+        (0, 1): (1650, 350, 350, 1650),
+        (1, 0): (1650, 350, 350, 1650),
+        (1, 1): (350, 1650, 1650, 350),
+    }
+
+    def corr(c):
+        npp, npm, nmp, nmm = c
+        return Fraction(npp + nmm - npm - nmp, N)
+
+    def marg_A(c):
+        npp, npm, nmp, nmm = c
+        return Fraction(npp + npm, N)
+
+    def marg_B(c):
+        npp, npm, nmp, nmm = c
+        return Fraction(npp + nmp, N)
+
+    E = {ctx: corr(c) for ctx, c in counts.items()}
+    if not (E[(0, 0)] == E[(0, 1)] == E[(1, 0)] == Fraction(13, 20)
+            and E[(1, 1)] == Fraction(-13, 20)):
+        failures.append(f"empirical correlators wrong: {E}")
+    for ctx, c in counts.items():
+        if sum(c) != N:
+            failures.append(f"counts for {ctx} do not sum to {N}: {c}")
+        if marg_A(c) != Fraction(1, 2) or marg_B(c) != Fraction(1, 2):
+            failures.append(f"marginals not balanced at {ctx}")
+    S_hat = E[(0, 0)] + E[(0, 1)] + E[(1, 0)] - E[(1, 1)]
+    if S_hat != Fraction(13, 5):
+        failures.append(f"CHSH value != 13/5: {S_hat}")
+
+    t = Fraction(58, 1000)
+    box_min_S = S_hat - 4 * t
+    margin = box_min_S - 2
+    if not (box_min_S > 2):
+        failures.append(f"confidence box does not exclude local polytope: {box_min_S}")
+    if margin != Fraction(368, 1000):
+        failures.append(f"exclusion margin != 368/1000: {margin}")
+
+    c_sign = (1, 1, 1, -1)
+    verts = _deterministic_vertices()
+    for v in verts:
+        val = sum(Fraction(s) * vi for s, vi in zip(c_sign, v))
+        if val > 2:
+            failures.append(f"a deterministic vertex violates the Fine facet: {v} -> {val}")
+    Evec = (E[(0, 0)], E[(0, 1)], E[(1, 0)], E[(1, 1)])
+    for v in verts:
+        if all(abs(vi - ei) <= t for vi, ei in zip(v, Evec)):
+            failures.append(f"a local vertex lies inside the confidence box: {v}")
+
+    fb = feasbool_structural(Evec)
+    if fb["feasible"]:
+        failures.append("point estimate misclassified Sep (should be IJCStr)")
+    if fb.get("max_chsh_value") != "13/5":
+        failures.append(f"engine CHSH value != 13/5: {fb.get('max_chsh_value')}")
+
+    # Hoeffding box exclusion, certified exactly (no float in the load-bearing path).
+    # True half-width t_H = sqrt(2 ln(2/alpha')/N), alpha'=1/400, N=4000.
+    # ln(800) < 7 since e^7 > (27/10)^7 = 27^7/10^7 > 800 and e > 27/10, so
+    #   t_H^2 = 2 ln(800)/N < 14/4000 = 7/2000.
+    # (6/100)^2 = 36/10000 = 7.2/2000 > 7/2000 >= t_H^2, so t_H < 6/100, hence
+    # 4 t_H < 24/100 < 3/5: the ACTUAL Hoeffding confidence box is excluded.
+    if not (Fraction(27, 10) ** 7 > 800):
+        failures.append("rational bound e^7 > 800 failed")
+    tH_sq_upper = Fraction(7, 2000)      # > t_H^2  (from ln(800) < 7)
+    tH_upper = Fraction(6, 100)          # certified upper bound on t_H
+    if not (tH_upper * tH_upper > tH_sq_upper):
+        failures.append("6/100 is not a certified upper bound on the Hoeffding half-width")
+    if not (4 * tH_upper < S_hat - 2):
+        failures.append("Hoeffding box not certified excluded (4 t_H < S-2 fails)")
+
+    Ectrl = (Fraction(2, 5), Fraction(2, 5), Fraction(2, 5), Fraction(-2, 5))
+    S_ctrl = Ectrl[0] + Ectrl[1] + Ectrl[2] - Ectrl[3]
+    if S_ctrl != Fraction(8, 5):
+        failures.append(f"control CHSH != 8/5: {S_ctrl}")
+    if not feasbool_structural(Ectrl)["feasible"]:
+        failures.append("control point should be Static-Sep (box meets the polytope)")
+
+    passed = not failures
+    return {
+        "name": (
+            "T_chsh_raw_count_confidence_box_local_exclusion: raw-count CHSH "
+            "confidence box disjoint from the local polytope [P_math] "
+            "(Paper 1 supp v9.18 anchor)"
+        ),
+        "passed": passed,
+        "epistemic": "P_math",
+        "dependencies": [
+            "T_feasbool_general_contextuality",
+            "T_ijc_boolean_defender_bridge",
+        ],
+        "cross_refs": ["T_correlation_ladder_exact_rational_chsh_witness"],
+        "failures": failures,
+        "key_result": (
+            "A literal 4x4000-trial CHSH count table gives exact correlators "
+            "(13/20,13/20,13/20,-13/20), balanced 1/2 marginals, S=13/5. For any "
+            "half-width t with 4t < S-2 = 3/5 the confidence box's minimum of the "
+            "Fine functional (+,+,+,-) is S-4t > 2, so the whole box lies outside "
+            "the local polytope: defender LP infeasible, Fine facet the separator, "
+            "margin (S-2)-4t. At t=58/1000 (a certified over-estimate of "
+            "sqrt(2 ln(2/alpha')/N), alpha'=1/400,N=4000) the exact margin is "
+            "368/1000, matching the supplement's ~0.369. The S=1.6 control is local "
+            "(no witness). Anchors Paper 1 supp v9.18 ex:end-to-end-walk."
+        ),
+    }
+
+
+def diagonal_defender_realization(weights: Dict) -> Dict:
+    """Diagonal (classical) operator model + level-1 NPA moment data of a Boolean
+    defender on the (2,2,2) cover (prop:defender-implies-diagonal-quantum).
+
+    weights: strategy (a0,a1,b0,b1) in {+1,-1}^4 -> nonnegative Fraction, sum 1.
+    Returns the level-1 moment matrix over [I, E_{a0,+}, E_{a1,+}, E_{b0,+},
+    E_{b1,+}] built two ways: Tr(sigma O_u O_v) on the diagonal representation, and
+    the manifest PSD Gram sum sum_lambda p(lambda) w_lambda w_lambda^T. Equality is
+    the exact PSD certificate.
+    """
+    atoms = [lam for lam, w in weights.items() if w != 0]
+    p = [Fraction(weights[lam]) for lam in atoms]
+    assert sum(p) == 1 and all(pi >= 0 for pi in p)
+    settings = ["a0", "a1", "b0", "b1"]
+
+    def ind_plus(lam, s):
+        return Fraction(1) if lam[settings.index(s)] == 1 else Fraction(0)
+
+    ops = ["I"] + settings
+
+    def eig(op, lam):
+        return Fraction(1) if op == "I" else ind_plus(lam, op)
+
+    n = len(ops)
+    M_trace = [[sum(p[i] * eig(ops[u], atoms[i]) * eig(ops[v], atoms[i])
+                    for i in range(len(atoms)))
+                for v in range(n)] for u in range(n)]
+    M_gram = [[Fraction(0)] * n for _ in range(n)]
+    for i, lam in enumerate(atoms):
+        w = [eig(ops[u], lam) for u in range(n)]
+        for u in range(n):
+            for v in range(n):
+                M_gram[u][v] += p[i] * w[u] * w[v]
+    return {"atoms": atoms, "p": p, "ops": ops, "M_trace": M_trace, "M_gram": M_gram}
+
+
+def check_T_boolean_defender_diagonal_npa_feasible() -> Dict:
+    """Boolean defender => feasible diagonal (classical) NPA moment matrix.
+
+    Anchors Paper 1 Technical Supplement v9.18 Proposition
+    prop:defender-implies-diagonal-quantum, constructively and in exact rational
+    arithmetic. From a Boolean defender (distribution over deterministic global
+    sections of the (2,2,2) cover), the diagonal projectors E_e = diag(rho(e)(lambda))
+    and diagonal state sigma = diag(p(lambda)) form a finite commuting -- indeed
+    manifestly CLASSICAL, all-diagonal -- realization whose level-1 moment matrix is
+    feasible, exhibited via an explicit sum-of-outer-products PSD certificate. The
+    converse fails (the PR-box has no Boolean defender), so the map is one-directional.
+
+    Grade P_math. Companion (forward direction) to
+    check_T_ijc_boolean_defender_bridge's IJCStr => noncommutativity contrapositive.
+    """
+    failures: List[str] = []
+    weights = {(1, 1, 1, 1): Fraction(1, 2), (-1, -1, -1, -1): Fraction(1, 2)}
+    R = diagonal_defender_realization(weights)
+    atoms, p, ops = R["atoms"], R["p"], R["ops"]
+
+    if R["M_trace"] != R["M_gram"]:
+        failures.append("moment matrix Tr(sigma O_u O_v) != Gram sum (PSD cert broken)")
+    if not all(pi >= 0 for pi in p):
+        failures.append("state weights not nonnegative (invalid PSD Gram weighting)")
+    M = R["M_trace"]
+    n = len(ops)
+    if any(M[u][v] != M[v][u] for u in range(n) for v in range(n)):
+        failures.append("moment matrix not symmetric")
+
+    settings = ["a0", "a1", "b0", "b1"]
+
+    def out(lam, s):
+        return lam[settings.index(s)]
+
+    def ind_plus(lam, s):
+        return Fraction(1) if out(lam, s) == 1 else Fraction(0)
+
+    for s in settings:
+        for lam in atoms:
+            e_plus = ind_plus(lam, s)
+            if e_plus * e_plus != e_plus:
+                failures.append(f"E_{s},+ not idempotent at {lam}")
+            e_minus = Fraction(1) - e_plus
+            if e_plus + e_minus != 1:
+                failures.append(f"completeness fails at {s},{lam}")
+            if e_plus * e_minus != 0:
+                failures.append(f"orthogonality fails at {s},{lam}")
+
+    for su in settings:
+        for sv in settings:
+            for lam in atoms:
+                a = ind_plus(lam, su); b = ind_plus(lam, sv)
+                if a * b - b * a != 0:
+                    failures.append(f"[{su},{sv}] != 0 at {lam} (impossible for diagonal)")
+
+    for s in settings:
+        tr = sum(pi * ind_plus(lam, s) for pi, lam in zip(p, atoms))
+        direct = sum(w for lam, w in weights.items() if out(lam, s) == 1)
+        if tr != direct:
+            failures.append(f"Tr(sigma E_{s},+)={tr} != defender marginal {direct}")
+
+    E_model = tuple(
+        sum(pi * Fraction(out(lam, sa) * out(lam, sb)) for pi, lam in zip(p, atoms))
+        for (sa, sb) in [("a0", "b0"), ("a0", "b1"), ("a1", "b0"), ("a1", "b1")]
+    )
+    E_atoms = commuting_realization_atoms(weights)
+    if E_model != E_atoms:
+        failures.append(f"diagonal correlators {E_model} != atom correlators {E_atoms}")
+    if not feasbool_structural(E_atoms)["feasible"]:
+        failures.append("defended behaviour is not Static-Sep (no defender could exist)")
+
+    pr = feasbool_structural((Fraction(1), Fraction(1), Fraction(1), Fraction(-1)))
+    if pr["feasible"]:
+        failures.append("PR-box misclassified Sep (converse-fails witness broken)")
+
+    passed = not failures
+    return {
+        "name": (
+            "T_boolean_defender_diagonal_npa_feasible: a Boolean defender gives a "
+            "feasible diagonal (classical) NPA moment matrix [P_math] "
+            "(Paper 1 supp v9.18 anchor)"
+        ),
+        "passed": passed,
+        "epistemic": "P_math",
+        "dependencies": ["T_ijc_boolean_defender_bridge"],
+        "cross_refs": ["T_feasbool_general_contextuality"],
+        "failures": failures,
+        "key_result": (
+            "From a Boolean defender on the (2,2,2) cover the diagonal projectors "
+            "E_e = diag(rho(e)(lambda)) and state sigma = diag(p(lambda)) build a "
+            "finite ALL-DIAGONAL (hence classical, commuting) realization: each E is "
+            "idempotent, per-setting +/- projectors are orthogonal and complete, all "
+            "commutators vanish, Tr(sigma E) reproduces the defender marginals, and "
+            "the correlators match the global-section atom construction. The level-1 "
+            "moment matrix equals its own sum_lambda p(lambda) w w^T Gram form -- an "
+            "explicit PSD certificate feasible at every finite NPA level. The converse "
+            "fails: the PR-box is IJCStr, no Boolean defender exists, so the map is "
+            "one-directional. Anchors Paper 1 supp v9.18 "
+            "prop:defender-implies-diagonal-quantum."
+        ),
+    }
+
+
 _CHECKS = {
     "T_ijc_boolean_defender_bridge": check_T_ijc_boolean_defender_bridge,
+    "T_chsh_raw_count_confidence_box_local_exclusion": check_T_chsh_raw_count_confidence_box_local_exclusion,
+    "T_boolean_defender_diagonal_npa_feasible": check_T_boolean_defender_diagonal_npa_feasible,
 }
 
 
