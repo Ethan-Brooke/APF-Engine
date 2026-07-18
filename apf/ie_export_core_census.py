@@ -913,9 +913,13 @@ def check_T_ie_full_surface_input_inventory():
     rep = run_census(scope="full")
 
     # Leg 0: scope + the engine-native named class.
-    check(rep["n_export_inputs"] == 200,
-          f"full scope: 200 pinned inputs walked (got {rep['n_export_inputs']})"
-          " -- re-pinned 199->200 at v24.3.400 (the Tsirelson re-declaration:"
+    check(rep["n_export_inputs"] == 204,
+          f"full scope: 204 pinned inputs walked (got {rep['n_export_inputs']})"
+          " -- re-pinned 200->204 at v24.3.427 (the Paper 9 finite-basis IE"
+          " declarations: the atom-cover model export + the three general-bridge"
+          " OBSTRUCTION_NAMED_CLOSURE rows; typed roots / externals / conjectures"
+          " / heavy / engine-native all unchanged, verified set-exact)."
+          " Prior re-pin 199->200 at v24.3.400 (the Tsirelson re-declaration:"
           " the .398-declined export on apf.core re-declared after the"
           " v24.3.399 debt-registration wave registered T_adj/T_sep/T2b;"
           " landed INTERNAL_IDENTITY_GLOBAL_P; the .398 second-law decline"

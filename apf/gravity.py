@@ -2129,10 +2129,13 @@ def check_T_which_v_no_registered_interior_reader():
         '_module_manifest.py': ('VLD', 'infra'),
         '_optimize_vendored.py': ('L', 'fence'),
         'a_mu_hvp_capacity_density.py': ('V', 'fence'),
+        'aboutness_occupancy_section.py': ('V', 'consumer'),  # dispositioned 2026-07-18 (.406/.427): aboutness = occupancy-selected SSB vacuum; vacuum vocabulary in prose, no which-v reader (clause (a) empty)
+        'aeon_turnover.py': ('VL', 'consumer'),  # dispositioned 2026-07-18 (.409): aeon-turnover endpoint; vacuum + count vocabulary, no which-v reader
         'acc_reading_selection.py': ('VL', 'consumer'),
         'acc_unification_all_p.py': ('L', 'consumer'),
         'admissible_representation_stack.py': ('L', 'consumer'),
         'bank.py': ('VL', 'infra'),
+        'carrier_trichotomy.py': ('V', 'consumer'),  # dispositioned 2026-07-18 (.414): occupancy/structure/hold trichotomy; vacuum vocabulary in prose, no which-v reader
         'base_fiber_allocation.py': ('VLH', 'consumer'),
         'charged_lepton_qed_real_adapter.py': ('L', 'fence'),
         'class_transition.py': ('VL', 'consumer'),
@@ -2149,6 +2152,7 @@ def check_T_which_v_no_registered_interior_reader():
         'descent_obstruction_calculus.py': ('L', 'consumer'),
         'crystal_ledger.py': ('L', 'analysis'),  # re-dispositioned at the .351+ crystal-ledger landing: dashboard analysis layer -- LITERAL mentions of which-v/vglobal check names inside the curated disposition map (strings, not readers); no interior mode-label read
         'drawn_content_readings.py': ('L', 'fence'),  # re-dispositioned during .326: staged generative functional (concurrent lane); 42s are SU(3) isotypic-dim arithmetic, no 42-sector sense
+        'ec_inventory_reading.py': ('L', 'consumer'),  # dispositioned 2026-07-18 (.423): EC kinematic type-inventory reading; ln-composite tier vocabulary, no which-v reader
         'evaporation_quartet.py': ('VL', 'consumer'),
         'ew_bosonic_enforcement_reservoir.py': ('VL', 'consumer'),
         'ew_branch_incidence_density.py': ('V', 'fence'),
@@ -2555,7 +2559,7 @@ def check_T_vacuum_content_typing_status():
         'formal_kernel.py': 4,
         'gravity.py': 39,  # re-pinned 2026-07-04 by the wg2 C(n)-census landing seat (same cross-lane repair as the manifest entry below): the 39th hit is THIS MAP'S OWN manifest-entry re-pin comment line -- the .395 leg's comment names the knee-design 'Eq.' token and the T-two-seven-d header verbatim and carries the family phrase in-line, so it self-announced through the pin it documents (the intended discipline; verified narrative, no rogue characterization; the count was 39 both before and after this seat's own comment edit, verified by reverting the edit in memory)
         'test_no_smuggling.py': 7,
-        '_module_manifest.py': 6,  # re-pinned 2026-07-04 LATER by the concurrent wg2 C(n)-census landing seat (v24.3.394; cross-lane sentinel repair, exactly the documented merge-race pattern below): sixth hit line = the .395 lane's OWN count-neutral narrative header, which names this very pin and self-carries both the token and a family word in one line -- verified changelog-narrative, no rogue characterization; caught by the .394 landing's post-land sentinel sweep after the .395 leg merged mid-landing. Prior re-pin same day (the .394 full-surface census pass; the census's out-of-order walk executed this sentinel and scored the catch): +2 hit lines, BOTH verified changelog-narrative from the 2026-07-03 sibling landings -- the .363 knee-design line (Paper 26 App. A 'Eq. 27' citation) and the .362 'T27d REWIRING' header, each pulled into scope by vacuum-family words on adjacent narrative lines (the window is +/-2). No rogue characterization. Prior re-pin 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
+        '_module_manifest.py': 5,  # re-pinned 2026-07-18 (v24.3.427 fold rewrote the manifest header comment, 6->5 27-in-vacuum-context hits); prior re-pin 2026-07-04 LATER by the concurrent wg2 C(n)-census landing seat (v24.3.394; cross-lane sentinel repair, exactly the documented merge-race pattern below): sixth hit line = the .395 lane's OWN count-neutral narrative header, which names this very pin and self-carries both the token and a family word in one line -- verified changelog-narrative, no rogue characterization; caught by the .394 landing's post-land sentinel sweep after the .395 leg merged mid-landing. Prior re-pin same day (the .394 full-surface census pass; the census's out-of-order walk executed this sentinel and scored the catch): +2 hit lines, BOTH verified changelog-narrative from the 2026-07-03 sibling landings -- the .363 knee-design line (Paper 26 App. A 'Eq. 27' citation) and the .362 'T27d REWIRING' header, each pulled into scope by vacuum-family words on adjacent narrative lines (the window is +/-2). No rogue characterization. Prior re-pin 2026-07-02 (the .357 landing pass): third hit line = a concurrent-lane narrative merge race -- the .355 pin was computed against its own tree snapshot; the 192891d final commit swept ALL sibling manifest legs, and the merged slot-no-go-era narrative line (eleven matches, incl. the slot triple and descriptions OF this very pin) entered the context window. All three hit lines verified changelog-narrative, no rogue characterization. (This comment deliberately avoids the bare token it polices.)
     }
     offenders = {}
     for root, dirs, files in _os.walk(pkg_dir):
@@ -2731,6 +2735,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
     DISPOSITION = {
         '__init__.py': 'infra',
         '_module_manifest.py': 'infra',
+        'aeon_turnover.py': 'count-readout',  # dispositioned 2026-07-18: the .409 aeon-turnover theorem reads count-level terminal-patch config (S_propagation family); global-stratum coupling is count-readout, scalar-typed
         'bank.py': 'infra',
         'base_fiber_allocation.py': 'declaration',
         'cosmogenesis_t1_t4_quartet_real_adapter.py': 'count-readout',
@@ -2788,7 +2793,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
     kinds = {}
     for k in DISPOSITION.values():
         kinds[k] = kinds.get(k, 0) + 1
-    check(kinds == {'infra': 4, 'declaration': 2, 'count-readout': 8,
+    check(kinds == {'infra': 4, 'declaration': 2, 'count-readout': 9,
                     'no-go-witness': 1, 'proof-witness': 6,
                     'register-home': 1, 'code-witness': 1},
           f"clause (b): per-kind counts pinned (live: {kinds})")

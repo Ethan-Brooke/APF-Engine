@@ -449,6 +449,12 @@ UNSHADOWED: Dict[str, str] = {
     "strong:tetraquark_yuoh_state_independent": "delivered_obstruction",
     # self-certifying named closures (candidate future walls)
     "foundation:agt_encoding_wall": "self_certifying_closure",
+    # Paper 9 finite-basis general-bridge obstructions (v24.3.427; dispositioned 2026-07-18):
+    # closure-by-design rows, each carrying its own scope-contract certificate + finite
+    # no-amalgamation countermodel (check_T_finite_operational_basis_scope_contract).
+    "foundation:finite_operational_basis_general_bridge": "self_certifying_closure",
+    "foundation:finite_compatible_joint_realization_general_bridge": "self_certifying_closure",
+    "foundation:operational_basis_to_precision_channel_bridge": "self_certifying_closure",
     "dark:saturation_no_go_guard": "self_certifying_closure",
     "payload:bottom_pole_obstruction_real_adapter_live": "self_certifying_closure",
     "payload:charm_pole_obstruction_real_adapter_live": "self_certifying_closure",

@@ -1,15 +1,33 @@
 {
- "generated": "2026-07-06",
- "pin_version": "24.3.403",
+ "generated": "2026-07-18",
+ "pin_version": "24.3.427",
  "coverage_summary": {
-  "modules_total": 464,
+  "modules_total": 481,
   "modules_onboarded": 216,
   "modules_onboarded_direct": 157,
   "modules_onboarded_via_covers": 59,
-  "target_surface_total": 260,
+  "target_surface_total": 277,
   "target_surface_plumbing": 85,
-  "target_surface_open": 0,
-  "target_open_modules": [],
+  "target_surface_open": 17,
+  "target_open_modules": [
+   "apf.aboutness_occupancy_section",
+   "apf.aeon_turnover",
+   "apf.born_at_ties",
+   "apf.carrier_trichotomy",
+   "apf.center_flux_exit",
+   "apf.codef_aggregation",
+   "apf.commutative_no_unresolved_hold",
+   "apf.ec_inventory_reading",
+   "apf.frustrated_choice_family",
+   "apf.frustration_center_partition",
+   "apf.g2_trivial_center_exhibit",
+   "apf.gapless_serial_floor",
+   "apf.graded_threat_robustness",
+   "apf.hold_cost_dominance",
+   "apf.screen_geometry_characterization",
+   "apf.sun_hhom_battery",
+   "apf.triality_flux_correspondence"
+  ],
   "target_surface_onboarded": 175,
   "modules_by_axis": {
    "ROUTE": 145,
@@ -1120,7 +1138,7 @@
    "export_global_P": true,
    "owner_module": "apf.continuation_calculus",
    "expect_export": true,
-   "note": "Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid structural theorem [P_structural] in place of the toy capacity-overspend scenario probe; verdict is a structural identity, no physics import.",
+   "note": "Pre-existing Paper 10 capacity-floor identity. It does not by itself assert existence of a finite complete operational basis.",
    "covers": []
   },
   {
@@ -1154,6 +1172,39 @@
    "owner_module": "apf.fencea_hinge_trichotomy",
    "expect_export": false,
    "note": "Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:finite_compatible_joint_realization_general_bridge",
+   "axis": "ROUTE",
+   "route": "continuation_compatible_joint_realization_general",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.continuation_calculus",
+   "expect_export": false,
+   "note": "Keeps compatibility distinct from individual minimum existence.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:finite_operational_basis_atom_cover_model",
+   "axis": "ROUTE",
+   "route": "continuation_finite_basis_atom_cover",
+   "solver_status": "INTERNAL_IDENTITY_GLOBAL_P",
+   "export_global_P": true,
+   "owner_module": "apf.continuation_calculus",
+   "expect_export": true,
+   "note": "Honest restricted-model export. The source and codomain coincide only after the finite atom-cover contract is declared.",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:finite_operational_basis_general_bridge",
+   "axis": "ROUTE",
+   "route": "continuation_finite_basis_general",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.continuation_calculus",
+   "expect_export": false,
+   "note": "Closure-by-design obstruction. Uses the existing Interface Atlas obstruction_named path; no new dependency or verdict system.",
    "covers": []
   },
   {
@@ -1275,6 +1326,17 @@
    "owner_module": "apf.continuation_sum_measure",
    "expect_export": false,
    "note": "Wave 7; the bespoke epistemic token carries its own rider (modulo_convention) -- quoted verbatim, not shortened to [P].",
+   "covers": []
+  },
+  {
+   "input_id": "foundation:operational_basis_to_precision_channel_bridge",
+   "axis": "ROUTE",
+   "route": "continuation_operational_to_precision_channel",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.continuation_calculus",
+   "expect_export": false,
+   "note": "Paper 9 bridge gate; prevents the finite-basis theorem from silently generating physical refinement channels.",
    "covers": []
   },
   {

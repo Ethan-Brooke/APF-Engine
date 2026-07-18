@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-06 against verdict pin v24.3.403. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-18 against verdict pin v24.3.427. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3890 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3918 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 216 of 464 loaded modules onboarded (157 directly), 175 of 260 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 216 of 481 loaded modules onboarded (157 directly), 175 of 277 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -24,10 +24,13 @@ Generated 2026-07-06 against verdict pin v24.3.403. Every row below is produced 
 | `foundation:class_transition_primitive` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, the collapse triad as a [P] composition over A1 + occupancy). FIVE checks. ... |
 | `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2... |
 | `foundation:collapse_triad_free_spend_permanent` | ROUTE | **EXPORT** | The v24.3.398 export split: the [P] triad gets its own exporting input, separated from the foundation:class_transition_primitive bundle a... |
-| `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Onboards the Paper 10 continuation calculus (the APF core math) onto the ROUTE axis. Sources the capacity-floor bound from the greedoid s... |
+| `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Pre-existing Paper 10 capacity-floor identity. It does not by itself assert existence of a finite complete operational basis. |
 | `foundation:d4_unique` | ROUTE | **EXPORT** | Wave 5 probe; all-[P] verified per epistemic fields; export-declared 2026-07-05 (census legs clean) |
 | `foundation:delta_calculus_derived_identities` | ROUTE | **EXPORT** | Onboards the Paper 12 Delta-calculus onto the ROUTE axis as a structural identity: the derived ledger identities are the codomain by cons... |
 | `foundation:fencea_hinge_trichotomy_ladder` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; the .340/.341 landings; profile clause [P+IJC] stands untouched |
+| `foundation:finite_compatible_joint_realization_general_bridge` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Keeps compatibility distinct from individual minimum existence. |
+| `foundation:finite_operational_basis_atom_cover_model` | ROUTE | **EXPORT** | Honest restricted-model export. The source and codomain coincide only after the finite atom-cover contract is declared. |
+| `foundation:finite_operational_basis_general_bridge` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Closure-by-design obstruction. Uses the existing Interface Atlas obstruction_named path; no new dependency or verdict system. |
 | `foundation:forced_universality_classes` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider. |
 | `foundation:formal_kernel_theorem11_and_slot_no_go` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 6; spine; never cite slot-level V_global identification as an open lead |
 | `foundation:four_input_declaration` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe; grades letter-checked (the clause is adopted; see the 2026-06-25 canonical-definition note) |
@@ -39,6 +42,7 @@ Generated 2026-07-06 against verdict pin v24.3.403. Every row below is produced 
 | `foundation:l_irr_induced_polarity` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 7 substrate *-algebra closure; docstring 'P_structural' vs machine P_structural_reading/P_audit flagged |
 | `foundation:mean_field_slack_equation` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; grade read from the epistemic field, matches docstring. |
 | `foundation:one_loop_measure_from_d4` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; the bespoke epistemic token carries its own rider (modulo_convention) -- quoted verbatim, not shortened to [P]. |
+| `foundation:operational_basis_to_precision_channel_bridge` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Paper 9 bridge gate; prevents the finite-basis theorem from silently generating physical refinement channels. |
 | `foundation:operational_completeness_sandwich` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the _module_manifest.py:438 comment (v24.3.230 stamp) still reads '[P_structural] x2' for the first two checks, but the in-... |
 | `foundation:paper1_fd1_executable_witness` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; the Paper 1 analog of formal_kernel's Theorem 1.1 witness |
 | `foundation:regime_r_exit_taxonomy` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe |

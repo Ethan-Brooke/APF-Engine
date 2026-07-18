@@ -1453,7 +1453,7 @@ def check_T_config_demand_register_split_bank_respected():
         # file: (hit count, disposition)  -- recorded human judgment,
         # per-candidate verdicts in the walk record of 2026-07-02;
         # counts pinned at scan time 2026-07-02 (post-.353 tree)
-        '_module_manifest.py': (5, 'infra: changelog prose (re-pinned 3->5 2026-07-04 by the .396 full-surface-inventory landing seat: the two new hits are the .396 narrative line itself, which must name the config-dem./register-split sentinel repairs it documents and sits adjacent to family-register narrative words; verified changelog-narrative, no reader/writer, the pin catching its own landing note is the intended discipline. (Token-avoidance convention applies to this comment.) Prior re-pin 2->3 2026-07-04 by the wg2 C(n)-census landing seat, v24.3.394, running the sentinel after the multi-lane day -- the red-bank lesson applied: the 3rd hit is the OLD .362 T27d narrative line, textually UNCHANGED, pulled into scope because the EXPECTED_REGISTRY_SIZE prior-chain comment two lines above it accreted the .389 ladder-ceiling summary whose d_eff decomposition names the C-word register; verified changelog-narrative churn only, no reader/writer involved, no new demand-pairwise surface. Prior re-pin 3->2 2026-07-03 v24.3.363: the 192891d merge-race 3rd hit no longer existed -- its narrative line was rewritten during the .358-.362 multi-lane manifest restructuring; verified comment-line churn only, found by the IP-review lane running the sentinel after landing)'),
+        '_module_manifest.py': (4, 'infra: changelog prose (re-pinned 5->4 2026-07-18 v24.3.427 fold header rewrite; prior 3->5 2026-07-04 by the .396 full-surface-inventory landing seat: the two new hits are the .396 narrative line itself, which must name the config-dem./register-split sentinel repairs it documents and sits adjacent to family-register narrative words; verified changelog-narrative, no reader/writer, the pin catching its own landing note is the intended discipline. (Token-avoidance convention applies to this comment.) Prior re-pin 2->3 2026-07-04 by the wg2 C(n)-census landing seat, v24.3.394, running the sentinel after the multi-lane day -- the red-bank lesson applied: the 3rd hit is the OLD .362 T27d narrative line, textually UNCHANGED, pulled into scope because the EXPECTED_REGISTRY_SIZE prior-chain comment two lines above it accreted the .389 ladder-ceiling summary whose d_eff decomposition names the C-word register; verified changelog-narrative churn only, no reader/writer involved, no new demand-pairwise surface. Prior re-pin 3->2 2026-07-03 v24.3.363: the 192891d merge-race 3rd hit no longer existed -- its narrative line was rewritten during the .358-.362 multi-lane manifest restructuring; verified comment-line churn only, found by the IP-review lane running the sentinel after landing)'),
         'acc_reading_selection.py': (1, 'fence: referent-3 corrigendum comment'),
         'bank.py': (1, 'infra: changelog prose (EXPECTED_THEOREM_COUNT line)'),
         'cosmology.py': (30, 'register-home: .517/.330/.338 family + this '
@@ -1570,12 +1570,15 @@ def check_T_config_demand_register_split_bank_respected():
     # +-2-line window enters the broad set on arrival with no bespoke
     # pre-naming required.
     BROAD_EXPECTED = frozenset({
-        '_module_manifest.py', 'acc_reading_selection.py',
+        '_module_manifest.py', 'aboutness_occupancy_section.py',  # disp 2026-07-18 (.406/.427): occupancy-SSB vacuum prose, no demand-pairwise surface
+        'acc_reading_selection.py',
         'admissible_representation_stack.py', 'bank.py',
-        'base_fiber_allocation.py', 'charged_lepton_qed_real_adapter.py',
+        'base_fiber_allocation.py', 'carrier_trichotomy.py',  # disp 2026-07-18 (.414): carrier trichotomy prose, no demand-pairwise surface
+        'charged_lepton_qed_real_adapter.py',
         'closed_world_completeness.py', 'core.py', 'cosmology.py',
         'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
-        'descent_obstruction_calculus.py', 'ew_branch_incidence_density.py',
+        'descent_obstruction_calculus.py', 'ec_inventory_reading.py',  # disp 2026-07-18 (.423): EC type-inventory reading prose, no demand-pairwise surface
+        'ew_branch_incidence_density.py',
         'extensions.py',
         'fencea_hinge_trichotomy.py',  # v24.3.396-landing disposition (2026-07-04, the full-surface census banking leg; net-0 caught the concurrent .389 module, the .374/.373 landing-lane pattern): its corner-entry-token hits are correlation-matrix PLACEMENT prose in the hinge-trichotomy case analysis (case (c)), the vacuum-adjacent vocab is the d_eff = 60+42 capacity arithmetic -- no register reader/writer of the policed kind. (This comment deliberately avoids the bare tokens it polices.)
         'fibration_census.py',
