@@ -32,13 +32,18 @@ PHYSICAL_PREMISES = (
     "later_recombination_witness",
     "connected_Regime_R_component",
     "continuous_effective_action",
+    "effective_image_is_a_Lie_subgroup_of_SO2",
     "positive_quadratic_ledger_form",
     "Q2_reversal_is_ledger_adjoint",
     "reversed_loop_is_inverse",
     "elementary_bipolar_first_order_completeness",
     "faithful_first_order_action",
     "jet_functoriality",
+    "orientation_synchronization_across_typed_sectors",
+    "continuous_conjugation_orientation_transport",
+    "closed_world_record_completeness",
     "generator_completeness",
+    "finite_real_Cstar_completion",
 )
 
 

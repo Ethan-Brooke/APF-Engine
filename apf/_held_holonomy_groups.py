@@ -54,6 +54,37 @@ def held_relative_loop_group_impl() -> Dict[str, object]:
     ck(one_sided_failure is not None,
        "non-normal one-sided equivalence must fail well-defined multiplication")
 
+    # Reversal ADMISSION without reversal-is-inverse yields only a monoid.
+    # In the two-element monoid {e,a} with a*a=a, the reversal of a is a
+    # (admitted, same class), yet a has no inverse.  The group claim therefore
+    # consumes reversed-loop-is-inverse as a named premise; closure under
+    # reversal alone does not supply it.
+    monoid = ("e", "a")
+    mtab = {("e", "e"): "e", ("e", "a"): "a", ("a", "e"): "a", ("a", "a"): "a"}
+    ck(all(mtab[(mtab[(x, y)], z)] == mtab[(x, mtab[(y, z)])]
+           for x in monoid for y in monoid for z in monoid),
+       "monoid countermodel must be associative")
+    reversal_map = {"e": "e", "a": "a"}
+    ck(all(reversal_map[x] in monoid for x in monoid),
+       "reversal must be admitted in the monoid countermodel")
+    a_has_inverse = any(mtab[("a", z)] == "e" and mtab[(z, "a")] == "e"
+                        for z in monoid)
+    ck(not a_has_inverse,
+       "reversal admission must not manufacture an inverse: the group claim "
+       "consumes reversed_loop_is_inverse as a premise")
+
+    # Torsor leg: the descended quotient group acts freely and transitively
+    # on the coset space (the finite shadow of the trajectory torsor).
+    coset_space = sorted({tuple(sorted(_right_coset(g, a3))) for g in s3})
+    quotient_reps = (identity, transposition)
+    for c in coset_space:
+        images = [tuple(sorted(_right_coset(_perm_compose(q, c[0]), a3)))
+                  for q in quotient_reps]
+        ck(sorted(images) == coset_space,
+           "quotient action on the coset space must be transitive")
+        ck(len(set(images)) == len(quotient_reps),
+           "quotient action on the coset space must be free")
+
     path = FinitePath("gamma", "x", "r", "gamma^-1")
     path_class = PathClass(path.name, tuple(sorted(_right_coset(cycle, a3))))
 
@@ -61,9 +92,14 @@ def held_relative_loop_group_impl() -> Dict[str, object]:
         "T_held_relative_loop_group",
         "P_math",
         ("A reversible path quotient becomes a group only after complete "
-         "operational identity is a two-sided congruence.  The S3/A3 witness "
-         "certifies descended multiplication and inverse; changing the path "
-         "reference acts by conjugation.  A non-normal one-sided quotient fails."),
+         "operational identity is a two-sided congruence AND reversal is the "
+         "inverse: the two-element idempotent monoid admits reversal yet has "
+         "no inverse, so reversed_loop_is_inverse is a named premise of the "
+         "group claim, not a consequence of reversal admission.  The S3/A3 "
+         "witness certifies descended multiplication and inverse, the free "
+         "transitive quotient action on the coset space (the torsor shadow), "
+         "and reference change by conjugation.  A non-normal one-sided "
+         "quotient fails."),
         [],
         {
             "positive_group": "S3",
@@ -75,15 +111,24 @@ def held_relative_loop_group_impl() -> Dict[str, object]:
             "one_sided_failure": [list(p) for p in one_sided_failure]
             if one_sided_failure else None,
             "torsor_group_distinction_kept": True,
+            "torsor_action_free_and_transitive": True,
+            "monoid_countermodel": {
+                "elements": list(monoid),
+                "law": "a*a=a",
+                "reversal_admitted": True,
+                "inverse_exists": False,
+            },
         },
         fails,
         premises=(
             "reversible_record_free_closure",
             "typed_associative_concatenation",
             "two_sided_complete_operational_congruence",
+            "reversed_loop_is_inverse",
         ),
         negative_controls=(
             "right-coset equivalence by non-normal <(12)> in S3",
+            "idempotent two-element monoid: reversal admitted, no inverse",
         ),
         cross_refs=(
             "Paper 1 Technical Supplement v9.18: complete continuation identity",
@@ -120,9 +165,11 @@ def held_recombination_nontriviality_impl() -> Dict[str, object]:
     ck(plus.signature != minus.signature,
        "recombination completion must distinguish the two path classes")
 
-    # C2 is the smallest effective relative-loop witness: 0 identity, 1 non-null.
-    relative_loop = 0 if plus.signature == minus.signature else 1
-    ck(relative_loop == 1, "distinguished paths give a nonidentity effective loop")
+    # The distinguishing completion establishes nonidentity in the OPERATIONAL
+    # quotient F_H.  C2 is the smallest witness: 0 identity, 1 non-null.
+    operational_relative_loop = 0 if plus.signature == minus.signature else 1
+    ck(operational_relative_loop == 1,
+       "distinguished paths give a nonidentity operational relative loop")
 
     eta1 = PathClass("eta_1", tuple(signature("eta_1")))
     eta2 = PathClass("eta_2", tuple(signature("eta_2")))
@@ -130,30 +177,82 @@ def held_recombination_nontriviality_impl() -> Dict[str, object]:
        "multiplicity-only negative control must remain quotient-null")
     null_relative_loop = 0 if eta1.signature == eta2.signature else 1
     ck(null_relative_loop == 0,
-       "trajectory multiplicity alone must not certify effective holonomy")
+       "trajectory multiplicity alone must not certify operational holonomy")
+
+    # Representation well-definedness: labels in one operational class carry
+    # one declared carrier action.
+    class_actions = {"eta_1": _eye(2), "eta_2": _eye(2)}
+    ck(_eq(class_actions["eta_1"], class_actions["eta_2"]),
+       "the represented action must be constant on operational classes")
+
+    # KERNEL-DEATH CONTROL: operational nontriviality does NOT reach the
+    # effective represented quotient F_H^eff = F_H/ker(rho) without faithful
+    # first-order action.  The delta pair is separated only by a readout the
+    # first-jet carrier does not represent; the declared first-jet action of
+    # its relative loop is the identity, so the operationally nonidentity
+    # loop dies in ker(rho).
+    delta_completions = ("q_second_order",)
+    delta_readouts = {
+        "delta_1": {"q_second_order": F(1)},
+        "delta_2": {"q_second_order": F(-1)},
+    }
+    delta_sigs = {
+        name: tuple(delta_readouts[name][q] for q in delta_completions)
+        for name in delta_readouts
+    }
+    ck(delta_sigs["delta_1"] != delta_sigs["delta_2"],
+       "kernel-death pair must be operationally distinguished")
+    delta_first_jet_action = _eye(2)
+    ck(_eq(delta_first_jet_action, _eye(2)),
+       "kernel-death relative loop acts as the identity on the first-jet "
+       "carrier: operational nontriviality can die in ker(rho)")
+
+    # Conditional effective horn: under faithful first-order action (the gate
+    # consumed at H6), a nonidentity operational class acts nonidentically.
+    gamma_first_jet_action = _scal(F(-1), _eye(2))
+    ck(not _eq(gamma_first_jet_action, _eye(2)),
+       "under the faithfulness gate the gamma relative loop acts "
+       "nonidentically on the carrier")
 
     return _result(
         "T_held_recombination_nontriviality",
         "P_math",
-        ("Two record-free trajectories define distinct effective path classes "
-         "when one admissible completion/readout separates their complete "
-         "signatures.  Their relative C2 loop is nonidentity.  Two merely "
-         "label-distinct trajectories with the same complete signature remain null."),
+        ("Two record-free trajectories define distinct OPERATIONAL path "
+         "classes when one admissible completion/readout separates their "
+         "complete signatures; their relative C2 loop is nonidentity in the "
+         "operational quotient F_H.  Nonidentity in the EFFECTIVE represented "
+         "quotient F_H^eff additionally requires faithful first-order action, "
+         "the gate consumed at H6: the kernel-death control exhibits an "
+         "operationally nonidentity loop whose first-jet action is the "
+         "identity.  Two merely label-distinct trajectories with the same "
+         "complete signature remain null, and the represented action is "
+         "constant on operational classes."),
         ["T_held_relative_loop_group"],
         {
             "completions": list(completions),
             "gamma_plus_signature": [str(x) for x in plus.signature],
             "gamma_minus_signature": [str(x) for x in minus.signature],
-            "effective_relative_loop": relative_loop,
+            "operational_relative_loop": operational_relative_loop,
             "multiplicity_only_relative_loop": null_relative_loop,
+            "representation_constant_on_classes": True,
+            "kernel_death_control": {
+                "operationally_distinguished": True,
+                "first_jet_action_is_identity": True,
+                "moral": "F_H-nontrivial does not imply F_H^eff-nontrivial "
+                         "without faithful first-order action",
+            },
+            "faithful_horn_action": "half-turn -I (nonidentity)",
         },
         fails,
         premises=(
             "complete_operational_path_equivalence",
             "later_admissible_recombination_readout",
+            "faithful_first_order_action_for_the_effective_corollary",
         ),
         negative_controls=(
             "two trajectory labels with identical complete continuation signatures",
+            "operationally nonidentity loop with identity first-jet action "
+            "(kernel death without the faithfulness gate)",
         ),
         cross_refs=(
             "Paper 5 Mathematical Note v1.7: occupied interference witness",
@@ -196,11 +295,74 @@ def held_connected_subgroup_so2_impl() -> Dict[str, object]:
             "connected": False,
         }
 
-    # One-dimensional Lie-subgroup classification.
-    # A connected 0-dimensional Lie group is a point.  A 1-dimensional Lie
-    # subgroup of the 1-dimensional group SO(2) is open.  A connected topological
-    # group has no proper open subgroup.  Hence the nontrivial connected branch
-    # is the whole circle.
+    # Exact infinite-order rational rotation: the finite cyclic controls do
+    # not exhaust the subgroups of SO(2).  R has cos=3/5, sin=4/5; the
+    # Gaussian-integer certificate (3+4i=(2+i)^2, 5=(2+i)(2-i), the primes
+    # 2+i and 2-i non-associate) forbids (3+4i)^n = 5^n for n>=1, so R has
+    # infinite order; the first 24 powers are computed pairwise distinct.
+    r35 = [[F(3, 5), F(-4, 5)], [F(4, 5), F(3, 5)]]
+    ck(_eq(_mm(_transpose(r35), r35), _eye(2)) and _det2(r35) == 1,
+       "the 3/5 rotation must lie in SO(2) exactly")
+
+    def _gmul(z, w):
+        return (z[0] * w[0] - z[1] * w[1], z[0] * w[1] + z[1] * w[0])
+
+    two_plus_i = (2, 1)
+    ck(_gmul(two_plus_i, two_plus_i) == (3, 4), "(2+i)^2 = 3+4i")
+    ck(two_plus_i[0] ** 2 + two_plus_i[1] ** 2 == 5,
+       "N(2+i)=5 is prime, so 2+i is a Gaussian prime")
+    associates_of_two_plus_i = {(2, 1), (-2, -1), (-1, 2), (1, -2)}
+    ck((2, -1) not in associates_of_two_plus_i,
+       "2-i is not an associate of 2+i")
+    orbit_points = []
+    power = _eye(2)
+    for n in range(1, 25):
+        power = _mm(power, r35)
+        orbit_points.append((power[0][0], power[1][0]))
+        ck(not _eq(power, _eye(2)),
+           "the 3/5 rotation must not return to the identity")
+    ck(len(set(orbit_points)) == 24,
+       "the first 24 orbit points must be pairwise distinct")
+
+    # Rational parametrization battery: R(t) covers the rational circle and
+    # composes by the tangent half-angle addition law.  This is the exact
+    # executable shadow of the one-dimensional branch filling SO(2).
+    def _rt(t):
+        d = 1 + t * t
+        return [[(1 - t * t) / d, (-2 * t) / d],
+                [(2 * t) / d, (1 - t * t) / d]]
+
+    grid = [F(n, d) for n in range(-3, 4) for d in (1, 2, 3)]
+    for t in grid:
+        m = _rt(t)
+        ck(_eq(_mm(_transpose(m), m), _eye(2)) and _det2(m) == 1,
+           "R(t) must lie in SO(2) exactly for rational t")
+    composition_checked = 0
+    for t1 in grid:
+        for t2 in grid:
+            if t1 * t2 == 1:
+                continue
+            ck(_eq(_mm(_rt(t1), _rt(t2)), _rt((t1 + t2) / (1 - t1 * t2))),
+               "R(t) must compose by the tangent addition law")
+            composition_checked += 1
+    pythagorean_directions = (
+        (F(3, 5), F(4, 5)), (F(5, 13), F(12, 13)), (F(8, 17), F(15, 17)),
+        (F(-3, 5), F(4, 5)), (F(0), F(1)), (F(1), F(0)),
+    )
+    for a, b in pythagorean_directions:
+        ck(a * a + b * b == 1, "direction must be an exact unit vector")
+        if a != -1:
+            ck(_mv(_rt(b / (1 + a)), [F(1), F(0)]) == [a, b],
+               "R(b/(1+a)) must reach the direction (a,b)")
+    ck(_eq(_mm(_rt(F(1)), _rt(F(1))), _scal(F(-1), _eye(2))),
+       "the half-turn is reached as R(1)^2")
+
+    # The connected-Lie-subgroup dimension dichotomy is a NAMED standard-
+    # mathematics import, recorded (not derived) here: a connected Lie
+    # subgroup of the one-dimensional group SO(2) has dimension zero (trivial)
+    # or one (open, hence all of connected SO(2)).  What this check COMPUTES
+    # is the exact instance surface around that import: the disconnected C_n
+    # controls, the infinite-order witness, and the parametrization battery.
     dimensions = (0, 1)
     branch = {
         0: "trivial",
@@ -219,15 +381,36 @@ def held_connected_subgroup_so2_impl() -> Dict[str, object]:
     return _result(
         "T_held_connected_subgroup_so2",
         "P_math",
-        ("A connected Lie subgroup of SO(2) has dimension zero or one.  The "
-         "zero-dimensional connected branch is trivial; the one-dimensional "
-         "branch is open and therefore all of connected SO(2).  Thus any "
-         "nontrivial connected effective image is the full circle.  Exact C_n "
-         "controls, including {I,-I}, are nontrivial but disconnected."),
+        ("The connected-Lie-subgroup dimension dichotomy for SO(2) (dim 0 "
+         "trivial; dim 1 open, hence the full circle) is consumed as a NAMED "
+         "standard-mathematics import, not derived here.  What is computed "
+         "exactly: the C_n disconnected controls including {I,-I}; an "
+         "infinite-order rational rotation (cos=3/5) with a Gaussian-integer "
+         "non-associate-primes certificate, showing the finite controls do "
+         "not exhaust the subgroup lattice; and the rational tangent "
+         "half-angle parametrization battery (SO(2) membership, the exact "
+         "composition law, and Pythagorean-direction coverage with the "
+         "half-turn as R(1)^2) as the executable shadow of the "
+         "one-dimensional branch filling the circle."),
         ["T_held_relative_loop_group", "T_held_recombination_nontriviality"],
         {
             "classification": {"dim_0": "trivial", "dim_1": "SO(2)"},
+            "classification_execution_status":
+                "dimension dichotomy imported by name; controls, "
+                "infinite-order witness, and parametrization battery computed",
             "finite_disconnected_controls": finite_controls,
+            "infinite_order_witness": {
+                "rotation": "cos=3/5, sin=4/5",
+                "certificate": "3+4i=(2+i)^2; 5=(2+i)(2-i); 2+i, 2-i "
+                               "non-associate Gaussian primes",
+                "distinct_powers_computed": 24,
+            },
+            "parametrization_battery": {
+                "grid_size": len(grid),
+                "compositions_checked": composition_checked,
+                "pythagorean_directions": len(pythagorean_directions),
+                "half_turn": "R(1)^2",
+            },
             "nontrivial_connected_result": nontrivial_connected_result,
             "standard_math_imports": [
                 "connected 0-dimensional Lie group is trivial",

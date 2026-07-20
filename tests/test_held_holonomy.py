@@ -20,9 +20,9 @@ def test_one_sided_congruence_negative_control():
     assert r["artifacts"]["one_sided_failure"] is not None
 
 
-def test_recombination_forces_nontrivial_effective_loop():
+def test_recombination_forces_nontrivial_operational_loop():
     r = _passed(hh.check_T_held_recombination_nontriviality())
-    assert r["artifacts"]["effective_relative_loop"] == 1
+    assert r["artifacts"]["operational_relative_loop"] == 1
 
 
 def test_multiplicity_alone_is_insufficient():
@@ -95,6 +95,62 @@ def test_dependency_graph_has_no_positivity_cycle():
     assert r["artifacts"]["canonical_cycle"] is None
     assert r["artifacts"]["positivity_cycle_mutation_detected"]
     assert r["artifacts"]["centrality_requires_H7"]
+    assert r["artifacts"]["centrality_requires_generator_completeness"]
+    assert r["artifacts"]["H6_requires_Lie_image"]
+    graph = r["artifacts"]["dependency_contract"]
+    assert "EFFECTIVE_IMAGE_LIE_SUBGROUP" in graph["H6"]
+    assert "GENERATOR_COMPLETENESS" not in graph["H7"]
+    assert "GENERATOR_COMPLETENESS" in graph["CENTRAL_COMPLEX_TYPE"]
+    assert r["artifacts"]["H1_requires_reversal_inverse"]
+    assert r["artifacts"]["H2_is_operational_scope"]
+    assert "REVERSAL_IS_INVERSE" in graph["H1"]
+    assert "FAITHFUL_ACTION" not in graph["H2"]
+    assert "FAITHFUL_ACTION" in graph["H6"]
+    assert "CONTINUOUS_ORIENTATION_TRANSPORT" in graph["H7"]
+    assert "CLOSED_WORLD_RECORD_COMPLETENESS" in graph["H7"]
+
+
+def test_group_check_carries_monoid_countermodel_and_torsor_leg():
+    r = _passed(hh.check_T_held_relative_loop_group())
+    cm = r["artifacts"]["monoid_countermodel"]
+    assert cm["reversal_admitted"] is True
+    assert cm["inverse_exists"] is False
+    assert r["artifacts"]["torsor_action_free_and_transitive"]
+    assert "reversed_loop_is_inverse" in r["premises"]
+
+
+def test_recombination_check_is_operationally_scoped():
+    r = _passed(hh.check_T_held_recombination_nontriviality())
+    assert r["artifacts"]["operational_relative_loop"] == 1
+    assert "effective_relative_loop" not in r["artifacts"]
+    kd = r["artifacts"]["kernel_death_control"]
+    assert kd["operationally_distinguished"] is True
+    assert kd["first_jet_action_is_identity"] is True
+    assert r["artifacts"]["representation_constant_on_classes"] is True
+
+
+def test_connected_subgroup_check_bills_import_and_computes_witnesses():
+    r = _passed(hh.check_T_held_connected_subgroup_so2())
+    assert "imported" in r["artifacts"]["classification_execution_status"]
+    iow = r["artifacts"]["infinite_order_witness"]
+    assert iow["distinct_powers_computed"] == 24
+    pb = r["artifacts"]["parametrization_battery"]
+    assert pb["compositions_checked"] > 0
+    assert pb["half_turn"] == "R(1)^2"
+
+
+def test_isometry_check_discriminates_indefinite_signature():
+    r = _passed(hh.check_T_reversible_ledger_isometry())
+    ind = r["artifacts"]["indefinite_form_control"]
+    assert ind["passes_isometry_schema"] is True
+    assert ind["passes_sharp_inverse_schema"] is True
+    assert ind["orthogonal"] is False
+    assert ind["power_growth_strict"] is True
+
+
+def test_first_jet_check_computes_jets():
+    r = _passed(hh.check_T_bipolar_first_jet_rank_two())
+    assert r["artifacts"]["jets_computed_from_coefficients"] is True
 
 
 def test_cli_certificate_marks_physical_premises_uncertified():
@@ -103,3 +159,12 @@ def test_cli_certificate_marks_physical_premises_uncertified():
     assert all(result["passed"] for result in results.values())
     assert cert.physical_premises_certified is False
     assert cert.dependency_contract_acyclic
+    assert "effective_image_is_a_Lie_subgroup_of_SO2" in cert.dependencies
+    assert "orientation_synchronization_across_typed_sectors" in cert.dependencies
+    assert "finite_real_Cstar_completion" in cert.dependencies
+    assert "continuous_conjugation_orientation_transport" in cert.dependencies
+    assert "closed_world_record_completeness" in cert.dependencies
+
+    mutated = {name: dict(result) for name, result in results.items()}
+    mutated["T_held_relative_loop_group"]["passed"] = False
+    assert hh.build_certificate(mutated).full_so2_image is False

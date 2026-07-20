@@ -2,7 +2,10 @@
 from __future__ import annotations
 from ._held_holonomy_common import *
 DEPENDENCY_CONTRACT: Dict[str, Tuple[str, ...]] = {
-    "H1": ("REVERSIBLE_HELD_CLOSURE", "TWO_SIDED_CONGRUENCE"),
+    "H1": (
+        "REVERSIBLE_HELD_CLOSURE", "TWO_SIDED_CONGRUENCE",
+        "REVERSAL_IS_INVERSE",
+    ),
     "H2": ("H1", "RECOMBINATION_WITNESS"),
     "H3": ("H1", "CONNECTED_REGIME_R", "CONTINUITY"),
     "H4": (
@@ -15,9 +18,18 @@ DEPENDENCY_CONTRACT: Dict[str, Tuple[str, ...]] = {
         "FIRST_ORDER_LOCAL_COMPLETENESS",
         "MINIMUM_COMPLETE_CARRIER",
     ),
-    "H6": ("H2", "H3", "H4", "H5", "FAITHFUL_ACTION"),
-    "H7": ("H6", "JET_FUNCTORIALITY", "GENERATOR_COMPLETENESS"),
-    "CENTRAL_COMPLEX_TYPE": ("H7", "FINITE_REAL_CSTAR_CLASSIFICATION"),
+    "H6": (
+        "H2", "H3", "H4", "H5", "FAITHFUL_ACTION",
+        "EFFECTIVE_IMAGE_LIE_SUBGROUP",
+    ),
+    "H7": (
+        "H6", "JET_FUNCTORIALITY", "ORIENTATION_SYNCHRONIZATION",
+        "CONTINUOUS_ORIENTATION_TRANSPORT",
+        "CLOSED_WORLD_RECORD_COMPLETENESS",
+    ),
+    "CENTRAL_COMPLEX_TYPE": (
+        "H7", "GENERATOR_COMPLETENESS", "FINITE_REAL_CSTAR_CLASSIFICATION",
+    ),
 }
 
 
@@ -105,6 +117,23 @@ def held_holonomy_dependency_contract_impl() -> Dict[str, object]:
        "premature mutation really removes naturality/generator completeness")
     ck(_depends_on(DEPENDENCY_CONTRACT, "CENTRAL_COMPLEX_TYPE", "H7"),
        "canonical centrality must pass through H7")
+    ck(_depends_on(DEPENDENCY_CONTRACT, "H6", "EFFECTIVE_IMAGE_LIE_SUBGROUP"),
+       "H6 must declare the finite-dimensional Lie-image classification gate")
+    ck(not _depends_on(DEPENDENCY_CONTRACT, "H7", "GENERATOR_COMPLETENESS"),
+       "H7 naturality must not silently contain generator completeness")
+    ck(_depends_on(DEPENDENCY_CONTRACT, "CENTRAL_COMPLEX_TYPE",
+                   "GENERATOR_COMPLETENESS"),
+       "central complex type must name generator completeness")
+    ck(not _depends_on(DEPENDENCY_CONTRACT, "H6", "GENERATOR_COMPLETENESS"),
+       "the local circle H6 must not silently contain the global generator premise")
+    ck(_depends_on(DEPENDENCY_CONTRACT, "H1", "REVERSAL_IS_INVERSE"),
+       "the H1 group claim must declare reversal-is-inverse: reversal "
+       "admission alone yields only a monoid")
+    ck(not _depends_on(DEPENDENCY_CONTRACT, "H2", "FAITHFUL_ACTION"),
+       "H2 is an operational-quotient claim; effectiveness is gated at H6, "
+       "not smuggled into the recombination witness")
+    ck(_depends_on(DEPENDENCY_CONTRACT, "H6", "FAITHFUL_ACTION"),
+       "effectiveness must be consumed exactly at H6")
 
     return _result(
         "T_held_holonomy_dependency_contract",
@@ -112,8 +141,9 @@ def held_holonomy_dependency_contract_impl() -> Dict[str, object]:
         ("The machine-readable H1-H7 graph is acyclic.  H6 consumes H4; H4 "
          "consumes the independently established quadratic ledger and Q2 adjoint. "
          "The mutation QUADRATIC_LEDGER<-H6 creates a detected cycle.  Central "
-         "complex type is separately gated by H7 naturality and generator "
-         "completeness, so the local quarter-turn is not silently globalized."),
+         "complex type is separately gated by H7 naturality, generator "
+         "completeness, and the finite real C*-classification, so the local "
+         "quarter-turn is not silently globalized."),
         [
             "T_held_relative_loop_group",
             "T_held_recombination_nontriviality",
@@ -131,6 +161,10 @@ def held_holonomy_dependency_contract_impl() -> Dict[str, object]:
             "positivity_cycle_mutation_detected": mutated_cycle is not None,
             "positivity_cycle_mutation": list(mutated_cycle) if mutated_cycle else None,
             "centrality_requires_H7": True,
+            "centrality_requires_generator_completeness": True,
+            "H6_requires_Lie_image": True,
+            "H1_requires_reversal_inverse": True,
+            "H2_is_operational_scope": True,
             "SAT_load_bearing": False,
         },
         fails,

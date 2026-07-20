@@ -40,6 +40,31 @@ def reversible_ledger_isometry_impl() -> Dict[str, object]:
     ck(not _eq(_mm(_transpose(contraction), contraction), i2),
        "forward contraction alone is not an isometry")
 
+    # Indefinite-signature control: under B=diag(1,-1) the boost L passes the
+    # ENTIRE isometry schema (L^T B L = B and L^sharp = L^-1) yet generates an
+    # unbounded, noncompact one-parameter family.  Positive-definiteness of
+    # the ledger form is therefore load-bearing between the isometry schema
+    # and any compact-circle conclusion: with an indefinite form the same
+    # schema admits SO(1,1), not SO(2).
+    b_ind = [[F(1), F(0)], [F(0), F(-1)]]
+    boost = [[F(5, 4), F(3, 4)], [F(3, 4), F(5, 4)]]
+    ck(_eq(_mm(_mm(_transpose(boost), b_ind), boost), b_ind),
+       "the boost must be an exact diag(1,-1) isometry")
+    boost_sharp = _mm(_mm(_inverse(b_ind), _transpose(boost)), b_ind)
+    ck(_eq(boost_sharp, _inverse(boost)),
+       "the boost must pass the sharp=inverse schema under the indefinite form")
+    ck(not _eq(_mm(_transpose(boost), boost), i2),
+       "the boost is not an orthogonal matrix")
+    boost_growth: List[F] = []
+    boost_power = i2
+    for _ in range(12):
+        boost_power = _mm(boost_power, boost)
+        boost_growth.append(boost_power[0][0])
+    ck(all(boost_growth[k] < boost_growth[k + 1]
+           for k in range(len(boost_growth) - 1)),
+       "boost powers must grow strictly: the indefinite isometry family is "
+       "noncompact, so positivity is the gate to the circle")
+
     return _result(
         "T_reversible_ledger_isometry",
         "P_math",
@@ -48,7 +73,10 @@ def reversible_ledger_isometry_impl() -> Dict[str, object]:
          "the inverse.  Hence T^sharp=T^-1 and T^TBT=B exactly.  The rational "
          "non-Euclidean witness is certified.  A forward contraction shows why "
          "one-sided monotonicity alone is insufficient; no new monotonicity "
-         "postulate is load-bearing."),
+         "postulate is load-bearing.  The SO(1,1) boost control passes the "
+         "full isometry schema under diag(1,-1) with strictly growing powers: "
+         "positive-definiteness of the ledger form is the computed load-bearing "
+         "gate between this schema and the compact-circle conclusion."),
         [],
         {
             "B": _matrix_strings(b),
@@ -60,6 +88,16 @@ def reversible_ledger_isometry_impl() -> Dict[str, object]:
             "two_sided_monotonicity_role": "auxiliary only",
             "forward_contraction_gap": _matrix_strings(forward_gap),
             "inverse_contraction_gap": _matrix_strings(inverse_gap),
+            "indefinite_form_control": {
+                "form": "diag(1,-1)",
+                "boost": _matrix_strings(boost),
+                "passes_isometry_schema": True,
+                "passes_sharp_inverse_schema": True,
+                "orthogonal": False,
+                "power_growth_strict": True,
+                "moral": "the isometry schema is signature-blind; positivity "
+                         "is the load-bearing gate to SO(2)",
+            },
         },
         fails,
         premises=(
@@ -69,10 +107,12 @@ def reversible_ledger_isometry_impl() -> Dict[str, object]:
         ),
         negative_controls=(
             "diag(1/2,1) is forward-nonincreasing but not isometric",
+            "SO(1,1) boost under diag(1,-1): isometry schema passes, "
+            "compactness fails",
         ),
         cross_refs=(
             "Paper 5 Mathematical Note v1.7 Lemma 5.2 and Corollary 5.3",
-            "Paper 5 Technical Supplement v7.10 Q2 ledger adjoint",
+            "Paper 5 Technical Supplement v7.11 Q2 ledger adjoint",
         ),
     )
 
@@ -120,14 +160,37 @@ def bipolar_first_jet_rank_two_impl() -> Dict[str, object]:
        _mv(first_jet_identity, q_minus_jet),
        "rank-two carrier separates opposite germs")
 
-    # Higher-order fence: t^2 and -t^2 have identical first jets at zero.
-    h_plus_first_jet = [F(0), F(0)]
-    h_minus_first_jet = [F(0), F(0)]
-    later = F(1, 3)
+    # Higher-order fence: t^2 and -t^2, COMPUTED from their coefficient
+    # lists, have identical first jets at zero yet distinct later values.
+    def _poly_eval(coeffs: Sequence[F], t: F) -> F:
+        acc = F(0)
+        for c in reversed(list(coeffs)):
+            acc = acc * t + c
+        return acc
+
+    def _poly_derivative(coeffs: Sequence[F]) -> List[F]:
+        return [F(k) * coeffs[k] for k in range(1, len(coeffs))]
+
+    def _first_jet(coeffs: Sequence[F]) -> List[F]:
+        return [_poly_eval(coeffs, F(0)),
+                _poly_eval(_poly_derivative(coeffs), F(0))]
+
+    h_plus_coeffs = [F(0), F(0), F(1)]     # t^2
+    h_minus_coeffs = [F(0), F(0), F(-1)]   # -t^2
+    h_plus_first_jet = _first_jet(h_plus_coeffs)
+    h_minus_first_jet = _first_jet(h_minus_coeffs)
+    ck(h_plus_first_jet == [F(0), F(0)],
+       "computed first jet of t^2 must vanish")
     ck(h_plus_first_jet == h_minus_first_jet,
-       "higher-order pair shares the first jet")
-    ck(later * later != -(later * later),
-       "higher-order pair remains distinct later")
+       "higher-order pair shares the computed first jet")
+    later = F(1, 3)
+    ck(_poly_eval(h_plus_coeffs, later) != _poly_eval(h_minus_coeffs, later),
+       "higher-order pair remains distinct at the computed later value")
+    q_plus_coeffs = [F(0), F(1)]           # t
+    q_minus_coeffs = [F(0), F(-1)]         # -t
+    ck(_first_jet(q_plus_coeffs) == q_plus_jet
+       and _first_jet(q_minus_coeffs) == q_minus_jet,
+       "declared first jets must match the computed jets of t and -t")
 
     return _result(
         "T_bipolar_first_jet_rank_two",
@@ -145,6 +208,7 @@ def bipolar_first_jet_rank_two_impl() -> Dict[str, object]:
             "rank_one_rows_checked": rank_one_rows_checked,
             "minimum_complete_rank": 2,
             "higher_order_control": ["t^2", "-t^2"],
+            "jets_computed_from_coefficients": True,
             "scope": "one elementary bipolar quotient after common/record coordinates split off",
             "not_the_tesseract_rank_four_claim": True,
         },

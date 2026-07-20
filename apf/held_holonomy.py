@@ -117,6 +117,7 @@ def build_certificate(
         return bool(rs[name]["passed"])
 
     circle_schema = all((
+        passed("T_held_relative_loop_group"),
         passed("T_held_recombination_nontriviality"),
         passed("T_held_connected_subgroup_so2"),
         passed("T_reversible_ledger_isometry"),
@@ -157,8 +158,9 @@ IE_DECLARATIONS = (
                 "The exact finite group, isometry, first-jet, circle, naturality, "
                 "block-classification, SAT-disposition, and dependency-cycle "
                 "certificates pass. The physical Held circle remains conditional "
-                "on occupied coherence, connectedness, the Q2 adjoint, faithful "
-                "first-order action, naturality, and generator completeness."
+                "on occupied coherence, connectedness, a finite-dimensional Lie "
+                "image, the Q2 adjoint, faithful first-order action, naturality, "
+                "and generator completeness."
             ),
             "target_value_consumed": False,
         },

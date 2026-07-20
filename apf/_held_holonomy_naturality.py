@@ -42,6 +42,7 @@ def held_circle_quarter_turn_impl() -> Dict[str, object]:
         premises=(
             "nontrivial_connected_effective_image",
             "faithful_isometric_action_on_the_bipolar_plane",
+            "positive_quadratic_ledger_form",
         ),
         negative_controls=(
             "the disconnected C2 subgroup contains -I but no quarter-turn",
@@ -104,12 +105,14 @@ def held_jet_naturality_impl() -> Dict[str, object]:
             "jet_functoriality",
             "one_dimensional_comparison_derivative_is_scalar",
             "orientation_synchronization_across_typed_sectors",
+            "continuous_conjugation_orientation_transport",
+            "closed_world_record_completeness",
         ),
         negative_controls=(
             "diag(2,1) does not commute with J",
         ),
         cross_refs=(
-            "Paper 5 Technical Supplement v7.10 section 23.3-23.4",
+            "Paper 5 Technical Supplement v7.11 section 23.3-23.4",
         ),
     )
 
