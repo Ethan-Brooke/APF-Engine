@@ -1,0 +1,53 @@
+name: Integrate Held holonomy
+
+on:
+  push:
+    branches:
+      - feat/held-holonomy-v1-1
+    paths:
+      - "scripts/integrate_held_holonomy.py"
+      - ".github/workflows/integrate-held-holonomy.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/held-holonomy-v1-1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Apply guarded registry and census patches
+        run: python scripts/integrate_held_holonomy.py
+      - name: Install APF and test dependencies
+        run: python -m pip install --upgrade pip pytest sympy && python -m pip install -e .
+      - name: Run Held-holonomy certificate and tests
+        run: |
+          python -m compileall -q apf/held_holonomy.py apf/_held_holonomy_*.py
+          python -m apf.held_holonomy
+          python -m pytest -q tests/test_held_holonomy.py
+      - name: Regenerate IE verdict pin and reviewer artifacts
+        run: |
+          PYTHONPATH=. python scripts/gen_ie_atlas_verdict_pin.py
+          PYTHONPATH=. python scripts/gen_reviewer_manifest.py
+      - name: Verify registry and bank audit
+        run: python verify_all.py --bank-audit
+      - name: Commit integrated landing surfaces
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apf/_module_manifest.py apf/ie_atlas_verdict_pin.py \
+                  apf/ie_export_core_census.py apf/ie_wall_shadow_census.py \
+                  artifacts/ie_atlas_export.json REVIEWER_ATLAS.md setup.py
+          if git diff --cached --quiet; then
+            echo "No integration changes to commit"
+            exit 0
+          fi
+          git commit -m "v24.3.429 integrate Held-holonomy certificate"
+          git push origin HEAD:feat/held-holonomy-v1-1
