@@ -193,6 +193,7 @@ PINNED_VERDICTS = {
     "quantum:born_trace_rule": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:continuation_tesseract_exact_math_v0_5": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:ghz_mermin_state_independent": ("IJC_OBSTRUCTION", False),
+    "quantum:held_holonomy_conditional_certificate": ("OBSTRUCTION_NAMED_CLOSURE", False),
     "quantum:held_organizational_completeness_bridge": ("OBSTRUCTION_NAMED_CLOSURE", False),
     "quantum:i3_operator_self_identification": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "quantum:magic_square_threshold_robust": ("IJC_OBSTRUCTION", False),
@@ -236,4 +237,4 @@ PINNED_VERDICTS = {
     "wtrace:zll_r2_counterterm_pieces": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
 }
 
-PIN_VERSION = "24.3.428"
+PIN_VERSION = "24.3.429"

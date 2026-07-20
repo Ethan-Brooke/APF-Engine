@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-19 against verdict pin v24.3.428. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-07-20 against verdict pin v24.3.429. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3928 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3938 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 218 of 483 loaded modules onboarded (159 directly), 177 of 279 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 219 of 484 loaded modules onboarded (160 directly), 178 of 280 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -66,6 +66,7 @@ Generated 2026-07-19 against verdict pin v24.3.428. Every row below is produced 
 | `quantum:born_trace_rule` | ROUTE | **EXPORT** | v24.3.398 quantum-spine export wave: the finite Born rule as its own exporting input, downstream of the complex-sector gate (field select... |
 | `quantum:continuation_tesseract_exact_math_v0_5` | ROUTE | **EXPORT** | Pure finite mathematics. The HOC and physical midpoint bridges live in a separate non-exporting module. |
 | `quantum:ghz_mermin_state_independent` | CONTEXTUALITY | IJC_OBSTRUCTION | the GHZ/Mermin state-independent scenario (empty global-section support, brute-forced 0/64 -- six observables, 2^6 global sections -- in ... |
+| `quantum:held_holonomy_conditional_certificate` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Conditional Paper-5 Q4 certificate. SAT is bypassed, not refuted; the quadratic ledger is upstream and protected by a cycle tripwire. |
 | `quantum:held_organizational_completeness_bridge` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Self-certifying closure row: the identity/exchange-only countermodel proves the physical bridge is additional content. |
 | `quantum:i3_operator_self_identification` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; P_comp on the top check quoted as-is (composed status, distinct from plain P). |
 | `quantum:magic_square_threshold_robust` | CONTEXTUALITY | IJC_OBSTRUCTION | sign-equivalent textbook encoding of the v24.3.297 scenario (the banked check uses column parities (1,1,1); flipping two row signs gives ... |

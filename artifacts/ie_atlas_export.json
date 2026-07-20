@@ -1,12 +1,12 @@
 {
- "generated": "2026-07-19",
- "pin_version": "24.3.428",
+ "generated": "2026-07-20",
+ "pin_version": "24.3.429",
  "coverage_summary": {
-  "modules_total": 483,
-  "modules_onboarded": 218,
-  "modules_onboarded_direct": 159,
+  "modules_total": 484,
+  "modules_onboarded": 219,
+  "modules_onboarded_direct": 160,
   "modules_onboarded_via_covers": 59,
-  "target_surface_total": 279,
+  "target_surface_total": 280,
   "target_surface_plumbing": 85,
   "target_surface_open": 17,
   "target_open_modules": [
@@ -28,9 +28,9 @@
    "apf.sun_hhom_battery",
    "apf.triality_flux_correspondence"
   ],
-  "target_surface_onboarded": 177,
+  "target_surface_onboarded": 178,
   "modules_by_axis": {
-   "ROUTE": 147,
+   "ROUTE": 148,
    "CODOMAIN": 7,
    "CONTEXTUALITY": 7,
    "READOUT": 1
@@ -94,6 +94,7 @@
    "apf.gauge_quotient_ledger",
    "apf.generations",
    "apf.gravity",
+   "apf.held_holonomy",
    "apf.horizon_joint_bridge",
    "apf.horizon_ledger_reindexing",
    "apf.i4_composition",
@@ -2009,6 +2010,17 @@
    "owner_module": "apf.ijc_feasbool_engine",
    "expect_export": false,
    "note": "the GHZ/Mermin state-independent scenario (empty global-section support, brute-forced 0/64 -- six observables, 2^6 global sections -- in check_T_feasbool_general_contextuality) -> IJCStr named obstruction",
+   "covers": []
+  },
+  {
+   "input_id": "quantum:held_holonomy_conditional_certificate",
+   "axis": "ROUTE",
+   "route": "held_relative_loop_holonomy",
+   "solver_status": "OBSTRUCTION_NAMED_CLOSURE",
+   "export_global_P": false,
+   "owner_module": "apf.held_holonomy",
+   "expect_export": false,
+   "note": "Conditional Paper-5 Q4 certificate. SAT is bypassed, not refuted; the quadratic ledger is upstream and protected by a cycle tripwire.",
    "covers": []
   },
   {
