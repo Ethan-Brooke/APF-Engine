@@ -203,7 +203,7 @@ def _rank(a: Matrix) -> int:
     rank = 0
     col = 0
     while rank < r and col < c:
-        pivot = next((i for k in range(rank, r) if m[i][col] != 0), None)
+        pivot = next((k for k in range(rank, r) if m[k][col] != 0), None)
         if pivot is None:
             col += 1
             continue
