@@ -455,6 +455,9 @@ UNSHADOWED: Dict[str, str] = {
     "foundation:finite_operational_basis_general_bridge": "self_certifying_closure",
     "foundation:finite_compatible_joint_realization_general_bridge": "self_certifying_closure",
     "foundation:operational_basis_to_precision_channel_bridge": "self_certifying_closure",
+    # Continuation Tesseract v24.3.428: exact countermodel/scope-contract rows.
+    "quantum:held_organizational_completeness_bridge": "self_certifying_closure",
+    "quantum:zipper_root_physicality_gate": "self_certifying_closure",
     "dark:saturation_no_go_guard": "self_certifying_closure",
     "payload:bottom_pole_obstruction_real_adapter_live": "self_certifying_closure",
     "payload:charm_pole_obstruction_real_adapter_live": "self_certifying_closure",

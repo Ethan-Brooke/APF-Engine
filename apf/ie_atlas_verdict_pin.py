@@ -191,7 +191,9 @@ PINNED_VERDICTS = {
     "payload:top_msr_r_evolution_real_adapter_live": ("SOLVED_GLOBAL_P", True),
     "payload:top_pole_mc_obstruction_real_adapter_live": ("OBSTRUCTION_NAMED_CLOSURE", False),
     "quantum:born_trace_rule": ("INTERNAL_IDENTITY_GLOBAL_P", True),
+    "quantum:continuation_tesseract_exact_math_v0_5": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:ghz_mermin_state_independent": ("IJC_OBSTRUCTION", False),
+    "quantum:held_organizational_completeness_bridge": ("OBSTRUCTION_NAMED_CLOSURE", False),
     "quantum:i3_operator_self_identification": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "quantum:magic_square_threshold_robust": ("IJC_OBSTRUCTION", False),
     "quantum:qutrit_noncontextual_control": ("GLOBAL_SECTION_EXPORTED", True),
@@ -199,6 +201,7 @@ PINNED_VERDICTS = {
     "quantum:tsirelson_bound": ("INTERNAL_IDENTITY_GLOBAL_P", True),
     "quantum:vacuum_label_code_p1_witness": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
     "quantum:vacuum_scheme_covariance_split": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
+    "quantum:zipper_root_physicality_gate": ("OBSTRUCTION_NAMED_CLOSURE", False),
     "readout:su2_diquark": ("CANONICAL_RECORD_EXPORTED", True),
     "readout:su2_fund4": ("READOUT_OBSTRUCTION", False),
     "readout:su3_baryon": ("CANONICAL_RECORD_EXPORTED", True),
@@ -233,4 +236,4 @@ PINNED_VERDICTS = {
     "wtrace:zll_r2_counterterm_pieces": ("SOLVED_LOCAL_HELD_FOR_REPAIR", False),
 }
 
-PIN_VERSION = "24.3.427"
+PIN_VERSION = "24.3.428"

@@ -650,7 +650,7 @@ def check_T_ie_export_core_dependency_census():
 # The full-surface input inventory (v24.3.396)
 # =============================================================================
 
-#: Typed root inventory for the FULL surface (scope="full", all 200 pinned
+#: Typed root inventory for the FULL surface (scope="full", all 207 pinned
 #: atlas inputs since v24.3.400): 61 names, 7 genres (67 -> 62 at
 #: v24.3.399, the debt-registration wave; 62 -> 61 at v24.3.401, the
 #: audit-M1 D-quotient de-premising -- premise genre 23 -> 22); every
@@ -913,8 +913,8 @@ def check_T_ie_full_surface_input_inventory():
     rep = run_census(scope="full")
 
     # Leg 0: scope + the engine-native named class.
-    check(rep["n_export_inputs"] == 204,
-          f"full scope: 204 pinned inputs walked (got {rep['n_export_inputs']})"
+    check(rep["n_export_inputs"] == 207,
+          f"full scope: 207 pinned inputs walked (got {rep['n_export_inputs']})"
           " -- re-pinned 200->204 at v24.3.427 (the Paper 9 finite-basis IE"
           " declarations: the atom-cover model export + the three general-bridge"
           " OBSTRUCTION_NAMED_CLOSURE rows; typed roots / externals / conjectures"
@@ -1014,7 +1014,7 @@ def check_T_ie_full_surface_input_inventory():
         ),
         key_result=(
             "A1 + the named premises + 13 declared external ledgers + 23 "
-            "pinned conjectures, full surface, machine-verified: 200 inputs; "
+            "pinned conjectures, full surface, machine-verified: 207 inputs; "
             f"{len(FULL_SURFACE_TYPED_ROOTS)} typed roots ({n_by_genre['premise']} premise / "
             f"{n_by_genre['named_unregistered']} named-unregistered debt / "
             f"{n_by_genre['named_internal']} internal / "
