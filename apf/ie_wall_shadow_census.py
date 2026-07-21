@@ -460,6 +460,8 @@ UNSHADOWED: Dict[str, str] = {
     "quantum:zipper_root_physicality_gate": "self_certifying_closure",
     # Held holonomy v24.3.429: finite certificate passes; physical premises named.
     "quantum:held_holonomy_conditional_certificate": "self_certifying_closure",
+    # Quantum front-end closure v24.3.430: finite schemas pass; premises named.
+    "quantum:frontend_closure_conditional_certificate": "self_certifying_closure",
     "dark:saturation_no_go_guard": "self_certifying_closure",
     "payload:bottom_pole_obstruction_real_adapter_live": "self_certifying_closure",
     "payload:charm_pole_obstruction_real_adapter_live": "self_certifying_closure",
