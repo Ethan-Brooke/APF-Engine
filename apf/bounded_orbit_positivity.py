@@ -123,7 +123,8 @@ def eig_growth_certificate(g,depth=10):
             if okiter: return (cand,lam)
     return None
 def polynomial_growth_certificate(g,depth=20):
-    """Unipotent-genre: verified closed form g^n e2 = (n*c, 1)-type strictly
+    """Unipotent-genre: verified closed form (n-th power of the generator
+    applied to e2) = (n*c, 1)-type strictly
     growing first coordinate. Returns True iff orbit coordinates strictly grow."""
     M=I2; prev=None; grew=True
     for n in range(1,depth+1):
