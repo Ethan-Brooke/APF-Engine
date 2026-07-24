@@ -11,6 +11,7 @@ on:
       - "tests/test_zipper_reduction_frontier.py"
       - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   pull_request:
     branches:
@@ -22,6 +23,7 @@ on:
       - "tests/test_zipper_reduction_frontier.py"
       - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   workflow_dispatch:
 
