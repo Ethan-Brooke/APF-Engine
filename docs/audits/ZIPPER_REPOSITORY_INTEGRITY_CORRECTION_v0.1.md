@@ -69,6 +69,8 @@ tests/test_zipper_reduction_frontier.py
 
 The dedicated workflow runs the manifest-integrity test separately and then runs the full six-file focused suite.
 
+Hosted workflow run `30094616922` completed successfully on the corrected tree. The manifest/test-presence step, all five candidate certificates, the full six-file focused suite, and the manifest-defined production bank audit all passed.
+
 ## 5. Correct verification language
 
 The licensed verification statements are now:
@@ -76,6 +78,6 @@ The licensed verification statements are now:
 - the production bank surface is unchanged **relative to the production manifest**;
 - the audit-candidate modules are explicitly named on a separate unbanked manifest surface;
 - focused test presence is asserted from the checked-out tree;
-- focused test execution is established only by the dedicated workflow step and its recorded result.
+- focused test execution is established by the dedicated workflow step and its recorded result.
 
 The packet may not cite a truncated diff, a successful `--bank-audit` run, or a module import performed outside the checked-out PR tree as proof of focused test presence.
