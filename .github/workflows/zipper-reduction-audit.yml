@@ -7,12 +7,15 @@ on:
     paths:
       - "apf/zipper_reduction.py"
       - "apf/zipper_reduction_frontier.py"
+      - "apf/zipper_reflection_bridge.py"
       - "tests/test_zipper_reduction.py"
       - "tests/test_zipper_reduction_frontier.py"
+      - "tests/test_zipper_reflection_bridge.py"
       - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
+      - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   pull_request:
     branches:
@@ -20,12 +23,15 @@ on:
     paths:
       - "apf/zipper_reduction.py"
       - "apf/zipper_reduction_frontier.py"
+      - "apf/zipper_reflection_bridge.py"
       - "tests/test_zipper_reduction.py"
       - "tests/test_zipper_reduction_frontier.py"
+      - "tests/test_zipper_reflection_bridge.py"
       - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
+      - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   workflow_dispatch:
 
@@ -44,12 +50,14 @@ jobs:
       - name: Install APF and audit dependencies
         run: python -m pip install --upgrade pip pytest sympy && python -m pip install -e .
       - name: Compile zipper-reduction modules
-        run: python -m compileall -q apf/zipper_reduction.py apf/zipper_reduction_frontier.py
+        run: python -m compileall -q apf/zipper_reduction.py apf/zipper_reduction_frontier.py apf/zipper_reflection_bridge.py
       - name: Run exact moving-exchange certificate
         run: python -m apf.zipper_reduction
+      - name: Run operational-reflection bridge certificate
+        run: python -m apf.zipper_reflection_bridge
       - name: Run downstream frontier certificate
         run: python -m apf.zipper_reduction_frontier
       - name: Run adversarial tests
-        run: python -m pytest -q tests/test_zipper_reduction.py tests/test_zipper_reduction_frontier.py
+        run: python -m pytest -q tests/test_zipper_reduction.py tests/test_zipper_reflection_bridge.py tests/test_zipper_reduction_frontier.py
       - name: Confirm canonical bank remains unchanged
         run: python verify_all.py --bank-audit
