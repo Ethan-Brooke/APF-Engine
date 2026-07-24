@@ -9,6 +9,14 @@ on:
       - "tests/test_zipper_reduction.py"
       - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "apf/zipper_reduction.py"
+      - "tests/test_zipper_reduction.py"
+      - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
+      - ".github/workflows/zipper-reduction-audit.yml"
   workflow_dispatch:
 
 permissions:
