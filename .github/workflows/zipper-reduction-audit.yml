@@ -18,6 +18,7 @@ on:
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
       - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
+      - "docs/audits/ZIPPER_BRIDGE_BANK_CONCORDANCE_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   pull_request:
     branches:
@@ -36,6 +37,7 @@ on:
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
       - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
       - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
+      - "docs/audits/ZIPPER_BRIDGE_BANK_CONCORDANCE_v0.1.md"
       - ".github/workflows/zipper-reduction-audit.yml"
   workflow_dispatch:
 
