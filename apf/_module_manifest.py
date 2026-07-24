@@ -7,7 +7,7 @@ Replaces the previously-duplicate lists in ``apf/bank.py``'s ``_MODULE_PATHS``
 had drifted significantly; this manifest is the single source of truth both
 files now import from.
 
-Four categories
+Five categories
 ---------------
 
 ``BANK_REGISTRY_MODULES`` (233 modules)
@@ -26,6 +26,12 @@ Four categories
     Standalone-lemma modules under ``apf/standalone/``. Have check_* defs but
     don't use the ``register(registry)`` contract. Listed in ``verify_all.MODULES``
     for scorecard enumeration; NOT loaded by ``bank._load()``.
+
+``AUDIT_CANDIDATE_MODULES`` (5 modules)
+    Explicitly unbanked research/audit candidates. They are named here so
+    repository census tooling cannot silently miss them, but they are excluded
+    from ``BANK_LOAD_MODULES``, ``ALL_MODULES_VERIFY_ORDER``, ``MODULE_TYPES``,
+    and the production theorem registry. Dedicated CI invokes them directly.
 
 ``KNOWN_REGISTER_ANOMALIES`` (0 modules — cleaned up v24.3.20 2026-05-18)
     Modules with a non-standard ``register()`` signature (``register()`` with no
@@ -585,6 +591,18 @@ STANDALONE_LEMMA_MODULES: tuple[str, ...] = (
     "apf.standalone.L_CKM_resolution_limit",
     "apf.standalone.phase1_seesaw_closure",
     "apf.standalone.phase5_theorem_R_audit",
+)
+
+
+# Unbanked zipper research packet. Deliberately excluded from the production
+# bank load, standard verify_all scorecard, module-type crystal, and registry.
+# Dedicated audit CI imports and executes these modules explicitly.
+AUDIT_CANDIDATE_MODULES: tuple[str, ...] = (
+    "apf.zipper_clearance_occupancy",
+    "apf.zipper_reduction",
+    "apf.zipper_reflection_bridge",
+    "apf.zipper_bridge_bank_concordance",
+    "apf.zipper_reduction_frontier",
 )
 
 
