@@ -7063,6 +7063,16 @@ def check_T_inseparable_IJC():
       occupancy at the interface' -- the bridge derived internally, the
       occupancy independently witnessed.
 
+      READING (2026-07-24, count-neutral cross-ref; no grade change): the
+      independently-witnessed occupancy -- that THIS interface is in branch
+      (IJC) -- is the framework's single un-forced bit, and it is exactly
+      the orthodox-vs-Bohm ontological datum. The invasive (hidden-
+      preferred-order / Bohmian) completion agrees on every observable, so
+      no observable-admissibility principle excludes it; the |c|=5/7 facet
+      (check_T_minimal_branch_selection_obstruction) marks where non-
+      invasive classical realizability ends, NOT where L_irr-admissibility
+      ends. Formal home: Paper 1 Technical Supplement, sec:ontological-residue.
+
     PROOF STRUCTURE (paired witnesses):
       BRANCH (Sep) WITNESS — auditor's countermodel:
         Step S1: V_Sep = M_d1 ⊕ M_d2 ⊕ Π with explicit factorization.
@@ -7728,6 +7738,19 @@ def check_T_quantum_admissibility_condition():
       (ii) On the classical record-eigenstate witness, Boolean record-
           locking incurs zero distortion -- the classical case correctly
           fails QAC (no quantum structure forced).
+
+    Reading (2026-07-24, count-neutral cross-ref; no grade change). The QAC
+    is the framework's single un-forced bit, read one level below the
+    observable: whether the substrate carries a hidden preferred order
+    (Bohmian) or none (orthodox). The observable structure above it is
+    forced -- Sep/IJC, the incompatibility certifier, the correlation
+    geometry, the |c|=5/7 non-invasive-realizability facet
+    (check_T_minimal_branch_selection_obstruction), and the conjectured
+    2*sqrt(2) ceiling. The two ontologies are empirically equivalent by
+    construction (Toner-Bacon 2003; Bohmian mechanics), so no observable-
+    admissibility principle can decide the branch; [P_regime] is exactly
+    this posture. Formal home: Paper 1 Technical Supplement,
+    sec:ontological-residue.
     """
     coh = _qac_witness_coherent_2level()
     cls = _qac_witness_classical_2level()
