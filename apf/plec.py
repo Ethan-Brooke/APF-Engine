@@ -515,7 +515,7 @@ def check_Regime_exit_Type_V():
 
 
 def check_T_trivial_alignment_is_Type_II():
-    """T_trivial_alignment_is_Type_II: Trivial Alignment as Type II Configuration [P_structural].
+    """T_trivial_alignment_is_Type_II: Trivial Alignment as Type II Configuration [P_structural_reading].
 
     STATEMENT: The trivial alignment (a, empty) -- admissible-possibility-
     space Omega_Gamma present, distinction family D_a empty -- is a Type II
@@ -542,7 +542,7 @@ def check_T_trivial_alignment_is_Type_II():
     related by sigma. Verify equal realignment cost from (a, empty),
     confirming non-unique argmin up to Z_2.
 
-    STATUS: [P_structural]. Dependencies: A1, L_loc, Lemma BW, Regime_R.
+    STATUS: [P_structural_reading]. Dependencies: A1, L_loc, Lemma BW, Regime_R.
     """
     E_plus = Fraction(1)
     E_minus = Fraction(1)
@@ -584,7 +584,7 @@ def check_T_trivial_alignment_is_Type_II():
             'This is the cosmogenesis-from-perfect-symmetry program load-'
             'bearing structural object inside Regime R.'
         ),
-        key_result='Trivial alignment is Type II under any nontrivial symmetry group G [P_structural]',
+        key_result='Trivial alignment is Type II under any nontrivial symmetry group G [P_structural_reading]',
         dependencies=['A1', 'L_loc', 'L_epsilon_star', 'Regime_R'],
         cross_refs=['Regime_exit_Type_II', 'T_type_II_resolution_under_L_irr'],
         artifacts={
@@ -601,7 +601,7 @@ def check_T_trivial_alignment_is_Type_II():
 
 
 def check_T_type_II_resolution_under_L_irr():
-    """T_type_II_resolution_under_L_irr: L_irr-Accumulated Asymmetry Resolves Type II [P_structural].
+    """T_type_II_resolution_under_L_irr: L_irr-Accumulated Asymmetry Resolves Type II [P_structural_reading].
 
     STATEMENT: For a Type II configuration with symmetric cost functional
     invariant under group G, L_irr-accumulated record-locking adds an
@@ -624,7 +624,7 @@ def check_T_type_II_resolution_under_L_irr():
     unique at x = -1. The Z_2 symmetry of L_sym has been broken to the
     trivial subgroup by the L_irr-induced correction.
 
-    STATUS: [P_structural]. Dependencies: A1, L_irr, L_nc, Regime_exit_Type_II,
+    STATUS: [P_structural_reading]. Dependencies: A1, L_irr, L_nc, Regime_exit_Type_II,
     T_trivial_alignment_is_Type_II.
     """
     def L_sym(x):
@@ -687,7 +687,7 @@ def check_T_type_II_resolution_under_L_irr():
             'structural: the sign of epsilon, not its magnitude, fixes the '
             'broken phase.'
         ),
-        key_result='L_irr-accumulated asymmetry resolves Type II degeneracy uniquely [P_structural]',
+        key_result='L_irr-accumulated asymmetry resolves Type II degeneracy uniquely [P_structural_reading]',
         dependencies=['A1', 'L_irr', 'L_nc', 'L_loc', 'L_epsilon_star',
                       'Regime_exit_Type_II', 'T_trivial_alignment_is_Type_II'],
         cross_refs=['Regime_R', 'Regime_exit_Type_III'],
@@ -707,7 +707,7 @@ def check_T_type_II_resolution_under_L_irr():
 
 
 def check_T_cosmogenic_lattice_ordering():
-    """T_cosmogenic_lattice_ordering: Partial-Order Φc-Monotonic Cosmogenic Sequence + No-GUT Corollary [P_structural].
+    """T_cosmogenic_lattice_ordering: Partial-Order Φc-Monotonic Cosmogenic Sequence + No-GUT Corollary [P_structural_reading].
 
     STATEMENT: The cosmogenic ordering of staged Type II resolutions in
     the (61, 102) capacity lattice is partially ordered by Phi_c-
@@ -745,7 +745,7 @@ def check_T_cosmogenic_lattice_ordering():
     list the framework's admissible gauge factors and verify no
     unified group spanning all three appears.
 
-    STATUS: [P_structural]. Dependencies: A1, L_nc, L_irr, L_loc,
+    STATUS: [P_structural_reading]. Dependencies: A1, L_nc, L_irr, L_loc,
     Theorem_R, T_field, T_trivial_alignment_is_Type_II,
     T_type_II_resolution_under_L_irr.
     """
@@ -836,7 +836,7 @@ def check_T_cosmogenic_lattice_ordering():
             'sequence + commuting-sector partial-order admission + '
             'structural enumeration of admissible vs candidate GUT groups.'
         ),
-        key_result='Cosmogenic order is partial; Phi_c-monotonicity forced; no-GUT corollary holds; tau_p = infinity [P_structural]',
+        key_result='Cosmogenic order is partial; Phi_c-monotonicity forced; no-GUT corollary holds; tau_p = infinity [P_structural_reading]',
         dependencies=['A1', 'L_nc', 'L_irr', 'L_loc', 'Theorem_R', 'T_field',
                       'T_trivial_alignment_is_Type_II',
                       'T_type_II_resolution_under_L_irr'],
@@ -860,7 +860,7 @@ def check_T_cosmogenic_lattice_ordering():
 
 
 def check_T_omega_gamma_max_symmetry_group():
-    """T_omega_gamma_max_symmetry_group: Maximal Symmetry Group of Omega_Gamma at Trivial Alignment [P_structural].
+    """T_omega_gamma_max_symmetry_group: Maximal Symmetry Group of Omega_Gamma at Trivial Alignment [P_structural_reading].
 
     v24.3.7 NEW. Cosmogenic synthesis closure: identifies the maximal
     symmetry group G_max of the admissible-possibility space Omega_Gamma
@@ -1026,7 +1026,7 @@ def check_T_omega_gamma_max_symmetry_group():
             'synthesis-doc Q1 (Reference - Cosmogenesis from the Trivial '
             'Alignment, 2026-05-15, sec. 8 question 1).'
         ),
-        key_result='G_max = S_61 x [SU(3) x SU(2) x U(1)] at the trivial alignment [P_structural]',
+        key_result='G_max = S_61 x [SU(3) x SU(2) x U(1)] at the trivial alignment [P_structural_reading]',
         dependencies=[
             'L_gauge_template_uniqueness',
             'T_trivial_alignment_is_Type_II',
