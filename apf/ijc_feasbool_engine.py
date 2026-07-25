@@ -1110,6 +1110,14 @@ def check_T_feasbool_concordance() -> Dict:
     agree on Boole-polytope membership. Both branches are asserted non-empty so
     the leg cannot pass vacuously.
 
+    Leg 1b (physical instance): the exact measured correlators of a real
+    loophole-closing Bell experiment -- Rosenfeld et al., PRL 119, 010402 (2017),
+    the 398 m event-ready trapped-atom run -- are structural_IJC concordantly
+    across all four ports. This anchors the synthetic battery to measured data.
+    GEOMETRIC (Boole-polytope membership) only: it makes no statistical,
+    Process-IJC, or freedom-of-choice claim; that experimental wrapper is a
+    separate, non-banked layer.
+
     Leg 2 (taxonomy correspondence): feasbool_layered's four verdicts
     {structural_IJC, preservation_infeasible, capacity_only_failure, SepAdm}
     correspond bijectively to price_preservation_branch.classify's
@@ -1166,6 +1174,38 @@ def check_T_feasbool_concordance() -> Dict:
             % (n_inside, n_outside)
         )
 
+    # ---- Leg 1b: physical instance -- a real loophole-closing Bell experiment ----
+    # Rosenfeld et al., PRL 119, 010402 (2017); arXiv:1611.04604v2. Event-ready
+    # trapped-atom test, 398 m separation. Exact aggregate correlators (supplement
+    # S8 counts) for the two heralded preparations. GEOMETRIC claim ONLY: the
+    # measured correlators sit OUTSIDE the local Boole polytope, concordantly across
+    # all four ports. This anchors the synthetic battery to real measured data; it
+    # makes NO statistical / Process-IJC / freedom-of-choice claim (that layer is a
+    # separate, non-banked experimental wrapper and is out of scope here).
+    def _corr(uu, ud, du, dd):
+        n = uu + ud + du + dd
+        return Fraction(uu - ud - du + dd, n)
+    rosenfeld_2017 = {
+        "Psi_plus": (_corr(154, 483, 471, 135), _corr(135, 471, 507, 107),
+                     _corr(134, 499, 513, 117), _corr(489, 160, 182, 443)),
+        "Psi_minus": (_corr(168, 443, 536, 149), _corr(122, 492, 510, 117),
+                      _corr(535, 115, 128, 461), _corr(172, 439, 483, 130)),
+    }
+    physical_concordant = 0
+    for _prep, E in rosenfeld_2017.items():
+        fb_out = feasbool(_chsh_correlator_scenario(E))["branch"] == "IJCStr"
+        lay_out = feasbool_layered(_chsh_correlator_scenario(E))["verdict"] == "structural_IJC"
+        ta_out = _inside_boole(E) is False
+        tb_out = _in_local(E) is False
+        if not (fb_out and lay_out and ta_out and tb_out):
+            failures.append(
+                "physical instance Rosenfeld-2017 %s not concordantly structural_IJC "
+                "(feasbool=%s layered=%s two_axis=%s third_boat=%s)"
+                % (_prep, fb_out, lay_out, ta_out, tb_out)
+            )
+        else:
+            physical_concordant += 1
+
     # ---- Leg 2: four-verdict taxonomy correspondence ----
     tmap = {
         "structural_IJC": _ppb.STRUCTURAL_IJC,
@@ -1213,11 +1253,21 @@ def check_T_feasbool_concordance() -> Dict:
             "T_feasbool_branch_taxonomy_four_verdicts",
         ],
         "failures": failures,
+        "physical_instance": (
+            "Rosenfeld et al. PRL 119 010402 (2017) event-ready atom Bell run "
+            "(398 m): %d/2 measured-data preparations concordantly structural_IJC "
+            "across feasbool / layered / two-axis / third_boat -- geometric "
+            "Boole-polytope membership only, no statistical or Process-IJC claim"
+            % physical_concordant
+        ),
         "key_result": (
-            "%d/%d correlators concordant across feasbool / layered / two-axis / "
-            "third_boat (both branches hit); four-verdict taxonomy bijective with "
-            "price_preservation_branch.classify. FeasBool named the canonical "
-            "general Boole-polytope engine." % (len(battery) - len(failures), len(battery))
+            "%d/%d synthetic correlators concordant across feasbool / layered / "
+            "two-axis / third_boat (both branches hit); four-verdict taxonomy "
+            "bijective with price_preservation_branch.classify. FeasBool named the "
+            "canonical general Boole-polytope engine. Physical anchor: %d/2 "
+            "Rosenfeld-2017 measured preparations structural_IJC across all four "
+            "ports." % (len(battery) - len([f for f in failures if not f.startswith('physical')]),
+                        len(battery), physical_concordant)
         ),
     }
 
