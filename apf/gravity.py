@@ -2258,6 +2258,7 @@ def check_T_which_v_no_registered_interior_reader():
         'yang_mills_gap.py': ('V', 'fence'),
         'yang_mills_md_bridge.py': ('V', 'fence'),
         'ym_quotient_ledger.py': ('L', 'fence'),
+        'zipper_metric_theorems.py': ('L', 'infra'),  # v24.3.437 (2026-07-25): benign drift-net disposition. The 'L' match is the incidental result-variable name r42 (= check_L_two_frame_irreducibility()) in the module's mutation battery -- NOT a V_global/vacuum-sector interior reader. Surfaced when v24.3.437's full --bank-only execution first ran this census; the .435 zipper/quantum-lane landing verified via --bank-audit, which does not execute it.
         'ew_osw_source_families/gamma_gamma_vacuum_polarization.py': ('V', 'fence'),
     }
 
