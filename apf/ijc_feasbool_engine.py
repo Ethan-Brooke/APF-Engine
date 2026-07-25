@@ -1,15 +1,17 @@
 """General FeasBool engine: exact Boole-polytope feasibility over any finite scenario.
 
-Phase 21 Task B, built out (staged, NOT yet bank-registered).
+Banked v24.3.436 (four checks, [P_structural_instrument]); harmonized with the
+recent clean-room ports by check_T_feasbool_concordance (v24.3.440).
 
 The (2,2,2) bridge engine (apf.ijc_boolean_defender_bridge) decides the
 Boolean-defender branch on the single Bell-CHSH cover via Fine's facet list.
 This module is the general engine: it decides ``FeasBool`` (the structural
-layer of Paper 5 supp v6.8) for an ARBITRARY finite marginal scenario --
+layer of the Paper 1 Technical Supplement v9.21, sec:sep-ijc-representation)
+for an ARBITRARY finite marginal scenario --
 any measurements, any outcome sets, any context hypergraph -- by exact
-Boole-polytope / global-section feasibility (thm:boolean-defender-boole-
-global-v58), and derives noncommutativity from defender-failure
-(thm:general-finite-query-noncommutative-bridge-v547).
+Boole-polytope / global-section feasibility (P1 supp
+thm:boolean-feasibility-separating-witnesses), and derives noncommutativity
+from defender-failure (P1 supp thm:sep-ijc-representation).
 
 Two computations, both exact (Fraction), no numpy/scipy:
 
@@ -33,9 +35,19 @@ noncommutative. The Farkas inequality is the constructive separating
 witness.
 
 Scope/grade: occupancy (that a physical interface IS in branch IJC) stays
-the QAC, untouched. This engine supplies only the math bridge. Proposed
-grade P_structural pending fresh hostile audit + native verify_all +
-sign-off.
+the QAC, untouched. This engine supplies only the math bridge. Banked at
+grade P_structural_instrument.
+
+Concordance (harmonization, v24.3.440): FeasBool is the general
+Boole-polytope engine. check_T_feasbool_concordance cross-checks it against
+the recent self-contained clean-room ports: the Boole-polytope test is
+pointwise-identical to quantum_condition_two_axis.inside_boole (its Axis I)
+and third_boat_no_extension._in_local_polytope (Fine's local polytope), and
+the feasbool_layered four-verdict taxonomy corresponds to
+price_preservation_branch.classify (the same nested filter, structural >=
+preservation >= admissible). minimal_branch_obstruction (|c|<=5/7) and
+global_defect_margin (signed-cycle defect) compute different objects and are
+cross-referenced, not asserted equal.
 """
 
 from __future__ import annotations
@@ -158,7 +170,7 @@ def lp_feasible(
 
 @dataclass(frozen=True)
 class Scenario:
-    """A finite marginal scenario (Paper 5 supp v6.8 def:finite-marginal-scenario).
+    """A finite marginal scenario (Paper 1 Technical Supplement v9.21 def:sep-ijc-tested).
 
     measurements : ordered dict-like name -> tuple of outcomes.
     contexts     : list of tuples of measurement names (jointly queried).
@@ -458,7 +470,7 @@ def scenario_from_dict(d: Dict) -> "Scenario":
 
 
 # =====================================================================
-# Bank check (staged; not yet registered)
+# Bank checks (registered via _CHECKS / register())
 # =====================================================================
 
 def check_T_feasbool_general_contextuality() -> Dict:
@@ -475,7 +487,7 @@ def check_T_feasbool_general_contextuality() -> Dict:
       * GHZ/Mermin -> IJCStr (empty global support, the Mermin contradiction).
       * qutrit noncontextual -> SepStr.
 
-    Proposed grade P_structural (pending hostile audit). Occupancy stays the
+    Banked grade P_structural_instrument. Occupancy stays the
     QAC. The engine discharges the Boole-membership (math) half only; it does
     NOT discharge the Paper 5 supp bridge theorem's APF-side hypotheses (word
     adequacy, repeatable record partitions, overlap coherence, bridge-
@@ -531,7 +543,7 @@ def check_T_feasbool_general_contextuality() -> Dict:
         "name": (
             "T_feasbool_general_contextuality: exact Boole-polytope FeasBool "
             "over arbitrary scenarios; IJCStr derives noncommutativity "
-            "[P_structural, staged Phase 21 Task B]"
+            "[P_structural_instrument]"
         ),
         "passed": passed,
         "epistemic": "P_structural_instrument",
@@ -703,8 +715,8 @@ def check_T_ijc_constructive_noncommutator():
     return {
         "name": (
             "T_ijc_constructive_noncommutator: an IJC Bell table exhibited with "
-            "its realizing noncommuting 2-qubit record pair [P_structural, "
-            "staged Phase 21 Task B]"
+            "its realizing noncommuting 2-qubit record pair "
+            "[P_structural_instrument]"
         ),
         "passed": passed,
         "epistemic": "P_structural_instrument",
@@ -730,7 +742,8 @@ def check_T_ijc_constructive_noncommutator():
 
 # =====================================================================
 # The three-layer FeasBool cascade -> the four-verdict branch taxonomy.
-# Paper 5 supp v6.8 def:three-layer-feasbool-v598 + thm:branch-exhaustivity-v57:
+# Paper 1 Technical Supplement v9.21 sec:sep-ijc-representation (four-verdict
+# taxonomy also banked in price_preservation_branch.py):
 #   (B1) STRUCTURAL : Boole-polytope membership            -> SepStr / IJCStr
 #   (B2) PRESERVATION: + declared no-added-resource /        -> preservation-feasible
 #                       continuation-profile constraints        / preservation-infeasible
@@ -808,8 +821,9 @@ def feasbool_layered(scn, preservation=None, ledger=None):
 def check_T_feasbool_branch_taxonomy_four_verdicts():
     """The full four-verdict branch taxonomy, computed by the three-layer cascade.
 
-    Verifies the CONVEX/LP special case of Paper 5 supp v6.8
-    thm:branch-exhaustivity-v57 on witnesses: B1 (Boole polytope) is exact, while
+    Verifies the CONVEX/LP special case of the four-verdict branch taxonomy
+    (Paper 1 Technical Supplement v9.21 sec:sep-ijc-representation; also banked
+    in price_preservation_branch.py) on witnesses: B1 (Boole polytope) is exact, while
     B2/B3 are the declared-linear-constraint and EXPECTED-cost sub-cases (not the
     full MILP support-size/memory ledger of rem:capacity-only-limitation-v556 /
     ex:...-v578). In that sub-case exactly one of (i) SepAdm / (ii) capacity-only
@@ -1082,11 +1096,138 @@ def check_T_ks_parity_contextuality_scalable():
     }
 
 
+def check_T_feasbool_concordance() -> Dict:
+    """Concordance: the general FeasBool engine agrees with the recent
+    self-contained clean-room ports on the shared Boole-polytope / four-verdict
+    math. The harmonization certificate -- it re-derives no port; it proves the
+    banked implementations are mutually consistent, so a divergence in any one
+    would be caught here.
+
+    Leg 1 (pointwise, same input E): over a fixed 47-correlator (2,2,2) battery
+    spanning both branches, the engine's IJCStr verdict, its layered
+    structural-IJC leg, quantum_condition_two_axis.inside_boole (its Axis I),
+    and third_boat_no_extension._in_local_polytope (Fine's local polytope) all
+    agree on Boole-polytope membership. Both branches are asserted non-empty so
+    the leg cannot pass vacuously.
+
+    Leg 2 (taxonomy correspondence): feasbool_layered's four verdicts
+    {structural_IJC, preservation_infeasible, capacity_only_failure, SepAdm}
+    correspond bijectively to price_preservation_branch.classify's
+    {STRUCTURAL_IJC, PRESERVATION_IJC, CAPACITY_ONLY_FAILURE, ADMISSIBLE_BOOLEAN}
+    -- the same nested filter (structural >= preservation >= admissible),
+    demonstrated on matched witnesses. This is a structural correspondence, not
+    a pointwise identity (the two consume inputs at different abstraction
+    levels).
+
+    Related but NOT asserted equal: minimal_branch_obstruction (|c|<=5/7) and
+    global_defect_margin (signed-cycle defect) compute different objects.
+
+    Grade P_structural_instrument; non-exporting; ppc=false; no [P] moved.
+    """
+    import random as _random
+    from apf.quantum_condition_two_axis import inside_boole as _inside_boole
+    from apf.third_boat_no_extension import _in_local_polytope as _in_local
+    from apf import price_preservation_branch as _ppb
+
+    failures = []
+
+    # ---- Leg 1: Boole-polytope pointwise agreement ----
+    curated = [
+        (Fraction(1, 2), Fraction(1, 2), Fraction(1, 2), Fraction(1, 2)),       # local S=1
+        (Fraction(1, 2), Fraction(1, 2), Fraction(1, 2), Fraction(-1, 2)),      # boundary S=2
+        (Fraction(13, 20), Fraction(13, 20), Fraction(13, 20), Fraction(-13, 20)),  # S=2.6
+        (Fraction(7, 10), Fraction(7, 10), Fraction(7, 10), Fraction(-7, 10)),  # S=2.8
+        (Fraction(1), Fraction(1), Fraction(1), Fraction(-1)),                  # PR box S=4
+        (Fraction(0), Fraction(0), Fraction(0), Fraction(0)),                   # S=0
+    ]
+    rng = _random.Random(20260725)
+    battery = list(curated) + [
+        tuple(Fraction(rng.randint(-10, 10), 10) for _ in range(4)) for _ in range(41)
+    ]
+    n_inside = n_outside = 0
+    for E in battery:
+        fb_out = feasbool(_chsh_correlator_scenario(E))["branch"] == "IJCStr"
+        lay_out = feasbool_layered(_chsh_correlator_scenario(E))["verdict"] == "structural_IJC"
+        ta_out = _inside_boole(E) is False
+        tb_out = _in_local(E) is False
+        if not (fb_out == lay_out == ta_out == tb_out):
+            failures.append(
+                "Boole-polytope disagreement at E=%s (feasbool=%s layered=%s "
+                "two_axis=%s third_boat=%s)"
+                % (tuple(str(x) for x in E), fb_out, lay_out, ta_out, tb_out)
+            )
+        if fb_out:
+            n_outside += 1
+        else:
+            n_inside += 1
+    if n_inside == 0 or n_outside == 0:
+        failures.append(
+            "battery did not span both branches (inside=%d outside=%d) -- vacuous"
+            % (n_inside, n_outside)
+        )
+
+    # ---- Leg 2: four-verdict taxonomy correspondence ----
+    tmap = {
+        "structural_IJC": _ppb.STRUCTURAL_IJC,
+        "preservation_infeasible": _ppb.PRESERVATION_IJC,
+        "capacity_only_failure": _ppb.CAPACITY_ONLY_FAILURE,
+        "SepAdm": _ppb.ADMISSIBLE_BOOLEAN,
+    }
+    prbox = _chsh_correlator_scenario((Fraction(1), Fraction(1), Fraction(1), Fraction(-1)))
+    local = _chsh_correlator_scenario(
+        (Fraction(1, 2), Fraction(1, 2), Fraction(1, 2), Fraction(1, 2))
+    )
+    fb_witness = {
+        "structural_IJC": feasbool_layered(prbox)["verdict"],
+        "SepAdm": feasbool_layered(local, ledger=(lambda _s: Fraction(0), Fraction(1)))["verdict"],
+        "capacity_only_failure": feasbool_layered(local, ledger=(lambda _s: Fraction(2), Fraction(1)))["verdict"],
+        "preservation_infeasible": feasbool_layered(
+            local, preservation=[(lambda _s: True, Fraction(0))]
+        )["verdict"],
+    }
+    pp_witness = {
+        _ppb.ADMISSIBLE_BOOLEAN: _ppb.classify([_ppb.cand("d", True, 0, 1)], tolerance=1, capacity=1),
+        _ppb.CAPACITY_ONLY_FAILURE: _ppb.classify([_ppb.cand("d", True, 0, 5)], tolerance=1, capacity=1),
+        _ppb.PRESERVATION_IJC: _ppb.classify([_ppb.cand("d", True, 9, 1)], tolerance=1, capacity=1),
+        _ppb.STRUCTURAL_IJC: _ppb.classify([_ppb.cand("d", False, 0, 1)], tolerance=1, capacity=1),
+    }
+    for fbv, ppv in tmap.items():
+        if fb_witness[fbv] != fbv:
+            failures.append("feasbool_layered witness for %s produced %s" % (fbv, fb_witness[fbv]))
+        if pp_witness[ppv] != ppv:
+            failures.append("price_preservation witness for %s produced %s" % (ppv, pp_witness[ppv]))
+
+    passed = not failures
+    return {
+        "name": (
+            "T_feasbool_concordance: the general FeasBool engine agrees with the "
+            "clean-room ports -- Boole-polytope pointwise-identical to "
+            "two_axis.inside_boole + third_boat._in_local_polytope (47-correlator "
+            "battery, both branches hit), four-verdict taxonomy corresponds to "
+            "price_preservation_branch.classify [P_structural_instrument]"
+        ),
+        "passed": passed,
+        "epistemic": "P_structural_instrument",
+        "dependencies": [
+            "T_feasbool_general_contextuality",
+            "T_feasbool_branch_taxonomy_four_verdicts",
+        ],
+        "failures": failures,
+        "key_result": (
+            "%d/%d correlators concordant across feasbool / layered / two-axis / "
+            "third_boat (both branches hit); four-verdict taxonomy bijective with "
+            "price_preservation_branch.classify. FeasBool named the canonical "
+            "general Boole-polytope engine." % (len(battery) - len(failures), len(battery))
+        ),
+    }
+
+
 _CHECKS = {
     "T_feasbool_general_contextuality": check_T_feasbool_general_contextuality,
     "T_ijc_constructive_noncommutator": check_T_ijc_constructive_noncommutator,
     "T_feasbool_branch_taxonomy_four_verdicts": check_T_feasbool_branch_taxonomy_four_verdicts,
     "T_ks_parity_contextuality_scalable": check_T_ks_parity_contextuality_scalable,
+    "T_feasbool_concordance": check_T_feasbool_concordance,
 }
 
 
