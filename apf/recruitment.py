@@ -1,6 +1,6 @@
 """APF v7.7 — Recruitment-radius extension module.
 
-Implements twelve bank-registered checks closing the recruitment-radius
+Implements thirteen bank-registered checks closing the recruitment-radius
 content across the corpus updates and Papers 24/25:
 
     check_H1_continuum_from_anchor_profile      — Paper 6 H1 closure (Wave 1)
@@ -21,6 +21,11 @@ content across the corpus updates and Papers 24/25:
     check_T_sixteen_case_unification_structural — Paper 24 §5 meta-check
     check_T_DCE_Q_dependence_prediction         — Paper 24 §5 1/Q prediction
     check_T_purcell_DCE_consistency             — Paper 24 §5 internal check
+
+    check_T_knee_downturn_direction_corroboration — reduced O3 instrument:
+                                                  Kouwenhoven-2024 knee-
+                                                  downturn corroboration
+                                                  (v24.3.439)
 
 Source of truth for the structural derivations:
     Paper 1 Supplement v8.20 §14 — bounded continuum bridge: continuous anchor
@@ -2083,6 +2088,234 @@ def check_T_purcell_DCE_consistency():
 # Module registry
 # =============================================================================
 
+
+# =============================================================================
+# T_knee_downturn_direction_corroboration: the reduced O3 instrument
+# (v24.3.439) -- Kouwenhoven-2024 TLS noise downturn corroborates the r_th=1
+# knee DIRECTION at device level (8/9, p=0.0195) + conditional T_k
+# localization; reframe of the cold-audited (REDUCED) O3 visible pin.
+# NON-EXPORTING [P_structural_instrument].
+# =============================================================================
+def check_T_knee_downturn_direction_corroboration():
+    """T_knee_downturn_direction_corroboration: Kouwenhoven-2024 TLS noise
+    downturn corroborates the r_th=1 knee DIRECTION at device level and
+    localizes at T_k where it survives a curvature guard [P_structural_instrument].
+
+    REFRAME OF RECORD (2026-07-25): the O3 visible-pin walk was cold-audited and
+    REDUCED -- the per-device "visible pin" does not survive look-elsewhere
+    (strongest track KID6@-97: p=0.095, ~1.7 sigma; the measurement-sigma SNRs
+    rested on stated error bars ~20x too small). This instrument banks only what
+    survived that audit, at instrument grade, with the failure modes named.
+
+    DATA: Kouwenhoven et al. 2024 (PRApplied 21, 044036), Zenodo
+    10.5281/zenodo.10159731, LT266_3D/3_Device_T; 36 tracks = 9 devices (KID1-9)
+    x 4 read powers over 6 temperatures 25-800 mK. Per-track (T_mK, y=ln S_f(10Hz))
+    frozen below; from-raw extraction reproduced bit-exact in the 2026-07-25 audit.
+
+    LEG A (downturn DIRECTION, device-clustered -- the honest unit, since tracks
+    within a device are correlated): after removing a smooth quadratic-in-lnT
+    baseline, the low-T noise departs DOWNWARD on 8/9 devices (mean
+    knee-beyond-quad coefficient) -> device-level sign-test p = 0.0195, the
+    direction predicted by the r_th=1 knee at T_k = h f / k_B. The track-level
+    29/36 (p=1.6e-4) is ANTI-CONSERVATIVE and is NOT the claim.
+
+    LEG B (CONDITIONAL T_k localization): for tracks whose downturn survives a
+    quadratic curvature guard (quad-null pattern SNR >= 3), the free-fit knee
+    localizes at T_k (median free-knee/T_k ~ 1.0) versus ~0.68 for the
+    non-survivors -- a survivor-vs-non-survivor contrast, small-N.
+
+    NAMED HONESTY LEGS (carried in-statement):
+      H1  stated per-point error bars understate the scatter ~20x (linear
+          reduced-chi2 ~ 438); measurement-sigma SNRs are NOT used.
+      H2  NO single-device detection: strongest track look-elsewhere p = 0.095.
+      H3  NOT a population scaling law: the free-knee does not track h f/k_B
+          across all devices (non-survivor median ~ 0.68); localization is
+          conditional on curvature-survival only.
+      H4  largely curvature-degenerate: a plain quadratic absorbs the feature on
+          ~30/36 tracks; the claim is the residual BEYOND curvature.
+
+    MAY-NOT-CITE: "visible pin"; "detection"; "spec (c) visible half revived";
+    the track-level p=1.6e-4 as the significance (use device-level p=0.0195); any
+    population h f/k_B scaling law. Rule D's O3 named-open discharges here AS A
+    DIRECTION CORROBORATION ONLY; spec (c)'s visible half stays VACANT pending a
+    dataset with more temperatures in 100-300 mK and a wider frequency range.
+
+    PROVENANCE: WALK_O3_visible_pin.md (2026-07-24) -> AUDIT_O3_visible_pin_
+    2026-07-25.md (REDUCE 0.55) -> AUDIT_O3_reduced_instrument_2026-07-25.md
+    (LAND-WITH-FIXES 0.82). In-check math is numpy-free normal-equations OLS,
+    validated bit-consistent with the numpy audit on the sign counts, medians,
+    and survivor set.
+
+    STATUS: [P_structural_instrument]. NON-EXPORTING. Dependencies:
+    T_tls_transduction_class_discriminator_rule_D;
+    T_tls_capacity_budget_knee_design_corollary.
+    """
+    h = 6.62607015e-34
+    kB = 1.380649e-23
+    FROZEN = [
+        (1, -105.0, 3.759, (25,50,100,200,400,801), (-38.492,-38.118,-37.903,-38.756,-39.911,-41.577)),
+        (1, -97.0, 3.759, (25,50,100,200,400,800), (-39.526,-39.133,-38.930,-39.590,-40.575,-42.293)),
+        (1, -89.0, 3.759, (25,50,100,200,400,801), (-40.116,-40.022,-39.967,-40.429,-41.351,-43.012)),
+        (1, -81.0, 3.759, (25,50,100,200,400,799), (-41.086,-41.038,-40.995,-41.376,-42.144,-43.453)),
+        (2, -107.0, 3.947, (25,50,100,200,400,801), (-34.432,-34.070,-33.966,-35.056,-36.017,-37.532)),
+        (2, -99.0, 3.947, (25,50,100,200,400,798), (-35.365,-35.158,-35.116,-35.904,-36.750,-38.128)),
+        (2, -91.0, 3.947, (25,50,100,200,400,801), (-36.536,-36.587,-36.332,-36.908,-37.756,-38.775)),
+        (2, -83.0, 3.947, (25,50,100,200,400,800), (-37.913,-37.968,-37.761,-38.080,-38.438,-39.340)),
+        (3, -106.0, 3.972, (25,50,100,200,400,800), (-38.296,-37.979,-37.873,-38.757,-39.984,-41.216)),
+        (3, -98.0, 3.972, (25,50,100,200,400,801), (-39.096,-38.905,-39.046,-39.481,-40.809,-42.270)),
+        (3, -90.0, 3.972, (25,50,100,200,399,800), (-40.234,-40.060,-40.013,-40.620,-41.689,-43.118)),
+        (3, -82.0, 3.972, (25,50,100,200,400,800), (-41.169,-41.020,-41.039,-41.429,-42.365,-43.885)),
+        (4, -106.0, 4.741, (25,50,100,200,400,799), (-37.342,-37.238,-37.769,-37.889,-39.157,-40.936)),
+        (4, -98.0, 4.741, (25,50,100,200,400,800), (-38.296,-38.371,-38.707,-38.842,-40.094,-41.643)),
+        (4, -90.0, 4.741, (25,50,100,200,400,800), (-39.207,-39.219,-39.434,-39.868,-41.078,-42.354)),
+        (4, -82.0, 4.741, (25,50,100,200,399,800), (-40.653,-40.569,-40.738,-40.944,-41.804,-43.084)),
+        (5, -106.0, 5.017, (25,50,100,200,400,801), (-36.736,-36.667,-37.082,-37.476,-38.697,-40.124)),
+        (5, -98.0, 5.017, (25,50,100,200,400,799), (-38.081,-37.928,-38.008,-38.604,-39.727,-41.239)),
+        (5, -90.0, 5.017, (25,50,100,200,400,800), (-39.421,-39.351,-39.328,-39.753,-40.629,-42.146)),
+        (5, -82.0, 5.017, (25,50,100,200,400,800), (-40.472,-40.386,-40.398,-40.686,-41.490,-42.967)),
+        (6, -105.0, 5.121, (25,50,100,200,400,799), (-34.147,-33.860,-33.946,-34.458,-35.353,-36.705)),
+        (6, -97.0, 5.121, (25,50,100,200,400,801), (-34.811,-34.791,-34.911,-35.121,-36.056,-37.438)),
+        (6, -89.0, 5.121, (25,50,100,200,400,800), (-36.282,-36.194,-36.358,-36.336,-37.069,-38.229)),
+        (6, -81.0, 5.121, (25,50,100,200,400,801), (-37.526,-37.542,-37.563,-37.578,-37.959,-38.846)),
+        (7, -106.0, 5.223, (25,50,100,200,400,799), (-38.244,-37.688,-37.118,-38.170,-38.987,-40.545)),
+        (7, -98.0, 5.223, (25,50,100,200,400,799), (-39.215,-39.039,-38.410,-39.176,-39.947,-41.525)),
+        (7, -90.0, 5.223, (25,50,100,200,400,798), (-40.132,-39.925,-39.553,-39.861,-40.822,-42.413)),
+        (7, -82.0, 5.223, (25,50,100,200,400,799), (-40.888,-40.926,-40.544,-40.834,-41.563,-43.083)),
+        (8, -105.0, 5.987, (25,50,100,200,400,801), (-37.406,-36.880,-36.486,-37.119,-38.185,-39.755)),
+        (8, -97.0, 5.987, (25,50,100,200,400,800), (-38.475,-37.965,-37.666,-37.882,-39.132,-40.736)),
+        (8, -89.0, 5.987, (25,50,100,200,400,800), (-39.392,-39.071,-38.857,-39.069,-40.118,-41.644)),
+        (8, -81.0, 5.987, (25,50,100,200,400,802), (-40.315,-40.204,-39.804,-40.352,-41.119,-42.575)),
+        (9, -106.0, 6.319, (25,50,100,200,400,800), (-34.167,-34.068,-33.698,-33.609,-35.157,-36.675)),
+        (9, -98.0, 6.319, (25,50,100,200,400,799), (-34.979,-34.978,-34.846,-35.038,-36.036,-37.296)),
+        (9, -90.0, 6.319, (25,50,100,200,400,800), (-36.105,-36.006,-35.997,-36.375,-37.182,-37.958)),
+        (9, -82.0, 6.319, (25,50,100,200,400,799), (-37.377,-37.453,-41.129,-37.527,-37.694,-41.409)),
+    ]
+    def _solve(A, b):
+        n = len(A)
+        M = [row[:] + [b[i]] for i, row in enumerate(A)]
+        for c in range(n):
+            p = max(range(c, n), key=lambda r: abs(M[r][c]))
+            M[c], M[p] = M[p], M[c]
+            piv = M[c][c]
+            for r in range(n):
+                if r != c and M[r][c] != 0.0:
+                    f = M[r][c] / piv
+                    for k in range(c, n + 1):
+                        M[r][k] -= f * M[c][k]
+        return [M[i][n] / M[i][i] for i in range(n)]
+    def _ols(cols, y):
+        n = len(y)
+        p = len(cols)
+        A = [[sum(cols[i][t] * cols[j][t] for t in range(n)) for j in range(p)]
+             for i in range(p)]
+        bb = [sum(cols[i][t] * y[t] for t in range(n)) for i in range(p)]
+        c = _solve(A, bb)
+        fit = [sum(c[j] * cols[j][t] for j in range(p)) for t in range(n)]
+        return c, fit
+    def _onset(Ts, Tk):
+        raw = [_math.log(Tk / t) if t < Tk else 0.0 for t in Ts]
+        b = max(raw)
+        return [r / b if b > 0 else 0.0 for r in raw]
+    def _quad(Ts, y, Tk):
+        x = [_math.log(t) for t in Ts]
+        one = [1.0] * len(Ts)
+        x2 = [xx * xx for xx in x]
+        v = _onset(Ts, Tk)
+        c, fit = _ols([one, x, x2, v], y)
+        resid = [y[i] - fit[i] for i in range(len(y))]
+        dof = max(len(Ts) - 4, 1)
+        sig = _math.sqrt(sum(r * r for r in resid) / dof)
+        cn, fn = _ols([one, x, x2], v)
+        vp = [v[i] - fn[i] for i in range(len(v))]
+        vn = _math.sqrt(sum(q * q for q in vp))
+        return c[3], (abs(c[3]) * vn / sig if sig > 0 else float('inf'))
+    def _freeknee(Ts, y):
+        x = [_math.log(t) for t in Ts]
+        one = [1.0] * len(Ts)
+        lo, hi = min(x) + 0.02, max(x) - 0.02
+        best = None
+        for i in range(60):
+            Tt = _math.exp(lo + (hi - lo) * i / 59)
+            v = [_math.log(Tt / t) if t < Tt else 0.0 for t in Ts]
+            m = max(v)
+            if m <= 0:
+                continue
+            v = [q / m for q in v]
+            c, fit = _ols([one, x, v], y)
+            sse = sum((y[t] - fit[t]) ** 2 for t in range(len(y)))
+            if best is None or sse < best[0]:
+                best = (sse, Tt)
+        return best[1]
+    def _median(xs):
+        xs = sorted(xs)
+        n = len(xs)
+        return xs[n // 2] if n % 2 else 0.5 * (xs[n // 2 - 1] + xs[n // 2])
+    dev = {}
+    surv = []
+    nonsurv = []
+    for kid, P, fghz, tsmk, yy in FROZEN:
+        Ts = [t / 1e3 for t in tsmk]
+        Tk = h * (fghz * 1e9) / kB
+        a, snr = _quad(Ts, list(yy), Tk)
+        ratio = _freeknee(Ts, list(yy)) / Tk
+        dev.setdefault(kid, []).append(a)
+        (surv if snr >= 3.0 else nonsurv).append((kid, P, snr, ratio))
+    down = sum(1 for k in dev if sum(dev[k]) / len(dev[k]) < 0.0)
+    pA = sum(_math.comb(9, k) for k in range(down, 10)) / 512.0
+    check(len(dev) == 9 and len(FROZEN) == 36,
+          "36 tracks across 9 devices (frozen Kouwenhoven 3-device chip)")
+    check(down == 8,
+          "LEG A: 8/9 devices show a net-downward knee-beyond-quad coefficient")
+    check(abs(pA - 0.0195312) < 1e-4,
+          "LEG A: device-level sign-test p = 0.0195 (the honest clustered value)")
+    ms = _median([s[3] for s in surv])
+    mn = _median([s[3] for s in nonsurv])
+    check(len(surv) >= 4,
+          "LEG B: >= 4 curvature-guard survivors (quad-null SNR >= 3)")
+    check(0.95 <= ms <= 1.15,
+          "LEG B: survivors localize at T_k (median free-knee/T_k ~ 1.0)")
+    check(mn < 0.80 and mn < ms,
+          "LEG B/H3: non-survivors do NOT localize at T_k -> conditional, "
+          "not a population scaling law")
+    return _result(
+        name='T_knee_downturn_direction_corroboration',
+        tier=4,
+        epistemic='P_structural_instrument',
+        summary=(
+            'Kouwenhoven 2024 (Zenodo 10.5281/zenodo.10159731, 3-device chip; '
+            '36 tracks / 9 devices) corroborates the r_th=1 knee at T_k=hf/kB as '
+            'a DIRECTION, not a per-device detection: after a quadratic-in-lnT '
+            'baseline the low-T noise departs downward on 8/9 devices '
+            '(device-level sign-test p=0.0195), and where the departure survives '
+            'a quadratic curvature guard the free-fit knee localizes at T_k '
+            '(median free-knee/T_k ~ 1.0 vs ~0.68 for non-survivors). Reframe of '
+            'the cold-audited O3 visible pin (REDUCE): the pin does not survive '
+            'look-elsewhere (strongest track p=0.095) and the measurement-sigma '
+            'SNRs rested on error bars ~20x too small; this keeps only the '
+            'surviving content with the four failure modes named. Rule D spec '
+            '(c) visible half stays vacant.'
+        ),
+        key_result=('r_th=1 downturn corroborated at device level (8/9, '
+                    'p=0.0195) + conditional T_k localization; NOT a visible pin'),
+        dependencies=['T_tls_transduction_class_discriminator_rule_D',
+                      'T_tls_capacity_budget_knee_design_corollary'],
+        cross_refs=[],
+        artifacts={
+            'n_tracks': len(FROZEN),
+            'n_devices': len(dev),
+            'devices_downward': down,
+            'legA_device_signtest_p': round(pA, 5),
+            'legA_tracklevel': '29/36 downward (anti-conservative, not the claim)',
+            'legB_survivors': len(surv),
+            'legB_survivor_median_freeknee_over_Tk': round(ms, 3),
+            'legB_nonsurvivor_median_freeknee_over_Tk': round(mn, 3),
+            'H1_error_understatement': '~20x (linear reduced-chi2 ~438)',
+            'H2_strongest_track_lookelsewhere_p': 0.095,
+            'provenance': 'Kouwenhoven 2024 PRApplied 21 044036; Zenodo 10.5281/zenodo.10159731; O3 audit 2026-07-25',
+        },
+    )
+
+
 _CHECKS = {
     'H1_continuum_from_anchor_profile': check_H1_continuum_from_anchor_profile,
     'H2_locality_from_recruitment_kernels': check_H2_locality_from_recruitment_kernels,
@@ -2098,6 +2331,8 @@ _CHECKS = {
     'T_sixteen_case_unification_structural': check_T_sixteen_case_unification_structural,
     'T_DCE_Q_dependence_prediction': check_T_DCE_Q_dependence_prediction,
     'T_purcell_DCE_consistency': check_T_purcell_DCE_consistency,
+    'T_knee_downturn_direction_corroboration':
+        check_T_knee_downturn_direction_corroboration,
 }
 
 
