@@ -1,0 +1,38 @@
+# Normalize line endings and end the recurring CRLF churn.
+# Rationale: the box's editor writes CRLF; without this file git flags every
+# already-committed (LF) source file as "modified", so `git status` shows a
+# large phantom dirty set every session. `text=auto` makes git normalize on
+# comparison and commit, so those phantom modifications disappear.
+
+*           text=auto
+
+# Source / text -> LF in the repo and working tree (deterministic).
+*.py        text eol=lf
+*.md        text eol=lf
+*.tex       text eol=lf
+*.txt       text eol=lf
+*.json      text eol=lf
+*.csv       text eol=lf
+*.cfg       text eol=lf
+*.ini       text eol=lf
+*.toml      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.sh        text eol=lf
+
+# Windows scripts stay CRLF (they run natively on the box).
+*.ps1       text eol=crlf
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+
+# Binaries — never touch.
+*.pdf       binary
+*.zip       binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.docx      binary
+*.xlsx      binary
+*.pptx      binary
+*.ipynb     binary
