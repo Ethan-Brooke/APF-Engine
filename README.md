@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18529115.svg)](https://doi.org/10.5281/zenodo.18529115)
 [![Zenodo community](https://img.shields.io/badge/Zenodo-admissibility__physics-1f77b4)](https://zenodo.org/communities/admissibility_physics)
-[![checks](https://img.shields.io/badge/bank--registered-3745%20PASS-success)](verify_all.py)
+[![checks](https://img.shields.io/badge/bank--registered-4081%20PASS-success)](verify_all.py)
 [![free dimensionless params](https://img.shields.io/badge/free%20dimensionless%20params-0-brightgreen)](#prediction-scorecard)
 
 A machine-verifiable theorem bank that derives the Standard Model gauge group, fermion
@@ -27,7 +27,7 @@ pip install -e .
 python verify_all.py
 ```
 
-The bank carries **3,745 registered theorems across 422 typed modules** (v24.3.249).
+The bank carries **4,081 registered theorems across 450 registered modules** (v24.3.440).
 
 ## What is this?
 

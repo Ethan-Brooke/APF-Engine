@@ -10,12 +10,12 @@ files now import from.
 Four categories
 ---------------
 
-``BANK_REGISTRY_MODULES`` (233 modules)
+``BANK_REGISTRY_MODULES`` (450 modules)
     Modules with a ``register(registry)`` function that contributes checks to
     ``apf.bank.REGISTRY``. Loaded by ``bank._load()`` and enumerated by
     ``verify_all.MODULES``.
 
-``ARCHITECTURE_ONLY_MODULES`` (29 modules)
+``ARCHITECTURE_ONLY_MODULES`` (53 modules)
     Architecture/engineering-only modules whose ``register()`` returns 0 checks
     BY DESIGN. Loaded by ``bank._load()`` for completeness; ``--bank-audit``
     Bucket B filters these so the warning surfaces only genuine misregistrations.
