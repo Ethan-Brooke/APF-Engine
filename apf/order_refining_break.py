@@ -76,8 +76,9 @@ HONEST VERDICT (is anything smuggled? does the reading hold up?)
 WHAT THIS DOES NOT DO (fences, carried on every check's may_not_cite)
 --------------------------------------------------------------------
 * Does NOT show APF *charges* the order -- that needs enforcement-realism.
-* Does NOT lift the QAC -- needs enforcement-realism + origin-forcing +
-  G-hold-exact.
+* Does NOT lift the QAC -- still needs enforcement-realism + origin-forcing
+  (G-hold-exact is now constitutively free under A2-exact, Ethan's ruling
+  2026-07-26).
 * "foliation = point-stabilizer of the frame action" is a modeling READING.
 """
 
@@ -351,7 +352,7 @@ _CROSS_REFS = [
 _FENCES_COMMON = [
     "Shows the order is a partition-REFINING break IN THE FINITE MODEL only.",
     "Does NOT establish that APF CHARGES the order -- enforcement-realism is a separate step.",
-    "Does NOT lift the QAC (needs enforcement-realism + origin-forcing + G-hold-exact).",
+    "Does NOT lift the QAC (still needs enforcement-realism + origin-forcing; G-hold-exact is now constitutively free under A2-exact, Ethan's ruling 2026-07-26).",
 ]
 
 _FENCES_READING = _FENCES_COMMON + [

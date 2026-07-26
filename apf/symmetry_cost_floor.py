@@ -61,8 +61,10 @@ SCOPE FENCES (enforced in may_not_cite on BOTH checks)
    symmetry-breaking that orthodox QM does not pay for) is NOT established here;
    it is a separate downstream premise (enforcement-realism + the specific
    broken symmetry).
- * The QAC does NOT lift from this lemma alone. This is step 1 of 4
-   (zero-lemma / enforcement-realism / origin-forcing / G-hold-exact).
+ * The QAC does NOT lift from this lemma alone. This is step 1 of the QAC-lift
+   surface (zero-lemma (this) / enforcement-realism / origin-forcing);
+   G-hold-exact is now constitutively free under A2-exact (Ethan's ruling
+   2026-07-26).
 
 ------------------------------------------------------------------------------
 HONEST SCOPE (owned in-module, not smuggled)
@@ -318,8 +320,8 @@ _MAY_NOT_CITE_COMMON = [
     "unpaid symmetry-breaking that orthodox QM does not charge for' is a "
     "separate downstream premise (enforcement-realism + a specific broken "
     "symmetry), not licensed by this lemma.",
-    "QAC does NOT lift from this lemma. This is step 1 of 4 (zero-lemma / "
-    "enforcement-realism / origin-forcing / G-hold-exact); the quantum branch "
+    "QAC does NOT lift from this lemma. This is step 1 of the QAC-lift surface (zero-lemma / "
+    "enforcement-realism / origin-forcing); G-hold-exact is now constitutively free under A2-exact (Ethan's ruling 2026-07-26); the quantum branch "
     "is not selected here.",
 ]
 
@@ -329,8 +331,8 @@ _CROSS_REFS = [
     "A1 (finite enforcement capacity)",
     "L_epsilon_star (the positive floor eps*)",
     "T_sep / enforced-distinction structure",
-    "QAC 4-step surface: zero-lemma (this) -> enforcement-realism -> "
-    "origin-forcing -> G-hold-exact (cf. T_hold_cost_dominance_split)",
+    "QAC-lift surface: zero-lemma (this) -> enforcement-realism -> "
+    "origin-forcing (G-hold-exact is now constitutively free under A2-exact, Ethan's ruling 2026-07-26; cf. T_hold_cost_dominance_split)",
     # Occupant-cost arc: the breaks that DO cost (partition-refining / order-
     # refining) and the rent/occupant ledger that prices them.
     "order_refining_break",

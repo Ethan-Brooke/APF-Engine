@@ -1,5 +1,5 @@
 """The hold cost-dominance split: the mechanism trichotomy and the two-clause
-conditional theorem.
+theorem.
 
 Lane: The Turning/quantum_selected_mechanism_2026-07-08/ (charter: Reference -
 CONTINUATION - Quantum as the Selected Mechanism (2026-07-08), as MODIFIED by
@@ -12,13 +12,13 @@ carried: family-level quantifier; pricing-note scoping rider; K1-UT
 disambiguation).  Long-form witnesses: walk_trichotomy_theorem.py (346 exact
 checks) + walk_pricing_lemma.py (189 exact checks), both exit 0 against the
 v24.3.412 tree; the check bodies below port the walker's legs (classifier +
-battery constructors + guard + withheld-grant conditional + spectator pass +
+battery constructors + guard + classical-restricted counterfactual + spectator pass +
 genuine re-run + float tripwire + UNBINNED tripwire) as self-contained exact
 Fraction arithmetic, consuming banked checks live at content level.
 
 L_mechanism_trichotomy [P_structural].  At a genuine N >= 2 BW-distinct-cost
 choice event sigma over an admissible configuration family W, every
-admissible selection mechanism -- under the faithful-representation reading
+candidate selection mechanism -- under the faithful-representation reading
 (every mechanism's pre-commit conditioning is empty, fresh-formed, standing,
 or held, WORLD-UNIFORMLY: one conditioning category per mechanism across the
 family, the clause that absorbs world-heterogeneous consult/form rows, which
@@ -36,33 +36,43 @@ of:
   (ii)  the hold: co-present coherent survey, zero booking until the single
         commit (FREE leg [P]); availability is what OCCUPANCY provides (the
         one occupancy entry); defined WITH its dual premise exemption
-        (constitutive of the bin); populated as an EXACT competitor only
-        under the named grant G-hold-exact.  DISCLOSURE: the hold's bin is
+        (constitutive of the bin); populated as an exact competitor
+        UNCONDITIONALLY -- exact per-event selection is A2's constitutive content under A2-exact (a non-argmin commit violates A2), so the hold is exact like every admissible mechanism; what makes bin (ii) distinctive is its COST PROFILE (zero booking until commit), not a special exactness.  DISCLOSURE: the hold's bin is
         TYPE-ASSIGNED via the reading's 'held' conditioning category, not
         cost-computed (untagged, its facts land UNBINNED -- computed), and
         no cost column separates the hold from R9's default world -- the
         separation is carried by typing + the .412 commutativity axis;
-  (iii) does-not-exactly-select per-event: blind/fiat (exact ONLY on
-        argmin-degenerate families -- named family assumption),
-        approximate-A2 (the banked spectator form), eventual-argmin folds
-        (exact per-history, never per-event).
+  (iii) does-not-exactly-select per-event -- the INADMISSIBLE bin under A2
+        read EXACT (a non-argmin commit VIOLATES A2, hence is inadmissible):
+        blind/fiat (exact ONLY on argmin-degenerate families -- named family
+        assumption), approximate-A2 (the banked spectator form),
+        eventual-argmin folds (exact per-history, never per-event).  It stays
+        a classifier slot -- R1/R2/R8 land here on separating families -- but
+        every occupant is barred by A2-exact.
 The marginal column is genuinely two-valued {0} u [eps, oo) (computed: no
 booking in (0, eps) exists in any ledger).  The UNBINNED branch is a live
 tripwire with two owned firing modes (stage-2 F1): the untagged-hold
 disclosure probe, and any world-heterogeneous conditioning row.
 
-T_hold_cost_dominance_split [P_structural] WITH THE NAMED GRANT G-hold-exact
-(re-headlined from T_A2_selects_the_hold per stage-1 M3: "A2 selects the
-hold" simpliciter is computed FALSE by this module's own guard and is NOT
-the claim).  Given the constitutive base {A1, MD, A2, BW, occupancy}, with
-occupancy entering exactly once (hold-availability), and -- as a named model
-input -- G-hold-exact:
-  (1) CONDITIONAL STRICT LEG (on fresh).  Granted G-hold-exact, the hold is
-      strictly cheaper than every bin-(i) fresh-formation mechanism --
-      marginal 0 vs >= eps (MD), the common commit floor computed equal per
-      world and cancelling -- by 0 < eps ONLY; A2 at mechanism granularity
-      (named reading R-A2-mech) prefers the hold on the fresh bin.  Citation
-      form: CONDITIONAL_ON_G_HOLD_EXACT, always.
+T_hold_cost_dominance_split [P_structural] (grant-free, unconditional)
+(REGROUNDED 2026-07-26 -- Ethan's ruling: A2 is read EXACT -- a non-argmin
+commit VIOLATES A2, hence is inadmissible.  Exact per-event selection is
+therefore A2's constitutive content: EVERY admissible mechanism is exact, the
+hold included.  The former named grant G-hold-exact is RETIRED -- with
+exactness constitutive there is no capability left to grant, so the theorem is
+grant-free AND unconditional.  The hold is NOT special for exactness (all of
+i/i'/ii are exact); it is special for its COST PROFILE -- zero booking until
+commit.
+"A2 selects the hold" SIMPLICITER stays FALSE -- the hold ties standing-consult
+mechanisms 0-vs-0 and A2 does not UNIQUELY pick it (clause 2)).  Given the
+constitutive base {A1, MD, A2 [read exact], BW, occupancy}, with occupancy
+entering exactly once (hold-availability):
+  (1) STRICT LEG (on fresh) -- grant-free AND unconditional.  The hold is
+      strictly cheaper than every bin-(i) fresh-formation mechanism -- marginal
+      0 vs >= eps (MD), the common commit floor computed equal per world and
+      cancelling -- by 0 < eps ONLY; A2 read exact prefers the hold on the
+      fresh bin (both compared mechanisms select exactly, so cost decides).
+      Citation form: GRANT_FREE_UNCONDITIONAL.
   (2) INDIFFERENCE LEG (never dispreferred).  Among exact mechanisms the
       hold is never cost-dispreferred; vs every bin-(i') standing-consult
       mechanism the comparison is 0-vs-0 and A2 alone does NOT pick -- the
@@ -99,29 +109,58 @@ THE TWO SCOPED NAMED PREMISES (stage-1 fix 2; disambiguation = stage-2 F3):
     premise's range.
   THE DUAL EXEMPTION is constitutive of bin (ii).  INTERNAL SPLIT (stage-2
     m2): exemption 1 (K1-UT/price: empty pre-commit history) is PRICE-shaped
-    and grant-FREE (computed for both the granted and the withheld hold);
-    exemption 2 (non-constant outcome map on identical empty classical
-    state) is CAPABILITY-shaped and obtains UNDER the grant G-hold-exact.
+    and grant-FREE (computed for both the hold and the classical-restricted
+    control); exemption 2 (non-constant outcome map on identical empty
+    classical state) is CAPABILITY-shaped: the hold's exact per-event
+    selection, which under A2-exact is A2's constitutive content (every
+    admissible mechanism is exact) -- grant-free AND unconditional.
 
-G-HOLD-EXACT -- THE NAMED GRANT (status block):
-  - GRANTED, NOT DERIVED: the banked triad certifies the hold's PRICE
-    profile only; the bank's mechanized A2 is approximate-only (status
-    fence consumed live: 'approximate form certified; A2 tie-selection + BW
-    non-degeneracy remain named opens') -- the granted capability is
-    precisely the named-open content;
-  - RECORD-SIDE UNVERIFIABLE: .412's dephasing leg (ii) -- post-commit, no
-    admissible observable in the commutative record algebra distinguishes a
-    hold-fed commit from a fiat that happened to land argmin;
-  - POSSIBLY PERMANENT: the benefit-leg discharge route is graveyarded
-    (charter section 6); the theorem may never rise above conditional form
-    on this axis;
-  - COMPUTED CONDITIONAL STRUCTURE: with the grant withheld the hold's facts
-    land in bin (iii) by the same classifier, its price profile unchanged
-    (the grant is capability-shaped, not price-shaped).
-  GRANT-DECLINING CONSUMERS read the theorem at [P_structural_reading];
-  clause 2 survives grant-free as the price-table fact (the hold's marginal
-  is 0 in every world by the [P] FREE leg, no mechanism books below 0, and
-  every standing-consult exact mechanism ties it 0-vs-0).
+A2-EXACT RULING (status block; REGROUNDED 2026-07-26, was "THE NAMED GRANT G-hold-exact"):
+  - GRANT-FREE AND UNCONDITIONAL: under Ethan's ruling that A2 is read EXACT
+    (a non-argmin commit VIOLATES A2, hence is inadmissible), exact per-event
+    selection is A2's constitutive content -- EVERY admissible mechanism is
+    exact, the hold included.  So no bespoke per-theorem grant is needed: the
+    retired grant had nothing left to grant.  Fiat check: an inexact fiat
+    VIOLATES A2 and is inadmissible (bin iii is the barred bin), so the hold's
+    per-event argmin is not a special capability -- it is what A2-exact requires
+    of every admissible mechanism;
+  - EXACTNESS IS CONSTITUTIVE, NOT VERIFIED: .412's dephasing leg (ii) -- that
+    post-commit no admissible observable in the commutative record algebra
+    distinguishes a hold-fed commit from a fiat that happened to land argmin --
+    is moot for the grade; the axiom requires exactness, so nothing needs
+    record-side verifying;
+  - MECHANIZATION STAYS APPROXIMATE (honesty rail): the bank mechanizes only
+    approximate A2 -- a VERIFICATION limit, not an axiom weakening; the AXIOM
+    is exact (the ruling).  Do not claim A2-exact is mechanized;
+  - THE RULING DOES REAL WORK (classical-restricted counterfactual): confine A2
+    to the classical D-quotient and the hold's facts land in bin (iii) by the
+    same classifier (approximate), its price profile unchanged (the content is
+    capability-shaped, not price-shaped) -- so A2-exact vs A2-classical-restricted
+    flips the hold exact <-> approximate; the ruling is not vacuous.
+  A2-CLASSICAL-ONLY CONSUMERS (readers who restrict A2 to the D-quotient) read
+  the strict leg at [P_structural_reading]; under A2-exact it is [P_structural],
+  grant-free AND unconditional; clause 2 survives as the price-table fact (the
+  hold's marginal is 0 in every world by the [P] FREE leg, no mechanism books
+  below 0, and every standing-consult exact mechanism ties it 0-vs-0).
+
+  CORPUS NOTE: the name "G-hold-exact" appears across the corpus in two
+  distinct roles, and the 2026-07-26 ruling changes only its STATUS -- never
+  any literal.  (a) FIREWALL LITERALS: the modules dense_sandwich_born,
+  operational_score_linearity, born_at_ties, and _hfc_345_contracts carry the
+  token "G_HOLD_EXACT" BY DESIGN, as forbidden-dependency tripwires that
+  certify the name is ABSENT from a protected ancestry (e.g. the Born
+  representation ancestry).  Those firewall literals MUST stay: the tripwire
+  tests for the name itself, so retiring the grant neither removes nor may
+  remove them.  (b) CONTENT-LABEL MENTIONS: other modules (symmetry_cost_floor,
+  order_refining_break, rent_exclusion_gate, bounded_orbit_positivity,
+  carrier_trichotomy, finite_representation_lemmas, occupant_cost_selection,
+  hfc_345_closure) cite "G-hold-exact" as the label for THIS content.  What the
+  2026-07-26 ruling retires is the bespoke GRANT itself: under A2-exact, exact
+  per-event selection is constitutive (every admissible mechanism is exact), so
+  wherever a module cites "G-hold-exact" the content it named is now grant-free
+  AND unconditional -- A2's own constitutive exactness, never a free-floating
+  per-theorem permission.  The ruling changes the name's STATUS (retired,
+  A2-constitutive); it never touches the firewall literals.
 
 THE R7 WIDTH DIAL -- RULED AS-IS (Ethan, 2026-07-09; ruling-of-record, this
 corrigendum): the fused-computation convention (fused computation free --
@@ -134,10 +173,10 @@ locus: L_cost [P] attaches cost to committed realignment per transition,
 uniquely -- a pure read realigns nothing; conditioning is not a transition;
 (3) the strict claims the reversed setting would manufacture globally are
 available structurally on frustrated sub-families (the slack-run-minimizer
-lane, 2026-07-09) without touching the convention.  PRACTICAL CONTENT NOW
-UNCONDITIONAL: a classical zero-marginal exact route exists at every choice
+lane, 2026-07-09) without touching the convention.  PRACTICAL CONTENT (the
+indifference half is unconditional): a classical zero-marginal exact route exists at every choice
 event (fresh formation never forced); the theorem's practical width is the
-indifference clause plus conditional fresh-side dominance.  The reversed
+indifference clause plus unconditional fresh-side dominance.  The reversed
 branch (computation books; R7/R4/R9 migrate toward bin (i), strict leg
 widens) is RETAINED as the recorded road-not-taken, no longer a pending
 ruling.  All statements were verified STABLE under either ruling
@@ -158,13 +197,14 @@ CROSS_REF, not a dependency (stage-2 m3: consumed naming-only on the M4 leg,
 per the .402 SCC edge-hygiene discipline).
 
 MAY NOT CITE: "A2 selects the hold" simpliciter (computed FALSE -- the
-guard); clause 1 without the grant; the split without the indifference
-clause; strict preference over standing-consult mechanisms in any phrasing;
-bin-(iii) exclusion without the family-separation assumption (degenerate
-families join the indifference class -- computed); any per-world floor from
-the pricing lemma; that the hold's existence-as-exact-competitor is banked
-(it is the grant); anything concluding occupancy; any classical mechanism
-forbidden, blocked, or unavailable; eps's magnitude anywhere.
+guard: the hold ties standing-consult mechanisms 0-vs-0); the split without
+the indifference clause; strict preference over standing-consult mechanisms
+in any phrasing; bin-(iii) exclusion without the family-separation assumption
+(degenerate families join the indifference class -- computed); any per-world
+floor from the pricing lemma; that A2-exact is MECHANIZED (it is a
+constitutive RULING -- the bank mechanizes only approximate A2, a verification
+limit, not an axiom weakening); anything concluding occupancy; any classical
+mechanism forbidden, blocked, or unavailable; eps's magnitude anywhere.
 
 COROLLARIES (folded into the theorem's key_result/artifacts; no separate
 reading-grade check):
@@ -176,22 +216,22 @@ reading-grade check):
     forces selection to be hold-realized (consuming the bridge changes no
     bin -- computed); no forcing anywhere.
   Corollary 2 (the exact-A2 openness reframe, [P_structural_reading],
-    fresh-side only, grant-conditional): the bank mechanizes only
-    approximate A2; among FRESH realizations the zero-price exact option is
-    the hold -- conditional on G-hold-exact; the standing side is the
-    indifference clause's territory.
+    fresh-side only): the bank mechanizes only APPROXIMATE A2 (a verification
+    limit; the AXIOM is exact under the ruling); among FRESH realizations the
+    zero-price exact option is the hold -- grant-free AND unconditional; the
+    standing side is the indifference clause's territory.
 
 GRADES (2026-06-29 grade-by-tracked-dependencies ruling; stage-2 grade
 ruling of record).  L_mechanism_trichotomy: [P_structural] -- the grade
 string names the faithful-representation reading incl. the world-uniform
 conditioning category, the two scoped premises K1-UT + Omega-conditioning,
 and the bin-(ii) type-assignment disclosure.  T_hold_cost_dominance_split:
-[P_structural] with the named grant G-hold-exact + the named reading
-R-A2-mech -- the registered claim is the CONDITIONAL (the grant sits in the
-antecedent, hoisted into the statement), resting on [P]/[P_math] anchors
-throughout the gating arithmetic + two named scoped premises + two named
-readings; the grade string itself carries the grant so no scraper reads a
-bare [P_structural].
+[P_structural] (grant-free, unconditional; regrounded 2026-07-26) -- under A2
+read EXACT a non-argmin commit violates A2, so exact per-event selection is
+constitutive and no grant sits in the antecedent; the registered claim rests
+on [P]/[P_math] anchors throughout the gating arithmetic + two named scoped
+premises K1-UT + Omega-conditioning; the grade string carries the grant-free /
+unconditional note so the retirement is legible to a scraper.
 
 Lane records: The Turning/quantum_selected_mechanism_2026-07-08/
 (NOTE_v0.2_trichotomy_and_theorem.md + NOTE_v0.2_pricing_lemma.md, both as
@@ -205,11 +245,11 @@ from fractions import Fraction as F
 # Assertable verdict flags (pinned; editing them is a visible act).
 # ---------------------------------------------------------------------------
 EPS = F(3, 7)                 # deliberately non-unit; only 0 < eps is imported
-G_HOLD_EXACT = 'GRANTED'      # the named grant (stage-1 fix 1, hoisted)
-STRICT_LEG_FORM = 'CONDITIONAL_ON_G_HOLD_EXACT'
+G_HOLD_EXACT = 'RETIRED_A2_CONSTITUTIVELY_EXACT'  # was the bespoke grant 'GRANTED'; RETIRED 2026-07-26 (Ethan ruling: A2 read EXACT -- a non-argmin commit VIOLATES A2, hence is inadmissible). Exact per-event selection is now A2's constitutive content (every admissible mechanism is exact), so there is no capability left to grant. Grant-free AND unconditional.
+STRICT_LEG_FORM = 'GRANT_FREE_UNCONDITIONAL'   # no bespoke grant AND no conditional: under A2-exact a non-argmin commit is inadmissible, so exact selection is constitutive and the strict-over-fresh leg holds unconditionally
 HOLD_EXEMPTION_BUNDLE = ('K1_UT_committed_scope_exempt',
                          'Omega_conditioning_exempt')
-M4_STATUS = 'NAMED_READING'   # R-A2-mech: named reading, never banked content
+M4_STATUS = 'CONSTITUTIVE_RULING'   # per-event exact A2 is Ethan's constitutive ruling of record (2026-07-26), not a reading: a non-argmin commit violates A2
 TRICHOTOMY_EXHAUSTIVENESS = 'FAITHFUL_REPRESENTATION_READING_WORLD_UNIFORM'
 R7_WIDTH_DIAL = 'RULED_AS_IS_FUSED_READS_FREE_2026_07_09'  # was NEEDS_ETHAN_...; ruled by Ethan 2026-07-09
 
@@ -532,7 +572,7 @@ def _run_model(ck):
         return facts
 
     def build_hold(grant, tag=''):
-        # bin-(ii) reference mechanism; exactness = the G-hold-exact GRANT
+        # bin-(ii) reference mechanism; exactness = A2's constitutive content (A2-exact: every admissible mechanism selects exactly)
         pw = []
         for j, w in enumerate(V_SEP):
             hold_pre = mk('rh_precommit%s_%s_w%d' % (tag, grant.lower(), j))
@@ -544,14 +584,14 @@ def _run_model(ck):
                "RH(%s) w%d: K1-UT EXEMPTION computed -- no committed "
                "realignment exists pre-commit (FREE leg + superadditivity "
                "ruling); exemption 1 is PRICE-shaped and GRANT-FREE" % (grant, j))
-            if grant == 'GRANTED':
-                outcome = _argmin_pos(w)   # THE GRANT: exact per-event selection
+            if grant == 'RETIRED_A2_CONSTITUTIVELY_EXACT':
+                outcome = _argmin_pos(w)   # per-event exact selection: A2's constitutive content under A2-exact -- the hold selects exactly like every admissible mechanism (a non-argmin commit would violate A2)
             else:
-                outcome = 0                # withheld: approximate/spectator shape
+                outcome = 0                # control: A2 read classical-only (D-quotient restricted) -> approximate/spectator shape
             pw.append({'outcome': outcome, 'viol': 0, 'marginal': F(0),
                        'standing_level': F(0), 'consults_standing': False,
                        'upstream_booking': F(0)})
-        name = 'RH_the_hold' if grant == 'GRANTED' else 'RH_hold_grant_withheld'
+        name = 'RH_the_hold' if grant == 'RETIRED_A2_CONSTITUTIVELY_EXACT' else 'RH_hold_a2_classical_restricted'
         return _row_facts(name, pw, is_hold=True)
 
     # ---- main pass ------------------------------------------------------
@@ -586,20 +626,24 @@ def _run_model(ck):
 
     hold_available = occupancy_available('hold_availability')
     ck(hold_available is True, "hold availability = occupancy as NAMED INPUT")
-    ck(G_HOLD_EXACT == 'GRANTED',
-       "G-HOLD-EXACT GRANT FLAG (assertable): granted, not derived; carried "
-       "possibly permanently (benefit-leg graveyard; .412 record-side "
-       "unverifiability)")
+    ck(G_HOLD_EXACT == 'RETIRED_A2_CONSTITUTIVELY_EXACT',
+       "A2-EXACT RULING (assertable): under Ethan's ruling 2026-07-26 that A2 "
+       "is read EXACT (a non-argmin commit VIOLATES A2, hence is inadmissible), "
+       "exact per-event selection is A2's constitutive content -- every "
+       "admissible mechanism is exact, the hold included; the retired grant "
+       "G-hold-exact had nothing left to grant -- grant-free AND unconditional")
     RH = build_hold(G_HOLD_EXACT)
     ck(RH['exact_per_event'],
-       "RH: single commit to the argmin UNDER the G-hold-exact grant (the "
-       "grant is the source of this line, not a derivation)")
+       "RH: single commit to the argmin -- the hold selects exactly per event, "
+       "as A2-exact requires of every admissible mechanism (exact per-event "
+       "selection is A2's constitutive content -- grant-free AND unconditional)")
     ck(RH['marginal_min'] == RH['marginal_max'] == 0,
        "RH: zero marginal pre-commit booking")
     ck(HOLD_EXEMPTION_BUNDLE == ('K1_UT_committed_scope_exempt',
                                  'Omega_conditioning_exempt'),
        "EXEMPTION BUNDLE FLAG: dual exemption constitutive of bin (ii), "
-       "bundled with occupancy (availability) + the grant")
+       "bundled with occupancy (availability); A2-exact makes exactness "
+       "constitutive, no grant")
     ck(all(pw['consults_standing'] is False and pw['standing_level'] == 0 and
            pw['upstream_booking'] == 0 for pw in RH['per_world']),
        "RH: consults NO Omega-ledger-visible input (no standing register, no "
@@ -607,7 +651,8 @@ def _run_model(ck):
     ck(len({pw['outcome'] for pw in RH['per_world']}) == 2,
        "RH: Omega-CONDITIONING EXEMPTION computed -- outcome map NON-constant "
        "across V_SEP despite identical (empty) classical pre-commit state "
-       "(exemption 2 is CAPABILITY-shaped and obtains UNDER the grant)")
+       "(exemption 2 is CAPABILITY-shaped: the hold's exact per-event selection, "
+       "which A2-exact makes constitutive -- grant-free AND unconditional)")
 
     battery = [R1, R2, R3, R4, R5, R6a, R6b, R7, R8, R9, RH]
 
@@ -653,17 +698,20 @@ def _run_model(ck):
            "w%d: commit floor IDENTICAL across all exact mechanisms (cancels; "
            "DERIVED from M1 + shared outcome, not independently measured)" % j)
 
-    # ---- the computed conditional structure (grant withheld) -------------
+    # ---- the ruling-does-real-work counterfactual (A2 confined to the classical D-quotient) --
     RH_WITHHELD = build_hold('WITHHELD', tag='_cf')
     ck(not RH_WITHHELD['exact_per_event'],
-       "CONDITIONAL STRUCTURE computed: grant withheld => exact_per_event FAILS")
+       "RULING-DOES-REAL-WORK counterfactual: A2 confined to the classical "
+       "D-quotient => the hold's exact_per_event FAILS")
     ck(_assign_bin(RH_WITHHELD, hold_available=hold_available) == 'iii',
-       "CONDITIONAL STRUCTURE computed: the withheld-grant hold lands in bin "
-       "(iii) by the same classifier -- bin (ii)'s population as an EXACT "
-       "competitor is GRANT-DEPENDENT")
+       "RULING-DOES-REAL-WORK counterfactual: with A2 confined to the classical "
+       "D-quotient the hold lands in bin (iii) by the same classifier -- so "
+       "A2-exact vs A2-classical-restricted flips the hold exact <-> approximate "
+       "(the ruling is NOT vacuous)")
     ck(RH_WITHHELD['marginal_min'] == RH_WITHHELD['marginal_max'] == 0,
-       "the grant is CAPABILITY-shaped, not price-shaped: the withheld hold's "
-       "price profile is unchanged (the banked triad certifies price only)")
+       "the exactness content is CAPABILITY-shaped, not price-shaped: the "
+       "classical-restricted hold's price profile is unchanged (the banked triad "
+       "certifies price only)")
 
     # ---- spectator pass (Sep world, no hold available) --------------------
     bins_sep = {}
@@ -858,16 +906,18 @@ def check_L_mechanism_trichotomy():
         'passed': passed,
         'tier': 4,
         'key_result': (
-            'Per admissible configuration family: every admissible selection '
+            'Per admissible configuration family: every candidate selection '
             'mechanism at a genuine N >= 2 BW-distinct-cost choice event lands '
             '-- per event, at the world-family level (exactness is a '
             'family-level property; bookings are realized per world) -- in '
             'exactly one of four bins: (i) pays-fresh (books >= eps marginal); '
             "(i') consults-standing (zero marginal); (ii) the hold (zero "
             'pre-commit; TYPE-ASSIGNED via the held conditioning category; '
-            'dual premise exemption constitutive; populated as an exact '
-            'competitor only under the named grant G-hold-exact); (iii) '
-            'does-not-exactly-select per-event. Exhaustiveness rides the '
+            'dual premise exemption constitutive; an exact competitor like '
+            'every admissible mechanism -- exact selection is A2 constitutive '
+            'under A2-exact, grant-free and unconditional); (iii) '
+            'does-not-exactly-select per-event (INADMISSIBLE under A2-exact). '
+            'Exhaustiveness rides the '
             'faithful-representation reading incl. the world-uniform '
             'conditioning category [P_structural cap, named]; the marginal '
             'column is two-valued {0} u [eps, oo) (computed); the UNBINNED '
@@ -888,7 +938,7 @@ def check_L_mechanism_trichotomy():
                                'transitions); Omega-conditioning scoped to '
                                'classical/Sep mechanisms; the hold exempt from '
                                'both (exemption 1 price-shaped grant-free; '
-                               'exemption 2 capability-shaped under the grant)'),
+                               'exemption 2 capability-shaped -- exact selection is A2 constitutive under A2-exact)'),
             'k1_ut_disambiguation': ("K1-UT is NOT the bank's K1 "
                                      "(D_quotient_forced dep label) and NOT "
                                      ".411's candidate-switch K1 (stage-2 F3)"),
@@ -912,12 +962,13 @@ def check_L_mechanism_trichotomy():
 
 
 def check_T_hold_cost_dominance_split():
-    """The two-clause conditional theorem (see module docstring, statement 2).
-    Tier 4, [P_structural] WITH THE NAMED GRANT G-hold-exact + the named
-    reading R-A2-mech; grant-declining consumers read [P_structural_reading]
-    (clause 2 survives grant-free as the price-table fact).  No citation may
-    drop the indifference clause.  Regime_R is a cross_ref, not a dependency
-    (naming-only consumption on the M4 leg; stage-2 m3)."""
+    """The two-clause theorem (see module docstring, statement 2).
+    Tier 4, [P_structural] (grant-free, unconditional; regrounded 2026-07-26 --
+    A2 read EXACT makes exact per-event selection constitutive); A2-classical-
+    only consumers (who restrict A2 to the D-quotient) read the strict leg at
+    [P_structural_reading] (clause 2 survives as the price-table fact).  No
+    citation may drop the indifference clause.  Regime_R is a cross_ref, not a
+    dependency (naming-only consumption on the M4 leg; stage-2 m3)."""
     from apf.core import check_T_no_IJC_no_noncommutativity
     from apf.operational_completeness import check_T_ledger_rent_excluded
     from apf.commutative_no_unresolved_hold import (
@@ -967,10 +1018,10 @@ def check_T_hold_cost_dominance_split():
     ck(r_a2.get('artifacts', {}).get('status_fence') ==
        'approximate form certified; A2 tie-selection + BW non-degeneracy '
        'remain named opens',
-       "Corollary 2 + the grant tie: the bank mechanizes only APPROXIMATE A2 "
-       "(exact field pin); the granted capability (exact per-event selection) "
-       "is precisely the named-open content -- the grant is a NAMED MODEL "
-       "INPUT, never banked content")
+       "Corollary 2 (honesty rail): the bank mechanizes only APPROXIMATE A2 "
+       "(exact field pin) -- a VERIFICATION limit, not an axiom weakening; the "
+       "AXIOM is exact (Ethan's A2-exact ruling closes the exact half; the "
+       "tie-among-equal-cost + BW non-degeneracy stay named opens)")
     r_spec = check_T_no_IJC_no_noncommutativity()
     ck(r_spec.get('passed') is True and
        r_spec.get('epistemic') == 'P_structural',
@@ -992,13 +1043,13 @@ def check_T_hold_cost_dominance_split():
     ck(a2_root['statement'] ==
        'G_realized = argmin_{q in A_Gamma} K[q] (PLEC selector)',
        "M4: the banked A2 root is the PATH-FUNCTIONAL argmin (exact field "
-       "pin); the extension to mechanism-histories is the NAMED READING "
-       "R-A2-mech, not banked content")
+       "pin) -- argmin IS exact selection, so A2-exact reads the root "
+       "literally; a non-argmin commit violates it and is inadmissible")
     ck(a2_root['check'] == 'Regime_R',
        "M4: the root's check is Regime_R (well-posedness), not a per-event law")
-    ck(M4_STATUS == 'NAMED_READING',
-       "M4 VERDICT FLAG: R-A2-mech is a NAMED READING (per-event exact A2 "
-       "NOT banked)")
+    ck(M4_STATUS == 'CONSTITUTIVE_RULING',
+       "M4 VERDICT FLAG: per-event exact A2 is Ethan's CONSTITUTIVE RULING "
+       "(2026-07-26), not a reading -- a non-argmin commit violates A2")
 
     # ---- the model ----------------------------------------------------------
     M = _run_model(ck)
@@ -1006,11 +1057,13 @@ def check_T_hold_cost_dominance_split():
     RH, RH_WITHHELD = M['RH'], M['RH_WITHHELD']
     commit_bookings, exact_rows = M['commit_bookings'], M['exact_rows']
 
-    # ---- Clause 1: CONDITIONAL STRICT LEG vs bin (i) ------------------------
-    ck(STRICT_LEG_FORM == 'CONDITIONAL_ON_G_HOLD_EXACT',
-       "STRICT-LEG CITATION FORM (assertable): conditional on the named "
-       "grant; may not be cited simpliciter")
-    ck(G_HOLD_EXACT == 'GRANTED', "the grant is in force for this pass")
+    # ---- Clause 1: STRICT LEG (grant-free, unconditional) vs bin (i) --------
+    ck(STRICT_LEG_FORM == 'GRANT_FREE_UNCONDITIONAL',
+       "STRICT-LEG CITATION FORM (assertable): grant-free AND unconditional -- "
+       "under A2-exact a non-argmin commit is inadmissible, so exact selection "
+       "is A2's constitutive content (no bespoke permission, no conditional) and "
+       "the strict-over-fresh leg holds unconditionally")
+    ck(G_HOLD_EXACT == 'RETIRED_A2_CONSTITUTIVELY_EXACT', "A2-exact ruling in force: the grant G-hold-exact is retired (exact selection is A2 constitutive -- grant-free AND unconditional)")
     bin_i = [f for f in battery if bins[f['row']] == 'i']
     ck(len(bin_i) >= 3, "bin (i) is populated (R3, R5, R6a)")
     for facts in bin_i:
@@ -1020,13 +1073,13 @@ def check_T_hold_cost_dominance_split():
             ck(m >= EPS, "strict leg: %s w%d marginal >= eps (pricing B1)" %
                (facts['row'], j))
             ck(h == 0, "strict leg: hold w%d marginal == 0 (FREE leg)" % j)
-            ck(h < m, "STRICT (conditional on G-hold-exact): hold 0 < %s "
-                      "marginal (only 0 < eps used)" % facts['row'])
+            ck(h < m, "STRICT (grant-free, unconditional under A2-exact): hold "
+                      "0 < %s marginal (only 0 < eps used)" % facts['row'])
             floor_j = commit_bookings[j][0]
             ck(h + floor_j < m + floor_j,
-               "STRICT with commit floor (conditional): hold total < %s "
-               "total (floor cancels; derived from M1 + shared outcome)"
-               % facts['row'])
+               "STRICT with commit floor (grant-free, unconditional): hold "
+               "total < %s total (floor cancels; derived from M1 + shared "
+               "outcome)" % facts['row'])
 
     # ---- Clause 2: INDIFFERENCE LEG vs bin (i') -----------------------------
     bin_ip = [f for f in battery if bins[f['row']] == "i'"]
@@ -1105,13 +1158,21 @@ def check_T_hold_cost_dominance_split():
     passed = not fails
     return {
         'name': 'T_hold_cost_dominance_split',
-        'epistemic': ('P_structural | named grant G-hold-exact; named reading '
-                      'R-A2-mech'),
+        'epistemic': ('P_structural (grant-free, unconditional). A2 read '
+                      'EXACT is the constitutive rule of record (Ethan '
+                      '2026-07-26): a non-argmin commit violates A2, so bin '
+                      '(iii) is INADMISSIBLE and the retired grant G-hold-exact '
+                      "had nothing left to grant -- exactness is A2's "
+                      'constitutive content, universal among admissible '
+                      'mechanisms, never a capability special to the hold'),
         'passed': passed,
         'tier': 4,
         'key_result': (
-            'Conditional on the named grant G-hold-exact (granted, not '
-            'derived; possibly permanent): (1) the hold is strictly cheaper '
+            'Under A2 read EXACT (Ethan 2026-07-26: a non-argmin commit '
+            'violates A2, so bin (iii) is inadmissible and exact per-event '
+            'selection is A2 constitutive -- every admissible mechanism is '
+            'exact, and the retired grant G-hold-exact had nothing left to '
+            'grant): grant-free, UNCONDITIONAL.  (1) the hold is strictly cheaper '
             'than every bin-(i) fresh-formation mechanism -- marginal 0 vs '
             '>= eps, common commit floor cancelling (derived from M1 + '
             'shared outcome) -- by 0 < eps only; (2) among exact mechanisms '
@@ -1128,10 +1189,10 @@ def check_T_hold_cost_dominance_split():
             'fully admissible. Corollary 1 (.412 bridge, [P_math]-on-banked, '
             'strictly conditional, no forcing): a witnessed coherent hold => '
             'non-commutative interface algebra. Corollary 2 (openness '
-            'reframe, [P_structural_reading], fresh-side only, '
-            'grant-conditional): among fresh realizations the zero-price '
-            'exact option is hold-shaped. Grant-declining consumers read '
-            '[P_structural_reading].'
+            'reframe, [P_structural_reading], fresh-side only): among '
+            'fresh realizations the zero-price exact option is hold-shaped. '
+            'A2-classical-only readers (who restrict A2 to the D-quotient) '
+            'read the strict leg at [P_structural_reading].'
         ),
         'dependencies': ['A1', 'L_epsilon_star', 'L_cost', 'D_quotient_forced',
                          'T_coherent_free_spend_permanent',
@@ -1142,35 +1203,44 @@ def check_T_hold_cost_dominance_split():
                          'L_mechanism_trichotomy', 'occupancy'],
         'cross_refs': ['Regime_R', 'T_gapless_serial_floor'],
         'artifacts': {
-            'grade_gate': ('[P_structural] with the named grant G-hold-exact '
-                           '+ named reading R-A2-mech (stage-2 grade ruling, '
-                           '2026-06-29 grade-by-tracked-dependencies); '
-                           'grant-declining consumers read '
-                           '[P_structural_reading] -- clause 2 survives '
-                           'grant-free as the price-table fact'),
-            'grant_status': ('granted-not-derived (approximate-A2 status '
-                             'fence names the capability OPEN); record-side '
-                             'unverifiable (.412 dephasing leg); benefit-leg '
-                             'discharge graveyarded => possibly permanent; '
-                             'capability-shaped not price-shaped (withheld '
-                             'hold: bin (iii), price unchanged -- computed)'),
+            'grade_gate': ('[P_structural] (grant-free, unconditional; A2 read '
+                           'exact = constitutive rule of record 2026-07-26, '
+                           'Ethan). Clause 1 (strict over fresh) is now '
+                           'unconditional; clause 2 (indifference vs '
+                           'standing-consult) is a price fact, unchanged'),
+            'grant_status': ('RETIRED 2026-07-26 (Ethan, A2-exact ruling): the '
+                             'bespoke grant G-hold-exact is GONE, not '
+                             're-sourced. A2 read EXACT makes a non-argmin '
+                             'commit inadmissible, so exact per-event selection '
+                             'is A2 constitutive (every admissible mechanism is '
+                             'exact) -- no capability is left to grant. '
+                             'GRANT-FREE and UNCONDITIONAL. The .412 '
+                             'record-unverifiability is moot for the grade '
+                             '(exactness is constitutive; nothing needs '
+                             'verifying). Classical-restricted counterfactual '
+                             '(A2 confined to the D-quotient): the hold would be '
+                             'approximate (bin iii) -- the ruling does real '
+                             'work, not vacuous'),
             'r7_dial': ('RULED AS-IS (Ethan 2026-07-09): fused reads free '
-                        'is the convention-of-record; practical content now '
-                        'unconditional -- the indifference clause + '
-                        'conditional fresh-side dominance; the reversed '
+                        'is the convention-of-record; practical content: the '
+                        'indifference clause is unconditional, plus '
+                        'unconditional fresh-side dominance; the reversed '
                         'branch (R7/R4/R9 migrate to bin (i), strict leg '
                         'widens) retained as the recorded road-not-taken; '
                         'grounds: the M2 counter-world arithmetic, the '
                         'L_cost per-transition billing locus, and the '
                         'frustrated-family structural route to strictness'),
             'may_not_cite': ('"A2 selects the hold" simpliciter (computed '
-                             'FALSE -- the guard); clause 1 grant-free; the '
-                             'split without the indifference clause; strict '
-                             'preference over standing-consult in any '
-                             'phrasing; bin-(iii) exclusion without the '
-                             'family-separation assumption; any per-world '
-                             'pricing floor; hold-existence-as-exact-'
-                             'competitor as banked (it is the grant); '
+                             'FALSE -- the guard: the hold ties standing-consult '
+                             'mechanisms 0-vs-0); the split without the '
+                             'indifference clause; strict preference over '
+                             'standing-consult in any phrasing; bin-(iii) '
+                             'exclusion without the family-separation assumption '
+                             '(degenerate families join the indifference class); '
+                             'any per-world pricing floor; that A2-exact is '
+                             'MECHANIZED (it is a constitutive RULING -- the '
+                             'bank mechanizes only approximate A2, a '
+                             'verification limit, not an axiom weakening); '
                              'anything concluding occupancy; any forbidding; '
                              'eps magnitude'),
             'floor_equality': ('DERIVED from M1 + shared outcome (exactness '
@@ -1180,8 +1250,9 @@ def check_T_hold_cost_dominance_split():
                          'consumption on the M4 leg (stage-2 m3; .402 SCC '
                          'edge-hygiene discipline)'),
             'exemption_split': ('exemption 1 (K1-UT/price) grant-free; '
-                                'exemption 2 (Omega/capability) under the '
-                                'grant (stage-2 m2)'),
+                                'exemption 2 (Omega/capability) is A2 '
+                                'constitutive under A2-exact -- grant-free '
+                                'AND unconditional (stage-2 m2)'),
             'fences': ('no-forbidding (computed); no-magnitude (0 < eps '
                        'only); occupancy input-never-conclusion '
                        '(hold-availability only, registry tripwired); '

@@ -34,9 +34,14 @@ enforcement-realism ruling then does its HONEST job: it LICENSES THE COUNT.
 THE COMPOSED THEOREM  (check_T_occupant_cost_selection)
 --------------------------------------------------------------------------------
 Grade: [P_structural | enforcement-realism + physical-reading].
-A CONDITIONAL theorem with two NAMED premises -- epistemically parallel to how
-the banked T_hold_cost_dominance_split is [P_structural | G-hold-exact]: a
-structural cost fact that is load-bearing only under a named grant.
+A CONDITIONAL theorem with two NAMED premises: the enforcement-realism ruling
+and the physical reading.  (These are distinct from G-hold-exact, which was
+retired on 2026-07-26 when A2 was read EXACT (Ethan's constitutive rule of
+record: a non-argmin commit violates A2), retiring the bespoke grant --
+exact per-event selection is A2's constitutive content, so
+T_hold_cost_dominance_split's strict leg is now [P_structural] grant-free
+AND unconditional and the grant had nothing left to grant; occupant_cost_selection
+stays conditional on its own premises.)
 
 Statement (composition, not re-derivation):
 
@@ -541,8 +546,11 @@ _CROSS_REFS = [
     "LHV stuck in the Boole polytope; only directed input escapes.",
     "check_T_third_boat_iff_local: a commuting extension (LHV / common cause) "
     "exists iff the behavior is in the local polytope (Fine).",
-    "T_hold_cost_dominance_split: the epistemic template -- [P_structural | "
-    "G-hold-exact], a structural cost fact load-bearing only under a named grant.",
+    "T_hold_cost_dominance_split: the cost-dominance structural sibling "
+    "(strict leg regrounded 2026-07-26 to [P_structural] grant-free AND "
+    "unconditional under A2-exact -- the grant G-hold-exact is retired, "
+    "exact selection is A2 constitutive); this theorem stays "
+    "conditional on its own enforcement-realism premise.",
     "T_ledger_rent_excluded: standing-rent is excluded from the ledger; the "
     "directed term is a per-activation charge, not rent.",
     "Paper20_Supplement_D2: cost surplus is NECESSARY-not-sufficient for the QAC.",

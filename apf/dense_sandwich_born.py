@@ -1335,7 +1335,7 @@ def check_T_g_hold_exact_not_in_born_ancestry() -> Dict[str, object]:
         fails.append("reinsertion mutation not caught by forbidden-name tripwire")
     return _result(
         "T_g_hold_exact_not_in_born_ancestry",
-        "G-hold-exact is not in the dependency ancestry of the operational Born representation theorem: the proof never invokes the grant, the machine contract verifies its absence under its name and the forbidden aliases, and reinsertion is caught. This LOCATES the grant outside this theorem's ancestry; it does not refute it, discharge it, or exhibit a countermodel (Ruling 1 stands: record-level equality cannot adjudicate cost-level mechanism distinctions). The grant remains live for the stronger claim that the coherent hold itself realizes exact outcome selection.",
+        "G-hold-exact is not in the dependency ancestry of the operational Born representation theorem: the proof never invokes the grant, the machine contract verifies its absence under its name and the forbidden aliases, and reinsertion is caught. This LOCATES the grant outside this theorem's ancestry; it does not refute it, discharge it, or exhibit a countermodel (Ruling 1 stands: record-level equality cannot adjudicate cost-level mechanism distinctions). The grant G-hold-exact is retired (A2-exact, Ethan 2026-07-26): exact outcome selection is A2 constitutive; this firewall still certifies the name is absent from the Born ancestry.",
         {
             "born_ancestry_size": len(born_ancestry),
             "G_hold_exact_in_ancestry": "G_HOLD_EXACT" in born_ancestry,
@@ -1343,7 +1343,7 @@ def check_T_g_hold_exact_not_in_born_ancestry() -> Dict[str, object]:
             "premise_rows_scanned": len(premise_rows),
             "reinsertion_mutation_caught": True,
             "countermodel_claimed": False,
-            "grant_status": "open; located outside the Born ancestry only",
+            "grant_status": "retired 2026-07-26 (A2-constitutive); the firewall still certifies the name G_HOLD_EXACT is absent from the Born ancestry",
         },
         fails,
         dependencies=("T_dense_born_dependency_contract",),

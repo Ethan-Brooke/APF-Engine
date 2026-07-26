@@ -77,8 +77,10 @@ axis -- not a theorem; it caps both soleness clauses at [P_structural]):
   permanent (L_irr -- no refund).  Source arena-side (N >= 2 BW-distinct
   alternatives of ONE slot), target occupancy-side (exactly one committed
   bit).  Its population as the SELECTED exact mechanism of fresh choice is
-  CONDITIONAL on the named grant G-hold-exact (inherited
-  Needs-Ethan from .413, stated conditionally, never resolved here); the
+  sourced from A2-exact (Ethan's 2026-07-26 constitutive rule of record: a
+  non-argmin commit violates A2, so exact per-event selection is A2's
+  constitutive content and the grant G-hold-exact is retired -- grant-free
+  AND unconditional; inherited); the
   R7 dial is RULED AS-IS (Ethan 2026-07-09, .413 ruling-of-record) --
   inherited verbatim.  No citation of the leg-3 mechanism framing may drop .413's
   indifference clause.
@@ -326,9 +328,11 @@ def check_T_carrier_trichotomy():
        "carries it exactly once")
     r_split = run('T_hold_cost_dominance_split')
     ck(r_split.get('passed') is True, ".413 split passes")
-    ck('G-hold-exact' in r_split.get('epistemic', ''),
-       "leg 3's mechanism framing is CONDITIONAL on the named grant "
-       "(inherited; grant in the grade string)")
+    ck('unconditional' in r_split.get('epistemic', ''),
+       "leg 3's mechanism framing tracks .413's grade -- regrounded "
+       "2026-07-26 to [P_structural] grant-free AND unconditional under "
+       "A2-exact (the grant G-hold-exact is retired -- exact per-event "
+       "selection is A2 constitutive)")
     ck(hcd.R7_WIDTH_DIAL == 'RULED_AS_IS_FUSED_READS_FREE_2026_07_09',
        "the R7 dial ruling (as-is, Ethan 2026-07-09) is inherited verbatim "
        "from .413's ruling-of-record, not resolved by this module")
@@ -379,7 +383,9 @@ def check_T_carrier_trichotomy():
                       'metadata); leg-2 weakest joints named: tiling '
                       'P_structural_seam + rival kill '
                       'P_structural_exhaustive; leg-3 mechanism framing '
-                      'inherits G-hold-exact + R-A2-mech (.413)'),
+                      'inherits the A2-exact reground (.413; grant '
+                      'G-hold-exact retired 2026-07-26, grant-free AND '
+                      'unconditional)'),
         'passed': passed,
         'tier': 4,
         'key_result': (
@@ -399,8 +405,9 @@ def check_T_carrier_trichotomy():
             '(leg 3, inherited consumption of .413) the hold is the '
             'priced, unbooked passage between them -- zero booking until '
             'the single commit, floor-booked at the crossing, permanent '
-            'record; its selected-mechanism framing stays conditional on '
-            'G-hold-exact (the R7 dial: RULED AS-IS, Ethan 2026-07-09, inherited '
+            'record; its selected-mechanism framing is sourced from the '
+            'A2-exact reground (.413; grant G-hold-exact retired 2026-07-26, '
+            'grant-free AND unconditional under A2-exact; the R7 dial: RULED AS-IS, Ethan 2026-07-09, inherited '
                   'verbatim) and never drops the indifference '
             'clause. Soleness clauses capped [P_structural] by the named '
             'R-carrier-taxonomy reading. No leg citable bare-[P].'

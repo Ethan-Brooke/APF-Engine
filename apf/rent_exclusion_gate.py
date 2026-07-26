@@ -85,7 +85,7 @@ CRITICAL FENCES  (may_not_cite on all three checks)
     realization of the directed influence regardless of the mechanism's
     self-description?). This module shows the order is per-activation
     (chargeABLE), NOT that it is charged.
-  * It does NOT lift the QAC (still needs enforcement-realism + G-hold-exact).
+  * It does NOT lift the QAC (still needs enforcement-realism; G-hold-exact is now constitutively free under A2-exact, Ethan's ruling 2026-07-26).
     "capacity shortage => quantum" and "the branch/QAC is derived" stay BARRED.
   * "deposit = shared-randomness = LHV" is a MODELING READING of rent-exclusion
     kind-(a); only the polytope-membership is the [P_math] part.

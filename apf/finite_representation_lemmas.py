@@ -33,8 +33,14 @@ module or by anything it imports):
     * "Paper 5 v7.14 is canonical"
     * "local quadraticity is derived, not assumed" without the finiteness caveat
 
-Standing open grant: G_HOLD_EXACT remains a named grant (Ruling 1: discharge
-REFUSED).  Quotient-nullity may be concluded only relative to a declared
+G_HOLD_EXACT (the bespoke grant) was RETIRED by the 2026-07-26 A2-exact ruling
+(Ethan's constitutive rule of record: a non-argmin commit violates A2).  Its
+per-event exact-selection content is now A2's own constitutive content --
+exact selection is universal among admissible mechanisms, grant-free AND
+unconditional, so the retired grant had nothing left to grant.  Ruling 1 (this
+module's discharge-refusal) stands as historical fact but is now MOOT: the
+retirement is a domain ruling on A2, NOT a discharge -- nothing here proves the
+benefit leg.  Quotient-nullity may be concluded only relative to a declared
 context family and resolution, with the named failure predicate
 NONCONSERVATIVE_OPERATIONAL_QUOTIENT (Ruling 5).
 """
@@ -1241,8 +1247,11 @@ def check_L_operational_quotient_conservativity(
     def readout_only_agreement(a: str, b: str) -> bool:
         return t[a]["readouts"] == t[b]["readouts"]
 
-    # Ruling 1 standing: the grant is open; nothing here discharges it.
-    g_hold_status = "OPEN_NAMED_GRANT (Ruling 1: discharge refused)"
+    # Ruling 1 standing: nothing here discharges the benefit leg; the bespoke
+    # grant was RETIRED by the 2026-07-26 A2-exact ruling (elsewhere): under
+    # A2-exact exact selection is A2 constitutive, so the grant had nothing
+    # left to grant, grant-free AND unconditional.
+    g_hold_status = "GRANT_RETIRED__A2_READ_EXACT_CONSTITUTIVE (2026-07-26; grant-free AND unconditional; exact selection is A2 constitutive -- the retired grant had nothing left to grant)"
 
     # hold-fed vs fiat: identical readouts, different cost rows.
     ck(readout_only_agreement("hold_fed_exact_commit",
@@ -1294,8 +1303,11 @@ def check_L_operational_quotient_conservativity(
          "computed to fire the named failure predicate "
          "NONCONSERVATIVE_OPERATIONAL_QUOTIENT.  A pair agreeing on "
          "readouts, cost rows, and typing is identifiable relative to the "
-         "declared family.  G_HOLD_EXACT remains an open named grant "
-         "(Ruling 1); this check computes nothing that discharges it."),
+         "declared family.  G_HOLD_EXACT (the bespoke grant) was retired by "
+         "the 2026-07-26 A2-exact ruling (exact selection is A2 "
+         "constitutive, grant-free AND unconditional -- the retired grant "
+         "had nothing left to grant); this check still "
+         "computes nothing that discharges the benefit leg."),
         [],
         {
             "declared_context_family": list(DECLARED_CONTEXT_FAMILY),

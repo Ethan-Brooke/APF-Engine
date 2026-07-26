@@ -27,8 +27,11 @@ THE NAMED READING (new surface, standalone-walked -- see the walk record):
   record): the hold defers BOOKING, never OCCUPANCY (occupancy constitutive [P],
   ruling 2026-07-07; T_ledger_rent_excluded removes rent, not footprint) --
   capacity bounds are state bounds; the hold-side QUANTITATIVE bound consumes
-  the sharpened survey==counted-rho identification (G-hold-exact, .422), a named
-  grant, record-side unverifiable (.412), disclosed and never certified.
+  the sharpened survey==counted-rho identification (formerly gated by the
+  grant G-hold-exact, .422; that grant is retired 2026-07-26 -- under A2-exact
+  exact per-event selection is A2 constitutive, so the identification is
+  grant-free AND unconditional). The hold-side survey stays record-side
+  unverifiable (.412), disclosed as such.
 
 STATEMENT (under R-capacity-bounded-world). Admissible reversible action
 families on the completed finite fragment are BOUNDED GROUPS (they preserve a
