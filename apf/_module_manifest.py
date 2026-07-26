@@ -587,6 +587,7 @@ ARCHITECTURE_ONLY_MODULES: tuple[str, ...] = (
     "apf.sc_material_evidence",  # v24.3.37 - Coherent Materials Audit Layer; SC evidence audit ladder
     "apf.sc_material_ledger",  # v24.3.37 - Coherent Materials Audit Layer; material ledger schema validator
     "apf.superconductivity_ie",  # v24.3.30 - IE coherent-phase-regime; SC admissibility margin + audit ladder evaluator
+    "apf._rp_ct_w_quarantine",  # (2026-07-25, count-neutral) RP-CT.W quarantine label -- metadata-only; names the open W-export severable subtree (~2386 checks) for core-bank legibility. Defines no check, registers nothing.
 )
 
 
