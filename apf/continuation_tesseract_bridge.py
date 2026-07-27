@@ -29,16 +29,63 @@ from typing import Callable, Dict, List, Mapping, Sequence, Tuple
 Matrix = List[List[F]]
 Vector = List[F]
 
+# THE CANONICAL HOC OBLIGATION INVENTORY.
+#
+# v24.3.444 (2026-07-27): the factor-isolation root is UNBUNDLED into its two
+# clauses, 8 -> 9.  This is not a reinterpretation: the banked HFC-345 contract
+# already carried the same split as a BUNDLED PAIR --
+# apf._hfc_345_contracts.LEAF_MANIFEST["leaves"]["FACTOR_ISOLATION_NEUTRAL_
+# COMPLETION"] declares two clauses ("factor isolation: common and defect
+# factors can be isolated record-free" / "neutral completion: the isolation
+# completes symmetry-neutrally") with the certification note "bundled pair:
+# certification must address both clauses".  The bank already knew this root
+# was two obligations wearing one name; naming them separately makes the
+# obligation surface explicit and is strictly CONSERVATIVE (it declares more,
+# never fewer, obligations downstream).
+#
+# WHAT IS *NOT* DONE HERE, AND WHY.  A research packet (2026-07-27) proposes a
+# different nine: it DEMOTES binary_HOC and nonnegative_physical_completed_self_
+# loops to derived nodes, moves typed_reversal out to downstream reversal
+# receipts, renames affine_cargo_naturality and dyadic_classical_positive_
+# control, and adds four new positive-completion names.  That inventory also
+# counts nine and SHARES ONLY FOUR NAMES WITH THIS ONE.  Its moves are in the
+# unsafe direction -- they REMOVE declared obligations -- so they are held
+# pending a blinded audit.  Additions and splits are conservative; demotions
+# and removals are not.  See MEMBERSHIP-not-count, below.
 HOC_PACKAGE = (
     "binary_HOC",
     "compatible_joint_realization",
-    "record_free_factor_isolation_with_neutral_completion",
+    "record_free_factor_isolation",
+    "symmetry_neutral_complement_completion",
     "affine_cargo_naturality",
     "same_type_factor_return",
     "dyadic_classical_positive_control",
     "typed_reversal",
     "nonnegative_physical_completed_self_loops",
 )
+
+# The frozen membership of record.  The scope contract below asserts against
+# THIS, set-exactly, and not against a bare length.  A count assertion is not a
+# contract: two inventories can agree on nine and share four names, which is
+# exactly what the held research proposal does.  Membership drift now errors.
+#
+# WRITTEN OUT AS LITERALS, DELIBERATELY.  Deriving this from HOC_PACKAGE would
+# make it a self-referential certificate -- it would follow any replacement of
+# the tuple and certify it, which is precisely the "leg that cannot fail"
+# defect class.  Caught here by mutation (substituting the held research
+# inventory escaped a derived version and is caught by this one).  If the
+# inventory legitimately changes, BOTH lists change, in one commit, on purpose.
+HOC_PACKAGE_CANONICAL_MEMBERSHIP = frozenset({
+    "binary_HOC",
+    "compatible_joint_realization",
+    "record_free_factor_isolation",
+    "symmetry_neutral_complement_completion",
+    "affine_cargo_naturality",
+    "same_type_factor_return",
+    "dyadic_classical_positive_control",
+    "typed_reversal",
+    "nonnegative_physical_completed_self_loops",
+})
 
 
 def _shape(a: Matrix) -> Tuple[int, int]:
@@ -125,8 +172,20 @@ def check_T_HOC_quantum_close_scope_contract():
        "identity/exchange carrier lacks the defect character idempotent")
     ck(all(not _eq(_mm(m, m), m) or _eq(m, i2) for m in physical_monoid),
        "identity/exchange carrier has no nontrivial physical idempotent")
-    ck(len(HOC_PACKAGE) == len(set(HOC_PACKAGE)) == 8,
-       "the conditional close has eight distinct named obligations")
+    ck(len(HOC_PACKAGE) == len(set(HOC_PACKAGE)) == 9,
+       "the conditional close has nine distinct named obligations")
+    ck(frozenset(HOC_PACKAGE) == HOC_PACKAGE_CANONICAL_MEMBERSHIP,
+       "MEMBERSHIP, not count: the obligation inventory must match the frozen "
+       "canonical membership set-exactly. A bare length assertion accepts any "
+       "nine names whatever -- the held 2026-07-27 research proposal is also "
+       "nine and shares only four of them -- so a count gate would pass a "
+       "wholesale inventory replacement in silence while five downstream "
+       "conditional_on declarations quietly changed meaning")
+    ck("record_free_factor_isolation" in HOC_PACKAGE
+       and "symmetry_neutral_complement_completion" in HOC_PACKAGE,
+       "the factor-isolation root is carried as its two separately named "
+       "clauses, matching the bundled-pair certification note already borne by "
+       "FACTOR_ISOLATION_NEUTRAL_COMPLETION in the banked HFC-345 contract")
 
     return _result(
         "T_HOC_quantum_close_scope_contract",

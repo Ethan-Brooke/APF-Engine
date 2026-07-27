@@ -22,7 +22,7 @@ constructions of this packet; neither is a pre-existing APF result.  The
 actual banked neighbors are ``continuation_tesseract_math`` (the
 exchange-natural competition zipper: check_T_calibration_free_competition_zipper,
 check_T_quantum_zipper_root_of_exchange) and ``continuation_tesseract_bridge``
-(the eight-leg HOC_PACKAGE, including ``affine_cargo_naturality``).  The 2x2
+(the nine-leg HOC_PACKAGE, including ``affine_cargo_naturality``).  The 2x2
 zipper F_345 below is a divergent re-implementation of that banked machinery:
 the banked module checks the exchange-naturality leg in-code, this packet's
 first cut dropped it, and the fortified packet consumes it instead as the
