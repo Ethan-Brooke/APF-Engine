@@ -27,7 +27,7 @@ finite witnesses:
   (4) check_T_positive_cone_quotient_compatible (positivity gate
       preserved under ideal quotient)
   (5) check_T_split_composite_gates_tensor_closure (rules out H by
-      M_n(H) (x)_R M_m(H) ~= M_{2nm}(R), not quaternionic)
+      M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic)
   (6) check_T_split_composite_gates_tomographic_locality (rules out
       R by Wootters-Hardy local-marginal parameter count)
   (7) check_T_split_closed_world_complex_selection (composite of (5)
@@ -466,7 +466,7 @@ def check_T_positive_cone_quotient_compatible():
 def check_T_split_composite_gates_tensor_closure():
     """T_split_composite_gates_tensor_closure: only D in {R, C} pass
     finite tensor closure of matrix algebras over R.  Quaternionic
-    M_n(H) has M_n(H) (x)_R M_m(H) ~= M_{2nm}(R), not quaternionic.
+    M_n(H) has M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic.
 
     Tier 3 [P_math].  Paper 5 Supplement v5.97 section "Field
     selection by split closed-world composite gates", first leg of
@@ -514,7 +514,7 @@ def check_T_split_composite_gates_tensor_closure():
     assert closure_results["C"] is False, \
         "C fails tensor closure over R (expected -- closure must be over C)"
     assert closure_results["H"] is False, \
-        "H fails tensor closure (M_n(H) (x)_R M_m(H) is M_{2nm}(R))"
+        "H fails tensor closure (M_n(H) (x)_R M_m(H) is M_{4nm}(R))"
 
     # Now verify: when tensor is taken over D itself (the proper
     # internal tensor product), closure holds for D in {R, C} but
@@ -523,7 +523,7 @@ def check_T_split_composite_gates_tensor_closure():
     # Over C: dim_C(M_n(C) (x)_C M_m(C)) = (nm)^2 = dim_C(M_{nm}(C))  -- OK
     # Over H: H is noncommutative, so (x)_H is not well-defined as a
     # field tensor product; the closest analog M_n(H) (x)_R M_m(H)
-    # ~= M_{2nm}(R) loses the quaternionic structure.
+    # ~= M_{4nm}(R) loses the quaternionic structure.
 
     def field_tensor_closure_holds(D):
         """Return True iff M_n(D) (x)_D M_m(D) is M_{nm}(D), i.e.,
@@ -542,7 +542,7 @@ def check_T_split_composite_gates_tensor_closure():
         "epistemic": "P_math",
         "key_result": (
             "Tensor-closure leg of the split composite gate: H "
-            "fails (M_n(H) (x)_R M_m(H) = M_{2nm}(R), not "
+            "fails (M_n(H) (x)_R M_m(H) = M_{4nm}(R), not "
             "quaternionic); only R and C admit proper "
             "field-tensor-product closure of their matrix algebras"
         ),
@@ -551,10 +551,11 @@ def check_T_split_composite_gates_tensor_closure():
             "closure decomposes into (i) finite tensor closure + "
             "(ii) finite tomographic locality.  Leg (i) -- this "
             "check -- rules out the quaternions structurally: M_n(H) "
-            "tensored over R with M_m(H) is real-dimensional 4 n^2 "
-            "m^2, while a hypothetical quaternionic M_{nm}(H) would "
-            "have real dimension only 4 (nm)^2 -- a factor-4 excess "
-            "that is the well-known M_{2nm}(R) reduction.  H is also "
+            "tensored over R with M_m(H) is real-dimensional "
+            "16 n^2 m^2, while a hypothetical quaternionic "
+            "M_{nm}(H) would have real dimension only 4 (nm)^2 -- a "
+            "factor-4 excess, and the real algebra it actually lands "
+            "in is M_{4nm}(R).  H is also "
             "noncommutative and admits no internal field-tensor-"
             "product structure."
         ),
@@ -778,7 +779,7 @@ def check_T_split_closed_world_complex_selection():
             "longer a single black-box axiom.  It is the conjunction "
             "of two independently-derivable conditions -- finite "
             "tensor closure (rules out H structurally because "
-            "M_n(H) (x)_R M_m(H) ~= M_{2nm}(R), not quaternionic) "
+            "M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic) "
             "and finite tomographic locality (rules out R via the "
             "Wootters-Hardy local-marginal parameter count).  C is "
             "the unique field passing both, derived not postulated.  "
