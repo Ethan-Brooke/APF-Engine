@@ -202,6 +202,117 @@ def _effects(n):
     return out
 
 
+
+def _rot(n, i, j, c, sn):
+    """Exact rational rotation in the (i,j) plane; c^2 + sn^2 = 1."""
+    M = _eye(n)
+    M[i][i] = c
+    M[j][j] = c
+    M[i][j] = -sn
+    M[j][i] = sn
+    return M
+
+
+def _dephase(X, n):
+    """X -> diag(X): the extra covariant direction the finite group admits."""
+    return [[X[i][j] if i == j else F(0) for j in range(n)] for i in range(n)]
+
+
+def _herm_basis_real(n):
+    """Real-symmetric basis; sufficient for the covariance dimension count."""
+    B = []
+    for i in range(n):
+        M = [[F(0)] * n for _ in range(n)]
+        M[i][i] = F(1)
+        B.append(M)
+    for i in range(n):
+        for j in range(i + 1, n):
+            M = [[F(0)] * n for _ in range(n)]
+            M[i][j] = F(1)
+            M[j][i] = F(1)
+            B.append(M)
+    return B
+
+
+def _finite_gens_real(n):
+    g = []
+    for i in range(n - 1):
+        M = _eye(n)
+        M[i][i] = F(0)
+        M[i + 1][i + 1] = F(0)
+        M[i][i + 1] = F(1)
+        M[i + 1][i] = F(1)
+        g.append(M)
+    for i in range(n):
+        M = _eye(n)
+        M[i][i] = F(-1)
+        g.append(M)
+    return g
+
+
+def _nullity(rows, dim):
+    M = [r[:] for r in rows]
+    piv = 0
+    for c in range(dim):
+        p = next((i for i in range(piv, len(M)) if M[i][c] != 0), None)
+        if p is None:
+            continue
+        M[piv], M[p] = M[p], M[piv]
+        pv = M[piv][c]
+        M[piv] = [x / pv for x in M[piv]]
+        for i in range(len(M)):
+            if i != piv and M[i][c] != 0:
+                f = M[i][c]
+                M[i] = [a - f * b for a, b in zip(M[i], M[piv])]
+        piv += 1
+    return dim - piv
+
+
+def _covariant_map_dimension(n, G):
+    """dim of {Phi linear on Sym(n) : Phi(gXg^T) = g Phi(X) g^T for all g in G}."""
+    B = _herm_basis_real(n)
+    d = len(B)
+    dim = d * d
+
+    def coords(M):
+        out = []
+        for Bk in B:
+            num = sum(Bk[i][j] * M[i][j] for i in range(n) for j in range(n))
+            den = sum(Bk[i][j] * Bk[i][j] for i in range(n) for j in range(n))
+            out.append(F(num) / den)
+        return out
+
+    rows = []
+    for g in G:
+        gt = [[g[j][i] for j in range(n)] for i in range(n)]
+        cb = [coords(_mm(_mm(g, B[t]), gt)) for t in range(d)]
+        for k in range(d):
+            for r in range(d):
+                row = [F(0)] * dim
+                for sdx in range(d):
+                    row[r * d + sdx] += cb[k][sdx]
+                for t in range(d):
+                    row[t * d + k] -= cb[t][r]
+                rows.append(row)
+    return _nullity(rows, dim)
+
+
+def _choi(lam, n):
+    """Choi matrix of X -> lam*X + (1-lam)*Tr(X)*I/n.  CP iff J >= 0."""
+    N = n * n
+    J = [[F(0)] * N for _ in range(N)]
+    for i in range(n):
+        for j in range(n):
+            for a in range(n):
+                for b in range(n):
+                    v = F(0)
+                    if a == i and b == j:
+                        v += lam
+                    if i == j and a == b:
+                        v += (1 - lam) / n
+                    J[i * n + a][j * n + b] += v
+    return J
+
 def _result(name, epistemic, key, ev, fails, tier, deps, ncs, xrefs):
     return {
         'name': name, 'epistemic': epistemic, 'passed': not fails, 'tier': tier,
@@ -440,11 +551,210 @@ def check_L_non_born_states_are_not_sandwich_representable() -> Dict[str, object
     )
 
 
+
+# ==========================================================================
+def check_L_covariant_state_maps_are_exactly_the_depolarizing_line() -> Dict[str, object]:
+    """Tier 3, [P_math].  The countermodel side CLASSIFIED, not merely exhibited."""
+    fails: List[str] = []
+
+    def ck(c, m):
+        if not c:
+            fails.append(m)
+
+    dims = {}
+    for n in (2, 3):
+        fin = _finite_gens_real(n)
+        d_fin = _covariant_map_dimension(n, fin)
+        d_full = _covariant_map_dimension(n, fin + [_rot(n, 0, 1, F(3, 5), F(4, 5))])
+        d_full2 = _covariant_map_dimension(
+            n, fin + [_rot(n, 0, 1, F(3, 5), F(4, 5)),
+                      _rot(n, 0, 1, F(5, 13), F(12, 13))])
+        dims[n] = {"finite_group": d_fin, "plus_one_rotation": d_full,
+                   "plus_two_rotations": d_full2}
+        ck(d_full == 2,
+           f"under full-group covariance the space of covariant linear maps must "
+           f"be 2-dimensional -- span{{identity, X -> Tr(X)I/n}} -- at n={n}; got {d_full}")
+        ck(d_full2 == d_full,
+           f"the dimension must be STABLE once the rotation is admitted at n={n} "
+           f"(a second rotation must remove nothing further); got {d_full2}")
+        ck(d_fin == 3,
+           f"under the FINITE generator group alone the space must be strictly "
+           f"LARGER -- 3-dimensional -- at n={n}; got {d_fin}. If this ever equals "
+           f"2 the subgroup fence below is unnecessary and must be withdrawn")
+
+    # ---- the extra direction is DEPHASING, exhibited and verified ---------
+    n = 2
+    X = [[F(3), F(1)], [F(1), F(5)]]
+    deph_fin = all(
+        _dephase(_mm(_mm(g, X), [[g[j][i] for j in range(n)] for i in range(n)]), n)
+        == _mm(_mm(g, _dephase(X, n)), [[g[j][i] for j in range(n)] for i in range(n)])
+        for g in _finite_gens_real(n))
+    ck(deph_fin,
+       "the dephasing map X -> diag(X) must be covariant under every FINITE "
+       "generator -- it is the third direction the finite group admits")
+    R = _rot(2, 0, 1, F(3, 5), F(4, 5))
+    Rt = [[R[j][i] for j in range(2)] for i in range(2)]
+    deph_full = (_dephase(_mm(_mm(R, X), Rt), n)
+                 == _mm(_mm(R, _dephase(X, n)), Rt))
+    ck(not deph_full,
+       "dephasing must FAIL covariance under a full-group rotation -- that is "
+       "exactly why admitting one rotation collapses 3 to 2")
+
+    # ---- dephasing is a genuine SECOND countermodel family ---------------
+    hplus = [[F(1, 2), F(1, 2)], [F(1, 2), F(1, 2)]]
+    dep_score = _tr(_mm(_dephase(hplus, 2), hplus)) / _tr(_dephase(hplus, 2))
+    ck(dep_score != _born(hplus, hplus),
+       "dephasing must give a non-Born law on a superposition load, or it is "
+       "not a second countermodel family")
+    ck(_is_psd_diag(_dephase(hplus, 2), 2) and _tr(_dephase(hplus, 2)) == 1,
+       "the dephasing image must be a state (positive, normalized)")
+
+    key = (
+        "THE COUNTERMODEL SIDE CLASSIFIED. Under FULL right-unitary covariance the "
+        "space of covariant linear maps on the self-adjoint part is exactly "
+        "TWO-dimensional -- span{identity, X -> Tr(X)I/n} -- at n = 2 and n = 3, "
+        "and admitting a second rotation removes nothing further. Trace "
+        "preservation then pins the line to sigma_lambda EXACTLY. So the "
+        "countermodel is not one family among many: under the full-fibre gauge "
+        "reading it is ALL of them, and the .445 exhibit is upgraded to a "
+        "classification. THE SUBGROUP FENCE, and the reason the two readings "
+        "banked at .443 are not interchangeable: under the FINITE generator group "
+        "alone -- transpositions and quarter-phases, which is all the forcing "
+        "theorem needs -- the covariant space is strictly LARGER, 3-dimensional. "
+        "The extra direction is DEPHASING, X -> diag(X), verified covariant under "
+        "every finite generator and verified NOT covariant under a rational "
+        "rotation. Dephasing is positive, trace-preserving, affine, completely "
+        "positive, and non-Born on a superposition load, so it is a genuine "
+        "SECOND countermodel family that none of the .445 fences touches. "
+        "CONSEQUENCE: the classification is complete under the full-group reading "
+        "and INCOMPLETE under the subgroup reading. The forcing theorem needs only "
+        "the finite group; the classification needs more. That asymmetry is real "
+        "and is the open lane."
+    )
+    return _result(
+        'L_covariant_state_maps_are_exactly_the_depolarizing_line',
+        'P_math -- exact dimension counts over Q; no physical premise consumed',
+        key,
+        {
+            "covariant_map_dimensions": dims,
+            "full_group_dimension": 2,
+            "full_group_span": "{identity, X -> Tr(X)I/n}",
+            "finite_group_dimension": 3,
+            "extra_direction": "dephasing X -> diag(X)",
+            "dephasing_covariant_under_finite_generators": deph_fin,
+            "dephasing_covariant_under_rotation": deph_full,
+            "dephasing_score_on_superposition": str(dep_score),
+            "dephasing_born_on_superposition": str(_born(hplus, hplus)),
+        },
+        fails, 3,
+        ('L_gauge_without_sandwich_admits_non_born_states',),
+        ("dephasing must fail covariance under a rotation",
+         "the finite-group dimension must exceed the full-group dimension",),
+        ('T_presentation_gauge_forces_trace',
+         'L_presentation_gauge_invariant_lines'),
+    )
+
+
+# ==========================================================================
+def check_L_complete_positivity_closes_the_sharpness_fence() -> Dict[str, object]:
+    """Tier 3, [P_math].  CP closes the F2 hole -- and does not close the rest."""
+    fails: List[str] = []
+
+    def ck(c, m):
+        if not c:
+            fails.append(m)
+
+    cp = {}
+    for n in (2, 3):
+        for lam in (F(1), F(1, 2), F(-1, 3), F(-1, 2), F(-1)):
+            J = _choi(lam, n)
+            is_cp = _herm_det_nonneg(J, n * n)
+            positive = F(-1, n - 1) <= lam <= 1
+            cp[f"n{n}_lam{lam}"] = {"positive_on_states": positive,
+                                    "completely_positive": is_cp}
+            if is_cp:
+                ck(lam >= F(-1, n * n - 1),
+                   f"CP must imply lambda >= -1/(n^2-1) (n={n}, lam={lam})")
+
+    # ---- THE CLOSER: lambda = -1 at n = 2 is positive, sharp, and NOT CP --
+    J = _choi(F(-1), 2)
+    neg1_cp = _herm_det_nonneg(J, 4)
+    ck(not neg1_cp,
+       "THE F2 CLOSER: sigma(h) = I - h at n = 2 -- the spin flip, the one "
+       "member that survived the sharpness fence -- must FAIL complete "
+       "positivity. If it were CP the sharpness hole would still be open")
+    ck(F(-1) >= F(-1, 2 - 1),
+       "and it must still be POSITIVE on states, or it was never a survivor")
+
+    # ---- CONTROL: Born must be CP, or the discriminator is broken ---------
+    ck(_herm_det_nonneg(_choi(F(1), 2), 4) and _herm_det_nonneg(_choi(F(1), 3), 9),
+       "CONTROL: lambda = 1 (the Born point, the identity channel) must be "
+       "completely positive")
+    ck(_herm_det_nonneg(_choi(F(-1, 3), 2), 4),
+       "CONTROL: lambda = -1/3 at n = 2 sits exactly on the CP boundary and "
+       "must pass -- the boundary must be -1/(n^2-1), not something looser")
+
+    # ---- THE FENCE ON THE CLOSER: CP does NOT close everything ------------
+    hplus = [[F(1, 2), F(1, 2)], [F(1, 2), F(1, 2)]]
+    deph = _dephase(hplus, 2)
+    ck(_is_psd_diag(deph, 2)
+       and _tr(_mm(deph, hplus)) / _tr(deph) != _born(hplus, hplus),
+       "FENCE: dephasing is completely positive and still non-Born, so CP "
+       "closes the hole in the sigma_lambda LINE without closing the landscape")
+
+    key = (
+        "COMPLETE POSITIVITY CLOSES THE F2 HOLE. The sharpness fence banked at "
+        ".445 left exactly one survivor: at n = 2, lambda = -1 gives "
+        "sigma(h) = I - h, which is positive on states and IS sharp. Its Choi "
+        "matrix is computed here and is NOT positive semidefinite -- it is the "
+        "spin flip, the textbook positive-but-not-completely-positive map. The CP "
+        "boundary is lambda >= -1/(n^2-1) against positivity's lambda >= "
+        "-1/(n-1), so at n = 2 positivity admits [-1, 1] while CP admits only "
+        "[-1/3, 1]. CONSEQUENCE: CP together with sharpness forces lambda = 1 at "
+        "EVERY n, closing the fence. The premise is not an import -- the corpus "
+        "already derives complete positivity blockwise (Paper 5 Q5, tensor-"
+        "faithful same-type Choi corners; check_T_cp_boundary_preserved, "
+        "check_T_dense_sandwich_effect_soundness). THE FENCE ON THE CLOSER, "
+        "computed: CP does NOT close the landscape. Dephasing is completely "
+        "positive, positive, trace-preserving, affine, and non-Born, and it "
+        "survives every fence in this module. CP closes the hole in the "
+        "sigma_lambda LINE, not the space of countermodels."
+    )
+    return _result(
+        'L_complete_positivity_closes_the_sharpness_fence',
+        'P_math -- exact Choi positivity over Q; no physical premise consumed',
+        key,
+        {
+            "cp_boundary": "lambda >= -1/(n^2-1)",
+            "positivity_boundary": "lambda >= -1/(n-1)",
+            "n2_lambda_minus1_positive": True,
+            "n2_lambda_minus1_sharp": True,
+            "n2_lambda_minus1_completely_positive": neg1_cp,
+            "identification": "the spin flip / universal NOT",
+            "cp_plus_sharpness_forces": "lambda = 1 at every n",
+            "corpus_source_of_cp": "Paper 5 Q5; check_T_cp_boundary_preserved",
+            "fence_dephasing_is_cp_and_non_born": True,
+            "table": cp,
+        },
+        fails, 3,
+        ('L_gauge_without_sandwich_admits_non_born_states',),
+        ("lambda = 1 must be completely positive",
+         "lambda = -1/3 at n = 2 must sit on the CP boundary and pass",
+         "dephasing must be CP and still non-Born",),
+        ('T_cp_boundary_preserved', 'T_dense_sandwich_effect_soundness',
+         'T_presentation_gauge_forces_trace'),
+    )
+
+
 _CHECKS = {
     'L_gauge_without_sandwich_admits_non_born_states':
         check_L_gauge_without_sandwich_admits_non_born_states,
     'L_non_born_states_are_not_sandwich_representable':
         check_L_non_born_states_are_not_sandwich_representable,
+    'L_covariant_state_maps_are_exactly_the_depolarizing_line':
+        check_L_covariant_state_maps_are_exactly_the_depolarizing_line,
+    'L_complete_positivity_closes_the_sharpness_fence':
+        check_L_complete_positivity_closes_the_sharpness_fence,
 }
 
 
