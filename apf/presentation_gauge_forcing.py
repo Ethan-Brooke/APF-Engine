@@ -89,6 +89,27 @@ which is where the sharpest falsifier lives: if only a proper subgroup of
 presentations is realizable, the theorem returns a NON-TRACIAL cost functional
 and a NON-BORN score.
 
+SCOPE CORRIGENDUM OF RECORD (2026-07-27, blinded audit).  "Under (ii) P4 is what
+excludes it" is TRUE ONLY FOR REALIZABLE SUBGROUPS CONTAINING THE ADMITTED
+FAMILY, and that scope was not stated.  Reading (ii) as written quantifies over
+an ARBITRARY realizable subgroup, and outside the admitted family there are
+survivors on which P4 AND POSITIVITY BOTH HOLD and the score is still non-Born.
+Two, both executed below:
+
+    realizable subgroup = transpositions,  R = I + sigma_x/2   PSD, Tr R = 2
+        b = [[1,2],[3,5]]    eta_b(E00) = 1/8     Born = 5/39
+    realizable subgroup = <rotation>,      R = I + sigma_y/2   PSD, Tr R = 2
+        b = [[1,i],[3,5]]    eta_b(E00) = 1/35    Born = 1/18
+
+Each is constant across its own subgroup orbit, so each satisfies (ii); each is
+positive-definite with nonzero trace, so neither P4 nor positivity touches it.
+This is a SHARPER failure mode than the trace-zero one, and it is the one that
+actually threatens the theorem: the trace-zero weight is a P4 story only, whereas
+these survive every normalization premise the theorem has.  What excludes them is
+the ADMITTED FAMILY -- they are not invariant under the quarter-phases -- so the
+honest statement of the failure mode is that the theorem's protection against
+(ii) is exactly the richness of the realizable presentation family, not P4.
+
 TWO RESTRICTIONS, NEITHER COSMETIC.
   (a) DIRECT SUMS.  The conclusion is FALSE on +_i M_{n_i}.  Block-diagonal
       unitaries never mix blocks, so the constants are fixed independently and do
@@ -519,7 +540,22 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
     ck(frob_preserved > 0, "the Frobenius-preservation battery must be non-empty")
 
     # ---- Step B: enumerate every invariant line, both fields. --------------
+    # CORRIGENDUM OF RECORD (2026-07-27, blinded audit).  _graded_solutions
+    # returns a BASIS of each graded solution space, not its lines.  When a
+    # graded space has dimension >= 2 the invariant LINES form a projective
+    # space and any predicate applied to the returned spanning vectors tests
+    # only those vectors -- so "every non-scalar invariant line has trace zero"
+    # would be a statement about an RREF artefact rather than about the variety.
+    # It is TRUE for the admitted family because every graded space here is
+    # ONE-dimensional, and that is now ASSERTED rather than relied on: with
+    # dim <= 1 a spanning vector IS the line, and Step C's predicates are
+    # statements about the variety.  Counterexample showing the assertion is
+    # load-bearing and not decorative: under transpositions ALONE the +1 space
+    # is 2-dimensional and contains R = I + sigma_x/2, which is non-scalar, PSD,
+    # and has trace 2 -- so on a wider generator set the Step C predicates would
+    # pass while their claim is false.  That control is executed in Step D.
     lines: Dict[str, List[Dict[str, object]]] = {}
+    space_dims: Dict[str, List[int]] = {}
     for field, basis_fn, gen_fn in (("C", _herm_basis, _complex_generators),
                                     ("R", _sym_basis, _real_generators)):
         for n in (2, 3, 4):
@@ -527,8 +563,16 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
             basis = basis_fn(n)
             seen = []
             recs: List[Dict[str, object]] = []
+            dims: List[int] = []
             for signs in product((1, -1), repeat=len(gens)):
-                for R in _graded_solutions(basis, gens, signs, n):
+                _sols_here = _graded_solutions(basis, gens, signs, n)
+                dims.append(len(_sols_here))
+                ck(len(_sols_here) <= 1,
+                   f"Step B: every graded solution space must be at most "
+                   f"ONE-dimensional ({field}{n}, signs={signs}, got "
+                   f"{len(_sols_here)}) -- otherwise the returned vectors are an "
+                   f"RREF basis and Step C tests an artefact, not the lines")
+                for R in _sols_here:
                     key = tuple(tuple(x) for row in R for x in row)
                     if key in seen:
                         continue
@@ -539,7 +583,9 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
                         "trace_re": str(tr[0]),
                         "psd": _is_psd(R, n),
                     })
+            # (loop body unchanged; the enclosing scan now pins the dimension)
             lines[f"{field}{n}"] = recs
+            space_dims[f"{field}{n}"] = dims
 
     # ---- Step C: the classification claim, computed. ----------------------
     non_scalar_total = 0
@@ -573,6 +619,25 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
            f"NEGATIVE CONTROL: permutations alone must leave more than the "
            f"scalar line (n={n}) -- they do not force the trace")
 
+    # ---- Step D2: WHY the dimension pin in Step B is load-bearing. ---------
+    # On a wider graded space the Step C predicates would report "pass" while
+    # their claim is FALSE.  Exhibited, not asserted: under transpositions alone
+    # at n = 2 the +1 space is 2-dimensional, and I + sigma_x/2 lies in it --
+    # invariant, NON-scalar, PSD, and trace 2.  Any predicate keyed to returned
+    # spanning vectors can miss it; the dimension pin is what makes Step C a
+    # statement about the variety rather than about an RREF artefact.
+    Rx = [[ONE, (F(1, 2), F(0))], [(F(1, 2), F(0)), ONE]]
+    perm2 = _transpositions(2)
+    ck(all(_mm(_mm(g, Rx), _dag(g)) == Rx for g in perm2),
+       "Step D2: the wider-space witness must be invariant under the "
+       "permutation subgroup")
+    ck(not _is_scalar(Rx, 2) and _is_psd(Rx, 2) and _tr(Rx)[0] == 2,
+       "Step D2: and it must be NON-scalar, PSD, and trace-NONZERO -- the exact "
+       "shape Step C's predicates forbid, surviving on a wider graded space")
+    ck(len(_graded_solutions(_herm_basis(2), perm2, [1] * len(perm2), 2)) > 1,
+       "Step D2: and the space it lives in must actually be >1-dimensional, or "
+       "the witness proves nothing about the dimension pin")
+
     key = (
         "THE VARIETY IS CLOSED, not sampled. Well-definedness of a RATIO imposes "
         "only U R U* = mu(U) R; mu = +-1 EXACTLY (U R U* is Hermitian with the "
@@ -588,7 +653,16 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
         "non-scalar survivors are TWO -- diag(1,-1) and [[0,1],[1,0]] -- so the "
         "loophole is two-dimensional there, not one. Negative control: "
         "permutations alone leave strictly more than the scalar line at every n, "
-        "so the forcing is not attributable to relabelling."
+        "so the forcing is not attributable to relabelling. SCOPE OF 'CLOSED' "
+        "(corrigendum of record, 2026-07-27, blinded audit): the enumeration "
+        "returns a BASIS of each graded space, so the trace-zero and PSD "
+        "predicates are statements about invariant LINES only because every "
+        "graded space here is ONE-dimensional -- now asserted in Step B rather "
+        "than relied on. Step D2 exhibits what the pin buys: under transpositions "
+        "alone the +1 space is 2-dimensional and contains I + sigma_x/2, which is "
+        "non-scalar, PSD and trace 2, so on a wider generator set the predicates "
+        "would report pass while their claim is false. The closure claim is "
+        "therefore scoped to the admitted family, where it is exact."
     )
     return _result(
         'L_presentation_gauge_invariant_lines',
@@ -600,6 +674,9 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
             "frobenius_preservation_checks": frob_preserved,
             "nonzero_hermitian_positive_frobenius": positive_frob,
             "subgroup_control_permutations_only_survivors": subgroup_survivors,
+            "graded_space_dimensions": space_dims,
+            "wider_space_witness": "I + sigma_x/2 under transpositions alone: "
+                                   "non-scalar, PSD, trace 2",
             "mu_restricted_to": "{+1, -1}",
         },
         fails,
@@ -607,7 +684,9 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
         (),
         (),
         ("permutations alone must not force scalarity",
-         "the enumeration must find at least one non-scalar line",),
+         "the enumeration must find at least one non-scalar line",
+         "on a 2-dimensional graded space a non-scalar PSD trace-2 invariant "
+         "survives, so the dimension pin is load-bearing",),
         ('T_presentation_gauge_forces_trace',
          'T_closed_loop_score_is_normalized_trace'),
     )
@@ -743,6 +822,49 @@ def check_T_presentation_gauge_forces_trace() -> Dict[str, object]:
        "load-invariance across the right-unitary fibre -- so it does NOT satisfy "
        "this theorem's hypothesis and is excluded by the symmetry alone")
     born_z = _born(_mm(bz, _dag(bz)), e00)
+    ck(s_base is not None and born_z is not None and s_base != born_z,
+       "RESTRICTION (b): the subgroup-surviving weight must actually give a "
+       "NON-BORN score, or the named failure mode is empty")
+
+    # ---- RESTRICTION (b2): the sharper failure mode. ----------------------
+    # P4 does NOT protect reading (ii) at an arbitrary realizable subgroup.
+    # Two survivors on which P4 and positivity BOTH hold and the score is still
+    # non-Born.  Computed, not asserted; each is checked to be (1) invariant
+    # across its own subgroup orbit, so it satisfies (ii); (2) PSD with nonzero
+    # trace, so neither premise reaches it; (3) non-Born; and (4) EXCLUDED by
+    # the admitted family, which is what actually does the work.
+    U345_ = [[(F(3, 5), F(0)), (F(-4, 5), F(0))],
+             [(F(4, 5), F(0)), (F(3, 5), F(0))]]
+    sharper = {}
+    for tag, Rw, bw, sub in (
+            ("sigma_x / transpositions",
+             [[ONE, (F(1, 2), F(0))], [(F(1, 2), F(0)), ONE]],
+             [[ONE, (F(2), F(0))], [(F(3), F(0)), (F(5), F(0))]],
+             _transpositions(2)),
+            ("sigma_y / rotation",
+             [[ONE, (F(0), F(-1) / 2)], [(F(0), F(1) / 2), ONE]],
+             [[ONE, (F(0), F(1))], [(F(3), F(0)), (F(5), F(0))]],
+             [U345_])):
+        ck(all(_mm(_mm(g, Rw), _dag(g)) == Rw for g in sub),
+           "RESTRICTION (b2): the survivor must be invariant under its own "
+           "realizable subgroup, or it does not satisfy reading (ii) [%s]" % tag)
+        ck(_is_psd(Rw, 2) and _tr(Rw) != ZERO,
+           "RESTRICTION (b2): and it must be PSD with NONZERO trace, or P4 or "
+           "positivity would already exclude it [%s]" % tag)
+        s_sub = _score(Rw, bw, e00)
+        b_sub = _born(_mm(bw, _dag(bw)), e00)
+        orbit = {_score(Rw, _mm(bw, g), e00) for g in sub} | {s_sub}
+        ck(len(orbit) == 1,
+           "RESTRICTION (b2): the score must be CONSTANT across the subgroup "
+           "orbit, or the survivor is not (ii)-invariant as a score [%s]" % tag)
+        ck(s_sub is not None and b_sub is not None and s_sub != b_sub,
+           "RESTRICTION (b2): and the score must be NON-BORN, or there is no "
+           "failure mode to name [%s]" % tag)
+        ck(any(_mm(_mm(g, Rw), _dag(g)) != Rw for g in _complex_generators(2)),
+           "RESTRICTION (b2): and the ADMITTED family must exclude it -- that is "
+           "what protects the theorem, not P4 [%s]" % tag)
+        sharper[tag] = {"score": str(s_sub), "born": str(b_sub),
+                        "psd": True, "trace_re": str(_tr(Rw)[0])}
 
     # ---- P3 is load-bearing: at rank one the requirement is vacuous. ------
     rank_one_vacuous = True
@@ -822,7 +944,8 @@ def check_T_presentation_gauge_forces_trace() -> Dict[str, object]:
             "trace_zero_score_base": str(s_base),
             "trace_zero_score_after_fibre_rotation": str(s_fibre),
             "trace_zero_born": str(born_z),
-            "trace_zero_full_fibre_invariant": False,
+            "trace_zero_full_fibre_invariant": (s_base == s_fibre),
+            "subgroup_survivors_p4_and_positivity_hold": sharper,
             "rank_one_requirement_vacuous": rank_one_vacuous,
             "gauge_sense_banked": "full right-unitary fibre",
             "gauge_sense_named_failure_mode": "proper realizable subgroup",
@@ -838,7 +961,9 @@ def check_T_presentation_gauge_forces_trace() -> Dict[str, object]:
         ("direct sum M2+M2 breaks the conclusion",
          "trace-zero weight breaks it under the subgroup reading",
          "rank-one loads make the requirement vacuous",
-         "psi = -Tr still reproduces Born (the sign is not load-bearing)"),
+         "psi = -Tr still reproduces Born (the sign is not load-bearing)",
+         "two subgroup survivors on which P4 AND positivity hold and the score "
+         "is non-Born -- the admitted family, not P4, is what excludes them"),
         ('T_closed_loop_score_is_normalized_trace',
          'L_gauge_forcing_supersedes_cyclicity_premise',
          'T_g_hold_exact_not_in_born_ancestry'),

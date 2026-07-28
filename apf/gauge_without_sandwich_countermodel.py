@@ -610,7 +610,17 @@ def check_L_covariant_state_maps_are_exactly_the_depolarizing_line() -> Dict[str
        "the dephasing image must be a state (positive, normalized)")
 
     key = (
-        "THE COUNTERMODEL SIDE CLASSIFIED. Under FULL right-unitary covariance the "
+        "THE COUNTERMODEL SIDE CLASSIFIED. SCOPE CORRIGENDUM OF RECORD "
+        "(2026-07-27, blinded audit): the dimension counts below are computed by "
+        "_covariant_map_dimension over the REAL SYMMETRIC slice Sym(n) with "
+        "_finite_gens_real -- transpositions and SIGN FLIPS -- and the "
+        "'full-group' leg adds real plane ROTATIONS, not U(n). The prose that "
+        "follows said 'full right-unitary' and 'quarter-phases', which is not "
+        "what runs. The NUMBERS are unaffected: recomputing over Herm(n) with the "
+        "complex generators (transpositions + quarter-phases) returns the same "
+        "3 -> 2 at n = 2, verified independently in presentation_gauge_forcing "
+        "Step E. Read every dimension below as a Sym(n) count under real "
+        "generators, corroborated on Herm(n). Under covariance of that kind the "
         "space of covariant linear maps on the self-adjoint part is exactly "
         "TWO-dimensional -- span{identity, X -> Tr(X)I/n} -- at n = 2 and n = 3, "
         "and admitting a second rotation removes nothing further. Trace "
@@ -619,7 +629,8 @@ def check_L_covariant_state_maps_are_exactly_the_depolarizing_line() -> Dict[str
         "reading it is ALL of them, and the .445 exhibit is upgraded to a "
         "classification. THE SUBGROUP FENCE, and the reason the two readings "
         "banked at .443 are not interchangeable: under the FINITE generator group "
-        "alone -- transpositions and quarter-phases, which is all the forcing "
+        "alone -- transpositions and sign flips in this computation, the real "
+        "shadow of the transpositions and quarter-phases that is all the forcing "
         "theorem needs -- the covariant space is strictly LARGER, 3-dimensional. "
         "The extra direction is DEPHASING, X -> diag(X), verified covariant under "
         "every finite generator and verified NOT covariant under a rational "
