@@ -42,12 +42,19 @@ of the connecting partial isometry off the support]).
 
   INVARIANCE, computed: (bU)(bU)* = b b* on five shapes against an exact
   unitary pool.
-  COMPLETENESS, computed as an EXHAUSTIVE FINITE WITNESS: over a bounded
-  GAUSSIAN-integer box -- genuinely Gaussian, real and imaginary parts both
-  swept -- every carrier c with c c* = b b* is reached as c = bU by an EXHIBITED
-  unitary, at FULL RANK (32 of 32 reached) and at RANK DEFICIENCY (8 of 8).  The
-  connecting group is the full monomial Gaussian-unitary group at n = 2, all 32
-  elements built and each verified unitary.
+  COMPLETENESS, computed as a FINITE WITNESS that is CARRIER-CONTINGENT and
+  billed as such: over a bounded Gaussian-integer box -- genuinely Gaussian,
+  real and imaginary parts both swept -- every carrier c with c c* = b b* is
+  reached as c = bU by an EXHIBITED unitary, at FULL RANK (32 of 32) and at RANK
+  DEFICIENCY (8 of 8), the connecting group being the 32-element MONOMIAL
+  Gaussian-unitary group at n = 2 (all elements built, distinct, closed under
+  multiplication, each verified unitary).  TWO SCOPE FACTS, EXECUTED IN-CHECK
+  AND NOT TO BE DROPPED WHEN THIS IS QUOTED: the witness is NOT the general
+  theorem -- an exact non-monomial Gaussian-rational unitary [[h,h],[h,-h]],
+  h = (1+i)/2, lies outside the group and connects an in-box pair it does not
+  reach; and the FULL-RANK half is ORBIT-BLIND, since with b = I the test
+  reduces to U == c, so 32 of 32 is a fact about U(2) intersect M2(Z[i]) and
+  only the 8 of 8 rank-deficient half is orbit-sensitive.
   CONTROLS: a non-unitary right move CHANGES the load, so invariance is not
   vacuous; and the two witnesses are verified to differ in rank by their load
   determinants, so the rank-deficient case is genuinely tested.
@@ -64,10 +71,12 @@ check_L_identity_carrier_vectorization (tier 3, [P_math]).
   CONTROLS: the effect probe is asserted NON-ZERO and NON-SCALAR (with a zero
   probe the sandwich identity degenerates to 0 == 0 and proves nothing); SWAP is
   computed NOT to be of the local form e (x) I while the genuine local effect
-  IS, and SWAP fails the sandwich identity; a self-overlap is exactly 1 on a
-  COMPLEX carrier, which fails the moment the inner product drops its conjugate
-  -- a real carrier cannot see conjugation at all; and a non-unitary right move
-  changes the marginal.
+  IS, and SWAP fails the sandwich identity; a self-overlap is computed on a
+  COMPLEX carrier and cross-checked against the norm, which fails the moment the
+  inner product drops its conjugate -- a real carrier cannot see conjugation at
+  all; and a non-unitary right move changes the marginal.  The vec law
+  |bA>> = (I (x) A^T)|b>> is executed with a NON-UNITARY A as well, so it
+  carries no unitarity content on its own.
 
 ============================================================================
 MAY-NOT-CITE.
@@ -292,11 +301,36 @@ _SHAPES: Tuple[Tuple[int, int], ...] = ((2, 2), (3, 2), (2, 3), (3, 3), (4, 3))
 def _result(name, epistemic, key_result, evidence, fails, tier,
             dependencies, premises, negative_controls, cross_refs,
             fail_count=None):
+    """Build the result dict, and CROSS-ASSERT the two failure records HERE.
+
+    CORRIGENDUM 2026-07-28 (execution audit, MAJOR): the cross-assert used to
+    live only in this module's run_all().  The bank does NOT call run_all() --
+    bank.py invokes each registered check_fn() directly and reads r['passed']
+    (bank.py, the `r = check_fn()` / `if r['passed']:` loop).  So the guarantee
+    did not travel on the banked path: a mutation forcing 'passed' True was
+    demonstrated to report PASS to the bank with 359 recorded failures.  The
+    assert now lives at the point the dict is BUILT, so it travels with the
+    dict wherever the dict goes, and run_all() remains as a second gate.
+
+    RESIDUAL LIMIT, DISCLOSED RATHER THAN OVERCLAIMED: this catches DIVERGENCE
+    between the two failure records -- the realistic tampering, where a repair
+    patches one recording site and not the other, and which is what previously
+    escaped on the banked path.  It does NOT catch a bare literal substitution
+    of the verdict itself ('passed': True), because nothing downstream
+    re-derives that field: bank.py reads it.  No code inside a module can
+    defend against an arbitrary edit to its own return statement; that is a
+    property of the bank's contract, not of this module, and the earlier
+    v24.3.449 commit message claimed the protection more broadly than is true."""
+    counted = len(fails) if fail_count is None else fail_count
+    if len(fails) != counted:
+        raise AssertionError(
+            f"{name}: failure records disagree -- fail_reasons has "
+            f"{len(fails)} entries, the independent counter says {counted}")
     return {
-        'fail_count': len(fails) if fail_count is None else fail_count,
+        'fail_count': counted,
         'name': name,
         'epistemic': epistemic,
-        'passed': not fails,
+        'passed': (counted == 0),
         'tier': tier,
         'key_result': key_result,
         'evidence': evidence,
