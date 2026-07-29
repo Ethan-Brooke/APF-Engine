@@ -7739,18 +7739,44 @@ def check_T_quantum_admissibility_condition():
           locking incurs zero distortion -- the classical case correctly
           fails QAC (no quantum structure forced).
 
-    Reading (2026-07-24, count-neutral cross-ref; no grade change). The QAC
-    is the framework's single un-forced bit, read one level below the
-    observable: whether the substrate carries a hidden preferred order
-    (Bohmian) or none (orthodox). The observable structure above it is
-    forced -- Sep/IJC, the incompatibility certifier, the correlation
-    geometry, the |c|=5/7 non-invasive-realizability facet
+    Reading (2026-07-24, count-neutral cross-ref; no grade change).  The
+    observable structure above the QAC is forced -- Sep/IJC, the
+    incompatibility certifier, the correlation geometry, the |c|=5/7
+    non-invasive-realizability facet
     (check_T_minimal_branch_selection_obstruction), and the conjectured
-    2*sqrt(2) ceiling. The two ontologies are empirically equivalent by
-    construction (Toner-Bacon 2003; Bohmian mechanics), so no observable-
-    admissibility principle can decide the branch; [P_regime] is exactly
-    this posture. Formal home: Paper 1 Technical Supplement,
+    2*sqrt(2) ceiling.  What is left un-forced is read one level below the
+    observable: whether the substrate carries a hidden preferred order
+    (Bohmian) or none (orthodox).  The two ontologies are empirically
+    equivalent by construction (Toner-Bacon 2003; Bohmian mechanics), so no
+    observable-admissibility principle can decide it; [P_regime] is exactly
+    this posture.  Formal home: Paper 1 Technical Supplement,
     sec:ontological-residue.
+
+    CORRIGENDUM (2026-07-28, count-neutral; no grade moved).  The sentence
+    above previously read "the QAC is the framework's SINGLE un-forced bit".
+    That is superseded and must not be cited.  The A2-exact arc of 2026-07-26
+    (v24.3.441) retired the G-hold-exact grant on the ruling that A2 read
+    EXACT is constitutive, and re-sited the reserved bit: per
+    check_T_nonlocal_tie_resolution, the selection ENGINE is
+    occupancy-INDEPENDENT [P] and what occupancy supplies is WHICH SIDE --
+    i.e. which alternative obtains.  The reserved bit is therefore the
+    OUTCOME (occupancy), and the orthodox-vs-Bohm residue is a distinct
+    [P_regime] item rather than the same one.  The Born stack's grades are
+    mapped in nonlocal_tie_resolution.py::born_grade_map (form [P_math];
+    operative law [P_structural], grant-free; the tie engine
+    [P_structural | occupancy]; the flat-tie floor [P_structural_reading];
+    the outcome [P_regime]).
+
+    AND A SEPARATION WORTH HAVING, established 2026-07-28.  Premises P1
+    (sandwich realization) and P2 (the load is the datum, the carrier is
+    notation) of T_presentation_gauge_forces_trace are NOT this reserved
+    bit and are not the QAC.  Both are empirically decidable in principle --
+    the .443 RESTRICTION (b2) survivor returns 1/8 against Born's 5/39 on
+    the same load and effect, a measurable difference -- whereas the QAC's
+    two branches are empirically equivalent BY CONSTRUCTION.  So the Born
+    arc is not hostage to the un-decidable bit.  Open items and what would
+    close them: APF Reference Docs/Reference - THE BORN LEDGER - Open Items
+    and What Would Close It (2026-07-28).md.
     """
     coh = _qac_witness_coherent_2level()
     cls = _qac_witness_classical_2level()
