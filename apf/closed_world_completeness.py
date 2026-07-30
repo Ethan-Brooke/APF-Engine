@@ -67,15 +67,43 @@ from typing import Dict, List, Tuple
 # =====================================================================
 
 def check_T_closed_ledger_reciprocity():
-    """T_closed_ledger_reciprocity: in a closed-world ledger with no
-    hidden debt, the prep-side and read-side cost-pairings agree.
+    """T_closed_ledger_reciprocity: the closed-ledger pairing identity.
 
-    Tier 3 [P_regime + accounting].  Paper 5 Supplement v5.97
-    section "Finite closed-world record completeness", Theorem
-    "Closed-ledger reciprocity".  This is the v5.43 unbundling
-    response to reviewer point 1: reciprocal calibration is not
-    postulated as a Barnum-Wilce-style self-duality axiom, it is a
-    consequence of finite ledger conservation.
+    Tier 3 [P_math | ALGEBRAIC IDENTITY ONLY -- the closure condition is
+    installed DEFINITIONALLY, not constrained; NO ledger content, computed].
+
+    SCOPE CORRIGENDUM 2026-07-29 (external audit, MAJOR, accepted).  This
+    check previously carried [P_regime+accounting] and the sentence
+    "reciprocal calibration is not postulated as a Barnum-Wilce-style
+    self-duality axiom, it is a consequence of finite ledger conservation."
+    THAT IS NOT WHAT EXECUTES, and the claim is WITHDRAWN.
+
+    What executes is the polarization identity.  The witness sets
+    t := p + m at the point of construction, so leg (ii) is
+        <p,m> = (1/2)(||p+m||^2 - ||p||^2 - ||m||^2),
+    an identity of any real inner-product space, true for every p and m
+    whatsoever.  The "no hidden debt" closure condition is not a constraint
+    the witness satisfies; it is the definition of t.  Legs (i) and (iii)
+    are the commutativity of real multiplication.  Nothing here computes,
+    constrains, or uses ledger conservation, positivity, or finiteness.
+
+    TWO DISCLOSURE LEGS NOW EXECUTE, so the vacuity is visible in-check
+    rather than only in this docstring:
+      (iv) with t supplied as an INDEPENDENT datum rather than as p + m,
+           the identity FAILS on an exhibited witness -- which is what
+           shows the identity was definitional;
+      (v)  all three original legs hold on a witness with NEGATIVE "costs",
+           so no positivity, floor, or conservation premise is doing work.
+
+    WHAT WOULD MAKE THIS A THEOREM (not attempted here): t must be an
+    independently given ledger datum, and a conservation law must be shown
+    to force t_i = p_i + m_i.  That is the whole content, and it is absent.
+
+    MAY NOT BE CITED AS: "reciprocal calibration is derived"; "self-duality
+    is derived from no-hidden-debt"; "the Barnum-Wilce axiom is discharged";
+    "the adjoint is structural rather than postulated"; or in support of any
+    matching-effect / preparation-load clause.  See the companion corrigendum
+    on check_T_closed_read_write_self_duality.
 
     Witness construction.  Take a finite ledger with three record
     events (x1, x2, x3) and per-event prep/measurement costs
@@ -132,27 +160,80 @@ def check_T_closed_ledger_reciprocity():
     assert abs(B_pm - B_swap) < 1e-12, \
         f"conjugate-swap invariance fails: B(p,m)={B_pm}, B(m,p)={B_swap}"
 
+    # ---- DISCLOSURE LEG (iv): the identity is DEFINITIONAL. -------------
+    # With t supplied as an independent ledger datum rather than as p + m,
+    # the "closed-world identity" fails.  So leg (ii) tested the definition
+    # of t, not a closure condition the witness had to satisfy.
+    t_independent = (9.0, 9.0, 9.0)
+    rhs_indep = 0.5 * (sum(ti * ti for ti in t_independent)
+                       - norm_sq(p) - norm_sq(m))
+    identity_is_definitional = abs(B_pm - rhs_indep) > 1e-9
+    assert identity_is_definitional, (
+        "leg (ii) must FAIL when t is an independent datum -- if it holds "
+        "there too, this disclosure leg is not exhibiting anything")
+
+    # ---- DISCLOSURE LEG (v): no ledger content. ------------------------
+    # All three original legs hold on a witness with NEGATIVE costs, so no
+    # positivity, cost floor, finiteness, or conservation premise is doing
+    # any work in this check.
+    p_neg = (-3.0, 5.0, -2.0)
+    m_neg = (4.0, -1.0, 6.0)
+    t_neg = tuple(p_neg[i] + m_neg[i] for i in range(3))
+    rhs_neg = 0.5 * (sum(ti * ti for ti in t_neg)
+                     - norm_sq(p_neg) - norm_sq(m_neg))
+    witness_is_actually_negative = (min(p_neg) < 0.0 and min(m_neg) < 0.0)
+    assert witness_is_actually_negative, (
+        "the disclosure witness must ACTUALLY carry negative costs on both "
+        "sides -- a non-negative witness probes no positivity premise and "
+        "this leg would exhibit nothing")
+    holds_on_negative_costs = (
+        abs(dot(p_neg, m_neg) - dot(m_neg, p_neg)) < 1e-12
+        and abs(dot(p_neg, m_neg) - rhs_neg) < 1e-12)
+    assert holds_on_negative_costs, (
+        "the legs must hold on negative costs too -- that is what shows no "
+        "ledger premise is load-bearing here")
+
+    passed = bool(identity_is_definitional and holds_on_negative_costs)
+
     return {
         "name": "T_closed_ledger_reciprocity",
-        "passed": True,
+        "passed": passed,
         "tier": 3,
-        "epistemic": "P_regime+accounting",
+        "epistemic": ("P_math | ALGEBRAIC IDENTITY ONLY -- the closure "
+                      "condition is installed definitionally, not "
+                      "constrained; no ledger content, computed"),
         "key_result": (
-            f"Reciprocal pairing B(p,m)={B_pm} symmetric on 3-event "
-            f"closed-world ledger; closed-world identity verified to "
-            f"machine precision; reciprocal calibration is structural"
+            f"THE POLARIZATION IDENTITY, and nothing more.  B(p,m)={B_pm} is "
+            f"symmetric and satisfies <p,m> = (1/2)(||p+m||^2 - ||p||^2 - "
+            f"||m||^2) -- an identity of any real inner-product space, "
+            f"because the witness DEFINES t := p + m.  COMPUTED DISCLOSURES: "
+            f"with t supplied independently the identity FAILS, which is what "
+            f"shows it was definitional; and all three legs hold on NEGATIVE "
+            f"costs, so no positivity, floor, finiteness or conservation "
+            f"premise is load-bearing.  The prior claim that reciprocal "
+            f"calibration is 'derived from finite ledger conservation' rather "
+            f"than postulated as a Barnum-Wilce self-duality axiom is "
+            f"WITHDRAWN (2026-07-29 external audit): nothing here computes "
+            f"ledger conservation."
+        ),
+        "may_not_cite": (
+            "reciprocal calibration is derived",
+            "self-duality is derived from no-hidden-debt",
+            "the Barnum-Wilce axiom is discharged",
+            "the adjoint is structural rather than postulated",
+            "this supports any matching-effect or preparation-load clause",
         ),
         "summary": (
-            "Finite closed-world ledger conservation forces the prep "
-            "and measurement cost vectors into a symmetric bilinear "
-            "pairing B(p, m) = sum p_i m_i.  This pairing is precisely "
-            "the operational content of the reciprocal-calibration "
-            "gate: an adjoint of a prep functional is just its swap "
-            "partner under B.  The gate is therefore not postulated "
-            "(as in Barnum-Wilce self-duality) but derived from the "
-            "no-hidden-debt structure of the closed-world ledger.  "
-            "This is the v5.43 reviewer-response unbundling for "
-            "regime gate (1)."
+            "SCOPE CORRIGENDUM 2026-07-29.  What executes is the "
+            "polarization identity on a witness that defines t := p + m, "
+            "plus the commutativity of real multiplication.  The "
+            "no-hidden-debt closure condition is the definition of t, not a "
+            "constraint, and two disclosure legs now compute that: the "
+            "identity fails when t is independent, and every leg survives "
+            "negative costs.  What would make this a theorem -- an "
+            "independently given t plus a conservation law forcing "
+            "t_i = p_i + m_i -- is absent and is not attempted here.  The "
+            "v5.43 reviewer-response reading of this check is withdrawn."
         ),
     }
 
@@ -982,21 +1063,45 @@ def check_T_constructive_commuting_realization():
 # =====================================================================
 
 def check_T_closed_read_write_self_duality():
-    """T_closed_read_write_self_duality: on a finite ledger with
-    closed read/write completeness, the read and write cones
-    coincide via the symmetric pairing.
+    """T_closed_read_write_self_duality: the non-negative orthant of R^3 is
+    self-dual.
 
-    Tier 3 [P_regime+accounting].  Paper 5 Supplement v5.97 (v5.44),
-    Theorem "Closed read/write self-duality".  This is a
-    sharper restatement of the closed-ledger reciprocity gate: not
-    only does the bilinear pairing exist, but the cone of
-    "preparation costs" coincides with the cone of "measurement
-    costs" -- self-duality.
+    Tier 3 [P_math | THE CLASSICAL SIMPLEX CONE ONLY -- no read cone and no
+    write cone are constructed; self-duality here is a textbook property of
+    R^n_+ and does NOT transfer to the quantum matching-effect question].
 
-    Witness: same 3-event ledger as check_T_closed_ledger_reciprocity,
-    augmented with an explicit cone of acceptable cost vectors
-    (componentwise non-negative).  The cone is its own dual under
-    the bilinear pairing B(p, m) = sum p_i m_i.
+    SCOPE CORRIGENDUM 2026-07-29 (external audit, MAJOR, accepted).  This
+    check previously carried [P_regime+accounting] and the sentence "the
+    cone of valid preparation cost vectors equals the cone of valid
+    measurement cost vectors as dual cones."  THAT IS NOT WHAT EXECUTES,
+    and the claim is WITHDRAWN.
+
+    There is no preparation cone and no measurement cone anywhere in the
+    computation.  Both are the SAME list of five vectors, filtered by
+    componentwise non-negativity.  What the legs verify is that
+    R^3_+ is self-dual -- true of R^n_+ for every n, and true because
+    R^n_+ is a SIMPLEX cone.  It is the classical cone.
+
+    WHY THAT MATTERS AND IS NOT A QUIBBLE.  Self-duality is a property of
+    the particular cone, not a consequence of having a symmetric pairing.
+    A new disclosure leg computes the standard counterexample: the
+    cross-polytope (l1) cone is NOT self-dual -- its dual is the cube
+    (l-infinity) cone -- exhibited exactly.  So no route may cite this
+    check to license a matching-effect, self-duality, or Barnum-Wilce
+    clause about a quantum state space: the one cone on which the property
+    is trivial is the one this check tested, and the effect cone that
+    actually threatens the matching-effect clause is the cross-polytope,
+    where it fails.
+
+    A second disclosure leg computes that R^3_+ has exactly 3 extreme rays
+    while the qubit PSD cone has a continuum (four distinct rank-one
+    projectors are exhibited), so the tested cone is not even of the same
+    combinatorial type as the object the reading claimed.
+
+    MAY NOT BE CITED AS: "read/write self-duality is derived"; "the
+    preparation and measurement cones coincide"; "the adjoint is not a
+    postulated involution"; "Barnum-Wilce self-duality is discharged"; or
+    in support of any matching rank-one effect being admitted.
     """
     n = 3
 
@@ -1051,27 +1156,92 @@ def check_T_closed_read_write_self_duality():
     summed = tuple(a[i] + b[i] for i in range(n))
     assert in_cone(summed)
 
+    # ---- DISCLOSURE LEG (v): SELF-DUALITY IS A PROPERTY OF THIS CONE. ---
+    # The cross-polytope (l1) cone is NOT self-dual: its dual is the cube
+    # (l-infinity) cone.  Exhibited exactly -- s lies in the dual (pairs
+    # non-negatively with every l1-ball generator, i.e. |s_i| <= 1) but is
+    # NOT in the l1 ball.  This is the cone that actually bears on the
+    # matching-effect question, and the property fails on it.
+    from fractions import Fraction as _F
+    l1_generators = [tuple(_F(1) if k == i else _F(0) for k in range(3))
+                     for i in range(3)]
+    l1_generators += [tuple(-x for x in g) for g in l1_generators]
+    s_dual = (_F(1), _F(1), _F(1))
+    pairs_nonneg_with_all = all(
+        sum(s_dual[k] * g[k] for k in range(3)) >= _F(0)
+        or sum(s_dual[k] * (-g[k]) for k in range(3)) >= _F(0)
+        for g in l1_generators)
+    in_dual_cube = max(abs(x) for x in s_dual) <= _F(1)
+    in_l1_ball = sum(abs(x) for x in s_dual) <= _F(1)
+    cross_polytope_not_self_dual = bool(in_dual_cube and not in_l1_ball)
+    assert cross_polytope_not_self_dual, (
+        "the cross-polytope cone must be exhibited as NOT self-dual -- if it "
+        "were, this disclosure leg would not be showing that self-duality is "
+        "special to the cone tested above")
+
+    # ---- DISCLOSURE LEG (vi): WRONG COMBINATORIAL TYPE. ----------------
+    # R^3_+ is a SIMPLEX cone with exactly 3 extreme rays.  The qubit PSD
+    # cone has a continuum; four distinct rank-one projectors are exhibited
+    # as Bloch vectors of unit length, pairwise non-proportional.
+    orthant_extreme_rays = 3
+    qubit_extreme_witnesses = [(_F(1), _F(0), _F(0)), (_F(0), _F(1), _F(0)),
+                               (_F(0), _F(0), _F(1)),
+                               (_F(3, 5), _F(4, 5), _F(0))]
+    unit_length = all(sum(x * x for x in r) == _F(1)
+                      for r in qubit_extreme_witnesses)
+    distinct = len({r for r in qubit_extreme_witnesses}) == 4
+    wrong_combinatorial_type = bool(
+        unit_length and distinct
+        and len(qubit_extreme_witnesses) > orthant_extreme_rays)
+    assert wrong_combinatorial_type, (
+        "the qubit witnesses must be unit-length, distinct, and more "
+        "numerous than the orthant's extreme rays, or this leg exhibits "
+        "nothing")
+
+    passed = bool(cross_polytope_not_self_dual and wrong_combinatorial_type)
+
     return {
         "name": "T_closed_read_write_self_duality",
-        "passed": True,
+        "passed": passed,
         "tier": 3,
-        "epistemic": "P_regime+accounting",
+        "epistemic": ("P_math | THE CLASSICAL SIMPLEX CONE ONLY -- no read "
+                      "cone and no write cone are constructed; does NOT "
+                      "transfer to the quantum matching-effect question"),
         "key_result": (
-            f"On 3-event ledger, the non-negative cone is verified "
-            f"self-dual under B(u,v) = sum u_i v_i: every cone "
-            f"element pairs >= 0 with every other cone element; "
-            f"every non-cone element has a negative-pair witness"
+            "R^3_+ IS SELF-DUAL, and that is the whole content.  No "
+            "preparation cone and no measurement cone are constructed "
+            "anywhere in this check -- both are the same five-vector list "
+            "filtered by componentwise non-negativity -- so the prior claim "
+            "that 'the cone of valid preparation cost vectors equals the "
+            "cone of valid measurement cost vectors' is WITHDRAWN "
+            "(2026-07-29 external audit).  TWO COMPUTED DISCLOSURES fence "
+            "the transfer: the cross-polytope (l1) cone is NOT self-dual -- "
+            "its dual is the cube, exhibited by s = (1,1,1) with "
+            "||s||_inf = 1 but ||s||_1 = 3 -- so self-duality is a property "
+            "of the particular cone and this check tested the one where it "
+            "is trivial; and R^3_+ has exactly 3 extreme rays against a "
+            "continuum for the qubit PSD cone (four unit-length, pairwise "
+            "distinct Bloch witnesses exhibited), so the tested cone is not "
+            "even of the right combinatorial type."
+        ),
+        "may_not_cite": (
+            "read/write self-duality is derived",
+            "the preparation and measurement cones coincide",
+            "the adjoint is not a postulated involution",
+            "Barnum-Wilce self-duality is discharged",
+            "this supports any matching rank-one effect being admitted",
         ),
         "summary": (
-            "Closed read/write completeness elevates closed-ledger "
-            "reciprocity to cone-level self-duality: the cone of "
-            "valid preparation cost vectors equals the cone of valid "
-            "measurement cost vectors as dual cones under the "
-            "symmetric pairing.  This is the structural content of "
-            "the adjoint operation on the record algebra -- the "
-            "adjoint is just the swap partner under the self-dual "
-            "pairing, not a postulated involution.  Verified on the "
-            "canonical 3-event finite witness."
+            "SCOPE CORRIGENDUM 2026-07-29.  What executes is the textbook "
+            "self-duality of the non-negative orthant on a five-vector "
+            "witness.  The read/write cone reading is withdrawn: there are "
+            "no two cones in the computation.  Two disclosure legs now "
+            "compute why the property does not transfer -- the "
+            "cross-polytope cone is not self-dual, and the orthant is a "
+            "simplex cone of the wrong combinatorial type for a quantum "
+            "state space.  The effect family that actually threatens the "
+            "matching-effect clause is the cross-polytope, where "
+            "self-duality fails."
         ),
     }
 
