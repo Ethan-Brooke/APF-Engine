@@ -621,8 +621,13 @@ def check_T_ladder_ceiling_calibration_from_saturation():
         (check_T_interface_sector_bridge, check_L_self_exclusion + T11 [P]);
       - sigma = S_dS / C_total = ln(d_eff), the intensive entropy per capacity
         type at saturation (check_L_sigma_intensive [P], from
-        check_T_deSitter_entropy S_dS = C_total ln(d_eff) = 61 ln102 = 282.1
-        nats, the observed de Sitter entropy).
+        check_T_deSitter_entropy, whose ledger log-count is
+        S_dS = C_total ln(d_eff) = 61 ln102 = 282.1 -- the LOGARITHM of the
+        de Sitter entropy, which is itself 102^61 nats. DICTIONARY (2026-07-30): the symbol S_dS here is the LEDGER LOG-COUNT
+    C_total*ln(d_eff) = 282.12 = ACC_SM (Paper 8's S_SM), which is the
+    LOGARITHM of the de Sitter entropy. The de Sitter entropy itself is
+    102^61 nats (= A/4 l_P^2). Symbol retained as legacy; see THE
+    DICTIONARY in check_T_deSitter_entropy (gravity.py).)
     With beta = 1 the calibration is EXACTLY e^{-beta*eps} = e^{-sigma} =
     1/d_eff: exciting one FENCE-A cell costs one distinction against the
     saturated maximally-mixed background rho = I/d_eff (check_L_KMS_trace_state).
@@ -656,8 +661,9 @@ def check_T_ladder_ceiling_calibration_from_saturation():
     sigma = _m.log(d_eff)
     S_dS = C_total * sigma
     check(abs(S_dS - 282.12) < 0.02,
-          "S_dS = C_total ln(d_eff) = 61 ln102 = %.3f nats reproduces the "
-          "observed dS entropy ~282.1 [T_deSitter_entropy]" % S_dS)
+          "S_dS = C_total ln(d_eff) = 61 ln102 = %.3f reproduces the ledger "
+          "log-count ACC_SM, i.e. ln of the observed de Sitter entropy "
+          "[T_deSitter_entropy]" % S_dS)
 
     # the ladder calibration eps IS sigma (beta = 1)
     eps = _LN102
@@ -695,7 +701,8 @@ def check_T_ladder_ceiling_calibration_from_saturation():
             'cost: sigma = S_dS/C_total = ln(d_eff) [L_sigma_intensive, P], with '
             'd_eff = (C_total-1)+C_vacuum = 60+42 = 102 the interface-stratum '
             'dimension [T_interface_sector_bridge, P] and S_dS = 61 ln102 = 282.1 '
-            'nats the observed de Sitter entropy [T_deSitter_entropy, P]. With '
+            'the ledger log-count, i.e. ln of the observed de Sitter entropy '
+            '[T_deSitter_entropy, P]. With '
             'beta = 1 the calibration is exactly e^{-eps} = 1/d_eff -- one '
             'distinction against the saturated rho = I/d_eff background -- so '
             'beta*eps = sigma = ln(d_eff) is the interface saturation cost, and '

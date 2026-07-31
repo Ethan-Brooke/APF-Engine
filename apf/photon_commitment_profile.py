@@ -31,7 +31,8 @@ SCOPE / HONEST NON-CLAIMS.
     C_gamma = 3 eps lands when that pin lands.
   * The 3/4 is NOT a reading of the coupling. The abelian coupling is the channel
     count 1/alpha_Y = S_dS/sigma = C_total = 61 (integer-rigid: 61 = 45+4+12 is an
-    integer partition, S_dS = 61*sigma is the banked de Sitter entropy tied to
+    integer partition, S_dS = 61*sigma is the banked ledger log-count -- ln of
+    the de Sitter entropy, which is 102^61 nats -- tied to
     Lambda = 42/61), and the 3/4 cannot enter it -- the photon contributes a FULL
     sigma to S_dS as a propagating mode while being a partial record. The 3/4 is the
     photon's RECORD STATE / force character (the N_commit reading, orthogonal to the

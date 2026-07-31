@@ -142,10 +142,16 @@ def check_L_QG_P1_closure():
     check(-123 < log10_LG < -121,
           f"Λ·G = 10^{log10_LG:.1f} (obs ~10^-122)")
 
-    # (c) Hierarchy: area-law DOF count
+    # (c) Hierarchy: ledger log-count. NOT the area-law DOF count -- the
+    # area-quarter is 102^61, and this is its logarithm.
+    # DICTIONARY (2026-07-30): the symbol S_dS here is the LEDGER LOG-COUNT
+    # C_total*ln(d_eff) = 282.12 = ACC_SM (Paper 8's S_SM), which is the
+    # LOGARITHM of the de Sitter entropy. The de Sitter entropy itself is
+    # 102^61 nats (= A/4 l_P^2). Symbol retained as legacy; see THE
+    # DICTIONARY in check_T_deSitter_entropy (gravity.py).
     S_dS = C_total * math.log(d_eff)
     check(abs(S_dS - 282.1) < 0.1,
-          f"S_dS = {S_dS:.1f} nats")
+          f"ACC_SM = ln(S_dS) = {S_dS:.1f}")
 
     # (d) Absolute scale: v from M_Pl
     M_Pl = 1.22089e19

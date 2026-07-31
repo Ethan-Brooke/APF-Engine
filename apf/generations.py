@@ -7282,7 +7282,9 @@ def check_L_Fisher_entropy_budget():
     Step 4: PMNS: sin²θ₁₂ + sin²θ₂₃ + sin²θ₁₃ = 0.896
     → ΔS_PMNS = 51 × 0.896 = 45.70 nats
 
-    Step 5: Total = 48.36 nats. S_dS = 61 × ln(102) = 282.1 nats.
+    Step 5: Total = 48.36 nats. S_dS = 61 × ln(102) = 282.1 -- the ledger
+    LOG-COUNT ACC_SM (ln of the de Sitter entropy, which is 102^61 nats;
+    symbol retained as legacy, see THE DICTIONARY in check_T_deSitter_entropy).
     Ratio: 48.36/282.1 = 17.1%.
 
     CP phase cost is third-order in mixing: ΔS_CP ~ c₁₂ c₂₃ c₁₃ ~ 10⁻⁵.

@@ -107,9 +107,11 @@ def check_T_concordance():
     ======================================================================
     SECTOR 7: DE SITTER ENTROPY [P, from T_deSitter_entropy]
     ======================================================================
-      S_dS = 61 * ln(102) = 282.12 nats
+      S_dS     = d_eff^C_total = 102^61 ~ 10^{122.5} nats  (= A/4 l_P^2)
       S_dS_obs = pi / (Lambda * G) ~ 10^{122.5}  (in Planck units)
-      These must match (consistency check with T10).
+      These must match, and they do (2.13%).
+      The ledger LOG-COUNT ACC_SM = 61*ln(102) = 282.12 is ln(S_dS) and
+      is NOT the entropy -- see the SECTOR 7 note in the body.
 
     STATUS: Mixed. Sectors 1-2 are [P] (exact from capacity counting).
     Sectors 3-6 are [P_structural] (model-dependent numerical estimates).
@@ -302,30 +304,38 @@ def check_T_concordance():
     # ================================================================
     # SECTOR 7: DE SITTER ENTROPY
     # ================================================================
-    S_dS = C_total * _math.log(d_eff)  # = 282.12 nats
-    # Cross-check: S_dS = pi / (Lambda * G) in Planck units
-    # Lambda * G = 3*pi / 102^61
-    # pi / (Lambda * G) = pi * 102^61 / (3*pi) = 102^61 / 3
-    # ln(102^61 / 3) = 61*ln(102) - ln(3) = 282.12 - 1.10 = 281.02
-    # This should be close to S_dS = 282.12
-    # The small discrepancy is from the 3*pi prefactor vs pi.
-    # Actually: S = ln(N_microstates) = ln(102^61) = 61*ln(102) = 282.12
-    # The Bekenstein formula gives S = A/(4G) = pi/(Lambda*G) = pi*102^61/(3pi) = 102^61/3
-    # So S_Bek = ln(102^61/3) != 61*ln(102), because Bek entropy is the LOG of microstates
-    # Actually S_Bek = A/(4G) is already the entropy in nats/bits, not ln(N).
-    # S = pi / (Lambda*G) = pi * 102^61 / (3*pi) = 102^61 / 3
-    # This is HUGE (~10^{122}). But S_dS from capacity = 282 nats.
-    # The reconciliation: S_dS = C_total * ln(d_eff) = ln(d_eff^C_total) = ln(102^61)
-    # The Bekenstein entropy is S_Bek = 102^61 / 3 (in Planck units with particular normalization)
-    # These are different normalizations of the same thing.
-    # In the capacity framework: N_microstates = 102^61, S = ln(N) = 282 nats.
-    S_dS_nats = C_total * _math.log(d_eff)
-    N_microstates = d_eff ** C_total  # = 102^61
+    # SECTOR 7 NOTE (corrigendum 2026-07-30). The comment block that stood
+    # here worked the tension and left it open, concluding "these are
+    # different normalizations of the same thing." They are not. The
+    # resolution:
+    #
+    #   S_Bek = A/(4 l_P^2) is ALREADY the entropy in nats. It is not ln(N).
+    #   T10 banks Lambda*G = 3*pi/102^61, and for de Sitter A/4 = 3*pi/(Lambda*G)
+    #   exactly, so A/4 = 102^61 and therefore S_dS = 102^61 nats.
+    #   The count=area anchor is what identifies the ledger's 102^61
+    #   configurations with the horizon's 102^61 Planck cells; the Boltzmann
+    #   relation S = ln(N) is then NOT also available for the same N.
+    #   61*ln(102) = 282.12 is ln(S_dS) -- the ledger LOG-COUNT ACC_SM,
+    #   Paper 8's S_SM -- and it is what feeds 1/alpha_cross = ACC/6,
+    #   N_e = ACC/2, eta_B and T_univ. It is not the de Sitter entropy.
+    #
+    # Finding: "Reference - FINDING - The de Sitter Entropy Question,
+    # Answered (2026-07-30)". Anchor: check_L_epsilon_star_Planck Step 5.
+    S_dS = d_eff ** C_total                        # the entropy, in nats
+    acc_sm = C_total * _math.log(d_eff)            # = 282.12 = ln(S_dS)
+    # Cross-check against T10, in log space:
+    #   A/4 = 3*pi/(Lambda*G) = 102^61  =>  log10 = 61*log10(102) = 122.5246
+    log10_S_dS = C_total * _math.log10(d_eff)
+    N_microstates = d_eff ** C_total  # = 102^61 configurations = A/4 cells
 
     results['deSitter'] = {
-        'S_dS_nats': round(S_dS_nats, 2),
-        'N_microstates': f'{d_eff}^{C_total}',
-        'log10_N': round(C_total * _math.log10(d_eff), 1),
+        'S_dS_nats': f'{d_eff}^{C_total} ~ 1e{log10_S_dS:.1f}',
+        'ACC_SM_log_count_nats': round(acc_sm, 2),
+        'N_configurations': f'{d_eff}^{C_total}',
+        'log10_N': round(log10_S_dS, 1),
+        'dictionary': ('S_dS = A/4 = 102^61 nats (entropy); '
+                       'ACC_SM = 61*ln(102) = 282.12 = ln(S_dS) '
+                       '(ledger log-count, NOT the entropy)'),
         'consistent_with_T10': True,
     }
 
@@ -807,13 +817,19 @@ def check_T_inflation():
           S(k) = k * ln(d_eff)
         where k is the number of committed types and d_eff = 102
         (L_self_exclusion [P]).
-    (3) The de Sitter radius R_dS relates to entropy by:
-          S_dS = pi * R_dS^2 / l_P^2
+    (3) The de Sitter radius R_dS relates to the horizon entropy by:
+          S_horizon = pi * R_dS^2 / l_P^2
         so R_dS grows as types commit.
-    (4) Each type commitment increases the horizon entropy by
+    (4) Each type commitment increases the horizon LOG-COUNT by
         ln(d_eff) = ln(102) = 4.625 nats, expanding the horizon.
     (5) The total expansion: N_e_max = S_dS / 2 = 61*ln(102)/2 = 141.1
         e-folds, well exceeding the ~60 required.
+        DICTIONARY (2026-07-30): the S_dS consumed at (5) is the ledger
+        LOG-COUNT ACC_SM = 61*ln(102) = 282.12, which is ln of the de Sitter
+        entropy; that entropy is itself 102^61 nats. The e-fold ceiling is a
+        division of the log-count, not of the entropy -- halving 102^61 would
+        give 1.7e122 e-folds, which is not what is meant. Symbol retained as
+        legacy; see THE DICTIONARY in check_T_deSitter_entropy (gravity.py).
 
     PRE-INFLATIONARY STATE:
       Before any types commit (k = 0): S = 0, no horizon structure.
@@ -1207,10 +1223,12 @@ def check_T_baryogenesis():
     check(config_entropy == 1061208, f"d_eff^N_gen = {config_entropy}")
 
     # ================================================================
-    # Step 4: Horizon entropy
+    # Step 4: Horizon ledger log-count (ACC_SM = ln of the de Sitter entropy;
+    # the entropy itself is 102^61 -- legacy symbol, see THE DICTIONARY in
+    # check_T_deSitter_entropy)
     # ================================================================
     S_dS = C_total * _math.log(d_eff)
-    check(abs(S_dS - 282.123) < 0.01, f"S_dS = {S_dS:.3f}")
+    check(abs(S_dS - 282.123) < 0.01, f"ACC_SM = ln(S_dS) = {S_dS:.3f}")
 
     # ================================================================
     # Step 5: Assembly
@@ -1303,7 +1321,7 @@ def check_T_baryogenesis():
             f'(obs {eta_B_observed:.2e}, error {error_pct:.1f}%). '
             f'Microcanonical counting: d^N routing configs for N=3 '
             f'distinguishable generations (T_capacity_ladder [P]) in '
-            f'd=102 states, normalized by S_dS entropy (definitional). '
+            f'd=102 states, normalized by the S_dS log-count (definitional). '
             f'd^N uniquely selected: d^(N-1) gives 88x, d^(N+1) gives '
             f'125x, d^N/N! gives 5x off. '
             f'Five [P] inputs, zero free parameters. '
@@ -1340,13 +1358,14 @@ def check_T_baryogenesis():
             },
             'dilution_factors': {
                 'generation_config': f'd_eff^N_gen = {config_entropy}',
-                'horizon_entropy': f'S_dS = {S_dS:.1f} nats',
+                'horizon_log_count': f'ACC_SM = ln(S_dS) = {S_dS:.1f} nats',
                 'total': f'{denominator:.0f}',
             },
             'physical_interpretation': (
                 'CP bias (maximal) seeds asymmetry in baryonic routing. '
                 'Diluted by: (a) generation routing entropy (102^3 configs), '
-                '(b) horizon entropy (282 nats). '
+                '(b) the horizon log-count ACC_SM = ln(S_dS) = 282 nats '
+                '(NOT the de Sitter entropy, which is 102^61 nats). '
                 'Frozen by L_irr at saturation transition.'
             ),
             'no_free_parameters': True,

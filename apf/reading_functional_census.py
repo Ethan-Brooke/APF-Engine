@@ -53,7 +53,9 @@ instances; it forces nothing and proves nothing by itself.
        operationalization). For gauge readings, state-canonical closure is
        UNAVAILABLE by the not-a-state-function corollary (recomputed live
        in the registered sentinel): the abelian 61 and non-abelian 47.02
-       read the SAME S_dS = 282.12 and return different values.
+       read the SAME horizon log-count S_dS = 282.12 and return different
+       values. (S_dS is the ledger LOG-COUNT, ln of the de Sitter entropy
+       102^61; legacy symbol, see THE DICTIONARY in check_T_deSitter_entropy.)
 
 THE ASYMMETRY, PRINCIPLED -- MODULO THE PHI-IDENTIFICATION (.314 terminal;
 audit correction). Why is bosonic-16 admissible-and-forced where charged-45

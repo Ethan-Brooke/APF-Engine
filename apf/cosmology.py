@@ -2775,7 +2775,8 @@ def check_L_singularity_resolution():
     # At k=61: present universe
     S_final = C_total * _m.log(d_eff)
     check(abs(S_final - 282.12) < 0.1,
-          f"S(k=61) = {S_final:.2f} = S_dS (present de Sitter entropy)")
+          f"S(k=61) = {S_final:.2f} = ACC_SM (the present ledger log-count; "
+          f"the de Sitter entropy is its exponential, 102^61 nats)")
 
     return _result(
         name='L_singularity_resolution: Big Bang Singularity Avoidance',

@@ -129,8 +129,10 @@ CLAIM_REFRESH: Dict[str, Dict[str, Any]] = {
             "Horizon area as fiber-cost with capacity bound is banked via "
             "the fiber-cost classifier; the area-law/microstate identity "
             "is COMPUTED, not asserted (check_T_horizon_arealaw_microstate_"
-            "consistency [P], v24.3.272 corrigendum: A/4 = 3 pi/(Lambda G) "
-            "= 102^61 with S_dS = ln(A/4) = 282, two distinct identities)."
+            "consistency [P], v24.3.272 corrigendum, superseded by the "
+            "2026-07-30 dictionary corrigendum: A/4 = 3 pi/(Lambda G) = 102^61 "
+            "IS the de Sitter entropy by T_Bek, and 282 = ln(A/4) is the ledger "
+            "log-count ACC_SM -- two distinct identities, in that order)."
         ),
         "provenance": ["check_T_horizon_arealaw_microstate_consistency",
                         "horizon_fiber_cost_classifier"],

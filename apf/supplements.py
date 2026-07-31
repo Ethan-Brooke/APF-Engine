@@ -4334,8 +4334,12 @@ def check_L_RT_capacity():
 
         S(A) = k · ln(d_eff) = (k / C_total) · S_dS
 
-    where S_dS = C_total · ln(d_eff) = 282.12 is the total de Sitter entropy
-    (T_deSitter_entropy [P]).
+    where S_dS = C_total · ln(d_eff) = 282.12 is the total ledger LOG-COUNT
+    ACC_SM (T_deSitter_entropy [P]) --- the logarithm of the de Sitter entropy,
+    which is itself 102^61 nats. Symbol S_dS retained as legacy; see THE
+    DICTIONARY in check_T_deSitter_entropy (gravity.py). Everything below is a
+    statement about the ledger's marginal entropies and their FRACTIONS, and is
+    unaffected by which of the two scalars carries the name.
 
     This realizes the FORM of the Ryu-Takayanagi (RT) relation at uniform
     density:
@@ -4382,8 +4386,19 @@ def check_L_RT_capacity():
     Step 3 — Area identification [L_equip P + T_Bek P]:
       L_equip: each type contributes equally to the Bekenstein entropy.
       T_Bek: S_Bek = Area/(4G).
-      L_equip + T_Bek → each type occupies area = S_dS/(C_total) in units
-      of 4G. Therefore Area(γ_A)/4G = k · (S_dS/C_total) = k · ln(d_eff).
+      L_equip + T_Bek → each type occupies the FRACTION 1/C_total of the
+      horizon area. That fractional statement is what this check executes and
+      what the RT form needs.
+
+      SCOPE (corrigendum 2026-07-30). The ABSOLUTE reading of this step ---
+      "area per type = S_dS/C_total = ln(d_eff) in units of 4G", hence
+      Area/4G = S_dS = 282 --- is WITHDRAWN. It puts the de Sitter area-quarter
+      at 282 Planck cells, against A/4 = 3π/(ΛG) = 102^61 from T10, and it is
+      the one-logarithm displacement the 2026-07-30 dictionary corrigendum
+      names. A capacity type occupies 102^61/61 Planck cells, not ln(102) and
+      not one. No executed leg here consumed the absolute form: the area legs
+      below are normalized (area_per_type = 1/C_total), so they are fractional
+      and survive intact.
 
     KEY RESULT — RT FORMULA:
       The APF RT formula is exact for the de Sitter horizon:
@@ -4401,7 +4416,9 @@ def check_L_RT_capacity():
       spatial gradients in admissibility density) would require a true
       minimal surface computation. The APF result is RT at uniform density.
 
-    STATUS: [P] for the marginal-entropy identity S(A) = (k/C_total)·S_dS
+    STATUS: [P] for the marginal-entropy identity S(A) = (k/C_total)·S_dS,
+    which is a statement about the ledger's log-counts and is independent of
+    the absolute area normalization withdrawn above.
     (correct math on the maximally-mixed saturation state; this is what the
     downstream consumers — the Page curve, the QEC wedge — rely on). The
     holographic/"entanglement-entropy" READING of S(A) is
@@ -4454,8 +4471,10 @@ def check_L_RT_capacity():
     check(abs(S_AB - (k_A * S_1 + k_B * S_1)) < 1e-12,
           f"S(A∪B) = S(A)+S(B) = {S_AB:.4f} (additive for product state)")
 
-    # Area identification: k types → Area = k/C_total of total horizon area
-    # From L_equip + T_Bek: equal area per type
+    # Area identification: k types → Area = k/C_total of total horizon area.
+    # FRACTIONAL only (corrigendum 2026-07-30): the absolute area-quarter is
+    # 102^61, not S_dS = 282, so this normalizes rather than dimensionalizes.
+    # From L_equip + T_Bek: equal area FRACTION per type
     area_per_type = 1.0 / C_total  # normalized units
     check(abs(C_total * area_per_type - 1.0) < 1e-14, "C_total areas sum to full horizon")
     check(abs(S_dS * area_per_type - S_1) < 1e-14,
@@ -8736,7 +8755,8 @@ def check_L_QEC_wedge_duality():
         A reconstructs all 19 matter types.
         Ā reconstructs NO matter types (they're in A, not Ā) and
           no vacuum types (global locking).
-        → Ā encodes S_vac = Ω_Λ · S_dS entropy without accessible bulk operators.
+        → Ā encodes S_vac = Ω_Λ · S_dS of the ledger log-count without
+          accessible bulk operators.
           This is the holographic dual of the vacuum cosmological constant.
 
       For A = vacuum fraction (k = C_vac = 42):
@@ -12837,6 +12857,13 @@ def check_L_metric_from_entanglement_data():
     # Continuum: S(A) = Area(γ_A)/(4G_N)
     # Matching: k · s₁ = Area(γ_A)/(4G_N)
     # → Area(γ_A) = 4G_N · k · s₁ = k · l_P² (one Planck area per type)
+    # SCOPE (corrigendum 2026-07-30): "one Planck area per type" is the
+    # NORMALIZATION OF THIS TOY, not the physical de Sitter horizon. The
+    # physical area-quarter is 3π/(ΛG) = 102^61 Planck cells (T10), so a
+    # capacity type occupies 102^61/61 of them. What the discrete↔continuum
+    # matching below establishes is the LINEARITY Area ∝ k, which is what
+    # Step 4 uses; the unit is set by the toy's s₁ = ln 2 and carries no
+    # claim about the horizon's absolute size.
 
     for k in range(1, C_total + 1):
         S_discrete = k * s_1
@@ -12844,11 +12871,13 @@ def check_L_metric_from_entanglement_data():
         check(Area_from_S > 0,
               f"k={k}: Area = {Area_from_S:.4f} l_P²")
 
-    # At saturation (k = C_total): Area = C_total l_P² = de Sitter horizon area
+    # At saturation (k = C_total): Area = C_total l_P² in the toy's units.
+    # This is the toy's saturation area, NOT the physical de Sitter horizon
+    # (whose area-quarter is 102^61 -- see the scope note above).
     A_dS = C_total * (4 * G_N * s_1)
-    S_dS = A_dS / (4 * G_N)
-    check(abs(S_dS - C_total * s_1) < 1e-10,
-          f"S_dS = {S_dS:.2f} = C·ln2 = {C_total * s_1:.2f}")
+    S_toy = A_dS / (4 * G_N)
+    check(abs(S_toy - C_total * s_1) < 1e-10,
+          f"toy saturation: A/(4G) = {S_toy:.2f} = C·ln2 = {C_total * s_1:.2f}")
 
     # ══════════════════════════════════════════════════════════════════
     #  Counting: how many "coordinates" of g are fixed?

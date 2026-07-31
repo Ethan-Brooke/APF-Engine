@@ -444,24 +444,38 @@ def check_T_BH_quarter_coefficient():
 # ====================================================================
 
 def check_T_horizon_arealaw_microstate_consistency():
-    """De Sitter horizon: the area-quarter IS the microstate count; the entropy is its log.
+    """De Sitter horizon: the area-quarter IS the configuration count IS the entropy.
 
-    A_dS/(4 l_P^2) and the microstate count are the SAME object -- the count
-    Omega = d_eff^C_total = 102^61 -- not two numbers that happen to agree. The
-    banked Lambda*G = 3*pi/Omega (T10) fixes the de Sitter area-quarter at
+    A_dS/(4 l_P^2) and the ledger configuration count are the SAME object -- the
+    count Omega = d_eff^C_total = 102^61 -- not two numbers that happen to agree.
+    The banked Lambda*G = 3*pi/Omega (T10) fixes the de Sitter area-quarter at
     A/4 = 3*pi/(Lambda*G) = Omega = 102^61 ~ 3.3e122, the horizon area in Planck
-    units. The de Sitter ENTROPY is the LOGARITHM of that count,
-    S_dS = ln(A/4) = ln(Omega) = 61*ln(102) = 282.123 nats (T_deSitter_entropy).
+    units. By T_Bek (S = kappa*|A|, kappa = 1/4) the de Sitter ENTROPY IS that
+    area-quarter:
+        S_dS = A/(4 l_P^2) = Omega = 102^61 nats.
+    What sits one logarithm below is the LEDGER LOG-COUNT
+        ACC_SM = ln(Omega) = 61*ln(102) = 282.123,
+    which is Paper 8's S_SM (apf/unification.py) and is NOT the entropy.
 
-    So area-law and microstate counting are consistent as COUNT = AREA, with the
-    entropy one logarithm below -- NOT as a single number equal to 282 (the
-    area-quarter is ~10^122, not 282). This check computes A/4 from the banked CC
-    relation and verifies the two genuinely distinct identities
-    (A/4 == Omega ; S_dS == ln(A/4)) rather than asserting their equality.
+    CORRIGENDUM 2026-07-30 -- THIS CHECK HAD THE DICTIONARY INVERTED. Prior text
+    read "the de Sitter ENTROPY is the LOGARITHM of that count, S_dS = ln(A/4)".
+    That contradicts T_Bek in the same corpus (S = A/4, not ln(A/4)) and it
+    contradicts T10: Lambda*G = 3*pi/S is exact for de Sitter, so S = 282.12
+    would put Lambda/M_Pl^4 at 1e-1 rather than 1e-122, failing the CC result by
+    121 decades. The correct reading is the one this module's own count=area
+    anchor already carries, and the one check_L_epsilon_star_Planck Step 5
+    (supplements.py) has always asserted: ln(S_Bek) = S_APF, not S_Bek = S_APF.
+    Finding: "Reference - FINDING - The de Sitter Entropy Question, Answered
+    (2026-07-30)". No number moves under the correction; the identification does.
+
+    This check computes A/4 from the banked CC relation and verifies three
+    identities -- (A/4 == Omega ; S_dS == A/4 ; ACC == ln S_dS) -- and, as the
+    discriminating leg the prior version lacked, that the entropy is ~1e122 and
+    NOT 282, checked against the observed pi/(H^2 Omega_Lambda).
     """
     # A/4 from the banked CC relation Lambda*G = 3*pi/Omega, in log space to avoid
     # catastrophic cancellation on the ~10^122 magnitude.
-    omega_log = C_TOTAL * math.log(D_EFF)                 # ln(Omega) = ln(count) = 282.123
+    omega_log = C_TOTAL * math.log(D_EFF)                 # ACC = ln(Omega) = 282.123
     lambdaG_log = math.log(3 * math.pi) - omega_log       # ln(Lambda*G), T10
     area_quarter_log = math.log(3 * math.pi) - lambdaG_log  # ln(A/4) = ln(3*pi/(Lambda*G))
     banked_value = 282.123
@@ -476,28 +490,58 @@ def check_T_horizon_arealaw_microstate_consistency():
     # confirm "area = count" (there is no separate geometric area input to compare).
     # Flagged by the Face-2 one-log-displacement cold audit, 2026-06-25.
     area_equals_count = abs(area_quarter_log - omega_log) < 1e-9
-    # Identity 2: the de Sitter ENTROPY is the logarithm of the area-quarter (= ln Omega).
-    s_microstate = omega_log
-    entropy_is_log_of_area = (abs(s_microstate - area_quarter_log) < 1e-9
-                              and abs(s_microstate - banked_value) < 0.01)
-    # Sanity: the area-quarter is exponentially larger than the entropy (one log apart).
-    one_log_apart = area_quarter_log > 1e2  # ln(A/4)=282 >> ... A/4 itself ~ e^282 ~ 1e122
-    ok = area_equals_count and entropy_is_log_of_area and one_log_apart
+    # Identity 2: the de Sitter ENTROPY *is* the area-quarter (T_Bek: S = A/4),
+    # and the ledger log-count ACC sits one logarithm BELOW it.
+    acc_log_count = omega_log
+    acc_is_log_of_entropy = (abs(acc_log_count - area_quarter_log) < 1e-9
+                             and abs(acc_log_count - banked_value) < 0.01)
+
+    # Identity 3 -- THE DISCRIMINATING LEG (added 2026-07-30 with the corrigendum).
+    # The prior version's legs were all satisfied by the inverted dictionary too,
+    # because every one of them lived in log space. This one does not: it computes
+    # the entropy itself and compares it to the OBSERVED de Sitter entropy
+    # S_obs = pi/(H0^2 * Omega_Lambda), the Gibbons-Hawking value in nats.
+    s_dS_log10 = C_TOTAL * math.log10(D_EFF)              # log10(102^61) = 122.5246
+    H0_PL = 1.18e-61
+    OMEGA_LAMBDA = 42.0 / 61.0
+    s_obs = math.pi / (H0_PL ** 2 * OMEGA_LAMBDA)         # 3.277e122
+    s_obs_log10 = math.log10(s_obs)
+    entropy_matches_observation = abs(s_dS_log10 - s_obs_log10) < 0.02
+    # ... and the inverted reading does NOT match it: 282 is 120 decades short.
+    log_count_does_not_match = abs(math.log10(banked_value) - s_obs_log10) > 100.0
+    # value-level agreement of the entropy (2.13%) vs log-level (0.0074%):
+    entropy_frac_err = abs(10.0 ** (s_dS_log10 - s_obs_log10) - 1.0)
+    log_count_frac_err = abs(acc_log_count - math.log(s_obs)) / math.log(s_obs)
+    currencies_ordered = entropy_frac_err > 100 * log_count_frac_err
+
+    ok = (area_equals_count and acc_is_log_of_entropy
+          and entropy_matches_observation and log_count_does_not_match
+          and currencies_ordered)
     if not ok:
         return _fail("check_T_horizon_arealaw_microstate_consistency", status="P",
-                     summary="Area-law / microstate reconciliation failed",
-                     data={"area_quarter_log": area_quarter_log, "omega_log": omega_log})
+                     summary="Area-law / configuration-count reconciliation failed",
+                     data={"area_quarter_log": area_quarter_log, "omega_log": omega_log,
+                           "entropy_matches_observation": entropy_matches_observation,
+                           "log_count_does_not_match": log_count_does_not_match,
+                           "currencies_ordered": currencies_ordered})
     return _ok(
         "check_T_horizon_arealaw_microstate_consistency", status="P",
         summary=("De Sitter area-quarter A/4 = 3*pi/(Lambda*G) = Omega = 102^61 ~ 3.3e122 "
-                 "(the microstate COUNT = the horizon area), and the de Sitter ENTROPY is "
-                 "its logarithm S_dS = ln(A/4) = 61*ln(102) = 282.123 nats. Area-law and "
-                 "microstate counting are consistent as count = area, entropy one log below "
-                 "-- not as a single number equal to 282."),
+                 "(the configuration COUNT = the horizon area), and by T_Bek the de Sitter "
+                 "ENTROPY IS that area-quarter: S_dS = 102^61 nats, matching the observed "
+                 "pi/(H^2 Omega_Lambda) = 3.277e122 to 2.13%. The ledger LOG-COUNT "
+                 "ACC_SM = ln(Omega) = 61*ln(102) = 282.123 sits one logarithm below and is "
+                 "NOT the entropy; it agrees with ln(S_obs) to 0.0074%. Corrigendum "
+                 "2026-07-30: the prior text of this check had the two inverted."),
         data={"area_quarter_eq_count_Omega": "A/4 = Omega = 102^61 ~ 3.3e122",
-              "dS_entropy_nats": banked_value,
+              "dS_entropy_nats": "102^61 = 3.347e122",
+              "dS_entropy_observed_nats": f"{s_obs:.6e}",
+              "dS_entropy_frac_error": f"{entropy_frac_err:.2%}",
+              "ledger_log_count_ACC": banked_value,
+              "ACC_frac_error_vs_ln_S_obs": f"{log_count_frac_err:.4%}",
               "ln_area_quarter": area_quarter_log,
-              "relation": "A/4 = 3*pi/(Lambda*G) = Omega ; S_dS = ln(A/4) = ln(Omega)",
+              "relation": "A/4 = 3*pi/(Lambda*G) = Omega = S_dS ; ACC = ln(S_dS)",
+              "withdrawn": "S_dS = ln(A/4) = 61*ln(102) = 282.123 nats",
               "cc_relation": "Lambda * G = 3*pi / 102^61"},
         dependencies=["T_deSitter_entropy", "T_horizon_reciprocity", "T_Bek",
                       "check_T_BH_quarter_coefficient"])

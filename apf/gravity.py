@@ -539,9 +539,17 @@ def check_T_deSitter_entropy():
 
     v4.3.6 NEW.
 
-    STATEMENT: The de Sitter entropy of the observable universe is:
+    STATEMENT: The de Sitter entropy of the observable universe is
 
-        S_dS = C_total * ln(d_eff)
+        S_dS = d_eff^C_total = 102^61 nats,
+
+    equivalently the horizon area-quarter A/(4*l_P^2) = 102^61. Its
+    LOGARITHM is the capacity ledger's log-count scalar
+
+        ln(S_dS) = C_total * ln(d_eff) = 61*ln(102) = 282.123,
+
+    which is ACC_SM (Paper 8's S_SM; apf/unification.py) and is NOT the
+    de Sitter entropy. See THE DICTIONARY, below.
 
     where:
         C_total = dag_get('C_total', default=61, consumer='T_deSitter_entropy') (capacity types, T_field [P])
@@ -553,10 +561,18 @@ def check_T_deSitter_entropy():
 
     PROOF (5 steps, all from [P] theorems):
 
-    Step 1 [T_Bek, P]:
+    Step 1 [T_Bek, P + count=area anchor]:
       At the de Sitter horizon (Bekenstein saturation), the entropy is
-      the logarithm of the number of distinguishable configurations:
-        S = ln(Omega)
+      the area-quarter in Planck units:
+        S = kappa * |A| with kappa = 1/4, i.e. S = A/(4*l_P^2).
+      The count=area anchor (ANCHORED, NOT DERIVED -- Face-2 Move 4;
+      horizon_ledger_reindexing.py) identifies that area-quarter with
+      the capacity ledger's configuration count:
+        A/(4*l_P^2) = Omega.
+      The anchor is what carries the identification. The Boltzmann
+      relation S = ln(Omega) is NOT also available for the same Omega:
+      if A/4 = Omega and S = A/4, then S = Omega, and the horizon's
+      Boltzmann microstate count is e^(Omega), not Omega.
 
     Step 2 [T_field, P]:
       The capacity ledger has C_total = 61 distinguishable types.
@@ -583,12 +599,20 @@ def check_T_deSitter_entropy():
 
     Step 5 [Result]:
       Omega = d_eff^C_total = 102^61.
-      S_dS = C_total * ln(d_eff) = 61 * ln(102).
+      S_dS = A/(4*l_P^2) = Omega = 102^61 nats.
+      ln(S_dS) = C_total * ln(d_eff) = 61*ln(102) = 282.123 = ACC_SM.
 
     NUMERICAL VERIFICATION:
-      S_dS(predicted) = 61 * ln(102) = 282.123 nats
-      S_dS(observed)  = ln(3.277 * 10^122) = 282.102 nats
-      Error: 0.007%
+      S_dS(predicted) = 102^61          = 3.347e122 nats
+      S_dS(observed)  = pi/(H^2*Omega_L) = 3.277e122 nats
+      Error on the entropy itself: 2.13%
+      Error on its logarithm (61*ln(102) = 282.123 vs
+        ln(S_observed) = 282.102): 0.0074%
+      The two figures are the same agreement stated in two currencies
+      and should be quoted together. The 2.13% is the honest sibling of
+      the H0 line below (66.83 predicted vs 67.36 observed, 1.0 sigma);
+      a genuine 0.0074% pin ON THE ENTROPY would imply an H0 agreement
+      three orders tighter than this same check reports.
 
       Using S_dS = pi / (H^2 * Omega_Lambda) with Omega_Lambda = 42/61:
       Predicted H0 = 66.83 km/s/Mpc  [FORK-CONDITIONAL: this is the
@@ -612,10 +636,36 @@ def check_T_deSitter_entropy():
     The same 42 appears in Omega_Lambda = 42/61 (T11, Corollary C1).
 
     STATUS: [P] -- all five steps use [P] theorems, scoped to the
-    entropy/exponent content S_dS = 61*ln(102) (equivalently
-    Omega = 102^61). No new imports and no new axioms FOR THE
+    entropy/exponent content S_dS = Omega = 102^61 (equivalently
+    ln(S_dS) = 61*ln(102)). No new imports and no new axioms FOR THE
     EXPONENT; the O(1) prefactor of the equivalent Lambda*G form
-    imports the count=area reading (see READING CAVEAT).
+    imports the count=area reading (see READING CAVEAT), and so does
+    the identification of Omega with the area-quarter (see Step 1).
+
+    THE DICTIONARY (corrigendum, 2026-07-30). Two scalars, one name.
+    ACC_SM = C_total*ln(d_eff) = 282.123 nats is the ledger LOG-COUNT
+    -- Paper 8's S_SM, correctly named there, and the object consumed
+    by 1/alpha_cross = ACC/6 = 47.02 (L_crossing_entropy), N_e = ACC/2,
+    eta_B, T_univ, and the four ACC identities. Omega = d_eff^C_total
+    = 102^61 is the CONFIGURATION COUNT, identified with the horizon
+    area-quarter by the count=area anchor and therefore equal, via
+    S = A/4, to the de Sitter entropy in nats -- the object consumed by
+    Lambda*G = 3*pi/Omega, rho_Lambda/M_Pl^4 = 42/102^62, and H0.
+    Prior text of this check called 282.123 "the de Sitter entropy" and
+    reported ln(S_observed) as "S_dS(observed)". That is WITHDRAWN: it
+    contradicts T_Bek (S = A/4, not ln(A/4)) and it contradicts T10 --
+    with Lambda*G = 3*pi/S exact for de Sitter, S = 282.12 would put
+    Lambda/M_Pl^4 at 1e-1 rather than 1e-122, failing the CC result by
+    121 decades. No number computed by this check or downstream of it
+    moves under the correction; only the identification does.
+    Anchor of record for the corrected dictionary:
+    check_L_epsilon_star_Planck Step 5 (supplements.py), which has
+    always asserted ln(S_Bek) = S_APF rather than S_Bek = S_APF.
+    Finding: "Reference - FINDING - The de Sitter Entropy Question,
+    Answered (2026-07-30)".
+    MAY NOT CITE: "S_dS = 61*ln(102)" as a horizon-entropy claim;
+    "the count 102^61 is pinned to 0.0074%" (the COUNT is pinned to
+    2.13%, its LOGARITHM to 0.0074%).
 
     READING CAVEAT (v24.3.320, the vacuum O(1) adjudication,
     2026-07-02). The equivalent form Lambda*G = 3*pi/102^61 carries
@@ -629,8 +679,8 @@ def check_T_deSitter_entropy():
     count=area BRANCH of a banked reading fork whose other branch
     (two-factor coefficient 42/102, lambda_absolute.py) gives 70.03
     km/s/Mpc; ratio exactly sqrt(56/51). See
-    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py). The entropy
-    identity S_dS = 61*ln(102) = 282.123 nats — this check's key
+    check_T_vacuum_o1_reading_fork (vacuum_o1_fork.py). The exponent
+    identity S_dS = 102^61, ln(S_dS) = 61*ln(102) = 282.123 — this check's key
     content — is the exponent statement and is untouched by the fork.
     """
     C_total = dag_get('C_total', default=61, consumer='T_deSitter_entropy')
@@ -638,18 +688,23 @@ def check_T_deSitter_entropy():
     d_eff = (C_total - 1) + C_vacuum
     check(d_eff == 102)
 
-    # Step 5: Entropy
-    S_predicted = C_total * _math.log(d_eff)
+    # Step 5: the entropy is the count; ACC is its logarithm.
+    # ln_S_predicted is ACC_SM = C_total*ln(d_eff) = 282.123 -- the LEDGER
+    # LOG-COUNT, not the entropy. The entropy is Omega = d_eff^C_total.
+    ln_S_predicted = C_total * _math.log(d_eff)
+    Omega_predicted = float(d_eff) ** C_total          # = S_dS in nats
 
-    # Observed: S_dS = pi / (H^2 * Omega_L) in Planck units
+    # Observed: S_dS = pi / (H^2 * Omega_L) in Planck units, i.e. A/(4 l_P^2)
     H0_Pl = 1.18e-61  # Hubble constant in Planck units
     Omega_L = Fraction(42, 61)
     Omega_L_float = float(Omega_L)
     S_observed = _math.pi / (H0_Pl**2 * Omega_L_float)
     ln_S_observed = _math.log(S_observed)
 
-    # Entropy comparison (informational, not gating)
-    entropy_error = abs(S_predicted - ln_S_observed) / ln_S_observed
+    # (i) the entropy itself, in its own currency (informational, not gating)
+    entropy_error = abs(Omega_predicted - S_observed) / S_observed      # 2.13%
+    # (ii) the same agreement stated on the logarithm (ACC vs ln S_obs)
+    log_count_error = abs(ln_S_predicted - ln_S_observed) / ln_S_observed  # 0.0074%
 
     # Microstate count comparison (in log10 space)
     log10_predicted = C_total * _math.log10(d_eff)
@@ -687,23 +742,28 @@ def check_T_deSitter_entropy():
     ]
 
     return _result(
-        name='T_deSitter_entropy: S_dS = 61*ln(102)',
+        name='T_deSitter_entropy: S_dS = 102^61 (ln S_dS = 61*ln(102))',
         tier=4, epistemic='P',
         summary=(
-            f'de Sitter entropy from capacity microstate counting. '
-            f'{C_total} types x {d_eff} states/type = {d_eff}^{C_total} microstates. '
+            f'de Sitter entropy from capacity configuration counting. '
+            f'{C_total} types x {d_eff} states/type = {d_eff}^{C_total} configurations. '
             f'd_eff = ({C_total}-1) + {C_vacuum} = {d_eff} '
             f'(off-diagonal correlations + vacuum modes, self excluded). '
-            f'S = {C_total}*ln({d_eff}) = {S_predicted:.3f} nats '
-            f'(obs {ln_S_observed:.3f}, error {entropy_error:.4%}). '
+            f'Count=area anchor: S_dS = A/(4 l_P^2) = {d_eff}^{C_total} '
+            f'= {Omega_predicted:.3e} nats (obs {S_observed:.3e}, error '
+            f'{entropy_error:.2%}); its logarithm is the ledger log-count '
+            f'ACC_SM = {C_total}*ln({d_eff}) = {ln_S_predicted:.3f} '
+            f'(vs ln obs {ln_S_observed:.3f}, {log_count_error:.4%}). '
             f'Predicted H0 = {H0_pred_km:.1f} km/s/Mpc '
             f'({H0_tension:.1f} sigma from Planck 2018; FORK-CONDITIONAL '
             f'count=area branch, see check_T_vacuum_o1_reading_fork). '
             f'Lambda*G = 3pi/{d_eff}^{C_total} = 10^{log10_LG_pred:.1f}.'
         ),
         key_result=(
-            f'S_dS = {C_total}*ln({d_eff}) = {S_predicted:.3f} nats '
-            f'[0.007%]; Lambda*G = 3pi/102^61 (3pi O(1) count=area-'
+            f'S_dS = {d_eff}^{C_total} = {Omega_predicted:.3e} nats [2.13%]; '
+            f'ln S_dS = ACC_SM = {C_total}*ln({d_eff}) = {ln_S_predicted:.3f} '
+            f'[0.0074%] -- the ledger log-count, NOT the entropy; '
+            f'Lambda*G = 3pi/102^61 (3pi O(1) count=area-'
             f'reading-conditional; H0 66.83 = count=area fork branch — '
             f'see check_T_vacuum_o1_reading_fork)'
         ),
@@ -713,9 +773,16 @@ def check_T_deSitter_entropy():
             'C_vacuum': C_vacuum,
             'd_eff': d_eff,
             'd_eff_decomposition': f'{C_total-1} off-diag + {C_vacuum} vacuum',
-            'S_predicted_nats': round(S_predicted, 3),
-            'S_observed_nats': round(ln_S_observed, 3),
-            'entropy_error': f'{entropy_error:.4%}',
+            'S_dS_predicted_nats': f'{Omega_predicted:.6e}',
+            'S_dS_observed_nats': f'{S_observed:.6e}',
+            'S_dS_error_on_the_entropy': f'{entropy_error:.2%}',
+            'ACC_SM_predicted': round(ln_S_predicted, 3),
+            'ln_S_dS_observed': round(ln_S_observed, 3),
+            'error_on_the_logarithm': f'{log_count_error:.4%}',
+            'dictionary': ('S_dS = Omega = d_eff^C_total (the entropy, '
+                           '= A/4 by the count=area anchor); ACC_SM = '
+                           'C_total*ln(d_eff) = 282.123 (the ledger '
+                           'log-count) = ln S_dS, NOT the entropy'),
             'log10_Omega_predicted': round(log10_predicted, 3),
             'log10_Omega_observed': round(log10_observed, 3),
             'H0_predicted_km': round(H0_pred_km, 2),
@@ -724,7 +791,8 @@ def check_T_deSitter_entropy():
             'Lambda_G_log10': round(log10_LG_pred, 1),
             'CC_explanation': (
                 f'Lambda/M_Pl^4 ~ 10^-122 because the de Sitter horizon '
-                f'fits {d_eff}^{C_total} microstates. '
+                f'carries {d_eff}^{C_total} nats of entropy '
+                f'(= {d_eff}^{C_total} Planck cells, count=area). '
                 f'{d_eff} = {C_total-1} + {C_vacuum} from capacity ledger.'
             ),
         },
@@ -741,9 +809,10 @@ def check_T_horizon_reciprocity():
     second-epsilon commitments. In the bulk, Sector A pairings are
     obligatorily symmetric (undirected matching), giving bulk microstate
     count M(61,42) ~ 42^61. At the de Sitter horizon, the reciprocity
-    constraint dissolves (timelike separation), giving horizon microstate
-    count 102^61 and S_dS = 61*ln(102). The gap 61*ln(102/42) is the
-    interaction potential entropy: the entropy of unreciprocated
+    constraint dissolves (timelike separation), giving horizon configuration
+    count 102^61, hence (count=area, T_deSitter_entropy) S_dS = 102^61
+    nats with ln(S_dS) = 61*ln(102). The gap 61*ln(102/42) is the
+    interaction potential log-count: the share of unreciprocated
     second-epsilon commitments recorded at the boundary.
 
     PROOF (6 steps, all from [P] theorems):
@@ -789,20 +858,25 @@ def check_T_horizon_reciprocity():
       => Each of 61 horizon crossings is an independent 102-state event.
       => Horizon microstate count Omega = 102^61.
 
-    Step 5 [T_Bek, P]: DE SITTER ENTROPY.
-      S_dS = ln(Omega) = ln(102^61) = 61*ln(102) = 282.123 nats.
-      Observed: 282.102 nats. Error: 0.007%.
+    Step 5 [T_Bek + count=area anchor, P]: DE SITTER ENTROPY.
+      S_dS = A/(4*l_P^2) = Omega = 102^61 nats (2.13% vs the observed
+      3.277e122); its logarithm is the ledger log-count
+      ln(S_dS) = ACC_SM = 61*ln(102) = 282.123 (0.0074% vs 282.102).
+      CORRIGENDUM 2026-07-30: prior text of this step read
+      "S_dS = ln(Omega) = 282.123 nats", which is ln(S_dS), not S_dS.
+      See THE DICTIONARY in check_T_deSitter_entropy. The split below
+      is a decomposition OF THE LOGARITHM and is unchanged in value.
 
-    Step 6 [ENTROPY SPLIT]:
-      S_dS = S_propagation + S_interaction
+    Step 6 [LOG-COUNT SPLIT]:
+      ln(S_dS) = ACC_propagation + ACC_interaction
            = 61*ln(42)     + 61*ln(102/42)
            = 227.998       + 54.125 nats.
       S_propagation: entropy of 61 channels choosing among 42 vacuum modes.
       S_interaction: entropy of 61 channels each having 60 potential partners,
                      accumulated unreciprocated at the horizon.
       The smallness of Lambda is the price of 60 potential partners per channel
-      across 61 channels: each adds ln(102/42) = 0.887 nats to S_dS,
-      driving 102^61 large and Lambda*G = 3*pi/102^61 small.
+      across 61 channels: each adds ln(102/42) = 0.887 to ln(S_dS),
+      driving S_dS = 102^61 large and Lambda*G = 3*pi/102^61 small.
 
     STATUS: [P]. All steps from [P] theorems. No new axioms.
     """
@@ -841,14 +915,16 @@ def check_T_horizon_reciprocity():
     check(abs(S_bulk_approx - 227.998) < 0.01, "ln M(61,42) ≈ 61*ln(42)")
 
     # Step 4 & 5: horizon entropy
+    # ln(S_dS) = ACC_SM: the LOG-COUNT, not the entropy (S_dS = 102^61).
     S_horizon = C_total * _math.log(d_eff)
-    check(abs(S_horizon - 282.123) < 0.001, "S_dS = 61*ln(102) = 282.123 nats")
+    check(abs(S_horizon - 282.123) < 0.001,
+          "ln(S_dS) = ACC_SM = 61*ln(102) = 282.123")
 
     # Step 6: entropy split
     S_propagation = C_total * _math.log(C_vacuum)
     S_interaction  = C_total * _math.log(d_eff / C_vacuum)
     check(abs(S_propagation + S_interaction - S_horizon) < 1e-9,
-          "S_dS = S_propagation + S_interaction")
+          "ln(S_dS) = S_propagation + S_interaction")
     check(abs(S_propagation - 227.998) < 0.01,
           f"S_propagation = 61*ln(42) = {S_propagation:.3f}")
     check(abs(S_interaction - 54.125) < 0.001,
@@ -870,16 +946,17 @@ def check_T_horizon_reciprocity():
             f'simultaneous configs = M(61,42) ~ 42^61 (ln ~ {S_bulk_approx:.1f} nats). '
             f'Horizon: reciprocity dissolves at timelike-separated crossings; '
             f'each crossing independent -> Omega = 102^61. '
-            f'S_dS = 61*ln(102) = {S_horizon:.3f} nats (obs 282.102, error 0.007%). '
-            f'Split: S_prop = 61*ln(42) = {S_propagation:.1f} nats + '
-            f'S_int = 61*ln(102/42) = {S_interaction:.1f} nats. '
-            f'Interaction entropy per channel = ln(102/42) = {S_int_per_channel:.3f} nats: '
+            f'S_dS = 102^61 nats; ln(S_dS) = ACC_SM = 61*ln(102) = '
+            f'{S_horizon:.3f} (obs ln 282.102, error 0.0074%). '
+            f'Split of the LOG-COUNT: 61*ln(42) = {S_propagation:.1f} + '
+            f'61*ln(102/42) = {S_interaction:.1f}. '
+            f'Interaction share per channel = ln(102/42) = {S_int_per_channel:.3f}: '
             f'the price of 60 potential partners drives Lambda small.'
         ),
         key_result=(
             'Bulk configs ~ 42^61 (matching constraint); '
-            'horizon entropy 102^61 (reciprocity dissolved); '
-            'gap = 61*ln(102/42) = interaction potential entropy'
+            'horizon count = entropy = 102^61 nats (reciprocity dissolved); '
+            'gap in the log-count = 61*ln(102/42) = interaction potential share'
         ),
         dependencies=[
             'T_kappa',          # 2-epsilon structure
@@ -889,7 +966,7 @@ def check_T_horizon_reciprocity():
             'L_self_exclusion', # d_eff = 102
             'T_field',          # C_total = 61
             'T11',              # C_vacuum = 42
-            'T_Bek',            # S = ln(Omega)
+            'T_Bek',            # S = A/4 (count=area anchor: A/4 = Omega)
         ],
         artifacts={
             'sector_A':            sector_A,

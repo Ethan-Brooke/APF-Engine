@@ -284,15 +284,18 @@ def check_T_Lambda_coefficient_degeneracy_audit():
     42/102 -- the earlier registration as [C].
 
     WHAT CLOSES IT (to [P_structural], not [P]). Factor the bare scale exactly. With
-    sigma = ln d_eff the per-slot entropy quantum and S_dS = K_SM * sigma the de Sitter
-    horizon entropy (T11),
+    sigma = ln d_eff the per-slot entropy quantum and S_dS = K_SM * sigma the ledger
+    LOG-COUNT -- ln of the de Sitter entropy, which is itself 102^61 nats (T11,
+    T_deSitter_entropy; symbol S_dS retained as legacy, see THE DICTIONARY in
+    check_T_deSitter_entropy) --,
 
         d_eff^(-K_SM) = exp(-K_SM ln d_eff) = exp(-S_dS)     EXACTLY,
 
     so the formula factors with no approximation into
 
         rho_Lambda / M_Pl^4 = (C_vacuum / d_eff) * exp(-S_dS)
-                            = (vacuum admissibility fraction) x (de Sitter horizon suppression).
+                            = (vacuum admissibility fraction) x (de Sitter horizon suppression),
+    the suppression being exp of minus the log-count, i.e. one over the entropy 102^61.
 
     Both factors are bank-forced and derived independently of Lambda's magnitude: exp(-S_dS)
     is the horizon-entropy suppression (T11); 42/102 is the vacuum fraction of per-slot
@@ -407,7 +410,8 @@ def check_T_Lambda_coefficient_degeneracy_audit():
         summary=(
             f"The Lambda coefficient is not one of ~{len(within_001)} numerical "
             f"near-coincidences: it is forced by FORM. The bare scale factors exactly, "
-            f"d_eff^(-K_SM) = exp(-S_dS) (de Sitter horizon entropy, T11), so "
+            f"d_eff^(-K_SM) = exp(-S_dS) (S_dS the ledger log-count = ln of the de Sitter "
+            f"entropy 102^61, T11), so "
             f"rho_Lambda/M_Pl^4 = (C_vacuum/d_eff) * exp(-S_dS) = (vacuum admissibility "
             f"fraction) x (horizon suppression), both factors bank-forced. The form "
             f"constraint -- vacuum-stratum share of per-slot admissibility -- excludes the "
@@ -444,7 +448,8 @@ def check_T_Lambda_coefficient_degeneracy_audit():
                                     _CANON_C_LOCAL / _CANON_K_FERMIONS,
                                     residual(_CANON_C_LOCAL / _CANON_K_FERMIONS)),
             'structural_form': 'rho_Lambda/M_Pl^4 = (C_vacuum/d_eff) * exp(-S_dS); '
-                               'S_dS = K_SM * ln(d_eff) = de Sitter horizon entropy (T11).',
+                               'S_dS = K_SM * ln(d_eff) = the ledger log-count = ln of the '
+                               'de Sitter entropy, which is 102^61 nats (T11).',
             'audit_registered_as_conjecture': audit_is_honest,
         },
     )

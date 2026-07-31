@@ -23,9 +23,14 @@ P(n) ∝ e^{n(sigma - beta*eps)} on n in {0, ..., C_total}.
                            This is the framework temperature and the onset of inversion.
       - beta = 0         : infinite temperature (microstate-uniform), <n> -> C_total.
       - beta < 0         : negative temperature, fully inverted onto the ceiling.
-  * At infinite temperature the log-partition-function is the de Sitter horizon entropy:
+  * At infinite temperature the log-partition-function is the ledger LOG-COUNT:
     ln Z(beta=0) = ln( sum_n d_eff^n ) = C_total*sigma + O(1/d_eff) = S_dS (T_deSitter_entropy).
-    The inversion saturates the ledger at the ceiling, and the ceiling's entropy is S_dS.
+    The inversion saturates the ledger at the ceiling, and the ceiling's log-count is S_dS.
+    DICTIONARY (2026-07-30): S_dS here is C_total*ln(d_eff) = 282.12 = ACC_SM, which is
+    ln of the de Sitter entropy; that entropy is itself 102^61 nats (= A/4 l_P^2).
+    A log-partition-function is a log-count, so it is the log-count it matches --
+    NOT the horizon entropy. Symbol retained as legacy; see THE DICTIONARY in
+    check_T_deSitter_entropy (gravity.py).
 
 GRADE [P]: exact structural facts about the bounded canonical ensemble, composing banked [P]
 lemmas (the ceiling C_total via L_count/FD4, the rate beta=sigma/eps via L_beta_temp, the energy
@@ -80,7 +85,7 @@ def check_T_negative_temperature_needs_the_ceiling():
     branch DO NOT EXIST -- the ceiling creates them; (iii) <n> rises monotonically from 0 to
     C_total as beta runs +inf -> -inf, with the two faces balancing (P uniform, <n>=C_total/2) at
     beta=sigma/eps, infinite T (<n>->C_total) at beta=0, full inversion for beta<0; (iv) at
-    infinite temperature ln Z = C_total*sigma + O(1/d_eff) = S_dS, the de Sitter horizon entropy.
+    infinite temperature ln Z = C_total*sigma + O(1/d_eff) = S_dS, the ledger log-count.
 
     PROOF. The bounded sum is finite for all beta (i). The geometric series sum_0^inf e^{(sigma-
     beta eps)n} converges iff sigma-beta eps < 0 iff beta > sigma/eps (ii). Monotonicity:
@@ -143,7 +148,7 @@ def check_T_negative_temperature_needs_the_ceiling():
     # monotonicity sign: d<n>/dbeta = -eps Var(n) < 0
     _check(var_bal > 0, "d<n>/d beta = -eps*Var(n) < 0 (monotone)")
 
-    # (iv) infinite-temperature log-partition-function = de Sitter horizon entropy (to O(1/d_eff))
+    # (iv) infinite-temperature log-partition-function = ledger log-count (to O(1/d_eff))
     lnZ0 = _lnZ(0.0, sigma, eps, N)
     S_dS = N * sigma
     _check(abs(lnZ0 - S_dS) < 3.0 / d_eff, f"ln Z(beta=0) = {lnZ0:.4f} = C_total*sigma = S_dS = {S_dS:.4f} (+O(1/d_eff))")
@@ -168,7 +173,7 @@ def check_T_negative_temperature_needs_the_ceiling():
             "two faces balancing (P uniform, <n>=C_total/2) AT beta=sigma/eps (the framework "
             "temperature, the inversion onset), infinite temperature at beta=0 (<n>->C_total), full "
             "inversion onto the ceiling for beta<0. At infinite temperature ln Z = C_total*sigma = "
-            "S_dS, so the inverted, saturated ledger carries exactly the de Sitter horizon entropy. "
+            "S_dS, so the inverted, saturated ledger carries exactly the ledger log-count. "
             "SCOPE: a canonical/accessibility statement, NOT a microcanonical negative-T claim (the "
             "Dunkel-Hilbert dispute does not bite); we claim the ledger is in the bounded-spectrum "
             "CLASS that admits inversion, not that the cosmos is inverted; the dynamics of reaching "
@@ -186,7 +191,7 @@ def check_T_negative_temperature_needs_the_ceiling():
             "prerequisite": "FD4 bounds the energy spectrum above (E <= C_total*eps)",
             "ceiling_creates_branch": "bounded Z finite for all beta; unbounded converges only for beta>sigma/eps",
             "onset": "beta=sigma/eps: two faces balance, P uniform, <n>=C_total/2 (inversion onset)",
-            "infinite_T": "beta=0: <n>->C_total; ln Z = C_total*sigma = S_dS (de Sitter entropy)",
+            "infinite_T": "beta=0: <n>->C_total; ln Z = C_total*sigma = S_dS (ledger log-count)",
             "class": "bounded-spectrum -> the laser/spin negative-temperature class",
             "parked": "dynamics of reaching inversion (T_no_physical_time_flow_overclaim); microcanonical claim avoided (Dunkel-Hilbert)",
         },

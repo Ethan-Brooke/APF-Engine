@@ -802,7 +802,8 @@ def check_T_census_unit_exclusion_conditional() -> Dict:
     executable and pinned.
 
     THE TWO HORNS (computed below, exact where possible):
-      EXTENSION: a 62nd census unit shifts the CC register by Delta S_dS = ln(d_eff)
+      EXTENSION: a 62nd census unit shifts the CC register's LOG-COUNT by
+    Delta S_dS = ln(d_eff)
         = ln(102) ~ 4.625 nats -- an INTEGER census shift, no coupling constant anywhere
         (amplitude-independence is structural). Against the honest confirmation bands
         (narrow: |282.123 - 282.102| = 0.021 nats; wide, under the H0DN tension:

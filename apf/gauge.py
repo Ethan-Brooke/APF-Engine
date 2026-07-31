@@ -2981,7 +2981,8 @@ def check_T_proton():
     # ================================================================
     # L_irr: admissibility physics -> capacity commitment is locally unrecoverable
     # The universe at current epoch is at full Bekenstein saturation
-    # (T_deSitter_entropy confirms: S_dS = 61*ln(102) matches observation)
+    # (T_deSitter_entropy confirms: S_dS = 102^61 nats matches observation to
+    #  2.13%; its logarithm is the ledger log-count 61*ln(102) = 282.12)
     #
     # Key logical chain:
     #   Current universe at saturation [T_deSitter_entropy, P]

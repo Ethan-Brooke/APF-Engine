@@ -43,6 +43,11 @@ Four consistency identities
 ---------------------------
   I1 Holographic         S_BH = ln(dim H_horizon) = ACC_horizon
                          (pi_G and pi_T o ln o pi_Q all agree)
+                         SCOPE: I1 holds AT A HORIZON, for the Hilbert
+                         space of THAT horizon. It must not be
+                         instantiated with the Standard-Model ledger
+                         and the de Sitter horizon simultaneously --
+                         see check_I1_holographic's SCOPE RESTRICTION.
   I2 Gauge-cosmological  K in pi_F equals the cosmological denominator
                          in pi_C (same integer, structural identity)
   I3 Thermo-quantum      S_vN(rho_max_mixed) = ln(dim H) = ACC
@@ -511,6 +516,13 @@ def _identity_I1_holographic(acc_horizon_record, tolerance=1e-10):
     equals the log of the horizon Hilbert-space dimension (ln o pi_Q)
     equals the admissibility-capacity scalar (pi_T).
 
+    SCOPE (2026-07-30). The three objects here belong to ONE interface:
+    the Hilbert space is the horizon's own. Feeding a Hilbert space from
+    a DIFFERENT interface than the horizon is a category error, and it is
+    the specific error that generated a 120-decade discrepancy in the de
+    Sitter entropy statements. See check_I1_holographic's SCOPE
+    RESTRICTION, which computes the failure rather than asserting it.
+
     Parameters
     ----------
     acc_horizon_record : ACC
@@ -939,6 +951,27 @@ def check_I1_holographic():
 
     DEPENDENCIES: T_Bek (Papers 3, 6), pi_G, pi_T, pi_Q (apf/unification.py).
 
+    SCOPE RESTRICTION (2026-07-30) -- READ BEFORE INSTANTIATING. I1
+    relates three readings OF ONE INTERFACE. It is NOT licensed to pair
+    the Standard-Model ledger's Hilbert space with the de Sitter horizon.
+    Doing so is what produced the withdrawn claim "S_dS = 61*ln(102) =
+    282.12 nats":
+
+      * feed I1 dim H = 102^61 and it returns a horizon whose
+        area-quarter is 61*ln(102) = 282.12 Planck units -- a horizon
+        roughly 19 Planck lengths across, not the de Sitter horizon;
+      * feed I1 the actual de Sitter horizon, whose area-quarter is
+        A/4 = 3*pi/(Lambda*G) = 102^61 (T10), and it demands
+        dim H = exp(102^61).
+
+    Both are consistent applications of I1. They are applications to
+    DIFFERENT horizons, and taking them together is what manufactures the
+    120 decades. The de Sitter entropy is S_dS = A/4 = 102^61 nats
+    (T_Bek + the count=area anchor); ACC_SM = 61*ln(102) is the ledger
+    LOG-COUNT and is not that entropy. Finding: "Reference - FINDING -
+    The de Sitter Entropy Question, Answered (2026-07-30)". The leg in
+    the body computes the separation so it cannot be re-derived silently.
+
     NOTE (2026-04-21, Phase 14): This check is now the scalar-level
     witness of the three-level refinement of I1. See
     apf/unification_three_levels.py: check_I1_scalar (alias),
@@ -950,6 +983,28 @@ def check_I1_holographic():
     r = _identity_I1_holographic(acc_h)
     check(r['consistent'],
           f"I1 holographic identity failed on canonical horizon (A=100): {r}")
+
+    # --- SCOPE RESTRICTION, computed (2026-07-30) ---------------------------
+    # The mis-instantiation is exhibited, not asserted: pairing the SM ledger's
+    # Hilbert space with the de Sitter horizon is arithmetically inconsistent.
+    K_SM, d_eff = 61, 102
+    acc_sm_log_count = K_SM * _math.log(d_eff)            # 282.123 = ln dim H_SM
+    # (i) I1 fed dim H = 102^61 returns a horizon of area-quarter 282.12 ...
+    area_quarter_from_sm_ledger = acc_sm_log_count
+    # (ii) ... while the de Sitter horizon's own area-quarter, from T10
+    #      Lambda*G = 3*pi/Omega, is 102^61:
+    log10_area_quarter_dS = K_SM * _math.log10(d_eff)     # 122.5246
+    # (iii) so these are not the same horizon -- and the gap is what the
+    #       withdrawn 282.12-nat claim silently crossed:
+    decades_apart = log10_area_quarter_dS - _math.log10(area_quarter_from_sm_ledger)
+    check(decades_apart > 100.0,
+          f"SCOPE RESTRICTION vacuous: the SM-ledger instantiation and the de "
+          f"Sitter horizon differ by only {decades_apart:.1f} decades; the "
+          f"restriction only bites if they are far apart")
+    # (iv) equivalently, the dS horizon demands dim H = exp(102^61):
+    check(log10_area_quarter_dS > _math.log10(acc_sm_log_count) + 100.0,
+          "SCOPE RESTRICTION: ln(dim H) demanded by the dS horizon must exceed "
+          "the SM ledger's own log-count by >100 decades")
     return _result(
         name='I1 — Holographic consistency identity',
         tier=3,
@@ -965,7 +1020,11 @@ def check_I1_holographic():
             f"Maximum residual {r['max_residual']:.3g} < tolerance "
             f"{r['tolerance']}."
         ),
-        key_result='pi_G, ln o pi_Q, and pi_T coincide at any horizon.',
+        key_result=('pi_G, ln o pi_Q, and pi_T coincide at any horizon -- '
+                    'of THAT horizon. Not licensed across interfaces: the SM '
+                    'ledger (dim H = 102^61) and the de Sitter horizon '
+                    '(A/4 = 102^61) are 120 decades apart as horizons, and '
+                    'pairing them is the withdrawn "S_dS = 282.12 nats".'),
         dependencies=['T_Bek', 'T_concordance'],
         cross_refs=['T_ACC_unification', 'A9_closure'],
         artifacts=r,

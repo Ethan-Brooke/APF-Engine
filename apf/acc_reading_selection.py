@@ -18,8 +18,16 @@ scalars satisfy S_dS / sigma = C_total exactly.
 THE READING-SELECTION RULE.
 A resolving enforcement structure reads the one ledger through the ACC scalar fixed by
 two attributes of the structure -- its RANK (how it resolves each slot) and its TYPE
-(which slots it supports) -- all gauge readings referred to the de Sitter horizon S_dS
-at the crossing scale (L_crossing_entropy [P]).
+(which slots it supports) -- all gauge readings referred to the horizon ledger
+LOG-COUNT S_dS = C_total ln d_eff = 282.12 at the crossing scale
+(L_crossing_entropy [P]).
+
+DICTIONARY (2026-07-30): S_dS here is the LEDGER LOG-COUNT ACC_SM (Paper 8's
+S_SM), which is ln of the de Sitter entropy; that entropy is itself 102^61 nats
+(= A/4 l_P^2). Every reading in this module divides or scales the log-count, so
+nothing here changes in value -- but the object read is the log-count, not the
+entropy. Symbol retained as legacy; see THE DICTIONARY in
+check_T_deSitter_entropy (gravity.py).
 
   RANK. The competition Gram A = [[1,x],[x,x^2+m]] has det A = m = dim[g,g], the derived-algebra
   dimension (= dim of the image of the adjoint ACTION ad: g -> End(g)): 8 for SU(3), 3 for SU(2),
@@ -491,7 +499,7 @@ def check_T_acc_reading_selection():
         summary=(
             "One capacity ledger -- C_total = 61 slots at per-slot degeneracy d_eff = 102 -- read four "
             "ways. The Reading-Selection Rule: a resolving structure reads the ACC scalar fixed by its "
-            "RANK and its TYPE, all gauge readings referred to the de Sitter horizon S_dS "
+            "RANK and its TYPE, all gauge readings referred to the horizon ledger log-count S_dS "
             "(L_crossing_entropy [P]). The four instances: (1) the non-abelian crossing is rank-2 with "
             "running support -- the fixed-point Fisher equilibrium reads S_dS smeared as B*sigma = "
             "S_dS/6 = 47.02 [P, L_coupling_capacity_id]; (2) the abelian coupling is rank-1 with full "
@@ -500,7 +508,7 @@ def check_T_acc_reading_selection():
             "bosonic type -- a count over the 16 bosonic slots, C_boson/2 = 8 [P_structural, type "
             "clause open]; (4) the cosmological fractions are the horizon equipartition residual "
             "partition -- Omega_Lambda = 42/61 [P, L_equip / T12E]. Instances 1 and 2 are the SAME "
-            "horizon S_dS, read by opposite branches of the rank/fixed-point dichotomy (47.02*6 = S_dS "
+            "horizon log-count S_dS, read by opposite branches of the rank/fixed-point dichotomy (47.02*6 = S_dS "
             "= 61*sigma); that dichotomy is argued at [P_structural] -- a gauge coupling is read as having two "
             "readings, the no-third exhaustiveness open. GRADE [P_structural] overall: with the gauge arm at [P_structural] and the "
             "cosmological instance [P], the single remaining open arm is the EW-floor TYPE clause -- "
@@ -865,7 +873,7 @@ def check_L_abelian_support_openness_pins():
       (2) THE NOT-A-STATE-FUNCTION COROLLARY (the walk's one genuinely new
           named obstruction, audit-verified, class-level): the abelian (61)
           and the non-abelian (B = C_total/6 running modes, value S_dS/6 =
-          47.02) readings consume the SAME horizon S_dS = 61 ln 102 = 282.12
+          47.02) readings consume the SAME horizon log-count S_dS = 61 ln 102 = 282.12
           and return DIFFERENT values -- both recomputed in-check -- so a
           gauge reading is provably NOT a function of the horizon state
           alone, and NO state-side argument can select the abelian support.
@@ -992,7 +1000,7 @@ def check_L_abelian_support_openness_pins():
               "pinned in both directions (no silent closure, no silent promotion; "
               "flags read live), carrying the NOT-A-STATE-FUNCTION corollary as a "
               "named class-level obstruction -- the abelian (61) and non-abelian "
-              "(47.02) readings consume the SAME horizon S_dS = 282.12 and return "
+              "(47.02) readings consume the SAME horizon log-count S_dS = 282.12 and return "
               "different values, so a gauge reading is not a function of the "
               "horizon state alone and no state-side argument can select the "
               "abelian support -- and recomputing the two-pronged 45-corroboration "

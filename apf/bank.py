@@ -613,7 +613,9 @@ v5.2.4 CHANGELOG:
     Closes paper's claim about Tomita-Takesaki modular theory.
 
   L_RT_capacity [P]:
-    S(A) = k·ln(d_eff) = (k/61)·S_dS for any subregion of k types.
+    S(A) = k·ln(d_eff) = (k/61)·S_dS for any subregion of k types, S_dS the
+    ledger LOG-COUNT 61·ln(102) = 282.12 (ln of the de Sitter entropy 102^61;
+    legacy symbol, see THE DICTIONARY in check_T_deSitter_entropy).
     APF version of Ryu-Takayanagi formula for uniform boundary density.
     Special cases: S(vacuum) = Ω_Λ·S_dS, S(matter) = Ω_m·S_dS.
     Zero mutual info from the maximally-mixed saturation state (L_equip + L_KMS_trace_state;

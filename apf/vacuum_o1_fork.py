@@ -220,7 +220,8 @@ def check_T_cc_comparator_registry():
       * fractional_reading.py: rho/M_Pl^4, obs -122.90, a 0.37-decade band
         (a looser, legacy-Planck surface).
     Plus two genuinely different observables with their own tolerances:
-    S_dS (0.007%, log-space count pin, NO O(1)) and the DESI neutrino-sum
+    the de Sitter entropy (2.13% on the entropy itself, equivalently
+    0.0074% on its logarithm; NO O(1)) and the DESI neutrino-sum
     bound (x1.2 envelope). This check registers all four, asserts the
     currency bridge that reconciles T10 to the canonical comparator, and
     localizes the magnitude looseness to the reading-conditional O(1).
@@ -233,18 +234,38 @@ def check_T_cc_comparator_registry():
         to 0.007 decades -- inside the 0.05-decade gate, NOT the phantom
         0.65 decades the stale -122.2 implied.
 
-    (b) COUNT PIN, O(1)-FREE. S_dS = 61*ln(102) = 282.123 nats vs observed
-        282.102: residual 0.0074% -- the count Omega = 102^61 is pinned to
-        entropy-grade precision with no O(1) prefactor.
+    (b) ENTROPY PIN, O(1)-FREE, STATED IN BOTH CURRENCIES. The de Sitter
+        entropy is S_dS = Omega = d_eff^K = 102^61 = 3.347e122 nats (T_Bek
+        S = A/4, composed with the count=area anchor A/4 = Omega); the
+        observed pi/(H^2 Omega_Lambda) is 3.277e122. Residual ON THE
+        ENTROPY: 2.13%. The SAME agreement on the logarithm -- the ledger
+        log-count ACC_SM = 61*ln(102) = 282.123 against ln(S_obs) =
+        282.102 -- is 0.0074%. Both are computed here and both are
+        reported, because quoting only the second overstates the pin by
+        four orders and would imply an H0 agreement three orders tighter
+        than the 1.0-sigma one T_deSitter_entropy actually reports.
+        Neither figure carries an O(1) prefactor.
+
+        CORRIGENDUM 2026-07-30. Prior text read "S_dS = 61*ln(102) =
+        282.123 nats vs observed 282.102 ... the count Omega = 102^61 is
+        pinned to 0.0074%". Two defects: 282.123 is ln(S_dS), not S_dS
+        (it is the ledger log-count, Paper 8's S_SM), and the hardcoded
+        282.102 is ln of an observed entropy rather than an observed
+        entropy; and the COUNT is pinned to 2.13%, only its LOGARITHM to
+        0.0074%. Finding: "Reference - FINDING - The de Sitter Entropy
+        Question, Answered (2026-07-30)".
 
     (c) LOOSENESS LOCALIZES TO THE O(1). The magnitude comparator carries a
         reading-conditional O(1) (the 3/8 vs 42/102 fork, ratio 56/51,
-        spread ~0.041 decades) while the SAME count is entropy-pinned to
-        0.0074%. So the decade-level looseness in the CC magnitude is
-        entirely the O(1) reading fork -- not slack in the exponent.
+        spread ~0.041 decades) while the SAME count is pinned in log space
+        to 0.0074% (0.0032 decades). So the decade-level looseness in the
+        CC magnitude is the O(1) reading fork -- not slack in the exponent.
+        The comparison is decade-against-decade and is unaffected by the
+        (b) corrigendum, which changes a currency label, not a residual.
 
     (d) PER-OBSERVABLE, NOT ONE CANONICAL BAND. CC magnitude (decades,
-        reading-forked), dS entropy (%, count-pinned), and the neutrino sum
+        reading-forked), dS entropy (% on the entropy AND on its log,
+        count-pinned), and the neutrino sum
         (x-factor envelope) test different observables at different
         precisions; forcing one tolerance across them would be dishonest.
         The canonical CC-magnitude comparator is this module's 0.05-decade
@@ -274,16 +295,31 @@ def check_T_cc_comparator_registry():
     check(abs(res_LG - 0.007) < 0.004,
           f"Lambda*G residual {res_LG:.4f} off the expected 0.007 decades")
 
-    # (b) count pin, O(1)-free --------------------------------------------
-    S_dS = _K_SM * _math.log(_D_EFF)                         # 282.123
-    S_dS_obs = 282.102
-    frac_err = abs(S_dS - S_dS_obs) / S_dS_obs
+    # (b) entropy pin, O(1)-free, in BOTH currencies ----------------------
+    # ACC_SM is the ledger LOG-COUNT, not the entropy. The entropy is the
+    # count itself: S_dS = Omega = d_eff^K (count=area anchor + T_Bek).
+    ACC_SM = _K_SM * _math.log(_D_EFF)                       # 282.123 = ln S_dS
+    ln_S_dS_obs = 282.102                                    # = ln(3.277e122)
+    frac_err = abs(ACC_SM - ln_S_dS_obs) / ln_S_dS_obs       # 0.0074%
     check(frac_err < 1e-4,
-          f"S_dS count pin {frac_err*100:.4f}% exceeds 0.01% (obs 282.102)")
+          f"log-count pin {frac_err*100:.4f}% exceeds 0.01% "
+          f"(ACC_SM {ACC_SM:.3f} vs ln S_obs {ln_S_dS_obs})")
+    # the same agreement in the entropy's own currency:
+    S_dS_log10 = _K_SM * _math.log10(_D_EFF)                 # 122.5246
+    S_dS_obs_log10 = ln_S_dS_obs / _math.log(10.0)           # 122.5155
+    entropy_frac_err = abs(10.0 ** (S_dS_log10 - S_dS_obs_log10) - 1.0)   # 2.13%
+    check(0.015 < entropy_frac_err < 0.030,
+          f"entropy-currency residual {entropy_frac_err*100:.2f}% outside the "
+          f"expected 1.5-3.0% band (S_dS = 102^61 vs pi/(H^2 Omega_L))")
+    # and the two currencies must not be conflated: the entropy pin is
+    # ~285x looser than the log pin, which is why both are reported.
+    check(entropy_frac_err > 100 * frac_err,
+          f"currency ordering failed: entropy {entropy_frac_err:.4f} vs "
+          f"log {frac_err:.6f} -- these are not interchangeable precisions")
 
     # (c) looseness localizes to the O(1) ---------------------------------
     # The O(1) reading fork (3/8 vs 42/102) spreads the magnitude by
-    # log10(56/51) ~ 0.041 decades; the count (entropy) is pinned to 0.0074%.
+    # log10(56/51) ~ 0.041 decades; the count is log-pinned to 0.0074%.
     o1_spread_dec = abs(_math.log10(float(Fraction(_C_VACUUM, _D_EFF)))
                         - _math.log10(3.0 / 8.0))            # ~0.041
     check(frac_err * 100 < 0.01 and 0.03 < o1_spread_dec < 0.05,
@@ -307,10 +343,16 @@ def check_T_cc_comparator_registry():
             'home': 'check_T_vacuum_o1_reading_fork',
         },
         'dS_entropy': {
-            'observable': 'S_dS = 61*ln(102) nats',
-            'canonical_obs': 282.102,
-            'tolerance': '0.0074% (log-space, count-pinned, no O(1))',
-            'status': 'derived count pin',
+            'observable': 'S_dS = d_eff^K = 102^61 nats (= A/4 l_P^2)',
+            'canonical_obs': '3.277e122 = pi/(H0^2 Omega_Lambda)',
+            'tolerance': '2.13% on the entropy; 0.0074% on its logarithm '
+                         '(ACC_SM = 61*ln(102) = 282.123 vs ln obs = '
+                         '282.102). No O(1) either way. Quote both.',
+            'status': 'derived count pin, stated in two currencies',
+            'withdrawn_2026_07_30': ("observable 'S_dS = 61*ln(102) nats' "
+                                     "with canonical_obs 282.102 -- that is "
+                                     "ln(S_dS) against ln(observed S_dS), "
+                                     "and the count is pinned to 2.13%"),
             'home': 'check_T_horizon_reciprocity / T_deSitter_entropy',
         },
         'neutrino_sum': {
@@ -338,19 +380,24 @@ def check_T_cc_comparator_registry():
             f"8*pi*(rho/M_Pl^4), so T10's count=area prediction {pred_LG:.3f} "
             f"matches obs {obs_LG:.3f} to {res_LG:.3f} decades -- the prior "
             f"-122.2 in T10 was a currency artifact (phantom ~0.65 dec). The "
-            f"count Omega=102^61 is entropy-pinned to {frac_err*100:.4f}% by "
-            f"S_dS (no O(1)); the magnitude looseness is the reading-"
+            f"count Omega=102^61 IS the de Sitter entropy (count=area + "
+            f"T_Bek), pinned to {entropy_frac_err*100:.2f}% against the "
+            f"observed 3.277e122; its logarithm ACC_SM = 61*ln(102) is "
+            f"pinned to {frac_err*100:.4f}% (no O(1) either way -- quote "
+            f"both). The magnitude looseness is the reading-"
             f"conditional O(1) fork alone ({o1_spread_dec:.3f}-decade spread, "
             f"ratio 56/51). The four comparators are per-observable, not one "
             f"canonical band: CC magnitude (0.05-dec gate at -122.944, "
-            f"canonical) / dS entropy (0.007%, count pin) / neutrino sum "
+            f"canonical) / dS entropy ({entropy_frac_err*100:.2f}% on the "
+            f"entropy, {frac_err*100:.4f}% on its log) / neutrino sum "
             f"(x1.2 DESI) / the fractional_reading 0.37-dec legacy pin "
             f"(consistent within the canonical gate, {legacy_gap:.3f} dec)."
         ),
         key_result=(
             'Lambda*G = 8*pi*(rho/M_Pl^4): T10 matches obs to 0.007 dec '
-            '(phantom 0.65-dec residual was a currency artifact); count '
-            'entropy-pinned to 0.0074%, looseness localizes to the O(1) '
+            '(phantom 0.65-dec residual was a currency artifact); the count '
+            '102^61 IS S_dS, pinned to 2.13% (0.0074% on its log); '
+            'looseness localizes to the O(1) '
             'fork (56/51); comparators are per-observable, canonical CC gate '
             '= 0.05 dec at -122.944.'
         ),
@@ -363,7 +410,8 @@ def check_T_cc_comparator_registry():
             'obs_Lambda_G_log10': round(obs_LG, 3),
             'pred_Lambda_G_log10': round(pred_LG, 3),
             'Lambda_G_residual_decades': round(res_LG, 4),
-            'S_dS_count_pin_pct': round(frac_err * 100, 4),
+            'S_dS_entropy_pin_pct': round(entropy_frac_err * 100, 2),
+            'ACC_log_count_pin_pct': round(frac_err * 100, 4),
             'O1_reading_spread_decades': round(o1_spread_dec, 4),
             'canonical_cc_obs_log10': _LOG10_OBS,
             'legacy_cc_gap_decades': round(legacy_gap, 3),

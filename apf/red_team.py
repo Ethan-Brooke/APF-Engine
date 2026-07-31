@@ -1665,7 +1665,8 @@ def check_RT_bridge_audit():
     C_total = 61
     S = C_total * math.log(d_eff)
     rt_check(abs(S - 61 * math.log(102)) < 1e-10,
-             f"Bridge C: S_dS = {S:.4f} = 61×ln(102)")
+             f"Bridge C: ACC_SM = ln(S_dS) = {S:.4f} = 61×ln(102) "
+             f"(the de Sitter entropy itself is 102^61 nats)")
 
     # Bridge D: σ = ln(d_eff)
     sigma = math.log(d_eff)
