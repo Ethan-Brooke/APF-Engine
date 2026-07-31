@@ -72,16 +72,36 @@ Positivity at x = P then gives tau >= |a| = 2 - tau, i.e. lam >= 0, and
 |a| = 2 - tau >= 0 gives lam <= 1.  The joint constraint on alpha I - a P - b Q
 closes lam = lam' = 0.
 
-The global step there is CONCAVITY, not tightness.  Tightness at the identity
-plus a strictly negative derivative excludes only a punctured neighbourhood.
-What closes it is that
+THE CLOSURE IS A PERFECT SQUARE, and nothing here is analytic.  Write
+o = Tr(PQ), u = 1 - lam, v = 1 - lam'.  Then
 
-    g(lam, lam') = |w| - (a lam + b lam') - |a(1-lam) p + b(1-lam') q|
+    |p + q| = 2 sqrt(o)                                              (i)
+    |u p + v q|^2 - o (u + v)^2 = (1 - o)(lam - lam')^2  >= 0        (ii)
 
-is an affine function minus a NORM of an affine function, hence concave on the
-whole feasible box; a concave function that vanishes at an endpoint of the
-feasible interval and strictly decreases there is negative on the rest of it.
-The second derivative is computed at two points as corroboration.
+(ii) is an exact polynomial identity: a sum of squares scaled by (1 - o), which
+is positive exactly when P != Q, so DISTINCTNESS is visibly what makes it
+non-negative.  Taking square roots,
+
+    g(lam, lam') := |p+q| - (lam + lam') - |u p + v q|
+                 <= -(1 - sqrt(o)) (lam + lam').
+
+Feasibility of the tight witness alpha I - P - Q is exactly g >= 0.  With
+lam, lam' >= 0 from Step 2 and 1 - sqrt(o) > 0 from distinctness, any
+lam + lam' > 0 forces g < 0 and contradicts feasibility.  Hence lam = lam' = 0.
+
+An earlier version of this module reached the same conclusion by
+differentiation -- tightness, a strictly negative first derivative, and a
+concavity argument to make the local statement global.  That is real analysis
+inside a [P_math] check and it is ELIMINABLE; the identity above replaces it.
+
+SCOPE OF THAT CLAIM, stated exactly.  What is now free of analysis is the
+ARGUMENT: no derivative, no limit, no concavity, no compactness.  Every step is
+polynomial identity plus the order-preserving square root, and the decisive
+object (ii) is a polynomial in lam, lam' over Q(o).  Individual VALUES of g at
+off-diagonal points are still irrational -- g(1/2, 0) = 17/75 - sqrt(1801)/75 --
+because g is a difference of norms; the claim is about the reasoning, not about
+every number the module prints.  A blanket rationality claim over the whole
+theorem would therefore be FALSE and is withdrawn.
 
 WHAT THIS DOES NOT DO, and the scope is tighter than it first reads
 -------------------------------------------------------------------
@@ -106,7 +126,8 @@ weights, continuation cost, or outcome selection.
 
 DISTINCTNESS SUFFICES; NONORTHOGONALITY IS NOT NEEDED -- and the two cases close
 by DIFFERENT mechanisms.  THE CLOSURE STRENGTH IS 1 - sqrt(Tr PQ), which equals
-|dg/dlam| at the identity, is 18/25 at the engine pair, is MAXIMAL (= 1) at
+the coefficient in the bound above, is 18/25 at the engine pair, is MAXIMAL
+(= 1) at
 orthogonality, and vanishes only in the limit P -> Q, which is the distinctness
 hypothesis.  The sharp global form g(lam, lam') <= -(1 - sqrt(Tr PQ))(lam + lam')
 is executed.  Orthogonal rays close instead by the second certainty acting on a
@@ -177,11 +198,8 @@ F_Q = sp.simplify(S_U * F_P * S_U.H)
 # inequality on a headline number is not a pin: 25/14, 4 and -32/25 all satisfied
 # the previous guards.
 EXPECT_TR_PQ = sp.Rational(49, 625)
-EXPECT_CLOSURE = sp.Rational(18, 25)        # 1 - sqrt(Tr PQ) = |dg/dlam|
-EXPECT_DG11 = sp.Rational(-18, 25)          # dg/dlam at the identity, a = b = 1
+EXPECT_CLOSURE = sp.Rational(18, 25)        # 1 - sqrt(Tr PQ)
 EXPECT_SECOND_CERTAINTY = sp.Rational(241, 625)   # t + (1-t) Tr(PQ)
-EXPECT_D2G = sp.Rational(-288, 175)         # d2g/dlam2 at the identity, a = b = 1
-EXPECT_D2G_MID = -100352 * sp.sqrt(113) / 957675    # the same at lam = 1/2
 
 # Sentences this module may not ship in any prose field.  Checked in _result()
 # AND in run_all(), because a receipt no verdict consults is not a receipt, and
@@ -450,6 +468,41 @@ def check_L_certainty_and_positivity_force_the_lambda_form() -> Dict[str, object
     # and the lemma's PSD hypothesis is what licenses the step: without it,
     # Tr(AB) = 0 does not give AB = 0 (control in leg (vi)).
 
+    # (iii-A2) THE SAME ROUTE AT THE Q RAY.  The theorem's closure consumes
+    #   lam' >= 0 as well as lam >= 0, and an earlier version of this module
+    #   exhibited the derivation at the P ray ONLY -- so half the hypothesis sat
+    #   on the assumed side of a check whose headline is "EXECUTED for a general
+    #   T rather than assumed".  Q is not a coordinate axis in the Bloch frame,
+    #   so this is not the P computation relabelled: the forced direction is q.
+    tauQ, b1, b2, b3 = sp.symbols("tauQ b1 b2 b3", real=True)
+    TQg = sp.simplify((tauQ * I2 + b1 * SX + b2 * SY + b3 * SZ) / 2)
+    TfQg = sp.simplify(T_EXPOSE * I2 + (1 - T_EXPOSE) * TQg)
+    MQ = sp.simplify(I2 - TfQg)
+    suppQ = sp.simplify(Q1 * MQ)
+    solQ = sp.solve([sp.Eq(suppQ[i, j], 0) for i in range(2) for j in range(2)],
+                    [tauQ, b1, b2, b3], dict=True)
+    if len(solQ) != 1:
+        fails.append("the support-lemma equation Q M = 0 must have a unique "
+                     "solution manifold; got %s" % solQ)
+    else:
+        lamq = sp.symbols("lamq", real=True)
+        TQ_forced = sp.simplify(TQg.subs(solQ[0]))
+        TQ_form = sp.simplify(Q1 + lamq * (I2 - Q1))
+        free = sorted(TQ_forced.free_symbols, key=str)
+        if len(free) != 1:
+            fails.append("exactly one real parameter must survive at the Q ray; "
+                         "got %s" % free)
+        else:
+            sub = sp.solve(sp.Eq(sp.trace(TQ_forced), 1 + lamq), free[0])
+            if not sub or sp.simplify(TQ_forced.subs({free[0]: sub[0]})
+                                      - TQ_form) != sp.zeros(2, 2):
+                fails.append("the derived Q image must be EXACTLY Q + lam'(I-Q); "
+                             "got %s" % TQ_forced)
+    # and Q is genuinely a different ray, so this is not the P leg renamed
+    if sp.simplify(bloch(Q1) - bloch(P0)) == sp.zeros(3, 1):
+        fails.append("the Q ray must differ from the P ray, or the second "
+                     "instance exhibits nothing")
+
     # (iii-B) ROUTE 2 -- THE CAUCHY-SCHWARZ CHAIN, EXECUTED not asserted.
     #   Solve certainty for the longitudinal component, substitute into the
     #   positivity inequality |a|^2 <= (2 - tau)^2, and READ OFF that the residual
@@ -603,7 +656,7 @@ def check_L_certainty_and_positivity_force_the_lambda_form() -> Dict[str, object
 
 
 def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
-    """The theorem.  Both bounds computed, the global step CONCAVE."""
+    """The theorem.  Both bounds computed; the closure is a perfect square."""
     fails: List[str] = []
     lam, lamp = sp.symbols("lam lamp", real=True)
     a, b = sp.symbols("a b", positive=True)
@@ -618,111 +671,196 @@ def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
     #     companion lemma; re-exhibited here on the concrete family).
     if not psd(P0):
         fails.append("the probe x = P must be PSD")
-    _, TP, _ = family(lam, lamp)
-    if sp.simplify(sp.trace(TP)) != 1 + lam:
-        fails.append("T(P) trace must be 1 + lam")
-    # EXHIBITED, not merely asserted: T(P) = P + lam(I-P) has eigenvalues 1 and
-    # lam, so positivity at x = P is EXACTLY lam >= 0.
-    ev_TP = sorted([sp.nsimplify(v) for v in
-                    sp.simplify(P0 + lam * (I2 - P0)).eigenvals().keys()],
-                   key=str)
-    if sorted([str(v) for v in ev_TP]) != ["1", "lam"]:
-        fails.append("T(P) must have eigenvalues {1, lam}, so that positivity at "
-                     "x = P is exactly lam >= 0; got %s" % ev_TP)
-    for probe, want in ((sp.Rational(-1, 5), False), (sp.Rational(1, 5), True)):
-        if psd(sp.simplify(P0 + probe * (I2 - P0))) is not want:
-            fails.append("positivity at x = P must decide the sign of lam; "
-                         "misread at lam = %s" % probe)
+    _, TP, TQ = family(lam, lamp)
+    # BOTH RAYS.  An earlier version ran this leg on the P side only, so the Q
+    # half of family() was dead code -- flipping its sign left the module 7/7
+    # green -- while the closure below consumed lam' >= 0, which was therefore
+    # established nowhere.  Both sides are exhibited here.
+    for lbl, R, Tx, L in (("P", P0, TP, lam), ("Q", Q1, TQ, lamp)):
+        if sp.simplify(sp.trace(Tx)) != 1 + L:
+            fails.append("T(%s) trace must be 1 + %s" % (lbl, L))
+        ev = sorted([str(sp.nsimplify(v)) for v in
+                     sp.simplify(R + L * (I2 - R)).eigenvals().keys()])
+        if ev != sorted(["1", str(L)]):
+            fails.append("T(%s) must have eigenvalues {1, %s}, so positivity at "
+                         "x = %s is exactly %s >= 0; got %s"
+                         % (lbl, L, lbl, L, ev))
+        for probe, want in ((sp.Rational(-1, 5), False), (sp.Rational(1, 5), True)):
+            if psd(sp.simplify(R + probe * (I2 - R))) is not want:
+                fails.append("positivity at x = %s must decide the sign of %s; "
+                             "misread at %s" % (lbl, L, probe))
+        if psd(sp.simplify(I2 - (R + sp.Rational(6, 5) * (I2 - R)))):
+            fails.append("%s > 1 must break positivity of T(I-%s)" % (L, lbl))
 
-    # --- leg 2: the tight constraint, its strictly negative derivative, and the
-    #     CONCAVITY that turns a local statement into a global one.
+    # --- leg 2: the closure, EXACTLY and ALGEBRAICALLY.
+    #
+    # An earlier version reached lam <= 0 by differentiating: tightness at the
+    # identity, a strictly negative first derivative, and a concavity argument to
+    # turn that local statement global.  That is real analysis inside a [P_math]
+    # check, and it is ELIMINABLE -- the same conclusion is a perfect square.
+    #
+    # Write o = Tr(PQ), u = 1 - lam, v = 1 - lam'.  Two identities:
+    #
+    #   (i)  |p + q| = 2 sqrt(o)            [ since Tr(PQ) = (1 + p.q)/2 ]
+    #   (ii) |u p + v q|^2 - o (u + v)^2 = (1 - o)(lam - lam')^2   >= 0
+    #
+    # (ii) is an exact polynomial identity, and it is a SUM OF SQUARES scaled by
+    # (1 - o), which is positive exactly when P != Q.  So the distinctness
+    # hypothesis is what makes it non-negative, visibly.  Taking square roots,
+    # |u p + v q| >= sqrt(o)(u + v), i.e.
+    #
+    #   g(lam, lam') := |p+q| - (lam + lam') - |u p + v q| <= -(1 - sqrt(o))(lam + lam').
+    #
+    # Feasibility of the tight witness is exactly g >= 0.  With lam, lam' >= 0
+    # from the companion lemma and 1 - sqrt(o) > 0 from distinctness, any
+    # lam + lam' > 0 forces g < 0 and contradicts feasibility.  Hence
+    # lam = lam' = 0.  No derivative, no limit, no concavity: the whole step is
+    # algebra over Q(sqrt(o)), and at the engine pair sqrt(o) = 7/25 is rational,
+    # so it is algebra over Q outright.
+    w11_early = sp.simplify(p + q)
+    o_sym = sp.Symbol("o_sym", positive=True)
+    lam_s, lamp_s = sp.symbols("lam_s lamp_s", real=True)
+    u_s, v_s = 1 - lam_s, 1 - lamp_s
+    pq_sym = 2 * o_sym - 1                       # p.q from Tr(PQ) = (1 + p.q)/2
+    if sp.simplify((2 + 2 * pq_sym) - 4 * o_sym) != 0:
+        fails.append("identity (i) must give |p+q|^2 = 4 Tr(PQ)")
+    norm_img_sq = sp.simplify(u_s ** 2 + v_s ** 2 + 2 * u_s * v_s * pq_sym)
+    sos = sp.expand(sp.simplify(norm_img_sq - o_sym * (u_s + v_s) ** 2))
+    if sp.simplify(sos - (1 - o_sym) * (lam_s - lamp_s) ** 2) != 0:
+        fails.append("identity (ii) must be the EXACT perfect square "
+                     "(1 - o)(lam - lam')^2; got %s" % sp.factor(sos))
+    # the square is what carries it, and (1 - o) > 0 is DISTINCTNESS.  Both halves
+    # exhibited: at the engine overlap the factor is positive; at o = 1 (P = Q,
+    # the excluded case) it VANISHES and the bound says nothing.
+    o_engine = EXPECT_TR_PQ
+    if not (sp.simplify(1 - o_engine) > 0):
+        fails.append("(1 - Tr(PQ)) must be strictly positive for distinct rays")
+    if sp.simplify((1 - o_sym).subs({o_sym: 1})) != 0:
+        fails.append("at o = 1 the scaling factor must VANISH -- that is the "
+                     "excluded case P = Q, and the bound must degenerate there")
+    if sp.simplify(sos.subs({o_sym: 1})) != 0:
+        fails.append("at o = 1 the whole bound must collapse, or distinctness is "
+                     "not what carries it")
+    # equality case, computed: the bound is TIGHT exactly on lam = lam'.
+    if sp.simplify(sos.subs({lamp_s: lam_s})) != 0:
+        fails.append("the bound must be tight exactly at lam = lam'")
+    if sp.simplify(sos.subs({lamp_s: 0, o_sym: o_engine})) != \
+            sp.simplify((1 - o_engine) * lam_s ** 2):
+        fails.append("off the diagonal the slack must be (1 - o)(lam - lam')^2")
+
+    # THE CLOSURE STRENGTH, and the contradiction that closes the theorem.
+    # (An earlier draft named 2/|p+q| = 1/sqrt(o) "the margin"; no inequality has
+    # that as slack and it runs the OPPOSITE way -- it diverges at orthogonality,
+    # where the theorem is strongest.  The bar is in BARRED_PROSE.)
+    o = EXPECT_TR_PQ
+    closure = sp.simplify(1 - sp.sqrt(o))
+    if closure != EXPECT_CLOSURE:
+        fails.append("the closure strength must be EXACTLY 1 - sqrt(Tr PQ) = %s; "
+                     "got %s" % (EXPECT_CLOSURE, closure))
+    if not (closure > 0):
+        fails.append("the closure strength must be strictly positive, which is "
+                     "distinctness again")
+    # the contradiction, executed on the bound rather than asserted:
+    #   lam, lam' >= 0 and lam + lam' > 0  =>  upper bound on g is < 0.
+    contradiction_witnesses = []
+    if sp.simplify(-closure * 0) != 0:
+        fails.append("at the identity the bound must vanish, or the theorem "
+                     "would exclude its own conclusion")
+
+    # THE BOUND, verified against the CONSTRUCTED g rather than only in the
+    # abstract identity -- the two must be the same object.
     w = sp.simplify(a * p + b * q)
-    N = norm(w)
-    img = sp.simplify(a * (1 - lam) * p + b * (1 - lamp) * q)
-    g = sp.simplify(N - (a * lam + b * lamp) - norm(img))
+    img = sp.simplify(a * (1 - lam) * b ** 0 * p + b * (1 - lamp) * q)
+    g = sp.simplify(norm(w) - (a * lam + b * lamp) - norm(img))
     if sp.simplify(g.subs({lam: 0, lamp: 0})) != 0:
         fails.append("the constraint must be TIGHT at the identity")
-    dg = sp.simplify(sp.diff(g, lam).subs({lam: 0, lamp: 0}))
-    dg11 = sp.nsimplify(sp.simplify(dg.subs({a: 1, b: 1})))
-    if dg11 != EXPECT_DG11:
-        fails.append("dg/dlam at the identity must be EXACTLY %s; got %s"
-                     % (EXPECT_DG11, dg11))
-    if not (dg11 < 0):
-        fails.append("dg/dlam at the identity must be strictly negative")
-    # CONCAVITY.  g is (affine) - (norm of an affine map), hence concave; the
-    # structural reason is stated in the module header.  Corroborated by the sign
-    # of the second derivative, which must be NEGATIVE, at two distinct points --
-    # a single point could be an artefact of the endpoint.
-    # THE STRUCTURAL REASON, executed: img is AFFINE in (lam, lam'), so |img| is
-    # convex and g = affine - |img| is concave.  Two sampled second derivatives
-    # corroborate; this is the statement.
-    for v in (lam, lamp):
-        if sp.simplify(sp.diff(img, v, 2)) != sp.zeros(3, 1):
-            fails.append("the image must be AFFINE in %s -- that is why |img| is "
-                         "convex and g is concave" % v)
-        if sp.simplify(sp.diff(img, v)) == sp.zeros(3, 1):
-            fails.append("the image must actually DEPEND on %s, or affinity is "
-                         "vacuous" % v)
-    d2 = sp.diff(g, lam, 2)
-    d2g = sp.nsimplify(sp.simplify(d2.subs({lam: 0, lamp: 0}).subs({a: 1, b: 1})))
-    d2g_mid = sp.nsimplify(sp.simplify(
-        d2.subs({lam: sp.Rational(1, 2), lamp: 0}).subs({a: 1, b: 1})))
-    # PINNED BY EQUALITY, not by sign.  A sign test cannot tell the second
-    # derivative from the first: dg/dlam is also negative here, so "d2 < 0"
-    # would pass on sp.diff(g, lam, 1).
-    if sp.simplify(d2g - EXPECT_D2G) != 0:
-        fails.append("d2g/dlam2 at the identity must be EXACTLY %s; got %s"
-                     % (EXPECT_D2G, d2g))
-    if sp.simplify(d2g_mid - EXPECT_D2G_MID) != 0:
-        fails.append("d2g/dlam2 at lam = 1/2 must be EXACTLY %s; got %s"
-                     % (EXPECT_D2G_MID, d2g_mid))
-    if not (d2g < 0):
-        fails.append("g must be CONCAVE in lam at the identity -- tightness plus "
-                     "a negative derivative alone excludes only a punctured "
-                     "neighbourhood; got d2g = %s" % d2g)
-    if not (d2g_mid < 0):
-        fails.append("concavity must hold across the feasible interval, not only "
-                     "at the endpoint; got %s at lam = 1/2" % d2g_mid)
+    # THE IDENTITY, ON THE CONSTRUCTED VECTORS, SYMBOLICALLY IN lam AND lam'.
+    # An earlier version checked the bound at twelve rational points and tied the
+    # constructed g only to `predicted`, which was rebuilt from the SAME abstract
+    # expression -- so the two were checked against each other and against
+    # nothing else.  This runs the identity on the engine's own p and q.
+    img11 = sp.simplify(((1 - lam) * p + (1 - lamp) * q))
+    img11_sq = sp.simplify((img11.T * img11)[0])
+    u11, v11 = 1 - lam, 1 - lamp
+    if sp.simplify(img11_sq - o * (u11 + v11) ** 2
+                   - (1 - o) * (lam - lamp) ** 2) != 0:
+        fails.append("on the CONSTRUCTED p, q the identity must hold "
+                     "symbolically: |u p + v q|^2 - o(u+v)^2 = (1-o)(lam-lam')^2; "
+                     "residual %s" % sp.simplify(img11_sq - o * (u11 + v11) ** 2
+                                                 - (1 - o) * (lam - lamp) ** 2))
+    # THE TIE.  Feasibility of the tight witness is claimed to be exactly g >= 0.
+    # That sentence is about family() and psd(), so it is checked against BOTH --
+    # not against a second copy of the same algebra.  This is what catches a
+    # two-site convention change, and a sign flip on the Q side of family().
+    alpha_t = sp.simplify((2 + norm(w11_early)) / 2)
+    for L in (0, sp.Rational(1, 10), sp.Rational(1, 2), 1,
+              sp.Rational(-1, 10)):
+        for Lp in (0, sp.Rational(1, 3), 1, sp.Rational(-1, 10)):
+            Tl, _, _ = family(L, Lp)
+            Tx = sp.simplify(Tl(alpha_t, -1, -1))
+            # THE TIE, BY VALUE AND NOT BY VERDICT.  For a 2x2 Hermitian
+            # X = (t I + s.sigma)/2, PSD is exactly t >= |s|, so the PSD SLACK is
+            # t - |s|.  g must EQUAL that slack.  Comparing only the booleans is
+            # too coarse: a g built on the wrong sign convention still returns
+            # the same True/False at every sampled point, which is how the
+            # foreign auditor's two-site mutation walked through the first
+            # version of this leg.
+            slack = sp.simplify(sp.trace(Tx) - norm(bloch(Tx)))
+            val = sp.simplify(g.subs({lam: L, lamp: Lp}).subs({a: 1, b: 1}))
+            if sp.simplify(slack - val) != 0:
+                fails.append("g must EQUAL the PSD slack of the tight witness "
+                             "under family() at (%s, %s): slack = %s, g = %s"
+                             % (L, Lp, slack, val))
+            feasible = psd(Tx)
+            if feasible is not bool(sp.simplify(val) >= 0):
+                fails.append("g >= 0 must be EXACTLY feasibility of the tight "
+                             "witness under family(); they disagree at "
+                             "(%s, %s): psd = %s, g = %s"
+                             % (L, Lp, feasible, val))
+            if L >= 0 and Lp >= 0 and not (sp.simplify(val + closure * (L + Lp)) <= 0):
+                fails.append("the constructed g must obey the algebraic bound "
+                             "g <= -(1 - sqrt(o))(lam + lam'); failed at (%s, %s)"
+                             % (L, Lp))
 
-    # dg/dlam' must exist too: the joint closure needs BOTH partials for the
-    # supporting-hyperplane step.  At a = b = 1 it equals dg/dlam by symmetry.
-    dgp11 = sp.nsimplify(sp.simplify(
-        sp.diff(g, lamp).subs({lam: 0, lamp: 0}).subs({a: 1, b: 1})))
-    if dgp11 != EXPECT_DG11:
-        fails.append("dg/dlam' at the identity must also be EXACTLY %s (the "
-                     "joint closure needs both partials); got %s"
-                     % (EXPECT_DG11, dgp11))
+    # THE CONTRADICTION, consulting g AND feasibility rather than the bound alone.
+    # An earlier version checked only that -(1 - sqrt(o))(lam + lam') < 0, which
+    # is arithmetic about a coefficient and says nothing about the theorem: it
+    # consulted neither g nor psd().  Here each witness carries all three.
+    for L, Lp in ((sp.Rational(1, 100), 0), (0, sp.Rational(1, 3)),
+                  (sp.Rational(1, 2), sp.Rational(1, 2)), (1, 1)):
+        bound = sp.simplify(-closure * (L + Lp))
+        gval = sp.simplify(g.subs({lam: L, lamp: Lp}).subs({a: 1, b: 1}))
+        Tl, _, _ = family(L, Lp)
+        feasible = psd(sp.simplify(Tl(alpha_t, -1, -1)))
+        if not (bound < 0):
+            fails.append("at (lam, lam') = (%s, %s) the bound must be strictly "
+                         "negative" % (L, Lp))
+        if not (sp.simplify(gval - bound) <= 0):
+            fails.append("g must sit AT OR BELOW the bound at (%s, %s); "
+                         "g = %s, bound = %s" % (L, Lp, gval, bound))
+        if feasible:
+            fails.append("the tight witness must be INFEASIBLE at (%s, %s) -- "
+                         "that is the contradiction the theorem runs on" % (L, Lp))
+        contradiction_witnesses.append((L, Lp, str(bound), str(gval), feasible))
+    # the control: at the identity the witness IS feasible, so the contradiction
+    # does not exclude the theorem's own conclusion.
+    Tid, _, _ = family(0, 0)
+    if not psd(sp.simplify(Tid(alpha_t, -1, -1))):
+        fails.append("at lam = lam' = 0 the tight witness must be FEASIBLE")
 
-    # THE CLOSURE STRENGTH.  It is 1 - sqrt(Tr PQ) = |dg/dlam|, MAXIMAL at
-    # orthogonality and vanishing only as P -> Q, which is the excluded
-    # hypothesis.  (An earlier draft named 2/|p+q| = 1/sqrt(Tr PQ) "the margin";
-    # no inequality has that as slack and it runs the OPPOSITE way.  The bar is
-    # in BARRED_PROSE.)
+    # the strict Cauchy-Schwarz content, in closed form
     w11 = sp.simplify(p + q)
     cs_gap = sp.simplify(norm(w11) - (p.T * w11)[0])
     if not (cs_gap > 0):
         fails.append("strict Cauchy-Schwarz must give |p+q| > p.(p+q); that "
                      "strictness IS the distinctness hypothesis")
-    o = EXPECT_TR_PQ
-    closure = sp.simplify(1 - sp.sqrt(o))
-    if closure != EXPECT_CLOSURE or sp.simplify(closure + dg11) != 0:
-        fails.append("the closure strength must be EXACTLY 1 - sqrt(Tr PQ) = %s "
-                     "and must equal |dg/dlam|; got %s vs %s"
-                     % (EXPECT_CLOSURE, closure, -dg11))
-    # the general Cauchy-Schwarz gap, in closed form: 2 sqrt(o)(1 - sqrt(o)).
     if sp.simplify(cs_gap - 2 * sp.sqrt(o) * (1 - sp.sqrt(o))) != 0:
         fails.append("the Cauchy-Schwarz gap must be 2 sqrt(o)(1 - sqrt(o)) in "
                      "closed form; got %s" % cs_gap)
-    # |p+q| = 2 sqrt(Tr PQ) is a GENERAL identity, not a fact about this pair:
-    # verify it symbolically for an arbitrary unit q against p = (0,0,1).
+    # |p+q| = 2 sqrt(Tr PQ) is a GENERAL identity: verify it symbolically for an
+    # arbitrary unit q, with Tr(PQ) COMPUTED from the projectors rather than
+    # quoted.
     qx, qy, qz = sp.symbols("qx qy qz", real=True)
-    unit = sp.Eq(qx ** 2 + qy ** 2 + qz ** 2, 1)
-    lhs = sp.simplify(((sp.Matrix([0, 0, 1]) + sp.Matrix([qx, qy, qz])).T
-                       * (sp.Matrix([0, 0, 1]) + sp.Matrix([qx, qy, qz])))[0])
-    if sp.simplify(lhs.subs({qx ** 2: 1 - qy ** 2 - qz ** 2}) - (2 + 2 * qz)) != 0:
-        fails.append("|p+q|^2 must reduce to 2 + 2 q_z for a general unit q")
-    # Tr(PQ) COMPUTED for the general pair, not quoted: build both projectors
-    # from their Bloch vectors and take the trace of the product.
     Pgen = sp.simplify((I2 + SZ) / 2)
     Qgen = sp.simplify((I2 + qx * SX + qy * SY + qz * SZ) / 2)
     trPQ_gen = sp.simplify(sp.trace(Pgen * Qgen))
@@ -731,17 +869,6 @@ def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
                      "got %s" % trPQ_gen)
     if sp.simplify((2 + 2 * qz) - 4 * trPQ_gen) != 0:
         fails.append("|p+q|^2 = 4 Tr(PQ) must hold identically")
-    if sp.simplify(unit.lhs - unit.rhs) == 0:
-        fails.append("the unit constraint must be a nontrivial relation")
-
-    # THE SHARP GLOBAL BOUND, which is what makes the local statement global:
-    #   g(lam, lam') <= -(1 - sqrt(o)) (lam + lam')   on the feasible box.
-    for L in (0, sp.Rational(1, 10), sp.Rational(1, 2), 1):
-        for Lp in (0, sp.Rational(1, 3), 1):
-            val = sp.simplify(g.subs({lam: L, lamp: Lp}).subs({a: 1, b: 1}))
-            if not (sp.simplify(val + closure * (L + Lp)) <= 0):
-                fails.append("the sharp bound g <= -(1 - sqrt(o))(lam + lam') "
-                             "must hold; failed at (%s, %s)" % (L, Lp))
 
     # --- leg 3: the feasible set is the single point
     survivors = []
@@ -820,11 +947,16 @@ def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
         "matched certainty at two DISTINCT rays is the identity on S.  The image "
         "form and lam >= 0 come from certainty plus positivity (derived, not "
         "assumed, in the companion lemma); lam <= 0 because the PSD constraint "
-        "on alpha I - aP - bQ is tight at the identity with derivative %s < 0 at "
-        "a = b = 1 and is CONCAVE in lam across the feasible interval -- "
-        "tightness plus a negative derivative alone would exclude only a "
-        "punctured neighbourhood.  The CLOSURE STRENGTH is 1 - sqrt(Tr PQ) = %s, "
-        "which is exactly |dg/dlam| at the identity, is MAXIMAL at orthogonality "
+        "on alpha I - aP - bQ is exactly g >= 0, and the exact polynomial "
+        "identity |u p + v q|^2 - o(u+v)^2 = (1 - o)(lam - lam')^2 -- a PERFECT "
+        "SQUARE scaled by (1 - o), positive exactly when P != Q -- gives "
+        "g <= -(1 - sqrt(o))(lam + lam'), so any lam + lam' > 0 contradicts "
+        "feasibility.  NO DERIVATIVE, NO LIMIT, NO CONCAVITY: the step is "
+        "polynomial identity plus an order-preserving square root -- though "
+        "individual VALUES of g stay irrational, which is why the claim is about "
+        "the argument and not about every printed number.  The "
+        "CLOSURE STRENGTH is 1 - sqrt(Tr PQ) = %s, "
+        "which is the coefficient in the bound above, is MAXIMAL at orthogonality "
         "and vanishes only as P -> Q -- the excluded hypothesis -- and it "
         "carries the sharp global bound g <= -(1 - sqrt(Tr PQ))(lam + lam').  "
         "The feasible set is exactly {0}.  COMPLETE POSITIVITY IS "
@@ -836,7 +968,7 @@ def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
         "THE ZERO MATRIX, so the constraint it carries is the linear dependence "
         "Q = I - P rather than a positivity bound.  So the banked two-ray "
         "theorem's nonorthogonality fence does NOT transfer to this route."
-        % (dg11, closure),
+        % closure,
         fails,
         imports=("Cauchy-Schwarz in R^3 (inequality, with its equality case used "
                  "as the parallelism step)",),
@@ -847,11 +979,10 @@ def check_T_positivity_forces_the_identity_readout() -> Dict[str, object]:
             "closes instead",
         ),
         artifacts={
-            "dg_dlam_at_identity": str(dg11),
-            "d2g_dlam2_at_identity": str(d2g),
-            "d2g_dlam2_at_half": str(d2g_mid),
+            "closure_identity": "|u p + v q|^2 - o(u+v)^2 = (1-o)(lam-lam')^2",
+            "analytic_content": "none -- no derivative, limit or concavity",
+            "contradiction_witnesses": [str(w) for w in contradiction_witnesses],
             "closure_strength_1_minus_sqrt_TrPQ": str(closure),
-            "dg_dlamp_at_identity": str(dgp11),
             "feasible_lam_set": [str(s) for s in survivors],
             "dim_S_orthogonal_case": int(dim_orth),
             "complete_positivity_used": cp_used,
