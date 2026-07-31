@@ -226,11 +226,20 @@ note's Sec 5 bank spec followed verbatim):
     is ~2.2e-12 floor units at solar weak field; the approximate-A2/
     no-slack route is dead for w as it was for theta.
   - F-W2 TRIPWIRE (in-check, B2's style): the recruitment.py instrument
-    name set is re-asserted against the pinned twelve-name baseline; a
+    name set is re-asserted against the pinned THIRTEEN-name baseline; a
     new ruler-sector or channel-anisotropic response instrument landing
     in the recruitment census fails this check loudly and forces a
     re-audit of TCP clause (ii)'s pricing (instruments landing outside
-    that census remain E1-search-bounded, named).
+    that census remain E1-search-bounded, named).  The thirteenth name,
+    knee_downturn_direction_corroboration (.439, 2026-07-25), was
+    re-audited 2026-07-31 and is NEITHER: 'channel' in this codebase is
+    the n+1 clock/ruler deposit channels and 'channel-anisotropic' is
+    c_t != c_s in gamma_bound_aniso, while the instrument's 'downturn
+    DIRECTION' is a one-dimensional sign bit on d(ln S_f) carrying no
+    channel index at all.  recruitment.py contains zero occurrences of
+    ruler / clock / lambda_t / lambda_s / anisotrop.  Clause (ii)'s
+    pricing is NOT voided: sections 1-8 execute and pass with the
+    thirteenth loaded, and only section 9's census guard fired.
 
 STATUS. Fork check [P_structural]; the two route-closures
 [P_structural_instrument] -- instrument-enumeration-bounded negatives in
@@ -464,6 +473,44 @@ def check_T_gammaC_carrier_fork():
 # the ELEVEN checks present at walk time; Rule D (.371) landed in the
 # concurrent lane after the enumeration and its forced re-audit was performed
 # and recorded at banking time (2026-07-03) -- see the module docstring.
+#
+# ADVANCED TO THIRTEEN 2026-07-31, and NOT by silencing a tripwire.  The
+# thirteenth, check_T_knee_downturn_direction_corroboration (.439,
+# 2026-07-25), sat red for SIX DAYS against a pin frozen at twelve on
+# 2026-07-03; --bank-audit is a registry-LOAD gate and could not see it.
+# Each tripwire named a SPECIFIC remedy; each was performed against the
+# instrument's CONTENT, by a blinded seat:
+#   T2'   -- the countermodel and static-vacuity legs were re-executed WITH
+#            the thirteenth loaded and still realize every gamma_C; four
+#            adversarial construction routes (T_k = hf/k_B -> carrier index;
+#            r_th in {1,2,4} -> the fork {1,1/3,0,-1}; sign-as-direction; a
+#            constraint on (A,B,beta)) are dead, the instrument's variables
+#            being disjoint from the countermodel's.  It is NON-EXPORTING
+#            with empty cross_refs, so it cannot reach gamma_C by citation.
+#   F-W2  -- neither ruler-sector nor channel-anisotropic (see docstring).
+#   F-CL2 -- reader-free: the token scan and the closed-signature leg both
+#            hold WITH the thirteenth present, and the substantive predicate
+#            (a demand-multiplicity variable in E_rec or the master
+#            equation) is untouched.
+# The guards stay SET-EXACT, so a fourteenth instrument still trips them.
+# Nothing became true because the number changed.  Contrast the standing
+# EXPECTED_REGISTRY_SIZE rule, where the held modules' second blinded audit
+# has never happened -- that is the anti-pattern, and this is not it.
+# Precedent: the .371 Rule D advance, same shape.
+# Record: Artifacts_2026-07-30_session/heavy_pass/
+#         RE_AUDIT_recruitment_baseline_2026-07-31.md (PIN-MAY-ADVANCE 0.86).
+#
+# NAMED EXPOSURE F-CL2-e, disclosed rather than patched.  This instrument
+# introduces the corpus's first READ-INTENSITY index -- four read powers in
+# dBm -- and the F-CL2 token scan did not see it, because 'reader' does not
+# substring-match 'read powers'.  It CLEARS the predicate anyway: the power
+# is a drive amplitude on one channel, not a count; it appears in a single
+# executable line (a label tuple), enters no fit, coefficient or cost, and
+# device clustering averages it away.  The token list is a PROXY and the
+# next instrument may slip past it.  Widening the list is the wrong repair
+# (joint / shared / load all occur benignly in-module); the right one is
+# that any new instrument's re-audit must test the PREDICATE, not the
+# tokens.
 _RECRUITMENT_INSTRUMENT_BASELINE = frozenset({
     'check_H1_continuum_from_anchor_profile',
     'check_H2_locality_from_recruitment_kernels',
@@ -477,6 +524,7 @@ _RECRUITMENT_INSTRUMENT_BASELINE = frozenset({
     'check_T_sixteen_case_unification_structural',
     'check_T_DCE_Q_dependence_prediction',
     'check_T_purcell_DCE_consistency',
+    'check_T_knee_downturn_direction_corroboration',   # .439, re-audited
 })
 
 # The instrument enumeration of record (artifact data): what T2/T2' audited.
@@ -586,9 +634,14 @@ def check_L_notrace_not_from_recruitment_instruments():
           "TRIPWIRE: recruitment instrument(s) removed/renamed since the "
           f"baseline: {sorted(removed_instruments)} -- the enumeration "
           "of record is stale; re-pin after re-audit")
-    check(len(live_names) == 12,
-          "the pinned baseline is twelve names (the walk's eleven + the "
-          ".371 Rule D landing, re-audited at banking time)")
+    check(len(live_names) == len(_RECRUITMENT_INSTRUMENT_BASELINE),
+          f"the live census must match the pin exactly "
+          f"({len(_RECRUITMENT_INSTRUMENT_BASELINE)} names: the walk's "
+          "eleven + the .371 Rule D landing re-audited 2026-07-03 + the "
+          ".439 knee-downturn instrument re-audited 2026-07-31).  DERIVED "
+          "from the pin, not hardcoded -- an independently hardcoded count "
+          "is a second site a pin advance silently leaves stale, which is "
+          "exactly what this leg used to be.")
 
     return _result(
         name='L_notrace_not_from_recruitment_instruments -- the no-trace '
@@ -616,10 +669,12 @@ def check_L_notrace_not_from_recruitment_instruments():
             'geometric specialization, outside the licensing set. THE '
             'TRIPWIRE IS LIVE: the check enumerates apf/recruitment.py\'s '
             'check functions at runtime and FAILS LOUDLY if the name set '
-            'differs from the pinned twelve-name baseline (the walk\'s '
+            'differs from the pinned THIRTEEN-name baseline (the walk\'s '
             'eleven + the concurrent .371 Rule D, whose forced re-audit '
             'was performed at banking time: a TLS transduction-design '
-            'instrument, no comparison-direction content). A thirteenth '
+            'instrument, no comparison-direction content; + the .439 '
+            'knee-downturn instrument, re-audited 2026-07-31 after it sat '
+            'red for six days). A FOURTEENTH '
             'recruitment instrument fails the bank and forces a T2\' '
             're-audit. SCOPE: non-derivability from the corpus AS '
             'FORMALIZED is the theorem; NEVER cite as "APF cannot derive '
@@ -649,6 +704,29 @@ def check_L_notrace_not_from_recruitment_instruments():
                               'transduction-design instrument, no '
                               '(lambda_t, lambda_s) content; static-vacuity '
                               'discharge as the knee corollary',
+            'knee_downturn_reaudit': 'performed 2026-07-31 after a SIX-DAY '
+                                     'red (.439 banked 2026-07-25 against a '
+                                     'pin frozen 2026-07-03; --bank-audit is '
+                                     'a registry-LOAD gate and cannot see '
+                                     'it). Blinded, PIN-MAY-ADVANCE 0.86. '
+                                     'T2: countermodel + static vacuity '
+                                     're-executed WITH it loaded, still '
+                                     'realize every gamma_C; four '
+                                     'adversarial construction routes dead; '
+                                     'NON-EXPORTING, cross_refs empty. '
+                                     'F-W2: neither ruler-sector nor '
+                                     'channel-anisotropic (a 1-D sign bit '
+                                     'on d(ln S_f), no channel index). '
+                                     'F-CL2: reader-free, PREDICATE tested '
+                                     'not just tokens. NAMED EXPOSURE '
+                                     'F-CL2-e: first read-intensity index '
+                                     'in the corpus (4 read powers, dBm); '
+                                     'the token scan cannot see it because '
+                                     '"reader" does not match "read '
+                                     'powers". It clears the PREDICATE '
+                                     '(drive amplitude not a count; one '
+                                     'label line; no fit/coefficient/cost; '
+                                     'averaged away by device clustering)',
             'live_routes': ['reservoir-exclusion (L1 open + L2 banked + L3 '
                             'finite)', 'the weight-one walk (derive w = 1)'],
             'witness': 'The Turning/mastereq_carrier_witness_2026-07-03.py '
@@ -1142,8 +1220,9 @@ def check_T_weight_one_reduction():
         if name.startswith('check_') and inspect.isfunction(obj)
         and obj.__module__ == 'apf.recruitment')
     check(live_names == _RECRUITMENT_INSTRUMENT_BASELINE,
-          "F-W2 TRIPWIRE: the recruitment instrument census moved since "
-          "the pinned twelve-name baseline -- a new ruler-sector or "
+          f"F-W2 TRIPWIRE: the recruitment instrument census moved since "
+          f"the pinned {len(_RECRUITMENT_INSTRUMENT_BASELINE)}-name "
+          "baseline -- a new ruler-sector or "
           "channel-anisotropic response instrument voids TCP clause "
           "(ii)'s pricing and forces a re-audit of the weight-one "
           "reduction (instruments landing outside the recruitment census "
