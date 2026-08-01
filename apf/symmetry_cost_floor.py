@@ -3,10 +3,24 @@
 """
 symmetry_cost_floor.py
 
-APF bank module -- ported to the live tree; not yet wired into the manifest
-(registration is a separate step). Self-contained: stdlib + fractions +
+APF bank module -- registered in BANK_REGISTRY_MODULES since v24.3.437
+(occupant-cost arc, the zero-lemma, +2). Self-contained: stdlib + fractions +
 itertools only. No scipy / numpy / multiprocessing.Pool / apf imports. Exact
 arithmetic throughout (Fraction, int).
+
+CARRIER NOTE (2026-08-01). The cost priced here lives on a FINITE CARRIER: a
+configuration over X = {0..n-1}, priced by the pairs it tells apart under its
+orbit partition. It is not a functional on a represented algebra, and no
+construction in the bank carries a value between the two carriers. Any route
+reading a score off this cost owes that transfer a definition first. Two
+independent lanes have now stopped at this same point -- the held
+``atomic_equal_cost_frame`` module (whose own scope note observes that a
+projective ray in M_n(C) is a different carrier from this orbit partition, and
+that the type-transfer is undefined), and the readout-completeness burden of
+the Paper 5 Technical Supplement Q3E remark. NOT established, and not implied
+by anything here: that the sandwich construction cannot run on this cost. See
+``apf/ledger_extension_degree.py`` for what the banked cost does and does not
+determine about degree.
 
 ------------------------------------------------------------------------------
 THESIS UNDER TEST
