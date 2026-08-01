@@ -854,6 +854,17 @@ def check_RT_expected_theorem_count():
 
 # Per-check phenomenological-tolerance whitelist for RT_tolerance_audit.
 # Each entry maps a check name to (max acceptable tolerance percent, reason).
+#
+# WHAT THIS TABLE CAN AND CANNOT SAY (2026-08-01). An entry asserts that the
+# number on the right of a comparison is a PERCENTAGE with a written envelope.
+# It cannot express a bound in physical units, a bound in degrees, or a bound
+# that is not a tolerance at all -- and three of its entries were doing
+# exactly that, each with a reason that did not describe its own check. Two
+# are retained below as declared INSTRUMENT ARTIFACTS rather than deleted,
+# because deleting them makes a text-matching scanner flag a phantom; they
+# clear nothing. A separate reporting tool covers the tolerances this
+# instrument cannot see -- see scripts/tolerance_census.py -- and it
+# makes no claim, so nothing has to audit it.
 # Loose tolerances NOT in this whitelist trigger a FLAG; whitelisted ones are
 # surfaced in the audit summary so reviewers see them, but do not fail the
 # audit. Adding to this whitelist is an explicit editorial decision -- the
@@ -886,25 +897,35 @@ PHENOMENOLOGICAL_TOLERANCE_WHITELIST = {
     ),
     'L_prediction_catalog': (
         10.0,
-        'Meta-check across all 49 predictions: flags any individual '
-        'prediction >10% off. This is a loose-by-design aggregator '
-        'threshold for catalog consistency, not a per-prediction tolerance. '
-        'Per-prediction tolerances are tracked separately.'
+        'CORRECTED 2026-08-01. Gates the MEAN error across tested predictions '
+        '(mean_err = sum(errors)/len(errors), currently ~3.8% over 40 tested), '
+        'NOT any individual prediction. The prior reason read "flags any '
+        'individual prediction >10% off", which describes a strictly stronger '
+        'check than the one that executes; per-prediction tolerances are '
+        'tracked at their own sites.'
     ),
     'L_Einstein_from_entanglement': (
         10.0,
-        'Einstein equations recovered from entanglement-first-law via '
-        'Jacobson-style argument; 10% is the structural reconstruction '
-        'tolerance for the Ricci-from-entanglement-area derivation, '
-        'reflecting next-to-leading-order corrections (Faulkner et al '
-        '2014 typical residuals).'
+        'CORRECTED 2026-08-01 -- THIS IS NOT A TOLERANCE. No 10% tolerance '
+        'exists anywhere in that check. The scanner matched the text '
+        '"error < 10" inside an f-string SUMMARY SENTENCE -- "Clausius '
+        'dQ=TdS verified on Schwarzschild (error < 10^-10)". The actual '
+        'tolerance there is abs(delta_Q_from_TdS - delta_Q_from_energy) '
+        '< 1e-10. The prior reason cited Faulkner et al 2014 '
+        'next-to-leading-order residuals in support of a tolerance that does '
+        'not exist. The entry is retained ONLY to suppress a known artifact '
+        'of a text-matching instrument; it clears nothing, because there is '
+        'nothing to clear.'
     ),
     'L_PMNS_CP_corrected': (
         15.0,
-        'delta_PMNS observationally ~234 deg with ~20 deg uncertainty '
-        '(NuFIT 5.3, 2024 global fit). 15% tolerance is TIGHTER than the '
-        'experimental error bar; tightening below this would over-claim '
-        'against current data.'
+        'CORRECTED 2026-08-01 -- THE UNIT IS DEGREES, NOT PERCENT. The check '
+        'reads abs(delta_cons) < 15 and its own message prints '
+        '"|delta| < 15 deg". 15 degrees is tighter than the ~20 deg NuFIT 5.3 '
+        'uncertainty on delta_PMNS, so the bound is defensible -- but the '
+        'prior reason argued in degrees while labelling the result a '
+        'percentage, and this whitelist can only express percentages. '
+        'Retained as an instrument artifact, not as a percentage envelope.'
     ),
 }
 
