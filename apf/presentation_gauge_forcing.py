@@ -619,6 +619,383 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
            f"NEGATIVE CONTROL: permutations alone must leave more than the "
            f"scalar line (n={n}) -- they do not force the trace")
 
+    # ---- Step D1: the OTHER half of that control -- quarter-phases alone. --
+    # THIS LEG ANSWERS TO THE PROPOSITION'S PROOF, NOT TO ITS STATEMENT.  The
+    # statement of prop:presentation-gauge-trace quantifies over EVERY unitary;
+    # its proof needs exactly two families and says, in prose, what each of them
+    # alone leaves -- "Each generator alone therefore imposes rank two on
+    # (a,d,x,y) and leaves a two-parameter family --- an unequal diagonal
+    # survives the phase, and an equal-diagonal real off-diagonal survives the
+    # swap" -- and at general n, "the permutations equalize the diagonal entries
+    # of R, and independent quarter-phases on distinct coordinates force
+    # i^{k_j-k_k} R_{jk} = R_{jk} for all admissible choices, hence R_{jk} = 0
+    # off the diagonal".  The SWAP half of that sentence is Step D above.  The
+    # PHASE half was asserted in prose and never executed, with the generator
+    # helper for it already in this file.  It is executed here, and the two
+    # halves together make Step D a DECOMPOSITION of the forcing rather than a
+    # one-sided sanity check: each half alone leaves strictly more than the
+    # scalar line, for a DIFFERENT reason, and their intersection is the scalar
+    # line the theorem runs on.
+    #
+    # WHAT MAY BE READ OFF THE RETURNED BASIS AND WHAT MAY NOT.
+    # _graded_solutions returns an RREF BASIS of the solution space, not its
+    # lines -- the corrigendum of record in Step B.  A predicate applied to that
+    # basis is a statement about the SPAN only if its truth set is closed under
+    # linear combination.  DIAGONALITY IS SUCH A PREDICATE, since the diagonal
+    # matrices are a subspace; PSD AND TRACE-NONZERO ARE NOT, which is exactly
+    # the error class the corrigendum caught.  That difference is not asserted
+    # here, it is EXHIBITED: this very space contains diag(1,-1,0,...,0), which
+    # is invariant, diagonal, non-scalar and NOT PSD, so a PSD reading of this
+    # basis would be true of the basis and false of the space, while the
+    # diagonal reading transfers.  Because the phase half alone does not equalize
+    # the diagonal, a non-scalar trace-zero survivor here is expected and is no
+    # counterexample to Step C, which quantifies over the ADMITTED family.
+    #
+    # And the claim is made SET-EXACT rather than dimensional, in both
+    # directions, with the dimension read off the computation:
+    #     span(returned) <= diagonals  -- every returned vector is diagonal;
+    #     diagonals <= solution space  -- every E_ii is verified invariant;
+    #     dim = n                      -- computed, then compared to n.
+    # The solver is verified rather than trusted: every returned vector is
+    # checked to satisfy g R g* = R directly, so a count-correct basis of the
+    # wrong space is caught instead of absorbed.
+    phase_survivors: Dict[str, int] = {}
+    perm_survivors: Dict[str, int] = {}
+    both_survivors: Dict[str, int] = {}
+    phase_space_exactly_diagonal: Dict[str, bool] = {}
+    phase_blocks_certified: Dict[str, bool] = {}
+    for n in (2, 3, 4):
+        basis = _herm_basis(n)
+        phases = _quarter_phases(n)
+        gens_all = _complex_generators(n)
+        tag = f"C{n}"
+
+        # (a) The two controls must PARTITION the admitted family, or they are
+        #     two isolated facts about two unrelated groups rather than a
+        #     decomposition of this theorem's forcing.
+        ck(_transpositions(n) + phases == gens_all,
+           f"Step D1: the two controls must partition the admitted family "
+           f"({tag}) -- transpositions + quarter-phases must BE the admitted "
+           f"generator list, or the decomposition claim is empty")
+
+        # (b) And the phase half must really be QUARTER-phases: one per
+        #     coordinate, diagonal, unitary, of order EXACTLY four.  Sign flips
+        #     are diagonal, unitary, one per coordinate, and leave the SAME
+        #     diagonal space -- for the wrong reason and over the wrong field --
+        #     so nothing downstream distinguishes them and this leg must.
+        #     WELL-FORMEDNESS GATE, AND ITS HONEST SCOPE.  Every leg below
+        #     conjugates by a generator or indexes the family by coordinate, so
+        #     the gate is what keeps THIS leg from raising on a malformed
+        #     family.  It does NOT make the CHECK crash-proof, and the earlier
+        #     comment here said it did.  A shape-malformed family is consumed by
+        #     Step A, ~85 lines upstream, which performs the same conjugation on
+        #     the same generators and raises there first; that is PRE-EXISTING
+        #     -- the banked file raises identically -- and it is outside this
+        #     extension's remit to repair.  Second audit, mutation M5.
+        shape_ok = all(isinstance(g, list) and len(g) == n
+                       and all(isinstance(row, list) and len(row) == n
+                               for row in g)
+                       for g in phases)
+        ck(shape_ok,
+           f"Step D1: every phase generator must be an n x n matrix ({tag})")
+        ck(len(phases) == n,
+           f"Step D1: there must be one quarter-phase per coordinate ({tag}, "
+           f"got {len(phases)})")
+        family_ok = bool(shape_ok and len(phases) == n)
+        if not family_ok:
+            #     A malformed family is dropped HERE, after the two assertions
+            #     above have already recorded the failure, so that D1's own
+            #     legs are not handed a matrix they cannot index.
+            #     CAVEAT, and it is why the dimension leg's message must be read
+            #     with the family legs above it: the empty family leaves the
+            #     WHOLE AMBIENT invariant, so the dimension leg below reports
+            #     n^2 and its message quotes that number -- which is a fact
+            #     about the substitution, NOT about the malformed family's own
+            #     invariant space.  The family legs above carry the real cause.
+            #     Second audit, mutation M2.
+            phases = []
+        diag_sigs = set()
+        for g in (phases if family_ok else ()):
+            g2 = _mm(g, g)
+            ck(_mm(g, _dag(g)) == _eye(n),
+               f"Step D1: each phase generator must be unitary ({tag})")
+            ck(all(g[a][b] == ZERO for a in range(n) for b in range(n)
+                   if a != b),
+               f"Step D1: each phase generator must be diagonal ({tag})")
+            ck(_mm(g2, g2) == _eye(n) and g2 != _eye(n),
+               f"Step D1: each phase generator must have order EXACTLY four "
+               f"({tag}) -- order two would be a SIGN FLIP, which leaves the "
+               f"same diagonal space and would make this control a statement "
+               f"about the wrong family")
+            diag_sigs.add(tuple(g[i][i] for i in range(n)))
+        ck(family_ok and len(diag_sigs) == n,
+           f"Step D1: the phases must sit on DISTINCT coordinates ({tag}, "
+           f"{len(diag_sigs)} distinct of {n}; family well-formed: "
+           f"{family_ok}) -- the proof's clause is 'independent quarter-phases "
+           f"on distinct coordinates', and a malformed family reports zero "
+           f"distinct coordinates here rather than raising")
+
+        #      AND THE PREDICATE ITSELF, not a proxy for it.  Distinct diagonal
+        #      signatures is a COUNT; "one quarter-phase per coordinate" is a
+        #      STATEMENT ABOUT SUPPORT, and a family can satisfy the count while
+        #      failing the statement.  Two families do exactly that: phases[i]
+        #      carrying i at coordinate i and -i at coordinate i+1 mod n, and
+        #      the family D_0..D_{n-2} together with i*I.  Both are diagonal,
+        #      unitary, of order four, n in number and pairwise distinct; both
+        #      generate a PROPER SUBGROUP of (Z/4)^n, so neither is "all
+        #      admissible choices of i^{k_j}"; and neither is supported on one
+        #      coordinate.  The proxy admits both.  The predicate does not.
+        #      This assertion also supplies the index convention that leg (c1)
+        #      below reads -- it takes phases[j] for the block at (j,k) -- which
+        #      was otherwise true only by construction and unstated, so a
+        #      REORDERING of the helper made (c1) fail with a message blaming
+        #      the mathematics.  Found by a foreign audit, three escapes, one
+        #      assertion.
+        #      EITHER quarter-phase at coordinate i is admissible: i and -i
+        #      generate the same Z/4 and the proof quantifies over ALL
+        #      admissible choices of i^{k_j}, so pinning to +i alone would
+        #      reject an equivalent family -- a false rejection, found by the
+        #      second audit.  What must be pinned is the SUPPORT.
+        quarter_at_i = (IMAG, (F(0), F(-1)))
+        ck(all(phases[i][i][i] in quarter_at_i
+               and all(phases[i][a][a] == ONE for a in range(n) if a != i)
+               for i in (range(n) if family_ok else ())) and family_ok,
+           f"Step D1: phases[i] must be A quarter-phase supported on "
+           f"coordinate i and the identity elsewhere ({tag}) -- 'independent "
+           f"quarter-phases on distinct coordinates' is a statement about "
+           f"SUPPORT, not about which of the two quarter-phases is used, and "
+           f"leg (c1) reads phases[j] for the block at (j,k)")
+
+        # (b2) THE OTHER HALF OF THE DECOMPOSITION, pinned to the same
+        #      standard.  Step D asserts only that permutations alone leave
+        #      MORE than the scalar line -- a bare inequality -- while the
+        #      key_result now describes the pair as a decomposition and quotes a
+        #      dimension.  An inequality does not carry a number.  A foreign
+        #      audit deleted one constraint row from the solver, moved
+        #      permutations-alone from 2 to 3/5/8 at n = 2/3/4, and the check
+        #      stayed green with the prose one field away still reading
+        #      "dimension 2".  Pinned here, in D1, so Step D is untouched and
+        #      this remains an extension.
+        perm_sols = _graded_solutions(basis, _transpositions(n),
+                                      [1] * len(_transpositions(n)), n)
+        perm_survivors[tag] = len(perm_sols)
+        ck(len(perm_sols) == 2,
+           f"Step D1: permutations alone must leave EXACTLY a two-dimensional "
+           f"space ({tag}: computed {len(perm_sols)}) -- Step D's inequality "
+           f"does not carry the number the key_result quotes")
+        #      And the proof's own clause for this half -- "the permutations
+        #      equalize the diagonal entries of R" -- executed rather than
+        #      quoted: every returned vector has a constant diagonal.
+        ck(all(len({R[i][i] for i in range(n)}) == 1 for R in perm_sols),
+           f"Step D1: permutations alone must EQUALIZE THE DIAGONAL ({tag}) "
+           f"-- that is the proof's clause for this half, and Step D never "
+           f"executes it")
+
+        # (c0) THE AMBIENT, pinned SET-EXACTLY.  "Exactly the diagonal" is a
+        #      claim about a space, and it is the intended claim only if the
+        #      ambient is the FULL n^2-dimensional Hermitian space.  Shrink the
+        #      ambient -- drop the imaginary off-diagonal directions, say -- and
+        #      every assertion below still passes while meaning something
+        #      strictly weaker.  So the ambient is pinned against the standard
+        #      basis by membership, not by count alone.
+        diag_units = []
+        for i in range(n):
+            E = _zeros(n)
+            E[i][i] = ONE
+            diag_units.append(E)
+        blocks = []
+        for j in range(n):
+            for k in range(j + 1, n):
+                X = _zeros(n)
+                X[j][k] = ONE
+                X[k][j] = ONE
+                Y = _zeros(n)
+                Y[j][k] = IMAG
+                Y[k][j] = (F(0), F(-1))
+                blocks.append((j, k, X, Y))
+        expected_basis = diag_units + [M for (_, _, X, Y) in blocks
+                                       for M in (X, Y)]
+        missing = sum(1 for M in expected_basis if M not in basis)
+        ck(len(basis) == n * n and len(expected_basis) == n * n
+           and missing == 0,
+           f"Step D1: the ambient must be the FULL n^2-dimensional Hermitian "
+           f"space ({tag}: |basis| = {len(basis)}, n^2 = {n * n}, {missing} "
+           f"standard directions missing) -- on a smaller ambient 'exactly the "
+           f"diagonal' is a weaker claim wearing the same words")
+
+        # (c1) THE UPPER CONTAINMENT, CERTIFIED WITHOUT THE SOLVER.
+        #      The one thing an RREF basis cannot certify about itself is that
+        #      it SPANS: a solver that under-returns yields a solution space
+        #      strictly larger than the diagonals while every returned vector is
+        #      still diagonal.  So the upper bound is established independently.
+        #      Each quarter-phase is diagonal, hence conjugation preserves the
+        #      decomposition of the Hermitian space into the n diagonal units
+        #      and the n(n-1)/2 two-dimensional off-diagonal blocks; on the
+        #      block at (j,k) the generator acts by the 2x2 real matrix M read
+        #      off the (j,k) entry, and the block contributes a nonzero
+        #      invariant iff M - I is singular.  Both facts are computed: that
+        #      the block is preserved, and that det(M - I) != 0.  This is the
+        #      executable form of the proof's "independent quarter-phases on
+        #      distinct coordinates force i^{k_j-k_k} R_{jk} = R_{jk}, hence
+        #      R_{jk} = 0 off the diagonal".
+        blocks_closed = 0
+        blocks_rigid = 0
+        for (j, k, X, Y) in (blocks if family_ok else ()):
+            g = phases[j]
+            coefs = []
+            closed = True
+            for B in (X, Y):
+                C = _mm(_mm(g, B), _dag(g))
+                if any(C[a][b] != ZERO for a in range(n) for b in range(n)
+                       if (a, b) != (j, k) and (a, b) != (k, j)):
+                    closed = False
+                coefs.append((C[j][k][0], C[j][k][1]))
+            if not closed:
+                continue
+            blocks_closed += 1
+            (a11, a21), (a12, a22) = coefs
+            if (a11 - 1) * (a22 - 1) - a12 * a21 != 0:
+                blocks_rigid += 1
+        ck(family_ok and blocks_closed == len(blocks),
+           f"Step D1: conjugation by a quarter-phase must preserve every "
+           f"off-diagonal block ({tag}: {blocks_closed} of {len(blocks)}; "
+           f"family well-formed: {family_ok}) -- the block argument is valid "
+           f"only for DIAGONAL generators")
+        ck(family_ok and blocks_rigid == len(blocks),
+           f"Step D1: M - I must be nonsingular on every off-diagonal block "
+           f"({tag}: {blocks_rigid} of {len(blocks)}) -- this is the upper "
+           f"containment solution space <= diagonals, and it is the half no "
+           f"returned basis can certify about itself, since a solver that "
+           f"under-returns leaves every returned vector diagonal")
+        phase_blocks_certified[tag] = bool(family_ok
+                                           and blocks_closed == len(blocks)
+                                           and blocks_rigid == len(blocks)
+                                           and len(blocks) == n * (n - 1) // 2)
+
+
+        # (c) The surviving space, computed.
+        sols = _graded_solutions(basis, phases, [1] * len(phases), n)
+        dim = len(sols)
+        phase_survivors[tag] = dim
+
+        sols_shape_ok = all(len(R) == n and all(len(row) == n for row in R)
+                            for R in sols)
+        ck(sols_shape_ok,
+           f"Step D1: every returned vector must be an n x n matrix ({tag})")
+        probe_ok = bool(family_ok and sols_shape_ok)
+        not_invariant = (sum(1 for R in sols
+                             if any(_mm(_mm(g, R), _dag(g)) != R
+                                    for g in phases))
+                         if probe_ok else -1)
+        ck(not_invariant == 0,
+           f"Step D1: every returned vector must actually satisfy g R g* = R "
+           f"({tag}, {not_invariant} of {dim} do not; -1 means the family or "
+           f"the returned shapes were malformed and this leg DID NOT RUN, "
+           f"which is not the same as passing) -- the solver is verified, not "
+           f"trusted")
+
+        ck(dim > 1,
+           f"NEGATIVE CONTROL: quarter-phases alone must leave more than the "
+           f"scalar line ({tag}, computed dimension {dim}) -- they do not force "
+           f"the trace either, and the complementary control is Step D")
+
+        ck(dim == n,
+           f"Step D1: quarter-phases alone must leave exactly the "
+           f"n-dimensional diagonal ({tag}: computed {dim}, claimed {n})")
+
+        off_diag_offenders = (sum(1 for R in sols
+                                  if any(R[a][b] != ZERO
+                                         for a in range(n) for b in range(n)
+                                         if a != b))
+                              if sols_shape_ok else -1)
+        ck(off_diag_offenders == 0,
+           f"Step D1: every returned vector must be DIAGONAL ({tag}, "
+           f"{off_diag_offenders} of {dim} carry an off-diagonal entry) -- this "
+           f"is the content of the phase half, and diagonality is a SUBSPACE "
+           f"predicate, so basis-wise truth is a statement about the span")
+
+        diag_units_invariant = 0
+        for i in (range(n) if family_ok else ()):
+            E = _zeros(n)
+            E[i][i] = ONE
+            if all(_mm(_mm(g, E), _dag(g)) == E for g in phases):
+                diag_units_invariant += 1
+        ck(diag_units_invariant == n,
+           f"Step D1: every diagonal matrix unit must be phase-invariant "
+           f"({tag}: {diag_units_invariant} of {n}) -- this is the containment "
+           f"diagonals <= solution space, which no dimension count supplies")
+
+        #      AND THE OTHER HALF OF THE CONTRAST, computed.  The comment
+        #      block above says a PSD reading of this basis "would be true of
+        #      the basis and false of the space".  The false-of-the-space half
+        #      is pinned by the W witness.  The true-of-the-basis half was
+        #      asserted and never tested; it is one line, so it is tested.
+        #      Second audit, MINOR-2.
+        ck(all(_is_psd(R, n) for R in sols) and all(_tr(R)[0] != ZERO[0]
+                                                    for R in sols),
+           f"Step D1: every returned basis vector must be PSD with nonzero "
+           f"trace ({tag}) -- that is the 'true of the basis' half of the "
+           f"contrast this block claims, and without it the contrast is prose")
+
+        phase_space_exactly_diagonal[tag] = bool(
+            probe_ok and dim == n and off_diag_offenders == 0
+            and diag_units_invariant == n and not_invariant == 0)
+
+        # The predicate-transfer witness, exhibited on this space.
+        W = _zeros(n)
+        W[0][0] = ONE
+        W[1][1] = (F(-1), F(0))
+        ck(family_ok and all(_mm(_mm(g, W), _dag(g)) == W for g in phases),
+           f"Step D1: diag(1,-1,0,...) must be phase-invariant ({tag}; family "
+           f"well-formed: {family_ok}) -- the witness that this space is bigger "
+           f"than a line")
+        ck(not _is_psd(W, n) and not _is_scalar(W, n) and _tr(W)[0] == 0,
+           f"Step D1: and it must be NON-PSD, non-scalar and trace-zero ({tag}) "
+           f"-- so a PSD or trace reading of the returned RREF basis would be an "
+           f"artefact here, while the diagonal reading transfers to every line")
+
+        # (d) THE PAIR.  Each half alone leaves strictly more; together they
+        #     leave dimension one, and it is the scalar line.
+        both = _graded_solutions(basis, gens_all, [1] * len(gens_all), n)
+        both_survivors[tag] = len(both)
+        ck(len(both) == 1,
+           f"Step D1: the two halves TOGETHER must leave dimension ONE ({tag}, "
+           f"computed {len(both)}) -- otherwise the two controls do not "
+           f"decompose the forcing, they merely coexist")
+        ck(len(both) == 1 and _is_scalar(both[0], n),
+           f"Step D1: and the single surviving line must be the SCALAR line "
+           f"({tag})")
+
+    # (e) COVERAGE CONTRACT.  An empty `fails` is returned both by a leg whose
+    #     assertions passed and by a leg that never ran, so the sweep is counted
+    #     by name rather than left to the loop.
+    ck(sorted(phase_survivors) == ["C2", "C3", "C4"],
+       f"Step D1 ANTI-VACUITY: the phases-alone control must have run at "
+       f"n = 2,3,4 (ran: {sorted(phase_survivors)})")
+    ck(sorted(both_survivors) == ["C2", "C3", "C4"],
+       f"Step D1 ANTI-VACUITY: the both-halves pairing must have run at "
+       f"n = 2,3,4 (ran: {sorted(both_survivors)})")
+    #      Step D and Step D1 each solve for permutations-alone, independently.
+    #      Two calls for one quantity that nothing compares is two numbers that
+    #      can drift apart in silence -- and the second audit found that the new
+    #      key had been silently OVERWRITING Step D's banked field, so the
+    #      divergence would not even have been visible in the evidence.
+    ck(subgroup_survivors == perm_survivors,
+       f"Step D1 coverage: Step D and Step D1 must agree on permutations-alone "
+       f"(Step D {subgroup_survivors} vs Step D1 {perm_survivors}) -- they are "
+       f"two independent solves of one quantity and nothing else ties them")
+    ck(all(perm_survivors.get(t) == 2 for t in ("C2", "C3", "C4")),
+       f"Step D1 coverage: permutations-alone must be pinned at every n "
+       f"(recorded: {sorted(perm_survivors)})")
+    ck(all(phase_blocks_certified.get(t) is True
+           for t in ("C2", "C3", "C4")),
+       f"Step D1 ANTI-VACUITY: the solver-independent upper containment must "
+       f"be certified at every n (recorded: {sorted(phase_blocks_certified)})")
+    ck(all(phase_space_exactly_diagonal.get(t) is True
+           for t in ("C2", "C3", "C4")),
+       f"Step D1 ANTI-VACUITY: the exactly-diagonal verdict must be recorded "
+       f"and TRUE at every n (recorded: {sorted(phase_space_exactly_diagonal)})")
+
     # ---- Step D2: WHY the dimension pin in Step B is load-bearing. ---------
     # On a wider graded space the Step C predicates would report "pass" while
     # their claim is FALSE.  Exhibited, not asserted: under transpositions alone
@@ -651,9 +1028,34 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
         "survivor, so it is SUFFICIENT for the forcing and POSITIVITY IS NOT "
         "NEEDED for it (positivity buys only c > 0). Over R at n = 2 the "
         "non-scalar survivors are TWO -- diag(1,-1) and [[0,1],[1,0]] -- so the "
-        "loophole is two-dimensional there, not one. Negative control: "
-        "permutations alone leave strictly more than the scalar line at every n, "
-        "so the forcing is not attributable to relabelling. SCOPE OF 'CLOSED' "
+        "loophole is two-dimensional there, not one. NEGATIVE CONTROL, BOTH "
+        "HALVES -- this is a decomposition of the forcing, not a one-sided "
+        "sanity check, and it answers to the proposition's PROOF, which needs "
+        "only two generator families, rather than to its statement, which "
+        "quantifies over every unitary. Permutations alone leave strictly more "
+        "than the scalar line at every n (dimension 2 at n = 2,3,4), so the "
+        "forcing is not attributable to relabelling. Quarter-phases alone leave "
+        "strictly more too, and WHAT they leave is computed and pinned "
+        "set-exactly: EXACTLY the diagonal subspace, dimension 2, 3, 4 at "
+        "n = 2, 3, 4 -- every returned vector diagonal (span <= diagonals, a "
+        "SUBSPACE predicate, so basis-wise truth transfers to every line) and "
+        "every diagonal matrix unit invariant (diagonals <= solution space), "
+        "with every returned vector verified to satisfy g R g* = R rather than "
+        "trusted from the solver. The upper containment does not rest on the "
+        "solver at all: since the quarter-phases are diagonal they preserve the "
+        "splitting of the Hermitian space into n diagonal units and n(n-1)/2 "
+        "two-dimensional off-diagonal blocks, and on every block M - I is "
+        "nonsingular, which is the executable form of the proof's clause and is "
+        "the half a returned RREF basis cannot certify about itself, a solver "
+        "that under-returns leaving every returned vector diagonal. The ambient "
+        "is pinned set-exactly to the full n^2-dimensional Hermitian space, "
+        "since on a smaller ambient the same words carry a weaker claim. The two halves TOGETHER leave dimension one "
+        "and it is the scalar line, so each family alone is insufficient and "
+        "the intersection is what forces the trace. The contrast that makes the "
+        "predicate choice load-bearing is exhibited on this same space: "
+        "diag(1,-1,0,...) is invariant, non-scalar, trace-zero and NOT PSD, so "
+        "a PSD or trace reading of an RREF basis would be an artefact while the "
+        "diagonal reading is exact. SCOPE OF 'CLOSED' "
         "(corrigendum of record, 2026-07-27, blinded audit): the enumeration "
         "returns a BASIS of each graded space, so the trace-zero and PSD "
         "predicates are statements about invariant LINES only because every "
@@ -674,6 +1076,13 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
             "frobenius_preservation_checks": frob_preserved,
             "nonzero_hermitian_positive_frobenius": positive_frob,
             "subgroup_control_permutations_only_survivors": subgroup_survivors,
+            "subgroup_control_phases_only_survivors": phase_survivors,
+            "subgroup_control_permutations_only_survivors_pinned":
+                perm_survivors,
+            "phases_only_space_is_exactly_diagonal": phase_space_exactly_diagonal,
+            "phases_only_upper_containment_certified_without_solver":
+                phase_blocks_certified,
+            "admitted_family_both_halves_survivors": both_survivors,
             "graded_space_dimensions": space_dims,
             "wider_space_witness": "I + sigma_x/2 under transpositions alone: "
                                    "non-scalar, PSD, trace 2",
@@ -684,6 +1093,19 @@ def check_L_presentation_gauge_invariant_lines() -> Dict[str, object]:
         (),
         (),
         ("permutations alone must not force scalarity",
+         "quarter-phases alone must not force scalarity either: they leave "
+         "EXACTLY the n-dimensional diagonal, by both containments, at "
+         "n = 2,3,4",
+         "the two halves together leave dimension one, and it is the scalar "
+         "line, so the two controls decompose the forcing",
+         "the upper containment is certified WITHOUT the solver -- every "
+         "off-diagonal block is preserved and rigid -- so a solver that "
+         "under-returns cannot be mistaken for a smaller invariant space",
+         "the ambient is pinned set-exactly to the full n^2-dimensional "
+         "Hermitian space, since 'exactly the diagonal' is weaker on a "
+         "smaller ambient",
+         "the phase half must be order-four quarter-phases on distinct "
+         "coordinates, not order-two sign flips, which leave the same space",
          "the enumeration must find at least one non-scalar line",
          "on a 2-dimensional graded space a non-scalar PSD trace-2 invariant "
          "survives, so the dimension pin is load-bearing",),
