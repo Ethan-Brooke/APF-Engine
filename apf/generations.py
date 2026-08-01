@@ -3081,7 +3081,11 @@ def check_L_mass_mixing_independence():
     x = float(dag_get('x_overlap', default=0.5, consumer='L_mass_mixing_independence')); cW = _math.cos(_math.pi/5); c6 = _math.cos(_math.pi/6)
     ev = _eigvalsh([[x**9, x**8, 0], [x**8, 1, c6], [0, c6, cW]])
     e13 = abs(ev[0]/ev[2] - 9.4e-4)/9.4e-4 * 100
-    e23 = abs(ev[1]/ev[2] - 1.9e-2)/1.9e-2 * 100
+    # m_s/m_b reference corrected 2026-08-01: 1.9e-2 -> 1.856e-2 = 1/53.88,
+    # PDG 2025 b-quark Listings OUR AVERAGE (m_b/m_s = 53.88 +- 0.12). The
+    # prior value was that number rounded to two significant figures, 2.4%
+    # high. This gate moves from -0.86% to +1.62% and still holds at 2%.
+    e23 = abs(ev[1]/ev[2] - 1.856e-2)/1.856e-2 * 100
     check(e13 < 5 and e23 < 2)
 
     return _result(
@@ -3122,7 +3126,7 @@ def check_T_mass_ratios():
     cY = _math.cos(_math.pi/4); c6 = _math.cos(_math.pi/6)
 
     obs = {
-        'down':   (9.4e-4,  1.9e-2),
+        'down':   (9.4e-4,  1.856e-2),   # m_s/m_b = 1/53.88, PDG 2025
         'lepton': (2.88e-4, 5.95e-2),
         'up':     (7.4e-6,  3.6e-3),
     }
@@ -3452,7 +3456,7 @@ def check_L_boundary_projection():
 
     x = float(dag_get('x_overlap', default=0.5, consumer='L_boundary_projection')); c6 = _math.cos(_math.pi/6)
     sectors = [
-        ('down',    [[x**9,  x**8,  0],[x**8,  1, c6],   [0, c6,    cW]],     9.4e-4, 1.9e-2),
+        ('down',    [[x**9,  x**8,  0],[x**8,  1, c6],   [0, c6,    cW]],     9.4e-4, 1.856e-2),
         ('lepton',  [[x**8,  x**5,  0],[x**5,  1, x],    [0, x,     sW2]],    2.88e-4, 5.95e-2),
         ('up',      [[x**12, x**9,  0],[x**9,  1, c6**2],[0, c6**2, cY*cW]],  7.4e-6, 3.6e-3),
     ]

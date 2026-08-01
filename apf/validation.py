@@ -2004,7 +2004,16 @@ def check_L_prediction_catalog():
         ('ln(M_Pl/M_Z)',   39.44,     39.44,   0.01,    '', 'L_hierarchy_tightened',     'A'),
         # ═══ MASS RATIOS ═══
         ('m_d/m_b',        9.76e-4,   9.4e-4,  0.5e-4,  '', 'T_mass_ratios',             'A'),
-        ('m_s/m_b',        1.88e-2,   1.9e-2,  0.1e-2,  '', 'T_mass_ratios',             'A'),
+        # CORRECTED 2026-08-01, and this row moves out of 3 sigma. The
+        # observed value was 1.9e-2 +- 0.1e-2. Both were wrong: m_s/m_b is
+        # 1/53.88 = 1.856e-2 (PDG 2025 b-quark Listings, "OUR AVERAGE",
+        # m_b/m_s = 53.88 +- 0.12), and the real uncertainty is +-0.22%, so
+        # the quoted +-5.3% bar was 24x too generous. The APF prediction is
+        # UNCHANGED and is good in absolute terms -- 1.88e-2 is +1.29% off --
+        # but against a ratio measured to 0.22% that is +5.8 sigma, where the
+        # old row read -0.20 sigma. The agreement did not get worse; the
+        # error bar stopped hiding it.
+        ('m_s/m_b',        1.88e-2,   1.856e-2, 0.004e-2, '', 'T_mass_ratios',            'A'),
         ('m_e/m_τ',        2.82e-4,   2.88e-4, 0.01e-4, '', 'T_mass_ratios',             'A'),
         ('m_μ/m_τ',        6.15e-2,   5.95e-2, 0.01e-2, '', 'T_mass_ratios',             'A'),
         ('m_t/m_b',        41.3,      40.7,    1.0,     '', 'T27c',                      'A'),
