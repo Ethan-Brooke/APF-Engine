@@ -610,7 +610,7 @@ def run_all():
     line = "=" * 74
     print(line)
     print("APF bank module : symmetry_cost_floor.py")
-    print("ported to the live tree -- not yet wired into the manifest")
+    print("registered in BANK_REGISTRY_MODULES since v24.3.437")
     print(line)
 
     results = {nm: fn() for nm, fn in _CHECKS.items()}
