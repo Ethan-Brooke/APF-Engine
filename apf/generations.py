@@ -3084,7 +3084,7 @@ def check_L_mass_mixing_independence():
     # m_s/m_b reference corrected 2026-08-01: 1.9e-2 -> 1.856e-2 = 1/53.88,
     # PDG 2025 b-quark Listings OUR AVERAGE (m_b/m_s = 53.88 +- 0.12). The
     # prior value was that number rounded to two significant figures, 2.4%
-    # high. This gate moves from -0.86% to +1.62% and still holds at 2%.
+    # high. This gate moves from -0.86% to +1.49% and still holds at 2%.
     e23 = abs(ev[1]/ev[2] - 1.856e-2)/1.856e-2 * 100
     check(e13 < 5 and e23 < 2)
 

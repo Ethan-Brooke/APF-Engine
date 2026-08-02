@@ -240,11 +240,11 @@ v6.5 CHANGELOG:
       authoritative; Δq mechanism was cancellation artifact.
     L_Higgs_curvature_channel [P] — Third FN channel from Higgs VEV
       curvature h=(0,1,0) on P₃. q_curv = q_B[0]/N_gen = 7/3.
-      CLOSES m_s/m_b (+7.0% vs PDG 1/53.88), Georgi-Jarlskog (0.1% vs the
-      GUT relation).
+      CLOSES m_s/m_b (+6.9% vs PDG 1/53.88), Georgi-Jarlskog (0.1% vs the
+      GUT relation; experiment implies 3.208).
     L_NNLO_Fritzsch [P] — Complex Fritzsch perturbation: c = x^{2d},
-      θ = π/N_gen, w = (1, −e^{iπ/3}, 0)/√2. 7 independent observables
-      within 13% (GJ is m_s/m_b restated, not an eighth).
+      θ = π/N_gen, w = (1, −e^{iπ/3}, 0)/√2. 6 independent observables
+      within 13% (GJ is m_s/m_b restated; delta_CKM is J restated).
       δ_CKM = 65.7° (exp 65.6°, +0.1%). Zero free parameters.
     L_sin2_oneloop [P + disp.rel.] — sin²θ̂_W(M_Z) = (3/13)(1+Δκ̂_SM).
       Standard SM κ̂ correction Δκ̂ = +0.00195 = 3.4×α/(4π).

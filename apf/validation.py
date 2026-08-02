@@ -2013,7 +2013,23 @@ def check_L_prediction_catalog():
         # but against a ratio measured to 0.22% that is +5.8 sigma, where the
         # old row read -0.20 sigma. The agreement did not get worse; the
         # error bar stopped hiding it.
-        ('m_s/m_b',        1.88e-2,   1.856e-2, 0.004e-2, '', 'T_mass_ratios',            'A'),
+        # DERIVED ON BOTH SIDES, corrected 2026-08-01 by a second blinded
+        # audit. The first correction derived the OBSERVED column and left the
+        # PREDICTION column rounded at 1.88e-2 -- in the row whose own comment
+        # forbids rounding. T_mass_ratios computes 0.0188367; the rounding was
+        # worth 0.9 sigma, four times the 0.2 sigma the observed-side fix was
+        # worth. Deriving one side and rounding the other is not a principle.
+        #
+        # UNSCALED ERROR BAR, DISCLOSED. PDG prints m_b/m_s = 53.88 +- 0.12 as
+        # an unscaled average of two inputs that disagree at 2.47 sigma
+        # (BAZAVOV 18: 53.94 +- 0.12; CHAKRABORTY 15: 52.55 +- 0.55,
+        # chi2/dof = 6.1). Under PDG's own scale-factor convention S = 2.47
+        # the error becomes +-0.289, this row falls to ~2.8 sigma, and the
+        # catalogue returns to 33/40. PDG printed 0.12, so 0.12 is used --
+        # but a change whose point is "the error bar stopped hiding it" has to
+        # say out loud that its new bar is the unscaled one on a discrepant
+        # pair. RULING OWED; do not treat 32/40 as settled.
+        ('m_s/m_b',        0.0188367, 1/53.88, (1/53.88)*(0.12/53.88), '', 'T_mass_ratios', 'A'),
         ('m_e/m_τ',        2.82e-4,   2.88e-4, 0.01e-4, '', 'T_mass_ratios',             'A'),
         ('m_μ/m_τ',        6.15e-2,   5.95e-2, 0.01e-2, '', 'T_mass_ratios',             'A'),
         ('m_t/m_b',        41.3,      40.7,    1.0,     '', 'T27c',                      'A'),
@@ -2074,11 +2090,20 @@ def check_L_prediction_catalog():
     mean_err = sum(errors) / len(errors) if errors else 0
     median_err = sorted(errors)[len(errors) // 2] if errors else 0
 
-    # 7 predictions are >3σ due to high-precision experiments vs tree/NNLO theory:
-    #   sin²θ_W (11σ), 1/α_em (13σ), m_e/m_τ (6σ), m_μ/m_τ (20σ),
-    #   m_e/m_μ (5σ), θ₁₂_CKM (9σ), Δm_np (177σ).
+    # 8 predictions are >3σ due to high-precision experiments vs tree/NNLO
+    # theory:
+    #   sin²θ_W (11σ), 1/α_em (13σ), m_s/m_b (6.7σ), m_e/m_τ (6σ),
+    #   m_μ/m_τ (20σ), m_e/m_μ (5σ), θ₁₂_CKM (9σ), Δm_np (177σ).
     # All are understood precision residuals (inventory items 5-9 class).
-    # Threshold: allow up to 8 failures (7 known + 1 margin).
+    #
+    # THIS LIST WAS STALE, and the staleness mattered. m_s/m_b joined it on
+    # 2026-08-01 when its reference was corrected, and the comment still read
+    # "7 known + 1 margin" naming seven. The margin is now GONE: the gate is
+    # n_consistent >= n_tested - 8, i.e. 32 >= 32, so ANY further correction
+    # anywhere in this table fails this check. That is a real tripwire and it
+    # should be met by ruling the entries, not by widening the threshold.
+    # Widening it here would be exactly the "raise EXPECTED to make a held
+    # check pass" move this corpus rules against.
     check(n_consistent >= n_tested - 8,
           f"{n_consistent}/{n_tested} predictions consistent (≤3σ)")
     check(n_total >= 25,

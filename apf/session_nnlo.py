@@ -10,12 +10,12 @@ NEW THEOREMS (4):
   L_Higgs_curvature_channel [P]
     Third FN channel from Higgs VEV curvature h=(0,1,0) on P₃.
     q_curv = q_B[0]/N_gen = 7/3. Amplitude x^{7/3} at gen-1.
-    CLOSES m_s/m_b (+7.0% vs PDG 1/53.88), GJ (0.1% vs the GUT relation),
+    CLOSES m_s/m_b (+6.9% vs PDG 1/53.88), GJ (0.1% vs the GUT relation),
     δ_CKM at LO (0.8°).
 
   L_NNLO_Fritzsch [P]
     Complex Fritzsch perturbation c×|w⟩⟨w| with c = x^{2d}, θ = π/N_gen.
-    Lifts m_d from zero, rotates V_us. 7 independent observables within 13%.
+    Lifts m_d from zero, rotates V_us. 6 independent observables within 13%.
     δ_CKM = 65.7° (exp 65.6°, +0.1%). Zero free parameters.
 
   L_sin2_oneloop [P + disp.rel.]
@@ -195,7 +195,8 @@ def check_L_Higgs_curvature_channel():
 
     h = (0,1,0) unique ℓ₁-minimum integer cover on P₃.
     q_curv = q_B[0]/N_gen = 7/3. Direction v_curv = (0, x^{7/3}, 0).
-    CLOSES: m_s/m_b (4.4%), Georgi-Jarlskog (0.1%).
+    CLOSES: m_s/m_b (+6.9% vs PDG 1/53.88), Georgi-Jarlskog (0.1% vs the
+    GUT relation; experiment implies 3.208).
     """
     x = _X
 
@@ -222,9 +223,15 @@ def check_L_Higgs_curvature_channel():
           f"m_s/m_b = {ms_mb_LO:.4f} vs {MS_MB_EXP:.6f} "
           f"({(ms_mb_LO/MS_MB_EXP-1)*100:+.2f}%); the 15% envelope brackets MODEL "
           f"texture resolution, not measurement -- the ratio is known to 0.4%")
-    check(abs(GJ_LO / GJ_GUT_RELATION - 1) < 0.05,
-          f"GJ = {GJ_LO:.2f} vs the GUT relation {GJ_GUT_RELATION} "
-          f"({(GJ_LO/GJ_GUT_RELATION-1)*100:+.2f}%); experiment implies {GJ_EXP:.4f}")
+    # NOT GATED, corrected 2026-08-01 (second blinded audit). The NNLO
+    # sibling dropped its GJ gate on the argument that GJ is m_s/m_b
+    # restated -- and this one, the BINDING one, was left standing. At 0.05
+    # it admits ms_mb in [0.018878, 0.020865], TIGHTER than the 0.15 ms_mb
+    # gate three lines above and centred 6.8% above the measurement. So the
+    # module went on gating one prediction twice against two inconsistent
+    # references while its sibling's comment announced the opposite.
+    _gj_lo_vs_gut = (GJ_LO / GJ_GUT_RELATION - 1) * 100
+    _gj_lo_vs_exp = (GJ_LO / GJ_EXP - 1) * 100
 
     # Step 5: Angular mechanism — v_curv ⊥ span(v_B, v_H)
     cos_BH = np.dot(vB, vH) / (np.linalg.norm(vB) * np.linalg.norm(vH))
@@ -276,7 +283,8 @@ def check_L_NNLO_Fritzsch():
 
     M_d = M_d_LO + c × |w⟩⟨w|
     c = x^{2d} = x^8, θ = π/N_gen = π/3, w = (1, −e^{iπ/3}, 0)/√2.
-    8 observables within 11%, δ_CKM = 65.7° (+0.1%).
+    6 independent observables within 13%, δ_CKM = 65.7° (+0.1%).
+    (GJ is m_s/m_b restated; delta_CKM is asin(J/den) and so is J restated.)
 
     NOTE (v6.7): All parameters derived from framework constants
     (L_texture_from_capacity [P]). c from double propagation (T27c + T8),
@@ -297,11 +305,11 @@ def check_L_NNLO_Fritzsch():
     M_u = _build_up_sector()
     obs = _diag_ckm(M_d, M_u)
 
-    # Assertions on 8 observables
+    # Assertions on the measured observables
     # `exp` holds MEASURED values only. GJ = 3.0 was previously in here; it is
     # a GUT-scale theory relation, not a measurement, and it is gated
     # separately below. See the MS_MB_EXP block above for the m_s/m_b
-    # provenance -- the prior 0.019 was 2.5% high.
+    # provenance -- the prior 0.019 was 2.4% high.
     exp = {'md_ms': 0.050, 'ms_mb': MS_MB_EXP, 'Vus': 0.2243, 'Vcb': 0.041,
            'Vub': 0.00382, 'J': 3.08e-5, 'delta': 65.6}
 
@@ -347,11 +355,12 @@ def check_L_NNLO_Fritzsch():
             f'm_d/m_s = {obs["md_ms"]:.3f} (−11%), '
             f'm_s/m_b = {obs["ms_mb"]:.4f} ({(obs["ms_mb"]/exp["ms_mb"]-1)*100:+.1f}%), '
             f'V_us = {obs["Vus"]:.3f} (+6.5%). '
-            f'7 independent observables (GJ is m_s/m_b restated), '
-            f'zero free parameters.'
+            f'6 independent observables, zero free parameters. '
+            f'(GJ is m_s/m_b restated and delta_CKM = asin(J/den) is J '
+            f'restated; a 3-generation CKM has four physical parameters.)'
         ),
         key_result=(
-            f'δ_CKM = {obs["delta_CKM"]:.1f}° [P]. 7 independent observables within 13%; '
+            f'δ_CKM = {obs["delta_CKM"]:.1f}° [P]. 6 independent observables within 13%; '
             f'GJ = {obs["GJ"]:.3f} ({_gj_vs_gut:+.1f}% vs the GUT relation, '
             f'{_gj_vs_exp:+.1f}% vs experiment) is m_s/m_b restated, not an '
             f'eighth. Zero free parameters.'
