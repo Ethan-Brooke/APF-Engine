@@ -783,6 +783,35 @@ MAY-NOT-CITE
   - "the branch / QAC is derived" -- standing corpus bar, untouched.
 
 ------------------------------------------------------------------------------
+WHAT THIS MODULE DOES NOT SETTLE -- OCCUPANCY (added 2026-08-01, count-neutral)
+------------------------------------------------------------------------------
+Everything above is about the SPACE.  The direction is identified, its
+dimension is proved for all (n,m), and at (2,2) it is exhibited.  NOTHING HERE
+SAYS ANY STATE OCCUPIES IT, and no leg computes anything about a coefficient.
+
+A reader arriving at "there is a direction no local observation can reach" is
+one step from "therefore the world is complex," and that step is not available.
+An unreachable coordinate is exactly the kind of thing a theory may simply
+never populate.  v24.3.464 (`apf/composite_orientation_occupancy.py`) computes
+what the real theory actually does with the coefficient: the zero-coefficient
+sector is nonempty, convex, and carried into itself by every local orthogonal
+conjugation, so nothing in the real theory moves it off zero; and the
+reachability of the coordinate is field-dependent, so the occupancy question
+has no field-neutral form at all.  On that module's reading -- recorded in its
+docstring and in none of its legs -- the question is QAC genre: per-interface,
+read off the world, not derived.
+
+TWO CONSEQUENCES FOR CITATION.  The bridge packet's Theorems D and E take
+ACTUAL COMPOSITE ORIENTATION-PAIR DISTINCTION as their first premise; that
+premise is not supplied here and is not supplied there.  And the two modules
+NORMALIZE DIFFERENTLY: the witness pair is reported at +-1/8 here, using the
+raw pairing, and at +-1/32 in v24.3.464, which divides by <J(x)J, J(x)J> = 4.
+Both are correct.  Any comparison across the two must divide.
+
+Survey of record: `APF Reference Docs/Reference - AUDIT-FIRST SURVEY -
+Composite Orientation Occupancy (2026-08-01).md`.
+
+------------------------------------------------------------------------------
 KNOWN LIMITS
 ------------------------------------------------------------------------------
 Named here rather than left to be found.  None of these is repaired by
