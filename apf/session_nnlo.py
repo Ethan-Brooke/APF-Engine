@@ -175,6 +175,25 @@ def _diag_ckm(M_d, M_u):
 # "0.018560" would reintroduce the exact defect this block exists to fix: the
 # retired 0.019 was itself only 1/53.88 rounded, and a rounded literal
 # standing in for a measurement is how the 2.4% error survived unnoticed.
+#
+# THE +-0.12 IS UNSCALED, AND THAT IS PDG'S CONVENTION RATHER THAN AN
+# OVERSIGHT. The two inputs disagree at chi2/dof = 6.1, so an S formed from
+# both would be 2.47 and the bar would be +-0.289. PDG evaluates S only over
+# the experiments below a ceiling delta_0 = 3 * sqrt(N) * delta_xbar, where
+# delta_xbar is the unscaled error of the mean of all of them (Review of
+# Particle Physics, Introduction 5.2.2). Here delta_0 = 0.49743 and
+# Chakraborty's +-0.55 is above it, so that measurement enters the average
+# and is excluded from S; Bazavov alone remains below the ceiling, and
+# S = 1 -- though note that PDG's text does not cover the M = 1 endpoint, so
+# that last step is a forced inference and not a quotation. The ceiling is
+# demonstrably running in PDG's software on this same page: for the b-quark
+# MS mass average delta_0 = 0.05358, and the four inputs above it are exactly
+# the four ideogram rows with a blank chi2 column, with PDG's printed
+# chi2 = 17.3 at CL = 0.364 implying dof = M - 1 = 16 over the 17 included.
+# Caveat of record: at N = 2 the rule is degenerate -- the larger error clears
+# the ceiling iff the error ratio exceeds sqrt(17) = 4.1231, and here it is
+# 4.5833, an 11% margin. So +-0.12 is convention-correct rather than
+# statistically ideal. Ruled 2026-08-02.
 MB_MS_EXP = 53.88             # PDG 2025 b-quark Listings, "OUR AVERAGE"
 MB_MS_EXP_ABS_ERR = 0.12
 MS_MB_EXP = 1.0 / MB_MS_EXP                       # 0.0185598...

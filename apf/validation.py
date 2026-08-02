@@ -2020,15 +2020,62 @@ def check_L_prediction_catalog():
         # worth 0.9 sigma, four times the 0.2 sigma the observed-side fix was
         # worth. Deriving one side and rounding the other is not a principle.
         #
-        # UNSCALED ERROR BAR, DISCLOSED. PDG prints m_b/m_s = 53.88 +- 0.12 as
-        # an unscaled average of two inputs that disagree at 2.47 sigma
-        # (BAZAVOV 18: 53.94 +- 0.12; CHAKRABORTY 15: 52.55 +- 0.55,
-        # chi2/dof = 6.1). Under PDG's own scale-factor convention S = 2.47
-        # the error becomes +-0.289, this row falls to ~2.8 sigma, and the
-        # catalogue returns to 33/40. PDG printed 0.12, so 0.12 is used --
-        # but a change whose point is "the error bar stopped hiding it" has to
-        # say out loud that its new bar is the unscaled one on a discrepant
-        # pair. RULING OWED; do not treat 32/40 as settled.
+        # THE ERROR BAR IS PDG'S CONVENTION-CORRECT ONE. RULED 2026-08-02,
+        # against the earlier reading that it was an unscaled bar adopted in
+        # spite of the convention. The two inputs (BAZAVOV 18: 53.94 +- 0.12;
+        # CHAKRABORTY 15: 52.55 +- 0.55) disagree at chi2/dof = 6.1, and an S
+        # formed from BOTH would be 2.47, giving +-0.289, this row at ~2.8
+        # sigma, and a catalogue of 33/40. PDG's procedure forbids that step.
+        # Review of Particle Physics, Introduction 5.2.2: S is evaluated using
+        # only the experiments below a ceiling delta_0 = 3 * sqrt(N) *
+        # delta_xbar, where delta_xbar is the unscaled error of the mean of
+        # ALL the experiments. Here N = 2 and delta_xbar = 0.117242, so
+        # delta_0 = 0.49743, and CHAKRABORTY's +-0.55 sits ABOVE the ceiling:
+        # it enters the average and is EXCLUDED from S. BAZAVOV alone remains
+        # below it, so there is no chi2 to form and S = 1. The exclusion is
+        # not marginal-by-rounding -- taking delta_xbar as the printed 0.12
+        # gives delta_0 = 0.50912, which still excludes.
+        #
+        # THE CEILING IS DEMONSTRABLY RUNNING IN PDG'S OWN SOFTWARE, ON THIS
+        # PAGE. The b-quark MS mass average above the ratio is built from 21
+        # used entries: xbar = 4.18353, delta_xbar = 0.00390 (PDG prints
+        # 4.183 +- 0.004), so delta_0 = 3 * sqrt(21) * 0.00390 = 0.05358. The
+        # four entries above that ceiling are APARISI 22, ABRAMOWICZ 18,
+        # BERNARDONI 14 and DIMOPOULOS 12 -- and those are exactly and only
+        # the four ideogram rows whose chi2 column is printed BLANK. PDG's
+        # printed chi2 = 17.3 at CL = 0.364 implies dof = 16 = M - 1 over the
+        # 17 included entries (dof 15 gives 0.301, dof 17 gives 0.434). The
+        # ceiling is applied formulaically, not by editorial judgement.
+        #
+        # Corroborating but weaker: 53.8768 +- 0.11724 IS the unscaled
+        # weighted mean, and a scaled bar would print as 53.88 +- 0.29 under
+        # PDG's own rounding rule (5.3). Note the printed +-0.12 alone cannot
+        # distinguish the averaged error from BAZAVOV's own +-0.12; it is the
+        # central value 53.88 != 53.94 that proves an average was taken.
+        #
+        # WHAT IS INFERENCE AND NOT PDG TEXT. After exclusion M = 1, and
+        # S = [chi2/(M-1)]^(1/2) is 0/0. PDG never writes "if M < 2 then
+        # S = 1". The inference is forced -- a lone measurement cannot
+        # disagree with itself, and 5.2.2(b) shows PDG tracks M and gates on
+        # it -- but it is an inference. Do not cite it as "PDG says".
+        #
+        # THE STRONGEST OBJECTION, RECORDED RATHER THAN ANSWERED. At N = 2 the
+        # procedure is degenerate: the larger error exceeds the ceiling iff
+        # the error ratio exceeds sqrt(17) = 4.1231, so ANY two-point PDG
+        # average with a ratio above that is automatically unscaled however
+        # far apart the values sit. Here the ratio is 0.55/0.12 = 4.5833, an
+        # 11% margin -- BAZAVOV at +-0.14 would flip it. PDG's stated
+        # rationale is about protecting a BODY of precise data from being
+        # obscured, which is not the N = 2 case. So the honest claim is that
+        # +-0.12 is CONVENTION-CORRECT, not that it is statistically ideal.
+        # Departing from PDG here would be a deliberate choice to be argued,
+        # not a correction to be made silently.
+        #
+        # 32/40 therefore stands. What this row does NOT settle is whether
+        # comparing a prediction to a measurement 10-100x tighter than the
+        # model's own resolution is the right statistic at all; that question
+        # is chartered separately and must not be answered by editing this
+        # table.
         ('m_s/m_b',        0.0188367, 1/53.88, (1/53.88)*(0.12/53.88), '', 'T_mass_ratios', 'A'),
         ('m_e/m_τ',        2.82e-4,   2.88e-4, 0.01e-4, '', 'T_mass_ratios',             'A'),
         ('m_μ/m_τ',        6.15e-2,   5.95e-2, 0.01e-2, '', 'T_mass_ratios',             'A'),
