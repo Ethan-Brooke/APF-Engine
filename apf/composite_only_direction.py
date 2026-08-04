@@ -241,8 +241,8 @@ check_L_real_composite_only_direction_is_lambda_tensor_lambda
   LEG D''' the bank value at THREE FURTHER SHAPES for which this module ships
           no literal, taking the codimension count from six shapes to nine.
           NOT a relation with two live ranks -- see the correction below.
-  LEG D'' THE BANKED SIBLING, called live and found to DISAGREE -- and found
-          to disagree WITH ITSELF, which is recorded here and not adjudicated.
+  LEG D'' THE BANKED SIBLING, called live and found to AGREE, in magnitude
+          and in sign, with its own prose and with this module.
           Provenance is asserted by OBJECT IDENTITY against the freshly
           imported bank module, and the numbers are read out of the R clause
           STRUCTURALLY, by position, not by substring.  ALL
@@ -512,7 +512,7 @@ DEPENDENCIES (live calls into the bank):
   apf.third_boat_no_extension._chsh_facets, _dot, _in_local_polytope,
       CLASSICAL_CHSH_BOUND
   apf.closed_world_completeness.check_T_split_composite_gates_tomographic_locality
-      -- called live at leg D'' ONLY to record a divergence.  Nothing
+      -- called live at leg D'' ONLY to pin its six reported numbers.  Nothing
       downstream of leg D'' uses its numbers.
 
   WHAT "LIVE CALL" DOES AND DOES NOT BUY, STATED PLAINLY, AND FOR EVERY
@@ -560,54 +560,49 @@ DEPENDENCIES (live calls into the bank):
   keeps the under-generated form as a labelled cross-check.
 
 ------------------------------------------------------------------------------
-THE BANKED SIBLING DIVERGES FROM THIS MODULE -- AND FROM ITSELF: RECORDED,
-NOT ADJUDICATED, WITH A MAINTENANCE INSTRUCTION
+THE BANKED SIBLING NOW AGREES WITH THIS MODULE
 ------------------------------------------------------------------------------
 check_T_split_composite_gates_tomographic_locality (closed_world_completeness.py)
-sets d_R(n) = n(n+1)/2 and its CODE compares
+counts full observable dimensions, d_R(n) = n(n+1)/2, and compares
 
-    joint_R = d_R(n_A n_B) = 10   against   local_R = d_R(n_A) d_R(n_B)
-                                                     + d_R(n_A) + d_R(n_B) = 15,
+    joint_R = d_R(n_A n_B) = 10   against   local_R = d_R(n_A) d_R(n_B) = 9,
 
-reporting R as failing local tomography by a DEFICIT of five.  This module
-compares the same joint dimension, 10, against the RANK OF THE SPAN of the
-product observables, 9, and computes a SURPLUS of one.  The two banked numbers
-differ in MAGNITUDE and in the SIGN of the mismatch.  WHICH LOCAL FORMULA IS
-RIGHT IS NOT ADJUDICATED HERE, and nothing in this module may be cited for the
-sibling being wrong.
+a SURPLUS of one.  This module compares the same joint dimension against the
+rank of the span of the product observables, also 9, and computes the same
+surplus of one.  The two banked numbers agree in magnitude and in sign, and
+the agreement is not a coincidence of (2,2): the surplus is
+dim Lambda^2(R^n) (x) Lambda^2(R^m), which is what this module proves for all
+n and m, and the sibling recomputes that identity at seven shapes.
 
-A FURTHER FACT, RECORDED AND NOT ADJUDICATED.  An auditor read the sibling's
-own docstring and found that it already carries THIS module's number and THIS
-module's sign:
+An earlier version of the sibling mixed two conventions -- full dimensions for
+R and H against a trace-one dimension for C -- and applied the trace-one
+composition rule to all three, reporting R as failing by a deficit of five and
+H by a deficit of twenty.  Its own docstring already carried the surplus
+reading.  The conventions are now consistent, and either one may be used:
+subtracting one from each factor and from the joint count cancels, so the
+trace-one and full-dimension conventions return the same signed mismatch at
+every shape.  They may not be mixed.
 
-    "d_R(2*2) = 10 vs d_R(2)*d_R(2) = 3*3 = 9 -- 10 > 9 -- fails
-     (1 hidden global parameter)"
+Of the two legs that recorded the sibling's disagreement with its own
+docstring, one is retired and one is re-pointed.  The retired one asserted the
+disagreement itself, which no longer exists.  The re-pointed one asserts the
+opposite -- that the sibling's prose carries the same two signs its code
+computes.  It is TWO SUBSTRING TESTS.  A docstring edit leaving both
+substrings intact passes it, including one that inverts the surrounding
+physics prose or restores a superseded number elsewhere in the text.
 
-Only the sibling's CODE uses the +d_R(n_A)+d_R(n_B) form, yielding 15 and a
-deficit of 5.  So the sibling's prose and the sibling's code disagree with
-each other, and the prose agrees with this module.  That is recorded at the
-D'' legs, which read the sibling's __doc__ live.  This module takes no
-position on which of the sibling's two readings is the intended one.
+THE CLAUSE LEGS HAVE A LIMIT.  They parse numbers out of the sibling's
+returned key_result, which is an f-string over the sibling's own variables, so
+the legs cannot distinguish a computed value from a literal.  A sibling
+replaced by a stub returning the same record passes ALL THIRTY Dpp legs, not
+only the six clause legs.  A sibling whose key_result is rewritten with the
+integers inlined decouples the two entirely.
 
-An external audit HAS adjudicated the wider question, and ruled against the
-sibling's code on all three counts -- magnitude, sign, and physical direction,
-on the grounds that a trace-1-derived dimension formula is being applied to
-full Hermitian counts and that `joint < local` is being read as the
-reconstruction failure when the Wootters-Hardy failure is `joint > local`.
-This module takes no position on that either.  What follows from it is a
-maintenance liability worth stating where a maintainer will read it, and it is
-stated at the leg itself as well:
-
-    IF LEG D'' GOES RED BECAUSE THE SIBLING'S R CLAUSE, ITS CLAUSE HEADINGS
-    OR ITS DOCSTRING MOVED, THE CORRECT RESPONSE IS TO UPDATE THIS LEG TO THE
-    SIBLING'S NEW VALUE -- NOT TO REVERT THE SIBLING.
-
-The same applies to Dpp/sibling_passes, which couples this module's verdict to
-the sibling's.  The tripwire exists to make a silent divergence loud, not to
-freeze a banked check.  Every Dpp comparison is guarded on the parse having
-returned an integer, so a moved clause HEADING produces a returned record
-whose failing labels name the clause, rather than a TypeError that returns no
-record at all and takes this instruction with it.
+THE MAINTENANCE INSTRUCTION STANDS, WITH ITS DIRECTION UNCHANGED.  The clause
+legs pin the sibling's six numbers by position.  If one goes red because the
+sibling moved, update the leg to the sibling's new value; do not revert the
+sibling.  The tripwire exists to make a silent divergence loud, not to freeze
+a banked check.
 
 LEG D'' READS THE SIBLING STRUCTURALLY.  A previous version matched the
 substring "local=15" against the sibling's key_result -- and that string
@@ -706,9 +701,9 @@ MAY-NOT-CITE
     version that used a substring test and FALSE of the version that parsed
     four of six numbers, and it is not restated here in any form.  What the
     leg does is parse all six by position and compare each against a literal.
-  - "this module rules on which of the sibling's two readings is right" -- it
-    does not.  It records that the sibling's docstring and the sibling's code
-    give different numbers and different signs, and stops.
+  - "this module rules on which of the sibling's two readings is right" --
+    there are no longer two.  The sibling's prose and code agree, and the
+    legs pin its six numbers without ruling on them.
   - "the field hypothesis of Horodecki (1996) is CHECKED here" -- it is
     RECORDED, not checked.  A field hypothesis is not a computational
     predicate; there is nothing to evaluate that could come back False.  The
@@ -727,8 +722,10 @@ MAY-NOT-CITE
     `codim = r_lam`.  What was done instead is that every headline leg at
     leg D recomputes the subtraction on the spot rather than reading the
     variable.  That is a weaker property than a pin and is not billed as one.
-  - "this module rules on whether the banked sibling is correct" -- it does
-    not, in either direction.
+  - "the sibling's agreement CONFIRMS this module" -- it does not.  The
+    sibling recomputes the same closed form; two checks agreeing on an
+    identity one of them proves is concordance, not independent
+    corroboration.
   - "Cirel'son's bound is derived" / "the exhibit saturates" -- maximality is
     a named import and is used by no leg.
   - "the real-singlet CHSH exhibit is due to McKague, Mosca and Gisin", or
@@ -1305,14 +1302,16 @@ EXPECTED_LEGS: Dict[str, FrozenSet[str]] = {
             'Dpp/H_clause_is_present',
             'Dpp/the_three_clauses_are_distinct_sites',
             'Dpp/R_clause_joint_is_10',
-            'Dpp/R_clause_local_is_15',
-            'Dpp/C_clause_joint_is_15',
-            'Dpp/C_clause_local_is_15',
+            'Dpp/R_clause_local_is_9',
+            'Dpp/C_clause_joint_is_16',
+            'Dpp/C_clause_local_is_16',
             'Dpp/H_clause_joint_is_28',
-            'Dpp/H_clause_local_is_48',
+            'Dpp/H_clause_local_is_36',
             'Dpp/the_six_parsed_sibling_numbers_are_all_present',
             'Dpp/the_C_clause_reports_joint_equal_to_local',
-            'Dpp/the_H_clause_reports_a_deficit_like_the_R_clause',
+            'Dpp/the_R_clause_reports_a_surplus',
+            'Dpp/the_H_clause_reports_a_deficit',
+            'Dpp/the_R_and_H_clauses_have_opposite_signs',
             'Dpp/parser_detects_a_move_in_the_R_clause_alone',
             'Dpp/the_simulated_move_actually_changed_the_string',
             'Dpp/parser_detects_a_move_in_the_C_clause_alone',
@@ -1320,13 +1319,11 @@ EXPECTED_LEGS: Dict[str, FrozenSet[str]] = {
             'Dpp/structural_parser_reads_the_demo_C_clause_independently',
             'Dpp/reconstructed_sibling_joint_matches_the_parsed_value',
             'Dpp/reconstructed_sibling_local_matches_the_parsed_value',
-            'Dpp/local_counts_diverge',
+            'Dpp/the_sibling_prose_carries_the_signs_its_code_computes',
+            'Dpp/local_counts_agree',
             'Dpp/joint_dimensions_agree',
-            'Dpp/sibling_signed_mismatch_is_minus_five',
             'Dpp/this_module_signed_mismatch_is_plus_one',
-            'Dpp/the_two_mismatches_have_opposite_signs',
-            'Dpp/the_sibling_docstring_carries_the_ten_versus_nine_reading',
-            'Dpp/the_sibling_prose_and_the_sibling_code_disagree',
+            'Dpp/the_two_mismatches_agree',
             'E/under_generation_moves_the_codimension',
             'E/under_generation_codimension_is_2',
             'E/enlargement_sends_the_codimension_to_zero',
@@ -1735,7 +1732,7 @@ EXPECTED_LEG_COUNTS: Dict[str, int] = {
 # KNOWN LIMITS in the module docstring.
 EXPECTED_LEG_DIGEST: Dict[str, str] = {
     'check_L_real_composite_only_direction_is_lambda_tensor_lambda':
-        '6c69943521647afc39a33886659536a30952f8981a5c2096880966a90e2feb2c',
+        '071a64675695d6702a00e9b6418baf1bb68a5093139c7b3723db8551759c7fb0',
     'check_L_bipartite_chsh_blind_to_composite_only_direction':
         'f1abd9ec4c6c9f62bb3b24523c11cbd83fe9e1ad047b234ba92da24c4013d251',
 }
@@ -3360,8 +3357,8 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
         """The integer assigned to `key` inside ONE clause, or None.
 
         Tokenizes on commas AND whitespace, because the sibling writes its R
-        clause as "joint=10, local=15, deficit" and its C clause as
-        "joint=15 = local=15"."""
+        clause as "joint=10, local=9, signed=+1, surplus" and its C clause as
+        "joint=16 = local=16"."""
         for part in clause.replace(',', ' ').split():
             if part.startswith(key + '='):
                 tail = part[len(key) + 1:].strip()
@@ -3395,30 +3392,34 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
                              (r_joint, r_local, c_joint, c_local,
                               h_joint, h_local)))
     L("Dpp/R_clause_joint_is_10", r_joint == 10)
-    L("Dpp/R_clause_local_is_15", r_local == 15)
-    L("Dpp/C_clause_joint_is_15", c_joint == 15)
-    L("Dpp/C_clause_local_is_15", c_local == 15)
+    L("Dpp/R_clause_local_is_9", r_local == 9)
+    L("Dpp/C_clause_joint_is_16", c_joint == 16)
+    L("Dpp/C_clause_local_is_16", c_local == 16)
     L("Dpp/H_clause_joint_is_28", h_joint == 28)
-    L("Dpp/H_clause_local_is_48", h_local == 48)
+    L("Dpp/H_clause_local_is_36", h_local == 36)
     L("Dpp/the_six_parsed_sibling_numbers_are_all_present", _all_parsed)
     L("Dpp/the_C_clause_reports_joint_equal_to_local",
       c_joint is not None and c_local is not None and c_joint == c_local)
-    L("Dpp/the_H_clause_reports_a_deficit_like_the_R_clause",
-      _all_parsed and h_joint < h_local and r_joint < r_local)
+    L("Dpp/the_R_clause_reports_a_surplus",
+      _all_parsed and r_joint > r_local)
+    L("Dpp/the_H_clause_reports_a_deficit",
+      _all_parsed and h_joint < h_local)
+    L("Dpp/the_R_and_H_clauses_have_opposite_signs",
+      _all_parsed and (r_joint - r_local) * (h_joint - h_local) < 0)
     # THE PARSER, COMPUTED ON AN EDITED COPY OF THE STRING.  The previous
     # version's substring test returned the same answer after the R-local was
     # moved from 15 to 9, because "local=15" also occurs in the C clause.
     # Here the same edit is made on a copy and the parser is run on it.
-    _moved = sib_key.replace('local=15, deficit', 'local=9, deficit')
+    _moved = sib_key.replace('local=9, signed', 'local=7, signed')
     L("Dpp/parser_detects_a_move_in_the_R_clause_alone",
-      _field(_clause(_moved, 'R fails'), 'local') == 9
-      and _field(_clause(_moved, 'C passes'), 'local') == 15)
+      _field(_clause(_moved, 'R fails'), 'local') == 7
+      and _field(_clause(_moved, 'C passes'), 'local') == 16)
     L("Dpp/the_simulated_move_actually_changed_the_string",
       _moved != sib_key)
-    _moved_c = sib_key.replace('local=15)', 'local=99)')
+    _moved_c = sib_key.replace('joint=16 = local=16', 'joint=16 = local=99')
     L("Dpp/parser_detects_a_move_in_the_C_clause_alone",
       _field(_clause(_moved_c, 'C passes'), 'local') == 99
-      and _field(_clause(_moved_c, 'R fails'), 'local') == 15)
+      and _field(_clause(_moved_c, 'R fails'), 'local') == 9)
     # WHY THE PREVIOUS SUBSTRING TEST RETURNED THE SAME ANSWER AFTER THE
     # EDIT, computed on a SELF-CONTAINED string rather than on the live
     # sibling, so this leg does not depend on the sibling's current text.
@@ -3432,50 +3433,44 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
     L("Dpp/structural_parser_reads_the_demo_C_clause_independently",
       _field(_clause(_naive_demo, 'C passes'), 'local') == 15)
     sib_joint = K_dim_real(4)
-    sib_local = (K_dim_real(2) * K_dim_real(2)
-                 + K_dim_real(2) + K_dim_real(2))
+    sib_local = K_dim_real(2) * K_dim_real(2)
     here_local = shape_rows[0]['rank_local']
     here_codim = shape_rows[0]['codim']
     L("Dpp/reconstructed_sibling_joint_matches_the_parsed_value",
       r_joint is not None and r_joint == sib_joint)
     L("Dpp/reconstructed_sibling_local_matches_the_parsed_value",
       r_local is not None and r_local == sib_local)
-    L("Dpp/local_counts_diverge", sib_local != here_local)
+    L("Dpp/local_counts_agree", sib_local == here_local)
     L("Dpp/joint_dimensions_agree",
       sib_joint == shape_rows[0]['dim_sym_N'])
-    L("Dpp/sibling_signed_mismatch_is_minus_five",
-      sib_joint - sib_local == -5)
     L("Dpp/this_module_signed_mismatch_is_plus_one", here_codim == 1)
-    L("Dpp/the_two_mismatches_have_opposite_signs",
-      (sib_joint - sib_local < 0) != (here_codim < 0))
-    # THE SIBLING DISAGREES WITH ITSELF.  RECORDED, NOT ADJUDICATED.  An
-    # auditor read closed_world_completeness.py at the sibling's own
-    # docstring and found that it already carries THIS module's number and
-    # THIS module's sign:
+    L("Dpp/the_two_mismatches_agree",
+      sib_joint - sib_local == here_codim)
+    # THE ONLY LEG HERE THAT READS THE SIBLING'S PROSE AT ALL.
     #
-    #   "d_R(2*2) = 10 vs d_R(2)*d_R(2) = 3*3 = 9 -- 10 > 9 -- fails
-    #    (1 hidden global parameter)"
+    # The clause legs above parse numbers out of the sibling's RETURNED
+    # key_result.  That string is an f-string over the sibling's own
+    # variables, so the legs cannot tell a computed value from a literal.  A
+    # sibling replaced by a stub that returns the same record passes all
+    # thirty Dpp legs, this one included.
     #
-    # Only the sibling's CODE uses the + d_R(n_A) + d_R(n_B) form, giving 15
-    # and a deficit of 5.  So the sibling's prose and the sibling's code
-    # disagree with each other, and the prose agrees with this module.  WHICH
-    # OF THE SIBLING'S TWO READINGS IS INTENDED IS NOT DECIDED HERE.  The two
-    # legs below read the live __doc__; the maintenance instruction above
-    # applies to them as it does to the clause legs.
+    # What a docstring CAN do is drift from the code, which is the defect the
+    # corrigendum corrected: the sibling's prose carried the surplus reading
+    # while its code computed a deficit.  The leg below requires the
+    # docstring to contain the two sign words with the two magnitudes the
+    # code computes.  IT IS TWO SUBSTRING TESTS AND NOTHING MORE.  A
+    # docstring edit that leaves both substrings intact passes it,
+    # including one that inverts the surrounding physics prose or restores
+    # a superseded number elsewhere in the text.
     sib_doc = getattr(_sibling_tomographic_locality, '__doc__', None) or ''
-    L("Dpp/the_sibling_docstring_carries_the_ten_versus_nine_reading",
-      '10 > 9' in sib_doc and '3*3 = 9' in sib_doc)
-    L("Dpp/the_sibling_prose_and_the_sibling_code_disagree",
-      '10 > 9' in sib_doc and r_local == 15 and sib_local == 15
-      and r_joint == 10 and sib_joint == 10)
-    ev['sibling_docstring_reading'] = (
-        "d_R(2*2) = 10 vs d_R(2)*d_R(2) = 3*3 = 9 -- 10 > 9 -- fails "
-        "(1 hidden global parameter)")
-    ev['sibling_code_reading'] = (
-        "joint=10 against local = d_R(2) d_R(2) + d_R(2) + d_R(2) = 15 -- "
-        "a deficit of 5")
-    ev['sibling_local_formula'] = ("d_R(n_A) d_R(n_B) + d_R(n_A) + d_R(n_B) "
-                                   "with d_R(n) = n(n+1)/2")
+    L("Dpp/the_sibling_prose_carries_the_signs_its_code_computes",
+      r_joint is not None and r_local is not None
+      and h_joint is not None and h_local is not None
+      and ('SURPLUS of %d' % (r_joint - r_local)) in sib_doc
+      and ('DEFICIT of %d' % (h_local - h_joint)) in sib_doc)
+    ev['sibling_local_formula'] = ("d_R(n_A) d_R(n_B) with "
+                                   "d_R(n) = n(n+1)/2, full observable "
+                                   "dimensions")
     ev['sibling_joint_R'] = sib_joint
     ev['sibling_local_R'] = sib_local
     ev['sibling_signed_mismatch'] = sib_joint - sib_local
@@ -4225,7 +4220,7 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
       == composite_defect(K_dim_quaternionic, 2, 2) == -8)
     L("EV/reported_sibling_mismatch_is_the_parsed_difference",
       r_joint is not None and r_local is not None
-      and ev['sibling_signed_mismatch'] == r_joint - r_local == -5)
+      and ev['sibling_signed_mismatch'] == r_joint - r_local == here_codim)
     L("EV/reported_maximizer_numbers_are_the_computed_ones",
       ev['maximizer_eigenspace_dimension'] == len(eig_plus) == 2
       and ev['maximizer_family_size'] == len(set(fam)) == 6)
@@ -4319,28 +4314,23 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
         "dim - r_full = Delta_R, the ordinary codimension identity with ONE "
         "live rank, leaving PROBE_DROP unconstrained by it. The billing is "
         "withdrawn; the three extra shapes are real content and are kept. "
-        "A BANKED SIBLING DISAGREES, computed live and recorded rather than "
-        "smoothed over: check_T_split_composite_gates_tomographic_locality "
+        "THE BANKED SIBLING AGREES, computed live: "
+        "check_T_split_composite_gates_tomographic_locality "
         "(closed_world_completeness.py) compares joint_R = d_R(4) = 10 "
-        "against local_R = d_R(2) d_R(2) + d_R(2) + d_R(2) = 15 and reports "
-        "R failing by a DEFICIT of 5; this module compares the same 10 "
-        "against the RANK of the product-observable span, 9, and computes a "
-        "SURPLUS of 1. The two numbers differ in magnitude and in the sign "
-        "of the mismatch, because the local counts are different objects. "
-        "WHICH IS CORRECT IS NOT ADJUDICATED HERE. Leg D'' asserts provenance "
-        "on the CALLABLE and parses all six numbers -- R, C and H, joint and "
-        "local -- out of their own clauses BY POSITION, each comparison "
-        "guarded on the parse having returned an integer; the substring test "
-        "it replaces returned the same answer after the R-local moved, "
-        "because 'local=15' occurs in both clauses. "
-        "AND THE SIBLING DISAGREES WITH ITSELF, which is recorded and not "
-        "adjudicated: the sibling's own docstring reads 'd_R(2*2) = 10 vs "
-        "d_R(2)*d_R(2) = 3*3 = 9 -- 10 > 9 -- fails (1 hidden global "
-        "parameter)' -- this module's number and this module's sign. Only "
-        "the sibling's CODE uses the + d_R(2) + d_R(2) form giving 15 and a "
-        "deficit of 5. Leg D'' reads the live __doc__ and records the "
-        "disagreement. Which of the sibling's two readings is intended is "
-        "not decided here. "
+        "against local_R = d_R(2) d_R(2) = 9 and reports a SURPLUS of 1; "
+        "this module compares the same 10 against the RANK of the "
+        "product-observable span, also 9, and computes the same surplus. "
+        "Leg D'' asserts provenance on the CALLABLE and parses all six "
+        "numbers -- R, C and H, joint and local -- out of their own clauses "
+        "BY POSITION, each comparison guarded on the parse having returned "
+        "an integer; the substring test it replaces returned the same "
+        "answer after the R-local moved. THE PARSED NUMBERS COME OUT OF A "
+        "RETURNED STRING AND THE LEGS CANNOT TELL A COMPUTED VALUE FROM A "
+        "LITERAL: a sibling replaced by a stub returning the same record "
+        "would pass every one of them, this one included. One further leg "
+        "reads the sibling's __doc__ and requires its prose to contain the "
+        "two sign words with the two magnitudes the code computes; it is two "
+        "substring tests and a docstring edit leaving both intact passes it. "
         "CONTROLS THAT BITE: dropping one product generator moves the "
         "codimension to 2; adding J (x) J to the product list sends it to 0; "
         "and the SAME routine over the complex field returns codimension 0 "
@@ -4453,7 +4443,7 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
                       "quantum_admissibility.K_dim_quaternionic",
                       "closed_world_completeness."
                       "check_T_split_composite_gates_tomographic_locality "
-                      "(leg D'' only, to record a divergence)"],
+                      "(leg D'' only, to pin its six reported numbers)"],
         premises=[
             "LOCAL_PRODUCT_OBSERVABLE_MODEL (STRUCTURAL -- this is where the "
             "physics enters): 'what a pair of local measurements can read' is "
@@ -4666,20 +4656,18 @@ def check_L_real_composite_only_direction_is_lambda_tensor_lambda() -> dict:
             "check_T_field_selection_complex -- supplies the integer "
             "Delta_R(n, m) this module identifies; only its [P_math] half "
             "is consumed",
-            "check_T_split_composite_gates_tomographic_locality -- NOT a "
-            "parallel count.  It compares joint_R = d_R(4) = 10 against "
-            "local_R = d_R(2) d_R(2) + d_R(2) + d_R(2) = 15 with "
-            "d_R(n) = n(n+1)/2, and reports R failing by a DEFICIT of 5.  "
-            "This module compares the same 10 against the RANK of the "
-            "product-observable span, 9, and computes a SURPLUS of 1.  Leg "
-            "D'' parses all three clauses structurally and compares each "
-            "parsed number against a literal.  It also reads the sibling's "
-            "__doc__, which carries THIS module's number and sign "
-            "('10 > 9 -- fails (1 hidden global parameter)') while the "
-            "sibling's CODE carries 15 and a deficit of 5.  THAT "
-            "DISAGREEMENT IS RECORDED, NOT ADJUDICATED; WHICH LOCAL FORMULA "
-            "IS CORRECT IS NOT DECIDED HERE and this module may not be cited "
-            "for the sibling being wrong",
+            "check_T_split_composite_gates_tomographic_locality -- a "
+            "CONCORDANT count, by different means.  It compares "
+            "joint_R = d_R(4) = 10 against local_R = d_R(2) d_R(2) = 9 with "
+            "d_R(n) = n(n+1)/2 the full symmetric dimension, a SURPLUS of "
+            "1.  This module compares the same 10 against the RANK of the "
+            "product-observable span, also 9, and computes the same "
+            "surplus.  Agreement between a dimension count and a rank is "
+            "concordance, not independent corroboration: the sibling "
+            "recomputes the closed form this module proves.  Leg D'' "
+            "parses all three clauses structurally, compares each parsed "
+            "number against a literal, and requires the sibling's prose to "
+            "carry the same signs as its code",
             "check_L_bipartite_chsh_blind_to_composite_only_direction"],
     )
 

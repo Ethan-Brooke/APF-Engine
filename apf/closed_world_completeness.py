@@ -648,10 +648,12 @@ def check_T_split_composite_gates_tensor_closure():
 # =====================================================================
 
 def check_T_split_composite_gates_tomographic_locality():
-    """T_split_composite_gates_tomographic_locality: only D in {C}
-    passes finite tomographic locality.  Real M_n(R) joint states
-    have global parameters not visible to local marginals
-    (Wootters-Hardy local-tomography failure).
+    """T_split_composite_gates_tomographic_locality: of the two
+    candidates this leg adjudicates, only C passes.  Real M_n(R)
+    joint states carry global parameters that no local marginal sees
+    (Wootters-Hardy local-tomography failure).  H IS NOT ADJUDICATED
+    HERE -- see the H paragraph below; it is excluded by the
+    tensor-closure leg.
 
     Tier 3 [P_math].  Paper 5 Supplement v5.97 section "Field
     selection by split closed-world composite gates", second leg
@@ -661,89 +663,155 @@ def check_T_split_composite_gates_tomographic_locality():
     rules out R).
 
     Witness construction (parameter-count tomographic-locality
-    test).  Local tomography asserts: a joint state on a bipartite
-    composite system is fully determined by its local marginals
-    plus the bipartite correlations measurable from local-only
-    operations.  Equivalently:
-        dim(joint state space)  ==  dim(state_A) * dim(state_B)
-                                    + cross-corr terms
-    For real, complex, and quaternionic quantum mechanics, the
-    state-space dimension over R for an n-level system is:
-        R-QM:  n(n+1)/2          (real symmetric, trace-1)
-        C-QM:  n^2 - 1           (Hermitian trace-1)
-        H-QM:  n(2n-1)            (quaternionic Hermitian, trace-1)
-    Local-tomography parameter counts for an (n_A, n_B) bipartite
-    system:
-        joint:   d(n_A * n_B)
-        local:   d(n_A) * d(n_B)
-    Local-tomography requires: d(n_A * n_B) == d(n_A) * d(n_B) --
-    or, more precisely, the joint state is determined by local
-    marginal data of dimension d(n_A) * d(n_B).
+    test).  Local tomography asserts that the state space of a
+    bipartite composite is the tensor product of the local state
+    spaces, so that a joint state is fixed by local marginals plus
+    the correlations between local effects.  As a dimension count
+    over R, writing d_D(n) for the real dimension of the space of
+    observables of an n-level system over the division ring D:
 
-    Check on the standard formulae:
-      R-QM:  d_R(n) = n(n+1)/2.  d_R(2*2) = 10 vs d_R(2)*d_R(2) =
-        3*3 = 9 -- 10 > 9 -- fails (1 hidden global parameter).
-      C-QM:  d_C(n) = n^2 - 1.   d_C(2*2) = 15 vs d_C(2)*d_C(2) =
-        3*3 = 9 -- but local + correlations = 15: the dim 15 is
-        precisely n_A^2 * n_B^2 - 1 = (d_C(2)+1)*(d_C(2)+1) - 1
-        which is reachable from local + bipartite correlation
-        data.  C passes local tomography in the standard sense.
-      H-QM:  d_H(n) = n(2n-1).  d_H(4) = 4*7 = 28 vs d_H(2)*d_H(2)
-        = 6*6 = 36 -- 28 < 36 -- mismatch but in the opposite
-        direction (deficit of bipartite parameters).  H also
-        fails local tomography.
+        local tomography holds  iff  d_D(n_A n_B) == d_D(n_A) d_D(n_B)
 
-    The check certifies the parameter mismatch for R and H,
-    confirming that only C survives both legs of the split.
+    ALL THREE COUNTS ARE FULL SPACE DIMENSIONS, not trace-one
+    dimensions.  The distinction is load-bearing and mixing the two
+    is what a previous version of this check did:
+
+        R:  d_R(n) = n(n+1)/2      real symmetric
+        C:  d_C(n) = n^2           complex Hermitian
+        H:  d_H(n) = n(2n-1)       quaternionic Hermitian
+
+    The trace-one convention gives the same verdicts and the same
+    signed mismatch at every (n_A, n_B), because subtracting one
+    from each factor and from the joint count cancels:
+    (1+a)(1+b) - 1 with a = d(n_A) - 1, b = d(n_B) - 1 returns
+    d(n_A) d(n_B) - 1.  Either convention may be used; they may not
+    be mixed.
+
+    At the canonical (2,2):
+
+      R:  d_R(4) = 10 against d_R(2)^2 = 9.  SURPLUS of 1.  The
+          joint space carries one more parameter than the local
+          product supplies, so that parameter is invisible to local
+          data and R fails local tomography.  The surplus is not a
+          bare number: Sym(R^n (x) R^m) = (Sym (x) Sym) (+)
+          (Lambda (x) Lambda), so it is exactly
+          dim Lambda^2(R^n) (x) Lambda^2(R^m) = [n(n-1)/2][m(m-1)/2],
+          which this check recomputes below and which
+          apf.composite_only_direction proves for all n, m.
+
+      C:  d_C(4) = 16 against d_C(2)^2 = 16.  Equality.  C passes.
+
+      H:  d_H(4) = 28 against d_H(2)^2 = 36.  DEFICIT of 8.  READ
+          THIS DIFFERENTLY FROM THE R CASE.  Local tomography gives
+          joint <= local, so a deficit does not violate it.  What
+          36 product observables inside a 28-dimensional space
+          violates is LOCAL INDEPENDENCE, and the reason underneath
+          is that there is no quaternion-linear tensor product of
+          quaternionic modules at all.  The deficit is the
+          arithmetic signature of that absence, not a tomographic
+          shortfall.  H is properly excluded by the TENSOR-CLOSURE
+          leg of this split, which gives the composite as
+          M_{4 n m}(R) rather than M_{nm}(H).  Those two readings
+          of the H composite do not agree, and only the closure leg
+          is load-bearing for the exclusion.
+
+    THE DIRECTION MATTERS FOR R.  A hidden global parameter means
+    joint > local.  Reading joint < local as R's reconstruction
+    failure inverts the Wootters-Hardy condition, and that is the
+    error this check previously shipped.  The condition itself is
+    EQUALITY; R and H depart from it in opposite senses and for
+    different reasons.
+
+    A RELATION THE TWO DEPARTURES SATISFY, recomputed below:
+        d_H(nm) - d_H(n) d_H(m) == -8 [ d_R(nm) - d_R(n) d_R(m) ]
+    identically in n and m.  The -8 and the +1 at (2,2) are one
+    object, not two.
+
+    The check certifies the surplus for R and the equality for C.
+    It reports H's arithmetic and declines to draw a
+    tomographic-locality verdict from it.  Together with the
+    tensor-closure leg, which is where H is excluded, only C survives
+    the split.
     """
-    # State-space dimensions as functions of n
-    def d_R(n): return n * (n + 1) // 2     # symmetric matrices (trace-1)
-    def d_C(n): return n * n - 1            # Hermitian (trace-1)
-    def d_H(n): return n * (2 * n - 1)      # quaternionic Hermitian (trace-1)
+    # Full real dimensions of the observable space of an n-level
+    # system over each division ring.  NOT trace-one dimensions.
+    def d_R(n): return n * (n + 1) // 2     # real symmetric
+    def d_C(n): return n * n                # complex Hermitian
+    def d_H(n): return n * (2 * n - 1)      # quaternionic Hermitian
 
-    # Local tomography: does the joint dimension at (n_A * n_B)
-    # decompose into local-marginal data?  For an honest test we
-    # check whether
-    #     d_D(n_A * n_B)  ==  d_D(n_A) * d_D(n_B) + d_D(n_A) + d_D(n_B)
-    # which is the count of marginals + bipartite correlations
-    # accessible from purely local effects in standard tomographic
-    # frameworks.  C satisfies this (it's the canonical example);
-    # R and H do not.
+    # Local tomography as a dimension count: the composite state
+    # space is the tensor product of the local ones.
+    def local_product(d, n_A, n_B): return d(n_A) * d(n_B)
 
     n_A, n_B = 2, 2
 
-    # R-QM check
-    joint_R = d_R(n_A * n_B)         # 10
-    local_R = d_R(n_A) * d_R(n_B) + d_R(n_A) + d_R(n_B)  # 3*3 + 3 + 3 = 15
-    # The R-QM problem is that joint < local would mean overcount,
-    # joint > local mean undercount.  Standard Wootters argument:
-    # real-amplitude QM has fewer joint parameters than the
-    # local-marginal-product structure can support; equivalently,
-    # joint state has hidden global phase information not visible
-    # to local effects.  Numerically, joint_R=10 < local_R=15 --
-    # 5 parameters cannot be reconstructed from local-only data.
-    assert joint_R != local_R, (
-        f"R-QM should fail local tomography: joint={joint_R}, "
-        f"local={local_R}"
+    # ---- R: surplus, and the surplus is identified ----------------
+    joint_R = d_R(n_A * n_B)                        # 10
+    local_R = local_product(d_R, n_A, n_B)          # 9
+    surplus_R = joint_R - local_R                   # +1
+    assert surplus_R > 0, (
+        f"R-QM must fail local tomography by a SURPLUS: "
+        f"joint={joint_R}, local={local_R}, signed={surplus_R}"
+    )
+    # The surplus is dim Lambda^2(R^n_A) (x) Lambda^2(R^n_B).
+    def _lambda_dim(a, b): return (a * (a - 1) // 2) * (b * (b - 1) // 2)
+    lambda_dim = _lambda_dim(n_A, n_B)
+    assert surplus_R == lambda_dim, (
+        f"the R surplus must be the antisymmetric-square dimension: "
+        f"surplus={surplus_R}, dim(Lambda (x) Lambda)={lambda_dim}"
+    )
+    # ...and that identity is not an accident of (2,2).
+    _shapes = ((2, 3), (3, 3), (2, 4), (3, 5), (4, 4), (5, 7), (6, 6))
+    assert len(set(_shapes)) == len(_shapes), "the sweep repeats a shape"
+    assert any(a != b for a, b in _shapes), "the sweep is all-square"
+    # Every argument either formula is evaluated at, in BOTH slots and at
+    # the product, pinned to its closed form by value.
+    _args = sorted({v for a, b in _shapes for v in (a, b, a * b)}
+                   | {2, 4})
+    for _k in _args:
+        assert d_R(_k) == _k * (_k + 1) // 2, f"d_R wrong at {_k}"
+        assert d_C(_k) == _k * _k, f"d_C wrong at {_k}"
+        assert d_H(_k) == _k * (2 * _k - 1), f"d_H wrong at {_k}"
+        assert d_R(_k) > 0 and d_C(_k) > 0 and d_H(_k) > 0, (
+            f"dimensions must be positive at {_k}")
+    # The lists are built from _shapes and their lengths are asserted
+    # against it.
+    _lam = [(d_R(a * b) - d_R(a) * d_R(b), _lambda_dim(a, b))
+            for a, b in _shapes]
+    _rel = [(d_H(a * b) - d_H(a) * d_H(b),
+             -8 * (d_R(a * b) - d_R(a) * d_R(b))) for a, b in _shapes]
+    _mul = [(d_C(a * b), d_C(a) * d_C(b)) for a, b in _shapes]
+    assert len(_lam) == len(_rel) == len(_mul) == len(_shapes) == 7
+    assert all(x == y for x, y in _lam), (
+        f"the surplus/antisymmetric identity fails: {_lam}")
+    assert all(x == y for x, y in _rel), (
+        f"the H/R departure relation fails: {_rel}")
+    assert all(x == y for x, y in _mul), (
+        f"C must be exactly multiplicative: {_mul}")
+
+    # ---- C: equality ---------------------------------------------
+    joint_C = d_C(n_A * n_B)                        # 16
+    local_C = local_product(d_C, n_A, n_B)          # 16
+    assert joint_C == local_C, (
+        f"C-QM must pass local tomography: joint={joint_C}, "
+        f"local={local_C}"
     )
 
-    # C-QM check (canonical local-tomographic case)
-    joint_C = d_C(n_A * n_B)         # 15
-    # For C, local marginals (3+3) plus bipartite correlations
-    # (3*3 = 9) give 15 = joint dimension.  Local tomography holds.
-    locally_reconstructible_C = d_C(n_A) + d_C(n_B) + d_C(n_A) * d_C(n_B)
-    assert joint_C == locally_reconstructible_C, (
-        f"C-QM should pass local tomography: joint={joint_C}, "
-        f"locally_reconstructible={locally_reconstructible_C}"
+    # ---- H: deficit, the opposite direction from R ----------------
+    joint_H = d_H(n_A * n_B)                        # 28
+    local_H = local_product(d_H, n_A, n_B)          # 36
+    deficit_H = joint_H - local_H                   # -8
+    assert deficit_H < 0, (
+        f"H must run a DEFICIT: joint={joint_H}, local={local_H}, "
+        f"signed={deficit_H}"
     )
-
-    # H-QM check
-    joint_H = d_H(n_A * n_B)         # 28
-    locally_reconstructible_H = d_H(n_A) + d_H(n_B) + d_H(n_A) * d_H(n_B)
-    # 6 + 6 + 36 = 48 != 28; H also fails local tomography
-    assert joint_H != locally_reconstructible_H, (
-        f"H-QM should fail local tomography: joint={joint_H}, "
-        f"locally_reconstructible={locally_reconstructible_H}"
+    # Stated as the identical relation rather than as a sign
+    # product: a sign product is entailed by the two asserts above
+    # and cannot fail, and it is invariant under a coordinated flip
+    # of both conventions.
+    assert deficit_H == -8 * surplus_R, (
+        f"the H departure must be -8 times the R surplus: "
+        f"R={surplus_R}, H={deficit_H}"
     )
 
     return {
@@ -752,22 +820,30 @@ def check_T_split_composite_gates_tomographic_locality():
         "tier": 3,
         "epistemic": "P_math",
         "key_result": (
-            f"Tomographic-locality leg: R fails (joint={joint_R}, "
-            f"local={local_R}, deficit), C passes "
-            f"(joint={joint_C} = local={locally_reconstructible_C}), "
-            f"H fails (joint={joint_H}, local={locally_reconstructible_H}, "
-            f"deficit)"
+            f"Tomographic-locality leg at 2x2, full observable "
+            f"dimensions: R fails (joint={joint_R}, local={local_R}, "
+            f"signed={surplus_R:+d}, surplus), C passes "
+            f"(joint={joint_C} = local={local_C}), H fails "
+            f"(joint={joint_H}, local={local_H}, "
+            f"signed={deficit_H:+d}, deficit -- a local-INDEPENDENCE "
+            f"failure, not a tomographic one; see the docstring). "
+            f"The R surplus is the antisymmetric summand "
+            f"Lambda tensor Lambda, dimension {lambda_dim}."
         ),
         "summary": (
             "Second leg of the v5.43 split: finite tomographic "
-            "locality, the Wootters-Hardy condition that joint "
-            "state-space dimension factorizes as local marginals + "
-            "bipartite correlations.  Only C-QM passes this test "
-            "in the canonical 2x2 setting: dim 15 = 3 + 3 + 9.  "
-            "R-QM has dim 10 < 15 (local-only effects undercount), "
-            "and H-QM has dim 28 < 48 (also undercount).  Together "
-            "with the tensor-closure leg (which rules out H), this "
-            "leg pins the field selection to C uniquely."
+            "locality, the Wootters-Hardy condition that the "
+            "composite observable space is the tensor product of "
+            "the local ones.  Counting full real dimensions at "
+            "(2,2): C passes exactly, 16 = 4 x 4.  R carries a "
+            "SURPLUS of one, 10 against 9, and that one parameter "
+            "is the antisymmetric summand Lambda (x) Lambda, "
+            "invisible to every local marginal.  H carries a "
+            "DEFICIT of eight, 28 against 36 -- which is NOT a "
+            "tomographic-locality failure, since local tomography "
+            "gives joint <= local.  H is excluded by the "
+            "tensor-closure leg, and this leg is load-bearing "
+            "against R only."
         ),
     }
 
@@ -812,9 +888,20 @@ def check_T_split_closed_world_complex_selection():
         return D in ("R", "C")
 
     def passes_tomographic_locality(D):
-        # From check_T_split_composite_gates_tomographic_locality:
-        # Only C satisfies dim(joint(2x2)) = dim(local marginals)
-        # + dim(bipartite correlations) on the canonical 2x2 case.
+        # C satisfies d(n_A n_B) == d(n_A) d(n_B) on full observable
+        # dimensions; R does not, by a surplus.  H returns None --
+        # NOT False -- because this leg has no verdict to give about
+        # H.  There is no quaternion-linear tensor product, so the
+        # quaternionic composite whose dimension the comparison would
+        # need does not exist, and leg 1 says so: it gives
+        # M_n(H) (x)_R M_m(H) = M_{4nm}(R).  H is excluded by leg 1.
+        # THIS IS A LOOKUP, NOT A DERIVATION: the verdicts are
+        # literals here and this function does not call
+        # check_T_split_composite_gates_tomographic_locality.  Read
+        # that check for the computation; nothing here establishes
+        # it.
+        if D == "H":
+            return None
         return D == "C"
 
     # Per-candidate verdict
@@ -825,7 +912,9 @@ def check_T_split_closed_world_complex_selection():
         verdicts[D] = {
             "tensor_closure": leg1,
             "tomographic_locality": leg2,
-            "split_pass": leg1 and leg2,
+            # `is True` rather than truthiness, so a None leg-2
+            # verdict cannot be read as a pass.
+            "split_pass": (leg1 is True) and (leg2 is True),
         }
 
     # (i) C is the unique candidate passing BOTH legs
@@ -838,10 +927,16 @@ def check_T_split_closed_world_complex_selection():
     assert verdicts["R"]["tensor_closure"] is True
     assert verdicts["R"]["tomographic_locality"] is False
 
-    # (iii) H fails leg 1 (the "ℍ ruled out by tensor closure"
-    # reading) and also fails leg 2
+    # (iii) H fails leg 1 -- the "H ruled out by tensor closure"
+    # reading, and the ONLY ground on which H is excluded.  Leg 2
+    # returns no verdict for H: local tomography gives joint <= local,
+    # so H's parameter deficit does not violate it, and the object the
+    # comparison would need does not exist.  A previous version
+    # asserted `is False` here and double-counted H against a leg that
+    # the v5.43 unbundling assigns to R.
     assert verdicts["H"]["tensor_closure"] is False
-    assert verdicts["H"]["tomographic_locality"] is False
+    assert verdicts["H"]["tomographic_locality"] is None
+    assert verdicts["H"]["split_pass"] is False
 
     return {
         "name": "T_split_closed_world_complex_selection",
@@ -851,8 +946,11 @@ def check_T_split_closed_world_complex_selection():
         "key_result": (
             "Split closed-world composite gates: R passes "
             "tensor-closure but fails tomographic-locality; H fails "
-            "both; C uniquely passes both -- C selected by the "
-            "conjunction of independently-derivable conditions"
+            "tensor-closure, and tomographic-locality returns no "
+            "verdict for H; C uniquely passes both -- C selected by "
+            "the conjunction of independently-derivable conditions. "
+            "BOTH LEG VERDICTS HERE ARE LITERALS; this check composes "
+            "them and computes neither."
         ),
         "summary": (
             "Composite meta-theorem of the v5.43 reviewer-response "
@@ -863,7 +961,9 @@ def check_T_split_closed_world_complex_selection():
             "M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic) "
             "and finite tomographic locality (rules out R via the "
             "Wootters-Hardy local-marginal parameter count).  C is "
-            "the unique field passing both, derived not postulated.  "
+            "the unique field passing both.  The two leg verdicts "
+            "are looked up here, not recomputed; each leg's own "
+            "check carries its derivation.  "
             "This sharpens Phase 22b's check_T_field_selection_complex "
             "(uniform-defect form) by making the conjunction "
             "structure explicit."
@@ -1700,7 +1800,7 @@ IE_DECLARATIONS = (
             "deeper closed-world primitive of ledger conservation + no-phantom- "
             "records, exercised on small finite witnesses across 14 bank- "
             "registered checks. Field selection is the sharp result: H is ruled "
-            "out by tensor closure M_n(H) x_R M_m(H) ~= M_2nm(R) "
+            "out by tensor closure M_n(H) x_R M_m(H) ~= M_4nm(R) "
             "(check_T_split_composite_gates_tensor_closure, epistemic P_math), R "
             "by the Wootters-Hardy tomographic-locality parameter count "
             "(check_T_split_composite_gates_tomographic_locality, P_math), and "
