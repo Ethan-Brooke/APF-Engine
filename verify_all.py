@@ -223,6 +223,24 @@ def print_prediction_scorecard():
     except Exception as e:
         print(f"\nPrediction scorecard unavailable: {e}")
 
+    # The 2026-08-04 adoption ruling: the banked headline stays 32/40, and the
+    # three-number table is presented together wherever the scorecard appears.
+    # Guarded — a missing or failing scorecard_resolution must not break a run.
+    try:
+        from apf.scorecard_resolution import check_T_scorecard_resolution
+        a = check_T_scorecard_resolution()["artifacts"]
+        n = a["n_tested"]
+        print()
+        print("Scorecard resolution (ruled 2026-08-04: the headline is the banked row)")
+        print("-" * 44)
+        print(f"  BANKED   {a['headline_banked']}/{n}  sigma vs the measured error alone")
+        print(f"  LICENSED {a['headline_licensed']}/{n}  + model floor on the CKM angle rows "
+              f"(computed scope of check_L_CKM_resolution_limit)")
+        print(f"  EXTENDED {a['headline_extended']}/{n}  + the T_mass_ratios rows, conditional on "
+              f"{', '.join(a['headline_extended_conditional_on'])} (a premise, not derived)")
+    except Exception as e:
+        print(f"\nScorecard resolution unavailable: {e}")
+
 
 # ── Interface Engine operational phase (optional, opt-in via --with-engine) ───
 

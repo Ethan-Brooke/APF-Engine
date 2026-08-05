@@ -27,7 +27,7 @@ pip install -e .
 python verify_all.py
 ```
 
-The bank carries **4,081 registered theorems across 450 registered modules** (v24.3.440).
+The bank carries **4,151 registered theorems across 472 registered modules** (v24.3.467).
 
 ## What is this?
 
@@ -49,7 +49,19 @@ inputs.
 ## Prediction scorecard
 
 49 quantitative predictions, zero free dimensionless parameters (one dimensional anchor).
-40 tested; 33/40 within 3σ; mean error 3.77%, median 0.51%.
+40 tested. **The headline is 32/40 within 3σ** — mean error 3.79%, median 0.51%.
+
+Three statistics are computed side by side, and the ruling of 2026-08-04 is that the
+banked one is the headline:
+
+| | Within threshold | What it counts |
+|---|---|---|
+| **Banked** | **32/40** | σ = \|APF − obs\| / σ_obs against the measured error alone (`check_L_prediction_catalog`, `apf/validation.py`) |
+| Licensed | 33/40 | σ_eff in quadrature with a model resolution on the three CKM angle rows — the computed scope of the banked Froggatt–Nielsen grid-discreteness derivation (`check_L_CKM_resolution_limit`, `apf/standalone/L_CKM_resolution_limit.py`) |
+| Extended | 37/40 | the same floor additionally on the six `T_mass_ratios` rows, conditional on the named premise **FN_POWER_TRANSFER** — that a pure-FN-power observable inherits the charge grid's fractional resolution. That premise is *not* derived. |
+
+All three are recomputed from the banked rows by `check_T_scorecard_resolution`
+(`apf/scorecard_resolution.py`). Quote 32/40 unless you are quoting the premise too.
 
 ## The corpus
 

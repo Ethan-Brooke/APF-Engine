@@ -105,9 +105,12 @@ GUARDS (computed):
     counted-structure-preserving, (H-sym) fails, the chain cannot fire; the
     weighted law p(k) = a_k is exhibited admissible (equivariant) and
     non-uniform. Physical weighted selection is NOT forbidden; the weighted
-    Born identification stays [P_structural], now grant-free AND
-    unconditional -- the retired grant G-hold-exact named the identification
-    of the hold's survey amplitude with the counted ledger rho, which under
+    Born identification stays [P_structural], now grant-free, and
+    unconditional ON THE RETIRED GRANT ONLY -- the two named readings
+    (R-sel-LC, R-event-model) still condition the lemma; see GRANT-FREE, NOT
+    UNCONDITIONAL in the header. The retired grant
+    G-hold-exact named the identification of the hold's survey amplitude
+    with the counted ledger rho, which under
     A2-exact (Ethan's 2026-07-26 constitutive rule: a non-argmin commit
     violates A2) is A2's own constitutive content; with exactness
     constitutive the retired grant has nothing left to grant.
@@ -135,7 +138,11 @@ WHAT THIS CLOSES / WHAT STAYS OPEN:
     form, sited at the selection map, with C1 as the shape-donor. A future
     lane may attempt a genuine derivation; the stage-1 counter-model is the
     wall it must climb (do-not-re-walk note in the audit record).
-  - Weighted Born stays grant-conditional. This module consumes no grant.
+  - Weighted Born stays [P_structural], grant-free, and unconditional ON THE
+    RETIRED GRANT ONLY -- the identification the grant named is A2
+    constitutive content (the over-strength guard above). The two named
+    readings still condition the lemma; see GRANT-FREE, NOT UNCONDITIONAL in
+    the header. This module consumes no grant.
 
 MAY NOT CITE:
   - "uniform is unconditional" or "SUP dissolves into A1" (v0.1 language,
@@ -455,8 +462,9 @@ def check_L_selection_ledger_completeness():
     p = law_weighted([F(3, 7)] * 2, a_b)
     ck(p != [F(1, 2)] * 2 and
        [_tr(_mm(_diagm(a_b), Ek)) for Ek in _projectors(2)] == a_b,
-       'weighted law admissible + non-uniform: nothing over-forced; '
-       'weighted Born identification stays grant-conditional')
+       'weighted law admissible + non-uniform: nothing over-forced '
+       '(the grading of the weighted Born identification is argued in the '
+       'over-strength guard, not computed here)')
 
     # grant tripwire (stage-1 F4: case-insensitive, both spellings, on
     # both the code names and the module source):
@@ -513,8 +521,10 @@ def check_L_selection_ledger_completeness():
             'selection on non-flat amplitude admissible (nothing '
             'over-forced). Closes the FLAT CASE of the A2-tie-selection '
             'named open at reading grade; BW non-degeneracy stays open. '
-            'Weighted Born stays [P_structural], now grant-free AND '
-            'unconditional; the retired grant G-hold-exact named the survey==counted-rho identification '
+            'Weighted Born stays [P_structural], now grant-free, and '
+            'unconditional ON THE RETIRED GRANT ONLY -- the two named '
+            'readings still condition the lemma; the retired grant '
+            'G-hold-exact named the survey==counted-rho identification '
             '(2026-07-26, A2 read exact: exact selection is A2 constitutive, '
             'the retired grant has nothing to grant), now A2 constitutive '
             'content. '
@@ -559,8 +569,10 @@ def check_L_selection_ledger_completeness():
                       'over-strength (weighted admissible)',
             'grant_status': 'grant-free (tripwired, both spellings, '
                             'case-insensitive); weighted Born now grant-free '
-                            'and unconditional (the grant was retired '
-                            '2026-07-26, A2 read exact)',
+                            'and unconditional ON THE RETIRED GRANT ONLY -- '
+                            'the two named readings still condition the '
+                            'lemma (the grant was retired 2026-07-26, A2 '
+                            'read exact)',
             'named_open_effect': 'A2 tie-selection: FLAT CASE closed at '
                                  'reading grade; BW non-degeneracy: OPEN',
             'audit_trail': 'stage-1 cold audit REDUCE 0.55 (4 MAJOR + 4 '

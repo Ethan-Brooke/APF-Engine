@@ -2364,6 +2364,6 @@ IE_DECLARATIONS = (
             "instrument content; the Baer-Wiese all-N_c fence machine-pinned "
             "(the naive N_c-counting reading refuted in-check). "
         ),
-        "note": "Wave 6; scorecard row 49 (49 total / 40 tested / 33 consistent at the .341 landing)",
+        "note": "Wave 6; scorecard row 49 (49 total / 40 tested / 32 consistent, the banked headline as of 2026-08-04)",
     },
 )

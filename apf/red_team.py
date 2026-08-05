@@ -898,7 +898,7 @@ PHENOMENOLOGICAL_TOLERANCE_WHITELIST = {
     'L_prediction_catalog': (
         10.0,
         'CORRECTED 2026-08-01. Gates the MEAN error across tested predictions '
-        '(mean_err = sum(errors)/len(errors), currently ~3.8% over 40 tested), '
+        '(mean_err = sum(errors)/len(errors), currently 3.79% over 40 tested), '
         'NOT any individual prediction. The prior reason read "flags any '
         'individual prediction >10% off", which describes a strictly stronger '
         'check than the one that executes; per-prediction tolerances are '

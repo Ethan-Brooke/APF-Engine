@@ -1,12 +1,13 @@
 """One capacity frame plus one natural transport: the unistochastic criterion
 for when the transport forces the trace.
 
-UNREGISTERED -- this module ships without a register() entry point, pending its
-blinded audit.  No manifest change, no EXPECTED change.  It supersedes the
-mathematical content of the held predecessor (one_context_one_transport_HELD)
-under the 2026-08-04 plain-shape design ruling: the mathematics enters the
-corpus as an ordinary module; the bank's own battery and future audits are the
-verification story, the same as for every other banked module.
+REGISTERED at v24.3.467 (2026-08-04), after blinded cold audit
+LAND-WITH-FIXES 0.89, via the register() entry point at the foot of this file.
+It supersedes the mathematical content of the held predecessor
+(one_context_one_transport_HELD) under the 2026-08-04 plain-shape design
+ruling: the mathematics enters the corpus as an ordinary module; the bank's own
+battery and future audits are the verification story, the same as for every
+other banked module.
 
 SETTING.  A capacity frame E on C^n is the set of rank-one projectors onto an
 orthonormal basis (the capacity basis).  A cost functional is a Hermitian R.

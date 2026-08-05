@@ -83,7 +83,7 @@ pip install -e .
 python verify_all.py
 ```
 
-`verify_all.py` runs the full bank and prints the scorecard: 48 quantitative predictions, 39 tested, 32/39 within 3σ, mean absolute error 3.83%, median 0.37%. Requirements: Python ≥ 3.8, numpy, and scipy (a small number of numerical checks need it — special functions, two-loop RG integrals, spectral-action moments); the exact-rational core uses only the standard library.
+`verify_all.py` runs the full bank and prints the scorecard: 49 quantitative predictions, 40 tested, 32/40 within 3σ, mean absolute error 3.79%, median 0.51%. That 32/40 is the banked headline (σ against the measured error alone). Two further statistics are computed alongside it by `check_T_scorecard_resolution` (`apf/scorecard_resolution.py`) and printed with it: 33/40 when a model resolution is carried on the three CKM angle rows — the computed scope of the banked Froggatt–Nielsen grid-discreteness derivation (`check_L_CKM_resolution_limit`) — and 37/40 when the same floor is extended to the six `T_mass_ratios` rows, which is conditional on the named premise FN_POWER_TRANSFER and is not derived. The ruling of 2026-08-04 is that the headline stays 32/40. Requirements: Python ≥ 3.8, numpy, and scipy (a small number of numerical checks need it — special functions, two-loop RG integrals, spectral-action moments); the exact-rational core uses only the standard library.
 
 ## Where the codebase lives
 
@@ -139,7 +139,7 @@ APF **is** a formal derivation program with machine-verified theorems, a claim t
 
 ## About the APF series
 
-The Admissibility Physics Framework is a constraint-first derivation of the Standard Model and cosmological structure from a single primitive — finite enforcement capacity. The corpus runs from the foundational papers through the gauge sector, the quantum formalism, Lorentzian spacetime and the Einstein field equations, the cosmological constant, the electroweak and dark sectors, and the lattice Yang–Mills program. Each paper's main text and Technical Supplement is deposited separately on Zenodo and collected in the **[admissibility_physics](https://zenodo.org/communities/admissibility_physics)** community. The engine in this repository is the machine-verifiable companion to all of it (v24.3.249 — 3,745 bank-registered theorems across 422 typed modules, 48 quantitative predictions).
+The Admissibility Physics Framework is a constraint-first derivation of the Standard Model and cosmological structure from a single primitive — finite enforcement capacity. The corpus runs from the foundational papers through the gauge sector, the quantum formalism, Lorentzian spacetime and the Einstein field equations, the cosmological constant, the electroweak and dark sectors, and the lattice Yang–Mills program. Each paper's main text and Technical Supplement is deposited separately on Zenodo and collected in the **[admissibility_physics](https://zenodo.org/communities/admissibility_physics)** community. The engine in this repository is the machine-verifiable companion to all of it (v24.3.467 — 4,151 bank-registered theorems, 49 quantitative predictions).
 
 | # | Title | Concept DOI |
 |---|---|---|
