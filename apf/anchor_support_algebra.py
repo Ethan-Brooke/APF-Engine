@@ -62,13 +62,29 @@ like factors (A_v isomorphic to A_pi(v)), acting on A_Gamma by
 (x)_v alpha_v followed by factor permutation, and on presentations by
 transport. ANTI-automorphisms (transpose-type relabelings) are EXCLUDED
 from G_rel by definition, with the reason stated: G_rel is the group of
-empirical-difference-free relabelings acting by *-homomorphisms on the
-record composition structure; a transpose reverses operator products and
-is not a relabeling of the presentation in that sense. The exclusion is
-harmless for every quantity this check certifies -- supports, dimensions,
-block structures, and channel counts are all transpose-invariant -- so
-extending the group would change no leg; the scope is stated rather than
-smuggled. Support covariance, dimension invariance, and (in the sibling
+relabelings acting by *-homomorphisms on the record composition
+structure, empirical-difference-free IN THE PRICING SENSE -- the only
+sense this module uses, and see the dual status below; a transpose
+reverses operator products and is not a relabeling of the presentation
+in that sense. The exclusion is harmless for every quantity this check
+certifies -- supports, dimensions, block structures, and channel counts
+are all transpose-invariant -- so extending the group would change no
+leg; the scope is stated rather than smuggled.
+
+THE DUAL STATUS OF THE G_rel MOVES. G_rel contains the factor-wise
+INNER *-automorphisms, hence rephasings. Every quantity certified here is
+pricing-side -- supports, dimensions, block structures, channel counts,
+and in the sibling check J/R/Delta -- and every one of them is invariant
+under those moves, so the arithmetic of this module is untouched and
+nothing downstream of it is wrong. What the gloss must not be read as
+granting is the other half: these moves are PRICING-FREE and they are
+NOT RECORD-FREE, which is the dual status already ruled for sign and
+phase moves. Freeness is a predicate computed of the move at the side
+being asked about; it is not a property carried by the group. No leg
+here asserts, or needs, the record-side half. ("Reference - DECISION -
+Gauge Is Two Things (2026-08-05)"; a recorded reading, not banked.)
+
+Support covariance, dimension invariance, and (in the sibling
 check) J/R/Delta invariance under G_rel are theorems (leg 6); that the
 LEDGER is covariant -- that billing attaches no cost to a relabeling --
 is X1's relabel-freedom clause (FD1-sc), the allocation reading, named as

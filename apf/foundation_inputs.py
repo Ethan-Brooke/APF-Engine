@@ -345,7 +345,23 @@ def check_FD1_structural_completeness():
     an empirical difference is a structural fact: it is fixed by the structure
     that constitutes it, and is not free to be assigned by representational
     fiat.  A free choice that fixes NO empirical difference is a coordinative
-    convention (units, chart, gauge) and lies outside the clause.
+    convention and lies outside the clause.  The antecedent carries the whole
+    conditional: freeness is a predicate COMPUTED of the individual move, and
+    is never inherited from the category the move is filed under.  Units,
+    chart and gauge are the standing illustrations, and each illustrates a
+    move that satisfies the antecedent WHEN it satisfies it; naming the
+    category grants nothing.  Gauge is the sharp case and it divides.  A
+    gauge CHOICE -- which representative gets written down -- fixes no
+    empirical difference, so the antecedent holds and the choice is a
+    convention.  The DIMENSION of the gauge group counts directions that act
+    differently on observables; the antecedent fails there, those are
+    enforced distinctions, and check_L_cost_gauge (apf/core.py) bills them.
+    Whether acting differently on observables and fixing an empirical
+    difference are the same predicate or merely coextensive on the cases
+    tested is not established; the partition holds either way.
+    One conditional, two moves, complementary halves of one partition
+    ("Reference - DECISION - Gauge Is Two Things (2026-08-05)"; a recorded
+    reading, not banked).
 
     Witness:  a finite model separating empirical-difference-making assignments
     (excluded as free fiat) from empirical-difference-free relabelings
@@ -375,8 +391,9 @@ def check_FD1_structural_completeness():
         "FD1-sc: an empirically-consequential quantity cannot be assigned by "
         "free representational fiat"
     )
-    # (iii) contrast: a relabeling that changes no measured signature (units,
-    #       chart, gauge) is a free coordinative convention -- preserved.
+    # (iii) contrast: a relabeling that changes no measured signature is a free
+    #       coordinative convention -- preserved.  The predicate is computed of
+    #       the move; no category carries it.
     convention_candidates = {"gauge_A": (3, 13), "gauge_B": (3, 13)}
     convention_is_free = len(set(convention_candidates.values())) == 1
     assert convention_is_free, (
@@ -390,8 +407,10 @@ def check_FD1_structural_completeness():
         "key_result": (
             "Structural completeness adopted: empirically-consequential quantities "
             "(3 distinct billing signatures 3/13, 13/19, 13/35) are NOT free fiat -- "
-            "fixed by structure; empirical-difference-free relabelings (units/chart/"
-            "gauge) ARE free conventions, preserved."
+            "fixed by structure; a relabeling that fixes NO empirical difference "
+            "is a coordinative convention, preserved.  Freeness is computed of the "
+            "individual move and is never inherited from the category it is filed "
+            "under."
         ),
         "summary": (
             "The FD1 structural-completeness clause, adopted as a named foundational "
