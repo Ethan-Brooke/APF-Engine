@@ -425,6 +425,19 @@ def check_T_delta_coarse_graining_monotonicity() -> Dict:
       a free coordinative convention (FD1-sc, check_FD1_structural_
       completeness); a bijective relabel preserves all counts, so kappa and
       Delta are exactly INVARIANT (not merely monotone). Verified.
+      SCOPE (the EDF criterion, ruled 2026-08-04): empirical-difference-
+      free is a COMPUTED predicate, not a grantable grade -- a move is EDF
+      iff it preserves the continuation profile of every admissible
+      configuration (the FD1-sc criterion; the rule is encoded in
+      check_FD1_structural_completeness's witness -- a given move's
+      preservation is computed per-site, as this clause's relabel loop
+      does). Bijective relabelings of
+      the finite anchor-label set pass by construction (all counts
+      preserved); this clause's [P] extends exactly that far. Carrier
+      re-presentations, sign/phase moves, and gauge actions are NOT
+      covered by this clause -- profile-preservation must be shown FIRST
+      (presentation_gauge_forcing.py P2; Reference - DECISION - The
+      Empirical-Difference-Free Criterion (2026-08-04)).
 
     CPTP CLAUSE -- honest type boundary, NO theorem (module docstring); OPEN.
 

@@ -40,6 +40,17 @@ notation over C, not an assumption, and FALSE over H (see the D = H fence).
       THE GAUGE ASSUMPTION LIVES HERE.  It is renamed, not removed: an opponent
       who holds the carrier itself to be physical keeps P1, P3, P4 and rejects
       the conclusion with a positive-definite non-tracial weight in hand.
+      CRITERION CROSS-REF (the EDF ruling, 2026-08-04): whether a carrier
+      re-presentation b -> bu is empirical-difference-free is a COMPUTED
+      question, not a grantable one -- the criterion is FD1-sc profile
+      preservation (the rule is encoded in the witness of
+      check_FD1_structural_completeness, foundation_inputs.py; a given
+      move's preservation must be computed per-site;
+      Reference - DECISION - The Empirical-Difference-Free Criterion
+      (2026-08-04)).  It is NOT ruled free: relative recombination-visible
+      phase carries record content, so P2 stays a claim about nature and no
+      grade moves.  Any future freeness argument for a fiber move shows
+      profile-preservation FIRST, then invokes Clause E (delta_calculus.py).
   P3  richness: the full-support load is among the admissible preparations.
       STATUS: a genuine assumption, load-bearing, NOT derived.  At rank one the
       sandwich is invariant for EVERY weight, so the whole content of the
