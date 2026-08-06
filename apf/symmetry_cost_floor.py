@@ -10,10 +10,34 @@ arithmetic throughout (Fraction, int).
 
 CARRIER NOTE (2026-08-01). The cost priced here lives on a FINITE CARRIER: a
 configuration over X = {0..n-1}, priced by the pairs it tells apart under its
-orbit partition. It is not a functional on a represented algebra, and no
-construction in the bank carries a value between the two carriers. Any route
-reading a score off this cost owes that transfer a definition first. Two
-independent lanes have now stopped at this same point -- the held
+orbit partition.
+
+CORRECTED 2026-08-06. The 2026-08-01 form of this note said that NO construction
+in the bank carries a value between the two carriers, and that TWO independent
+lanes had stopped at this point. Both figures are superseded and the universal
+negative is FALSE as of v24.3.465/.466. Four registered modules now carry a
+value across, in increasing strength: ``word_carrier_transfer`` (words priced by
+this cost induce a functional on the diagonal subalgebra; at the uniform floor
+it is exactly eps*Tr), ``carrier_elliptope`` (the residual freedom parametrized
+as the eps-scaled elliptope), ``md_super_nodiscount`` (the crossing restated in
+MD's vocabulary, MD_SUPER_NODISCOUNT consumed not derived), and
+``fd3_valuation_born_chain`` (the transfer itself, conditional on four named
+clauses). The route count terminating on the carrier gap is FOUR, not two,
+three or five: the selection-side route (``counted_ledger_underdetermination``)
+and the cost-side route (``carrier_elliptope``) are DUALS under the
+Hilbert-Schmidt pairing -- nullity on Sym(n) = n(n-1)/2 = the elliptope's free
+sector, exactly, verified n = 2,3,4,5 -- so they are one route in two
+vocabularies, not two.
+
+WHAT IS ACTUALLY OPEN, and it is a different question from the one this note
+used to pose. The gap is CROSSED BY DEFINITION at DEF_REALIZATION_SIGNED_CONTRACTION
+(``fd3_valuation_born_chain``), which names itself as the crossing and records
+its excluded alternatives. Independent transfers exist in quantity -- the graph
+Laplacian is PSD, carries the cost linearly, is GL(n)-invariant, injective on
+configurations and S_n-equivariant, and S |-> eps*|S| I/n reproduces the number
+just as well. So the open question is NOT existence. It is UNIQUENESS: whether
+any transfer is FORCED. An arbitrary map that reproduces a number discharges
+nothing. The prior lanes remain on record and their diagnosis stands -- the held
 ``atomic_equal_cost_frame`` module (whose own scope note observes that a
 projective ray in M_n(C) is a different carrier from this orbit partition, and
 that the type-transfer is undefined), and the readout-completeness burden of
@@ -565,8 +589,13 @@ _CHECKS = {
 
 
 def register(registry):
-    """Register both checks into a bank-style registry dict (research lane --
-    NOT auto-wired; this module is not yet listed in the manifest)."""
+    """Register both checks into a bank-style registry dict.
+
+    (Corrected 2026-08-06: this docstring said "research lane -- NOT auto-wired;
+    this module is not yet listed in the manifest". It IS listed, at
+    ``_module_manifest.py:54`` and ``:763``, and this module's own header records
+    it as registered since v24.3.437. Third site of a sentence corrected at two
+    other sites on 2026-08-01.)"""
     for nm, fn in _CHECKS.items():
         registry[nm] = fn
     return registry
