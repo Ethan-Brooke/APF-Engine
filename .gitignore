@@ -53,3 +53,13 @@ verify_full_2026-07-05.txt
 # The tools are tracked; their JSON is not. An unstamped census JSON
 # sitting in scripts/ reads as current to the next reader.
 scripts/*_census.json
+
+# closure_run.py is a DISPOSABLE runner, not an instrument. It exists because
+# check_T_ie_full_surface_input_inventory and check_RT_dag_chain need a native
+# single-process run that no sandbox can reach. Canonical copy lives in
+# __APF Library/Artifacts_2026-08-09_session/closure_run/. Ignored here so a
+# `git add -A` cannot sweep a throwaway runner or its transcripts into a commit.
+# RULED 2026-08-09: disposable, NOT a kept tool -- making it one re-opens the
+# corpus-hygiene instrument freeze, and nothing about it needs to be pinned.
+closure_run.py
+closure_run_*.log
