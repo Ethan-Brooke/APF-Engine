@@ -35,6 +35,23 @@ MINORs the fifth audit made a condition of banking:
   - in `three_resolutions_determine_the_operator`, the coverage counter
     counts members recovered EXACTLY, and its returned key now says so.
 
+A THIRD DEPARTURE FROM THE AUDITED RECORD, 2026-08-09, in the same shape.
+`check_L_carrier_fiber_over_a_fixed_counted_ledger` carries one leg the
+audited object did not: `complex_convention_matches_the_upstream_
+construction`.  MINOR-6 of the fifth audit recorded that the Q(i) conjugation
+convention was defended by exactly one hardcoded literal, and that the
+coordinated two-site edit flipping the constructor AND that literal together
+-- mutant M06 -- escaped all 60 legs of the audited object.  Re-run against
+this module in fresh per-mutant processes on 2026-08-09, it escaped all 30
+legs here; on that same pre-fix module the single-site flip (M05) was caught,
+by one leg, exactly as that leg's note said.  The new leg compares the constructor against the same
+object built by presentation_gauge_forcing's own `_mm` / `_dag` / `_tr` --
+the construction this check's own cross_ref already declared and did not
+execute -- so one side of the comparison now lives in a different file, and
+the two-site edit goes red.  Two edits that still escape it are named at the
+leg.  Leg count on that check moves 11 -> 12; no check is added or removed,
+no registry key changes, EXPECTED is untouched.
+
 BANKED at v24.3.468 (2026-08-05) by a dedicated wiring seat.  The three
 checks register under BARE-NAME registry keys per the D6 ruling and
 `HELD_OUT_OF_THE_BANK` below reads False.
@@ -502,6 +519,7 @@ _INV_LEDGER = (
 
 _INV_FIBER = (
     "complex_carrier_convention_is_tied_by_value",
+    "complex_convention_matches_the_upstream_construction",
     "all_members_share_the_counted_ledger",
     "off_diagonal_coordinates_round_trip",
     "complex_phase_members_are_distinct",
@@ -1010,10 +1028,89 @@ def check_L_carrier_fiber_over_a_fixed_counted_ledger():
          "entrywise_match": _entrywise,
          "off_diagonal_is_not_symmetric": _not_transpose,
          "note": "rho_01 = v_0 conj(v_1) = 3/35 - 4/35 i. The opposite "
-                 "convention returns the conjugate here and is caught by "
-                 "this leg and by no other: distinctness, disjointness from "
-                 "the real embedding, and reality of the diagonal all survive "
-                 "conjugation"})
+                 "convention returns the conjugate here. Distinctness, "
+                 "disjointness from the real embedding, and reality of the "
+                 "diagonal all survive conjugation, so no other leg in this "
+                 "module except `complex_convention_matches_the_upstream_"
+                 "construction` moves under it -- and that leg, not this one, "
+                 "is the one the TWO-site edit cannot re-align. Measured "
+                 "2026-08-09; no leg computes it"})
+
+    # ---- the same convention, read through the UPSTREAM construction -------
+    # The last cross_ref of this check DECLARES that the rho_b computed here
+    # is the object presentation_gauge_forcing computes as b b* / Tr(b b*)
+    # (:59-62).  This leg EXECUTES that declaration on the complex fiber: the
+    # same carrier v, rebuilt in that module's own (re, im) pair
+    # representation, multiplied by that module's own `_dag` and normalised by
+    # that module's own `_tr`, compared entrywise against `_got`.
+    #
+    # WHY IT EXISTS, stated exactly.  The pin above compares `_got` against a
+    # literal written in THIS file, so an edit that flips the constructor AND
+    # rewrites that literal moves both sides together and escapes.  That is
+    # mutant M06 of the audited object's round-three battery, recorded as
+    # MINOR-6 in `The Turning (parked)/narrowed_joint_horn_b_PARKED_2026-08-05/
+    # audit_and_fix_returns/AUDIT_RETURN_E_round3.md`, where it escaped all 60
+    # legs; it was re-run against this module on 2026-08-09 and escaped all 30
+    # here.  This leg puts one side of the comparison in a different file.
+    #
+    # WHAT IT DOES NOT COVER, stated exactly.  It relocates the convention; it
+    # does not make it unmovable.  Two classes of edit still escape it and are
+    # named here rather than defended against.
+    #   (i) A coordinated THREE-site edit of THIS file: the constructor, the
+    #       `_expect` literal, and either of the two sites that stand between
+    #       `_v` and the comparison -- the `_up_col` conversion (conjugate the
+    #       carrier on the way in) or the read itself (transpose the result on
+    #       the way out).  BOTH were executed on 2026-08-09 and BOTH escape.
+    #       Each of those third sites alone, without the other two, is caught.
+    #  (ii) Any edit that moves the convention inside
+    #       presentation_gauge_forcing, which moves the anchor rather than
+    #       this module.  One measurement on that, made 2026-08-09 and
+    #       recorded rather than re-run by any leg: deleting the conjugation
+    #       from that module's `_dag` reddens all three of its own banked
+    #       checks, so the anchor is held by an object audited separately.
+    # And the standing module-wide limit applies here as everywhere: this leg
+    # protects a VALUE, not a verdict.  Replacing the comparison below with a
+    # self-comparison escapes, as the leg-inventory note above says of every
+    # leg in this file.
+    _up_col = [[(x.re, x.im)] for x in _v]
+    _upstream_ok = False
+    _upstream_rho = None
+    try:
+        import apf.presentation_gauge_forcing as _pgf
+        _up_h = _pgf._mm(_up_col, _pgf._dag(_up_col))
+        _up_tr = _pgf._tr(_up_h)
+        if _up_tr[1] == 0 and _up_tr[0] != 0:
+            _upstream_rho = [[CQ(e[0] / _up_tr[0], e[1] / _up_tr[0])
+                              for e in row] for row in _up_h]
+            _upstream_ok = all(_upstream_rho[i][j] == _got[i][j]
+                               for i in range(n) for j in range(n))
+    except Exception as _exc:                      # reported, never swallowed
+        _upstream_rho = "upstream read failed: %r" % (_exc,)
+    # anti-vacuity: a comparison between two REAL matrices cannot see a
+    # conjugation, so the leg also requires the off-diagonal entry it compares
+    # to carry a non-zero imaginary part.
+    _upstream_is_complex = (_upstream_rho is not None
+                            and not isinstance(_upstream_rho, str)
+                            and _upstream_rho[0][1].im != 0)
+    legs["complex_convention_matches_the_upstream_construction"] = (
+        _upstream_ok and _upstream_is_complex,
+        {"upstream": "presentation_gauge_forcing._mm(v, _dag(v)) / _tr, "
+                     "the b b* / Tr(b b*) of :59-62",
+         "upstream_rho": ([[str(x) for x in row] for row in _upstream_rho]
+                          if not isinstance(_upstream_rho, (str, type(None)))
+                          else _upstream_rho),
+         "agrees_entrywise_with_the_local_constructor": _upstream_ok,
+         "compared_entry_has_non_zero_imaginary_part": _upstream_is_complex,
+         "note": "the local constructor and the upstream construction return "
+                 "the same nine entries; the `upstream_rho` field above is "
+                 "the read, and no entry is quoted in this note. "
+                 "This leg reads the convention through code in another "
+                 "module, so the two-site edit that flips the constructor and "
+                 "its literal together no longer moves both sides. It does "
+                 "NOT establish that the convention is forced: b b* and its "
+                 "conjugate are both Hermitian rank-one objects with this "
+                 "diagonal, and which one is named rho_b is fixed upstream, "
+                 "not derived here"})
 
     # ---- the factoring computation -----------------------------------------
     keys = sorted(rhos) + sorted(cq_rhos)
