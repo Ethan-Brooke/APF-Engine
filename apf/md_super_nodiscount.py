@@ -721,7 +721,20 @@ def check_L_premise_inventory_set_exact():
     return _result("check_L_premise_inventory_set_exact", legs, fails,
                    {"consumed": len(PREMISES_CONSUMED),
                     "not_consumed": len(PREMISES_NOT_CONSUMED),
-                    "residual": len(RESIDUAL_PREMISES)})
+                    "residual": len(RESIDUAL_PREMISES),
+                    "what_this_check_establishes":
+                        "These legs read name lists declared in this "
+                        "file and literal copies of them written in the "
+                        "same file. PREMISES_CONSUMED, read by "
+                        "consumed_set_exact, forbidden_absent_and_disjoint "
+                        "and residual_named_and_inside_consumed, is built "
+                        "from the premise set imported from "
+                        "carrier_elliptope, and consumed_set_exact reads "
+                        "that imported set directly as well. None "
+                        "establishes that a "
+                        "listed premise is consumed, that an unlisted one "
+                        "is not, or that any name denotes anything, and a "
+                        "rename carried on every copy is invisible here."})
 
 # ---------------------------------------------------------------------------
 

@@ -192,7 +192,6 @@ No bank surface is touched.
 
 from fractions import Fraction as F
 from itertools import combinations
-from math import isqrt
 from typing import Dict, List, Tuple
 
 PHYSICAL_PREMISES_CERTIFIED = False
@@ -286,14 +285,6 @@ def _rank(rows):
         if r == len(M):
             break
     return r
-
-
-def _exact_sqrt(q: F):
-    """Exact rational square root, or None."""
-    if q < 0:
-        return None
-    r = F(isqrt(q.numerator), isqrt(q.denominator))
-    return r if r * r == q else None
 
 
 # ------------------------------------------------- complex rationals over Q(i)
@@ -497,7 +488,6 @@ _INV_LEDGER = (
     "three_resolutions_determine_the_operator",
     "three_real_resolutions_return_only_the_real_part",
     "three_resolution_premise_supplies_the_nullity_as_free_input",
-    "exact_root_predicate_negative_control",
     "fail_control_non_psd_operator_rejected",
     "fail_control_wrong_diagonal_rejected",
     "positivity_predicate_negative_control",
@@ -851,8 +841,10 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
     legs["fail_control_wrong_diagonal_rejected"] = (
         [wrong_diag[i][i] for i in range(n)] != list(a),
         {"planted": "diag(1/2, 1/4, 1/4)", "ledger": [str(x) for x in a],
-         "note": "a constructed operator off the counted ledger is rejected "
-                 "by the base membership test"})
+         "note": "COMPUTED HERE: the planted diagonal, as a list, is not "
+                 "equal to the counted ledger. This leg evaluates that "
+                 "inequality; no membership or admission apparatus is "
+                 "invoked by it"})
     big_off = _X_from_off(a, (F(1), F(0), F(0)))
     legs["fail_control_non_psd_operator_rejected"] = (
         not _psd(big_off),
@@ -860,7 +852,7 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
          "two_by_two_minor": str(a[0] * a[1] - F(1)),
          "psd": _psd(big_off)})
 
-    # ---- controls on the two predicates these checks run through ----------
+    # ---- control on the positivity predicate these checks run through -----
     leading_only_pass = [[F(0), F(0), F(0)], [F(0), F(-1), F(0)],
                          [F(0), F(0), F(0)]]
     leading_minors = [_det([[leading_only_pass[i][j] for j in range(k)]
@@ -875,14 +867,6 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
                  "used here ranges over ALL principal minors and returns "
                  "False. The rank-one operators these checks lean on are "
                  "singular, which is exactly where the two tests differ"})
-    legs["exact_root_predicate_negative_control"] = (
-        _exact_sqrt(F(4, 9)) == F(2, 3) and _exact_sqrt(F(1, 14)) is None
-        and _exact_sqrt(F(2)) is None,
-        {"square_input": "4/9 -> 2/3",
-         "non_square_inputs": ["1/14 -> None", "2 -> None"],
-         "note": "the ledger entries themselves are not rational squares here "
-                 "-- only their pairwise products are -- so the predicate has "
-                 "to return None rather than a floor"})
 
     key = (
         "READING AN OUTCOME LAW OFF THE COMMIT-RECORD RESOLUTION DETERMINES "
@@ -911,8 +895,8 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
         "adding exactly %d to the rank where the one-basis nullity is %d -- "
         "the same number by arithmetic, not two measurements -- on an input "
         "that takes %d distinct values across the real fiber sharing one "
-        "ledger. It carries no forbidden NAME; what it carries is the joint "
-        "itself, as free input. THIS RECORD DOES NOT SUPPORT 'the joint is "
+        "ledger. What it carries is the joint itself, as free input. THIS "
+        "RECORD DOES NOT SUPPORT 'the joint is "
         "closable P1-free'."
     ) % (gdet, rk, len(B) - rk, len(herm) - rkh, len(rhos),
          len(set(seps.values())), ranks[3], len(B), _real_verified,
@@ -932,7 +916,8 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
          "fiber_reads_distinct": len(set(reads.values())),
          "off_diagonal_effect_values_distinct": len(set(seps.values()))},
         legs, _INV_LEDGER,
-        ("an operator off the counted ledger must be rejected",
+        ("an operator whose diagonal differs from the counted ledger must "
+         "be separated from it by value",
          "an operator with an oversized off-diagonal must fail positivity",
          "an off-diagonal effect must separate fiber members",
          "the three-resolution recovery must NOT return rho_b on the two "
@@ -1077,8 +1062,10 @@ def check_L_carrier_fiber_over_a_fixed_counted_ledger():
         {"carrier": "(1, 1, 1)^T",
          "its_ledger": [str(r_off[i][i]) for i in range(n)],
          "fixture_ledger": [str(x) for x in a],
-         "note": "a constructed carrier with a different counted ledger is "
-                 "not admitted to the fiber"})
+         "note": "COMPUTED HERE: the diagonal of the operator built from "
+                 "this carrier, as a list, is not equal to the fixture "
+                 "ledger. This leg evaluates that inequality; no "
+                 "membership or admission apparatus is invoked by it"})
 
     # ---- the coordinate map is an isomorphism, verified by value ----------
     round_trip = all(_X_from_off(a, _off_of(r)) == r for r in rhos.values())
@@ -1128,13 +1115,15 @@ def check_L_carrier_fiber_over_a_fixed_counted_ledger():
         "consumed",
         3, key,
         {"generic_ledger": [str(x) for x in a],
-         "generic_real_fiber": 7, "generic_complex_members": 2,
+         "generic_real_fiber": len(set(real_offs.values())),
+         "generic_complex_members": len(set(cq_offs.values())),
          "generic_total_fiber": len(total),
          "flat_ledger": [str(x) for x in af], "flat_fiber": len(rhof),
          "rho_b_factors_through_counted_structure": rho_factors,
          "diagonal_factors_through_counted_structure": diag_factors},
         legs, _INV_FIBER,
-        ("a carrier with a different counted ledger must be rejected",
+        ("a carrier whose operator diagonal differs from the counted "
+         "ledger must be separated from it by value",
          "the factoring test must return True on the diagonal control",),
         ("born_at_ties.L_selection_ledger_completeness (clause (c): phases are "
          "not counted)",

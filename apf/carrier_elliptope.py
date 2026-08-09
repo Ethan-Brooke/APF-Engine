@@ -56,9 +56,16 @@ on the SYMMETRIC SLICE of the carrier-consistent family:
       instance (n = 3, 4, set sizes 2-3), every binding constraint
       comes from a set whose superposition is RANK-DEFICIENT -- two
       separators sharing a source index, e.g. x = E_01 + E_02 =
-      |0>(<1| + <2|), rank one. Under the readings "independent =
-      rank(x_S) = |S|" or "pairwise vertex-disjoint" the constraint set
-      is EMPTY (computed: zero rows at n = 3, 4) and the k-resolution
+      |0>(<1| + <2|), rank one. The SOURCE index is itself read by a
+      leg: every coefficient of the system equals twice the number of
+      separators of S sharing a source index at that unknown, on every
+      row (15 at n = 3, 124 at n = 4), computed by a second path (in
+      this file) and tied to the system builder entrywise, with the
+      target-sharing count as the discriminating control -- it differs
+      from the source-sharing count on every row.
+      Under the readings "independent = rank(x_S) = |S|" or "pairwise
+      vertex-disjoint" the constraint set is EMPTY (computed: zero rows
+      at n = 3, 4) and the k-resolution
       identity is satisfied by EVERY point of the elliptope, selecting
       nothing. Admitted-set counts for both readings are computed and
       pinned as a leg: rank-|S| admits (9, 2) sets at n = 3 and
@@ -287,6 +294,7 @@ EXPECTED_LEGS = {
     "check_L_missing_lemma_is_center_selection": [
         "admitted_set_counts_pinned_both_readings",
         "antisymmetric_sector_untouched",
+        "binding_coefficients_read_the_source_slot",
         "constraint_system_kernel_zero_n3_n4",
         "independence_fork_rank_deficient_only",
         "k_resolution_diagonal_part_automatic",
@@ -295,6 +303,7 @@ EXPECTED_LEGS = {
         "extreme_points_have_det_zero",
         "n2_closed_form_exact",
         "n3_grid_det_max_only_at_center",
+        "positivity_predicate_negative_control",
         "psd_filter_discriminates",
         "psd_test_rejects_positive_det_negative_minor",
         "second_unit_degree_three_scaling",
@@ -410,6 +419,36 @@ def check_L_missing_lemma_is_center_selection():
         all(tr == k for tr, k in systems[n]["traces"])
         and len(systems[n]["traces"]) > 0
         for n in (3, 4))
+    # THE LOAD SLOT, READ.  x_S^* x_S couples two separators of S exactly
+    # when they share a SOURCE index; x_S x_S^* would couple those sharing
+    # a TARGET.  Every coefficient of the system built above is predicted
+    # here from the source-sharing count by a path independent of the
+    # builder and tied to it entrywise; the target-sharing prediction is
+    # the discriminating control and every row is required to separate the
+    # two.  This is the leg that reads the SOURCE-index half of the
+    # E3 (iii) fork sentence; the rank-deficiency half is read by
+    # independence_fork_rank_deficient_only.
+    # SCOPE: both paths live in this file, so an edit carried on the
+    # builder AND on the prediction below is invisible here.  No module
+    # downstream consumes this system, so that coordinated edit is
+    # invisible to the lane as well.
+    slot_ok, slot_rows, slot_differ, slot_counts = True, 0, 0, []
+    for n in (3, 4):
+        rows, _, unknowns = _e3_system(n, eps, admit=lambda S: True)
+        slot_counts.append(len(rows))
+        for coeff, _, S, _ in rows:
+            src_pred = [F(2 * sum(1 for i in range(n)
+                                  if (i, p) in S and (i, q) in S))
+                        for (p, q) in unknowns]
+            tgt_pred = [F(2 * sum(1 for j in range(n)
+                                  if (p, j) in S and (q, j) in S))
+                        for (p, q) in unknowns]
+            slot_ok = slot_ok and coeff == src_pred
+            slot_rows += 1
+            slot_differ += 1 if src_pred != tgt_pred else 0
+    legs["binding_coefficients_read_the_source_slot"] = (
+        slot_ok and slot_counts == [15, 124]
+        and slot_differ == slot_rows)
     # antisymmetric coefficients of every binding row vanish identically
     anti = []
     for n in (3, 4):
@@ -431,6 +470,8 @@ def check_L_missing_lemma_is_center_selection():
             for n in (3, 4)}
     return _result("check_L_missing_lemma_is_center_selection", legs, fails,
                    {"systems": ksys,
+                    "rows_separating_source_from_target_slot":
+                        [slot_differ, slot_rows],
                     "admitted_counts_rank_reading": {str(n): rk_counts[n]
                                                      for n in (3, 4)},
                     "admitted_counts_vertex_disjoint": {str(n): vd_counts[n]
@@ -472,6 +513,21 @@ def check_T_trace_is_determinant_maximal():
         and all(d <= _det_bound(u2) for _, d in dets2)
         and at_max2 == [(F(0), F(0), F(0))]
         and max(d for _, d in dets2) == 27 * max(d for _, d in dets))
+    # NEGATIVE CONTROL ON THE POSITIVITY PREDICATE (shape taken from the
+    # leg positivity_predicate_negative_control in
+    # counted_ledger_underdetermination).  Every LEADING principal
+    # minor of diag(0, -1, 0) is zero, so a leading-minor test admits it;
+    # psd_by_minors ranges over ALL principal minors and returns False.
+    # The rank-one points this check leans on are singular, which is
+    # exactly where the two tests differ.
+    lead_pass = [[F(0), F(0), F(0)], [F(0), F(-1), F(0)],
+                 [F(0), F(0), F(0)]]
+    lead_minors = [det_exact([[lead_pass[i][j] for j in range(k)]
+                              for i in range(k)]) for k in range(1, 4)]
+    legs["positivity_predicate_negative_control"] = (
+        len(lead_minors) == 3 and all(m == 0 for m in lead_minors)
+        and psd_by_minors(lead_pass) is False
+        and psd_by_minors(sym_from_offdiag(3, eps, {})) is True)
     Wc = sym_from_offdiag(3, eps, {(0, 1): 2 * eps, (0, 2): 2 * eps,
                                    (1, 2): 2 * eps})
     m2 = det_exact([[Wc[0][0], Wc[0][1]], [Wc[1][0], Wc[1][1]]])

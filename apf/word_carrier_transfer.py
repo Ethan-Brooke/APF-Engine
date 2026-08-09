@@ -110,7 +110,12 @@ and is named accordingly; (c1) diagonal trace recovery at the uniform
 floor; (c2) full trace recovery; (d) declared-premise independence --
 set-exact against FORBIDDEN over a known catalogue, GRADING THE
 DECLARATION, and satisfiable by declaring nothing (the two control
-fixtures with empty declarations document this in the table). The content
+fixtures with empty declarations document this in the table).
+KNOWN_PREMISES is built as a union over FORBIDDEN_PREMISES, and no
+forbidden name appears in the other two parts of that union, so a name
+deleted from FORBIDDEN alone leaves the catalogue too and (d) returns
+False on the same fixture either way: the table reads "forbidden" and
+"not in the catalogue" alike. The content
 of (b) and (d) is that the declarations are auditable data, not that the
 referee verifies them. Fixtures: the Lambda^2 embedding, the Laplacian
 map, the trivial scalar map, the stipulated trace, a broken-additivity
@@ -335,7 +340,7 @@ EXPECTED_LEGS = {
     "check_L_banked_cost_probe": [
         "additive_on_disjoint_singletons", "callee_module_attribute_and_value_tie",
         "control_duplicate_entry_double_bills",
-        "control_probe_distinguishes_md_mode",
+        "control_md_mode_sign_follows_straddling_class",
         "control_probe_sees_weight_change",
         "singleton_weights_equal", "weight_is_positive",
     ],
@@ -420,9 +425,22 @@ def check_L_banked_cost_probe():
         for a, b in samples)
     legs["control_duplicate_entry_double_bills"] = (
         cc([(0, 1), (0, 1)], F(1), "positive") == 2 * w01)
-    legs["control_probe_distinguishes_md_mode"] = (
-        cc([(1, 2)], F(1), "positive") == w01
-        and cc([(1, 2)], F(1), "cancelling") == -w01)
+    # The (1, 2) mode split is enforced UPSTREAM by a raise inside
+    # probed_eps, which this check calls on its first line; a leg
+    # repeating that predicate could only ever be True.  Read here
+    # instead, on six pairs that predicate does not cover: three
+    # straddling pairs other than (1, 2), on which the two modes differ
+    # in sign, and three non-straddling pairs, on which they agree.
+    straddling = [(0, 2), (1, 3), (0, 3)]
+    non_straddling = [(0, 1), (2, 3), (2, 4)]
+    legs["control_md_mode_sign_follows_straddling_class"] = (
+        len(straddling) == 3 and len(non_straddling) == 3
+        and all(cc([p], F(1), "positive") == w01
+                and cc([p], F(1), "cancelling") == -w01
+                for p in straddling)
+        and all(cc([p], F(1), "positive") == w01
+                and cc([p], F(1), "cancelling") == w01
+                for p in non_straddling))
     legs["control_probe_sees_weight_change"] = (
         cc([(0, 1)], F(2), "positive") == 2 * w01
         and cc([(0, 1)], F(3), "positive") == 3 * w01)

@@ -84,9 +84,13 @@ The exhaustive protocol argmin table at n = 3 equals the closed form on
 all 834 presentations; at n = 4 minimal protocol SIZE equals support on
 all 4992 (reachability sets at sizes 1 and 2, attainment at 3).
 
-C2 -- MD-SUPER DERIVED, WITH EQUALITY
-(check_T_md_super_derived_with_equality).  For x a signed combination
-of k distinct separators: supp(x) = k (distinct ordered pairs are
+C2 -- MD-SUPER, WITH EQUALITY, UNDER COST_REPRESENTATION_ON_LOADS
+(check_T_md_super_derived_with_equality).  The derivation step is the
+definitional identification phi(x^T x) := c(x): it is consumed, not
+derived.  The registry key does not carry that qualifier; the returned
+record does, at ``derivation_step`` and in ``conditional_on``.
+For x a signed combination of k distinct separators:
+supp(x) = k (distinct ordered pairs are
 distinct cells), so c(x) = k*eps by C1; under
 COST_REPRESENTATION_ON_LOADS, phi(x^T x) = c(x) = k*eps >= k*eps -- the
 no-discount inequality holds WITH EQUALITY, as a theorem of the full
@@ -765,7 +769,19 @@ def check_T_md_super_derived_with_equality():
                    {"instance_counts": {f"n{n}_k{k}": c
                                         for (n, k), c in counts.items()},
                     "weak_form_violations": viol,
-                    "weak_form_slack_nonzero": slack_nonzero})
+                    "weak_form_slack_nonzero": slack_nonzero,
+                    "derivation_step":
+                        "phi_load := fd3_price -- COST_REPRESENTATION_ON_"
+                        "LOADS, a definitional identification, consumed "
+                        "and not derived. The legs "
+                        "cost_representation_phi_equals_k_eps_with_"
+                        "equality and derived_weak_form_zero_violations_"
+                        "zero_slack restate C1's closed form through that "
+                        "identification; the computed content outside it "
+                        "is the closed form itself and the set-exact "
+                        "value tie to the banked md_super rows. The "
+                        "registry key T_md_super_derived_with_equality is "
+                        "not qualified; this field is."})
 
 # ---------------------------------------------------------------------------
 # C3
@@ -841,7 +857,9 @@ def check_T_center_forced_born_pricing():
         # modules: equality_system's own coeff rows for the
         # ((0,1),(0,2))/(1,+-1) sets equal the sibling's
         # nodiscount_system coeff tuples for the same (S, signs) --
-        # both spell g_ij + g_ji, so the factor of 2 is pinned here
+        # the coefficient VALUES are tied, entrywise.  The SPELLING is
+        # not: g is symmetric, so g_ij + g_ji and 2*g_ij are the same
+        # value and this tie cannot separate them.
         sib_by_key = {(S, signs): dict(zip(unk_sib, cf))
                       for cf, _, S, signs in rows}
         unk_here = systems[n][3]
@@ -1103,7 +1121,33 @@ def check_L_residual_ledger_retirement():
                    {"consumed": len(PREMISES_CONSUMED),
                     "not_consumed": len(PREMISES_NOT_CONSUMED),
                     "derived_here": sorted(DERIVED_HERE),
-                    "conditional_on": list(CONDITIONAL_ON)})
+                    "conditional_on": list(CONDITIONAL_ON),
+                    "what_this_check_establishes":
+                        "Five legs -- consumed_set_exact, "
+                        "not_consumed_set_exact_with_derived_here_marker, "
+                        "conditional_on_carries_four_clauses, "
+                        "consumed_disjoint_from_not_consumed, "
+                        "linearity_residual_carried_not_discharged -- "
+                        "read name lists declared in this file and "
+                        "literal copies of them written in the same file. "
+                        "PREMISES_CONSUMED, read by consumed_set_exact, "
+                        "not_consumed_set_exact_with_derived_here_marker, "
+                        "consumed_disjoint_from_not_consumed and "
+                        "linearity_residual_carried_not_discharged, is "
+                        "built from the premise sets imported from "
+                        "word_carrier_transfer and carrier_elliptope; "
+                        "consumed_set_exact reads both of those imported "
+                        "sets directly and "
+                        "linearity_residual_carried_not_discharged reads "
+                        "the word_carrier_transfer one. None establishes "
+                        "what a name denotes, and a rename carried on "
+                        "every copy is invisible to them. Two legs "
+                        "execute a check and read its emitted record back "
+                        "by value: retired_name_cross_checked_against_trio "
+                        "executes the md_super sibling's check and reads "
+                        "its conditional_on, and "
+                        "own_emitted_record_carries_conditional_on emits a "
+                        "fresh record here and reads its conditional_on."})
 
 # ---------------------------------------------------------------------------
 # C6
