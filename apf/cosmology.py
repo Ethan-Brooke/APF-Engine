@@ -1224,16 +1224,16 @@ def check_T_config_demand_register_split_bank_respected():
           until re-dispositioned by hand:
             tier 0 (STRUCTURAL, audit REQUIRED 4 -- the answer to the
                     demonstrated vocabulary-blindness of tiers 1-3):
-                    the BROAD-pass candidate FILE SET -- files matching
-                    (Gram|demand|off-diag|overlap) AND vacuum vocab
-                    (C_vacuum|C_vac|V_global|vacuum|literal 42) at file
-                    level -- is pinned by enumeration (61 files at scan
-                    time 2026-07-02). NEW ENTRANTS FAIL this check
-                    until dispositioned. vacuum_label_code.py was in
-                    this set from its first appearance -- this tier
-                    would have flagged it with no bespoke pre-naming.
-                    Drops are allowed silently (a dropped file only
-                    reduces exposure; re-pin at next touch);
+                    the BROAD-pass candidate FILE SET -- files whose
+                    text carries both a demand/Gram-class pairwise token
+                    and vacuum-sector vocabulary -- is pinned by
+                    enumeration in BROAD_EXPECTED; the predicate is
+                    pat_broad / pat_vac42 and its blind class is stated
+                    there. A file entering the live set but not the pin
+                    FAILS until dispositioned; vacuum_label_code.py
+                    entered this set on first appearance, which this
+                    tier would have flagged with no pre-naming. Drops
+                    are silent (re-pin at next touch);
             tier 1: the clause-(B) triple co-occurrence map (exact
                     per-file hit counts; the .321 count-pin discipline
                     -- editing a dispositioned docstring re-fires the
@@ -1562,24 +1562,100 @@ def check_T_config_demand_register_split_bank_respected():
     # Clause C -- drift-net tiers 0-4
     # =================================================================
     # tier 0 (STRUCTURAL, audit REQUIRED 4): the broad-pass candidate file
-    # set, pinned by enumeration at scan time 2026-07-02 (61 files). New
+    # set, pinned by enumeration at scan time; the set below is that
+    # enumeration as re-pinned 2026-08-09 (61 files at the original
+    # 2026-07-02 pin, 72 immediately before the re-pin). New
     # entrants FAIL until dispositioned; drops are allowed silently (a
     # dropped file only reduces exposure; re-pin at next touch). This tier
     # catches the demonstrated failure mode of tiers 1-3: a module (e.g.
     # vacuum_label_code.py) whose demand-adjacent text sits outside every
     # +-2-line window enters the broad set on arrival with no bespoke
     # pre-naming required.
+    # -----------------------------------------------------------------
+    # RE-PINNED 2026-08-09 -- THE CORNER-ENTRY TOKEN IS NOW IDENTIFIER-BOUNDED,
+    # AND THIS SET IS THE ENUMERATION UNDER THAT BOUND.
+    #
+    # What the predicate below computes: a file enters the candidate set when
+    # its source carries BOTH a corner-entry/pairwise token AND a vacuum-sector
+    # token. The corner-entry token was previously unbounded, so it also
+    # matched as a SUBSTRING inside ordinary English words that end in the
+    # same four letters -- 'program', 'diagram', 'histogram', 'ideogram',
+    # 'parallelogram' and their inflections. Those hosts are not the policed
+    # vocabulary; they are unrelated words that happen to share a suffix.
+    #
+    # Counts, measured on this package at the re-pin: 72 files enter under the
+    # unbounded form and 48 under the bounded form, so 24 rows that had been in
+    # this set owed their membership to a shared suffix and to nothing else.
+    # Each of those 24 was measured individually: none of them carries any of
+    # the three other candidate tokens even once, so for each one the suffix
+    # hit was the whole of its membership. The bound and the re-pin are ONE
+    # change: a bounded predicate read against the 72-row set would leave 24
+    # rows matching no file, and a row matching no file constrains nothing --
+    # if such a file later acquires a real surface, it is already named here
+    # and the comparison below returns it as expected rather than as new.
+    #
+    # The 24 rows removed here, with the host that had been carrying them:
+    #   charged_lepton_qed_real_adapter.py -- program x1
+    #   closed_world_completeness.py -- programs x1
+    #   crystal.py -- Programmatic x1
+    #   crystal_metrics.py -- histogram x6
+    #   kappa_int_bounds.py -- program x1
+    #   lambda_absolute.py -- Program x1
+    #   phase_14d3_completions.py -- PROGRAM x1, diagram x1, program x1
+    #   photon_masslessness.py -- program x3
+    #   pi_gammagamma_2l_moment_native.py -- diagram x6, diagrams x3, DIAGRAM x1, Diagram x1
+    #   plec.py -- program x2
+    #   s_parameter_pure_gauge_constant_native.py -- diagram x11, diagrams x3
+    #   session_nnlo.py -- ideogram x1
+    #   subspace_functors.py -- diagram x2
+    #   unification_three_levels.py -- diagram x4, Diagram x3
+    #   vacuum_o1_fork.py -- program x1
+    #   validation.py -- ideogram x1
+    #   w_trace_denner_diagram_coefficient_table_closeout.py -- diagram x14, DiagramFamily x10, DIAGRAM x7
+    #   w_trace_denner_formula_import_native_assembly.py -- DIAGRAM x3, diagram x1
+    #   w_trace_diagram_family_numeric_evaluator_import.py -- diagram x4, DIAGRAM x3
+    #   w_trace_dizet_acquisition_instrumentation.py -- program x6
+    #   w_trace_native_two_loop_phase2_missing_terms_source_and_derivation_plan.py -- diagram x6, diagrams x4, program x3, DIAGRAM x2
+    #   w_trace_native_two_loop_phase2_p_plus_ibp_tool_admission_policy.py -- diagram x2
+    #   w_trace_native_two_loop_phase2_zfitter_comparator_guard.py -- program x1
+    #   w_trace_tensor_coefficient_map_scaffold.py -- diagram x7, DIAGRAM x5, diagrams x1
+    #
+    # Two of the 24 ('session_nnlo.py', 'validation.py') had been given
+    # written dispositions on 2026-08-08 that say, in the comment text itself,
+    # that the hit is a substring inside a longer word. Those dispositions
+    # retire with the rows: the bound now answers at the predicate what the
+    # prose was answering by hand.
+    #
+    # On the spelling of the bound: it is written with character classes
+    # rather than with \b, because Python counts '_' as a word character, so a
+    # \b-delimited form does not match the token when an underscore sits beside
+    # it -- which is the house identifier form, the policed lemma name among
+    # them. That spelling was measured on this package and removes one further
+    # file ('carrier_trichotomy.py') beyond the 24 above.
+    #
+    # Tier discipline is unchanged, and its direction is worth stating: the
+    # comparison below is ONE-SIDED. It returns files that are in the live set
+    # and not in this pin; it does not return the converse, so a row here that
+    # matches no file is not reported, and a change that narrows the predicate
+    # is not reported either. Drops are allowed silently and are re-pinned at
+    # the next touch.
+    # (Token-avoidance convention applies to this comment.)
+    # -----------------------------------------------------------------
     BROAD_EXPECTED = frozenset({
-        '_module_manifest.py', 'aboutness_occupancy_section.py',  # disp 2026-07-18 (.406/.427): occupancy-SSB vacuum prose, no demand-pairwise surface
+        '_module_manifest.py',
+        'aboutness_occupancy_section.py',  # disp 2026-07-18 (.406/.427): occupancy-SSB vacuum prose, no demand-pairwise surface
         'acc_reading_selection.py',
-        'admissible_representation_stack.py', 'bank.py',
-        'base_fiber_allocation.py', 'carrier_trichotomy.py',  # disp 2026-07-18 (.414): carrier trichotomy prose, no demand-pairwise surface
+        'admissible_representation_stack.py',
+        'bank.py',
+        'base_fiber_allocation.py',
         'carrier_elliptope.py',  # dispositioned 2026-08-08 (.465): its corner-entry-token hits are the carrier-transfer lane's own hollow-sector vocabulary -- the represented algebra's non-diagonal freedom, parametrized as the eps-scaled elliptope -- and the adjacent literal is an admitted-set count in that lane's own carrier-side combinatorics. A cost-carrier object, not a register reader/writer of the policed kind. (Token-avoidance convention applies to this comment.)
-        'charged_lepton_qed_real_adapter.py',
-        'closed_world_completeness.py', 'core.py', 'cosmology.py',
+        'carrier_trichotomy.py',  # disp 2026-07-18 (.414): carrier trichotomy prose, no demand-pairwise surface
         'composite_only_direction.py',  # dispositioned 2026-08-08 (.463): its corner-entry-token hits are the primitive self-test battery's leg labels plus the docstring and comment prose describing that battery, all naming corner entries of small real matrices in real-bipartite-GPT representation theory; the remaining hits are ordinary English usage -- some inside a longer word as a SUBSTRING, one the plain English verb -- and are not the policed vocabulary at all. None carries a vacuum-unit index, so none is a register reader/writer of the policed kind. The adjacent literal is a k-copy effect seed. (Token-avoidance convention applies to this comment.)
-        'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
-        'descent_obstruction_calculus.py', 'ec_inventory_reading.py',  # disp 2026-07-18 (.423): EC type-inventory reading prose, no demand-pairwise surface
+        'core.py',
+        'cosmology.py',
+        'crystal_ledger.py',
+        'descent_obstruction_calculus.py',
+        'ec_inventory_reading.py',  # disp 2026-07-18 (.423): EC type-inventory reading prose, no demand-pairwise surface
         'ew_branch_incidence_density.py',
         'extensions.py',
         'fencea_hinge_trichotomy.py',  # v24.3.396-landing disposition (2026-07-04, the full-surface census banking leg; net-0 caught the concurrent .389 module, the .374/.373 landing-lane pattern): its corner-entry-token hits are correlation-matrix PLACEMENT prose in the hinge-trichotomy case analysis (case (c)), the vacuum-adjacent vocab is the d_eff = 60+42 capacity arithmetic -- no register reader/writer of the policed kind. (This comment deliberately avoids the bare tokens it polices.)
@@ -1587,8 +1663,11 @@ def check_T_config_demand_register_split_bank_respected():
         'formal_kernel.py',  # v24.3.396-landing disposition (2026-07-04, same leg; net-0 caught the .391 Maschke landing): its bilinear-form-matrix token hits are check_L_maschke_semisimplicity_witness's trace-form nondegeneracy witness on the group algebras Q[Z_4]/Q[S_3] [P_math] -- representation-theory content, not a register object of the policed kind; the vacuum-adjacent vocab pre-exists (the .326 slot-no-go surface, see the which-v map). (Same token-avoidance convention.)
         'foundation_inputs.py',
         'gamma_c_carrier_program.py',  # v24.3.374-landing disposition (2026-07-04): the concurrent .375 gamma_C-program module caught live by net-0 at the .374 landing (with the which-v clause-(b) catch, same scan; .360/.373 precedent -- the landing lane dispositions the concurrent module); carrier-fork/no-trace instruments over Paper 9 conventions, no vacuum-42 register reader/writer
-        'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
-        'generations.py', 'gravity.py',
+        'gauge.py',
+        'gauge_invariant_record.py',
+        'gauge_quotient_ledger.py',
+        'generations.py',
+        'gravity.py',
         # RE-PINNED 2026-08-08: the row for ie_atlas_verdict_pin.py is
         # REMOVED from this tier. That file still carries the broad
         # corner-entry tokens, but no longer carries this tier's
@@ -1599,34 +1678,69 @@ def check_T_config_demand_register_split_bank_respected():
         'ie_onboarding_registry.py',
         'ie_wall_shadow_census.py',  # v24.3.401-landing disposition (2026-07-05): the wall-shadow census pins vacuum-adjacent verdict-pin row ids (quantum:vacuum_* / strong:vacuum_realization_triptych) + ICL_vac shadow prose; instrument pins only, no demand read/write; net-0 broad-set entry
         'interface_atlas.py',
-        'interface_atlas_v02_inputs.py', 'kappa_int_bounds.py',
-        'lambda_absolute.py', 'majorana.py', 'operational_completeness.py',
-        'phase_14d3_completions.py', 'photon_masslessness.py',
-        'pi_gammagamma_2l_moment_native.py', 'plec.py',
-        'quantum_operator_derivation.py', 'recruitment.py', 'red_team.py',
+        'interface_atlas_v02_inputs.py',
+        'majorana.py',
+        'operational_completeness.py',
+        'quantum_operator_derivation.py',
+        'recruitment.py',
+        'red_team.py',
         'representation_descent_kernel_adversarial_audit.py',
-        's_parameter_pure_gauge_constant_native.py', 'session_delta_pmns.py',
-        'session_nnlo.py',  # dispositioned 2026-08-08: its corner-entry-token hit is a SUBSTRING inside PDG's name for its own averaging plot, in the scale-factor prose; the adjacent hit is the hadronic-polarization input line in the module header. No register reader/writer of the policed kind.
-        'sin2theta_w_OS_capacity_counting.py', 'subspace_functors.py',
-        'supplements.py', 'thooft_anomaly_matching_chiral.py',
-        'unification.py', 'unification_three_levels.py',
-        'universality_forcing.py', 'vacuum_label_code.py',
-        'vacuum_o1_fork.py',
+        'session_delta_pmns.py',
+        'sin2theta_w_OS_capacity_counting.py',
+        'supplements.py',
+        'thooft_anomaly_matching_chiral.py',
+        'unification.py',
+        'universality_forcing.py',
+        'vacuum_label_code.py',
         'vacuum_scheme_covariance.py',  # v24.3.373 (2026-07-03): the S_42-covariant fence split; abstract covariant-scheme instrument on banked constants, no register reader/writer; dispositioned at landing per the .352/.355 pattern
-        'validation.py',  # dispositioned 2026-08-08: the same SUBSTRING hit as session_nnlo.py; the adjacent vocabulary is the banked capacity-partition arithmetic this module carries at count level, and it already holds a ('VL', 'consumer') row in the .318 which-v map. No register reader/writer of the policed kind.
-        'w_trace_denner_diagram_coefficient_table_closeout.py',
-        'w_trace_denner_formula_import_native_assembly.py',
         'w_trace_denner_ward_identity_counterterm_import.py',
-        'w_trace_diagram_family_numeric_evaluator_import.py',
-        'w_trace_dizet_acquisition_instrumentation.py',
         'w_trace_native_bosonic_photon_vp.py',
-        'w_trace_native_two_loop_phase2_missing_terms_source_and_derivation_plan.py',
-        'w_trace_native_two_loop_phase2_p_plus_ibp_tool_admission_policy.py',
-        'w_trace_native_two_loop_phase2_zfitter_comparator_guard.py',
-        'w_trace_tensor_coefficient_map_scaffold.py',
-        'yang_mills_md_bridge.py', 'ym_quotient_ledger.py',
+        'yang_mills_md_bridge.py',
+        'ym_quotient_ledger.py',
     })
-    pat_broad = re.compile(r'Gram|dem' + r'and|off[-_ ]?diag|overlap', re.I)
+    # Corner-entry token, identifier-bounded (see the re-pin note above).
+    # Alternative 1 matches the bare four-letter token in any case when the
+    # preceding character is not a letter, so '_x', '(x', 'L_x' and 'x_y'
+    # forms are all matched. Alternative 2 is case-SENSITIVE and matches the
+    # capitalised token preceded by a letter of either case -- a camelCase or
+    # PascalCase segment boundary, which is how the up-sector lemma names
+    # spell it. The three remaining tokens are unchanged: measured on this
+    # package, none of them has any alphabetic-prefix host, and their
+    # alphabetic-suffix hosts are ordinary inflections of the token itself.
+    #
+    # Measured scope of alternative 2, stated because it is not visible from
+    # the set below. On this package alternative 2 matches in exactly two
+    # modules -- supplements.py (22 matches; the two up-sector lemmas,
+    # check_L_up<T>_PSD_saturation and check_L_up<T>_schur_margin with <T>
+    # the corner-entry token, are both DEFINED there) and generations.py (1,
+    # a docstring cross-reference to the second of those) -- and in no other.
+    # Both of those modules ALSO match alternative 1 and both carry the
+    # sector half, so both are already pinned above via alternative 1:
+    # alternative 2 therefore adds NO file to the current candidate set. That
+    # is the whole of its measured effect here. It is retained because the
+    # vocabulary it matches is real and in the package, and because deleting
+    # it would make a future module whose ONLY policed surface is spelled
+    # that way invisible to this net. (The lemma names are written with the
+    # token elided per this file's token-avoidance convention -- and not only
+    # for tidiness: spelling them in full inside THIS file would make this
+    # very comment a third alternative-2 host and falsify the sentence above.
+    # A first draft of this note did exactly that and the self-read caught it.)
+    #
+    # STATED LIMITATION -- A BLIND CLASS REMAINS, AND IT IS IN THE UNSAFE
+    # DIRECTION. A letter-preceded spelling in which the token is not in the
+    # capitalised form matches NEITHER alternative: a separator resets
+    # alternative 1 (UP_GRAM is matched) and alternative 2 catches the
+    # capitalised spelling after a letter, so what is blind is the
+    # letter-preceded run-on in any other case -- upgram, PSDgram, UPGRAM
+    # are examples, and no completeness is claimed for that list. Such names
+    # are seen by the unbounded predicate this replaces and are NOT seen
+    # here. Measured on this package: adding a third alternative
+    # (?-i:(?<=[A-Z])GRAM) re-admits exactly SEVEN files --
+    # phase_14d3_completions.py, pi_gammagamma_2l_moment_native.py and five
+    # w_trace_* modules.
+    pat_broad = re.compile(
+        r'(?<![A-Za-z])gram|(?-i:(?<=[a-zA-Z])Gram)'
+        r'|dem' + r'and|off[-_ ]?diag|overlap', re.I)
     pat_vac42 = re.compile(r'C_vacuum|C_vac\b|V_global|\bvacuum\b|\b42\b', re.I)
     broad_live = {rel for rel, src in sources.items()
                   if pat_broad.search(src) and pat_vac42.search(src)}
@@ -1697,8 +1811,9 @@ def check_T_config_demand_register_split_bank_respected():
             'if those surfaces start supplying a positive off-diagonal b); '
             'the .318 walker run live; (C) a five-tier drift net including '
             f'the structural tier-0 broad-pass file-set pin '
-            f'({len(BROAD_EXPECTED)} files at this run; new '
-            'entrants fail without pre-naming). Anti-supplier: even '
+            f'({len(BROAD_EXPECTED)} files at this run; a new file '
+            'entering that set fails without pre-naming). Anti-supplier: '
+            'even '
             'landed, no positive b is supplied -- a = b stays OPEN [C]. '
             'Bank-closed-world only; the world-strength split stays a '
             'NAMED premise (the .330 flag keeps the literal NAMED/OPEN '
@@ -1777,9 +1892,12 @@ def check_T_config_demand_register_split_bank_respected():
                 'T_vacuum_label_code_no_leakage (.352), '
                 'T_vacuum_logical_sector_classical_ceiling (.352)'),
             'drift_net_tiers': {
-                'tier_0': ('STRUCTURAL broad-pass file-set pin: 61 files at '
-                           'scan time 2026-07-02; new entrants fail without '
-                           'pre-naming; drops allowed (exposure only shrinks)'),
+                'tier_0': (f'STRUCTURAL broad-pass file-set pin: '
+                           f'{len(BROAD_EXPECTED)} files at this run '
+                           f'(corner-entry token identifier-bounded, '
+                           f're-pinned 2026-08-09); a new file entering '
+                           f'that set fails without pre-naming; drops '
+                           f'allowed (exposure only shrinks)'),
                 'tier_1': 'the census map (exact per-file counts)',
                 'tier_2': "constructor '_ex" + "ch(': cosmology.py x6 only",
                 'tier_3': 'form literal (diagonal a / off-diagonal b): '
