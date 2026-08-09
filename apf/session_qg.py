@@ -173,7 +173,14 @@ def check_L_QG_P1_closure():
     check(err_mH < 0.5, f"m_H = {m_H_pred} GeV, error {err_mH:.2f}%")
 
     # (f) Graviton: massless spin-2, d=4, unique
-    # (verified in supplements.py: L_graviton_scattering, T_graviton)
+    # CORRECTED 2026-08-08: this comment claimed two graviton lemmas were
+    # "verified in supplements.py". T_graviton is banked but NOT in
+    # supplements.py, and the other name is not banked anywhere -- no def
+    # under any spelling, no registry key, never present at any commit. The
+    # retired identifier is in the commit message and wiki/Log.md, not
+    # quoted here (the census reads comments). Banked graviton content:
+    # T_graviton, L_graviton_capacity_excitation,
+    # L_graviton_self_interaction; no identification is made.
 
     # (g) Dimensional necessity: Buckingham π
     # A dimensionless axiom + dimensionless math = dimensionless outputs
@@ -245,7 +252,15 @@ def check_L_QG_P1_closure():
         dependencies=[
             'L_QG_UV_finiteness', 'T10', 'L_naturalness',
             'L_hierarchy_boson_suppression', 'L_Higgs_2loop',
-            'L_graviton_scattering', 'T_graviton',
+            # RETRACTED CITATION (2026-08-08): the unbanked graviton name
+            # resolved nowhere; see the corrected provenance note above. The
+            # returned artifacts dict still carries it as the graviton-sector
+            # attribution. That string is a claim about where the result
+            # comes from and is LEFT AS WRITTEN rather than quietly
+            # rewritten -- it is now visibly unsupported on its first
+            # conjunct, which is the honest state, and it is the one live
+            # citation of the name that remains.
+            'T_graviton',
             'L_BH_page_curve_capacity', 'L_full_quantum_theory',
         ],
         artifacts={

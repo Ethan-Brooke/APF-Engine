@@ -471,8 +471,14 @@ def check_L_sin2_oneloop():
             f'sin²θ̂_W = 0.23122. 11σ → 0σ by SM one-loop Δκ̂ = +0.00195 '
             f'[P + disp.rel.]'
         ),
-        dependencies=['T_sin2theta', 'L_Cauchy_uniqueness', 'L_alpha_em',
-                      'L_MW_MSbar'],
+        # RETRACTED CITATION (2026-08-08): this list carried one further
+        # name -- an MS-bar W-mass lemma -- that resolves nowhere: no def
+        # under any spelling, no registry key, never present at any commit.
+        # The retired identifier is in the commit message and wiki/Log.md,
+        # not quoted here (the census reads comments). Banked MS-bar W
+        # content is L_MW_scheme_correction (apf/gauge.py, registered
+        # unconditionally at v24.3.399); no identification is made.
+        dependencies=['T_sin2theta', 'L_Cauchy_uniqueness', 'L_alpha_em'],
         artifacts={
             'sin2_tree': s2, 'sin2_corrected': round(sin2_corrected, 5),
             'Delta_kappa': round(Delta_kappa, 6),

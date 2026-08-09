@@ -227,7 +227,17 @@ def check_L_top_mass_hint():
             f'NOT derived. Down sector unexplained.'
         ),
         key_result=f'σ = x^(1/d) → m_t = {m_t_pred:.1f} GeV ({err:.1f}%). [C]',
-        dependencies=['L_FN_map', 'T8', 'L_hierarchy_boson_suppression'],
+        # RETRACTED CITATION (2026-08-08): this list carried one further
+        # name -- a Froggatt-Nielsen map lemma -- that resolves nowhere: no
+        # def under any spelling, no registry key, never present at any
+        # commit. Not a rename a sweep missed. The retired identifier is
+        # recorded in the commit message and in wiki/Log.md, NOT quoted
+        # here: the vacancy census reads comments, so a name quoted inside
+        # its own retraction is counted as a fresh citation of it. Banked FN
+        # content is L_FN_ladder_uniqueness and L_c_FN_gap; no identification
+        # with either is made. The conjecture below is unaffected -- always
+        # [C], never rested on a banked FN map.
+        dependencies=['T8', 'L_hierarchy_boson_suppression'],
         artifacts={'sigma': round(sigma, 6), 'm_t_pred': round(m_t_pred, 1),
                    'err_pct': round(err, 1), 'not_derived': True},
     )

@@ -2175,13 +2175,40 @@ def check_L_prediction_catalog():
         ),
         dependencies=['T11', 'T12E', 'T_sin2theta', 'T4G', 'T27c',
                        'L_crossing_entropy', 'L_alpha_s_zero_input', 'L_alpha_em',
-                       'L_hierarchy_tightened', 'T_mass_ratios', 'L_CKM_phase_bracket',
+                       # RETRACTED CITATION (2026-08-08): a tightened-hierarchy
+                       # lemma named here resolves nowhere -- no def, no
+                       # registry key, never present at any commit. The
+                       # retired identifier is in the commit message and
+                       # wiki/Log.md, not quoted here (the census reads
+                       # comments). The catalog row for ln(M_Pl/M_Z) still
+                       # names it in its source column and is LEFT AS
+                       # WRITTEN: the attribution is a provenance claim, and
+                       # deleting it would remove the evidence of the debt
+                       # rather than pay it. Banked hierarchy content:
+                       # L_hierarchy_boson_suppression, L_hierarchy_cascade,
+                       # T_ew_planck_hierarchy_capacity_suppression_mechanism.
+                       'T_mass_ratios', 'L_CKM_phase_bracket',
                        'T_PMNS', 'T_PMNS_CP', 'L_MW_scheme_correction', 'L_Higgs_2loop',
                        'T_inflation', 'L_eta_B_Jarlskog', 'L_equation_of_state',
                        'L_mbb_prediction', 'T_theta_QCD',
                        'L_sigma_phenomenology', 'L_sigma_VEV',
-                       'L_crossing_correction', 'L_mc_mt_twoloop_RG',
-                       'L_nucleon_mass_difference'],
+                       'L_crossing_correction', 'L_mc_mt_twoloop_RG'],
+        # RETRACTED CITATION (2026-08-08): the list above ended with a
+        # nucleon-mass-difference lemma that resolves nowhere. Its story is
+        # not a missing rename but a DEAD CONDITIONAL IMPORT in apf/gauge.py:
+        # a guarded top-level import against a module that has never existed
+        # in this repository, so the ImportError arm has swallowed it on
+        # every load since the initial import. That is the exact genre the
+        # v24.3.399 debt-registration wave fixed for L_MW_scheme_correction
+        # eleven lines above it in the same function, and it was not fixed.
+        # The dead branch is deliberately LEFT IN PLACE -- deleting it hides
+        # the debt rather than paying it -- and the Delta m_np catalog row
+        # still names the lemma in its source column, also left as written.
+        # The retired identifier is in the commit message and wiki/Log.md,
+        # not quoted here (the census reads comments). NOTE the entry two
+        # lines up is NOT retracted: it is a pinned named_unregistered root
+        # in the typed inventory, and removing it vanishes a root the
+        # full-surface walk requires.
         artifacts={
             'n_predictions': n_total,
             'n_tested': n_tested,
