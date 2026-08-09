@@ -10,7 +10,7 @@ files now import from.
 Four categories
 ---------------
 
-``BANK_REGISTRY_MODULES`` (450 modules)
+``BANK_REGISTRY_MODULES`` (473 modules)
     Modules with a ``register(registry)`` function that contributes checks to
     ``apf.bank.REGISTRY``. Loaded by ``bank._load()`` and enumerated by
     ``verify_all.MODULES``.
