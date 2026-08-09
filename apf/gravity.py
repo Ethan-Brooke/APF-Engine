@@ -2144,8 +2144,11 @@ def check_T_which_v_no_registered_interior_reader():
           re-disposition discipline, not a defect. Tags: 'consumer' =
           42-sector-sense physics consumer; 'fence' = sense fence or
           arithmetic-42 coincidence; 'infra' = registry/test
-          infrastructure (the notes' 49 consumers = 44 'consumer' + 5
-          'infra' here; the per-file sense record lives in the notes).
+          infrastructure; 'analysis' = non-registered analysis-layer
+          surface (the per-file sense record lives in the notes). The
+          live per-tag counts are computed below and returned as
+          artifacts, and the tags are asserted to PARTITION the map:
+          the returned counts account for every row.
 
       (c) READOUT-SURFACE PIN: the Sector-B readout fingerprint -- the
           Step-1 docstring phrase naming the Gamma_E commitment to a
@@ -2212,11 +2215,13 @@ def check_T_which_v_no_registered_interior_reader():
         'acc_unification_all_p.py': ('L', 'consumer'),
         'admissible_representation_stack.py': ('L', 'consumer'),
         'bank.py': ('VL', 'infra'),
+        'carrier_elliptope.py': ('L', 'fence'),  # dispositioned 2026-08-08 (.465): the 'L' match is the admitted-set count in check_L_missing_lemma_is_center_selection and the module-docstring restatement -- carrier-side combinatorics on that module's own small carrier, an arithmetic-42 coincidence with no 42-sector sense (the drawn_content_readings precedent); constructs no interior reader (clause (a) scans it clean).
         'carrier_trichotomy.py': ('V', 'consumer'),  # dispositioned 2026-07-18 (.414): occupancy/structure/hold trichotomy; vacuum vocabulary in prose, no which-v reader
         'base_fiber_allocation.py': ('VLH', 'consumer'),
         'charged_lepton_qed_real_adapter.py': ('L', 'fence'),
         'class_transition.py': ('VL', 'consumer'),
         'codomain_transport_schema.py': ('VLD', 'consumer'),
+        'composite_only_direction.py': ('L', 'fence'),  # dispositioned 2026-08-08 (.463): the 'L' matches are the k-copy effect seed tuple K_EFFECT_SEEDS_B and the audit comments quoting it -- an arbitrary integer seed handed to sym_probe when the effect battery is built. Real-bipartite-GPT representation theory (Sym(x) branching); an arithmetic-42 coincidence with no 42-sector sense, and no interior reader.
         'core.py': ('VL', 'consumer'),
         'crystal.py': ('V', 'infra'),
         'cosmogenesis_t1_t4_quartet_real_adapter.py': ('V', 'consumer'),
@@ -2239,6 +2244,7 @@ def check_T_which_v_no_registered_interior_reader():
         'ew_planck_hierarchy_mechanism.py': ('VL', 'consumer'),
         'ew_pre_branch_necessity.py': ('V', 'fence'),
         'extensions.py': ('V', 'fence'),
+        'fd3_valuation_born_chain.py': ('L', 'fence'),  # dispositioned 2026-08-08 (.466): the 'L' matches are the incidental local name dom42 and its uses -- the digits are its call's own arguments, not a cardinality; the zipper_metric_theorems r42 precedent (.437, benign drift-net disposition of an incidental result-variable name). No 42-sector sense, no interior reader.
         'fencea_hinge_trichotomy.py': ('VL', 'consumer'),  # dispositioned 2026-07-04 (the .396 full-surface banking leg; net fired at the CONTINUATION's predicted point, on the .389 sibling module): V/L from the d_eff = (C_total-1)+C_vacuum = 60+42 = 102 capacity arithmetic in the framework-anchored ceiling legs -- count-level consumer of the banked T11 constant; constructs NO interior mode reader (clause (a) scans it clean)
         'fibration_census.py': ('L', 'consumer'),
         'fluctuation_response_two_faces.py': ('L', 'consumer'),
@@ -2435,6 +2441,17 @@ def check_T_which_v_no_registered_interior_reader():
     n_consumers = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'consumer')
     n_fences = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'fence')
     n_infra = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'infra')
+    n_analysis = sum(1 for v in FINGERPRINT_MAP.values() if v[1] == 'analysis')
+
+    # PARTITION GUARD (added 2026-08-08): the tag counts this check returns
+    # are read -- in its own summary and artifacts -- as a partition of the
+    # disposition map. This clause asserts that they are one.
+    n_tagged = n_consumers + n_fences + n_infra + n_analysis
+    check(n_tagged == len(FINGERPRINT_MAP),
+          f"tag partition: the reported tag counts account for EVERY row of the "
+          f"disposition map (consumer {n_consumers} + fence {n_fences} + infra "
+          f"{n_infra} + analysis {n_analysis} = {n_tagged}; map size "
+          f"{len(FINGERPRINT_MAP)}) -- a disposition tag with no counter fails here")
 
     return _result(
         name='T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural]',
@@ -2445,7 +2462,8 @@ def check_T_which_v_no_registered_interior_reader():
             f'off-saturation which-v lemma: (a) package-recursive literal-pattern scan with '
             f'per-file EXPECTED match sets, no blanket exemptions -- a which-v reader in any '
             f'module including gravity.py fails; (b) drift net over {len(FINGERPRINT_MAP)} '
-            f'dispositioned files ({n_consumers} consumers / {n_fences} fences / {n_infra} infra) '
+            f'dispositioned files ({n_consumers} consumers / {n_fences} fences / {n_infra} infra '
+            f'/ {n_analysis} analysis; the four tags are asserted to partition the map) '
             f'with V/L/D/H token-class fingerprints -- any new match, class change, or dropped '
             f'match fails; (c) the Sector-B readout fingerprint exists exactly once, at '
             f'T_horizon_reciprocity. Mode identity only; bank strength only; the physical '
@@ -2464,6 +2482,7 @@ def check_T_which_v_no_registered_interior_reader():
             'consumers': n_consumers,
             'fences': n_fences,
             'infra': n_infra,
+            'analysis': n_analysis,
             'expected_ident_matches': {k: sorted(v) for k, v in EXPECTED_IDENT_MATCHES.items()},
             'readout_pin': 'T_horizon_reciprocity (unique, package-recursive)',
             'strength': 'bank-closed-world only; protocol strength NOT certified',

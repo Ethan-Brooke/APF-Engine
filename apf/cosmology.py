@@ -1574,8 +1574,10 @@ def check_T_config_demand_register_split_bank_respected():
         'acc_reading_selection.py',
         'admissible_representation_stack.py', 'bank.py',
         'base_fiber_allocation.py', 'carrier_trichotomy.py',  # disp 2026-07-18 (.414): carrier trichotomy prose, no demand-pairwise surface
+        'carrier_elliptope.py',  # dispositioned 2026-08-08 (.465): its corner-entry-token hits are the carrier-transfer lane's own hollow-sector vocabulary -- the represented algebra's non-diagonal freedom, parametrized as the eps-scaled elliptope -- and the adjacent literal is an admitted-set count in that lane's own carrier-side combinatorics. A cost-carrier object, not a register reader/writer of the policed kind. (Token-avoidance convention applies to this comment.)
         'charged_lepton_qed_real_adapter.py',
         'closed_world_completeness.py', 'core.py', 'cosmology.py',
+        'composite_only_direction.py',  # dispositioned 2026-08-08 (.463): its corner-entry-token hits are the primitive self-test battery's leg labels plus the docstring and comment prose describing that battery, all naming corner entries of small real matrices in real-bipartite-GPT representation theory; the remaining hits are ordinary English usage -- some inside a longer word as a SUBSTRING, one the plain English verb -- and are not the policed vocabulary at all. None carries a vacuum-unit index, so none is a register reader/writer of the policed kind. The adjacent literal is a k-copy effect seed. (Token-avoidance convention applies to this comment.)
         'crystal.py', 'crystal_ledger.py', 'crystal_metrics.py',
         'descent_obstruction_calculus.py', 'ec_inventory_reading.py',  # disp 2026-07-18 (.423): EC type-inventory reading prose, no demand-pairwise surface
         'ew_branch_incidence_density.py',
@@ -1586,7 +1588,14 @@ def check_T_config_demand_register_split_bank_respected():
         'foundation_inputs.py',
         'gamma_c_carrier_program.py',  # v24.3.374-landing disposition (2026-07-04): the concurrent .375 gamma_C-program module caught live by net-0 at the .374 landing (with the which-v clause-(b) catch, same scan; .360/.373 precedent -- the landing lane dispositions the concurrent module); carrier-fork/no-trace instruments over Paper 9 conventions, no vacuum-42 register reader/writer
         'gauge.py', 'gauge_invariant_record.py', 'gauge_quotient_ledger.py',
-        'generations.py', 'gravity.py', 'ie_atlas_verdict_pin.py',
+        'generations.py', 'gravity.py',
+        # RE-PINNED 2026-08-08: the row for ie_atlas_verdict_pin.py is
+        # REMOVED from this tier. That file still carries the broad
+        # corner-entry tokens, but no longer carries this tier's
+        # sector-vocabulary half of the conjunction, so it no longer enters
+        # the live candidate set. Tier 0's stated discipline is that a drop
+        # is allowed silently and is re-pinned at the next touch; this is
+        # that touch.
         'ie_onboarding_registry.py',
         'ie_wall_shadow_census.py',  # v24.3.401-landing disposition (2026-07-05): the wall-shadow census pins vacuum-adjacent verdict-pin row ids (quantum:vacuum_* / strong:vacuum_realization_triptych) + ICL_vac shadow prose; instrument pins only, no demand read/write; net-0 broad-set entry
         'interface_atlas.py',
@@ -1597,12 +1606,14 @@ def check_T_config_demand_register_split_bank_respected():
         'quantum_operator_derivation.py', 'recruitment.py', 'red_team.py',
         'representation_descent_kernel_adversarial_audit.py',
         's_parameter_pure_gauge_constant_native.py', 'session_delta_pmns.py',
+        'session_nnlo.py',  # dispositioned 2026-08-08: its corner-entry-token hit is a SUBSTRING inside PDG's name for its own averaging plot, in the scale-factor prose; the adjacent hit is the hadronic-polarization input line in the module header. No register reader/writer of the policed kind.
         'sin2theta_w_OS_capacity_counting.py', 'subspace_functors.py',
         'supplements.py', 'thooft_anomaly_matching_chiral.py',
         'unification.py', 'unification_three_levels.py',
         'universality_forcing.py', 'vacuum_label_code.py',
         'vacuum_o1_fork.py',
         'vacuum_scheme_covariance.py',  # v24.3.373 (2026-07-03): the S_42-covariant fence split; abstract covariant-scheme instrument on banked constants, no register reader/writer; dispositioned at landing per the .352/.355 pattern
+        'validation.py',  # dispositioned 2026-08-08: the same SUBSTRING hit as session_nnlo.py; the adjacent vocabulary is the banked capacity-partition arithmetic this module carries at count level, and it already holds a ('VL', 'consumer') row in the .318 which-v map. No register reader/writer of the policed kind.
         'w_trace_denner_diagram_coefficient_table_closeout.py',
         'w_trace_denner_formula_import_native_assembly.py',
         'w_trace_denner_ward_identity_counterterm_import.py',
@@ -1685,7 +1696,8 @@ def check_T_config_demand_register_split_bank_respected():
             'cited as the OPEN a = b identity [C], and the check now FAILS '
             'if those surfaces start supplying a positive off-diagonal b); '
             'the .318 walker run live; (C) a five-tier drift net including '
-            'the structural tier-0 broad-pass file-set pin (61 files; new '
+            f'the structural tier-0 broad-pass file-set pin '
+            f'({len(BROAD_EXPECTED)} files at this run; new '
             'entrants fail without pre-naming). Anti-supplier: even '
             'landed, no positive b is supplied -- a = b stays OPEN [C]. '
             'Bank-closed-world only; the world-strength split stays a '
