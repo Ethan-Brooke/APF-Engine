@@ -354,7 +354,6 @@ def check_T_crystal_centrality_v69():
         ),
         dependencies=['T_crystal_v69_consistent'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'T_three_level_unification',
             'T_interface_sector_bridge',
             'T_ACC_unification',
@@ -765,7 +764,6 @@ def check_T_crystal_path_attribution_v69():
         key_result=headline + ' [P_structural]',
         dependencies=['T_crystal_v69_consistent'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'T_sin2theta',
             'T_crystal_centrality_v69',
         ],
@@ -1200,7 +1198,6 @@ def check_T_crystal_path_attribution_scc_v69():
         dependencies=['T_crystal_v69_consistent',
                       'T_crystal_path_attribution_v69'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'T_sin2theta',
             'Theorem_R',
             'T_gauge',
@@ -1532,7 +1529,6 @@ def check_T_crystal_cascade_v69():
         key_result=headline + ' [P_structural]',
         dependencies=['T_crystal_v69_consistent'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'T_crystal_centrality_v69',
             'T_crystal_path_attribution_v69',
         ],
@@ -1553,9 +1549,11 @@ def check_T_crystal_cascade_v69():
 # independent derivation chains fold into a single downstream theorem.
 # v6.9 has many such convergence sinks by design — Phase 14 added
 # T_three_level_unification (which folds I1/I2/I3/I4 into one), Phase
-# 13.1 added L_PLEC_components_essentiality (which folds the four
-# anchor-essentiality lemmas), Phase 14b's killed-rivals module folds
-# four structural-rival kills into a single statement, etc.
+# 13.1 added apf/crystal_axiom_roots.py, which pins the four PLEC
+# components to their source-most bank checks (A1, L_epsilon*,
+# Regime_R, worked_example) and registers no check of its own,
+# Phase 14b's killed-rivals module folds four structural-rival kills
+# into a single statement, etc.
 #
 # v6.9 convergence metric (depth-filtered DAG, same universe as
 # workstreams 2 / 4):
@@ -1722,8 +1720,9 @@ def check_T_crystal_convergence_v69():
     snapshot) §7 Convergence Patterns table. v6.9 has many more
     convergence sinks than v1.0 by design: Phase 14
     (T_three_level_unification folds I1/I2/I3/I4), Phase 13.1
-    (L_PLEC_components_essentiality folds the four anchor-essentiality
-    lemmas), Phase 14b (killed-rivals folds four structural rivals),
+    (crystal_axiom_roots pins the four PLEC components to their
+    source-most bank checks), Phase 14b (killed-rivals folds four
+    structural rivals),
     and the 2026-04-20 T_ACC_unification + interface-sector bridge
     passes (which fold gauge / cosmology / horizon strands).
 
@@ -1828,7 +1827,6 @@ def check_T_crystal_convergence_v69():
         key_result=headline + ' [P_structural]',
         dependencies=['T_crystal_v69_consistent'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'T_three_level_unification',
             'T_ACC_unification',
             'T_interface_sector_bridge',

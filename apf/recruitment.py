@@ -500,7 +500,7 @@ def check_T_quantum_anchor_einstein_A():
                       'H2_locality_from_recruitment_kernels',
                       'T_inseparable_IJC'],
         cross_refs=['T_thermal_exponent_interpretation',
-                    'T_CMB_absolute_formula',
+                    'T_T_CMB_absolute_formula',
                     'T_Born_trace_rule'],
         artifacts={
             'prefactor_check': prefactor_numerical,

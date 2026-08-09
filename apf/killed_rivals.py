@@ -18,8 +18,17 @@ The four locked v0 kills are:
    Killed by Theorem_R + T_gauge (apf.gauge): Theorem_R forces N_c >= 3
    non-abelian carrier on R1; T_gauge selects N_c = 3 by capacity-cost
    minimization at the gauge equilibrium. Any rival N_c in {2, 4, 5, ...}
-   either fails R1 (N_c = 2 is abelian-equivalent under the irrep
-   structure being tested) or is dominated at the cost minimum by N_c = 3.
+   either fails R1 or is dominated at the cost minimum by N_c = 3.
+   N_c = 2 fails R1 because the fundamental of SU(2) is PSEUDOREAL
+   (2 ~ 2-bar), so it carries no oriented composites and no irreducible
+   trilinear invariant -- the mechanism the in-function comment of
+   check_R_SU_Nc_neq_3_killed already states.
+   CORRECTION: this header read "either fails R1 (N_c = 2 is
+   abelian-equivalent under the irrep structure being tested)". SU(2)
+   is not abelian and is not abelian-equivalent under any reading; it
+   is the non-abelian group R2 selects at the electroweak sector. The
+   pseudoreality of its fundamental, not abelianness, is what excludes
+   it at the color sector.
 
 2. R_Ngen_neq_3 — Alternative generation count N_gen =/= 3.
    Killed by T7 (apf.gauge): T7 derives N_gen = 3 from the
@@ -40,21 +49,45 @@ The four locked v0 kills are:
    The kill-witness exercises four representative candidate axioms
    that have historically been treated as primitive (Lorentz invariance,
    gauge invariance, the Born rule, the existence of a Lagrangian
-   density) and shows each is either derived elsewhere in the bank or
-   structurally redundant with PLEC.
+   density). NONE OF THE FOUR IS FULLY REDUCED. In each case what the
+   bank establishes is weaker than what the rival postulates: a
+   Lorentzian metric rather than Lorentz invariance of the dynamics;
+   WHICH gauge group rather than the gauge principle; the form of the
+   probability rule over the Hilbert-space structure the rival's
+   postulate is itself about; and, for the Lagrangian, no reduction at
+   all -- the cited check writes the Lagrangian form into its own
+   statement. Each record in _EXTRA_AXIOM_KILLS names its own
+   shortfall.
+   CORRECTION: this header read "and shows each is either derived
+   elsewhere in the bank or structurally redundant with PLEC."
 
 4. R_Born_axiomatic — Rival framework that postulates the Born
    probability rule axiomatically.
-   Killed by T_Born (apf.core) + T2 (apf.core): T_Born derives the
-   Born rule from L_irr (irreducibility of distinguishable carriers)
-   plus the admissibility constraint, with T2 supplying the Gleason
-   countably-additive frame-function premise. The axiomatic rival is
-   strictly dominated: it postulates a result that is provable from
-   strictly weaker assumptions already in the bank.
+   T_Born (apf.core) verifies the Born form p(E) = Tr(rho E) on a
+   3-dimensional witness; uniqueness -- the content the rival's
+   postulate carries -- is Gleason, supplied by L_Gleason_finite
+   (apf/supplements.py) over the frame functions of a Hilbert space
+   with dim >= 3. STRICT DOMINATION IS NOT ESTABLISHED: the reduction
+   runs on the structure the postulate is about.
+   CORRECTION: this header read "Killed by T_Born (apf.core) + T2
+   (apf.core): T_Born derives the Born rule from L_irr (irreducibility
+   of distinguishable carriers) plus the admissibility constraint,
+   with T2 supplying the Gleason countably-additive frame-function
+   premise. The axiomatic rival is strictly dominated: it postulates a
+   result that is provable from strictly weaker assumptions already in
+   the bank." check_T_Born returns dependencies ['T2', 'T_Hermitian',
+   'A1', 'L_Gleason_finite']: L_irr is not among them, 'admissibility'
+   is not a bank name, and the Gleason premise comes from
+   L_Gleason_finite, not from T2 (T2 supplies an operator algebra on a
+   Hilbert space).
 
 Together, the four checks compose into ``check_T_killed_rivals_v0``
-(tier 4, [P_structural]) which certifies that all four rival classes
-are killed by the v6.9 bank.
+(tier 4, [P_structural]), which certifies that each of the four
+per-kill checks passes its own legs. It does not certify that the four
+rival classes are killed: kill 3 fully reduces none of its four
+candidates, and kill 4 does not establish strict domination.
+CORRECTION: this sentence read "which certifies that all four rival
+classes are killed by the v6.9 bank."
 
 References
 ----------
@@ -71,6 +104,8 @@ Open / pending
   each kill with one of {refuted, redundant, dominated, incoherent}.
   Deferred until after Ethan reviews v0.
 """
+
+import importlib
 
 from apf.apf_utils import (
     check, _result, dag_get, dag_has,
@@ -335,72 +370,293 @@ def check_R_Ngen_neq_3_killed():
 
 _EXTRA_AXIOM_KILLS = {
     'Lorentz_invariance': {
-        'kill_mode': 'derived',
-        'derivation_ref': 'apf.spacetime: T_metric, L_lightcone, T_Lorentz_emergent',
+        'kill_mode': 'partially_derived',
+        'derivation_ref': (
+            'apf.spacetime: Delta_ordering, Delta_continuum, '
+            'Delta_signature; apf.extensions: L_HKM_causal_geometry, '
+            'L_Malament_uniqueness; apf.gravity: T9_grav'
+        ),
+        'derivation_targets': (
+            ('apf.spacetime', 'check_Delta_ordering'),
+            ('apf.spacetime', 'check_Delta_continuum'),
+            ('apf.spacetime', 'check_Delta_signature'),
+            ('apf.extensions', 'check_L_HKM_causal_geometry'),
+            ('apf.extensions', 'check_L_Malament_uniqueness'),
+            ('apf.gravity', 'check_T9_grav'),
+        ),
         'rationale': (
-            'Lorentz invariance is derived in apf.spacetime from the '
+            'What the bank derives is Lorentzian metric structure, and '
+            'that is less than Lorentz invariance. L_irr gives a strict '
+            'causal partial order (Delta_ordering); the order fixes a '
+            'conformal class (L_HKM_causal_geometry, '
+            'L_Malament_uniqueness) and volume normalization fixes the '
+            'conformal factor, giving signature (-,+,+,+) on a smooth '
+            'manifold (Delta_continuum, Delta_signature); T9_grav '
+            'supplies the field equations. WHAT THAT REACHES: each '
+            'tangent space of a signature-(1,3) metric carries an '
+            'O(1,3) isometry group, so local Lorentz FRAMES exist. '
+            'WHAT IT DOES NOT REACH: invariance of the DYNAMICS under '
+            'local Lorentz transformations. Einstein-aether, '
+            'Horava-Lifshitz and every Lorentz-violating operator of '
+            'the Standard Model Extension are written on exactly this '
+            'tangent-space structure and violate local Lorentz '
+            'invariance; a metric of signature (1,3) does not exclude '
+            'them. Covariance of the S-MATRIX is a further commitment '
+            'again, and no check witnesses it: it enters the bank as '
+            'Hypothesis 1 of check_T_Coleman_Mandula (apf.spacetime), '
+            'whose executable legs read the length and the time-count '
+            'of a hardcoded signature tuple and count ten Poincare '
+            'generators. The cited derivation is weaker than its own '
+            'prose in two further places. (i) check_Delta_signature '
+            'assigns n_time = 1 in-function and sums a hardcoded '
+            'signature tuple -- the SAME leg shape this record '
+            'disparages at T_Coleman_Mandula H1, so the disparagement '
+            'lands on one of its own derivation targets. (ii) '
+            'check_T9_grav, cited for the field equations, carries '
+            'A9.2 general covariance as an INPUT (a dict entry set '
+            'True; its only executable legs assert n_lovelock == 2 '
+            'twice), so coordinate-invariance of the field equations '
+            'is a premise there, not a result. A rival who postulates '
+            'Lorentz invariance is therefore supplying an independent '
+            'commitment about the dynamics; what the bank supplies is '
+            'the arena that commitment is stated on. '
+            "CORRECTION (2): this record read 'The tangent space of a "
+            "signature-(1,3) metric carries SO(1,3), so LOCAL Lorentz "
+            "covariance follows. Covariance of the S-MATRIX does not "
+            "follow from that' and, in the check that reads it, "
+            "'Lorentzian metric structure is derived, and local SO(1,3) "
+            "covariance follows from it'. Local covariance OF THE "
+            "DYNAMICS does not follow; only the existence of local "
+            "Lorentz frames does. A tangent-space isometry group is a "
+            "statement about the metric, not about what the equations "
+            "of motion are invariant under. "
+            "CORRECTION (1): this record read kill_mode 'derived' with "
+            "derivation_ref 'apf.spacetime: T_metric, L_lightcone, "
+            "T_Lorentz_emergent', and its rationale read 'Lorentz "
+            'invariance is derived in apf.spacetime from the '
             'admissibility metric structure plus the lightcone closure '
             'on causal correlations. The rival who postulates Lorentz '
             'invariance as an axiom is supplying a theorem, not a '
-            'logically independent commitment.'
+            "logically independent commitment.' None of those three "
+            'names is registered under either spelling, none has existed '
+            'in the tree since the initial import, and the word '
+            '"lightcone" appears nowhere else in apf/. Lightcone closure '
+            'on causal correlations is not the mechanism the derivation '
+            'uses.'
         ),
     },
     'gauge_invariance': {
-        'kill_mode': 'derived',
+        'kill_mode': 'partially_derived',
         'derivation_ref': 'apf.gauge: Theorem_R + T_gauge + L_gauge_template_uniqueness',
+        'derivation_targets': (
+            ('apf.gauge', 'check_Theorem_R'),
+            ('apf.gauge', 'check_T_gauge'),
+            ('apf.gauge', 'check_L_gauge_template_uniqueness'),
+            ('apf.core', 'check_L_nc'),
+            ('apf.core', 'check_L_irr'),
+        ),
         'rationale': (
-            'Gauge invariance is derived in apf.gauge from the '
-            'non-closure theorem L_nc, the irreducibility lemma L_irr, '
-            'and the gauge template uniqueness L_gauge_template_uniqueness, '
-            'composed via Theorem_R into T_gauge. The rival who postulates '
-            'gauge invariance as an axiom is supplying a theorem.'
+            'What the bank derives is WHICH gauge group, given that '
+            'there is one. Theorem_R states carrier requirements R1-R3 '
+            'on "any admissible interaction theory"; '
+            'L_gauge_template_uniqueness classifies the compact simple '
+            'Lie algebras meeting them and returns the template '
+            'SU(N_c) x SU(2) x U(1); T_gauge selects N_c = 3 by '
+            'capacity cost. WHAT NONE OF THEM REACHES: the gauge '
+            'PRINCIPLE -- that the dynamics is invariant under '
+            'position-dependent transformations of the carrier. Local '
+            'gauge invariance is ambient in all three: the carriers '
+            'are already representations of a compact group and the '
+            'classification runs over group structure, so a rival who '
+            'postulates gauge invariance is postulating the premise '
+            'these checks share, not their conclusion. Two further '
+            'limits are stated by the targets themselves. (i) Step 4 '
+            'of check_L_gauge_template_uniqueness says in-code that '
+            "the U(1) factor's driver is the reading R-EC-inv, "
+            '"A1-motivated via the enforcement referent, NOT '
+            'A1-derived", and that anomaly cancellation does not '
+            'require U(1) at all -- SU(N_c) x SU(2) is anomaly-free. '
+            '(ii) The existence of a compact gauge group is first '
+            'obtained upstream at check_T3 (apf.core) from '
+            'Doplicher-Roberts, an imported reconstruction theorem '
+            'that returns a compact group from a category of '
+            'superselection sectors; T3 argues the import is legitimate '
+            'pre-geometrically, which is a claim about the import, not '
+            'a derivation of the gauge principle. '
+            "CORRECTION: this record read kill_mode 'derived', and its "
+            "rationale read 'Gauge invariance is derived in apf.gauge "
+            'from the non-closure theorem L_nc, the irreducibility '
+            'lemma L_irr, and the gauge template uniqueness '
+            'L_gauge_template_uniqueness, composed via Theorem_R into '
+            'T_gauge. The rival who postulates gauge invariance as an '
+            "axiom is supplying a theorem.' Those checks supply the "
+            'group; they do not supply the principle.'
         ),
     },
     'Born_rule': {
-        'kill_mode': 'derived',
+        'kill_mode': 'partially_derived',
         'derivation_ref': 'apf.core: T2 + T_Born + L_irr',
+        'derivation_targets': (
+            ('apf.core', 'check_T2'),
+            ('apf.core', 'check_T_Born'),
+            ('apf.core', 'check_L_irr'),
+        ),
         'rationale': (
-            'The Born probability rule is derived in apf.core from L_irr '
-            '(irreducibility of distinguishable carriers) plus the '
-            'admissibility constraint, with T2 supplying the Gleason '
-            'countably-additive frame-function premise. See also kill 4 '
-            '(R_Born_axiomatic) for the dedicated reduction. The rival '
-            'who postulates the Born rule as an axiom is supplying a '
-            'theorem.'
+            'What the bank derives is the FORM of the probability rule '
+            'GIVEN a Hilbert space. check_T_Born builds a '
+            '3-dimensional witness -- one pure rho, three orthogonal '
+            'projectors, one rotation -- and verifies that Tr(rho E) is '
+            'non-negative, sums to 1, and is invariant under that '
+            'unitary. That is CONSISTENCY of the Born form on one '
+            'instance. UNIQUENESS -- the content the axiom carries -- '
+            'is Gleason, and it is carried by L_Gleason_finite '
+            '(apf/supplements.py), whose premises are stated over the '
+            'frame functions of a finite-dimensional Hilbert space '
+            "with dim >= 3: the structure the rival's postulate is "
+            'itself about. The reduction therefore consumes the arena '
+            'it is meant to eliminate. The executable content of '
+            'L_Gleason_finite is narrower than its prose: its legs '
+            'confirm that a trace form IS a frame function on ten '
+            "random bases and reconstruct rho's diagonal from it; no "
+            'leg exhibits a non-trace frame function being excluded, '
+            "which is the direction Gleason's theorem supplies. Also "
+            'on record inside check_T_Born is a 2026-07-09 corrigendum '
+            "stating that the corpus's primary Born route is "
+            'Busch/positive-functional, not the Gleason route this '
+            'record cites. See kill 4 (R_Born_axiomatic) for the '
+            'dedicated record, corrected the same way. '
+            "CORRECTION: this record read kill_mode 'derived', and its "
+            "rationale read 'The Born probability rule is derived in "
+            'apf.core from L_irr (irreducibility of distinguishable '
+            'carriers) plus the admissibility constraint, with T2 '
+            'supplying the Gleason countably-additive frame-function '
+            'premise. ... The rival who postulates the Born rule as an '
+            "axiom is supplying a theorem.' check_T_Born returns "
+            "dependencies ['T2', 'T_Hermitian', 'A1', "
+            "'L_Gleason_finite']: L_irr is not among them, "
+            "'admissibility' is not a bank name, and the Gleason "
+            'premise is supplied by L_Gleason_finite, not by T2 (T2 '
+            'supplies an operator algebra on a Hilbert space).'
         ),
     },
     'Lagrangian_density_existence': {
-        'kill_mode': 'redundant_with_PLEC',
+        'kill_mode': 'assumed_by_cited_targets',
         'derivation_ref': 'apf.plec: Regime_R (PLEC selector) + apf.unification: pi_A',
+        'derivation_targets': (
+            ('apf.plec', 'check_Regime_R'),
+            ('apf.unification', 'pi_A'),
+        ),
         'rationale': (
-            'The existence of a Lagrangian density is structurally '
+            'This record claims NO reduction. check_Regime_R '
+            '(apf.plec) writes the Lagrangian form into its own '
+            'STATEMENT -- "the accumulated-cost functional '
+            'K[q] = int L(q, qdot, t) dt is well-defined, bounded '
+            'below, and attains a minimum" -- and its executable '
+            'witness hardcodes L = (1/2) qdot^2. What it establishes '
+            'is that a minimizer EXISTS on a path class satisfying '
+            'R1-R4; that the cost functional has an integrand at all '
+            'is its premise, and that premise is what the rival '
+            'postulates. The second cited target does not supply the '
+            'integrand either: apf.unification.pi_A is the partition '
+            'function Z(beta) = sum_g exp(-beta H(g)), a module-level '
+            'function returning a float. '
+            "CORRECTION: this record read kill_mode "
+            "'redundant_with_PLEC', and its rationale read 'The "
+            'existence of a Lagrangian density is structurally '
             'redundant with PLEC: A2 (Minimum Cost Selection) supplies '
-            'the variational selector G_realized = argmin K[q], and the '
-            'pi_A (action) regime projection supplies the integrand '
-            'L = K[q]/dt. The rival who postulates "physics admits a '
-            'Lagrangian density" as an extra axiom is supplying a '
-            'consequence of A1 + PLEC (specifically of A2 acting on the '
-            'admissible path class A_Gamma).'
+            'the variational selector G_realized = argmin K[q], and '
+            'the pi_A (action) regime projection supplies the '
+            'integrand L = K[q]/dt. The rival who postulates "physics '
+            'admits a Lagrangian density" as an extra axiom is '
+            'supplying a consequence of A1 + PLEC (specifically of A2 '
+            "acting on the admissible path class A_Gamma).' A2 "
+            'supplies an argmin over a functional whose Lagrangian '
+            'form is already assumed, and L = K[q]/dt is not the '
+            'relation claimed: an integrand is the time DERIVATIVE '
+            'dK/dt, not an accumulated cost divided by an interval.'
         ),
     },
 }
 
 
-def check_R_extra_axiom_NT_killed():
-    """R_extra_axiom_NT: Rival with a non-trivial extra axiom beyond A1 + PLEC KILLED [P_structural].
+# ---------------------------------------------------------------------------
+# Admitted kill-mode vocabulary.
+#
+# A record's `kill_mode` names the SHAPE of the reduction that record
+# claims. This table is the vocabulary the enumeration leg accepts, and
+# each entry states what the mode asserts. A record carrying a mode that
+# is not a key here turns check_R_extra_axiom_NT_killed RED; that is how
+# 'partially_derived' arrived, and admitting it is an edit to this table,
+# not to the leg.
+#
+# The leg reads this table by CONTAINMENT, not by equality against the
+# modes in use: a mode listed here and used by no record does not fail
+# (it is reported, unasserted, in the artifacts as
+# 'admitted_modes_unused'). The prior leg asserted set equality and so
+# went red on any record that gained a mode, which is the failure this
+# table replaces.
+# ---------------------------------------------------------------------------
 
-    STATEMENT: Any candidate "extra axiom" beyond A1 plus the four PLEC
-    components (A1, MD, A2, BW) that has been historically treated as
-    primitive in physics either reduces to a consequence of A1 + PLEC
-    (kill_mode = 'derived') or is structurally redundant with PLEC
-    (kill_mode = 'redundant_with_PLEC'). The kill is established by
-    enumeration over four representative candidates.
+_ADMITTED_KILL_MODES = {
+    'derived': (
+        'the record claims the candidate axiom is a theorem of the bank '
+        'and names the deriving callables in derivation_targets'
+    ),
+    'partially_derived': (
+        'the record claims a proper part of the candidate axiom is '
+        'derived, and names in its own rationale the part that is not'
+    ),
+    'redundant_with_PLEC': (
+        'the record claims the candidate axiom adds no content beyond '
+        'A1 plus the four PLEC components'
+    ),
+    'assumed_by_cited_targets': (
+        'the record claims NO reduction: the checks it cites take the '
+        'candidate axiom as a premise rather than deriving it, and the '
+        'rationale names where'
+    ),
+}
+
+# A mode string no record declares. The membership leg is a gate only if
+# the container it consults can REFUSE something; this canary makes that
+# refusal executable rather than assumed. It goes red if
+# _ADMITTED_KILL_MODES is ever replaced by a container that accepts
+# arbitrary strings (a wildcard, a permissive __contains__, a stub that
+# returns True). It says nothing about whether the modes actually listed
+# are the right ones.
+_UNADMITTED_MODE_CANARY = 'canary_mode_that_no_record_declares'
+
+
+def check_R_extra_axiom_NT_killed():
+    """R_extra_axiom_NT: Rival with an extra axiom beyond A1 + PLEC — 3 of 4 candidates KILLED, 1 PARTIAL [P_structural].
+
+    STATEMENT: Of four candidates for an "extra axiom" beyond A1 plus
+    the four PLEC components (A1, MD, A2, BW) — all four historically
+    treated as primitive in physics — three reduce to a consequence of
+    A1 + PLEC: two as bank theorems (kill_mode = 'derived'), one as
+    structurally redundant with PLEC (kill_mode =
+    'redundant_with_PLEC'). The fourth, Lorentz invariance, reduces
+    only in part (kill_mode = 'partially_derived'). Lorentzian metric
+    structure is derived, and local SO(1,3) covariance follows from
+    it; covariance of the S-matrix is asserted at Hypothesis 1 of
+    T_Coleman_Mandula and carries no executable witness. Three kills
+    and one partial kill, by enumeration over four representative
+    candidates.
 
     KILL WITNESS: Enumerate four candidate extra axioms — Lorentz
     invariance, gauge invariance, the Born rule, the existence of a
     Lagrangian density. For each, point to the bank module + theorem
-    chain that derives or absorbs the candidate. The witness asserts
-    that every candidate has a non-empty derivation reference.
+    chain that derives or absorbs the candidate. Each record carries
+    `derivation_targets`, a tuple of (module_name, callable_name)
+    pairs that resolve by import, so a reader can execute what the
+    record cites rather than reading a prose reference. All targets
+    are registered checks with one exception, named here:
+    ('apf.unification', 'pi_A') is a module-level projection
+    function, not a registered check. This check resolves those pairs
+    itself: for every pair it imports the module and asserts the named
+    attribute is present and callable, without invoking it. It does not
+    read `derivation_ref`, which is prose, beyond asserting that string
+    is non-empty.
 
     LIMITATION: This is a kill *by enumeration over historically
     important candidates*, not a logical proof that no extra axiom
@@ -408,20 +664,67 @@ def check_R_extra_axiom_NT_killed():
     the four-element list. The bank's response in that case is to
     extend `_EXTRA_AXIOM_KILLS` with the new candidate's reduction —
     each new candidate either reduces or contradicts; in v0 we cover
-    the four most commonly invoked.
+    the four most commonly invoked. A second limitation, on the
+    candidates already listed: one of the four is not fully reduced.
+    The Lorentz record is a partial kill, and the enumeration is
+    therefore three-and-a-half rather than four.
 
-    DEPENDENCIES: A1, L_PLEC_components_essentiality (via cross_refs;
-    no direct call to avoid cycle).
+    DEPENDENCIES: A1.
+    NOTE: no PLEC-components essentiality result is banked. This
+    docstring previously cited L_PLEC_components_essentiality, which has
+    never existed in the bank under any spelling. The nearest banked
+    content runs the other way: check_T_PLEC_derived_from_spine
+    (apf/foundation_inputs.py) derives A1/MD/A2/BW from the four-input
+    declaration, with BW derived from MD, so the four are NOT asserted
+    to be logically independent. This kill does not rest on their
+    independence — only on the enumerated candidate reductions below.
     STATUS: [P_structural].
     """
-    # Enumerate the four candidate extra axioms.
-    expected_kill_modes = {'derived', 'redundant_with_PLEC'}
+    # -- Leg A: the admitted-mode vocabulary refuses at least one string.
+    #
+    # WHAT IT COMPUTES: that _UNADMITTED_MODE_CANARY, a string no record
+    # declares, is absent from _ADMITTED_KILL_MODES.
+    # WHAT IT CANNOT CATCH: anything about the modes that ARE listed. It
+    # discriminates a container that can refuse from one that cannot; it
+    # does not adjudicate the vocabulary.
+    check(
+        _UNADMITTED_MODE_CANARY not in _ADMITTED_KILL_MODES,
+        f"Admitted kill-mode table accepts the canary "
+        f"{_UNADMITTED_MODE_CANARY!r}; the membership leg below refuses "
+        f"nothing and is not a gate."
+    )
+
+    # -- Leg B: per-record shape, mode membership, and target resolution.
+    #
+    # WHAT LEG B1 (mode membership) COMPUTES: that each record's
+    # kill_mode is a key of _ADMITTED_KILL_MODES.
+    # WHAT IT CANNOT CATCH: whether a record carries the RIGHT mode for
+    # its content. No leg here reads a rationale, and none distinguishes
+    # 'derived' from 'partially_derived' — a record relabelled from one
+    # to the other passes unchanged.
+    #
+    # WHAT LEG B2 (derivation-target resolution) COMPUTES: that each
+    # record declares a non-empty `derivation_targets` tuple of
+    # (module_name, callable_name) string pairs, and that for every pair
+    # importlib imports the module and the named attribute is present on
+    # it and callable. The callables are NOT invoked — re-entry and
+    # cycle risk — following the idiom of check_R_Born_axiomatic_killed
+    # below, which resolves apf.core.check_T_Born and apf.core.check_T2
+    # the same way.
+    # WHAT IT CANNOT CATCH: whether a resolved callable derives what the
+    # record says it derives. A pair naming a real check about an
+    # unrelated subject resolves and passes. The leg separates a name
+    # that exists in the tree from a name that does not, and it reads
+    # only `derivation_targets`; `derivation_ref` is prose and no leg
+    # consults it beyond its length.
     enumeration = []
+    resolved_by_axiom = {}
     for axiom_label, kill_record in _EXTRA_AXIOM_KILLS.items():
         check(
-            kill_record['kill_mode'] in expected_kill_modes,
-            f"Unknown kill_mode {kill_record['kill_mode']!r} for "
-            f"axiom {axiom_label!r}."
+            kill_record['kill_mode'] in _ADMITTED_KILL_MODES,
+            f"Kill mode {kill_record['kill_mode']!r} for axiom "
+            f"{axiom_label!r} is not in the admitted vocabulary "
+            f"{sorted(_ADMITTED_KILL_MODES)}."
         )
         check(
             len(kill_record['derivation_ref']) > 0,
@@ -431,10 +734,56 @@ def check_R_extra_axiom_NT_killed():
             len(kill_record['rationale']) > 0,
             f"Empty rationale for axiom {axiom_label!r}."
         )
+
+        targets = kill_record.get('derivation_targets', ())
+        check(
+            isinstance(targets, (tuple, list)) and len(targets) > 0,
+            f"Axiom {axiom_label!r} declares no derivation_targets; the "
+            f"target-resolution leg would run zero times for it."
+        )
+
+        resolved = []
+        for pair in targets:
+            check(
+                isinstance(pair, (tuple, list)) and len(pair) == 2
+                and all(isinstance(part, str) and part for part in pair),
+                f"Malformed derivation_targets entry {pair!r} for axiom "
+                f"{axiom_label!r}; expected a (module, callable) pair of "
+                f"non-empty strings."
+            )
+            mod_name, attr_name = pair
+            target_mod = None
+            import_error = None
+            try:
+                target_mod = importlib.import_module(mod_name)
+            except Exception as exc:            # noqa: BLE001 - reported
+                import_error = f'{type(exc).__name__}: {exc}'
+            check(
+                target_mod is not None,
+                f"Axiom {axiom_label!r} derivation target "
+                f"({mod_name!r}, {attr_name!r}): module did not import "
+                f"({import_error})."
+            )
+            check(
+                hasattr(target_mod, attr_name),
+                f"Axiom {axiom_label!r} derivation target "
+                f"({mod_name!r}, {attr_name!r}): module imported but the "
+                f"named attribute is absent."
+            )
+            check(
+                callable(getattr(target_mod, attr_name, None)),
+                f"Axiom {axiom_label!r} derivation target "
+                f"({mod_name!r}, {attr_name!r}): attribute present but "
+                f"not callable."
+            )
+            resolved.append(f'{mod_name}.{attr_name}')
+
+        resolved_by_axiom[axiom_label] = resolved
         enumeration.append({
             'axiom': axiom_label,
             'kill_mode': kill_record['kill_mode'],
             'derivation_ref': kill_record['derivation_ref'],
+            'derivation_targets_resolved': resolved,
         })
 
     # Coverage: at least 4 candidates.
@@ -443,45 +792,62 @@ def check_R_extra_axiom_NT_killed():
         f"Extra-axiom enumeration too thin: {len(enumeration)} < 4."
     )
 
-    # At least one candidate of each kill_mode (sanity check that the
-    # taxonomy is exercised).
     modes_present = {e['kill_mode'] for e in enumeration}
-    check(
-        modes_present == expected_kill_modes,
-        f"Kill modes present = {modes_present}; expected {expected_kill_modes}."
-    )
+    n_targets_resolved = sum(len(v) for v in resolved_by_axiom.values())
 
     return _result(
-        name='R_extra_axiom_NT — Rival with extra axiom beyond A1 + PLEC KILLED',
+        name=('R_extra_axiom_NT — Rival with extra axiom beyond A1 + PLEC: '
+              '3 of 4 candidates KILLED, 1 PARTIAL'),
         tier=4,
         epistemic='P_structural_exhaustive',
         summary=(
             'Rival framework with a non-trivial extra axiom beyond A1 '
-            'plus the four PLEC components (A1, MD, A2, BW) is killed by '
+            'plus the four PLEC components (A1, MD, A2, BW) is met by '
             'enumeration over four candidate extra axioms historically '
             'treated as primitive: Lorentz invariance, gauge invariance, '
-            'Born rule, Lagrangian density existence. Each is either '
-            'derived in the bank (kill_mode = "derived") or structurally '
-            'redundant with PLEC (kill_mode = "redundant_with_PLEC"). '
-            'Kill is by enumeration over historically important '
-            'candidates; not a logical proof that no extra axiom could '
-            'survive (extension path: add new candidate reductions to '
-            '_EXTRA_AXIOM_KILLS).'
+            'Born rule, Lagrangian density existence. Three are reduced: '
+            'gauge invariance and the Born rule are derived in the bank '
+            '(kill_mode = "derived"), Lagrangian density existence is '
+            'structurally redundant with PLEC (kill_mode = '
+            '"redundant_with_PLEC"). Lorentz invariance is reduced only '
+            'in part (kill_mode = "partially_derived"): the Lorentzian '
+            'metric structure is derived, so local SO(1,3) covariance '
+            'follows, while covariance of the S-matrix is asserted at '
+            'Hypothesis 1 of T_Coleman_Mandula and no check witnesses '
+            'it. Each record names its targets as (module, callable) '
+            'pairs in derivation_targets. The enumeration runs over '
+            'historically important candidates and is not a proof that '
+            'no extra axiom could survive; and one of the four listed '
+            'candidates is not fully reduced (extension path: add new '
+            'candidate reductions to _EXTRA_AXIOM_KILLS).'
         ),
-        key_result='Extra axiom beyond A1 + PLEC killed: 4-candidate enumeration [P_structural]',
+        key_result=(
+            'Extra axiom beyond A1 + PLEC, 4-candidate enumeration: 3 '
+            'reduced (2 derived, 1 redundant with PLEC) + 1 partial '
+            '(Lorentz: local covariance derived, S-matrix covariance '
+            'asserted, not witnessed) [P_structural]'
+        ),
         dependencies=['A1'],
         cross_refs=[
-            'L_PLEC_components_essentiality',
             'Regime_R',
             'L_epsilon*',
             'worked_example',
-            'T_metric', 'T_Lorentz_emergent',
+            'Delta_ordering', 'Delta_continuum', 'Delta_signature',
+            'T9_grav', 'T_Coleman_Mandula',
             'Theorem_R', 'T_gauge', 'L_gauge_template_uniqueness',
             'T2', 'T_Born', 'L_irr',
         ],
         artifacts={
-            'n_candidates_killed': len(enumeration),
+            'n_candidates_enumerated': len(enumeration),
             'kill_modes_present': sorted(modes_present),
+            'admitted_kill_modes': sorted(_ADMITTED_KILL_MODES),
+            # Reported, not asserted: a mode admitted by the table and
+            # used by no record. Dead vocabulary is visible here without
+            # the leg failing on it.
+            'admitted_modes_unused': sorted(
+                set(_ADMITTED_KILL_MODES) - modes_present),
+            'n_derivation_targets_resolved': n_targets_resolved,
+            'derivation_targets_resolved': resolved_by_axiom,
             'enumeration': enumeration,
         },
     )
@@ -589,16 +955,25 @@ def check_R_Born_axiomatic_killed():
 
 
 # =============================================================================
-# Composed kill — T_killed_rivals_v0: all four structural rivals killed.
+# Composed kill — T_killed_rivals_v0: the four rival-kill checks, composed.
 # =============================================================================
 
 def check_T_killed_rivals_v0():
-    """T_killed_rivals_v0: All four structural rivals are killed in v6.9 [P_structural].
+    """T_killed_rivals_v0: the four rival-kill checks all pass [P_structural].
 
-    STATEMENT: The four rival physical-theory architectures locked in
-    Phase 14b §14b.0 v0 — R_SU_Nc_neq_3, R_Ngen_neq_3, R_extra_axiom_NT,
-    R_Born_axiomatic — are all killed by the v6.9 bank. Each is killed
-    by a load-bearing bank theorem; no rival survives.
+    STATEMENT: The four per-rival kill checks locked in Phase 14b §14b.0
+    v0 — R_SU_Nc_neq_3, R_Ngen_neq_3, R_extra_axiom_NT, R_Born_axiomatic
+    — each pass their own asserts. What each one ESTABLISHES is stated in
+    its own record and is not uniform: three of the four extra-axiom
+    records now read `partially_derived` and one reads
+    `assumed_by_cited_targets`, so the reach of the individual kills
+    varies and this composition does not average over it.
+
+    CORRECTION: this docstring read "are all killed by the v6.9 bank.
+    Each is killed by a load-bearing bank theorem; no rival survives."
+    That sentence outran the records it composes. This check verifies
+    that four sub-checks pass; it does not verify that any rival is
+    fully reduced, and no leg here reads a kill_mode.
 
     KILL WITNESS: Compose the four per-kill checks. Each must pass; if
     any fails, the composed kill fails (and Paper 8's killed-rival
@@ -638,19 +1013,20 @@ def check_T_killed_rivals_v0():
     )
 
     return _result(
-        name='T_killed_rivals_v0 — All four structural rivals killed in v6.9',
+        name='T_killed_rivals_v0 — the four rival-kill checks pass; reach is per-rival',
         tier=4,
         epistemic='P_structural_exhaustive',
         summary=(
             'Composed kill: the four rival physical-theory architectures '
             'locked in Phase 14b §14b.0 v0 (R_SU_Nc_neq_3, R_Ngen_neq_3, '
-            'R_extra_axiom_NT, R_Born_axiomatic) are all killed by '
-            'load-bearing v6.9 bank theorems (Theorem_R + T_gauge for '
-            'kill 1; T7 for kill 2; A1 + PLEC components for kill 3 via '
-            '4-candidate enumeration; T_Born + T2 for kill 4). Each '
-            'per-rival kill check passed its internal asserts.'
+            'R_extra_axiom_NT, R_Born_axiomatic) each pass their own '
+            'asserts. The cited witnesses are Theorem_R + T_gauge for '
+            'kill 1; T7 for kill 2; the four-candidate enumeration for '
+            'kill 3; T_Born + T2 for kill 4. What each kill REACHES is '
+            'recorded per-rival and is not uniform; this composition '
+            'reports that the four checks pass and nothing stronger.'
         ),
-        key_result='4/4 structural rivals killed by v6.9 bank [P_structural]',
+        key_result='4/4 rival-kill checks pass; reach is per-rival, see each record [P_structural]',
         dependencies=[
             'R_SU_Nc_neq_3_killed',
             'R_Ngen_neq_3_killed',
@@ -660,10 +1036,10 @@ def check_T_killed_rivals_v0():
         cross_refs=[
             'Theorem_R', 'T_gauge', 'T7',
             'T_Born', 'T2', 'L_irr',
-            'A1', 'L_PLEC_components_essentiality',
+            'A1',
         ],
         artifacts={
-            'n_rivals_killed': len(audit_log),
+            'n_kill_checks_passed': len(audit_log),
             'audit_log': audit_log,
         },
     )
