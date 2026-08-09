@@ -182,8 +182,17 @@ def index_code(code_root):
     return defs, modules
 
 
-def resolve(kind, arg, defs, modules):
-    """(status, evidence). status in RESOLVED / UNRESOLVED / NOT_CODE."""
+def resolve(kind, arg, defs, modules, reg=None):
+    """(status, evidence). status in RESOLVED / UNRESOLVED / NOT_CODE.
+
+    `reg` is the bank registry closed over both key spellings (bare and
+    check_-prefixed, D6), or None when the registry would not import. A name
+    can be a live registry key with no `def` of that name in the tree: the
+    factory in apf/real_adapter_factory.py mints one closure under many keys,
+    so the def is `check_external_ledger_declared` while the keys are long and
+    specific. Resolving against defs alone reports those as absent. They are
+    not absent; they are named somewhere this tool was not looking.
+    """
     if kind in NON_CODE:
         return "NOT_CODE", kind
     if kind == "MODULE":
@@ -203,6 +212,13 @@ def resolve(kind, arg, defs, modules):
         if cand in defs:
             rel, line = defs[cand][0]
             return "RESOLVED", f"{rel}:{line}" + (f" (+{len(defs[cand])-1} more)" if len(defs[cand]) > 1 else "")
+    # A registry key with no def of that name is still a name the bank answers
+    # to. Reported distinctly, never as a def: the two are different surfaces
+    # and collapsing them would hide which one carried the name.
+    if reg:
+        for cand in (arg, "check_" + arg):
+            if cand in reg:
+                return "RESOLVED", f"registry key {cand} (no def of this name)"
     near = sorted(n for n in defs if arg and (n.startswith(arg) or arg in n))[:3]
     return "UNRESOLVED", ("near: " + ", ".join(near) if near else "no such def")
 
@@ -244,6 +260,23 @@ def main(argv):
     print(f"code index: {len(defs)} distinct def names, {len(modules)} modules "
           f"(held files excluded: {sorted(HELD_FILES)})")
 
+    # The registry, closed over both key spellings, built ONCE and used by both
+    # the resolution pass and the REGISTRATION report below. It was previously
+    # built only below, after resolution had already finished -- which is why a
+    # factory-minted check could not resolve.
+    try:
+        import sys as _sys
+        _sys.path.insert(0, code_root)
+        from apf import bank as _bank            # noqa
+        _bank._load()
+        reg = set(_bank.REGISTRY)
+        reg |= {k[6:] for k in list(reg) if k.startswith("check_")}
+        reg |= {"check_" + k for k in list(reg)}
+    except Exception as e:                        # noqa
+        reg = None
+        print(f"(registry probe unavailable: {type(e).__name__}; "
+              f"resolution falls back to defs only, and the registration stage is skipped)")
+
     rows = []
     by_macro_occ = collections.Counter()   # macro CALL SITES, counted as scanned
     per_file_class = collections.Counter()
@@ -270,7 +303,7 @@ def main(argv):
                         continue
                     a = clean(args[slot])
                     kind = arg_kind(a)
-                    status, evidence = resolve(kind, a, defs, modules)
+                    status, evidence = resolve(kind, a, defs, modules, reg)
                     rows.append(dict(paper=paper, file=os.path.relpath(p, papers_root),
                                      line=line, macro=mac, slot=slot, arg=a,
                                      kind=kind, status=status, evidence=evidence))
@@ -434,18 +467,6 @@ def main(argv):
     # ---- REGISTRATION. A def can exist and not be in the bank. A paper
     # anchoring one cites a function the engine never runs as a check. Guarded:
     # if the registry will not import, the rest of this tool still works.
-    try:
-        import sys as _sys
-        _sys.path.insert(0, code_root)
-        from apf import bank as _bank            # noqa
-        _bank._load()
-        reg = set(_bank.REGISTRY)
-        reg |= {k[6:] for k in list(reg) if k.startswith("check_")}
-        reg |= {"check_" + k for k in list(reg)}
-    except Exception as e:                        # noqa
-        reg = None
-        print(f"\n(registry probe unavailable: {type(e).__name__}; skipping the registration stage)")
-
     if reg is not None:
         chk = [r for r in rows if r["status"] == "RESOLVED" and r["kind"] in ("CHECKNAME", "IDENT")]
         unreg = [r for r in chk if r["arg"] not in reg]
