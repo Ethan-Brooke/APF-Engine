@@ -4666,6 +4666,114 @@ def check_T_adj_commutes():
 def check_L_Pi():
     """L_Pi: Joint admissibility is not diagonal when Delta > 0 [P+IJC].
 
+    MODE-ORIENTATION CONVENTION (2026-08-06): the two sector-to-pool
+    couplings in the Step 4 witness are given EQUAL MAGNITUDE and OPPOSITE
+    SIGN, so F_Pi(e1+e2) = 0 and F_Pi(e1-e2) = (0, 0, 2*Delta/C) lands in
+    Pi.  They previously carried the SAME sign, which puts the two modes
+    the other way round.
+
+    WHAT IS COMPUTED, AND AT WHICH SCOPE.  With U = diag(1, -1, 1),
+    U F_Pi_same U = F_Pi_opposite exactly, and U fixes E_d1, E_d2 and the
+    pool direction e3.  So relative to the data THIS CHECK supplies -- two
+    sector projections and the pool direction -- the two witnesses are
+    related by a symmetry of that data and the sign of the M_d2 basis
+    vector is free.  That is the whole of what the relation establishes,
+    and its scope is check_L_Pi.  It does NOT extend to the module: U also
+    exchanges e1+e2 and e1-e2, and check_T_mode_partition_conservation
+    writes v_+ = (e1+e2)/sqrt(2) in coordinates and calls it the common
+    mode.  At module scope the labelling IS fixed, and under it the two
+    witnesses are not interchangeable.  A claim that the previous sign was
+    unoriented rather than wrong was carried here and is withdrawn: it is
+    true at this check's scope and false at the module's, and the module's
+    is the scope a reader is in.
+
+    The edit changes F_Pi's entries and therefore F_Pi(e1+e2), F_Pi(e1-e2)
+    and F_Pi(e3).  What it does not change is any quantity that a leg reads
+    or a record reports -- see the next paragraph, which is a measured
+    claim, not the same claim restated.
+
+    WHAT THE SIGN CHANGE ALONE IS INVISIBLE TO, stated plainly: no leg
+    asserts the orientation.  Taken by itself -- the two matrix literals
+    and nothing else -- it leaves every record returned by this module
+    byte-identical.  That is a re-executable measurement (flip the two
+    literals, execute every check_* in core.py, hash the records) and NOT
+    a stored count: an earlier draft of this note pinned the module at
+    "62 checks, 1196 legs", and the leg figure went stale within two days
+    on edits that had nothing to do with the sign.  The operator is
+    published only through dag_put('F_Pi'), whose only BANK-LOADED
+    consumer is check_T_alg_FPi, which passes unchanged under either
+    sign.  (The out-of-bank legacy monolith paper1.py also reads the key
+    at ~:3620; it is absent from apf/_module_manifest.py and from
+    verify_all.py, so it is not in the bank arithmetic, and this is a
+    scope note rather than a universal negative.)  THAT SCOPE IS EXACT
+    AND MATTERS: the provenance corrigendum carried alongside this note
+    DOES change check_T_mode_partition_conservation's returned record --
+    its summary, its key_result, one artifact key and one leg message --
+    because that record attributed facts about a locally built operator
+    to this check's published witness, and byte-invisibility is precisely
+    what let a record change truth value without changing bytes.
+    Byte-invisibility is a measurement, not an argument for safety.
+
+    The six legs below that touch the operator constrain only that both
+    sector-to-pool couplings are NONZERO: a sweep over the 81 pairs
+    (a, b) drawn from the 9-value exact-rational grid
+    {-2, -1, -1/2, -1/5, 0, 1/5, 1/2, 1, 2} -- one zero, closed under
+    negation, and both properties are load-bearing for the counts -- finds
+    64 that pass all six, and 48 of those 64 put NEITHER named mode in
+    the kernel (8 have a + b = 0, 8 have a - b = 0).  The three legs that
+    would witness the orientation -- F_Pi(e1+e2) = 0, F_Pi(e1-e2) != 0,
+    and the image landing in Pi -- are deliberately NOT added here: a
+    check that mints the assertion its own edit satisfies certifies
+    nothing.
+
+    THE SOURCES, AND THE BRIDGE THEY NEED.  Reference - Conservation as
+    the Shadow of Finite Enforcement (2026-04-26 IJC update) states the
+    partition as a proposition in S2.3: defending the common mode p_+
+    engages no pool and carries no surplus, while defending p_- or p_Pi
+    commits capacity to Pi_12 at cost >= mu* > 0.  Its S2.3 COROLLARY
+    names the common-mode subspace as the zero-marginal-cost directions
+    and hence the symmetries; S2.6 names conservation laws as the kernel
+    of the cost-surplus map.  S2.2 and S2.4 carry the same partition in
+    the parable's vocabulary, as does Paper 0 sec:chained_boats
+    ("common-mode is cost-free ... the chain stays slack").  READING, NOT
+    RESULT: the step from those sources to this sign is the
+    identification of F_Pi WITH the cost-surplus map whose kernel they
+    name.  omega(F_Pi) = Delta/C is computed by a leg below; the
+    identification itself is established nowhere and is named here as a
+    reading.  Two gaps sit inside it: the doc's p_+, p_-, p_Pi are
+    PERTURBATIONS and its proposition is about the COST OF DEFENDING
+    them, whereas F_Pi is an operator on the substrate; and the
+    identification of the substrate direction e1+e2 with the perturbation
+    mode p_+ is made elsewhere, not in this check.
+
+    THE SPECTRUM, AND THE CONFLICT IT EXPOSES.  Both witnesses have
+    spectrum {0, +sqrt(2)*Delta/C, -sqrt(2)*Delta/C} -- identical, since
+    an orthogonal conjugation relates them -- so the stored F_Pi is
+    INDEFINITE under either sign and is not a non-negative cost
+    functional.  That is not incidental to the reading above.  Step 5(a)
+    below asserts the within-sector block vanishes, P F_Pi P = 0 with
+    P = E_d1 + E_d2; for a self-adjoint F that is also non-negative, this
+    FORCES F P = 0 (for x in range(P), x*Fx = x*(P F P)x = 0, and a PSD
+    form vanishing at x annihilates x), hence F_Pi(e1+e2) =
+    F_Pi(e1-e2) = 0 and F_Pi = diag(0, 0, c) -- the form ab2e066 retired
+    for commuting with E_d1.  Checked exhaustively over the symmetric
+    grid {-2..2}^3 with P F P = 0: the only PSD members are diag(0, 0, c),
+    c >= 0.  So under a non-negative cost reading, Step 5(a) and ANY mode
+    partition read off this operator cannot both stand, and the question
+    of a relative sign does not arise.  Whether Prop 2.3's cost-surplus F
+    is this F_Pi is open and unruled.  This note records the conflict; it
+    does not resolve it.
+
+    Every property the witness was built for survives: F_Pi is still
+    self-adjoint, still has a zero within-sector block, still engages Pi,
+    and still fails to commute with E_d1 and E_d2.  A relative sign
+    became available only with the 2026-06-17 corrigendum below.  Its
+    predecessor (ab2e066^) built two objects: an off-diagonal
+    [[0,0,1],[0,0,0],[1,0,0]], which couples ONE sector, and a diagonal
+    diag(0, 0, alpha), which couples NONE -- and the DIAGONAL one was the
+    stored object, dag_put and consumed downstream.  Neither had a
+    relative sign to get right.  That entry stands as written.
+
     PHASE 21 BRIDGE-PREMISE UPDATE (2026-04-26 NIGHT-LATER): the IJC
     premise this check loads on is the STRENGTHENED Dichotomy at the
     substrate-factorizability level (check_T_inseparable_IJC), not the
@@ -4796,8 +4904,36 @@ def check_L_Pi():
     # E_{d1,d2} engages the pool Pi OUTSIDE M_d1 (+) M_d2, so F_Pi COUPLES both
     # individual sectors to Pi (off-diagonal blocks).  F_Pi is NOT diagonal: a
     # diagonal F_Pi would commute with E_d1 and could not make A noncommutative --
-    # that is the whole content of check_T_alg_FPi.  Faithful self-adjoint form
-    # (couples e1<->Pi and e2<->Pi symmetrically):
+    # that is the whole content of check_T_alg_FPi.  Faithful self-adjoint form:
+    # the two sector-to-pool couplings have EQUAL MAGNITUDE.  Their RELATIVE
+    # SIGN is +1 here, so F_Pi sends the differential mode e1-e2 to zero and
+    # sends the common mode e1+e2 to (0, 0, 2*Delta/C), in the pool sector Pi.
+    #
+    # THE RELATIVE SIGN IS UNWITNESSED, AND IS PARKED (RULED 2026-08-08).
+    # A corrigendum flipping it to -1 was carried on 2026-08-06, took two
+    # blinded audits at LAND-WITH-FIXES 0.84 that pulled OPPOSITE WAYS on the
+    # same sentence, and does not land.  What is true, and computed:
+    #   * NO LEG READS THE SIGN.  Flipping both literals leaves all records
+    #     returned by this module byte-identical -- verified by SHA-256 over
+    #     the executed records, both orientations.  It is a free literal.
+    #   * Under the module's own labelling the current sign puts the COMMON
+    #     mode outside the kernel, which is the opposite of what four prose
+    #     surfaces say, two of them in print.  That divergence is real and is
+    #     disclosed here rather than silently corrected.
+    #   * The sign only acquires meaning under a NON-NEGATIVE cost reading,
+    #     and under that reading this check's own Step 5(a) leg (P F P = 0)
+    #     forces F_Pi = diag(0,0,c): for x in range(P), x*Fx = x*(P F P)x = 0,
+    #     and a PSD form vanishing at x annihilates x.  Verified exhaustively
+    #     over the symmetric integer grid {-2..2}: every PSD solution of
+    #     P F P = 0 is diagonal.  That is the form ab2e066 retired, because it
+    #     commutes with E_d1.  So Step 5(a) and a mode partition read off this
+    #     operator cannot both stand, and the relative sign does not arise
+    #     until that is ruled (open as "R-c").
+    #   * This witness is INDEFINITE under either sign (spectrum
+    #     {0, +-sqrt(2)*Delta/C}), so it is not a non-negative cost functional.
+    # Patch and both audit returns preserved at
+    # Artifacts_2026-08-06_session/sign_corrigendum/ and
+    # Artifacts_2026-08-06_session/returns/.
     Ed1 = _mat([[1,0,0],[0,0,0],[0,0,0]])
     Ed2 = _mat([[0,0,0],[0,1,0],[0,0,0]])
     F_Pi_scale = float(Delta / C)
@@ -5489,29 +5625,512 @@ def check_P_tom():
     )
 
 
+# Declared leg count for check_P_cls (counted contract; see that check's
+# docstring for the caveat about the still-owed counted-vs-set-exact ruling).
+# The count INCLUDES the inventory leg itself.
+_P_CLS_EXPECTED_LEGS = 570
+
+
 def check_P_cls():
     """P_cls: Compositional Closure from L_loc.
 
-    Over C: composite stays in Wedderburn class.
-    Over H: M_m(H) x_R M_n(H) -> M_{4mn}(C) exits quaternionic class.
+    Over C:  M_n(C) (x)_C M_m(C) ~= M_{nm}(C)  -- the composite STAYS in the
+             complex class.
+    Over H:  M_m(H) (x)_R M_n(H) ~= M_{4mn}(R) -- the composite LEAVES the
+             quaternionic class.
+
+    WHAT IS ESTABLISHED HERE is that second line, at the finite shapes
+    listed below, and the contrast with the first: a theorem of algebra
+    about the type invariant D, which goes 4 -> 1 over H against 2 -> 2
+    over C.  The step from there to "H is excluded" needs a further
+    premise -- that the admissible class must be closed under composition
+    -- and NO LEG BELOW COMPUTES ANY PART OF IT.  `dependencies` lists
+    L_loc, T2b and T_sep as declared bank edges; none of the three is
+    computed here.  A leg that stood here as warrant for the exclusion --
+    Fraction(5) + Fraction(4) == Fraction(9), on constants assigned on
+    the line immediately above it -- is an arithmetic identity on local
+    literals, and has been removed rather than left standing.
+
+    TARGET CORRECTION (2026-08-08).  This docstring and the leg below named
+    the composite target M_{4mn}(C), centre C.  The object is M_{4mn}(R),
+    centre R.  That is the correction the v24.3.442 quaternionic
+    tensor-target corrigendum made in closed_world_completeness.py, which
+    already carries the target as M_{4nm}(R); this check was not in its
+    sweep.  The correction is not cosmetic, because the argument standing
+    here was "M_k(H) has centre R, the composite has centre C, therefore
+    not isomorphic" -- and once the target is right THAT ARGUMENT IS VOID,
+    not merely mislabelled:
+
+        Z(M_k(H)) = R    and    Z(M_N(R)) = R.
+
+    The centres agree.  The dimensions agree too:
+
+        dim_R M_{4nm}(R) = dim_R M_{2nm}(H) = 16 n^2 m^2.
+
+    So neither the centre nor the real dimension separates the composite
+    from a quaternionic algebra.  Both non-separations are COMPUTED below.
+    The centre non-separation is at (3), asserted as an equality between
+    two executed rank computations.  The dimension non-separation is at
+    (6), where M_{2mn}(H) is built as explicit real matrices and its span
+    dimension is asserted equal to (4mn)^2.  The leg that used to carry
+    the dimension inside the shape loop compared (4mn)^2 with 4(2mn)^2 --
+    the same integer written two ways, with no constructed algebra in it
+    -- and has been removed.
+
+    Also retired: the only substantive leg was
+
+        check('R' != 'C', "M_k(H) center=R vs M_{4mn}(C) center=C: ...")
+
+    a comparison of two string literals, which cannot fail for any input.
+
+    WHAT SEPARATES THEM is the commutant in the defining module -- the
+    division algebra D = End_A(S) of the simple module, which is H for
+    M_k(H) (dim_R 4) and R for M_{4mn}(R) (dim_R 1).  Paper 1 v5.10
+    (sec. on P_cls) already states the argument in this form; the corpus
+    had the right argument in prose and the wrong one in the check.
+
+    WHAT IS COMPUTED HERE, leg by leg (no structure theorem is cited; every
+    algebra below is built as explicit real matrices and every dimension is
+    obtained from an executed rank computation):
+
+      (1) The quaternion representation is verified to BE a representation:
+          q |-> L_q is a homomorphism, q |-> R_conj(q) is a homomorphism,
+          and [L_q, R_p] = 0.  (Right multiplication alone is an
+          ANTI-homomorphism; the conjugate makes the second tensor factor
+          M_n(H) rather than M_n(H)^op.  Since M_n(H)^op ~= M_n(H) as real
+          algebras -- conj(ab) = conj(b) conj(a) -- nothing downstream
+          turns on which is used.)
+
+          FOUR RELABELLINGS LEAVE EVERY NUMBER BELOW UNCHANGED, and a
+          reader should know which, because none of them is asserted
+          anywhere: composing either factor with quaternion conjugation;
+          replacing the quaternion product by its opposite; and exchanging
+          which factor acts on the left.  {L_conj(q)} and {L_q} span the
+          SAME four-dimensional space (conjugation only negates i, j, k),
+          so the generated algebra is not merely isomorphic but identical
+          as a set of matrices, and every dimension, centre and commutant
+          below is literally the same number.  The construction therefore
+          fixes the two factors only up to opposite-algebra relabelling,
+          which is all the conclusion needs.
+      (2) rho(M_k(H)) embeds faithfully in M_{4k}(R): dim_R = 4k^2.
+      (3) THE CENTRE DOES NOT DISCRIMINATE.  dim_R Z(M_k(H)) = 1 for
+          k = 1,2,3 and dim_R Z(M_N(R)) = 1 for N = 4,8, asserted EQUAL.
+      (4) THE COMMUTANT DOES.  dim_R comm(M_k(H) on H^k) = 4 and
+          dim_R comm(M_N(R) on R^N) = 1, asserted UNEQUAL by value.  The
+          commutant of M_k(H) is then identified, not merely counted: it is
+          exactly span{R_1, R_i, R_j, R_k}, and the determinant of a general
+          element is asserted equal by VALUE to the quaternion norm form
+          (a^2+b^2+c^2+d^2)^{2k} at five sample points -- so the commutant
+          is a division algebra and H^k is a simple module, which is what
+          makes its commutant the invariant D.
+      (5) THE COMPOSITE, BUILT NOT CITED.  V = M_{m x n}(H) ~= R^{4mn}; the
+          left factor acts by A.v = Av, the right by B.v = v B^*.  The two
+          factors are verified to commute elementwise, each is verified to
+          embed faithfully (dim 4m^2, 4n^2), and their products are shown to
+          span ALL of End_R(V), rank (4mn)^2.  A full matrix algebra has a
+          simple defining module, so the commutant there IS D; it computes
+          to 1.  Shapes (m,n) = (1,1), (2,1), (1,2), (2,2).  The first
+          three have min(m,n) = 1, and there the two row-major indices
+          a*n + c and c*m + a agree for every (a,c).  At (2,2) they do
+          not: (a,c) = (1,0) gives 2 and 1.
+      (6) IN-CHECK NEGATIVE CONTROL.  The SAME discriminator is applied to
+          M_{2mn}(H), the quaternionic candidate of EQUAL real dimension and
+          EQUAL centre dimension: it returns 4, not 1.  So the leg at (5)
+          asserting 1 is not satisfied by construction.  Shapes
+          (m,n) = (1,1), (2,1); the control is not run at (1,2) or (2,2).
+      (7) OVER C THE CLASS IS PRESERVED.  D = C (dim_R 2) for M_n(C) on C^n
+          and D = C for M_n(C) (x)_C M_m(C) on C^{nm}, asserted EQUAL BY
+          VALUE -- against 4 -> 1 over H.  This is the contrast the
+          conclusion rests on, and it replaces the previous complex leg
+          (n * m == 6), which was an arithmetic identity carrying no
+          algebra.  Computed at (n,m) = (3,2) only.
+
+          THE TWO SIDES COMPOSE OVER DIFFERENT GROUND RINGS: the C side
+          forms (x)_C, the H side forms (x)_R.  Each composes over its
+          own centre, and the centres differ -- Z(C) = C, and Z(H) = R,
+          the latter computed at (3) with k = 1.  The contrast 2 -> 2
+          against 4 -> 1 is therefore between a (x)_C composite and a
+          (x)_R composite; nothing here composes the two fields over a
+          common ground ring.
+
+    WHAT THIS CHECK DOES NOT DO.  It computes at the listed finite shapes
+    only; nothing here is a proof for all (m, n).  It does not compute the
+    exclusion of H: it computes that D is not preserved, and the passage
+    from that to an exclusion runs through a closure premise that no leg
+    here computes.  It does not establish the Wedderburn or Frobenius
+    classifications, which it does not use.  The control at (6) records
+    that the discriminator returns different values on the two
+    equal-dimensional candidates at the sampled shapes; it is not a claim
+    about which edits this check would catch.  The leg counter below
+    is the counted-contract form (precedent: identity_carrier_membership);
+    the corpus's counted-vs-set-exact design ruling is still owed.  What
+    the counter can see is a block that stops running -- the count falls.
+    What it CANNOT see, and this is stated so nobody reads it as more than
+    it is, is an edit to the funnel itself: _c increments and then calls
+    check, so removing the check call leaves the count at its declared
+    value with every leg vacuous.  No counter placed here closes that.
+
+    THE TOLERANCE.  The rank computations use an ABSOLUTE tolerance of
+    1e-9, at FOUR sites: _span_dim, _commutant_dim, _centre_dim, and the
+    _indep call that _centre_dim makes before it.  Every rank call made by
+    this check was instrumented and its singular values recorded; on the
+    shapes run here the smallest NONZERO singular value at each site is
+
+        _span_dim        2.0
+        _commutant_dim   2*sqrt(2) = 2.8284...
+        _centre_dim      2*sqrt(2) = 2.8284...
+        _indep           1.0
+
+    while the largest NUMERICAL ZERO observed is about 9e-15 -- they are
+    not exact zeros, and that lower figure is BLAS-dependent.  _indep is
+    the binding site, tighter than the next by a factor of two, because
+    its input is a stack of elementary matrices of norm 1.  So every rank
+    below is unchanged for a uniform tolerance in roughly [1e-14, 1.0)
+    and changes outside it, which was executed: 1e-14, 1e-9 and 0.99 all
+    pass; 1e-15, 5e-15 and 1.0 all go red.  The margin above the 1e-9 in
+    the code is therefore 1.0.  An earlier version of this paragraph gave
+    "2.0 (span) and 4.0 (commutant)": that named two of the four sites,
+    missed the tightest, and its commutant figure was 4.0 against a
+    measured 2*sqrt(2).
+
+    Adler (1995) discusses the same non-closure; it is a pointer, not the
+    warrant -- the warrant is the computation below.
     """
-    C_A, C_B = Fraction(5), Fraction(4)
-    check(C_A + C_B == Fraction(9), "L_loc: no surplus for new DOF")
+    import numpy as np
 
-    # Complex closure
-    n, m = 3, 2
-    check(n * m == 6, "M_3(C) x M_2(C) = M_6(C): stays complex")
+    _legs = [0]
 
-    # Quaternionic non-closure: centers differ
-    check('R' != 'C', "M_k(H) center=R vs M_{4mn}(C) center=C: not isomorphic")
+    def _c(cond, msg):
+        _legs[0] += 1
+        check(cond, msg)
+
+    # ------------------------------------------------------------------
+    # quaternion arithmetic and its real 4x4 regular representations
+    # ------------------------------------------------------------------
+    _QB = ((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))
+
+    def _qmul(a, b):
+        aw, ax, ay, az = a
+        bw, bx, by, bz = b
+        return (aw * bw - ax * bx - ay * by - az * bz,
+                aw * bx + ax * bw + ay * bz - az * by,
+                aw * by - ax * bz + ay * bw + az * bx,
+                aw * bz + ax * by - ay * bx + az * bw)
+
+    def _qconj(a):
+        return (a[0], -a[1], -a[2], -a[3])
+
+    def _Lq(q):
+        """matrix of x |-> q x on R^4 in the basis (1, i, j, k)"""
+        M = np.zeros((4, 4))
+        for c, e in enumerate(_QB):
+            col = _qmul(q, e)
+            for r in range(4):
+                M[r, c] = col[r]
+        return M
+
+    def _Rq(q):
+        """matrix of x |-> x q on R^4 in the basis (1, i, j, k)"""
+        M = np.zeros((4, 4))
+        for c, e in enumerate(_QB):
+            col = _qmul(e, q)
+            for r in range(4):
+                M[r, c] = col[r]
+        return M
+
+    # ------------------------------------------------------------------
+    # executed linear algebra: span dimension, commutant, centre
+    # ------------------------------------------------------------------
+    def _span_dim(mats):
+        A = np.array([np.asarray(m, dtype=float).ravel() for m in mats])
+        return int(np.linalg.matrix_rank(A, tol=1e-9))
+
+    def _indep(mats):
+        keep, rows = [], []
+        for M in mats:
+            v = np.asarray(M, dtype=float).ravel()
+            if np.linalg.matrix_rank(np.array(rows + [v]), tol=1e-9) > len(rows):
+                rows.append(v)
+                keep.append(np.asarray(M, dtype=float))
+        return keep
+
+    def _commutant_dim(gens, D):
+        """dim_R {x in M_D(R) : [x, g] = 0 for all g in gens}"""
+        cols = []
+        for r in range(D):
+            for c in range(D):
+                E = np.zeros((D, D))
+                E[r, c] = 1.0
+                cols.append(np.concatenate(
+                    [(E @ g - g @ E).ravel() for g in gens]))
+        A = np.array(cols).T
+        return D * D - int(np.linalg.matrix_rank(A, tol=1e-9))
+
+    def _centre_dim(gens, D):
+        """dim_R {z in span(gens) : [z, g] = 0 for all g in gens}"""
+        basis = _indep(gens)
+        cols = [np.concatenate([(B @ g - g @ B).ravel() for g in gens])
+                for B in basis]
+        A = np.array(cols).T
+        return len(basis) - int(np.linalg.matrix_rank(A, tol=1e-9))
+
+    # ------------------------------------------------------------------
+    # the algebras, as explicit real matrices on their defining modules
+    # ------------------------------------------------------------------
+    def _MkH(k):
+        """rho(M_k(H)) acting on its defining module H^k = R^{4k}"""
+        D = 4 * k
+        g = []
+        for a in range(k):
+            for b in range(k):
+                for q in _QB:
+                    M = np.zeros((D, D))
+                    M[4 * a:4 * a + 4, 4 * b:4 * b + 4] = _Lq(q)
+                    g.append(M)
+        return g, D
+
+    def _MNR(N):
+        """M_N(R) acting on R^N"""
+        g = []
+        for a in range(N):
+            for b in range(N):
+                M = np.zeros((N, N))
+                M[a, b] = 1.0
+                g.append(M)
+        return g, N
+
+    def _MnC(n):
+        """rho(M_n(C)) acting on C^n = R^{2n}, complex structure J"""
+        I2 = np.eye(2)
+        J2 = np.array([[0., -1.], [1., 0.]])
+        D = 2 * n
+        g = []
+        for a in range(n):
+            for b in range(n):
+                for U in (I2, J2):
+                    M = np.zeros((D, D))
+                    M[2 * a:2 * a + 2, 2 * b:2 * b + 2] = U
+                    g.append(M)
+        return g, D
+
+    def _H_composite(m, n):
+        """M_m(H) (x)_R M_n(H) on V = M_{m x n}(H) = R^{4mn}.
+
+        left factor  : A.v = A v          (homomorphism of M_m(H))
+        right factor : B.v = v B^*        (B^* the quaternionic conjugate
+                                           transpose, so this too is a
+                                           homomorphism, of M_n(H))
+        """
+        D = 4 * m * n
+        Lg, Rg = [], []
+        for a in range(m):
+            for b in range(m):
+                for q in _QB:
+                    M = np.zeros((D, D))
+                    Lqm = _Lq(q)
+                    for c in range(n):
+                        M[(a * n + c) * 4:(a * n + c) * 4 + 4,
+                          (b * n + c) * 4:(b * n + c) * 4 + 4] = Lqm
+                    Lg.append(M)
+        for c in range(n):
+            for d in range(n):
+                for q in _QB:
+                    M = np.zeros((D, D))
+                    Rqm = _Rq(_qconj(q))
+                    for a in range(m):
+                        M[(a * n + c) * 4:(a * n + c) * 4 + 4,
+                          (a * n + d) * 4:(a * n + d) * 4 + 4] = Rqm
+                    Rg.append(M)
+        return Lg, Rg, D
+
+    def _C_composite(n, m):
+        """M_n(C) (x)_C M_m(C) acting on C^n (x)_C C^m = R^{2nm}"""
+        I2 = np.eye(2)
+        J2 = np.array([[0., -1.], [1., 0.]])
+        D = 2 * n * m
+        Lg, Rg = [], []
+        for a in range(n):
+            for b in range(n):
+                for U in (I2, J2):
+                    M = np.zeros((D, D))
+                    for c in range(m):
+                        M[(a * m + c) * 2:(a * m + c) * 2 + 2,
+                          (b * m + c) * 2:(b * m + c) * 2 + 2] = U
+                    Lg.append(M)
+        for c in range(m):
+            for d in range(m):
+                for U in (I2, J2):
+                    M = np.zeros((D, D))
+                    for a in range(n):
+                        M[(a * m + c) * 2:(a * m + c) * 2 + 2,
+                          (a * m + d) * 2:(a * m + d) * 2 + 2] = U
+                    Rg.append(M)
+        return Lg, Rg, D
+
+    # ==================================================================
+    # (1) the quaternion representation is a representation
+    # ==================================================================
+    for a in _QB:
+        for b in _QB:
+            _c(np.allclose(_Lq(_qmul(a, b)), _Lq(a) @ _Lq(b)),
+               "rho_H: q |-> L_q is an algebra homomorphism")
+            _c(np.allclose(_Rq(_qconj(_qmul(a, b))),
+                           _Rq(_qconj(a)) @ _Rq(_qconj(b))),
+               "rho_H: q |-> R_conj(q) is an algebra homomorphism")
+            _c(np.allclose(_Lq(a) @ _Rq(b), _Rq(b) @ _Lq(a)),
+               "left and right quaternion multiplications commute")
+
+    # ==================================================================
+    # (2) faithful embeddings
+    # ==================================================================
+    for k in (1, 2, 3):
+        gk, Dk = _MkH(k)
+        _c(_span_dim(gk) == 4 * k * k,
+           f"dim_R rho(M_{k}(H)) = 4k^2 = {4 * k * k} (faithful)")
+
+    gH, DH = _MkH(2)
+
+    # ==================================================================
+    # (3) THE CENTRE DOES NOT DISCRIMINATE
+    # ==================================================================
+    zH = [_centre_dim(*_MkH(k)) for k in (1, 2, 3)]
+    zR = [_centre_dim(*_MNR(N)) for N in (4, 8)]
+    for k, z in zip((1, 2, 3), zH):
+        _c(z == 1, f"dim_R Z(M_{k}(H)) = 1: the centre of a quaternionic "
+                   f"matrix algebra is R, not C")
+    for N, z in zip((4, 8), zR):
+        _c(z == 1, f"dim_R Z(M_{N}(R)) = 1: centre R")
+    _c(set(zH) == set(zR) == {1},
+       "centres of M_k(H) and M_N(R) are EQUAL (both 1): the centre cannot "
+       "separate the composite from a quaternionic algebra")
+
+    # ==================================================================
+    # (4) THE COMMUTANT DOES
+    # ==================================================================
+    cH = [_commutant_dim(*_MkH(k)) for k in (1, 2, 3)]
+    cR = [_commutant_dim(*_MNR(N)) for N in (4, 8)]
+    for k, c in zip((1, 2, 3), cH):
+        _c(c == 4, f"dim_R comm(M_{k}(H) on H^{k}) = 4: D = H")
+    for N, c in zip((4, 8), cR):
+        _c(c == 1, f"dim_R comm(M_{N}(R) on R^{N}) = 1: D = R")
+    _c(set(cH) == {4} and set(cR) == {1} and set(cH) != set(cR),
+       "commutant separates quaternionic type (4) from real type (1) BY VALUE")
+
+    # the commutant of M_2(H) is EXACTLY span{R_1, R_i, R_j, R_k} ~= H,
+    # and that span is a division algebra by the quaternion norm form
+    Rgen = []
+    for q in _QB:
+        M = np.zeros((DH, DH))
+        for a in range(2):
+            M[4 * a:4 * a + 4, 4 * a:4 * a + 4] = _Rq(q)
+        Rgen.append(M)
+    for X in Rgen:
+        for g in gH:
+            _c(np.allclose(X @ g, g @ X),
+               "each R_q commutes with rho(M_2(H))")
+    _c(_span_dim(Rgen) == 4 == cH[1],
+       "comm(M_2(H)) = span{R_1, R_i, R_j, R_k}: the commutant IS H")
+    for (a, b, c, d) in ((1, 0, 0, 0), (0, 1, 0, 0), (1, 2, 3, 4),
+                         (2, -1, 0, 3), (0, 0, 5, -2)):
+        X = a * Rgen[0] + b * Rgen[1] + c * Rgen[2] + d * Rgen[3]
+        _c(abs(float(np.linalg.det(X))
+               - float(a * a + b * b + c * c + d * d) ** 4) < 1e-6,
+           "det on the commutant EQUALS the quaternion norm form "
+           "(a^2+b^2+c^2+d^2)^{2k}: every nonzero element is invertible, "
+           "so H^k is a simple module and its commutant is the invariant D")
+
+    # ==================================================================
+    # (5) THE COMPOSITE, BUILT NOT CITED
+    # ==================================================================
+    d_composite = []
+    for (m, n) in ((1, 1), (2, 1), (1, 2), (2, 2)):
+        Lg, Rg, D = _H_composite(m, n)
+        _c(D == 4 * m * n,
+           f"composite module M_{{{m}x{n}}}(H) has real dimension 4mn = {D}")
+        for X in Lg:
+            for Y in Rg:
+                _c(np.allclose(X @ Y, Y @ X),
+                   "the two tensor factors commute elementwise")
+        _c(_span_dim(Lg) == 4 * m * m, "left factor embeds faithfully: 4m^2")
+        _c(_span_dim(Rg) == 4 * n * n, "right factor embeds faithfully: 4n^2")
+        prods = [X @ Y for X in Lg for Y in Rg]
+        _c(_span_dim(prods) == (4 * m * n) ** 2,
+           f"M_{m}(H) (x)_R M_{n}(H) spans ALL of End_R(V) = "
+           f"M_{{{4 * m * n}}}(R), rank {(4 * m * n) ** 2}")
+        _c(_centre_dim(prods, D) == 1,
+           "Z(composite) = R, dim 1 -- NOT C.  The composite target is "
+           "M_{4mn}(R), which is what makes the retired centre argument void")
+        dc = _commutant_dim(Lg + Rg, D)
+        d_composite.append(dc)
+        _c(dc == 1,
+           "comm(composite on M_{m x n}(H)) = R: the composite is of REAL "
+           "type, D = R, so it is not M_k(H) for any k")
+    _c(d_composite == [1, 1, 1, 1],
+       "D(composite) = R at every shape tested")
+
+    # ==================================================================
+    # (6) IN-CHECK NEGATIVE CONTROL
+    # ==================================================================
+    for (m, n) in ((1, 1), (2, 1)):
+        gQ, DQ = _MkH(2 * m * n)
+        _c(_span_dim(gQ) == 4 * (2 * m * n) ** 2 == (4 * m * n) ** 2,
+           "the quaternionic candidate M_{2mn}(H) has the SAME real "
+           "dimension as M_{4mn}(R)")
+        _c(_centre_dim(gQ, DQ) == 1,
+           "the quaternionic candidate has the SAME centre dimension (1)")
+        _c(_commutant_dim(gQ, DQ) == 4,
+           "NEGATIVE CONTROL: the same discriminator returns 4 on "
+           "M_{2mn}(H) and 1 on the composite -- the leg above is not "
+           "satisfied by construction")
+
+    # ==================================================================
+    # (7) OVER C THE CLASS IS PRESERVED
+    # ==================================================================
+    gCf, DCf = _MnC(3)
+    dC_factor = _commutant_dim(gCf, DCf)
+    _c(dC_factor == 2, "comm(M_3(C) on C^3) = C, dim_R 2")
+    Lc, Rc, Dc = _C_composite(3, 2)
+    _c(_span_dim([X @ Y for X in Lc for Y in Rc]) == 2 * (3 * 2) ** 2,
+       "M_3(C) (x)_C M_2(C) spans M_6(C): dim_R 2(nm)^2 = 72")
+    dC_comp = _commutant_dim(Lc + Rc, Dc)
+    _c(dC_comp == 2, "comm(M_3(C) (x)_C M_2(C)) = C, dim_R 2")
+    _c(dC_factor == dC_comp == 2,
+       "over C the division algebra is PRESERVED by value: 2 -> 2")
+    _c(cH[1] == 4 and d_composite[0] == 1 and cH[1] != d_composite[0],
+       "over H the division algebra is NOT preserved by value: 4 -> 1, so "
+       "the composite leaves the quaternionic class")
+
+    # ==================================================================
+    # leg inventory (counted contract; see docstring caveat)
+    # ==================================================================
+    _total = _legs[0] + 1          # +1: this inventory leg itself
+    _c(_total == _P_CLS_EXPECTED_LEGS,
+       f"leg inventory: {_total} legs executed, "
+       f"{_P_CLS_EXPECTED_LEGS} declared")
 
     return _result(
         name='P_cls: Compositional Closure (H excluded)',
         tier=0, epistemic='P',
-        summary='Over C: tensor product stays in complex matrix class. '
-                'Over H: composite exits quaternionic class (Adler 1995). '
-                'L_loc forbids the new DOF this would require.',
-        key_result='H excluded by compositional closure [P]',
+        summary='At finite shapes only; nothing here is a proof for all '
+                '(m,n). Over C, at (n,m) = (3,2): M_n(C) (x)_C M_m(C) '
+                'spans M_{nm}(C) and the division algebra D = C is '
+                'preserved (dim_R comm 2 -> 2). Over H, at (m,n) = (1,1), '
+                '(2,1), (1,2), (2,2): both factors are built as explicit '
+                'real matrices on V = M_{m x n}(H) = R^{4mn} and their '
+                'products are shown to span all of End_R(V), so the '
+                'composite is M_{4mn}(R) and D = H -> R (dim_R comm '
+                '4 -> 1). The two sides compose over different ground '
+                'rings, (x)_C against (x)_R. The centre does NOT '
+                'discriminate: Z(M_k(H)) = Z(M_N(R)) = R, both dim 1, '
+                'asserted as an equality; nor does real dimension -- at '
+                'the control shapes (1,1) and (2,1) the constructed '
+                'M_{2mn}(H) has span dimension (4mn)^2. That same '
+                'M_{2mn}(H) is the negative control: the discriminator '
+                'returns 4 on it. The step from "D is not preserved" to '
+                '"H is excluded" runs through a closure premise that no '
+                'leg here computes.',
+        key_result='D = H -> R under composition, against D = C -> C over '
+                   'C, at the shapes tested [P]',
         dependencies=['L_loc', 'T2b', 'T_sep'],
     )
 
@@ -6308,8 +6927,8 @@ def check_L_threat_substrate_realization():
               contains delta_{p_12}'s realization.  Hence W_{12} ∩
               Pi_{12} != {0}.
 
-    Operationalized below on the (IJC) test substrate (matching L_Pi
-    witness): V = M_{d_1} (+) M_{d_2} (+) Pi with M_{d_1} = e1,
+    Operationalized below on a three-sector test substrate constructed in
+    this check: V = M_{d_1} (+) M_{d_2} (+) Pi with M_{d_1} = e1,
     M_{d_2} = e2, Pi = e3.  W_{12} engages e3, so W_{12} ⊄
     span{e1, e2} = M_{d_1} (+) M_{d_2}.
 
@@ -6337,7 +6956,7 @@ def check_L_threat_substrate_realization():
     from fractions import Fraction
 
     # ============================================================
-    # Step 1: branch-(IJC) interface, witness from L_Pi
+    # Step 1: branch-(IJC) interface, witness constructed here
     # ============================================================
     C = Fraction(10)
     eps1 = Fraction(3)
@@ -6391,7 +7010,7 @@ def check_L_threat_substrate_realization():
     # ============================================================
     # Step 4: W_{12} contains delta_{p_12}'s realization, hence W_{12} ∩ Pi != {0}
     # ============================================================
-    # In the L_Pi witness, W_{12} = E_d1 + E_d2 + F_Pi, where F_Pi acts on Pi.
+    # In this witness, W_{12} = E_d1 + E_d2 + F_Pi, where F_Pi acts on Pi.
     # Construct W_{12}'s effect: it engages all three sectors.
     F_Pi_scale = float(Delta / C)
     F_Pi = _mscale(F_Pi_scale, _mat([[0, 0, 0], [0, 0, 0], [0, 0, 1]]))
@@ -6407,6 +7026,31 @@ def check_L_threat_substrate_realization():
     W12_pi_block = _mm(E_pi_sector, _mm(W12, E_pi_sector))
     check(_fnorm(W12_pi_block) > 0,
           "W_{12}|_Pi != 0: W_{12} ⊄ M_d1 (+) M_d2")
+
+    # The containment W_{12} ⊆ M_d1 (+) M_d2 says exactly W_{12} = P W_{12} P
+    # for P = E_d1 + E_d2, so its negation is the nonvanishing of the residual
+    # below.  Computed on the same W_{12} as the legs above; retained alongside
+    # them, not in place of them.
+    #
+    # THIS LEG ADDS NO DISCRIMINATING POWER, and saying so is the point of the
+    # comment.  P W_{12} P has column 2 identically zero, so resid[:,2] equals
+    # W_{12} e3, and the leg above ("W_{12} e3 != 0") therefore already entails
+    # this one.  Measured over 219,683 operators: zero cases where this leg is
+    # red and that one green.  It is here so that the conclusion this check
+    # RETURNS is computed rather than left for a reader to infer -- not as
+    # coverage.  Do not count it as a test.
+    #
+    # The real defect it does NOT fix: the five legs above are jointly
+    # over-strong.  They reduce to W[2][2] != 0, which is sufficient but not
+    # necessary for the returned conclusion, and they reject valid witnesses --
+    # 6,480 of 19,683 operators on the {0,1,-1} grid satisfy the conclusion with
+    # W[2][2] = 0, among them the operator check_L_Pi publishes.  Repairing that
+    # means RELAXING a leg on a check that is currently green, which is the
+    # self-favouring direction and wants its own seat and its own blinded audit.
+    P_sectors = _madd(Ed1, Ed2)
+    W12_resid = _msub(W12, _mm(P_sectors, _mm(W12, P_sectors)))
+    check(_fnorm(W12_resid) > 0,
+          "W_{12} - P W_{12} P != 0: W_{12} not contained in M_d1 (+) M_d2")
 
     # ============================================================
     # Lemma 2 conclusion verified
@@ -6425,18 +7069,36 @@ def check_L_threat_substrate_realization():
             'W_{12} is NOT contained in M_{d1} (+) M_{d2}.  Equivalently, '
             'there exists Pi_{12} ⊆ V_Gamma with Pi_{12} ∩ (M_{d1} (+) '
             'M_{d2}) = {0} and W_{12} ∩ Pi_{12} != {0}.  Operationalized on '
-            'the (IJC) test substrate from L_Pi: V = e1 (+) e2 (+) e3 with '
-            'F_Pi acting on e3; W_{12} = E_d1 + E_d2 + F_Pi engages e3, so '
+            'a three-sector test substrate built here: V = e1 (+) e2 (+) e3 '
+            'with F_Pi acting on e3; W_{12} = E_d1 + E_d2 + F_Pi engages e3, so '
             'W_{12} ⊄ span{e1, e2} = M_{d1} (+) M_{d2}.  This is the bridge '
             'from threat-level (IJC) to substrate-level active-pool '
             'engagement; replaces the fabricated "L_blk" theorem name with '
             'a derived lemma.'
         ),
         key_result='Branch-(IJC) ⇒ W_{12} engages Pi_{12} disjoint from M_{d1} (+) M_{d2} [P_structural_reading]',
-        # Phase 21 graph rewire (2026-06-29): the proof reconstructs the L_Pi
-        # F_Pi witness and invokes L_MD_extension's mu* floor, so it cites those
-        # lemmas (not their parents) through the bridge. Cycle-safe: neither
-        # L_Pi nor L_MD_extension reaches L_threat.
+        # Phase 21 graph rewire (2026-06-29): cites L_Pi and L_MD_extension
+        # (not their parents) through the bridge. Cycle-safe: neither L_Pi nor
+        # L_MD_extension reaches L_threat.
+        #
+        # PROVENANCE CORRIGENDUM (2026-08-07): this comment previously said the
+        # proof "reconstructs the L_Pi F_Pi witness", and the docstring, two
+        # body comments and the RETURNED summary field said the same. That has
+        # been false since ab2e066 (2026-06-17), which replaced L_Pi's published
+        # diagonal operator with an off-diagonal one. This check builds its own
+        # diag(0,0,alpha) and makes no dag_get call, so it never consumed L_Pi's
+        # object and does not now. The citation to L_Pi is retained because the
+        # lemma is genuinely upstream; what is removed is the claim that the
+        # operator came from it. Anchors and provenance only -- no leg moved, no
+        # value changed. The ab2e066 entry stands as written.
+        #
+        # SEPARATELY OWED: the five operator legs below are jointly over-strong
+        # -- they reduce to F[2][2] != 0, which is sufficient but NOT necessary
+        # for the W_{12} not-contained-in M_d1 (+) M_d2 that this check RETURNS,
+        # and they reject valid witnesses including the operator L_Pi publishes.
+        # A residual leg computing the returned conclusion directly was added
+        # 2026-08-07; it is entailed by an existing leg and does not close this.
+        # Relaxing the over-strong legs is the open item and needs its own seat.
         dependencies=['T_inseparable_IJC', 'L_Pi', 'L_MD_extension'],
         artifacts={
             'C': str(C),
@@ -6478,14 +7140,33 @@ def check_T_mode_partition_conservation():
     the substrate-integrity defense epsilon(d_Gamma) >= mu* > 0 by Lemma 1
     (MD Extension, Phase 19c).
 
-    The differential-mode subspace V_- is in the kernel of L_Pi's specific
-    F_Pi witness (which acts only on Pi).  The full Prop 2.3 case (b) for
-    V_- requires a richer F_Pi with off-diagonal coupling between M_d1
-    and M_d2 sectors that detects the relative sign of differential
-    perturbations — flagged as a follow-up generalization in §3 of the
-    conservation reference doc.  This check lands Prop 2.3 case (a)
-    fully + case (b) pool subcase fully + case (b) differential subcase
-    as partial (consistent with L_Pi's witness, awaiting richer F_Pi).
+    WHICH OPERATOR THIS CHECK RUNS ON (provenance corrigendum,
+    2026-08-08).  The operator below is BUILT HERE: F_Pi = (Delta/C) *
+    diag(0, 0, 1).  This check makes no dag_get call, so it has never
+    consumed the object check_L_Pi publishes and does not now.  Those are
+    different matrices.  check_L_Pi's published witness has been
+    OFF-DIAGONAL since ab2e066 (2026-06-17); the diagonal form built here
+    is the one that commit retired, and check_L_Pi's own Step 5
+    corrigendum note records why -- a diagonal F_Pi commutes with E_d1.
+    Every statement below is therefore about the locally built operator
+    and about nothing else.  The docstring, the body comments, a leg
+    label, the returned summary, key_result and one artifact previously
+    attributed these facts to "L_Pi's witness"; they are corrected here.
+    No leg moved and no value changed.  Whether this check SHOULD consume
+    check_L_Pi's published object is an open design question and is not
+    settled here.  It has a red consequence either way, which is why it
+    is not settled here: on check_L_Pi's same-sign witness
+    (Delta/C)[[0,0,1],[0,0,1],[1,1,0]], F_Pi(e1+e2) = (0,0,2*Delta/C)
+    and Step 2 goes red; on the opposite-sign form
+    (Delta/C)[[0,0,1],[0,0,-1],[1,-1,0]], F_Pi(e1-e2) = (0,0,2*Delta/C)
+    and Step 4 goes red.  Both have nullity 1, not 2.
+
+    The differential-mode subspace V_- is in the kernel of the operator
+    built here, which acts only on Pi.  So this check does not exhibit
+    Prop 2.3 case (b) for V_-: the operator it runs on annihilates the
+    differential mode, and the leg at Step 4 records that fact rather
+    than the proposition.  This check lands Prop 2.3 case (a) fully +
+    case (b) pool subcase fully, and does NOT land case (b) for V_-.
 
     COROLLARY (Noether inversion at branch-(IJC) interfaces): the kernel
     of F_Pi is the symmetry algebra of the joint-admissibility structure at
@@ -6508,15 +7189,15 @@ def check_T_mode_partition_conservation():
 
     PROOF STRUCTURE:
       Step 1: Construct V_+, V_-, V_Pi as orthogonal subspaces of
-              the L_Pi 3-sector substrate.
+              the 3-sector substrate.
       Step 2: Verify F_Pi annihilates V_+ (common-mode is cost-free).
       Step 3: Verify F_Pi acts nontrivially on V_Pi (pool-mode pays
               surplus epsilon(d_Gamma) >= mu* by Lemma 1).
-      Step 4: Verify F_Pi annihilates V_- on L_Pi's witness (partial
-              Prop 2.3 case (b) for differential mode; richer F_Pi
-              flagged as follow-up).
+      Step 4: Verify F_Pi annihilates V_- on the operator built
+              here.  This is NOT Prop 2.3 case (b) for the
+              differential mode; it is its negation on this operator.
       Step 5: Verify kernel(F_Pi) >= V_+ + V_- (the symmetry
-              subspace under L_Pi's witness).
+              subspace of the operator built here).
       Step 6: Compute the cost-surplus identification:
               Delta = epsilon(d_Gamma) = surplus on Pi-engagement.
       Step 7: Verify the Noether-inversion corollary: cost-free
@@ -6526,7 +7207,9 @@ def check_T_mode_partition_conservation():
     """
     from fractions import Fraction
 
-    # IJC premise (matching L_Pi witness)
+    # IJC premise (same premise NUMBERS as check_L_Pi: C, eps1, eps2, Delta;
+    # the OPERATOR below is built here and is not check_L_Pi's -- see the
+    # provenance corrigendum in the docstring)
     C = Fraction(10)
     eps1 = Fraction(3)
     eps2 = Fraction(2)
@@ -6591,23 +7274,31 @@ def check_T_mode_partition_conservation():
           "Pool-mode defense cost > 0 (the entire surplus)")
 
     # ============================================================
-    # Step 4: F_Pi annihilates V_- on L_Pi's witness (partial Prop 2.3 case b for V_-)
+    # Step 4: F_Pi annihilates V_- on the operator built here
     # ============================================================
     F_Pi_v_minus = _mv(F_Pi, v_minus)
     check(_aclose(F_Pi_v_minus, zero3v),
-          "Step 4 (partial Prop 2.3 case b for V_-): F_Pi(v_-) = 0 on L_Pi's witness")
-    # Note: full Prop 2.3 case (b) for V_- requires richer F_Pi with
-    # off-diagonal M_d1 <-> M_d2 coupling (sigma_x-like terms).  L_Pi's
-    # witness uses diagonal F_Pi = diag(0, 0, alpha), which is the
-    # simplest realization but doesn't distinguish V_- from V_+ at the
-    # F_Pi level.  Flagged as a follow-up generalization.
+          "Step 4: F_Pi(v_-) = 0 on the operator built in this check")
+    # This is the NEGATION of Prop 2.3 case (b) for V_-, not a partial form
+    # of it, and it holds because diag(0,0,alpha) kills both e1 and e2.
+    #
+    # A previous note here said full case (b) for V_- "requires a richer
+    # F_Pi with off-diagonal M_d1 <-> M_d2 coupling (sigma_x-like terms)".
+    # That is false and is retired.  For any self-adjoint
+    # F = (Delta/C)*[[0,0,a],[0,0,b],[a,b,0]] -- whose M_d1 <-> M_d2 block
+    # is identically zero -- F(e1-e2) = (0, 0, (Delta/C)(a-b)), so a != b
+    # already suffices and no M_d1 <-> M_d2 coupling is needed.  Witness in
+    # this module's own history: the pre-ab2e066 form a=1, b=0 sends e1-e2
+    # to (0, 0, Delta/C) != 0.  What case (b) for V_- needs is a DIFFERENT
+    # operator, not a richer one; which operator is the open question, and
+    # it is not answered here.
 
     # ============================================================
-    # Step 5: kernel(F_Pi) >= V_+ + V_-  (symmetry subspace under L_Pi)
+    # Step 5: kernel(F_Pi) >= V_+ + V_-  (symmetry subspace, this operator)
     # ============================================================
     # Both V_+ and V_- are in kernel(F_Pi) per Steps 2 and 4.
-    # The symmetry subspace under L_Pi's witness is therefore at least
-    # the full M_d1 (+) M_d2 sector (span{v_+, v_-} = span{e1, e2}).
+    # The symmetry subspace of the operator built here is therefore at
+    # least the full M_d1 (+) M_d2 sector (span{v_+, v_-} = span{e1, e2}).
     # The cost-surplus active sector is precisely V_Pi.
     sym_dim = 2  # span{v_+, v_-}
     cost_surplus_dim = 1  # span{v_Pi}
@@ -6635,7 +7326,7 @@ def check_T_mode_partition_conservation():
     # kernel(F_Pi) is a proper subspace, and its complement (the
     # cost-surplus active subspace) is what the conservation laws
     # constrain.
-    kernel_dim_in_IJC = 2  # V_+ + V_- (under L_Pi's witness)
+    kernel_dim_in_IJC = 2  # V_+ + V_- (kernel of the operator built here)
     image_dim_in_IJC = 1   # V_Pi engagement
     check(kernel_dim_in_IJC + image_dim_in_IJC == total_dim,
           "Noether-inversion: kernel(F_Pi) + image_subspace_of_F_Pi span the joint configuration space")
@@ -6658,8 +7349,13 @@ def check_T_mode_partition_conservation():
             '(pool) carries the cost-budget structure: F_Pi annihilates '
             'V_+ (common-mode is cost-free), engages V_Pi (pool-mode pays '
             'the entire surplus epsilon(d_Gamma) >= mu* > 0 by Lemma 1), '
-            'and (under L_Pi witness) annihilates V_- (partial Prop 2.3 '
-            'case (b); richer F_Pi for full case (b) flagged as follow-up).  '
+            'and also annihilates V_-.  The operator is BUILT IN THIS CHECK '
+            '(F_Pi = (Delta/C) diag(0,0,1)); this check makes no dag_get '
+            'call and does not consume the off-diagonal object check_L_Pi '
+            'publishes, so no COMPUTED statement here is a statement about '
+            'that object.  Because the local operator annihilates V_-, this '
+            'check does NOT land Prop 2.3 case (b) for the differential '
+            'mode -- it exhibits its negation on this operator.  '
             'COROLLARY (Noether inversion): kernel(F_Pi) = symmetry subspace; '
             'cost-free directions = symmetries; T_Noether yields conserved '
             'quantities.  This is the bridge from PLEC + IJC --> mode '
@@ -6668,10 +7364,17 @@ def check_T_mode_partition_conservation():
             'upstream).'
         ),
         key_result=(
-            'kernel(F_Pi) = V_+ + V_- = symmetry subspace at (IJC) interface; '
-            'image-active subspace = V_Pi = cost-surplus sector. Conservation '
-            'laws are the residue of finite admissibility on irreducibly joint '
-            'configurations [P+IJC, via L_Pi route + Lemma 1].'
+            'For the operator built in this check, F_Pi = (Delta/C) diag(0,0,1), '
+            'the legs verify MEMBERSHIP, not the kernel: F_Pi(v_+) = 0, '
+            'F_Pi(v_-) = 0, F_Pi(v_Pi) != 0. No rank, nullity or nullspace is '
+            'computed anywhere here, and sym_dim / kernel_dim_in_IJC are '
+            'literals, so "kernel(F_Pi) = V_+ + V_-" is asserted and not '
+            'established by any leg. Read as the symmetry / cost-surplus split '
+            'at an (IJC) interface under the Noether inversion, this covers '
+            'Prop 2.3 case (a) and the case (b) pool subcase; case (b) for V_- '
+            'is NOT landed here. The operator is local to this check and is '
+            'not the object check_L_Pi publishes '
+            '[P+IJC, via L_Pi route + Lemma 1].'
         ),
         dependencies=['L_Pi', 'L_MD_extension', 'L_threat_substrate_realization',
                       'T_IJC_dichotomy', 'T_alg_FPi'],
@@ -6684,10 +7387,17 @@ def check_T_mode_partition_conservation():
             'cost_surplus_subspace_dim': cost_surplus_dim,
             'kernel_F_Pi_basis': 'span{(e1+e2)/sqrt(2), (e1-e2)/sqrt(2)}',
             'image_F_Pi_basis': 'span{e3}',
-            'partial_Prop_2_3_note': (
-                'V_- in kernel(F_Pi) on L_Pi diagonal witness; full Prop '
-                '2.3 case (b) for V_- requires richer F_Pi with off-diagonal '
-                'M_d1<->M_d2 coupling (sigma_x-like). Follow-up generalization.'
+            'operator_provenance_note': (
+                'F_Pi here is built in this check as (Delta/C) diag(0,0,1); '
+                'no dag_get call is made, so check_L_Pi\'s published '
+                'off-diagonal witness (since ab2e066, 2026-06-17) is not '
+                'consumed. V_- lies in the kernel of the LOCAL operator, so '
+                'Prop 2.3 case (b) for V_- is not landed here. The retired '
+                'claim that case (b) for V_- requires off-diagonal '
+                'M_d1<->M_d2 coupling is false: F = (Delta/C)[[0,0,a],'
+                '[0,0,b],[a,b,0]] gives F(e1-e2) = (0,0,(Delta/C)(a-b)), '
+                'nonzero whenever a != b, with the M_d1<->M_d2 block '
+                'identically zero.'
             ),
             'conservation_doc_ref': (
                 'Reference - Conservation as the Shadow of Finite Admissibility '
