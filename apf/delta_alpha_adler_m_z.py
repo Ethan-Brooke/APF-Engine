@@ -255,12 +255,34 @@ def check_T_delta_alpha_had_adler_pqcd_first_principles_P() -> Dict[str, Any]:
           f"mu-scale half-span {MU_SCALE_HALF_SPAN_REL*100:.2f}% < 5% "
           "(consistent with 3-loop truncation expectation)")
 
-    # Threshold sensitivity (2 m_c vs 2 m_tau): below 20% trigger
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c); judgment
+    # site #19-adjacent, ruled by Ethan 2026-08-10 as R7 option (a)).
+    #   UNIT      percent-relative, ALREADY MULTIPLIED BY 100 at the
+    #             sensitivity_pct assignment above -- the literal 12.0 means
+    #             12%, not 0.12 and not 12 GeV^2.
+    #   ENVELOPE  12%, tightened from 20%.
+    #   WHAT THIS QUANTITY IS, and it is not what the prior comment implied:
+    #             the difference between two partial integrals with DIFFERENT
+    #             LOWER CUTOFFS (> Q^2_match = 2 m_c vs > 2 m_tau). It is the
+    #             size of the [2 m_c, 2 m_tau] slice -- a definitional
+    #             difference -- NOT a scheme ambiguity. The published
+    #             0.03-0.51% threshold figures apply to the TOTAL
+    #             Delta alpha_had, where the low-energy input moves to cancel
+    #             the matching log by construction; comparing this span to
+    #             those is a category error. Here the low-energy piece is
+    #             fenced into NP_RESIDUAL, so the recombined total carries
+    #             zero threshold dependence and the comparison is unavailable
+    #             by construction.
+    #   THIS IS A BOUNDEDNESS GUARD, not a threshold-stability test. A genuine
+    #             stability claim would need a Q_0^2 scan of the recombined
+    #             total gated near 1%, which the present residual construction
+    #             makes vacuous. Ruled: not built here.
     sensitivity_span = abs(DELTA_ALPHA_HAD_ADLER_PQCD_ABOVE_Q2MATCH
                            - DELTA_ALPHA_HAD_ADLER_PQCD_ABOVE_2MTAU)
     sensitivity_pct = sensitivity_span / DELTA_ALPHA_HAD_ADLER_PQCD_ABOVE_Q2MATCH * 100
-    check(sensitivity_pct < 20.0,
-          f"Q_match sensitivity {sensitivity_pct:.1f}% < 20% (below threshold-shift trigger)")
+    check(sensitivity_pct < 12.0,
+          f"[2 m_c, 2 m_tau] slice = {sensitivity_pct:.2f}% of the > Q^2_match "
+          f"piece, < 12% boundedness guard (NOT a scheme ambiguity)")
 
     # Q_match traces to banked m_c self-scale
     check(abs(Q_MATCH_PRIMARY_GEV - 2 * M_C_MC_GEV) < 1e-9,

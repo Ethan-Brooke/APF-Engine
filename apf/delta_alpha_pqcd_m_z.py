@@ -37,7 +37,8 @@ Auditor-gated promotion: passed 8/8 gates from the preflight response brief
     4. Residual fence (Delta alpha_had_dispersion - Delta alpha_had^pQCD as comparator)
     5. No 0.03631 reuse (FORBIDDEN_INPUT_LEDGER + bad_naive_skeleton_reuse.json fixture)
     6. No target consumption (FORBIDDEN_INPUT_LEDGER + bad_dispersion_as_threshold.json)
-    7. Scheme/threshold sensitivity (2 m_tau alternative recorded; 9% span)
+    7. Scheme/threshold sensitivity (2 m_tau alternative recorded; span computed
+       and gated in-check, not stated here)
     8. Pre-registered scenarios outcome (most-likely-positive-residual triggered)
 """
 from __future__ import annotations
@@ -180,12 +181,25 @@ def check_T_delta_alpha_had_pqcd_above_lambda_match_first_principles_P() -> Dict
     check(DELTA_ALPHA_HAD_NP_RESIDUAL > 0,
           "NP residual must be positive (negative would trigger structural alarm)")
 
-    # Sensitivity: 2 m_tau alternative threshold gives a different but bounded value
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c); R7 option
+    # (a), ruled by Ethan 2026-08-10). Sibling of the Adler-route gate in
+    # delta_alpha_adler_m_z.py; the reasoning there applies verbatim.
+    #   UNIT      percent-relative, ALREADY MULTIPLIED BY 100 at the
+    #             sensitivity_pct assignment above -- 12.0 means 12%.
+    #   ENVELOPE  12%, tightened from 20%.
+    #   WHAT THIS QUANTITY IS: the size of the [2 m_c, 2 m_tau] slice, a
+    #             difference between two partial integrals with different
+    #             lower cutoffs. NOT a scheme ambiguity, and NOT comparable to
+    #             the published 0.03-0.51% figures, which are about the total
+    #             Delta alpha_had with its low-energy input free to move.
+    #   BOUNDEDNESS GUARD, not a stability test. See the Adler sibling for why
+    #             the literature-comparable test is unavailable under the
+    #             present NP_RESIDUAL construction.
     sensitivity_span = abs(DELTA_ALPHA_HAD_PQCD_ABOVE_2MC - DELTA_ALPHA_HAD_PQCD_ABOVE_2MTAU)
     sensitivity_pct = sensitivity_span / DELTA_ALPHA_HAD_PQCD_ABOVE_2MC * 100
-    check(sensitivity_pct < 20.0,
-          f"threshold sensitivity {sensitivity_pct:.1f}% < 20% "
-          "(below scenario-2 threshold-sensitive trigger)")
+    check(sensitivity_pct < 12.0,
+          f"[2 m_c, 2 m_tau] slice = {sensitivity_pct:.2f}% of the > 2 m_c "
+          f"piece, < 12% boundedness guard (NOT a scheme ambiguity)")
 
     # Lambda_match traces to banked m_c self-scale
     check(abs(LAMBDA_MATCH_PRIMARY_GEV - 2 * M_C_MC_GEV) < 1e-9,

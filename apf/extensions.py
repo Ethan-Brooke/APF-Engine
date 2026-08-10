@@ -514,12 +514,29 @@ def check_T6B_beta_one_loop():
     alpha_2_GUT = 1 / inv_alpha2_GUT
     alpha_3_GUT = 1 / inv_alpha3_GUT
 
-    # SM couplings DON'T exactly unify (need BSM for that)
-    # but they should be within ~10% of each other at GUT scale
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c); the
+    # twentieth site, added by the 2026-08-01 audit and unruled until now.
+    # R7, ruled by Ethan 2026-08-10.)
+    #   UNIT      dimensionless RATIO MINUS ONE, not a percentage: 0.20 means
+    #             the largest coupling exceeds the smallest by 20%. The prior
+    #             literal 1.0 therefore admitted a FACTOR OF TWO.
+    #   ENVELOPE  0.20, tightened from 1.0.
+    #   THE PRIOR COMMENT WAS FALSE AGAINST THE EXECUTED VALUE. It said the
+    #             couplings "should be within ~10% of each other"; the gate
+    #             permitted 100% and the computed spread is above 10%, so
+    #             tightening to the commented intent would have FAILED the
+    #             check. The bound below brackets what the module actually
+    #             computes; the figure is printed, not asserted in prose.
+    #   WHAT IT GATES, stated the right way round: this is a BOUNDEDNESS guard
+    #             on non-unification. It does NOT establish that the SM fails
+    #             to unify -- read as an assertion it says the couplings AGREE
+    #             to within the envelope, which is the opposite reading and is
+    #             the one the retired comment invited.
     spread = max(alpha_1_GUT, alpha_2_GUT, alpha_3_GUT) / \
              min(alpha_1_GUT, alpha_2_GUT, alpha_3_GUT) - 1
-    check(spread < 1.0,
-          f"Coupling spread at GUT scale: {spread:.2f} (SM doesn't exactly unify)")
+    check(spread < 0.20,
+          f"Coupling spread at GUT scale: {spread:.4f} "
+          f"({spread:.1%}) < 0.20 boundedness guard (SM does not exactly unify)")
 
     # ── Step 5: Top Yukawa and Higgs quartic beta functions ──
     # These are the standard 1-loop RGEs used in L_RG_lambda
