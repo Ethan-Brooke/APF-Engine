@@ -13,7 +13,6 @@ Designed to catch the failure modes identified in the red team audit:
   RT_regression_higgs_mass  — Verify m_H doesn't silently revert to wrong values
   RT_eigvalsh_audit         — Verify no complex off-diagonal info is silently lost
   RT_expected_theorem_count — Assert expected total theorem count
-  RT_tolerance_audit        — Flag theorems with suspiciously loose tolerances
   RT_derivation_vs_witness  — Flag checks that only verify arithmetic, not derivation
 
   v6.7 NEW (Option 3 Work Plan):
@@ -1249,182 +1248,25 @@ def check_RT_expected_theorem_count():
 #  10. ENGINEERING: Tolerance Audit
 # ======================================================================
 
-# Per-check phenomenological-tolerance whitelist for RT_tolerance_audit.
-# Each entry maps a check name to (max acceptable tolerance percent, reason).
+# RT_tolerance_audit was RETIRED 2026-08-09. It inferred a percentage from a
+# bare float in a comparison, and the unit is not in the code: every one of the
+# three sites it was flagging at retirement is an absolute physical bound, not
+# a tolerance -- two residuals in MeV and a finite-part magnitude bound. Two of
+# the seven entries in its whitelist already recorded the same misreading in
+# their own reasons. Its red was therefore carried entirely by false positives,
+# in the same verify_all FLAG channel that RT_expected_theorem_count reports
+# down, and a channel with a permanent false alarm in it trains readers to
+# ignore the channel.
 #
-# WHAT THIS TABLE CAN AND CANNOT SAY (2026-08-01). An entry asserts that the
-# number on the right of a comparison is a PERCENTAGE with a written envelope.
-# It cannot express a bound in physical units, a bound in degrees, or a bound
-# that is not a tolerance at all -- and three of its entries were doing
-# exactly that, each with a reason that did not describe its own check. Two
-# are retained below as declared INSTRUMENT ARTIFACTS rather than deleted,
-# because deleting them makes a text-matching scanner flag a phantom; they
-# clear nothing. A separate reporting tool covers the tolerances this
-# instrument cannot see -- see scripts/tolerance_census.py -- and it
-# makes no claim, so nothing has to audit it.
-# Loose tolerances NOT in this whitelist trigger a FLAG; whitelisted ones are
-# surfaced in the audit summary so reviewers see them, but do not fail the
-# audit. Adding to this whitelist is an explicit editorial decision -- the
-# reason field is required and inspectable.
-PHENOMENOLOGICAL_TOLERANCE_WHITELIST = {
-    'L_NNLO_up_mass': (
-        20.0,
-        'Up-quark mass at NNLO carries ~10-15% lattice + perturbative '
-        'uncertainty (FLAG QCD averages 2024). Tolerance of 20% is the '
-        'experimental + lattice envelope, not a code error.'
-    ),
-    'T_concordance': (
-        50.0,
-        'Cross-regime concordance check spanning Omega_b, Omega_c, H_0, '
-        'and Bekenstein area; 50% is the structural-sanity tolerance for '
-        'the framework-level identification, not a precision claim. '
-        'Per-quantity precision is checked elsewhere.'
-    ),
-    'T_baryogenesis': (
-        20.0,
-        'Baryogenesis predictions are order-of-magnitude in the field; '
-        '20% is below the standard EWBG/leptogenesis envelope (typically '
-        '~50-100% across mechanisms).'
-    ),
-    'L_eta_B_Jarlskog': (
-        6.0,
-        'eta_B from Jarlskog invariant; 6% is at the experimental error bar '
-        '(PDG 2024 cosmological eta_B ~ 6.1e-10 with ~3% statistical + '
-        '~5% systematic).'
-    ),
-    'L_prediction_catalog': (
-        10.0,
-        'CORRECTED 2026-08-01. Gates the MEAN error across tested predictions '
-        '(mean_err = sum(errors)/len(errors), currently 3.79% over 40 tested), '
-        'NOT any individual prediction. The prior reason read "flags any '
-        'individual prediction >10% off", which describes a strictly stronger '
-        'check than the one that executes; per-prediction tolerances are '
-        'tracked at their own sites.'
-    ),
-    'L_Einstein_from_entanglement': (
-        10.0,
-        'CORRECTED 2026-08-01 -- THIS IS NOT A TOLERANCE. No 10% tolerance '
-        'exists anywhere in that check. The scanner matched the text '
-        '"error < 10" inside an f-string SUMMARY SENTENCE -- "Clausius '
-        'dQ=TdS verified on Schwarzschild (error < 10^-10)". The actual '
-        'tolerance there is abs(delta_Q_from_TdS - delta_Q_from_energy) '
-        '< 1e-10. The prior reason cited Faulkner et al 2014 '
-        'next-to-leading-order residuals in support of a tolerance that does '
-        'not exist. The entry is retained ONLY to suppress a known artifact '
-        'of a text-matching instrument; it clears nothing, because there is '
-        'nothing to clear.'
-    ),
-    'L_PMNS_CP_corrected': (
-        15.0,
-        'CORRECTED 2026-08-01 -- THE UNIT IS DEGREES, NOT PERCENT. The check '
-        'reads abs(delta_cons) < 15 and its own message prints '
-        '"|delta| < 15 deg". 15 degrees is tighter than the ~20 deg NuFIT 5.3 '
-        'uncertainty on delta_PMNS, so the bound is defensible -- but the '
-        'prior reason argued in degrees while labelling the result a '
-        'percentage, and this whitelist can only express percentages. '
-        'Retained as an instrument artifact, not as a percentage envelope.'
-    ),
-}
-
-
-def check_RT_tolerance_audit():
-    """RT_tolerance_audit: Catalog the tolerance used by each theorem check.
-
-    Scans theorem check functions for tolerance patterns of the form
-    ``err < N``, ``abs(...) < N``, or ``error < N`` and classifies each
-    finding above 5% as either:
-      * **whitelisted** -- the check appears in
-        ``PHENOMENOLOGICAL_TOLERANCE_WHITELIST`` with a documented reason
-        and the observed tolerance is at or below the whitelisted maximum.
-      * **flagged** -- the check is either not whitelisted at all, or is
-        whitelisted but the observed tolerance exceeds the documented
-        maximum (suggesting the tolerance was widened without re-justifying).
-
-    The audit ``passes`` iff there are zero flagged entries. Whitelisted
-    entries are surfaced in the audit summary so reviewers see them.
-    Adding to the whitelist is an explicit editorial decision: every entry
-    must include a reason field that an external auditor can inspect and
-    contest.
-    """
-    import re
-
-    try:
-        import inspect
-        from apf.bank import REGISTRY, _load
-        _load()
-
-        # Float literal: integer, float with decimal, or scientific notation.
-        _FLOAT = r'(\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?)'
-        patterns = [
-            re.compile(r'err[_a-zA-Z]*\s*<\s*' + _FLOAT),
-            re.compile(r'abs\([^)]*\)\s*<\s*' + _FLOAT),
-            re.compile(r'error[_a-zA-Z]*\s*<\s*' + _FLOAT),
-        ]
-
-        whitelisted = []  # known phenomenological tolerances
-        flagged = []      # actual concerns
-        for name, fn in REGISTRY.items():
-            try:
-                src = inspect.getsource(fn)
-                for pat in patterns:
-                    for match in pat.finditer(src):
-                        try:
-                            tol_val = float(match.group(1))
-                        except (ValueError, IndexError):
-                            continue
-                        if tol_val <= 5.0:
-                            continue
-                        entry = {
-                            'theorem': name,
-                            'tolerance': tol_val,
-                            'context': match.group(0)[:60],
-                        }
-                        wl = PHENOMENOLOGICAL_TOLERANCE_WHITELIST.get(name)
-                        if wl is not None and tol_val <= wl[0]:
-                            entry['reason'] = wl[1]
-                            whitelisted.append(entry)
-                        else:
-                            if wl is not None:
-                                entry['reason'] = (
-                                    f'Whitelisted at <={wl[0]}% but observed '
-                                    f'{tol_val}% -- re-justify.'
-                                )
-                            else:
-                                entry['reason'] = 'Not whitelisted.'
-                            flagged.append(entry)
-            except (OSError, TypeError):
-                continue
-
-        passed = len(flagged) == 0
-        return rt_result(
-            name='RT_tolerance_audit',
-            passed=passed,
-            severity='MEDIUM',
-            summary=(
-                f'Scanned {len(REGISTRY)} theorem checks for tolerance '
-                f'patterns. {len(whitelisted)} whitelisted phenomenological '
-                f'tolerances (documented in PHENOMENOLOGICAL_TOLERANCE_'
-                f'WHITELIST). {len(flagged)} flagged '
-                f'(non-whitelisted or exceeding whitelist max). '
-                f'{"PASS" if passed else "FLAG"}.'
-            ),
-            key_result=(
-                f'whitelisted={len(whitelisted)} '
-                f'flagged={len(flagged)}'
-            ),
-            artifacts={
-                'whitelisted': whitelisted[:30],
-                'flagged': flagged[:30],
-            },
-        )
-    except ImportError as e:
-        return rt_result(
-            name='RT_tolerance_audit',
-            passed=False,
-            severity='MEDIUM',
-            summary=f'Could not import apf: {e}',
-            key_result=f'IMPORT FAILED: {e}',
-        )
+# The replacement is scripts/tolerance_census.py: the same scan, shipped as a
+# reporting tool that makes no claim, so nothing has to audit it. The durable
+# fix is not a better classifier -- it is for a tolerance to DECLARE its unit
+# and envelope at the site, which turns the question into a syntactic one with
+# a right answer (Working Rule 17; D4@2026-08-03 option (c), execution open).
+#
+# Retirement is count-neutral: this check was never in the registry -- it sat
+# in _BANK_SAFE_CHECKS' exclusion list and reached execution only through
+# verify_all's vars(mod) walk.
 
 
 # ======================================================================
@@ -1441,7 +1283,6 @@ _CHECKS = {
     'RT_regression_higgs_mass': check_RT_regression_higgs_mass,
     'RT_eigvalsh_audit': check_RT_eigvalsh_audit,
     'RT_expected_theorem_count': check_RT_expected_theorem_count,
-    'RT_tolerance_audit': check_RT_tolerance_audit,
 }
 
 
@@ -2256,7 +2097,7 @@ def _wrap_for_bank(rt_check_fn):
 # Skip bank-dependent checks when registering INTO the bank (avoid recursion)
 _BANK_SAFE_CHECKS = {
     k: v for k, v in _CHECKS.items()
-    if k not in ('RT_expected_theorem_count', 'RT_tolerance_audit')
+    if k not in ('RT_expected_theorem_count',)
 }
 
 

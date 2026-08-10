@@ -292,6 +292,7 @@ def check_T_bottom_msbar_export_self_scale_branch_closed(): return _res("self_sc
 def check_T_bottom_msbar_export_nonselfscale_open(): return _res("nonselfscale_open", any(b.branch_id == "RUNNING_TO_OTHER_MU_BRANCH" and b.status.startswith("OPEN") for b in ROUTE_BRANCHES))
 def check_T_bottom_msbar_export_pole_rejected(): return _res("pole_rejected", any(b.branch_id == "POLE_BRANCH" and b.status.startswith("REJECTED") for b in ROUTE_BRANCHES))
 def check_T_bottom_msbar_export_pole_knockout_strength(): return _res("pole_knockout_strength", abs(POLE_PULL) > 10.0, pole_pull=POLE_PULL)
+# UNIT: MeV, absolute. 6.0 is a residual bound in MeV, NOT a 6% tolerance.
 def check_T_bottom_msbar_export_msbar_residual_small(): return _res("msbar_residual_small", abs(RESIDUAL_MEV) < 6.0, residual_mev=RESIDUAL_MEV)
 def check_T_bottom_msbar_export_relative_residual_small(): return _res("relative_residual_small", abs(RELATIVE_RESIDUAL_PERCENT) < 0.15)
 def check_T_bottom_msbar_export_pull_quoted_subsigma(): return _res("pull_quoted_subsigma", abs(PULL_QUOTED_SCALE) < 1.0, pull=PULL_QUOTED_SCALE)

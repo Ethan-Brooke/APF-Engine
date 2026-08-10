@@ -35,6 +35,7 @@ def _passed(r): return isinstance(r,dict) and r.get("passed") is True
 
 def check_T_w_trace_multisource_status_declared(): return _res("status_declared", STATUS.startswith("P_w_"))
 def check_T_w_trace_multisource_has_three_points(): return _res("has_three_points", len(comparison_points())==3)
+# UNIT: MeV, absolute. 6.0 bounds the M_W gap in MeV, NOT a 6% tolerance.
 def check_T_w_trace_multisource_all_points_few_mev(): return _res("all_points_few_mev", all(abs(v["M_W_gap_MeV"])<6.0 for v in comparison_points().values()))
 def check_T_w_trace_multisource_all_points_within_1p2sigma(): return _res("all_points_within_1p2sigma", all(v["gap_sigma_units"]<1.2 for v in comparison_points().values()))
 def check_T_w_trace_multisource_weighted_mean_computed(): return _res("weighted_mean_computed", 80.35 < weighted_summary()["weighted_M_W_GeV"] < 80.37)

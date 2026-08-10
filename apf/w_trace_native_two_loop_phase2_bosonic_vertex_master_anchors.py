@@ -86,6 +86,8 @@ def check_T_two_loop_phase2_bosonic_vertex_master_anchors_I4_I10_P():
     values = {name: finite_value(name) for name in ANCHORS}
     for name, v in values.items():
         check(math.isfinite(v), f"{name} finite part not finite: {v}")
+        # UNIT: dimensionless finite-part magnitude, absolute. 50.0 is a
+        # sanity bound on the anchor value, NOT a 50% tolerance.
         check(abs(v) < 50.0, f"{name} magnitude bounded: got {v}")
 
     # Sensitivity: S2 -> 0 must shift I4 finite part (I4 contains S2 in finite part)
