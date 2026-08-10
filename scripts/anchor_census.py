@@ -59,6 +59,36 @@ time, or by a seat with a brief.
 parameters and JSON keys. Those are partitioned out by shape and reported
 separately rather than counted as unresolved anchors.
 
+TWO THINGS FOLDED IN ON 2026-08-10, RULED RATHER THAN BUILT AS A FIFTH TOOL
+---------------------------------------------------------------------------
+  * NORMALISATION. `clean()` did not strip `\allowbreak`, so an anchor argument
+    carrying one survived with a literal backslash, matched neither the
+    identifier nor the module pattern, and was filed OTHER -> NOT_CODE. It was
+    not reported as a failure; it was not reported at all. Two such arguments
+    existed. Undoing a break hint is not inference -- the macro has one meaning
+    and TeX absorbs the space after it -- which is what keeps this clear of
+    Working Rule 17.
+
+  * THE PLAIN-\texttt{} STRATUM, reported apart and never folded into anchor
+    failures. A code object named outside an anchor macro was invisible here by
+    construction; the site that exposed this was found by grepping an English
+    word after surviving every instrument the corpus owns. First run: 1230
+    names, 1086 resolving, 144 not.
+
+    The 144 are not a defect list and this tool does not say they are. What they
+    demonstrated on the first run is sharper than a count: three names in one
+    supplement's summary table are the exact identifiers a dated anchor-repair
+    pass claims to have fixed, and in the file that pass produced the wrong name
+    still appears twice per identifier against one corrected occurrence. The
+    repair fixed the anchored site and left the plain-\texttt{} ones, because
+    the instrument it worked from could only see the site it fixed. A separate
+    56 are the already-ruled missing witness scripts of R1@2026-08-09, surfaced
+    here independently.
+
+    Do not quote the 1086 as missing anchors. Naming a module in a sentence is
+    not an anchor obligation, and which of them should be anchored is a
+    judgement this tool refuses, exactly as it refuses semantic drift.
+
 TWO BUGS THIS TOOL WAS BORN WITH, FIXED, AND KEPT FIXED
 ------------------------------------------------------
   * `^\s*def\s+` -- `\s` matches newlines, which puts the match start on a
@@ -127,10 +157,24 @@ def brace_args(s, i):
     return args, i
 
 
+# Break hints: pure typesetting no-ops that papers insert INSIDE identifiers so
+# a long check name can wrap. TeX absorbs the whitespace following a control
+# word, so the trailing `\s*` here is faithful to TeX rather than a guess --
+# `apf/\allowbreak initial_...` is `apf/initial_...`, with no space, to TeX too.
+#
+# This is NORMALISATION, not inference: each of these has exactly one meaning and
+# removing it has a right answer. That is what keeps it clear of Working Rule 17,
+# and it is why the list is closed rather than extended when a new case appears.
+RE_BREAKHINT = re.compile(r"\\(?:allowbreak|linebreak|nobreak|break|discretionary)\s*")
+RE_BREAKCHAR = re.compile(r"\\[-/@]")
+
+
 def clean(arg):
     """Strip the LaTeX that survives into an argument."""
     a = arg.strip()
     a = re.sub(r"\\[,;:!]", "", a)                       # thin spaces
+    a = RE_BREAKHINT.sub("", a)                          # \allowbreak & friends
+    a = RE_BREAKCHAR.sub("", a)                          # \- \/ \@
     a = a.replace("\\_", "_").replace("\\%", "%")
     a = re.sub(r"\\(?:texttt|textit|textbf|emph|mbox|text)\s*\{([^}]*)\}", r"\1", a)
     a = a.replace("{", "").replace("}", "").replace("$", "")
@@ -156,6 +200,38 @@ def arg_kind(a):
 
 
 NON_CODE = {"MACRO_PARAM", "TEX_LABEL", "SHA", "EMPTY", "OTHER"}
+
+
+# --------------------------------------------------------------------------
+# THE PLAIN-\texttt{} STRATUM. Reported separately, NEVER folded into anchor
+# failures.
+#
+# A code object named in plain \texttt{} instead of an anchor macro is invisible
+# to this tool by construction. One such site was found on 2026-08-09 by grepping
+# an English word, after it had survived every instrument the corpus owns.
+#
+# THE BOUND, and it is the whole Rule-17 defence: a \texttt{} is picked up only if
+# its normalised content matches one of two house conventions with sharp edges --
+# a `check_`-prefixed identifier, or a path ending `.py`. Two rules, closed. The
+# tell that this bound has failed is a run of findings each naming a new shape; if
+# that happens the answer is to report it, not to widen the list.
+#
+# WHAT THIS STRATUM DOES NOT DECIDE. R4@2026-08-09 rules that a RETIRED name is
+# written in plain \texttt{} deliberately, to keep it off the anchor surface. So a
+# non-resolving entry here is either a correctly retired name (the convention
+# working) or a broken citation (a defect), and NOTHING IN THIS TOOL CAN TELL THEM
+# APART. It hands over a finite list; a person reads it.
+# --------------------------------------------------------------------------
+RE_TT_CHECK  = re.compile(r"^check_[A-Za-z0-9_]*$")
+RE_TT_MODULE = re.compile(r"^[\w./-]+\.py$")
+
+
+def tt_shape(a):
+    if RE_TT_CHECK.match(a):
+        return "CHECKNAME"
+    if RE_TT_MODULE.match(a):
+        return "MODULE"
+    return None
 
 
 def index_code(code_root):
@@ -278,6 +354,7 @@ def main(argv):
               f"resolution falls back to defs only, and the registration stage is skipped)")
 
     rows = []
+    tt_rows = []                           # the plain-\texttt{} stratum, kept apart
     by_macro_occ = collections.Counter()   # macro CALL SITES, counted as scanned
     per_file_class = collections.Counter()
     for root, dirs, names in os.walk(papers_root):
@@ -291,12 +368,17 @@ def main(argv):
                 continue
             paper = os.path.relpath(p, papers_root).split(os.sep)[0]
             s = open(p, encoding="utf-8", errors="replace").read()
+            # Spans consumed by anchor macros, so the \texttt pass below cannot
+            # double-count a \texttt{} sitting INSIDE an anchor argument --
+            # clean() strips those wrappers, so they are already counted once.
+            consumed = []
             for m in re.finditer(r"\\([A-Za-z]+)", s):
                 mac = m.group(1)
                 if mac not in ANCHOR_MACROS:
                     continue
                 by_macro_occ[mac] += 1
-                args, _ = brace_args(s, m.end())
+                args, end_i = brace_args(s, m.end())
+                consumed.append((m.start(), end_i))
                 line = s.count("\n", 0, m.start()) + 1
                 for slot in ANCHOR_MACROS[mac]:
                     if slot >= len(args):
@@ -307,6 +389,22 @@ def main(argv):
                     rows.append(dict(paper=paper, file=os.path.relpath(p, papers_root),
                                      line=line, macro=mac, slot=slot, arg=a,
                                      kind=kind, status=status, evidence=evidence))
+
+            # ---- the plain-\texttt{} pass, on the same file -------------------
+            for m in re.finditer(r"\\texttt\b", s):
+                if any(a <= m.start() < b for a, b in consumed):
+                    continue
+                args, _ = brace_args(s, m.end())
+                if not args:
+                    continue
+                a = clean(args[0])
+                shape = tt_shape(a)
+                if shape is None:
+                    continue
+                status, evidence = resolve(shape, a, defs, modules, reg)
+                tt_rows.append(dict(paper=paper, file=os.path.relpath(p, papers_root),
+                                    line=s.count("\n", 0, m.start()) + 1,
+                                    arg=a, kind=shape, status=status, evidence=evidence))
 
     code_rows = [r for r in rows if r["status"] != "NOT_CODE"]
 
@@ -359,6 +457,27 @@ def main(argv):
     ur_cr = [r for r in unres if r["macro"] == "coderef"]
     print(f"\n  Of {len(unres)} unresolved anchors, {len(ur_cr)} are in \\coderef itself"
           f" — the idiom every previous sweep did read, and none resolved.")
+
+    # ---------------------------------------------------------------------
+    # THE PLAIN-\texttt{} STRATUM. Printed apart, counted apart, and NOT added
+    # to ANCHOR FAILURES above -- see the note at RE_TT_CHECK for why the tool
+    # refuses to judge which of these are defects.
+    # ---------------------------------------------------------------------
+    tt_res = [r for r in tt_rows if r["status"] == "RESOLVED"]
+    tt_unres = [r for r in tt_rows if r["status"] != "RESOLVED"]
+    print(f"\nplain \\texttt{{}} naming a code object, outside any anchor macro: "
+          f"{len(tt_rows)}   resolves: {len(tt_res)}   does not: {len(tt_unres)}")
+    print("  This stratum is REPORTED, not adjudicated. A non-resolving entry is")
+    print("  either a retired name written per R4@2026-08-09 -- which is the")
+    print("  convention working -- or a broken citation. Read them, one by one.")
+    for r in tt_unres:
+        print(f"    {r['file']}:{r['line']}  {r['arg']}   [{r['evidence']}]")
+    if tt_res:
+        seen = collections.Counter((r["paper"], r["arg"]) for r in tt_res)
+        print(f"  resolving (a live code object cited without an anchor macro, so"
+              f" invisible to every sweep): {len(seen)} distinct paper/name pairs")
+        for (pap, arg), c in seen.most_common(15):
+            print(f"    {c:3d}x  {arg}   [{pap}]")
 
     print("\nper-paper: anchors / of which \\coderef / unresolved")
     per = collections.defaultdict(lambda: [0, 0, 0])
