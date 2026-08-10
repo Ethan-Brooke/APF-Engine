@@ -1621,6 +1621,22 @@ EXPECTED_THEOREM_COUNT = EXPECTED_REGISTRY_SIZE  # 3299 v24.3.37 (2026-05-19 STA
 # Module name -> list of theorem names (populated at load time)
 _MODULE_MAP = {}
 
+# Module name -> why `_load()` came away from that module with no checks,
+# RECORDED AT THE LOAD EVENT (v24.3.468+, 2026-08-09).
+#
+# `_MODULE_MAP[m] == []` has several causes and the map cannot tell them
+# apart. Reconstructing the cause afterwards by re-importing the module is
+# not equivalent: Python does not cache a FAILED import, so a module that
+# failed here -- the circular / order-dependent import -- imports cleanly on
+# a later attempt and reads as if it had simply never had a `register`. This dict is the load event's own record;
+# `red_team.check_RT_expected_theorem_count` reads it rather than re-importing.
+#
+# Additive only: nothing in `_load()`'s control flow reads it, no branch was
+# added or removed, and no module's load, order or registration changed.
+# Absent from this dict == `_load()` reached the end of the normal path for
+# that module (which is NOT the same as "registered something").
+_LOAD_FAILURES = {}
+
 _loaded = False
 
 
@@ -1642,6 +1658,7 @@ def _load():
         return
     from importlib import import_module
     _load_errors = []
+    _LOAD_FAILURES.clear()
     for mod_path in _MODULE_PATHS:
         mod_name = mod_path.split('.')[-1]
         try:
@@ -1653,6 +1670,10 @@ def _load():
                 # KNOWN_REGISTER_ANOMALIES: register() takes 0 args instead of (registry,).
                 # Skip silently — module's checks won't enter REGISTRY (documented anomaly).
                 _MODULE_MAP[mod_name] = []
+                _LOAD_FAILURES[mod_name] = (
+                    'register_raised_TypeError: register(REGISTRY) raised '
+                    'TypeError (signature anomaly, or a TypeError from inside '
+                    'register -- this branch cannot tell those apart)')
                 continue
             after = set(REGISTRY.keys())
             _MODULE_MAP[mod_name] = sorted(after - before)
@@ -1666,9 +1687,24 @@ def _load():
             )
             _MODULE_MAP[mod_name] = []
             _load_errors.append((mod_name, str(e)))
+            _LOAD_FAILURES[mod_name] = f'import_failed: ImportError: {e}'
         except Exception as e:
             _MODULE_MAP[mod_name] = []
             _load_errors.append((mod_name, f"{type(e).__name__}: {e}"))
+            # What the load event knows about WHY. The inner try catches only
+            # TypeError, so the AttributeError raised by looking up `register`
+            # on a module that imported perfectly well arrives here — and that
+            # is the architecture-only-by-design case, not a load failure. A
+            # module whose import failed is absent from sys.modules, and an
+            # AttributeError raised from INSIDE register() leaves `register`
+            # present; neither takes this branch.
+            import sys as _sys
+            _obj = _sys.modules.get(mod_path)
+            _LOAD_FAILURES[mod_name] = (
+                'no_register'
+                if (isinstance(e, AttributeError) and _obj is not None
+                    and not hasattr(_obj, 'register'))
+                else f'load_failed: {type(e).__name__}: {e}')
     _loaded = True
 
     # Verify expected count

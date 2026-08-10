@@ -804,40 +804,437 @@ def check_RT_expected_theorem_count():
     than hardcoded here, so the check stays in sync with version bumps
     automatically. The constant lives in bank.py with its own per-version
     changelog; this check verifies the bank actually loaded that many.
+
+    AN EXCUSAL NEEDS BOTH A NAME AND A REASON, AND THE REASON CAN ONLY REVOKE.
+    `_MODULE_MAP` includes modules that register nothing by design; requiring
+    every entry to be non-empty is a condition no tree can satisfy, and a
+    condition that can never hold reports nothing when it fails to hold. So
+    the modules named in `apf._module_manifest.ARCHITECTURE_ONLY_MODULES` are
+    excused -- read from the manifest the bank itself loads from, NOT from
+    `verify_all.ARCHITECTURE_ONLY_WHITELIST`, which is a stale duplicate.
+
+    Membership on that list stays NECESSARY and this check does not weaken
+    it: an empty module that is not on the list fails `no_unexpected_empty`
+    and no reason is asked for. What the reason test adds is a REVOCATION.
+    For each listed module that registered nothing, the recorded reason must
+    be one of
+
+        no_register                     the module has no `register`
+                                        attribute, so the bank had nothing
+                                        to call
+        register_but_no_checks_exposed  the module has `register` but exposes
+                                        no callable named `check_*` at all,
+                                        so there was nothing to register
+
+    and any other reason -- the import RAISED, `register` raised, or the
+    module has a `register` and exposes `check_*` callables and still
+    registered none -- withdraws the excusal and fails the check. The test
+    can only ever take an excusal away; it cannot grant one. That is a
+    statement about `_reason_is_legitimate` IN ISOLATION, and it is not a
+    statement about this check as composed -- see the LIMIT below. The live
+    split across reasons is computed into `excusal_reason_counts` rather than
+    stated here.
+
+    THE REASON IS READ FROM THE LOAD EVENT, NOT FROM A FRESH IMPORT.
+    `apf.bank._LOAD_FAILURES` records, per module, why `_load()` came away
+    with nothing; that record is consulted first and is authoritative.
+
+    LIMIT, DISCLOSED: THE PRODUCER OF THAT RECORD IS NOT CONTROLLED HERE.
+    The nine `reason_control` clauses below are synthetic strings built in this
+    module; none of them exercises `apf.bank`. Most of the live excusals are
+    produced by `bank._load()`, so a single-line edit to how a `_load()` branch
+    classifies a failure -- the `ImportError` arm or the generic arm recording
+    `no_register`, or the `hasattr(_obj, 'register')` clause dropped from the
+    ternary -- grants a blanket excusal that every leg and every control clause
+    here reports green. This is a trust surface this check did not previously
+    have: before the record existed, nothing here depended on `bank`'s failure
+    handling. Controlling it means letting this check exercise `bank`'s
+    classification directly on synthetic (exception, module) pairs; that is not
+    done, and until it is, "the reason is authoritative" means "this check
+    trusts it", not "this check has checked it".
+    Reconstructing the reason by re-importing at check time is NOT
+    equivalent: Python does not cache a FAILED import, so a module that
+    failed during `_load()` -- the circular / order-dependent import --
+    imports cleanly on the second attempt and reads as
+    `no_register`, a true sentence about the module and a false answer to
+    "why is this map entry empty". Only a module with NO load-event record is
+    inspected by import; for every module this check asks about, such a module
+    imported during `_load()` and is therefore already in `sys.modules`, so
+    that inspection is a cache hit rather than a re-execution. (The
+    anti-vacuity control below deliberately calls the same helper on a module
+    that does NOT exist, to exercise the import arm.) `_LOAD_FAILURES` is
+    keyed by bare name, like `_MODULE_MAP` and with the same consequence: on
+    a bare-name collision the later module's record overwrites the earlier's.
+
+    WHAT THE REASON TEST CANNOT SEE, disclosed rather than assumed away.
+    Both legitimate reasons are read off the module as it now is, so neither
+    can tell a module that never had checks from one that LOST them: a listed
+    module truncated to nothing loses `register` and its check definitions
+    together, lands in `no_register`, and is excused.
+    `register_but_no_checks_exposed` has the identical hole. Which of the two
+    carries most of the excused population is computed into
+    `excusal_reason_counts` and is not asserted here. Closing either hole
+    needs a pin on the architecture-only list's contents, which this check
+    does not carry.
+    Note the direction of the residual: it takes a module ALREADY ON the
+    excusal list. A truncated module that is not on the list is caught by
+    `no_unexpected_empty`; putting it on the list is a manifest edit, not a
+    silent registration failure. The `check_*` scan also counts a callable
+    IMPORTED into a module as well as one defined there; that direction
+    refuses an excusal rather than granting one.
+
+    `map_complete` IS A CONSISTENCY GATE, NOT AN INTEGRITY GATE. It compares
+    `len(_MODULE_MAP)` against `len(BANK_LOAD_MODULES)`, and `_MODULE_MAP` is
+    built by iterating exactly that list. The comparison is self-referential:
+    it catches a bare-name collision between two manifest entries (two dotted
+    paths, one key), and it CANNOT catch a module dropped from the manifest
+    with `EXPECTED` co-lowered to match, because both sides move together.
+    Nothing here pins the manifest's contents.
+
+    `STANDALONE_LEMMA_MODULES` NEVER REACH `_MODULE_MAP` -- `BANK_LOAD_MODULES`
+    does not include them -- so they are outside this check's field of view
+    entirely, in both directions.
+
+    `KNOWN_REGISTER_ANOMALIES` IS THE THIRD ZERO-REGISTRATION CATEGORY AND IS
+    NOT EXCUSED. Its members are in `BANK_LOAD_MODULES` and register nothing by
+    design -- `_load()`'s inner `except TypeError` absorbs their register()
+    signature mismatch -- but they are not on the architecture-only list, so a
+    member would fail `no_unexpected_empty` on a by-design condition. The tuple
+    is empty today, so this is latent rather than live; it is stated because
+    the condition is by design and the failure would not be.
+
+    TWO THINGS THAT WILL BITE A LATER READER, both load-bearing:
+
+    (1) THE TWO SIDES SPELL MODULES DIFFERENTLY. `_MODULE_MAP` is keyed by
+        bare name (`codomain_competition`); the manifest holds dotted paths
+        (`apf.codomain_competition`). A set difference taken without
+        normalising returns every architecture-only module as unexcused and
+        leaves this check red -- looking exactly like the defect it repairs.
+
+    (2) A FAILED MANIFEST IMPORT EXCUSES NOTHING. If the import fails the
+        excused set is empty, every architecture-only module counts as
+        unexpected, and this check goes red.
+
+    ON THE COMPLETENESS LEG. `no_excusal_absent_from_module_map` is retained
+    and reported, but it is empty by construction while `BANK_LOAD_MODULES`
+    is DERIVED from `ARCHITECTURE_ONLY_MODULES` and `_load()` writes a
+    `_MODULE_MAP` key on every branch: an added name reaches `_MODULE_MAP`
+    whatever it is.
+
+    THE LEGS ARE NOT NINE INDEPENDENT TESTS. `every_excusal_resolves` is
+    dominated by `every_excused_empty_has_a_reason`: a did-not-load reason is
+    only ever computed for a module that registered nothing, so the first
+    firing implies the second, and it has not been observed to fire alone. Read
+    "9/9 declared legs ran" as a statement about EXECUTION, not independence.
+
+    LEG INVENTORY. The legs are declared by name in `DECLARED_LEGS` below,
+    ahead of the computation, and compared set-exactly against the legs that
+    actually ran. A mismatch contributes a failure reason (D7,
+    append-and-record -- it does not raise, so the remaining legs still
+    report their verdicts in the same pass). STANDING LIMIT, disclosed: an
+    inventory certifies that a declared leg EXECUTED. It does not certify
+    that the leg COULD HAVE FAILED. `reason_classifier_discriminates` is the
+    one leg that addresses the second question, and only for the reason
+    machinery.
+
+    THE VERDICT IS A FUNCTION OF THE FAILURE LIST. `passed` is derived from
+    `failure_reasons`, and the constructed record is then re-read against
+    three independent conditions: a record reporting `passed: True` beside a
+    non-empty failure list, beside a False leg, or beside a leg table that is
+    not the declared inventory, is flipped and the contradiction recorded.
+    LIMIT: an edit that neuters this guard as well is not caught here.
     """
     try:
-        from apf.bank import REGISTRY, _load, _MODULE_MAP, EXPECTED_THEOREM_COUNT
-        expected = EXPECTED_THEOREM_COUNT
+        from apf.bank import (REGISTRY, _load, _MODULE_MAP,
+                              EXPECTED_THEOREM_COUNT, _LOAD_FAILURES)
         _load()
-        actual = len(REGISTRY)
+
+        # Declared ahead of the computation; compared set-exactly below.
+        DECLARED_LEGS = frozenset((
+            'count_match',
+            'module_match',
+            'manifest_read',
+            'map_complete',
+            'no_unexpected_empty',
+            'every_excusal_resolves',
+            'every_excused_empty_has_a_reason',
+            'no_excusal_absent_from_module_map',
+            'reason_classifier_discriminates',
+        ))
+
+        expected, actual = EXPECTED_THEOREM_COUNT, len(REGISTRY)
         module_counts = {mod: len(names) for mod, names in _MODULE_MAP.items()}
         total_from_modules = sum(module_counts.values())
 
-        count_match = actual == expected
-        module_match = actual == total_from_modules
-        all_modules_loaded = all(len(names) > 0 for names in _MODULE_MAP.values())
+        def _bare(m):
+            return m.rsplit('.', 1)[-1]
 
-        empty_modules = [mod for mod, names in _MODULE_MAP.items() if len(names) == 0]
+        try:
+            from apf._module_manifest import (ARCHITECTURE_ONLY_MODULES,
+                                              BANK_LOAD_MODULES)
+            excused_paths = {_bare(m): m for m in ARCHITECTURE_ONLY_MODULES}
+            excused = set(excused_paths)
+            n_manifest_entries = len(BANK_LOAD_MODULES)
+            manifest_read = True
+        except Exception:                                          # noqa
+            excused_paths = {}
+            excused = set()
+            n_manifest_entries = None
+            manifest_read = False
 
-        return rt_result(
+        # Exactly two recorded reasons leave an excusal standing.
+        LEGITIMATE_EMPTY_REASONS = ('no_register',
+                                    'register_but_no_checks_exposed')
+        DID_NOT_LOAD_PREFIXES = ('import_failed', 'load_failed',
+                                 'register_raised')
+
+        def _reason_is_legitimate(reason):
+            return reason in LEGITIMATE_EMPTY_REASONS
+
+        def _empty_reason(bare, dotted, load_failures):
+            """Why did `_load()` come away from this module with no checks?
+
+            The load event's own record answers first; only a module with no
+            such record is inspected by import.
+            """
+            recorded = load_failures.get(bare)
+            if recorded:
+                return recorded
+            from importlib import import_module
+            try:
+                mod = import_module(dotted)
+            except Exception as exc:                               # noqa
+                return f'import_failed: {type(exc).__name__}: {exc}'
+            if not hasattr(mod, 'register'):
+                return 'no_register'
+            exposed = sorted(n for n, v in vars(mod).items()
+                             if n.startswith('check_') and callable(v))
+            if not exposed:
+                return 'register_but_no_checks_exposed'
+            return (f'register_present_and_{len(exposed)}_check_callable(s)_'
+                    f'exposed_but_none_registered')
+
+        # -- anti-vacuity control on the reason machinery ------------------
+        # Both arms of the excusal, and the precedence of the load record
+        # over a fresh import, are exercised on inputs whose classification
+        # is fixed in advance. Widening LEGITIMATE_EMPTY_REASONS, flattening
+        # `_reason_is_legitimate`, or making `_empty_reason` return a
+        # constant fires this leg. The first eight clauses are synthetic and
+        # independent of the tree; the last reads THIS module, so it depends
+        # on `apf.red_team` continuing to carry a `register` and at least one
+        # `check_*` -- if that ever stops being true the clause reports a
+        # false failure, not a false pass.
+        _ABSENT = 'apf.__reason_control_module_that_does_not_exist__'
+        _SYNTH = 'import_failed: ImportError: synthetic control record'
+        control = {
+            'no_register_is_excusable':
+                _reason_is_legitimate('no_register') is True,
+            'no_checks_exposed_is_excusable':
+                _reason_is_legitimate('register_but_no_checks_exposed') is True,
+            'import_failure_is_not_excusable':
+                _reason_is_legitimate(_SYNTH) is False,
+            'load_failure_is_not_excusable':
+                _reason_is_legitimate(
+                    'load_failed: RuntimeError: synthetic control') is False,
+            'register_raising_is_not_excusable':
+                _reason_is_legitimate(
+                    'register_raised_TypeError: synthetic control') is False,
+            'exposed_but_unregistered_is_not_excusable':
+                _reason_is_legitimate(
+                    'register_present_and_3_check_callable(s)_exposed_but_'
+                    'none_registered') is False,
+            'load_record_takes_precedence_over_import':
+                _empty_reason('zz_control', _ABSENT,
+                              {'zz_control': _SYNTH}) == _SYNTH,
+            'absent_module_reports_import_failure':
+                _empty_reason('zz_control', _ABSENT, {}).startswith(
+                    'import_failed'),
+            'a_live_module_carrying_checks_is_not_excusable':
+                not _reason_is_legitimate(
+                    _empty_reason('red_team', 'apf.red_team', {})),
+        }
+        control_failures = sorted(k for k, v in control.items() if not v)
+
+        empty_modules = [mod for mod, names in _MODULE_MAP.items()
+                         if len(names) == 0]
+        empty_set = set(empty_modules)
+
+        # The condition this check exists for: a module that should register
+        # checks and registered none, and is not on the excusal list at all.
+        unexpected_empty = [m for m in empty_modules if _bare(m) not in excused]
+
+        # Every excused name resolved. A name that registered checks
+        # demonstrably imported and is recorded as such -- asking "why is it
+        # empty" about a module that is not empty would put a false sentence
+        # in the artifacts.
+        excusal_reasons = {}
+        for bare, dotted in sorted(excused_paths.items()):
+            registered = _MODULE_MAP.get(bare)
+            if registered:
+                excusal_reasons[bare] = f'registered_{len(registered)}_check(s)'
+            else:
+                excusal_reasons[bare] = _empty_reason(bare, dotted,
+                                                      _LOAD_FAILURES)
+        excused_unresolvable = sorted(
+            b for b, r in excusal_reasons.items()
+            if r.startswith(DID_NOT_LOAD_PREFIXES))
+
+        # The excusal, by reason. Empty + on the list + no legitimate reason
+        # for being empty = not excused.
+        excused_empty_with_reason = sorted(
+            b for b in excusal_reasons
+            if b in empty_set and _reason_is_legitimate(excusal_reasons[b]))
+        excused_empty_without_reason = sorted(
+            b for b in excusal_reasons
+            if b in empty_set and not _reason_is_legitimate(excusal_reasons[b]))
+
+        def _reason_bucket(r):
+            if _reason_is_legitimate(r):
+                return r
+            if r.startswith('registered_'):
+                return 'registered_checks'
+            for p in DID_NOT_LOAD_PREFIXES:
+                if r.startswith(p):
+                    return p
+            return 'exposed_but_none_registered'
+
+        excusal_reason_counts = {}
+        for r in excusal_reasons.values():
+            b = _reason_bucket(r)
+            excusal_reason_counts[b] = excusal_reason_counts.get(b, 0) + 1
+
+        # Retained and reported; see the docstring on why `map_complete` is
+        # the leg that can fail today and this one is empty by construction.
+        present = {_bare(m) for m in _MODULE_MAP}
+        excused_not_present = sorted(excused - present)
+
+        # Reported, not asserted: a module the manifest calls architecture-only
+        # that registered checks anyway. That is drift in the other direction
+        # and is a manifest question, not a silent-registration failure.
+        arch_that_registered = sorted(
+            _bare(m) for m, names in _MODULE_MAP.items()
+            if _bare(m) in excused and len(names) > 0)
+
+        legs = {
+            'count_match': actual == expected,
+            'module_match': actual == total_from_modules,
+            'manifest_read': manifest_read,
+            'map_complete': (manifest_read
+                             and len(_MODULE_MAP) == n_manifest_entries),
+            'no_unexpected_empty': not unexpected_empty,
+            'every_excusal_resolves': not excused_unresolvable,
+            'every_excused_empty_has_a_reason': not excused_empty_without_reason,
+            'no_excusal_absent_from_module_map': not excused_not_present,
+            'reason_classifier_discriminates': not control_failures,
+        }
+
+        # -- leg inventory, set-exact, append-and-record (D7) --------------
+        ran_legs = set(legs)
+        missing_legs = sorted(DECLARED_LEGS - ran_legs)
+        undeclared_legs = sorted(ran_legs - DECLARED_LEGS)
+
+        failing = sorted(k for k, v in legs.items() if not v)
+        failure_reasons = list(failing)
+        if missing_legs:
+            failure_reasons.append(
+                'leg_inventory: declared leg(s) did not run: '
+                + ', '.join(missing_legs))
+        if undeclared_legs:
+            failure_reasons.append(
+                'leg_inventory: leg(s) ran that are not declared: '
+                + ', '.join(undeclared_legs))
+        if control_failures:
+            failure_reasons.append(
+                'reason_control: ' + ', '.join(control_failures))
+
+        count_match = legs['count_match']
+
+        result = rt_result(
             name='RT_expected_theorem_count',
-            passed=count_match and module_match and all_modules_loaded,
+            passed=not failure_reasons,
             severity='HIGH',
             summary=(
                 f'Expected {expected} theorems, loaded {actual}. '
                 f'Module total: {total_from_modules}. '
-                f'Empty modules: {empty_modules if empty_modules else "none"}. '
-                f'{"ALL OK" if count_match else f"MISMATCH: expected {expected}, got {actual}"}.'
+                f'Module map: {len(_MODULE_MAP)} entries against '
+                f'{n_manifest_entries if manifest_read else "?"} in the manifest. '
+                f'Empty modules: {len(empty_modules)} = '
+                f'{len(excused_empty_with_reason)} architecture-only with an '
+                f'established reason + '
+                f'{len(excused_empty_without_reason)} architecture-only WITHOUT one'
+                f'{": " + str(excused_empty_without_reason) if excused_empty_without_reason else ""}'
+                f' + {len(unexpected_empty)} not on the excusal list'
+                f'{": " + str(unexpected_empty) if unexpected_empty else ""}. '
+                f'{"Manifest read OK. " if manifest_read else "MANIFEST NOT READ -- nothing excused. "}'
+                f'{len(ran_legs)} legs ran against {len(DECLARED_LEGS)} declared. '
+                f'{"ALL OK" if not failure_reasons else "FAILED: " + "; ".join(failure_reasons)}'
+                f'{"" if count_match else f" (expected {expected}, got {actual})"}.'
             ),
-            key_result=f'{actual}/{expected} theorems loaded; '
-                       f'{len(empty_modules)} empty modules',
+            key_result=(
+                f'{actual}/{expected} theorems loaded; '
+                f'{len(ran_legs)}/{len(DECLARED_LEGS)} declared legs ran; '
+                + ('all legs pass'
+                   if not failure_reasons
+                   else 'FAILED: ' + '; '.join(failure_reasons))
+            ),
             artifacts={
                 'expected': expected,
                 'actual': actual,
                 'module_counts': module_counts,
                 'empty_modules': empty_modules,
+                'excused_architecture_only': sorted(excused),
+                'unexpected_empty': unexpected_empty,
+                'excusal_reasons': excusal_reasons,
+                'excusal_reason_counts': excusal_reason_counts,
+                'excused_empty_with_reason': excused_empty_with_reason,
+                'excused_empty_without_reason': excused_empty_without_reason,
+                'excused_unresolvable': excused_unresolvable,
+                'excused_not_present_in_module_map': excused_not_present,
+                'architecture_only_that_registered': arch_that_registered,
+                'manifest_read': manifest_read,
+                'module_map_size': len(_MODULE_MAP),
+                'manifest_entry_count': n_manifest_entries,
+                'reason_control': control,
+                'reason_control_failures': control_failures,
+                'declared_legs': sorted(DECLARED_LEGS),
+                'legs': legs,
+                'legs_missing_from_run': missing_legs,
+                'legs_run_but_undeclared': undeclared_legs,
+                'failing_legs': failing,
+                'failure_reasons': failure_reasons,
             },
         )
+
+        # -- the verdict is a function of the failure list ------------------
+        # Three independent readings of the constructed record. A verdict
+        # written past the derivation cannot stand beside a non-empty failure
+        # list, a False leg, or a leg table that is not the declared
+        # inventory. LIMIT: an edit that neuters this guard too is not caught.
+        _a = result['artifacts']
+        contradictions = []
+        if result['passed'] and _a['failure_reasons']:
+            contradictions.append(
+                'record_self_contradiction: passed=True beside a non-empty '
+                'failure list')
+        if result['passed'] and not all(_a['legs'].values()):
+            contradictions.append(
+                'record_self_contradiction: passed=True beside a False leg in '
+                'the recorded leg table')
+        if result['passed'] and set(_a['legs']) != set(_a['declared_legs']):
+            contradictions.append(
+                'record_self_contradiction: passed=True beside a leg table '
+                'that is not the declared inventory')
+        if contradictions:
+            _a['failure_reasons'] = list(_a['failure_reasons']) + contradictions
+            result['passed'] = False
+        if not result['passed']:
+            _failed = 'FAILED: ' + '; '.join(_a.get('failure_reasons') or
+                                             ['(no reason recorded)'])
+            result['key_result'] = (f'{_failed} | {actual}/{expected} '
+                                    f'theorems loaded')
+            if 'FAILED' not in result['summary']:
+                result['summary'] = f'{result["summary"]} {_failed}.'
+        return result
     except ImportError as e:
         return rt_result(
             name='RT_expected_theorem_count',
