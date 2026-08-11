@@ -1123,17 +1123,50 @@ def negative_controls(alias, alias_src, sub_idx, graph_idx, inv_idx,
     return legs
 
 
+
+def _resolve_library_root():
+    """Locate the mounted __APF Library WITHOUT hardcoding a sandbox session id.
+
+    THE DEFECT THIS REPLACES, recorded because it silently disabled a control.
+    This module previously defaulted to a literal
+    `/sessions/<some-old-session>/mnt/__APF Library/...` path. Sandbox session
+    ids are minted PER SESSION, so that path is dead the moment the session
+    that wrote it ends. Run with defaults thereafter, the tool read ZERO papers
+    and still printed a plausible-looking number, and both of its controls
+    reported FILE NOT FOUND -- CONTROL DID NOT RUN. A tool whose positive
+    control cannot run cannot demonstrate that it detects anything.
+
+    Order: explicit env var, then any live sandbox mount by GLOB (never a
+    literal id), then the two known Windows usernames. Returns None if nothing
+    resolves -- the caller must say so rather than proceed silently.
+    """
+    import glob as _glob
+    env = os.environ.get("APF_LIBRARY_ROOT")
+    if env and os.path.isdir(env):
+        return env
+    for pat in ("/sessions/*/mnt/__APF Library",
+                "/sessions/*/mnt/*/__APF Library"):
+        for hit in sorted(_glob.glob(pat)):
+            if os.path.isdir(hit):
+                return hit
+    for guess in (os.path.expanduser("~/My Drive/__APF Library"),
+                  r"C:\Users\EthanBrooke\My Drive\__APF Library",
+                  r"C:\Users\brook\My Drive\__APF Library"):
+        if os.path.isdir(guess):
+            return guess
+    return None
+
+
 def main(argv):
     lib = None
     if "--library" in argv:
         lib = argv[argv.index("--library") + 1]
     else:
-        for guess in ("/sessions/upbeat-intelligent-wright/mnt/__APF Library",
-                      os.path.expanduser(r"~/My Drive/__APF Library"),
-                      r"C:\Users\EthanBrooke\My Drive\__APF Library"):
-            if os.path.isdir(guess):
-                lib = guess
-                break
+        # Resolve the mount; never hardcode a sandbox session id. A literal
+        # /sessions/<id>/ path is dead the moment that session ends, and this
+        # tool then reports "library index 0" and proceeds -- every library
+        # -facing classification silently wrong, no error raised.
+        lib = _resolve_library_root()
     out_json = (argv[argv.index("--json") + 1] if "--json" in argv
                 else os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   "vacancy_census.json"))
