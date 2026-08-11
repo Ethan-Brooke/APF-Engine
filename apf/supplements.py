@@ -6223,8 +6223,44 @@ def check_L_ST_Dirac():
                 distances[key] = round(dist, 2)
                 # FN prediction: d(g,h) ~ x^{-(q_B[g]+q_B[h])}
                 d_FN = x**(-(q_B[g]+q_B[h]))
-                check(abs(dist / d_FN - 1.0) < 0.2,
-                      f"d({g},{h}) = {dist:.2f} ≈ FN {d_FN:.2f} (within 20%)")
+                # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #1).
+                #   UNIT      percent-relative, written as a dimensionless
+                #             fraction: 0.05 is 5% of the FN prediction d_FN.
+                #             NOT a distance and NOT a length: dist is a Connes
+                #             distance, d_FN is the FN power-law prediction for
+                #             it, and the gate is on their ratio.
+                #   ENVELOPE  5%.
+                #   SOURCE    FN discreteness resolution. The x = 1/2
+                #             integer-charge grid has resolution ln 2 = 0.69 per
+                #             charge unit, and the derivation's own |V_us|
+                #             residual is delta_q = 0.0491 charge units -- 1/20
+                #             of the minimum integer step -- giving a fractional
+                #             floor delta_q * ln 2 = 3.40%, inside the
+                #             module-computed band [2.60%, 3.90%]
+                #             (L_CKM_resolution_limit [P],
+                #             apf/standalone/L_CKM_resolution_limit.py;
+                #             floor_within_derivation_computed_error_band,
+                #             apf/scorecard_resolution.py). Carrying that floor
+                #             from |V_us| to the Connes distances is
+                #             FN_POWER_TRANSFER -- a PREMISE, NOT derived
+                #             (same module).
+                #   BRACKETS  MODEL resolution, not measurement. BOTH sides here
+                #             are internal -- the Connes distance read off M_u and
+                #             the pure FN power law -- so no experimental
+                #             uncertainty applies to this comparison at all.
+                #   OBSERVED  2.99% worst over the six ordered pairs (d(0,1),
+                #             d(1,0)), 2.54% best; 5% is 1.67x the worst.
+                #             The retired 0.2 was 6.7x and did no work.
+                #   SIZED BY  the worst observed residual, not by the SOURCE
+                #             above. 2.99% rounded up to 5%: 1.67x. The 3.40%
+                #             floor the SOURCE names would admit the worst pair
+                #             at only 1.14x; 5% is the residual rounded up, not
+                #             the floor. The SOURCE states what kind of
+                #             uncertainty this gate brackets and did not set the
+                #             number 5.
+                check(abs(dist / d_FN - 1.0) < 0.05,
+                      f"d({g},{h}) = {dist:.2f} ≈ FN {d_FN:.2f} "
+                      f"({(dist/d_FN-1)*100:+.2f}%, envelope 5% = FN grid resolution)")
 
     return _result(
         name='L_ST_Dirac: D_F from APF Yukawa Matrices, all Connes axioms [P]',

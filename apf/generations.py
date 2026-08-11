@@ -8044,8 +8044,30 @@ def check_L_NNLO_down_mass():
     err_md_ms = abs(md_ms / exp['md_ms'] - 1)
     err_delta = abs(delta / exp['delta'] - 1)
     err_Vus = abs(Vus / exp['Vus'] - 1)
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #10).
+    #   UNIT      percent-relative, dimensionless fraction: 0.06 is 6% of
+    #             exp['md_ms']. err_md_ms is already the absolute relative
+    #             deviation, so the bound is not signed.
+    #   ENVELOPE  6%, UNCHANGED -- ruled defensible.
+    #   SOURCE    Experimental uncertainty on m_d/m_s is ~3% (FLAG 2024,
+    #             arXiv:2411.04268; PDG 2024 Quark Masses review, section 60);
+    #             the binding uncertainty is the FN grid resolution, computed
+    #             as delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
+    #             module-computed band [2.60%, 3.90%]
+    #             (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us|, where it is measured, to m_d/m_s is
+    #             FN_POWER_TRANSFER -- a PREMISE, NOT derived (same module).
+    #   OBSERVED  4.50%, so 6% is 1.33x. It was the tightest of the fourteen
+    #             mass-ratio / CKM gates when the 2026-08-01 package measured
+    #             them; two gates are now tighter (the m_s/m_b pair in
+    #             apf/session_nnlo.py, at 1.16x and 1.05x).
+    #   SIZED BY  the observed residual, not by the SOURCE above. 4.50%
+    #             rounded up to 6%: 1.33x. The SOURCE states what kind of
+    #             uncertainty this gate brackets; it did not set the number 6.
     check(err_md_ms < 0.06,
-          f"m_d/m_s = {md_ms:.4f} ({err_md_ms*100:.1f}% from exp)")
+          f"m_d/m_s = {md_ms:.4f} ({err_md_ms*100:.1f}% from exp, envelope 6%)")
     check(err_delta < 0.02,
           f"δ_CKM = {delta:.1f}° ({err_delta*100:.1f}% from exp)")
     check(err_Vus < 0.02,
@@ -8057,10 +8079,81 @@ def check_L_NNLO_down_mass():
     err_J = abs(J / exp['J'] - 1)
     check(err_Vcb < 0.05,
           f"V_cb = {Vcb:.4f} ({err_Vcb*100:.1f}% from exp)")
-    check(err_Vub < 0.10,
-          f"V_ub = {Vub:.5f} ({err_Vub*100:.1f}% from exp)")
-    check(err_J < 0.10,
-          f"J = {J:.2e} ({err_J*100:.1f}% from exp)")
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #11).
+    #   UNIT      percent-relative, dimensionless fraction: 0.06 is 6% of
+    #             exp['Vub'].
+    #   ENVELOPE  6%, tightened from 10%.
+    #   SOURCE    exp['Vub'] = 0.00382 is the PDG 2024 average, carrying 4-5%;
+    #             the dominant literature spread is the inclusive-vs-exclusive
+    #             determination gap, 8-11%. The model-side floor is the FN
+    #             grid resolution, computed as delta_q * ln 2 =
+    #             0.0491 * 0.6931 = 3.40%, inside the module-computed band
+    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us| to |V_ub| is FN_POWER_TRANSFER -- a PREMISE, NOT
+    #             derived (same module).
+    #   OBSERVED  4.05%, so 6% is 1.48x.
+    #   SIZED BY  the observed residual, not by either figure in the SOURCE.
+    #             4.05% rounded up to 6%: 1.48x. 6% is neither the 3.40% floor
+    #             nor anything in the 8-11% band -- it is the residual with
+    #             margin, and saying so is the point of this line.
+    #   NOTE      6% sits BELOW the 8-11% inclusive/exclusive spread, so this
+    #             gate is TIGHTER than the experimental discrepancy on its own
+    #             reference. Stated rather than assumed away.
+    #   TWO GATES, ONE REFERENCE, TWO WIDTHS -- stated, not reconciled.
+    #             The same 0.00382 is gated at 10% in check_L_NNLO_Fritzsch
+    #             (apf/session_nnlo.py, site #6), which justifies its width by
+    #             sitting INSIDE the 8-11% gap this site sits below. Both are
+    #             sized by their own observed residuals in two different
+    #             checks (-4.05% here, -5.59% there), so the widths are not a
+    #             contradiction about |V_ub| -- but they are two different
+    #             answers to "what uncertainty does a |V_ub| gate bracket",
+    #             and only a ruling makes them one. Each site names the other;
+    #             neither is changed.
+    check(err_Vub < 0.06,
+          f"V_ub = {Vub:.5f} ({err_Vub*100:.1f}% from exp, envelope 6%)")
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #12).
+    #   UNIT      percent-relative, dimensionless fraction: 0.08 is 8% of
+    #             exp['J'].
+    #   ENVELOPE  8%, tightened from 10%.
+    #   SOURCE    The Jarlskog invariant carries about +4.2/-3.8% as recorded
+    #             in the 2026-08-01 tolerance package's PDG reading; that
+    #             asymmetric bar is not re-derived here. The binding
+    #             uncertainty is the FN grid resolution, computed as
+    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
+    #             module-computed band [2.60%, 3.90%]
+    #             (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us| to the Jarlskog invariant is FN_POWER_TRANSFER -- a
+    #             PREMISE, NOT derived (same module).
+    #   OBSERVED  4.58% against exp['J'] = 3.08e-5 as carried here, so 8% is
+    #             1.75x.
+    #   SIZED BY  the observed residuals under BOTH references, not by the
+    #             SOURCE above: 4.58% against 3.08e-5 and 5.81% against
+    #             3.12e-5, the larger rounded up to 8% (1.75x / 1.38x). See
+    #             the reference caveat below -- bracketing both is what set
+    #             the number, and it is why this gate is 8% and not 6%.
+    #   REFERENCE CAVEAT, NOT REPAIRED HERE. The 2026-08-01 tolerance package
+    #             records the PDG central value as 3.12e-5, against which this
+    #             model J = 2.94e-5 reads -5.81%. 8% brackets the model under
+    #             EITHER reference (1.75x / 1.38x), which is why 8% and not 6%.
+    #             The literal was NOT updated: 3.08e-5 is a SHARED
+    #             experimental reference standing at four code sites in this
+    #             module and one in apf/session_nnlo.py. Only two of the five
+    #             are consumed by a gate -- this check's, and session_nnlo's
+    #             check_L_NNLO_Fritzsch at a 5% bound. The other three are
+    #             carried and not gated: check_T_CKM holds it in an exp dict
+    #             its checks list never reads, check_L_CP_channel reports it in
+    #             an f-string, and check_L_NLO_texture assigns J_exp and never
+    #             uses it. Two further mentions sit in docstring prose. Moving
+    #             one would leave siblings measuring the same PDG quantity
+    #             against two different numbers; it moves at every site or
+    #             none, and the others are outside this ruling's scope.
+    #             Site inventory verified by AST 2026-08-10, not by eye.
+    check(err_J < 0.08,
+          f"J = {J:.2e} ({err_J*100:.1f}% from exp, envelope 8%)")
 
     # Effective coefficients
     vB_norm2 = sum(v**2 for v in vB)
@@ -9112,10 +9205,49 @@ def check_L_GJ_from_capacity():
     GJ_gen0 = me_mtau / md_mb if md_mb > 0 else 0
 
     # Check GJ factors
-    check(abs(GJ_gen1 / N_c - 1) < 0.10,
-          f"GJ(gen-1) = {GJ_gen1:.2f}, expected {N_c}")
-    check(abs(GJ_gen0 / (1.0 / N_c) - 1) < 0.10,
-          f"GJ(gen-0) = {GJ_gen0:.2f}, expected {1.0/N_c:.3f}")
+    # TOLERANCE ENVELOPES, declared 2026-08-10 (D4@2026-08-03 (c), sites #13/#14).
+    #   UNIT      percent-relative, dimensionless fraction: 0.03 is 3% of N_c,
+    #             0.02 is 2% of 1/N_c. The measured quantity is a ratio of mass
+    #             ratios and the target is a pure number, so the gate carries
+    #             no physical unit at all.
+    #   ENVELOPE  3% (gen-1) and 2% (gen-0), tightened from 10% each.
+    #   SOURCE    FN discreteness resolution: the x = 1/2 integer-charge grid
+    #             has resolution ln 2 = 0.69 per charge unit, and the
+    #             derivation's own |V_us| residual is delta_q = 0.0491 charge
+    #             units, 1/20 of the minimum step, giving a fractional floor
+    #             delta_q * ln 2 = 3.40% inside the module-computed band
+    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor to these
+    #             two ratios is FN_POWER_TRANSFER -- a PREMISE, NOT derived
+    #             (same module). The floor is NOT read off the errors gated
+    #             here: those are 1.15% and 0.26%, i.e. delta_q = 0.0166 and
+    #             0.0038, three and thirteen times below the derivation's own
+    #             residual. An earlier draft of this block said the observed
+    #             errors correspond to dq = 0.05; they do not, and the
+    #             sentence was deleted rather than refreshed.
+    #   BRACKETS  MODEL resolution only. BOTH sides of each comparison are
+    #             model-derived -- the computed GJ factor against the exact
+    #             values N_c = 3 and 1/N_c from T_gauge [P]. NO experimental
+    #             quantity enters either gate, so no experimental envelope
+    #             applies and none is claimed.
+    #   OBSERVED  1.15% (2.61x at 3%) and 0.26% (7.62x at 2%). The retired 10%
+    #             was 8.7x and 38x respectively and did no work.
+    #   SIZED BY  the observed residuals, not by the SOURCE above, and here
+    #             the two disagree in the OTHER direction: 2% is STRICTLY
+    #             TIGHTER than the 3.40% floor the SOURCE names, so this gate
+    #             could not have been derived from that floor at all. What
+    #             set both numbers is the residual rounded up -- 1.15% to 3%
+    #             (2.61x) and 0.26% to 2% (7.62x). The 7.62x is the loosest
+    #             margin of the eight bounds this pass tightened; it is the
+    #             smallest step that leaves the gate readable, not a bound
+    #             with a source.
+    check(abs(GJ_gen1 / N_c - 1) < 0.03,
+          f"GJ(gen-1) = {GJ_gen1:.4f}, expected {N_c} "
+          f"({(GJ_gen1/N_c-1)*100:+.2f}%, envelope 3%)")
+    check(abs(GJ_gen0 / (1.0 / N_c) - 1) < 0.02,
+          f"GJ(gen-0) = {GJ_gen0:.4f}, expected {1.0/N_c:.3f} "
+          f"({(GJ_gen0/(1.0/N_c)-1)*100:+.2f}%, envelope 2%)")
 
     # Experimental comparison
     exp_mmu_mtau = 0.10566 / 1.7768    # 0.0595

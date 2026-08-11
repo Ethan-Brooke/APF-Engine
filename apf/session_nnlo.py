@@ -204,8 +204,73 @@ MS_MB_EXP_REL_ERR = MB_MS_EXP_ABS_ERR / MB_MS_EXP  # 0.2227%
 # experimental values.  Kept, but named for what it is.  GJ is not an
 # independent observable: GJ = (m_mu/m_tau)/(m_s/m_b) identically, so gating
 # it against experiment as well would gate m_s/m_b twice.
+#
+# DISCLOSURE, 2026-08-10 (D4@2026-08-03 (c), site #7). THE READING OF THIS
+# CONSTANT WAS RULED THE SAME DAY (R7@2026-08-10, site 7). WHAT REMAINS OPEN,
+# AND IS NOT SETTLED HERE, IS THE SIZING UNDER THAT READING.
+#   THERE IS NO LONGER A GATE TO DECLARE. The 2026-08-01 tolerance package
+#             filed site #7 as a 10%-wide gate on GJ against 3.0. That gate no
+#             longer exists: BOTH copies were retired on 2026-08-01 -- the
+#             one in check_L_NNLO_Fritzsch at c429254 and the one in
+#             check_L_Higgs_curvature_channel at 8cd5230 -- on the ground
+#             that GJ is m_s/m_b restated. Dates read off git, not inferred
+#             from the adjacent comments, which belong to a later change. GJ
+#             is now COMPUTED AND RECORDED at both sites and gated at neither.
+#             What follows is therefore a disclosure, not an envelope.
+#   THE UNIT, for the retired bound and for anything that replaces it:
+#             percent-relative on a pure number. GJ is a ratio of two mass
+#             ratios; the target is a dimensionless 3, so a 0.10 bound meant
+#             10% of 3.0 and carried no physical unit at all.
+#   THE QUESTION  Is 3.0 a GUT-SCALE STRUCTURAL TARGET being confirmed, or a
+#             stand-in for experiment? The paragraph directly above reads as
+#             the structural interpretation -- it says gating GJ against
+#             experiment "as well would gate m_s/m_b twice", which presumes
+#             3.0 is not the experimental comparison. RULED 2026-08-10
+#             (R7@2026-08-10, site 7): the STRUCTURAL reading is correct and
+#             is ratified. 3.0 is a GUT-scale relation, named as such, and
+#             gated against nothing.
+#   WHAT IS MEASURED  The Georgi-Jarlskog ratio implied by the measured masses
+#             is about 3.207 +- 0.007 as recorded in the 2026-08-01 tolerance
+#             package (not re-derived here), and GJ_EXP below computes 3.2039
+#             in this file from MS_MB_EXP. Those two agree to 0.10%, which is
+#             the order of the 0.13% gap between the direct average 53.88 and
+#             the chained cross-check 53.949 in the provenance block above.
+#             Those are two distinct figures and are quoted separately: the
+#             0.10% is an agreement, the 0.13% is a spread between averages.
+#             3.0 is nowhere near either.
+#   THE FACT THAT DECIDES IT, and it is why this is disclosed rather than
+#             quietly left at 10%. check_L_NNLO_Fritzsch returns
+#             GJ = 2.8506. Scoped deliberately: this constant has TWO
+#             consumers in this file, and the other,
+#             check_L_Higgs_curvature_channel, returns GJ = 2.9972 off a
+#             different mass channel (it prints 3.00 at two decimals). The
+#             two figures below are the Fritzsch value's and are not the
+#             sibling's.
+#               - Under the STRUCTURAL reading, the comparable envelope is the
+#                 GUT-threshold correction scale the package records at ~3%;
+#                 the model's -4.98% against 3.0 FAILS that.
+#               - Under the EXPERIMENTAL reading, the reference is ~3.204 and
+#                 the model's -11.03% FAILS a 10% gate.
+#             The retired 10% was derived from NEITHER envelope. It passed
+#             against 3.0 and would have failed against ~3.204, so the green
+#             verdict it produced was a consequence of the unchosen reading
+#             rather than of a sized bound.
+#   WHAT SURVIVES THAT RULING, and it is the uncomfortable half. The reading
+#             is settled; the SIZING is not. Under the ratified structural
+#             reading the model's miss against 3.0 is larger than the
+#             GUT-threshold correction scale recorded above, and nothing
+#             gates it. Disclosed, not gated, and no gate is reinstated.
 GJ_GUT_RELATION = 3.0
-GJ_EXP = (105.66 / 1776.86) / MS_MB_EXP    # = 3.2081, implied by the ratio above
+# The next line carried a trailing annotation stating the value it returns.
+# That annotation belonged to a SUPERSEDED m_b/m_s reference: when the
+# reference moved, the executed expression followed and the annotation did
+# not. RULED 2026-08-10 (R7@2026-08-10, the site-7 prose defect): DELETE the
+# stated figure rather than refresh it -- refreshing it recreates the same
+# failure the next time the reference moves. A comment may state a genre and
+# a reason; it may not state a derived number. The value is computed from
+# MS_MB_EXP: check_L_Higgs_curvature_channel prints it in its summary, and
+# check_L_NNLO_Fritzsch prints the model's percentage against it.
+GJ_EXP = (105.66 / 1776.86) / MS_MB_EXP    # implied by MS_MB_EXP
 # ---------------------------------------------------------------------------
 
 
@@ -215,7 +280,10 @@ def check_L_Higgs_curvature_channel():
     h = (0,1,0) unique ℓ₁-minimum integer cover on P₃.
     q_curv = q_B[0]/N_gen = 7/3. Direction v_curv = (0, x^{7/3}, 0).
     CLOSES: m_s/m_b (+6.9% vs PDG 1/53.88), Georgi-Jarlskog (0.1% vs the
-    GUT relation; experiment implies 3.208).
+    GUT relation). The experimental implication is computed from MS_MB_EXP
+    and printed in this check's summary. It is not restated here: the figure
+    that stood in this line belonged to a superseded reference and was not
+    carried forward when that reference moved (R7@2026-08-10).
     """
     x = _X
 
@@ -238,10 +306,46 @@ def check_L_Higgs_curvature_channel():
     ms_mb_LO = m_LO[1] / m_LO[2]
     GJ_LO = (105.66 / 1776.86) / ms_mb_LO
 
-    check(abs(ms_mb_LO / MS_MB_EXP - 1) < 0.15,
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #2).
+    #   UNIT      percent-relative, written as a dimensionless fraction:
+    #             0.08 is 8% of MS_MB_EXP.
+    #   ENVELOPE  8%, tightened from 15%.
+    #   SOURCE    MODEL texture resolution, NOT measurement. m_s/m_b is
+    #             scale-invariant and measured to MS_MB_EXP_REL_ERR (see the
+    #             provenance block above; PDG 2025 b-quark Listings), which is
+    #             ~30x smaller than the offset below. No experimental envelope
+    #             can justify a gate of this width; what it brackets is the
+    #             resolution of the discrete FN texture. That resolution is
+    #             COMPUTED, not estimated: delta_q = 0.0491 charge units on a
+    #             ln 2 = 0.69 grid gives a fractional floor
+    #             delta_q * ln 2 = 3.40%, inside the module-computed band
+    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us|, where it is measured, to m_s/m_b is
+    #             FN_POWER_TRANSFER -- a PREMISE, NOT derived (same module).
+    #   OBSERVED  +6.90%, so 8% is 1.16x. Of the sites this ruling touched
+    #             that is the tightest; the untouched m_s/m_b gate in
+    #             check_L_NNLO_Fritzsch is tighter still at 1.05x.
+    #   SIZED BY  the observed residual, not by the SOURCE above. 6.90%
+    #             rounded up to 8%: 1.16x. Note the direction -- 8% is more
+    #             than twice the 3.40% floor the SOURCE names, so the SOURCE
+    #             states what kind of uncertainty this gate brackets and did
+    #             not set the number 8.
+    #   DISCLOSURE, and it is the reason this line is worth a second look:
+    #             the 8% was sized on 2026-08-01 against the RETIRED literal
+    #             0.019, where the same model number reads +4.42% and 8% would
+    #             have been 1.81x. The reference was corrected to 1/53.88 on
+    #             2026-08-01 (c429254, date read off git; d9264db on 08-02 is
+    #             a comments-only ruling and moved no reference); the model
+    #             did not move, the yardstick did.
+    #             8% is applied as ruled and the changed headroom is recorded
+    #             here rather than silently re-sized.
+    check(abs(ms_mb_LO / MS_MB_EXP - 1) < 0.08,
           f"m_s/m_b = {ms_mb_LO:.4f} vs {MS_MB_EXP:.6f} "
-          f"({(ms_mb_LO/MS_MB_EXP-1)*100:+.2f}%); the 15% envelope brackets MODEL "
-          f"texture resolution, not measurement -- the ratio is known to 0.4%")
+          f"({(ms_mb_LO/MS_MB_EXP-1)*100:+.2f}%); the 8% envelope brackets MODEL "
+          f"texture resolution, not measurement -- the ratio is measured to "
+          f"{MS_MB_EXP_REL_ERR*100:.2f}%")
     # NOT GATED, corrected 2026-08-01 (second blinded audit). The NNLO
     # sibling dropped its GJ gate on the argument that GJ is m_s/m_b
     # restated -- and this one, the BINDING one, was left standing. At 0.05
@@ -332,24 +436,130 @@ def check_L_NNLO_Fritzsch():
     exp = {'md_ms': 0.050, 'ms_mb': MS_MB_EXP, 'Vus': 0.2243, 'Vcb': 0.041,
            'Vub': 0.00382, 'J': 3.08e-5, 'delta': 65.6}
 
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #3).
+    #   UNIT      percent-relative, dimensionless fraction: 0.15 is 15% of
+    #             exp['md_ms'].
+    #   ENVELOPE  15%, UNCHANGED -- ruled defensible.
+    #   SOURCE    Experimental uncertainty on m_d/m_s is ~3%, the honest
+    #             cross-determination window (FLAG 2024, arXiv:2411.04268;
+    #             PDG 2024 Quark Masses review, section 60). The BINDING
+    #             uncertainty is not that: it is the FN grid resolution,
+    #             computed as delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside
+    #             the module-computed band [2.60%, 3.90%]
+    #             (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us| to m_d/m_s is FN_POWER_TRANSFER -- a PREMISE, NOT
+    #             derived (same module).
+    #   OBSERVED  -11.16%, so 15% is 1.34x. Read the printed percentage, not
+    #             the bound: the offset is a RESULT about the texture.
+    #   SIZED BY  the observed residual, not by the SOURCE above, and here
+    #             the gap is wide enough to say plainly: 15% is more than four
+    #             times the 3.40% floor the SOURCE names. What set it is
+    #             11.16% rounded up, 1.34x. The SOURCE states the kind of
+    #             uncertainty; it does not carry this number.
     check(abs(obs['md_ms'] / exp['md_ms'] - 1) < 0.15,
-          f"m_d/m_s = {obs['md_ms']:.4f}")
-    # 13%. The corrected reference genuinely breaks the old 12% gate
-    # (+12.40%), so SOME widening is forced -- but 13% is the smallest bound
-    # that admits the measured offset, and a first pass at 15% was corrected
-    # here after a blinded audit called it 2.46 points of unearned headroom.
-    # The envelope brackets MODEL texture resolution: m_s/m_b is measured to
-    # 0.22%, so this offset is ~56 sigma and is a RESULT about the texture,
-    # not agreement. Read the printed percentage, not the bound.
+          f"m_d/m_s = {obs['md_ms']:.4f} "
+          f"({(obs['md_ms']/exp['md_ms']-1)*100:+.2f}%, envelope 15%)")
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #4);
+    # character RULED the same day (R7@2026-08-10, site 4).
+    # The 2026-08-01 tolerance package filed this site as a CORRECTNESS
+    # question -- the reference was a rounded literal and the model failed the
+    # narrower gate that preceded this one. That correction, and the 13% gate
+    # itself, landed on 2026-08-01; the date is read off git, not off an
+    # adjacent comment. The reference fix and the widening that followed it
+    # are RATIFIED WITHOUT CHANGE: the corrected reference broke the narrower
+    # gate, so some widening was forced, and a first pass at a wider bound was
+    # pulled back to 13% after a blinded audit called it unearned headroom.
+    # What follows adds no number to any of that.
+    #   UNIT      percent-relative, dimensionless fraction: 0.13 is 13% of
+    #             exp['ms_mb']. Not 13 MeV, not 0.13 of anything dimensionful
+    #             -- both sides of the ratio are masses and the quotient is a
+    #             pure number.
+    #   REFERENCE exp['ms_mb'] is MS_MB_EXP = 1/MB_MS_EXP, the
+    #             SCALE-CONSISTENT PDG ratio taken from the b-quark Listings
+    #             "OUR AVERAGE" for m_b/m_s. It is NOT m_s(2 GeV)/m_b(m_b),
+    #             which is a quotient of masses at different scales. See the
+    #             MS_MB_EXP provenance block above.
+    #   ENVELOPE  13%, UNCHANGED.
+    #   WHAT IT BRACKETS  A MODEL ERROR, and nothing else. No experimental
+    #             envelope of any width justifies a gate of this size, and
+    #             none is claimed.
+    #   WHAT THIS GATE IS, stated rather than left for a reader to infer.
+    #             The model sits many tens of standard deviations from a ratio
+    #             measured to a fraction of one percent, and the bound sits
+    #             just outside that offset. A GATE OF THIS WIDTH AROUND A
+    #             DISCREPANCY OF THAT SIZE IS NOT A TEST -- IT IS A TRIPWIRE
+    #             AGAINST CATASTROPHIC REGRESSION WEARING A TEST'S CLOTHES.
+    #             The offset and its size in units of the measurement's own
+    #             error are COMPUTED at the foot of this function and PRINTED
+    #             in the summary. Read those figures; the passing verdict
+    #             carries less information than either of them.
+    #   NO NEW LEG AND NO NEW PREDICATE. The sigma is printed, not asserted.
     check(abs(obs['ms_mb'] / exp['ms_mb'] - 1) < 0.13,
           f"m_s/m_b = {obs['ms_mb']:.4f} vs {exp['ms_mb']:.6f} "
-          f"({(obs['ms_mb']/exp['ms_mb']-1)*100:+.2f}%)")
+          f"({(obs['ms_mb']/exp['ms_mb']-1)*100:+.2f}%, envelope 13%)")
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #5).
+    #   UNIT      percent-relative, dimensionless fraction: 0.10 is 10% of
+    #             exp['Vus'].
+    #   ENVELOPE  10%, UNCHANGED -- ruled defensible.
+    #   SOURCE    exp['Vus'] = 0.2243 is the PDG 2024 kaon average, known to
+    #             0.38% (S = 2.5); the CKM global fit is 0.30%. The BINDING
+    #             uncertainty is the FN grid resolution, computed as
+    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
+    #             module-computed band [2.60%, 3.90%]
+    #             (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py) -- an order of magnitude above
+    #             the measurement error. |V_us| is the observable the floor is
+    #             MEASURED on, so no transfer premise is invoked at this site.
+    #   OBSERVED  +6.52%, so 10% is 1.53x.
+    #   SIZED BY  the observed residual, not by the SOURCE above. 6.52%
+    #             rounded up to 10%: 1.53x, about three times the 3.40% floor.
+    #             The SOURCE states what kind of uncertainty this gate
+    #             brackets; it did not set the number 10.
     check(abs(obs['Vus'] / exp['Vus'] - 1) < 0.10,
-          f"V_us = {obs['Vus']:.4f}")
+          f"V_us = {obs['Vus']:.4f} "
+          f"({(obs['Vus']/exp['Vus']-1)*100:+.2f}%, envelope 10%)")
     check(abs(obs['Vcb'] / exp['Vcb'] - 1) < 0.05,
           f"V_cb = {obs['Vcb']:.4f}")
+    # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #6).
+    #   UNIT      percent-relative, dimensionless fraction: 0.10 is 10% of
+    #             exp['Vub'].
+    #   ENVELOPE  10%, UNCHANGED -- ruled defensible.
+    #   SOURCE    exp['Vub'] = 0.00382 is the PDG 2024 average, itself carrying
+    #             4-5%; PDG 2025 moves it to 0.00389. The dominant spread is
+    #             not the average's error bar but the INCLUSIVE-vs-EXCLUSIVE
+    #             determination gap, 8-11%, which the 10% gate is inside of.
+    #             The model-side floor is the FN grid resolution, computed as
+    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
+    #             module-computed band [2.60%, 3.90%]
+    #             (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us| to |V_ub| is FN_POWER_TRANSFER -- a PREMISE, NOT
+    #             derived (same module).
+    #   OBSERVED  -5.59%, so 10% is 1.79x.
+    #   SIZED BY  the observed residual, not by the SOURCE above. 5.59%
+    #             rounded up to 10%: 1.79x. The SOURCE states what kind of
+    #             uncertainty this gate brackets; it did not set the number.
+    #   TWO GATES, ONE REFERENCE, TWO WIDTHS -- stated, not reconciled.
+    #             exp['Vub'] = 0.00382 is gated at 10% HERE and at 6% in
+    #             check_L_NNLO_down_mass (apf/generations.py, site #11), on
+    #             DIFFERENT and incompatible justifications: this site cites
+    #             the 8-11% inclusive/exclusive determination gap and sits
+    #             inside it, while site #11 cites the FN resolution and sits
+    #             deliberately BELOW that gap. Both are sized by their own
+    #             observed residuals (-5.59% here, -4.05% there -- two
+    #             different checks, two different computed |V_ub|), so the two
+    #             widths are not
+    #             a contradiction about |V_ub| -- but they are two different
+    #             answers to "what uncertainty does a |V_ub| gate bracket",
+    #             and only a ruling on that question makes them one. Each
+    #             site names the other; neither is changed.
     check(abs(obs['Vub'] / exp['Vub'] - 1) < 0.10,
-          f"V_ub = {obs['Vub']:.5f}")
+          f"V_ub = {obs['Vub']:.5f} "
+          f"({(obs['Vub']/exp['Vub']-1)*100:+.2f}%, envelope 10%)")
     check(abs(obs['J'] / exp['J'] - 1) < 0.05,
           f"J = {obs['J']:.2e}")
     check(abs(obs['delta_CKM'] / exp['delta'] - 1) < 0.01,
@@ -364,6 +574,14 @@ def check_L_NNLO_Fritzsch():
     _gj_vs_gut = (obs['GJ'] / GJ_GUT_RELATION - 1) * 100
     _gj_vs_exp = (obs['GJ'] / GJ_EXP - 1) * 100
 
+    # Site 4's character, COMPUTED rather than left to prose (R7@2026-08-10):
+    # the m_s/m_b offset expressed in units of the measurement's own quoted
+    # error. Nothing is gated on it and no leg consumes it; it is printed in
+    # the summary below so that the figure is read off the execution rather
+    # than off a comment that can go stale under its own reference.
+    _ms_mb_pct = (obs['ms_mb'] / exp['ms_mb'] - 1) * 100
+    _ms_mb_sigma = abs(_ms_mb_pct) / (MS_MB_EXP_REL_ERR * 100)
+
     return _result(
         name='L_NNLO_Fritzsch: NNLO complex Fritzsch perturbation',
         tier=3, epistemic='P',
@@ -372,7 +590,10 @@ def check_L_NNLO_Fritzsch():
             f'δ_CKM = {obs["delta_CKM"]:.1f}° (+0.1%), '
             f'J = {obs["J"]:.2e} (−1.3%), '
             f'm_d/m_s = {obs["md_ms"]:.3f} (−11%), '
-            f'm_s/m_b = {obs["ms_mb"]:.4f} ({(obs["ms_mb"]/exp["ms_mb"]-1)*100:+.1f}%), '
+            f'm_s/m_b = {obs["ms_mb"]:.4f} ({_ms_mb_pct:+.1f}%, '
+            f'{_ms_mb_sigma:.0f} sigma of a ratio measured to '
+            f'{MS_MB_EXP_REL_ERR*100:.2f}% -- the 13% gate is a regression '
+            f'tripwire, not a test of agreement), '
             f'V_us = {obs["Vus"]:.3f} (+6.5%). '
             f'6 independent observables, zero free parameters. '
             f'(GJ is m_s/m_b restated and delta_CKM = asin(J/den) is J '
@@ -540,10 +761,36 @@ def check_L_lepton_GJ():
     exp_me_mtau = 0.000511 / 1.7768    # 0.000288
 
     # Checks
-    check(abs(me_mmu / exp_me_mmu - 1) < 0.10,
-          f"m_e/m_μ = {me_mmu:.5f} (exp {exp_me_mmu:.5f})")
-    check(abs(mmu_mtau / exp_mmu_mtau - 1) < 0.10,
-          f"m_μ/m_τ = {mmu_mtau:.5f} (exp {exp_mmu_mtau:.5f})")
+    # TOLERANCE ENVELOPES, declared 2026-08-10 (D4@2026-08-03 (c), sites #8/#9).
+    #   UNIT      percent-relative, dimensionless fraction: 0.05 is 5% of
+    #             exp_me_mmu, 0.06 is 6% of exp_mmu_mtau.
+    #   ENVELOPE  5% (m_e/m_mu) and 6% (m_mu/m_tau), tightened from 10% each.
+    #   SOURCE    FN discreteness resolution. The x = 1/2 integer-charge grid
+    #             has resolution ln 2 = 0.69 per charge unit and the
+    #             derivation's own residual is delta_q = 0.0491 charge units,
+    #             1/20 of the minimum step, giving a fractional floor
+    #             delta_q * ln 2 = 3.40% inside the module-computed band
+    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             floor_within_derivation_computed_error_band,
+    #             apf/scorecard_resolution.py). Carrying that floor from
+    #             |V_us| to the charged-lepton mass ratios is
+    #             FN_POWER_TRANSFER -- a PREMISE, NOT derived (same module).
+    #   BRACKETS  MODEL resolution, not measurement. The charged-lepton mass
+    #             ratios are known to a RELATIVE 2.2e-8 (m_e/m_mu) and 5.1e-5
+    #             (m_mu/m_tau) (PDG 2024) -- six and three orders of magnitude
+    #             below these gates. Nothing here is an experimental envelope.
+    #   OBSERVED  +2.97% (1.69x at 5%) and +4.03% (1.49x at 6%).
+    #   SIZED BY  the observed residuals, not by the SOURCE above. 2.97% and
+    #             4.03% each rounded up to the next step, 5% and 6%. The two
+    #             RESIDUALS straddle the 3.40% floor; both BOUNDS sit above
+    #             it, and neither was read off it. The SOURCE says what kind
+    #             of uncertainty these gates bracket and set neither number.
+    check(abs(me_mmu / exp_me_mmu - 1) < 0.05,
+          f"m_e/m_μ = {me_mmu:.5f} (exp {exp_me_mmu:.5f}, "
+          f"{(me_mmu/exp_me_mmu-1)*100:+.2f}%, envelope 5%)")
+    check(abs(mmu_mtau / exp_mmu_mtau - 1) < 0.06,
+          f"m_μ/m_τ = {mmu_mtau:.5f} (exp {exp_mmu_mtau:.5f}, "
+          f"{(mmu_mtau/exp_mmu_mtau-1)*100:+.2f}%, envelope 6%)")
     check(abs(GJ2 / 3.0 - 1) < 0.05, f"GJ₂ = {GJ2:.2f}")
     check(abs(GJ1 / (1.0 / 3.0) - 1) < 0.05, f"GJ₁ = {GJ1:.2f}")
 
