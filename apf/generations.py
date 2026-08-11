@@ -8052,22 +8052,24 @@ def check_L_NNLO_down_mass():
     #   SOURCE    Experimental uncertainty on m_d/m_s is ~3% (FLAG 2024,
     #             arXiv:2411.04268; PDG 2024 Quark Masses review, section 60);
     #             the binding uncertainty is the FN grid resolution, computed
-    #             as delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
-    #             module-computed band [2.60%, 3.90%]
+    #             by the sibling as the |V_us| residual on the ln 2 grid;
+    #             its value and band are NOT quoted here
     #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us|, where it is measured, to m_d/m_s is
     #             FN_POWER_TRANSFER -- a PREMISE, NOT derived (same module).
-    #   OBSERVED  4.50%, so 6% is 1.33x. It was the tightest of the fourteen
-    #             mass-ratio / CKM gates when the 2026-08-01 package measured
-    #             them; two gates are now tighter (the m_s/m_b pair in
-    #             apf/session_nnlo.py, at 1.16x and 1.05x).
-    #   SIZED BY  the observed residual, not by the SOURCE above. 4.50%
-    #             rounded up to 6%: 1.33x. The SOURCE states what kind of
-    #             uncertainty this gate brackets; it did not set the number 6.
+    #   OBSERVED  computed into this check's message. It was the tightest of
+    #             the fourteen mass-ratio / CKM gates when the 2026-08-01
+    #             package measured them; the m_s/m_b pair in
+    #             apf/session_nnlo.py is now tighter, and each of those checks
+    #             prints its own margin.
+    #   SIZED BY  the observed residual, not by the SOURCE above -- that
+    #             residual rounded up. The SOURCE states what kind of
+    #             uncertainty this gate brackets; it did not set the number.
     check(err_md_ms < 0.06,
-          f"m_d/m_s = {md_ms:.4f} ({err_md_ms*100:.1f}% from exp, envelope 6%)")
+          f"m_d/m_s = {md_ms:.4f} ({err_md_ms*100:.1f}% from exp, envelope 6%"
+          f", margin {0.06/max(err_md_ms,1e-12):.2f}x)")
     check(err_delta < 0.02,
           f"δ_CKM = {delta:.1f}° ({err_delta*100:.1f}% from exp)")
     check(err_Vus < 0.02,
@@ -8087,16 +8089,16 @@ def check_L_NNLO_down_mass():
     #             the dominant literature spread is the inclusive-vs-exclusive
     #             determination gap, 8-11%. The model-side floor is the FN
     #             grid resolution, computed as delta_q * ln 2 =
-    #             0.0491 * 0.6931 = 3.40%, inside the module-computed band
-    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             by the sibling as the |V_us| residual on the ln 2 grid; its
+    #             value and band are NOT quoted here (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us| to |V_ub| is FN_POWER_TRANSFER -- a PREMISE, NOT
     #             derived (same module).
-    #   OBSERVED  4.05%, so 6% is 1.48x.
-    #   SIZED BY  the observed residual, not by either figure in the SOURCE.
-    #             4.05% rounded up to 6%: 1.48x. 6% is neither the 3.40% floor
-    #             nor anything in the 8-11% band -- it is the residual with
+    #   OBSERVED  computed into this check's message.
+    #   SIZED BY  the observed residual, not by either figure in the SOURCE --
+    #             that residual rounded up. The envelope is neither the floor
+    #             nor anything in the 8-11% band; it is the residual with
     #             margin, and saying so is the point of this line.
     #   NOTE      6% sits BELOW the 8-11% inclusive/exclusive spread, so this
     #             gate is TIGHTER than the experimental discrepancy on its own
@@ -8106,13 +8108,14 @@ def check_L_NNLO_down_mass():
     #             (apf/session_nnlo.py, site #6), which justifies its width by
     #             sitting INSIDE the 8-11% gap this site sits below. Both are
     #             sized by their own observed residuals in two different
-    #             checks (-4.05% here, -5.59% there), so the widths are not a
+    #             checks (each prints its own residual), so the widths are not a
     #             contradiction about |V_ub| -- but they are two different
     #             answers to "what uncertainty does a |V_ub| gate bracket",
     #             and only a ruling makes them one. Each site names the other;
     #             neither is changed.
     check(err_Vub < 0.06,
-          f"V_ub = {Vub:.5f} ({err_Vub*100:.1f}% from exp, envelope 6%)")
+          f"V_ub = {Vub:.5f} ({err_Vub*100:.1f}% from exp, envelope 6%"
+          f", margin {0.06/max(err_Vub,1e-12):.2f}x)")
     # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #12).
     #   UNIT      percent-relative, dimensionless fraction: 0.08 is 8% of
     #             exp['J'].
@@ -8121,24 +8124,24 @@ def check_L_NNLO_down_mass():
     #             in the 2026-08-01 tolerance package's PDG reading; that
     #             asymmetric bar is not re-derived here. The binding
     #             uncertainty is the FN grid resolution, computed as
-    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
-    #             module-computed band [2.60%, 3.90%]
+    #             by the sibling as the |V_us| residual on the ln 2 grid;
+    #             its value and band are NOT quoted here
     #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us| to the Jarlskog invariant is FN_POWER_TRANSFER -- a
     #             PREMISE, NOT derived (same module).
-    #   OBSERVED  4.58% against exp['J'] = 3.08e-5 as carried here, so 8% is
-    #             1.75x.
+    #   OBSERVED  computed into this check's message, under BOTH references.
     #   SIZED BY  the observed residuals under BOTH references, not by the
-    #             SOURCE above: 4.58% against 3.08e-5 and 5.81% against
-    #             3.12e-5, the larger rounded up to 8% (1.75x / 1.38x). See
-    #             the reference caveat below -- bracketing both is what set
-    #             the number, and it is why this gate is 8% and not 6%.
+    #             SOURCE above: the larger of the two, rounded up. Both
+    #             residuals and both margins are printed by the check (the
+    #             alternate reference is J_EXP_ALT below). See the reference
+    #             caveat -- bracketing both is what set the number, and it is
+    #             why this gate is 8% and not 6%.
     #   REFERENCE CAVEAT, NOT REPAIRED HERE. The 2026-08-01 tolerance package
-    #             records the PDG central value as 3.12e-5, against which this
-    #             model J = 2.94e-5 reads -5.81%. 8% brackets the model under
-    #             EITHER reference (1.75x / 1.38x), which is why 8% and not 6%.
+    #             records a different PDG central value (J_EXP_ALT below).
+    #             8% brackets the model under EITHER reference -- the check
+    #             prints both margins -- which is why 8% and not 6%.
     #             The literal was NOT updated: 3.08e-5 is a SHARED
     #             experimental reference standing at four code sites in this
     #             module and one in apf/session_nnlo.py. Only two of the five
@@ -8152,8 +8155,13 @@ def check_L_NNLO_down_mass():
     #             against two different numbers; it moves at every site or
     #             none, and the others are outside this ruling's scope.
     #             Site inventory verified by AST 2026-08-10, not by eye.
+    J_EXP_ALT = 3.12e-5   # the 2026-08-01 package's PDG central value; NOT adopted
+    err_J_alt = abs(J / J_EXP_ALT - 1)
     check(err_J < 0.08,
-          f"J = {J:.2e} ({err_J*100:.1f}% from exp, envelope 8%)")
+          f"J = {J:.2e} ({err_J*100:.1f}% from exp, envelope 8%"
+          f", margin {0.08/max(err_J,1e-12):.2f}x; against the alternate "
+          f"reference {err_J_alt*100:.2f}%, margin "
+          f"{0.08/max(err_J_alt,1e-12):.2f}x)")
 
     # Effective coefficients
     vB_norm2 = sum(v**2 for v in vB)
@@ -9212,11 +9220,11 @@ def check_L_GJ_from_capacity():
     #             no physical unit at all.
     #   ENVELOPE  3% (gen-1) and 2% (gen-0), tightened from 10% each.
     #   SOURCE    FN discreteness resolution: the x = 1/2 integer-charge grid
-    #             has resolution ln 2 = 0.69 per charge unit, and the
-    #             derivation's own |V_us| residual is delta_q = 0.0491 charge
-    #             units, 1/20 of the minimum step, giving a fractional floor
-    #             delta_q * ln 2 = 3.40% inside the module-computed band
-    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             resolves charge in steps of ln 2, and the derivation's own
+    #             |V_us| residual is a small fraction of one such step; that
+    #             fraction IS the fractional floor. Its value and its band are
+    #             computed by the sibling and are deliberately NOT quoted here
+    #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor to these
     #             two ratios is FN_POWER_TRANSFER -- a PREMISE, NOT derived
@@ -9231,23 +9239,28 @@ def check_L_GJ_from_capacity():
     #             values N_c = 3 and 1/N_c from T_gauge [P]. NO experimental
     #             quantity enters either gate, so no experimental envelope
     #             applies and none is claimed.
-    #   OBSERVED  1.15% (2.61x at 3%) and 0.26% (7.62x at 2%). The retired 10%
-    #             was 8.7x and 38x respectively and did no work.
+    #   OBSERVED  computed into each check's own message, together with the
+    #             margin the retired 10% would have given.
     #   SIZED BY  the observed residuals, not by the SOURCE above, and here
-    #             the two disagree in the OTHER direction: 2% is STRICTLY
-    #             TIGHTER than the 3.40% floor the SOURCE names, so this gate
-    #             could not have been derived from that floor at all. What
-    #             set both numbers is the residual rounded up -- 1.15% to 3%
-    #             (2.61x) and 0.26% to 2% (7.62x). The 7.62x is the loosest
-    #             margin of the eight bounds this pass tightened; it is the
-    #             smallest step that leaves the gate readable, not a bound
-    #             with a source.
-    check(abs(GJ_gen1 / N_c - 1) < 0.03,
+    #             the two disagree in the OTHER direction: the tighter gate is
+    #             STRICTLY TIGHTER than the floor the SOURCE names, so it could
+    #             not have been derived from that floor at all. What set both
+    #             numbers is the residual rounded up to the next step. The
+    #             looser of the two carries the largest margin of the bounds
+    #             this pass tightened; it is the smallest step that leaves the
+    #             gate readable, not a bound with a source.
+    _r13 = abs(GJ_gen1 / N_c - 1)          # D1@2026-08-10: margins computed
+    check(_r13 < 0.03,
           f"GJ(gen-1) = {GJ_gen1:.4f}, expected {N_c} "
-          f"({(GJ_gen1/N_c-1)*100:+.2f}%, envelope 3%)")
-    check(abs(GJ_gen0 / (1.0 / N_c) - 1) < 0.02,
+          f"({(GJ_gen1/N_c-1)*100:+.2f}%, envelope 3%, margin "
+          f"{0.03/max(_r13,1e-12):.2f}x; the retired 10% was "
+          f"{0.10/max(_r13,1e-12):.1f}x)")
+    _r14 = abs(GJ_gen0 / (1.0 / N_c) - 1)   # D1@2026-08-10: margins computed
+    check(_r14 < 0.02,
           f"GJ(gen-0) = {GJ_gen0:.4f}, expected {1.0/N_c:.3f} "
-          f"({(GJ_gen0/(1.0/N_c)-1)*100:+.2f}%, envelope 2%)")
+          f"({(GJ_gen0/(1.0/N_c)-1)*100:+.2f}%, envelope 2%, margin "
+          f"{0.02/max(_r14,1e-12):.2f}x; the retired 10% was "
+          f"{0.10/max(_r14,1e-12):.0f}x)")
 
     # Experimental comparison
     exp_mmu_mtau = 0.10566 / 1.7768    # 0.0595

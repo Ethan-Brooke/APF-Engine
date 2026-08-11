@@ -193,12 +193,12 @@ def check_L_CKM_resolution_limit():
     #             global fit and obs_th23 = 2.38 deg tracks |V_cb|. The BINDING
     #             uncertainty is not the measurement: it is the FN grid
     #             resolution, which THIS MODULE derives and does not estimate.
-    #             The x = 1/2 integer-charge grid has resolution ln 2 = 0.69
-    #             per charge unit; step 4 below computes delta_q = 0.0491
-    #             charge units -- 1/20 of the minimum step -- from the |Vus|
-    #             deviation, NOT from the two angle errors gated here; so the
-    #             fractional floor is delta_q * ln 2 = 3.40%, inside the
-    #             module-computed band [2.60%, 3.90%]
+    #             The x = 1/2 integer-charge grid resolves charge in steps of
+    #             ln 2; step 4 below COMPUTES delta_q and prints it, from the
+    #             |Vus| deviation and NOT from the two angle errors gated here.
+    #             The fractional floor is that residual on the ln 2 grid; step
+    #             4's own output carries the value and the band, so neither is
+    #             restated here
     #             (floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us|, where it is measured, to any other observable is
@@ -206,13 +206,17 @@ def check_L_CKM_resolution_limit():
     #             For theta_23 the relevant experimental spread is the |V_cb|
     #             inclusive-vs-exclusive gap of 5.9-6.1%, about 3 sigma, which
     #             6% sits at.
-    #   OBSERVED  theta_12 +3.50% (1.71x), theta_23 -2.64% (2.27x).
-    #   SIZED BY  the observed residuals, not by the SOURCE above. 3.50% and
-    #             2.64% both rounded up to a common 6%: margins 1.71x and
-    #             2.27x. The SOURCE says what kind of uncertainty these gates
-    #             bracket; it did not set the number 6.
-    check(abs(err_12) < 6.0, f"theta_12 error = {err_12:.1f}% (expect |2-4%|)")
-    check(abs(err_23) < 6.0, f"theta_23 error = {err_23:.1f}% (expect |2-4%|)")
+    #   OBSERVED  computed into each check's own message.
+    #   SIZED BY  the observed residuals, not by the SOURCE above -- both
+    #             rounded up to a common envelope, and each check prints the
+    #             margin that gives. The SOURCE says what kind of uncertainty
+    #             these gates bracket; it did not set the number.
+    check(abs(err_12) < 6.0,
+          f"theta_12 error = {err_12:.1f}% (expect |2-4%|, envelope 6%, "
+          f"margin {6.0/max(abs(err_12),1e-12):.2f}x)")
+    check(abs(err_23) < 6.0,
+          f"theta_23 error = {err_23:.1f}% (expect |2-4%|, envelope 6%, "
+          f"margin {6.0/max(abs(err_23),1e-12):.2f}x)")
     #
     # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #19).
     # THIS DECLARATION COVERS THE theta_13 GATE IMMEDIATELY BELOW, AND THAT
@@ -235,9 +239,13 @@ def check_L_CKM_resolution_limit():
     #             queued pass does not have to re-derive it. NONE OF IT HAS
     #             BEEN INCURRED. The derived reference is LARGER than the
     #             literal, so the residual would move UP IN MAGNITUDE, not
-    #             down, and would change sign: +3.87% becomes -4.61% against
-    #             |V_ub| = 0.00382. The direction runs against the framework,
-    #             which is why it is written down rather than smoothed over.
+    #             down, and would change sign. The projected figures are NOT
+    #             restated here: the reference they assumed was SUPERSEDED on
+    #             2026-08-11 (Reference - DECISION - The V_ub Reference
+    #             Superseded, and H5 Clause 7), so any number written here is
+    #             a number about a retired reference. The direction runs
+    #             AGAINST the framework, which is why it is recorded at all;
+    #             the magnitudes belong to the adoption pass that owns them.
     #
     #   ==================================================================
     #   THREE CONSEQUENCES OF DERIVING THE REFERENCE. ALL MEASURED, NONE
@@ -318,15 +326,19 @@ def check_L_CKM_resolution_limit():
     #             any change to validation.py. WITH the harvester also made
     #             tolerant, the pair goes green -- and neither move touches
     #             (3). Measured with both applied: check_L_prediction_catalog
-    #             goes from mean error 3.79% to 3.98%, with 32/40 consistent
-    #             and median 0.51% unchanged. DECLINED here on two grounds --
+    #             moves the mean error and leaves the consistent count and the
+    #             median where they were. The figures are deliberately not
+    #             restated -- they were computed against the superseded
+    #             reference, and the scorecard prints its own. DECLINED here
+    #             on two grounds --
     #             that row is governed by the prediction-scorecard charter,
     #             under which a measurement enters the table AS MEASURED and a
     #             derived angle is not a measurement; and the value it would
     #             take is exactly the unruled |V_ub| question. Owed as its own
     #             pass, with a ruling, not folded into this one.
     check(abs(err_13) < 6.0,
-          f"theta_13 error = {err_13:.1f}% (envelope 6%, percent-relative)")
+          f"theta_13 error = {err_13:.1f}% (envelope 6%, percent-relative"
+          f", margin {6.0/max(abs(err_13),1e-12):.2f}x)")
 
     # Step 1: Insensitivity to c_Hu
     c_Hu_range = [0.05, 0.08, 0.10, 0.125, 0.15, 0.20, 0.30]

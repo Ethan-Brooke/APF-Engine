@@ -6214,6 +6214,7 @@ def check_L_ST_Dirac():
 
     # --- Connes distance: d(g,h) ≈ 1/|M_u[g,h]| ---
     distances = {}
+    resid_pct = {}          # D1@2026-08-10: sizing figures are computed, not stated
     for g in range(N_gen):
         for h in range(N_gen):
             if g != h:
@@ -6223,7 +6224,10 @@ def check_L_ST_Dirac():
                 distances[key] = round(dist, 2)
                 # FN prediction: d(g,h) ~ x^{-(q_B[g]+q_B[h])}
                 d_FN = x**(-(q_B[g]+q_B[h]))
-                # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #1).
+                # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #1);
+                # sizing figures converted to computed output 2026-08-11 per
+                # D1@2026-08-10, which rules that a comment may state a genre
+                # and a reason and may NOT state a derived number.
                 #   UNIT      percent-relative, written as a dimensionless
                 #             fraction: 0.05 is 5% of the FN prediction d_FN.
                 #             NOT a distance and NOT a length: dist is a Connes
@@ -6231,16 +6235,15 @@ def check_L_ST_Dirac():
                 #             it, and the gate is on their ratio.
                 #   ENVELOPE  5%.
                 #   SOURCE    FN discreteness resolution. The x = 1/2
-                #             integer-charge grid has resolution ln 2 = 0.69 per
-                #             charge unit, and the derivation's own |V_us|
-                #             residual is delta_q = 0.0491 charge units -- 1/20
-                #             of the minimum integer step -- giving a fractional
-                #             floor delta_q * ln 2 = 3.40%, inside the
-                #             module-computed band [2.60%, 3.90%]
-                #             (L_CKM_resolution_limit [P],
-                #             apf/standalone/L_CKM_resolution_limit.py;
-                #             floor_within_derivation_computed_error_band,
-                #             apf/scorecard_resolution.py). Carrying that floor
+                #             integer-charge grid resolves charge in steps of
+                #             ln 2, and the derivation's own |V_us| residual is
+                #             a fraction of one such step; that fraction is the
+                #             fractional floor. Its value and its band are
+                #             COMPUTED BY THE SIBLING and are deliberately not
+                #             quoted here -- read them off L_CKM_resolution_limit
+                #             [P] (apf/standalone/L_CKM_resolution_limit.py) and
+                #             floor_within_derivation_computed_error_band
+                #             (apf/scorecard_resolution.py). Carrying that floor
                 #             from |V_us| to the Connes distances is
                 #             FN_POWER_TRANSFER -- a PREMISE, NOT derived
                 #             (same module).
@@ -6248,19 +6251,44 @@ def check_L_ST_Dirac():
                 #             are internal -- the Connes distance read off M_u and
                 #             the pure FN power law -- so no experimental
                 #             uncertainty applies to this comparison at all.
-                #   OBSERVED  2.99% worst over the six ordered pairs (d(0,1),
-                #             d(1,0)), 2.54% best; 5% is 1.67x the worst.
-                #             The retired 0.2 was 6.7x and did no work.
-                #   SIZED BY  the worst observed residual, not by the SOURCE
-                #             above. 2.99% rounded up to 5%: 1.67x. The 3.40%
-                #             floor the SOURCE names would admit the worst pair
-                #             at only 1.14x; 5% is the residual rounded up, not
-                #             the floor. The SOURCE states what kind of
-                #             uncertainty this gate brackets and did not set the
-                #             number 5.
+                #   OBSERVED  computed at run time into
+                #             artifacts['fn_distance_envelope']. Read the record,
+                #             not this comment: the residuals, the margin and the
+                #             retired bound's margin are all derived there, and
+                #             nothing checks a comment.
+                #   SIZED BY  the WORST observed residual, not by the SOURCE
+                #             above -- the envelope is that residual rounded up.
+                #             The floor the SOURCE names is LOOSER than the worst
+                #             residual, so sizing on the floor would have admitted
+                #             the worst pair by a SMALLER margin than the envelope
+                #             does; the record prints both margins so that
+                #             comparison is checkable rather than asserted. The
+                #             SOURCE states what kind of uncertainty this gate
+                #             brackets; it did not set the number.
+                resid_pct[key] = (dist / d_FN - 1.0) * 100.0
                 check(abs(dist / d_FN - 1.0) < 0.05,
                       f"d({g},{h}) = {dist:.2f} ≈ FN {d_FN:.2f} "
                       f"({(dist/d_FN-1)*100:+.2f}%, envelope 5% = FN grid resolution)")
+
+    # --- D1@2026-08-10: the site #1 sizing record, COMPUTED ------------------
+    # Every figure the declaration comment used to state is derived here and
+    # returned. A reference change moves these; it cannot leave them stale.
+    _env_pct     = 5.0                       # the ENVELOPE literal gated above
+    _retired_pct = 20.0                      # the bound this site replaced (0.2)
+    _abs_resid   = {k: abs(v) for k, v in resid_pct.items()}
+    _worst_pct   = max(_abs_resid.values())
+    _best_pct    = min(_abs_resid.values())
+    fn_distance_envelope = {
+        'envelope_pct':           _env_pct,
+        'worst_abs_residual_pct': round(_worst_pct, 2),
+        'best_abs_residual_pct':  round(_best_pct, 2),
+        'margin_at_envelope':     round(_env_pct / _worst_pct, 2),
+        'margin_at_retired':      round(_retired_pct / _worst_pct, 2),
+        'worst_pairs':            sorted(k for k, v in _abs_resid.items()
+                                         if abs(v - _worst_pct) < 1e-9),
+        'per_pair_residual_pct':  {k: round(v, 2) for k, v in resid_pct.items()},
+        'sized_by':               'the worst observed residual, rounded up',
+    }
 
     return _result(
         name='L_ST_Dirac: D_F from APF Yukawa Matrices, all Connes axioms [P]',
@@ -6294,6 +6322,7 @@ def check_L_ST_Dirac():
             'signs':          f'(ε,ε\',ε\'\')=({eps_J},{eps_JD},{eps_Jg})',
             'axioms_verified': 7,
             'Connes_distances': distances,
+            'fn_distance_envelope': fn_distance_envelope,
             'established_math': [
                 'Connes-Lott (1991)',
                 'Connes-Marcolli (2008): Noncommutative Geometry and the SM',
@@ -10084,7 +10113,7 @@ def check_L_Gleason_finite():
 """L_upGram_PSD_saturation: Up-Sector Gram Matrix Saturates PSD Boundary [P].
 
 STATEMENT: The up-sector Gram matrix G_up, after the H̃ crossing
-self-energy correction to G[0,0] (L_crossing_correction [P]), has
+self-energy correction to G[0,0] (L_crossing_correction), has
 Schur complement margin
 
     S₀₀ = G_up[0,0]_corr − (x⁹)² / S_lower  =  O(c_Hu² × ξ × x¹²) > 0
@@ -10108,7 +10137,7 @@ Step 3: PSD ↔ S₀₀ ≥ 0  ↔  S_lower ≥ x⁶/(1−c_Hu²ξ) = 0.01593
 Step 4: Any δ > 0 to G[1,2] reduces S_lower → S₀₀ < 0.
         Numerically: G[1,2] = c6² + x¹⁰  →  min eigenvalue < 0.
 
-INPUTS (all [P]): L_crossing_correction, L_crossing_self_energy,
+INPUTS: L_crossing_correction, L_crossing_self_energy,
     L_channel_crossing, L_x_half, T_mass_ratios, L_Fisher_curvature.
 
 NEW FREE PARAMETERS: 0
@@ -10185,9 +10214,9 @@ def check_L_upGram_PSD_saturation():
 
     return {
         'passed': True,
-        'status': 'P',
+        'status': 'P_structural_seam',
         'name': 'L_upGram_PSD_saturation [P]',
-        'epistemic': 'P',
+        'epistemic': 'P_structural_seam',
         'S_lower': round(S_lower, 8),
         'S_lower_min': round(S_lower_min, 8),
         'psd_margin_pct': round(psd_margin, 3),
@@ -10329,9 +10358,9 @@ def check_L_upGram_schur_margin():
 
     return {
         'passed': True,
-        'status': 'P',
+        'status': 'P_structural_seam',
         'name': 'L_upGram_schur_margin [P]',
-        'epistemic': 'P',
+        'epistemic': 'P_structural_seam',
         'S00_LO':          float(f'{S00_LO:.6e}'),
         'S00_corr':        float(f'{S00_corr:.6e}'),
         'crossing_term':   float(f'{crossing_term:.6e}'),

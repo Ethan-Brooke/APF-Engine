@@ -316,36 +316,47 @@ def check_L_Higgs_curvature_channel():
     #             ~30x smaller than the offset below. No experimental envelope
     #             can justify a gate of this width; what it brackets is the
     #             resolution of the discrete FN texture. That resolution is
-    #             COMPUTED, not estimated: delta_q = 0.0491 charge units on a
-    #             ln 2 = 0.69 grid gives a fractional floor
-    #             delta_q * ln 2 = 3.40%, inside the module-computed band
-    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             COMPUTED, not estimated: the |V_us| residual expressed in
+    #             FN charge units on the ln 2 grid IS the fractional floor. Its
+    #             value and its band are computed by the sibling and are
+    #             deliberately NOT quoted here (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us|, where it is measured, to m_s/m_b is
     #             FN_POWER_TRANSFER -- a PREMISE, NOT derived (same module).
-    #   OBSERVED  +6.90%, so 8% is 1.16x. Of the sites this ruling touched
-    #             that is the tightest; the untouched m_s/m_b gate in
-    #             check_L_NNLO_Fritzsch is tighter still at 1.05x.
-    #   SIZED BY  the observed residual, not by the SOURCE above. 6.90%
-    #             rounded up to 8%: 1.16x. Note the direction -- 8% is more
-    #             than twice the 3.40% floor the SOURCE names, so the SOURCE
+    #   OBSERVED  computed into this check's own message -- read the printed
+    #             residual and margin, not this comment. Of the sites this
+    #             ruling touched it is the tightest; the untouched m_s/m_b gate
+    #             in check_L_NNLO_Fritzsch is tighter still, and that check
+    #             prints its own figure.
+    #   SIZED BY  the observed residual, not by the SOURCE above -- the envelope
+    #             is that residual rounded up. Note the direction: the envelope
+    #             sits well ABOVE the floor the SOURCE names, so the SOURCE
     #             states what kind of uncertainty this gate brackets and did
-    #             not set the number 8.
+    #             not set the number.
     #   DISCLOSURE, and it is the reason this line is worth a second look:
-    #             the 8% was sized on 2026-08-01 against the RETIRED literal
-    #             0.019, where the same model number reads +4.42% and 8% would
-    #             have been 1.81x. The reference was corrected to 1/53.88 on
+    #             the 8% was sized on 2026-08-01 against a RETIRED literal
+    #             (MS_MB_EXP_RETIRED, defined at the check below), where the
+    #             same model number reads a smaller residual -- the check prints
+    #             BOTH margins so the shift in headroom is checkable rather
+    #             than asserted. The reference was corrected on
     #             2026-08-01 (c429254, date read off git; d9264db on 08-02 is
     #             a comments-only ruling and moved no reference); the model
     #             did not move, the yardstick did.
     #             8% is applied as ruled and the changed headroom is recorded
     #             here rather than silently re-sized.
-    check(abs(ms_mb_LO / MS_MB_EXP - 1) < 0.08,
+    # D1@2026-08-10: every sizing figure this site used to state is computed here.
+    MS_MB_EXP_RETIRED = 0.019   # the literal the 8% was sized against, 2026-08-01
+    _r2     = abs(ms_mb_LO / MS_MB_EXP - 1)
+    _r2_ret = abs(ms_mb_LO / MS_MB_EXP_RETIRED - 1)
+    check(_r2 < 0.08,
           f"m_s/m_b = {ms_mb_LO:.4f} vs {MS_MB_EXP:.6f} "
           f"({(ms_mb_LO/MS_MB_EXP-1)*100:+.2f}%); the 8% envelope brackets MODEL "
           f"texture resolution, not measurement -- the ratio is measured to "
-          f"{MS_MB_EXP_REL_ERR*100:.2f}%")
+          f"{MS_MB_EXP_REL_ERR*100:.2f}%; margin {0.08/max(_r2,1e-12):.2f}x, "
+          f"and against the retired reference the same model number reads "
+          f"{(ms_mb_LO/MS_MB_EXP_RETIRED-1)*100:+.2f}% "
+          f"(margin {0.08/max(_r2_ret,1e-12):.2f}x)")
     # NOT GATED, corrected 2026-08-01 (second blinded audit). The NNLO
     # sibling dropped its GJ gate on the argument that GJ is m_s/m_b
     # restated -- and this one, the BINDING one, was left standing. At 0.05
@@ -444,23 +455,26 @@ def check_L_NNLO_Fritzsch():
     #             cross-determination window (FLAG 2024, arXiv:2411.04268;
     #             PDG 2024 Quark Masses review, section 60). The BINDING
     #             uncertainty is not that: it is the FN grid resolution,
-    #             computed as delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside
-    #             the module-computed band [2.60%, 3.90%]
+    #             computed by the sibling as the |V_us| residual on the ln 2
+    #             grid; its value and band are NOT quoted here
     #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us| to m_d/m_s is FN_POWER_TRANSFER -- a PREMISE, NOT
     #             derived (same module).
-    #   OBSERVED  -11.16%, so 15% is 1.34x. Read the printed percentage, not
-    #             the bound: the offset is a RESULT about the texture.
-    #   SIZED BY  the observed residual, not by the SOURCE above, and here
-    #             the gap is wide enough to say plainly: 15% is more than four
-    #             times the 3.40% floor the SOURCE names. What set it is
-    #             11.16% rounded up, 1.34x. The SOURCE states the kind of
+    #   OBSERVED  computed into this check's message. Read the printed
+    #             percentage and margin, not the bound: the offset is a RESULT
+    #             about the texture.
+    #   SIZED BY  the observed residual, not by the SOURCE above, and here the
+    #             gap is wide enough to say plainly: the envelope is several
+    #             times the floor the SOURCE names. What set it is that
+    #             residual rounded up. The SOURCE states the kind of
     #             uncertainty; it does not carry this number.
-    check(abs(obs['md_ms'] / exp['md_ms'] - 1) < 0.15,
+    _r_md_ms = abs(obs['md_ms'] / exp['md_ms'] - 1)   # D1@2026-08-10: margin computed, not stated
+    check(_r_md_ms < 0.15,
           f"m_d/m_s = {obs['md_ms']:.4f} "
-          f"({(obs['md_ms']/exp['md_ms']-1)*100:+.2f}%, envelope 15%)")
+          f"({(obs['md_ms']/exp['md_ms']-1)*100:+.2f}%, envelope 15%)"
+          f" -- margin {0.15/max(_r_md_ms,1e-12):.2f}x")
     # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #4);
     # character RULED the same day (R7@2026-08-10, site 4).
     # The 2026-08-01 tolerance package filed this site as a CORRECTNESS
@@ -496,9 +510,11 @@ def check_L_NNLO_Fritzsch():
     #             in the summary. Read those figures; the passing verdict
     #             carries less information than either of them.
     #   NO NEW LEG AND NO NEW PREDICATE. The sigma is printed, not asserted.
-    check(abs(obs['ms_mb'] / exp['ms_mb'] - 1) < 0.13,
+    _r_ms_mb = abs(obs['ms_mb'] / exp['ms_mb'] - 1)   # D1@2026-08-10: margin computed, not stated
+    check(_r_ms_mb < 0.13,
           f"m_s/m_b = {obs['ms_mb']:.4f} vs {exp['ms_mb']:.6f} "
-          f"({(obs['ms_mb']/exp['ms_mb']-1)*100:+.2f}%, envelope 13%)")
+          f"({(obs['ms_mb']/exp['ms_mb']-1)*100:+.2f}%, envelope 13%)"
+          f" -- margin {0.13/max(_r_ms_mb,1e-12):.2f}x")
     # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #5).
     #   UNIT      percent-relative, dimensionless fraction: 0.10 is 10% of
     #             exp['Vus'].
@@ -506,21 +522,24 @@ def check_L_NNLO_Fritzsch():
     #   SOURCE    exp['Vus'] = 0.2243 is the PDG 2024 kaon average, known to
     #             0.38% (S = 2.5); the CKM global fit is 0.30%. The BINDING
     #             uncertainty is the FN grid resolution, computed as
-    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
-    #             module-computed band [2.60%, 3.90%]
+    #             computed by the sibling as the |V_us| residual on the
+    #             ln 2 grid; its value and band are NOT quoted here
     #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py) -- an order of magnitude above
     #             the measurement error. |V_us| is the observable the floor is
     #             MEASURED on, so no transfer premise is invoked at this site.
-    #   OBSERVED  +6.52%, so 10% is 1.53x.
-    #   SIZED BY  the observed residual, not by the SOURCE above. 6.52%
-    #             rounded up to 10%: 1.53x, about three times the 3.40% floor.
+    #   OBSERVED  computed into this check's message.
+    #   SIZED BY  the observed residual, not by the SOURCE above -- that
+    #             residual rounded up, several times the floor the SOURCE
+    #             names.
     #             The SOURCE states what kind of uncertainty this gate
     #             brackets; it did not set the number 10.
-    check(abs(obs['Vus'] / exp['Vus'] - 1) < 0.10,
+    _r_Vus = abs(obs['Vus'] / exp['Vus'] - 1)   # D1@2026-08-10: margin computed, not stated
+    check(_r_Vus < 0.10,
           f"V_us = {obs['Vus']:.4f} "
-          f"({(obs['Vus']/exp['Vus']-1)*100:+.2f}%, envelope 10%)")
+          f"({(obs['Vus']/exp['Vus']-1)*100:+.2f}%, envelope 10%)"
+          f" -- margin {0.10/max(_r_Vus,1e-12):.2f}x")
     check(abs(obs['Vcb'] / exp['Vcb'] - 1) < 0.05,
           f"V_cb = {obs['Vcb']:.4f}")
     # TOLERANCE ENVELOPE, declared 2026-08-10 (D4@2026-08-03 (c), site #6).
@@ -532,16 +551,16 @@ def check_L_NNLO_Fritzsch():
     #             not the average's error bar but the INCLUSIVE-vs-EXCLUSIVE
     #             determination gap, 8-11%, which the 10% gate is inside of.
     #             The model-side floor is the FN grid resolution, computed as
-    #             delta_q * ln 2 = 0.0491 * 0.6931 = 3.40%, inside the
-    #             module-computed band [2.60%, 3.90%]
+    #             computed by the sibling as the |V_us| residual on the
+    #             ln 2 grid; its value and band are NOT quoted here
     #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us| to |V_ub| is FN_POWER_TRANSFER -- a PREMISE, NOT
     #             derived (same module).
-    #   OBSERVED  -5.59%, so 10% is 1.79x.
-    #   SIZED BY  the observed residual, not by the SOURCE above. 5.59%
-    #             rounded up to 10%: 1.79x. The SOURCE states what kind of
+    #   OBSERVED  computed into this check's message.
+    #   SIZED BY  the observed residual, not by the SOURCE above -- that
+    #             residual rounded up. The SOURCE states what kind of
     #             uncertainty this gate brackets; it did not set the number.
     #   TWO GATES, ONE REFERENCE, TWO WIDTHS -- stated, not reconciled.
     #             exp['Vub'] = 0.00382 is gated at 10% HERE and at 6% in
@@ -550,16 +569,18 @@ def check_L_NNLO_Fritzsch():
     #             the 8-11% inclusive/exclusive determination gap and sits
     #             inside it, while site #11 cites the FN resolution and sits
     #             deliberately BELOW that gap. Both are sized by their own
-    #             observed residuals (-5.59% here, -4.05% there -- two
+    #             observed residuals (each check prints its own -- two
     #             different checks, two different computed |V_ub|), so the two
     #             widths are not
     #             a contradiction about |V_ub| -- but they are two different
     #             answers to "what uncertainty does a |V_ub| gate bracket",
     #             and only a ruling on that question makes them one. Each
     #             site names the other; neither is changed.
-    check(abs(obs['Vub'] / exp['Vub'] - 1) < 0.10,
+    _r_Vub = abs(obs['Vub'] / exp['Vub'] - 1)   # D1@2026-08-10: margin computed, not stated
+    check(_r_Vub < 0.10,
           f"V_ub = {obs['Vub']:.5f} "
-          f"({(obs['Vub']/exp['Vub']-1)*100:+.2f}%, envelope 10%)")
+          f"({(obs['Vub']/exp['Vub']-1)*100:+.2f}%, envelope 10%)"
+          f" -- margin {0.10/max(_r_Vub,1e-12):.2f}x")
     check(abs(obs['J'] / exp['J'] - 1) < 0.05,
           f"J = {obs['J']:.2e}")
     check(abs(obs['delta_CKM'] / exp['delta'] - 1) < 0.01,
@@ -766,11 +787,11 @@ def check_L_lepton_GJ():
     #             exp_me_mmu, 0.06 is 6% of exp_mmu_mtau.
     #   ENVELOPE  5% (m_e/m_mu) and 6% (m_mu/m_tau), tightened from 10% each.
     #   SOURCE    FN discreteness resolution. The x = 1/2 integer-charge grid
-    #             has resolution ln 2 = 0.69 per charge unit and the
-    #             derivation's own residual is delta_q = 0.0491 charge units,
-    #             1/20 of the minimum step, giving a fractional floor
-    #             delta_q * ln 2 = 3.40% inside the module-computed band
-    #             [2.60%, 3.90%] (L_CKM_resolution_limit [P];
+    #             resolves charge in steps of ln 2 and the derivation's own
+    #             residual is a small fraction of one such step; that fraction
+    #             IS the fractional floor. Its value and its band are computed
+    #             by the sibling and are deliberately NOT quoted here
+    #             (L_CKM_resolution_limit [P];
     #             floor_within_derivation_computed_error_band,
     #             apf/scorecard_resolution.py). Carrying that floor from
     #             |V_us| to the charged-lepton mass ratios is
@@ -779,18 +800,22 @@ def check_L_lepton_GJ():
     #             ratios are known to a RELATIVE 2.2e-8 (m_e/m_mu) and 5.1e-5
     #             (m_mu/m_tau) (PDG 2024) -- six and three orders of magnitude
     #             below these gates. Nothing here is an experimental envelope.
-    #   OBSERVED  +2.97% (1.69x at 5%) and +4.03% (1.49x at 6%).
-    #   SIZED BY  the observed residuals, not by the SOURCE above. 2.97% and
-    #             4.03% each rounded up to the next step, 5% and 6%. The two
-    #             RESIDUALS straddle the 3.40% floor; both BOUNDS sit above
-    #             it, and neither was read off it. The SOURCE says what kind
-    #             of uncertainty these gates bracket and set neither number.
-    check(abs(me_mmu / exp_me_mmu - 1) < 0.05,
+    #   OBSERVED  computed into each check's own message.
+    #   SIZED BY  the observed residuals, not by the SOURCE above -- each
+    #             rounded up to the next step. The two RESIDUALS straddle the
+    #             floor the SOURCE names; both BOUNDS sit above it, and neither
+    #             was read off it. The SOURCE says what kind of uncertainty
+    #             these gates bracket and set neither number.
+    _r8 = abs(me_mmu / exp_me_mmu - 1)       # D1@2026-08-10: margins computed
+    _r9 = abs(mmu_mtau / exp_mmu_mtau - 1)
+    check(_r8 < 0.05,
           f"m_e/m_μ = {me_mmu:.5f} (exp {exp_me_mmu:.5f}, "
-          f"{(me_mmu/exp_me_mmu-1)*100:+.2f}%, envelope 5%)")
-    check(abs(mmu_mtau / exp_mmu_mtau - 1) < 0.06,
+          f"{(me_mmu/exp_me_mmu-1)*100:+.2f}%, envelope 5%, margin "
+          f"{0.05/max(_r8,1e-12):.2f}x)")
+    check(_r9 < 0.06,
           f"m_μ/m_τ = {mmu_mtau:.5f} (exp {exp_mmu_mtau:.5f}, "
-          f"{(mmu_mtau/exp_mmu_mtau-1)*100:+.2f}%, envelope 6%)")
+          f"{(mmu_mtau/exp_mmu_mtau-1)*100:+.2f}%, envelope 6%, margin "
+          f"{0.06/max(_r9,1e-12):.2f}x)")
     check(abs(GJ2 / 3.0 - 1) < 0.05, f"GJ₂ = {GJ2:.2f}")
     check(abs(GJ1 / (1.0 / 3.0) - 1) < 0.05, f"GJ₁ = {GJ1:.2f}")
 
