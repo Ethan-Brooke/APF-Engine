@@ -135,7 +135,7 @@ For full per-version changelog, see CHANGELOG.md and apf/bank.py
 EXPECTED_THEOREM_COUNT docstring.
 """
 
-__version__ = '24.3.475'
+__version__ = '24.3.476'
 
 # v15.1 status: standard-Delta-r extraction worksheet banked at
 # [P_w_standard_delta_r_extraction_worksheet]. The ACFW standard-total
