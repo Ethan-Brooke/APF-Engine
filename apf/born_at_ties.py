@@ -32,7 +32,17 @@ TWO NAMED READINGS (load-bearing, carried in the grade string):
     IS the honest residue of the SUP premise.
   R-event-model: the counted structure of a HOLD-REALIZED commit (bin (ii))
     is exhausted by (cost vector, counted amplitude diag rho) in the
-    commit-record basis. Grounded at reading grade on: .412's dephasing
+    commit-record basis. BY RULING (2026-08-13), the event record
+    additionally DECLARES one further field: the sign class of the
+    off-diagonal sector {sign(rho_uv)} over the argmin support (a
+    switching class over pairs from a common source; elliptope-typed per
+    carrier_elliptope; ledger-free per counted_ledger_underdetermination).
+    The field is RECORDED, NOT COUNTED: it is not part of counted
+    structure for any banked law, hypothesis, or functional -- (H-sym),
+    the outcome law, the record functional, and every cost column read
+    exactly what they read before -- and it is CONSUMED BY NOTHING at
+    HEAD; any future consumer banks under its own audit trail and its own
+    named premise. Grounded at reading grade on: .412's dephasing
     (the record-visible functional factors through diag rho -- a universal
     identity, verified, NOT a sampled fact) + .413's Omega-conditioning
     exemption under its own faithful-representation reading (the hold's
@@ -80,7 +90,10 @@ THREE CLAUSES, WHAT EACH HONESTLY IS:
       record). What (c) does NOT do: prove inventory exhaustiveness against
       non-state counted structure (environment registers, event history) --
       that exclusion rides .413's exemption under .413's reading, named
-      above.
+      above. The sign-class field DECLARED in R-event-model (BY RULING
+      2026-08-13) does not enter this inventory: it is RECORDED, NOT
+      COUNTED, and (c)'s sign-twist exhibit -- phases uncounted, no bias
+      into the record -- stands verbatim.
 
 GUARDS (computed):
   - THE R8 WITHIN-WORLD GUARD: the biased fiat's marginal table ties
@@ -505,9 +518,13 @@ def check_L_selection_ledger_completeness():
             'A1-motivated via C1\'s dichotomy shape, NOT A1-derived -- the '
             'consistency counter-model is owned in-check) and '
             'R-event-model (hold-commit counted structure == {cost, diag '
-            'rho} in the commit-record basis; .412 diagonal-factoring '
-            'verified as a universal identity; inventory exhaustiveness '
-            'rides .413\'s Omega exemption under .413\'s reading), a '
+            'rho} in the commit-record basis; a sign-class field over the '
+            'off-diagonal sector is DECLARED by ruling 2026-08-13 -- '
+            'RECORDED, NOT COUNTED, consumed by nothing until a consumer '
+            'banks with its own audit trail; .412 '
+            'diagonal-factoring verified as a universal identity; '
+            'inventory exhaustiveness rides .413\'s Omega exemption under '
+            '.413\'s reading), a '
             'symmetry-protected flat tie has the UNIQUE admissible outcome '
             'law p = 1/N, and deterministic tie-break laws are '
             'inadmissible: the flat tie-break is irreducibly '
@@ -553,8 +570,13 @@ def check_L_selection_ledger_completeness():
                             'SUP residue; A1-motivated, NOT A1-derived '
                             '(counter-model owned, clause a3)',
                 'R-event-model': 'hold-commit counted structure == '
-                                 '{cost, diag rho}; .412 ground universal, '
-                                 'inventory exhaustiveness rides .413\'s '
+                                 '{cost, diag rho}; sign-class field over '
+                                 'the off-diagonal sector DECLARED by '
+                                 'ruling 2026-08-13, RECORDED NOT COUNTED, '
+                                 'consumed by nothing until a consumer '
+                                 'banks with its own audit trail; .412 '
+                                 'ground universal, inventory '
+                                 'exhaustiveness rides .413\'s '
                                  'exemption + reading',
             },
             'clause_b': 'PROVED: transitive invariance + normalization == '

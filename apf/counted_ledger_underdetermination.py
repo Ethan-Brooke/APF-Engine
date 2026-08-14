@@ -65,7 +65,11 @@ The open identification these checks are about is
         (born_at_ties.py:33-35 R-event-model -- a HOLD-REALIZED commit's
          counted structure is exhausted by (cost vector, counted amplitude
          diag rho) in the commit-record basis, the basis a NAMED INPUT at
-         born_at_ties.py:129-131)
+         born_at_ties.py:142-144; the same reading, BY RULING 2026-08-13,
+         additionally DECLARES a sign-class field over the off-diagonal
+         sector -- RECORDED, NOT COUNTED, consumed by nothing at HEAD --
+         so the counted-structure left side of this identification is
+         unchanged)
       ==
     the rho_b the representation/carrier chain computes
         (presentation_gauge_forcing.py:59-62, rho_b = b b* / Tr(b b*)).
@@ -81,7 +85,7 @@ Every statement below is about the operator, not the form.
     commit-record resolution {E_k} determines exactly the diagonal of X.  The
     linear map X |-> (Tr(X E_k))_k on the real symmetric sector at N = 3 has
     rank 3 and nullity 3; on the Hermitian sector over C, nullity 6.  The
-    identity Tr(diag(a) E_k) = a_k that born_at_ties.py:400-403 and :456-457
+    identity Tr(diag(a) E_k) = a_k that born_at_ties.py:413-416 and :469-470
     record as a tautology is the rank-3 half; the nullity is the rest.
 
 (2) THE CARRIER FIBER.  Over ONE counted ledger a = (1/14, 2/7, 9/14) there
@@ -161,7 +165,7 @@ CONDITIONAL ON (five named clauses; every record carries them):
                                     re-presentation, read by
                                     `sign_flip_moves_rho_b_and_fixes_the_
                                     ledger`.
-  COMMIT_RECORD_BASIS_AS_NAMED_INPUT   born_at_ties.py:129-131.
+  COMMIT_RECORD_BASIS_AS_NAMED_INPUT   born_at_ties.py:142-144.
   OPERATIONAL_AFFINITY_ON_EFFECTS   what the Riesz leg consumes to reach the
                                     trace form.  Open in the corpus
                                     (operational_score_linearity); NOT the
