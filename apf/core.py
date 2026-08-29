@@ -129,9 +129,23 @@ def check_M():
     trivially by a single subsystem with capacity C, and no physics
     can emerge (no locality, no gauge structure, no particles).
 
-    Used only by L_loc (locality derivation). M + NT + A1 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ locality.
+    Used only by L_loc (locality derivation). M + NT + A1 -> locality.
 
-    STATUS: POSTULATE ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â not derived from A1.
+    STATUS: POSTULATE -- not derived from A1.  Multiplicity is a
+    CONSTITUTIVE PRESUPPOSITION of A1, not a consequence of it.
+    L_M_derived is a self-consistency confirmation, not the derivation:
+    that is the grade both objects carry in the theorem register of
+    Papers/Paper 01 - The Enforceability of Distinction/Old/
+    Brooke_EnforceabilityOfDistinction_180 p version.tex
+
+    RECLASSIFIED 2026-08-28.
+    The returned record previously asserted BOTH readings at once --
+    this docstring said POSTULATE while `summary`, `key_result`,
+    `epistemic` and `artifacts['type']` said derived, the last as the
+    portmanteau 'derived_postulate'.  The contradiction is what was
+    repaired; the direction is a LOWERING, which is the conservative
+    one.  Two questions are left open on purpose and neither is settled
+    here: L_M_derived's own grade, and what [P] means in this corpus.
     """
     from fractions import Fraction
 
@@ -150,16 +164,18 @@ def check_M():
     return _result(
         name='M: Multiplicity Postulate',
         tier=-1,
-        epistemic='P',
+        epistemic='POSTULATE',
         summary=(
             'At least 2 distinguishable subsystems exist. The weakest '
             'possible non-triviality claim. Without M, A1 is trivially '
             'satisfied by a single subsystem. Used only in L_loc derivation. '
-            'DERIVED from A1 via L_M_derived [P] (v5.3.4): T_field → 61 types.'
+            'Multiplicity is a constitutive presupposition of A1, not a '
+            'consequence of it; L_M_derived is a self-consistency '
+            'confirmation, not the derivation.'
         ),
-        key_result='Multiple distinguishable subsystems exist [P, derived via T_field]',
+        key_result='Multiple distinguishable subsystems exist [POSTULATE]',
         dependencies=['A1'],  # presupposes something to partition
-        artifacts={'type': 'derived_postulate', 'min_subsystems': 2},
+        artifacts={'type': 'postulate', 'min_subsystems': 2},
     )
 
 
@@ -746,65 +762,593 @@ def check_L_irr():
     )
 
 
-def check_L_nc():
-    """L_nc: Non-Closure from Admissibility Physics + Locality.
+_LNC_EXPECTED_LEGS = (
+    "both_directions_composite_admissible_at_a_larger_budget",
+    "both_richness_regimes_realized_in_the_declared_model",
+    "closure_under_composition_decided_by_doubling",
+    "cross_module_admissible_set_tied_by_value_into_paper1_kernel",
+    "declared_parameters_set_exact_and_untested_convention_recorded",
+    "epsilon_star_premise_set_consumed_from_L_epsilon_star_record",
+    "grade_is_conditional_on_R_and_bare_P_is_barred",
+    "non_closure_does_not_force_superadditivity_computed",
+    "omega_adm_constructed_and_its_cardinality_enforced_twice",
+)
 
-    DERIVED LEMMA (formerly axiom A2).
+# The named UNBANKED premise.  The conclusion is conditional on it.
+_LNC_NAMED_UNBANKED_PREMISE = "R_RICHNESS"
 
-    CLAIM: A1 (admissibility physics) + L_loc (admissibility factorization)
-           ==> non-closure under composition.
+# The grade.  Bare 'P' is barred on this check: the archive names R as a
+# premise whose use here is conditional on a Paper 2 derivation, not
+# banked.  WHAT IS ENFORCED.  Three things, and none of them inspects
+# whether the returned token EXPRESSES conditionality:
+#   (i)   an exact pin of the returned grade against a second
+#         declaration in this same file -- a SELF-TIE; a coordinated
+#         edit of both sites escapes it, and that is disclosed.  It
+#         follows the landed precedent in
+#         `apf/induced_tie_flat_floor.py`;
+#   (ii)  the BASE grade is required to be a member of the barred set,
+#         so emptying that set or moving the base reddens;
+#   (iii) the returned grade is required to equal the canonical
+#         conditional form RECOMPUTED here from the base and from the
+#         very premise constant that flows into `conditional_on`.
+# RESIDUAL ESCAPE, DISCLOSED: a three-site edit that moves
+# _LNC_NAMED_UNBANKED_PREMISE together with both grade declarations
+# passes (iii) by construction -- the premise name moves in
+# `conditional_on` and in the artifacts at the same time, so the record
+# is self-disclosing, but no leg refuses it.
+_LNC_GRADE_BASE = "P"
+_LNC_GRADE_SEPARATOR = " | "
+_LNC_DECLARED_GRADE = "P | R_RICHNESS"
+_LNC_SURFACE_GRADE = "P | R_RICHNESS"
+_LNC_BARRED_GRADES = ("P", "AXIOM", "POSTULATE")
 
-    With admissibility factorized across interfaces (L_loc) and each
-    interface having admissibility physics (A1), individually admissible
-    distinctions sharing a cut-set can exceed local budgets when
-    composed.  Admissible sets are therefore not closed under
-    composition.
+# DECLARED MODEL PARAMETERS.  This object declares them and reads none
+# of them from any sibling's record; it therefore carries an untested
+# convention, and says so.  The floor's POSITIVITY is consumed from
+# check_L_epsilon_star; its MAGNITUDE is declared here, because that
+# record carries none.  NOT claimed: that no banked sibling supplies
+# such a value.  One does -- see the docstring.
+_LNC_DECLARED_PARAMETERS = {
+    "C": Fraction(10),            # interface budget (A1)
+    "eps_star": Fraction(1),      # cost floor magnitude (MD); declared
+    "multipliers": (1, 2, 3),     # per-type cost = multiplier * eps_star
+}
 
-    PROOF: Constructive witness on admissibility physics budget.
-    Let C = 10 (total capacity), E_1 = 6, E_2 = 6.
-    Each is admissible (E_i <= C). But E_1 + E_2 = 12 > 10 = C.
-    The composition exceeds capacity -> not admissible.
 
-    This is the engine behind competition, saturation, and selection:
-    sectors cannot all enforce simultaneously -> they must compete.
+def _lnc_omega_adm(costs, budget):
+    """The admissible set as an occupancy lattice, enumerated by product.
+
+    A state is an occupancy vector n over the distinction types; its
+    cost is sum(n_d * cost_d).  Admissible iff cost <= budget.  The set
+    is finite only when every cost is strictly positive: that is where
+    the floor enters, and the caller is required to handle the
+    divergent case rather than be handed a silently truncated set.
     """
-    # Constructive witness
-    C = 10  # total capacity budget
-    E_1 = 6
-    E_2 = 6
-    
-    # Each individually admissible
-    check(E_1 <= C, "E_1 must be individually admissible")
-    check(E_2 <= C, "E_2 must be individually admissible")
-    
-    # Composition exceeds capacity
-    check(E_1 + E_2 > C, "Composition must exceed capacity (non-closure)")
-    
-    # This holds for ANY capacity C and E_i > C/2
-    # General: for n sectors with E_i > C/n, composition exceeds C
-    n_sectors = 3
-    E_per_sector = C // n_sectors + 1  # = 4
-    check(n_sectors * E_per_sector > C, "Multi-sector non-closure")
-    
+    from itertools import product as _lnc_product
+    if any(c <= 0 for c in costs):
+        return None            # counting bound diverges; no set to return
+    ranges = [range(int(budget // c) + 1) for c in costs]
+    out = []
+    for n in _lnc_product(*ranges):
+        total = sum((Fraction(n[i]) * costs[i] for i in range(len(costs))),
+                    Fraction(0))
+        if total <= budget:
+            out.append((tuple(n), total))
+    return out
+
+
+def _lnc_omega_adm_dfs(costs, budget):
+    """Second, independent enumeration of the same set (recursive)."""
+    if any(c <= 0 for c in costs):
+        return None
+    out = []
+
+    def walk(i, prefix, spent):
+        if i == len(costs):
+            out.append((tuple(prefix), spent))
+            return
+        k = 0
+        while spent + Fraction(k) * costs[i] <= budget:
+            prefix.append(k)
+            walk(i + 1, prefix, spent + Fraction(k) * costs[i])
+            prefix.pop()
+            k += 1
+
+    walk(0, [], Fraction(0))
+    return out
+
+
+def check_L_nc():
+    """L_nc: Non-Closure of the admissible set under composition.
+
+    STATEMENT (archived source of record: the pre-split monograph
+    `Papers/Paper 01 - The Enforceability of Distinction/Old/Brooke_EnforceabilityOfDistinction_180 p version.tex`,
+    sha256 ff0cdef3..8d5d05a4, "Lemma L_nc (Non-Closure)" at line 1845):
+    A1 + L_epsilon* + M + R (Richness) ==> there exist admissible states
+    whose composition is not admissible; that is, Omega_adm is not
+    closed under composition.  The monograph's cone formulation:
+    "Omega_adm is closed under composition if and only if
+    2*Omega_adm is contained in Omega_adm ... This fails for any C > 0
+    and any non-zero state."
+
+    WHAT THIS CHECK COMPUTES.  It constructs Omega_adm as an actual set
+    of occupancy vectors over declared distinction types at a declared
+    budget with a declared cost floor, enumerates it twice by
+    independent routes and enforces the two cardinalities equal, and
+    decides closure by testing whether 2*Omega_adm is contained in
+    Omega_adm.  The MEMBERSHIP TEST is exercised in both directions: at
+    a larger budget the same composite state is computed to be inside
+    Omega_adm.  THE NON-CLOSURE VERDICT ITSELF IS NOT exercised in both
+    directions here; what was measured about its budget-sensitivity is
+    in the disclosed escapes below.
+
+    THE SUBSTITUTION, RECORDED.  The archived Omega_adm is CONTINUOUS --
+    the monograph's cone formulation is over cost vectors in
+    R^|D| with non-negative entries and coordinate sum at most C.  What
+    this check builds is a DISCRETE integer occupancy lattice over
+    declared types.  The doubling test is the archive's own criterion,
+    but it is evaluated on a substituted object.  The substitution is
+    stated here rather than left implicit.
+
+    WHICH STATEMENT.  Closure under composition -- the archived
+    statement, and the one the executable content decides.  Paper 1 main
+    v5.10 attaches a NON-CONVEXITY conclusion to L_nc.  The located
+    archive, in the same box, describes Omega_adm as "the intersection
+    of the non-negative orthant with a single closed halfspace --- a
+    convex polytope" and calls non-closure "a necessary consequence of
+    the convex-cone geometry of any budget-constrained admissible set".
+    This object decides convexity in neither direction, and the
+    obligation is the principal's to rule.
+
+    THE PREMISE, AND THE GRADE.  The richness premise R -- that the two
+    sectors' enforcement demands can each be chosen with E_i > C/2 -- is
+    named by the archive, which states that R "is not assumed but
+    previewed here and derived in the companion paper" and that "its use
+    in L_nc is conditional on that derivation".  That derivation is not
+    banked here.  R is therefore consumed as a NAMED UNBANKED PREMISE
+    and the conclusion is conditional on it; the grade returned is
+    conditional, not [P].  THE GROUND OF THE DEMOTION IS THE ARCHIVE,
+    NOT A LEG OF THIS OBJECT.  What the legs below establish about R is
+    weaker and is stated as what it is: the declared model realizes both
+    regimes, some achievable sector demand above C/2 and some at or
+    below.  The archived Step 2 itself -- "By premise R, we may take
+    E_1, E_2 > C/2 ... Their composition demands E_1 + E_2 > C" -- is a
+    tautology over an ordered field; that reading is this module's, not
+    the archive's.  What the archive itself says is that R is "not a
+    separate axiom but an explicit characterization of
+    the 'rich enough' regimes".
+
+    THE ARCHIVE'S INTERNAL DISAGREEMENT, RECORDED AND NOT ADJUDICATED.
+    The boxed Statement gives the premise set as A1 + L_epsilon* + M + R.
+    The "Logical scope" paragraph immediately above the box says that
+    "A1 + L_epsilon* + M are sufficient to guarantee that non-closing
+    configurations exist".  The two readings differ on whether R is
+    required.  This object transcribes the R-requiring version, which is
+    the conservative direction for its own grade, and records that the
+    source states the premise set two ways rather than picking a side
+    silently.
+
+    DECLARED PARAMETERS.  The budget C, the floor magnitude eps_star and
+    the per-type cost multipliers are declared model parameters: this
+    object declares them and reads none of them from a sibling's record,
+    so it carries an untested convention for its own budget and floor
+    magnitude.  `check_L_epsilon_star`'s returned record carries the
+    floor's premise set and asserts its POSITIVITY; it carries no
+    numeric magnitude, so the magnitude is declared here and said to be
+    declared.  NOT CLAIMED: that no banked sibling supplies such a
+    value.  One does --
+    `check_T_FD1_substrate_distinctions_capacity` in
+    `apf/paper1_kernel.py`, the module this object's cross-module leg
+    already imports from, returns both an interface capacity and a
+    numeric floor magnitude.  A value tie to it was available and is NOT
+    taken here; it is recorded as available and not taken.
+
+    SCOPE.  Non-closure does not by itself imply superadditivity
+    (Delta > 0) or interference; the archive says so and this object
+    computes an exactly-additive admissible pair to keep the point
+    visible.
+
+    DISCLOSED ESCAPES, measured.  (1) A coordinated two-site edit --
+    halving eps_star while doubling the multipliers -- leaves the
+    per-type costs and every verdict identical while the returned
+    sentence prints the halved floor.  Only the product is used; the two
+    declared parameters are separately unpinned, and no pin on the
+    product would catch it.  (1b) The second enumeration's INDEPENDENCE
+    is not machine-enforced: replacing the recursive enumerator's body
+    with a call to the product enumerator leaves this check green
+    (measured).  Implementation independence cannot be checked from
+    inside; the two routes are independent by authorship, not by test.
+    (1c) THE NON-CLOSURE VERDICT DID NOT MOVE WITH THE DECLARED BUDGET
+    AT ANY VALUE MEASURED.  The separation guard requires only that the
+    witness count lie strictly between zero and the set size; moving C
+    alone, up or down, left every leg green at every value tried.  No
+    universal is claimed from those trials.  The frozen surface's negative
+    control 2 -- raise C so that the composition fits -- is therefore
+    NOT MET, and is recorded as not met rather than amended.  This
+    object does not decide whether any admissible budget-and-floor
+    choice would redden it.  (2) The cross-module leg is blind in one
+    direction: it recomputes over `apf/paper1_kernel.py`'s own costs and
+    capacity, so a coordinated movement of THAT module's inputs moves
+    both sides of every comparison together and escapes.  The leg's
+    equality of that module's REPORTED count with its own enumerated
+    count is, further, a comparison of a pure function with itself on
+    the same module-level inputs and cannot fail while that module's
+    source stands; what is live in the leg is the comparison against
+    THIS object's independent enumerator and against the residual
+    multiset.  (3) The exact
+    grade pin is a self-tie against a second declaration in this file; a
+    coordinated edit of both sites escapes it.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08): a mismatch contributes a failure reason and does
+    not raise.  Standing limit, disclosed: an inventory certifies that a
+    declared leg EXECUTED, not that it could have failed.
+    """
+    legs = {}
+    fails = []
+    notes = []
+
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
+
+    from apf.core import check_L_epsilon_star
+
+    # -- declared parameters --------------------------------------------
+    C = _LNC_DECLARED_PARAMETERS["C"]
+    eps_star = _LNC_DECLARED_PARAMETERS["eps_star"]
+    mults = _LNC_DECLARED_PARAMETERS["multipliers"]
+    type_costs = [Fraction(m) * eps_star for m in mults]
+
+    declared = tuple(sorted(_LNC_DECLARED_PARAMETERS))
+    leg("declared_parameters_set_exact_and_untested_convention_recorded",
+        declared == ("C", "eps_star", "multipliers") and len(type_costs) == 3,
+        "declared parameter set is %r, asserted set-exactly; C = %s, "
+        "eps_star = %s, per-type costs = %r. RECORDED: this object "
+        "declares all three and reads none of them from a sibling's "
+        "record, so it carries an untested convention for its own budget "
+        "and floor magnitude. No absence is claimed here"
+        % (list(declared), C, eps_star, [str(c) for c in type_costs]))
+
+    # -- the floor's premise set, consumed from L_epsilon_star -----------
+    eps_rec = check_L_epsilon_star()
+    eps_deps = tuple(sorted(eps_rec.get('dependencies', ())))
+    numeric_fields = [v for v in eps_rec.get('artifacts', {}).values()
+                      if isinstance(v, (int, float, Fraction))]
+    leg("epsilon_star_premise_set_consumed_from_L_epsilon_star_record",
+        eps_deps == ('A1', 'BW', 'MD') and eps_star > 0,
+        "check_L_epsilon_star's returned dependency set is %r, consumed "
+        "set-exactly -- that set is what this leg gates on, together "
+        "with the floor's positivity. RECORDED, not inferred from: that "
+        "record carries %d numeric fields. The magnitude eps_star = %s "
+        "used here is declared, not read"
+        % (list(eps_deps), len(numeric_fields), eps_star))
+
+    # -- Omega_adm, enumerated twice, cardinality enforced ---------------
+    omega = _lnc_omega_adm(type_costs, C)
+    omega_dfs = _lnc_omega_adm_dfs(type_costs, C)
+    built = omega is not None and omega_dfs is not None
+    n_prod = len(omega) if built else 0
+    n_dfs = len(omega_dfs) if built else 0
+    omega_set = set(v for v, _ in omega) if built else set()
+    leg("omega_adm_constructed_and_its_cardinality_enforced_twice",
+        built and n_prod == n_dfs and n_prod > 1
+        and set(v for v, _ in omega_dfs) == omega_set,
+        "Omega_adm built at C = %s over %d distinction types with costs "
+        "%r; product enumeration gives %d states, an independent "
+        "recursive enumeration gives %d, the two cardinalities are "
+        "enforced equal and the two state sets are compared as sets. "
+        "The construction requires every cost strictly positive: at a "
+        "zero floor the counting bound diverges and no set is returned"
+        % (C, len(type_costs), [str(c) for c in type_costs], n_prod, n_dfs))
+
+    # -- closure under composition, decided by doubling ------------------
+    cost_of = dict(omega) if built else {}
+    witnesses = []
+    if built:
+        for v, total in omega:
+            doubled = tuple(2 * x for x in v)
+            if doubled not in omega_set:
+                witnesses.append((v, total, doubled, 2 * total))
+    n_witness = len(witnesses)
+    first_witness = witnesses[0] if witnesses else None
+    leg("closure_under_composition_decided_by_doubling",
+        built and 0 < n_witness < n_prod,
+        "closure tested as 2*Omega_adm contained in Omega_adm over all "
+        "%d admissible states; containment FAILS at %d computed "
+        "witnesses. The count is required to SEPARATE (strictly between "
+        "0 and the set size), so a membership verdict replaced by either "
+        "constant fails this leg. First witness: occupancy %r at cost "
+        "%s, whose double costs %s and exceeds the budget %s"
+        % (n_prod, n_witness,
+           first_witness[0] if first_witness else None,
+           first_witness[1] if first_witness else "n/a",
+           first_witness[3] if first_witness else "n/a", C))
+
+    # -- both directions: the same composite fits at a larger budget -----
+    C_ok = (2 * first_witness[1]) if first_witness else None
+    omega_ok = _lnc_omega_adm(type_costs, C_ok) if C_ok is not None else None
+    inside = False
+    if omega_ok is not None and first_witness is not None:
+        inside = first_witness[2] in set(v for v, _ in omega_ok)
+    leg("both_directions_composite_admissible_at_a_larger_budget",
+        inside and C_ok is not None and C_ok > C,
+        "at budget C_ok = %s with the SAME floor, the composite %r "
+        "(cost %s) is computed INSIDE Omega_adm; the MEMBERSHIP TEST is "
+        "therefore not one-sided by construction. This leg makes no "
+        "claim about the non-closure VERDICT; what was measured about "
+        "that verdict's budget-sensitivity is in the disclosed escapes"
+        % (C_ok, first_witness[2] if first_witness else None,
+           first_witness[3] if first_witness else "n/a"))
+
+    # -- both richness regimes are realized in the declared model --------
+    # WHAT THIS DECIDES: that the declared model realizes both regimes
+    # -- some achievable total strictly above C/2 and within budget, and
+    # some at or below C/2.
+    # That is a real property of the declared costs and it fails in a
+    # model whose achievable totals all sit on one side.  What it does
+    # NOT decide is that R is load-bearing: the two arithmetic conjuncts
+    # below are tautologies over an ordered field, exactly as the
+    # archived Step 2 is, and they are kept because they exhibit the two
+    # composition costs, not because they decide anything.
+    achievable = sorted(set(t for _, t in omega)) if built else []
+    half = C / 2
+    rich = [t for t in achievable if t > half]
+    poor = [t for t in achievable if t <= half]
+    r_holds = bool(rich) and (rich[0] + rich[0] > C)
+    not_r_fits = bool(poor) and (poor[-1] + poor[-1] <= C)
+    leg("both_richness_regimes_realized_in_the_declared_model",
+        r_holds and not_r_fits,
+        "over the %d achievable sector demands, BOTH regimes of premise "
+        "R are realized in the declared model: a demand %s strictly "
+        "above C/2 = %s, whose self-composition costs "
+        "%s and OVERFLOWS the budget %s, and a demand %s at or below "
+        "C/2, whose self-composition costs %s and FITS. The two "
+        "compositions are exhibited, not decided: each follows from the "
+        "definition of its list"
+        % (len(achievable), rich[0] if rich else "n/a", half,
+           (rich[0] * 2) if rich else "n/a", C,
+           poor[-1] if poor else "n/a",
+           (poor[-1] * 2) if poor else "n/a"))
+
+    # -- the grade, enforced on the verdict path -------------------------
+    conditional = [_LNC_NAMED_UNBANKED_PREMISE]
+    canonical_grade = (_LNC_GRADE_BASE + _LNC_GRADE_SEPARATOR
+                       + _LNC_NAMED_UNBANKED_PREMISE)
+    leg("grade_is_conditional_on_R_and_bare_P_is_barred",
+        _LNC_DECLARED_GRADE == _LNC_SURFACE_GRADE
+        and _LNC_DECLARED_GRADE not in _LNC_BARRED_GRADES
+        and _LNC_GRADE_BASE in _LNC_BARRED_GRADES
+        and _LNC_DECLARED_GRADE == canonical_grade
+        and _LNC_NAMED_UNBANKED_PREMISE in conditional,
+        "returned grade is %r. Three things are enforced. (i) an EXACT "
+        "STRING comparison against the declared surface grade %r -- a "
+        "self-tie against a second declaration in this file, which a "
+        "coordinated edit of both sites escapes; disclosed. (ii) the "
+        "base grade %r is required to be a member of the barred set %r, "
+        "so emptying that set or moving the base reddens; bare 'P' is "
+        "barred because the archived source names R as a premise whose "
+        "use here is conditional on a Paper 2 derivation that is not "
+        "banked. (iii) the returned grade is required to equal the "
+        "canonical conditional form %r, RECOMPUTED here from the base "
+        "and from the same premise constant %r that this check returns "
+        "in conditional_on. NOT ENFORCED, disclosed: no leg inspects "
+        "whether the token expresses conditionality, and a three-site "
+        "edit moving the "
+        "premise constant together with both grade declarations passes "
+        "all three conjuncts and leaves this check green (measured)"
+        % (_LNC_DECLARED_GRADE, _LNC_SURFACE_GRADE, _LNC_GRADE_BASE,
+           list(_LNC_BARRED_GRADES), canonical_grade,
+           _LNC_NAMED_UNBANKED_PREMISE))
+
+    # -- non-closure does not force superadditivity ----------------------
+    additive_pair = None
+    if built:
+        for v, t in omega:
+            if t == 0:
+                continue
+            doubled = tuple(2 * x for x in v)
+            if doubled in omega_set and cost_of[doubled] == t + t:
+                additive_pair = (v, t, doubled, cost_of[doubled])
+                break
+    leg("non_closure_does_not_force_superadditivity_computed",
+        additive_pair is not None,
+        "an admissible non-zero state %r at cost %s composes with itself "
+        "to %r at cost %s, which is EXACTLY additive (Delta = %s) and "
+        "admissible. Non-closure of the set does not force strict "
+        "superadditivity on every pair"
+        % (additive_pair[0] if additive_pair else None,
+           additive_pair[1] if additive_pair else "n/a",
+           additive_pair[2] if additive_pair else None,
+           additive_pair[3] if additive_pair else "n/a",
+           (additive_pair[3] - 2 * additive_pair[1]) if additive_pair
+           else "n/a"))
+
+    # -- cross-MODULE value tie into apf/paper1_kernel.py ----------------
+    # This leg runs THIS object's enumerator over that module's own costs
+    # and capacity and compares computed cardinalities and residual
+    # budgets -- values, not verdicts -- and then decides closure on THAT
+    # interface, so the non-closure verdict is exhibited independently of
+    # the budget declared above.  DISCLOSED DIRECTION OF BLINDNESS: both
+    # sides are computed from that module's inputs, so a coordinated
+    # movement of those inputs moves both together and escapes.
+    from apf.paper1_kernel import _DISTINCTIONS as _K_D
+    from apf.paper1_kernel import _CAPACITY as _K_C
+    from apf.paper1_kernel import _enumerate_admissible_states as _k_enum
+    from apf.paper1_kernel import (
+        check_T_FD1_substrate_distinctions_capacity as _k_check)
+    k_costs = [Fraction(_K_D[d]['cost']) for d in sorted(_K_D)]
+    k_cap = Fraction(_K_C)
+    k_states = _k_enum(_K_D, _K_C)
+    k_reported = _k_check()['artifacts']['FD2_num_admissible_states']
+    # that module's states are SUBSETS (occupancy in {0,1}); restrict
+    # this object's lattice to the same 0/1 stratum to compare like
+    # with like, and compare residual budgets as exact Fractions.
+    mine = _lnc_omega_adm(k_costs, k_cap)
+    mine01 = [(v, t) for v, t in mine if all(x <= 1 for x in v)] if mine else []
+    my_residuals = sorted(k_cap - t for _, t in mine01)
+    # the enumeration budget must SATURATE the capacity that module
+    # reports: without this the budget handed to the enumerator is not
+    # tied to anything, and shifting it alone escapes (measured).
+    my_max_total = max((t for _, t in mine), default=None) if mine else None
+    their_residuals = sorted(Fraction(s['delta_sigma']) for s in k_states)
+    k_witnesses = 0
+    if mine is not None:
+        mset = set(v for v, _ in mine)
+        for v, _t in mine:
+            if tuple(2 * x for x in v) not in mset:
+                k_witnesses += 1
+    leg("cross_module_admissible_set_tied_by_value_into_paper1_kernel",
+        mine is not None
+        and len(mine01) == k_reported == len(k_states)
+        and my_residuals == their_residuals
+        and my_max_total == k_cap
+        and k_witnesses > 0,
+        "this object's enumerator run over apf/paper1_kernel.py's own "
+        "costs %r and capacity %s returns %d states on the 0/1 stratum "
+        "against that module's returned FD2_num_admissible_states = %d "
+        "and its %d enumerated states; the residual-budget multisets are "
+        "compared as exact Fractions and agree (%r); the enumeration's "
+        "maximum admissible total is %s and is required to equal that "
+        "module's reported capacity %s, tying the budget handed to the "
+        "enumerator to the value that module returns. On that module's "
+        "interface, closure fails at %d computed witnesses -- the "
+        "non-closure verdict is exhibited on a budget this object did "
+        "not declare. BLIND IN ONE DIRECTION, disclosed: both sides are "
+        "computed from that module's inputs, so a coordinated movement "
+        "of those inputs escapes. The equality of that module's REPORTED "
+        "count with its own enumerated count is a comparison of a pure "
+        "function with itself and cannot fail while its source stands; "
+        "what is live here is the comparison against THIS object's "
+        "independent enumerator and against the residual multiset"
+        % ([str(c) for c in k_costs], k_cap, len(mine01), k_reported,
+           len(k_states), [str(r) for r in my_residuals], my_max_total,
+           k_cap, k_witnesses))
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_LNC_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+    if _LNC_DECLARED_GRADE in _LNC_BARRED_GRADES:
+        notes.append("barred grade returned: %r" % (_LNC_DECLARED_GRADE,))
+
+    sentences = [
+        ("Omega_adm is constructed as the admissible state set at budget "
+         "C = %s with cost floor eps* = %s. Closure under composition is "
+         "decided by testing whether 2*Omega_adm is contained in "
+         "Omega_adm; containment fails at %d computed witnesses, the "
+         "first being occupancy %r at cost %s."
+         % (C, eps_star, n_witness,
+            first_witness[0] if first_witness else None,
+            first_witness[1] if first_witness else "n/a")),
+        ("The membership test is not one-sided by construction: at a "
+         "budget admitting the composition (%s with the same floor) the "
+         "same composite state is computed to be INSIDE Omega_adm. The "
+         "non-closure verdict is a separate matter, and what was "
+         "measured about its budget-sensitivity is recorded among the "
+         "disclosed escapes."
+         % (C_ok if C_ok is not None else "n/a",)),
+        ("Premise R (richness) -- which the archived source of record "
+         "names, and whose use in this lemma that source makes "
+         "conditional on a derivation deferred to Paper 2 that is not "
+         "banked here -- is consumed as a NAMED UNBANKED PREMISE. The "
+         "conclusion is conditional on it."),
+        ("This object decides closure under composition. It does not "
+         "decide convexity of Omega_adm, does not imply superadditivity "
+         "(Delta > 0), and does not imply interference."),
+        ("The interface budget C and the floor magnitude eps* = %s are "
+         "carried as declared model parameters: this object declares "
+         "them and reads neither from a sibling's record, so it carries "
+         "an untested convention and says so. RECORDED, as a departure "
+         "from the frozen surface: that surface's fifth sentence carries "
+         "an absence claim about banked suppliers of the budget. Read "
+         "against the bank that claim is false, and no absence is "
+         "claimed here."
+         % (eps_star,)),
+        ("Dependency record, not repaired here: the archived source "
+         "gives L_nc the premises A1 + L_epsilon* + M + R in its boxed "
+         "statement and says A1 + L_epsilon* + M are sufficient in the "
+         "paragraph above it, and states that L_nc and L_loc are "
+         "logically independent, while this check's returned dependency "
+         "list reads A1 + L_loc. Reconciling it is a bank-edge rewire "
+         "and is deliberately not performed by this patch."),
+    ]
+
+    if fails:
+        check(False, "L_nc: " + " | ".join(fails))
+
     return _result(
-        name='L_nc: Non-Closure from Admissibility Physics + Locality',
+        name='L_nc: Non-closure of the admissible set under composition',
         tier=0,
-        epistemic='P',
-        summary=(
-            f'Non-closure witness: E_1={E_1}, E_2={E_2} each <= C={C}, '
-            f'but E_1+E_2={E_1+E_2} > {C}. '
-            'L_loc (admissibility factorization) guarantees distributed interfaces; '
-            'A1 (admissibility physics) bounds each. Composition at shared cut-sets '
-            'exceeds local budgets. Formerly axiom A2; now derived from A1+L_loc.'
-        ),
-        key_result='A1 + L_loc ==> non-closure (derived, formerly axiom A2)',
+        epistemic=_LNC_DECLARED_GRADE,
+        passed=(not notes),
+        fail_reasons=list(notes),
+        summary=" ".join(sentences),
+        key_result=(
+            'Omega_adm at C = %s, floor %s: 2*Omega_adm is not contained '
+            'in Omega_adm, %d computed witnesses [%s -- conditional on '
+            'the named unbanked premise %s]'
+            % (C, eps_star, n_witness, _LNC_DECLARED_GRADE,
+               _LNC_NAMED_UNBANKED_PREMISE)),
         dependencies=['A1', 'L_loc'],
+        cross_refs=['L_epsilon*', 'M',
+                    'T_FD1_substrate_distinctions_capacity'],
+        conditional_on=conditional,
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
         artifacts={
-            'C': C, 'E_1': E_1, 'E_2': E_2,
-            'composition': E_1 + E_2,
-            'exceeds': E_1 + E_2 > C,
-            'derivation': 'L_loc (factorized interfaces) + A1 (finite C) -> non-closure',
-            'formerly': 'Axiom A2 in 5-axiom formulation',
+            'C_declared': str(C),
+            'eps_star_declared': str(eps_star),
+            'type_costs': [str(c) for c in type_costs],
+            'omega_adm_size': str(n_prod),
+            'non_closure_witnesses': str(n_witness),
+            'first_witness_occupancy': (list(first_witness[0])
+                                        if first_witness else None),
+            'first_witness_cost': (str(first_witness[1])
+                                   if first_witness else None),
+            'C_ok_both_directions': str(C_ok) if C_ok is not None else None,
+            'named_unbanked_premise': _LNC_NAMED_UNBANKED_PREMISE,
+            'grade_before_this_patch': 'P',
+            'grade_after_this_patch': _LNC_DECLARED_GRADE,
+            'statement_decided': 'closure under composition',
+            'statement_NOT_decided': 'convexity of Omega_adm',
+            'archived_object': (
+                'CONTINUOUS cost cone in the archive; DISCRETE integer '
+                'occupancy lattice here. The substitution is recorded, '
+                'not assumed away'),
+            'archived_source_of_record': (
+                'Papers/Paper 01 - The Enforceability of Distinction/Old/'
+                'Brooke_EnforceabilityOfDistinction_180 p version.tex, '
+                'Lemma L_nc (Non-Closure)'),
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared '
+                'leg EXECUTED, not that it could have failed'),
+            'may_not_cite': [
+                '"Omega_adm is not convex" -- the located source proves '
+                'non-closure under composition AND describes Omega_adm '
+                'as a convex polytope; this object decides convexity in '
+                'neither direction and the obligation is filed, not '
+                'ruled',
+                'as evidence that the archive is silent on convexity -- '
+                'it is not, and a token count is not a reading of it',
+                'superadditivity, Delta > 0, or interference, in any '
+                'direction',
+                'that R is derived, banked, or discharged',
+                'as an UNCONDITIONAL result -- every quotation carries '
+                'the R condition',
+                'as evidence about Paper 2\'s derivation of R, which is '
+                'not read here',
+                'as an absence claim about banked suppliers of a budget '
+                'or a floor magnitude -- one exists, and this object '
+                'declares its own parameters rather than reading it',
+            ],
+            'held_out_of_the_bank': False,
+            'frozen_claim_surface_sha256': (
+                '5f72fd9a90f40cb4188f1019fce1d21ff42cf9773885108f4f4b23383e4f2465'),
         },
     )
 
@@ -4008,9 +4552,12 @@ def check_T_sep():
     CLAIM (Paper 1 Technical Supplement, spine-era statement: Theorem
     T_sep^op "Operational Sector Decomposition" + Theorem T_sep "Linear
     Representation of the Sector Decomposition"; archived source of
-    record: Papers/Paper 01/Old/Paper_1_Enforceability_of_Distinction_
-    Supplement_v6_pre-v7.0.tex, thm:Tsep_op / thm:Tsep -- the live v8.x
-    supplement restates the same content in the Sep/IJC architecture):
+    record -- the filename is on one unbroken line so that a substring
+    sweep can find it:
+    Papers/Paper 01 - The Enforceability of Distinction/Old/
+    Paper_1_Enforceability_of_Distinction_Supplement_v6_pre-v7.0.tex
+    at thm:Tsep_op / thm:Tsep -- the live v8.x supplement restates the
+    same content in the Sep/IJC architecture):
 
       (a) Cost criterion: distinctions d1, d2 at an interface Gamma are
           independently enforceable iff their joint enforcement cost is
@@ -4164,8 +4711,11 @@ def check_T_adj():
 
     CLAIM (Paper 1 Technical Supplement, spine-era statement: Theorem
     T_adj "Self-Adjointness of Sector Projections"; archived source of
-    record: Papers/Paper 01/Old/Paper_1_Enforceability_of_Distinction_
-    Supplement_v6_pre-v7.0.tex, thm:Tadj_sector): with respect to the
+    record -- the filename is on one unbroken line so that a substring
+    sweep can find it:
+    Papers/Paper 01 - The Enforceability of Distinction/Old/
+    Paper_1_Enforceability_of_Distinction_Supplement_v6_pre-v7.0.tex
+    at thm:Tadj_sector): with respect to the
     block-orthogonal bilinear form B forced by the sector decomposition
     (L_omega, a SUPPLEMENT-CITED RIDER: that K3 FORCES inter-sector
     orthogonality of any admissible cost bilinear form rests on the
@@ -5417,113 +5967,505 @@ def check_A1_disjoint_scope():
     )
 
 
+# The set-exact leg inventory, asserted on the path the bank executes.
+_KZT_EXPECTED_LEGS = (
+    "cross_coverage_and_kappa_computed_over_that_decomposition",
+    "cross_module_k3_additivity_recomputed_in_paper1_kernel",
+    "decomposition_recovered_uniquely_from_tsep_returned_record",
+    "delta_law_and_threshold_contrast_consumed_by_value_from_P4_IMP",
+    "epsilon_star_premise_set_consumed_from_L_epsilon_star_record",
+    "mechanism_anchors_pairwise_disjoint_computed",
+    "overlap_witness_present_in_the_same_decomposition",
+    "substrate_pool_intersections_computed",
+    "tsep_record_consumed_by_value",
+)
+
+# The grade this object is permitted to return.  Enforced on the verdict
+# path, not asserted in prose.  The frozen surface retains [P] and
+# records that whether [P] means "from A1 alone" or "from the PLEC four"
+# is unresolved; this object discloses the inherited premise and files
+# the question.  The guard fires only if the declared grade is moved
+# into the barred set; it is not a claim that the grade is right.
+_KZT_DECLARED_GRADE = "P"
+_KZT_BARRED_GRADES = ("AXIOM", "POSTULATE")
+
+# The premise this object inherits and does not adjudicate.
+_KZT_INHERITED_PREMISE = "S3 (via K3, via check_T_sep)"
+
+
+def _kzt_subsets(universe):
+    """Every subset of a finite universe, as frozensets."""
+    from itertools import combinations as _kzt_combinations
+    items = sorted(universe)
+    out = []
+    for r in range(len(items) + 1):
+        for combo in _kzt_combinations(items, r):
+            out.append(frozenset(combo))
+    return out
+
+
 def check_kappa_zero_Tsep():
-    """T_sep => kappa = 0: disjoint mechanism support forces zero cross-talk coupling.
+    """T_sep => kappa = 0: disjoint mechanism support forces zero cross-talk.
 
-    In Lemma P4's LP, cross-talk coupling kappa measures how much substrate
-    defense delta_Gamma covers individual-mechanism constraints delta_i >= epsilon(d_i).
+    STATEMENT (archived source of record: the pre-split monograph
+    `Papers/Paper 01 - The Enforceability of Distinction/Old/Brooke_EnforceabilityOfDistinction_180 p version.tex`,
+    sha256 ff0cdef3..8d5d05a4, "Corollary (T_sep => kappa = 0)" at line
+    1186): under T_sep's disjoint-support condition M_d1 cap M_d2 =
+    empty, the cross-talk coupling kappa of Lemma P4 is exactly zero.
+    Substrate defense delta_Gamma is localized to the shared pool
+    S_Gamma \\ (M_d1 cup M_d2); individual-mechanism defense delta_i is
+    localized to M_di; resources applied to one region provide exactly
+    zero coverage of constraints arising in the other.
 
-    Under T_sep's disjoint-mechanism condition M_d1 cap M_d2 = empty:
-      - Individual-mechanism defense delta_i is localized to M_di
-      - Substrate defense delta_Gamma is localized to S_Gamma \\ (M_d1 cup M_d2)
-      - These regions are PHYSICALLY DISJOINT subsets of S_Gamma
-      - Resources in one region provide ZERO coverage of constraints in the other
-      => kappa = 0 (derived, not assumed)
-      => Delta = c_Gamma >= epsilon(d_Gamma) > 0 (unconditional under T_sep)
+    WHAT THIS CHECK COMPUTES.  It does not write the regions down.  It
+    consumes `check_T_sep`'s own returned record -- its per-direction
+    `costs`, its per-distinction `eps`, its `pool`, and its
+    `deficit_d1_d3` -- and solves for the anchor sets that record
+    determines, over exact Fractions.  The solution is required to be
+    unique; the pairwise intersections are then computed over a region
+    list built here, the cross-coverage is computed from them, and
+    kappa is computed from the cross-coverage.  The Delta law and the
+    threshold contrast are consumed by value from `check_P4_IMP`'s own
+    returned record and are not re-derived.
 
-    This closes the logical gap in P4: "physical default kappa=0" was previously
-    asserted; it is now derived from T_sep's disjoint-support condition.
+    WHAT THIS OBJECT'S FAILURE CHANNEL IS.  The channel is "the record
+    `check_T_sep` returns is internally inconsistent", NOT "kappa might
+    be non-zero".  The recovery imposes cost and exhaustion and does not
+    impose disjointness.  On the record this object consumes, the
+    distinction costs saturate the substrate outside the pool, so an
+    overlap would make kappa(M_d1) + kappa(M_d2) strictly exceed
+    kappa(S \\ pool), which the cost and exhaustion constraints already
+    forbid: the disjointness is ENTAILED rather than tested.  The
+    saturation is neither computed nor enforced here as a conjunct,
+    which would pin this object to saturating records and redden
+    exactly the non-saturating case worth seeing.  What the recovery
+    does establish is that the anchors are the unique solution of the
+    record's own arithmetic.
+
+    REACH OF THAT CHANNEL, MEASURED AND PARTIAL.  It holds for the
+    anchors and NOT for the returned deficit: corrupting
+    `check_T_sep`'s returned `deficit_d1_d3` to a value inconsistent
+    with that check's own computed shared-overlap cost leaves this
+    check green, because the overlap solver then recovers a different
+    single consistent witness with the same separator.
+
+    THE GROUND OF EACH INTERSECTION, DISCLOSED.  Every pairwise
+    intersection of the region list is computed.  The pool-versus-anchor
+    ones are empty for a reason that is definitional rather than
+    T_sep-dependent: the pool is the complement of the anchors' union,
+    so any decomposition satisfying the exhaustion condition has them
+    empty whatever the anchors are.  This module records that split
+    rather than presenting the intersections as independent pieces of
+    evidence.  It is a disagreement with the archived proof's
+    presentation, in which the disjoint-support condition is invoked for
+    a conclusion that the pool's definition already delivers; the
+    disagreement is recorded, not resolved here.
+
+    ANTI-VACUITY.  The same recovery, over the same returned record,
+    exhibits an overlapping pair (d1, d3) whose anchor intersection is
+    non-empty with cost equal to `check_T_sep`'s returned
+    `deficit_d1_d3`.  The disjointness predicate therefore separates on
+    this substrate: it is not satisfied by every pair the record
+    carries.
+
+    DIRECTION.  Forward only.  The converse is not computed.
+
+    PREMISE INHERITANCE.  `check_T_sep`'s forward direction is argued
+    through K3, whose physical input S3 is stated to be a "physical
+    assumption, not derived from bare A1", with an A1-compliant
+    noise-bath countermodel supplied.  THAT STATEMENT IS IN A DIFFERENT
+    DOCUMENT FROM THE MONOGRAPH CITED IN THE STATEMENT ABOVE.  It is the
+    file `check_T_sep`'s own docstring names as ITS archived source of
+    record:
+      Papers/Paper 01 - The Enforceability of Distinction/Old/
+      Paper_1_Enforceability_of_Distinction_Supplement_v6_pre-v7.0.tex
+    The monograph carries the Corollary and does NOT carry the S3
+    statement; every occurrence of "(S3)" in it is an unrelated
+    sequential-product axiom of the effect-algebra reconstruction.
+    This object consumes `check_T_sep` by value
+    and inherits that premise.  It does not adjudicate it, and it does
+    not move its own grade on account of it.
+
+    DISCLOSED ESCAPE -- the coverage functional's normalisation is not
+    pinned, and a second coverage computation would not pin it.  Three
+    convention edits leave this check green: the denominator taken over
+    the region instead of the anchor, the argument order swapped at the
+    separator call, and the argument order swapped at all three call
+    sites together.  The measured reason: on the decomposition
+    `check_T_sep` returns, all three candidate normalisations COINCIDE
+    IN VALUE at all three call sites -- the
+    kappa readings because the intersection is empty and every
+    convention divides zero, the separator because the two sets it
+    compares have equal cardinality.  The verdict here turns only on
+    whether the intersection is empty and on the separator being
+    non-zero, and neither is sensitive to the normalisation.
+
+    THE SURFACE'S MULTI-SITE CONTROL, EXHIBITED SEPARATELY.  The frozen
+    surface's control 4 is a coordinated rename of the region keys AND
+    the disjointness predicate together.  Measured, on the control as
+    written: a
+    CONSISTENT rename of the region key and both filters is green --
+    that is refactor invariance and is the correct outcome -- while an
+    INCONSISTENT rename, and a widening of the pool-pair filter, both
+    redden through the count enforcement at the two intersection legs.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08): a mismatch contributes a failure reason and does
+    not raise.  Standing limit, disclosed: an inventory certifies that a
+    declared leg EXECUTED, not that it could have failed.
     """
-    from fractions import Fraction
+    from itertools import combinations as _kzt_pairs
+    legs = {}
+    fails = []
+    notes = []
 
-    # --- Geometry of defense regions under T_sep ---
-    # S_Gamma = M_d1 cup M_d2 cup S_substrate
-    # where S_substrate = S_Gamma \\ (M_d1 cup M_d2) is the shared substrate pool
-    # Under T_sep: M_d1 cap M_d2 = empty (disjoint)
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
 
-    # Represent each region as a set of "capacity units"
-    # M_d1: units 0,1,2  (3 units of capacity for d1's mechanism)
-    # M_d2: units 3,4    (2 units for d2's mechanism)
-    # S_substrate: units 5,6  (2 units of shared substrate)
-    M_d1 = frozenset({0, 1, 2})
-    M_d2 = frozenset({3, 4})
-    S_substrate = frozenset({5, 6})
-    S_Gamma = M_d1 | M_d2 | S_substrate
+    # -- (1) consume check_T_sep's own returned record, by value --------
+    from apf.core import check_T_sep, check_P4_IMP, check_L_epsilon_star
 
-    # Verify T_sep disjoint condition
-    check(len(M_d1 & M_d2) == 0, "T_sep: M_d1 cap M_d2 = empty (disjoint)")
-    check(len(M_d1 & S_substrate) == 0, "M_d1 disjoint from substrate pool")
-    check(len(M_d2 & S_substrate) == 0, "M_d2 disjoint from substrate pool")
-    check(M_d1 | M_d2 | S_substrate == S_Gamma, "S_Gamma = M_d1 cup M_d2 cup S_substrate")
+    tsep = check_T_sep()
+    art = tsep.get('artifacts', {})
+    have_keys = tuple(sorted(k for k in ('costs', 'eps', 'pool', 'deficit_d1_d3')
+                             if k in art))
+    want_keys = ('costs', 'deficit_d1_d3', 'eps', 'pool')
+    costs = {int(k): Fraction(v) for k, v in art.get('costs', {}).items()}
+    eps = {k: Fraction(v) for k, v in art.get('eps', {}).items()}
+    pool = frozenset(int(i) for i in art.get('pool', ()))
+    deficit = Fraction(art['deficit_d1_d3']) if 'deficit_d1_d3' in art else None
+    S = frozenset(costs)
+    leg("tsep_record_consumed_by_value",
+        have_keys == want_keys and bool(costs) and bool(eps)
+        and deficit is not None and pool <= S
+        and all(c > 0 for c in costs.values()),
+        "read %d substrate directions and %d distinction costs from "
+        "check_T_sep's returned artifacts; keys %r; pool of size %d; "
+        "deficit_d1_d3 = %s (exact Fractions, no value re-entered here)"
+        % (len(costs), len(eps), list(have_keys), len(pool),
+           deficit if deficit is not None else "absent"))
 
-    # Defense allocations are region-localized:
-    # delta_1 can only be drawn from M_d1  (covers constraint delta_1 >= eps1)
-    # delta_2 can only be drawn from M_d2  (covers constraint delta_2 >= eps2)
-    # delta_Gamma can only be drawn from S_substrate (covers d_Gamma constraint)
+    def kap(sub):
+        return sum((costs[i] for i in sub), Fraction(0))
 
-    # Cross-coverage: does delta_Gamma (in S_substrate) cover any of delta_1's constraint?
-    # Coverage is possible only if the defense regions overlap.
-    substrate_covers_d1 = len(S_substrate & M_d1)   # intersection cardinality
-    substrate_covers_d2 = len(S_substrate & M_d2)
-    check(substrate_covers_d1 == 0, "S_substrate disjoint from M_d1: zero coverage of d1 constraint")
-    check(substrate_covers_d2 == 0, "S_substrate disjoint from M_d2: zero coverage of d2 constraint")
+    # -- (2) solve for the anchors the record determines ----------------
+    # Constraints, each independently T_sep's own content and none of
+    # them the disjointness the next leg computes:
+    #   cost:       kappa(M_d1) = eps(d1), kappa(M_d2) = eps(d2)
+    #   exhaustion: M_d1 cup M_d2 cup pool = S_Gamma
+    # Disjointness is NOT imposed.  Uniqueness is enforced.  See the
+    # docstring: not imposed is not the same as not entailed, and on a
+    # saturating record it IS entailed.
+    subsets = _kzt_subsets(S)
+    solutions = [
+        (A, B) for A in subsets for B in subsets
+        if kap(A) == eps.get('d1') and kap(B) == eps.get('d2')
+        and (A | B | pool) == S
+    ]
+    unique = (len(solutions) == 1)
+    M_d1, M_d2 = solutions[0] if unique else (frozenset(), frozenset())
+    leg("decomposition_recovered_uniquely_from_tsep_returned_record",
+        unique and bool(M_d1) and bool(M_d2),
+        "solved over %d candidate subsets of the %d-direction substrate "
+        "under cost + exhaustion constraints only (disjointness NOT "
+        "imposed); solution count = %d, enforced == 1; recovered "
+        "M_d1 = %r (cost %s), M_d2 = %r (cost %s)"
+        % (len(subsets), len(S), len(solutions), sorted(M_d1), kap(M_d1),
+           sorted(M_d2), kap(M_d2)))
 
-    # Therefore kappa = 0 (no cross-coverage fraction)
-    kappa_derived = Fraction(substrate_covers_d1, len(M_d1)) if len(M_d1) > 0 else Fraction(0)
-    check(kappa_derived == 0, "kappa = 0 derived from disjoint support (not assumed)")
+    # -- (3) the region list, the pair list, and every count derived ----
+    # Nothing below is written down: the regions are built from the
+    # recovered decomposition, the pairs are enumerated from the regions,
+    # and each count is len() of an object constructed here.  The counts
+    # are then ENFORCED against one another at the two intersection legs,
+    # so a region added to or dropped from either list reddens rather
+    # than quietly changing a printed figure.
+    anchors = (('M_d1', M_d1), ('M_d2', M_d2))
+    regions = (('pool', pool),) + anchors
+    pairs = [(na, nb, ra & rb)
+             for (na, ra), (nb, rb) in _kzt_pairs(regions, 2)]
+    n_mech = len(anchors)
+    n_pairs = len(pairs)
+    pool_pairs = [p for p in pairs if 'pool' in (p[0], p[1])]
+    anchor_pairs = [p for p in pairs if 'pool' not in (p[0], p[1])]
+    n_pool_anchor = len(pool_pairs)
 
-    # --- Consequence: Delta = c_Gamma unconditionally ---
-    eps1 = Fraction(3)
-    eps2 = Fraction(2)
-    eps_Gamma = Fraction(1)
-    c_Gamma = eps_Gamma   # c_Gamma >= epsilon(d_Gamma) by robustness (P1)
+    # -- (4) the anchor-versus-anchor intersection ----------------------
+    anchor_overlap = M_d1 & M_d2
+    leg("mechanism_anchors_pairwise_disjoint_computed",
+        unique and len(anchor_pairs) == 1
+        and anchor_pairs[0][2] == anchor_overlap
+        and len(anchor_overlap) == 0,
+        "M_d1 cap M_d2 computed over the recovered decomposition = %r "
+        "(size %d), and it is the only anchor-versus-anchor pair in the "
+        "%d computed pairs; T_sep's disjoint-support condition holds on "
+        "the decomposition check_T_sep returns. GROUND, DISCLOSED IN THE "
+        "DOCSTRING AND NOT COMPUTED HERE: the distinction costs saturate "
+        "the substrate outside the pool, so this disjointness is entailed "
+        "by the cost and exhaustion constraints already imposed, and this "
+        "leg reddens on an inconsistent record and not on a consistent "
+        "overlapping one"
+        % (sorted(anchor_overlap), len(anchor_overlap), n_pairs))
 
-    # P4 gap with kappa = 0 (derived)
-    Delta = c_Gamma * (1 - 2 * kappa_derived)
-    check(Delta == c_Gamma, "kappa=0 (derived): Delta = c_Gamma")
-    check(Delta > 0, "Delta > 0 unconditional under T_sep (no kappa assumption needed)")
+    # -- (5) the pool-versus-anchor intersections, with their ground -----
+    leg("substrate_pool_intersections_computed",
+        unique and n_pool_anchor == n_mech
+        and n_pairs == n_mech * (n_mech + 1) // 2
+        and all(len(x) == 0 for _, _, x in pool_pairs),
+        "computed intersections %r; the %d pool-versus-anchor pairs are "
+        "all empty. Counts are enforced against one another: the number "
+        "of pool-versus-anchor pairs is required to equal the number of "
+        "anchor regions (%d), and the total pair count (%d) is required "
+        "to equal the number of pairs of the region list. GROUND "
+        "DISCLOSED: the pool is the complement of the anchors' union, so "
+        "under the exhaustion constraint these are empty for a "
+        "definitional reason and are not independent evidence for "
+        "T_sep's condition"
+        % ([(a, b, sorted(x)) for a, b, x in pairs], n_pool_anchor,
+           n_mech, n_pairs))
 
-    D_individual = eps1 + eps2
-    D_joint = eps1 + eps2 + Delta
-    check(D_joint > D_individual, "Joint defense strictly exceeds sum of individual (T_sep => kappa=0 => Delta>0)")
-    check(D_joint - D_individual == c_Gamma, "Gap equals c_Gamma exactly")
+    # -- (6) anti-vacuity: the same record carries an overlapping pair ---
+    d3_solutions = [
+        D for D in subsets
+        if kap(D) == eps.get('d3') and kap(D & M_d1) == deficit
+        and len(D & M_d1) > 0
+    ] if unique and deficit is not None else []
+    d3_unique = (len(d3_solutions) == 1)
+    M_d3 = d3_solutions[0] if d3_unique else frozenset()
+    leg("overlap_witness_present_in_the_same_decomposition",
+        d3_unique and len(M_d3 & M_d1) > 0
+        and kap(M_d3 & M_d1) == deficit,
+        "recovered M_d3 = %r (cost %s, solution count %d enforced == 1); "
+        "M_d1 cap M_d3 = %r is NON-empty with cost %s, tied by value to "
+        "check_T_sep's returned deficit_d1_d3 = %s. The disjointness "
+        "predicate separates on this substrate"
+        % (sorted(M_d3), kap(M_d3) if M_d3 else "n/a", len(d3_solutions),
+           sorted(M_d3 & M_d1), kap(M_d3 & M_d1) if M_d3 else "n/a", deficit))
 
-    # --- Contrast: overlapping case (kappa > 0, Delta may vanish) ---
-    # If M_d1 cap M_d2 != empty, some substrate defense covers mechanism defense
-    kappa_overlap = Fraction(1, 2)   # marginal: Delta = 0
-    Delta_overlap = c_Gamma * (1 - 2 * kappa_overlap)
-    check(Delta_overlap == 0, "Overlapping case kappa=1/2: Delta=0 (no superadditivity)")
+    # -- (7) cross-coverage and kappa, computed -------------------------
+    # ONE coverage functional serves the kappa reading and the separator.
+    # The separator is the overlapping pair the same record carries: a
+    # coverage functional that returns zero there returns zero for a
+    # reason that has nothing to do with T_sep, and this leg reddens.
+    # The functional's NORMALISATION is not pinned; see the docstring's
+    # disclosed escape, and the measured reason it cannot be pinned by a
+    # second computation.
+    def _coverage(region, anchor):
+        if not anchor:
+            return None
+        return Fraction(len(region & anchor), len(anchor))
 
-    kappa_cooperative = Fraction(3, 5)  # cooperative: Delta < 0
-    Delta_cooperative = c_Gamma * (1 - 2 * kappa_cooperative)
-    check(Delta_cooperative < 0, "kappa>1/2: Delta<0 (cooperative, classical regime)")
+    kappa_derived = _coverage(pool, M_d1) if unique else None
+    kappa_alt = _coverage(pool, M_d2) if unique else None
+    kappa_sep = _coverage(M_d3, M_d1) if (unique and M_d3) else None
+    leg("cross_coverage_and_kappa_computed_over_that_decomposition",
+        kappa_derived is not None and kappa_alt is not None
+        and kappa_sep is not None
+        and kappa_derived == 0 and kappa_alt == 0 and kappa_sep > 0,
+        "the coverage functional gives kappa = "
+        "|pool cap M_d1| / |M_d1| = %s and |pool cap M_d2| / |M_d2| = %s, "
+        "computed over the recovered decomposition and not over all "
+        "substrates. SEPARATOR: the same functional applied to the "
+        "overlapping pair gives |M_d3 cap M_d1| / |M_d1| = %s, which is "
+        "required non-zero, so a functional returning zero everywhere "
+        "fails this leg"
+        % (kappa_derived, kappa_alt, kappa_sep))
+
+    # -- (8) the Delta law, consumed by value from check_P4_IMP ---------
+    # The THRESHOLD contrast is read from that check's returned record.
+    p4 = check_P4_IMP()
+    p4art = p4.get('artifacts', {})
+    c_Gamma = Fraction(p4art['c_Gamma'])
+    p4_delta0 = Fraction(p4art['Delta_kappa0'])
+    k_thresh = Fraction(p4art['threshold_kappa'])
+    Delta = c_Gamma * (1 - 2 * (kappa_derived if kappa_derived is not None
+                                else Fraction(1)))
+    Delta_half = c_Gamma * (1 - 2 * k_thresh)
+    leg("delta_law_and_threshold_contrast_consumed_by_value_from_P4_IMP",
+        kappa_derived is not None
+        and Delta == p4_delta0 and Delta == c_Gamma and Delta > 0
+        and Delta_half == 0,
+        "c_Gamma = %s and Delta at kappa=0 = %s read from check_P4_IMP's "
+        "returned artifacts; Delta recomputed here at the derived "
+        "kappa = %s gives %s and is compared to P4_IMP's value as exact "
+        "Fractions, not as verdicts; the threshold contrast, at the "
+        "kappa = %s that check also returns, gives Delta = %s"
+        % (c_Gamma, p4_delta0, kappa_derived, Delta, k_thresh, Delta_half))
+
+    # -- (9) the floor's premise set, consumed from L_epsilon_star -------
+    eps_star_rec = check_L_epsilon_star()
+    eps_star_deps = tuple(sorted(eps_star_rec.get('dependencies', ())))
+    eps_star_magnitude = [v for v in eps_star_rec.get('artifacts', {}).values()
+                          if isinstance(v, (int, float, Fraction))]
+    leg("epsilon_star_premise_set_consumed_from_L_epsilon_star_record",
+        eps_star_deps == ('A1', 'BW', 'MD'),
+        "check_L_epsilon_star's own returned dependency set is %r, "
+        "consumed here set-exactly -- that set is what this leg gates on. "
+        "RECORDED, not inferred from: its returned record carries %d "
+        "numeric fields. This object reads no magnitude from it and "
+        "declares none"
+        % (list(eps_star_deps), len(eps_star_magnitude)))
+
+    # -- (10) a different-module recomputation, NOT a tie of this
+    # object's values.  What it does: it recomputes, inside
+    # apf/paper1_kernel.py and over that module's own perturbations,
+    # the K3 disjoint-support additivity that T_sep's forward direction
+    # rides, comparing computed costs rather than verdicts.  What it does
+    # NOT do: no quantity computed by this check enters the
+    # comparison, so it is an
+    # independent re-verification and not a value tie of this object.
+    from apf.paper1_kernel import _DISTINCTIONS as _K_DISTINCTIONS
+    from apf.paper1_kernel import _build_perturbations as _k_build
+    kperts = _k_build(_K_DISTINCTIONS)
+    kcost = {name: Fraction(p['cost']) for name, p in kperts.items()}
+    ksupp = {name: frozenset(p['support']) for name, p in kperts.items()}
+    tied, mismatched = 0, []
+    for a in sorted(kperts):
+        for b in sorted(kperts):
+            if a >= b or (ksupp[a] & ksupp[b]):
+                continue
+            union = ksupp[a] | ksupp[b]
+            for cname in sorted(kperts):
+                if ksupp[cname] == union:
+                    if kcost[cname] == kcost[a] + kcost[b]:
+                        tied += 1
+                    else:
+                        mismatched.append((a, b, cname))
+    leg("cross_module_k3_additivity_recomputed_in_paper1_kernel",
+        tied > 0 and not mismatched,
+        "over apf/paper1_kernel.py's own %d perturbations, %d "
+        "disjoint-support pairs have a named union perturbation; every "
+        "one has cost(union) equal to the sum of the parts as exact "
+        "Fractions (%d mismatches). Costs are compared, not verdicts. "
+        "SCOPE: this recomputation runs entirely inside that module and "
+        "no quantity computed by this check enters it -- it corroborates "
+        "the K3 step, it does not tie this object's values"
+        % (len(kperts), tied, len(mismatched)))
+
+    # -- leg inventory, set-exact, append-and-record --------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_KZT_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+    if _KZT_DECLARED_GRADE in _KZT_BARRED_GRADES:
+        notes.append("barred grade declared: %r" % (_KZT_DECLARED_GRADE,))
+
+    sentences = [
+        ("Given the substrate decomposition returned by check_T_sep, the "
+         "substrate-defense region and the %d mechanism-anchor regions are "
+         "computed pairwise disjoint (%d intersections, all empty, "
+         "computed), and kappa = %s over that decomposition."
+         % (n_mech, n_pairs,
+            kappa_derived if kappa_derived is not None else "undetermined")),
+        ("Direction: this object computes T_sep => kappa = 0. It does not "
+         "compute the converse."),
+        ("The law Delta = c_Gamma*(1 - 2*kappa) and the contrast value at "
+         "kappa = %s are consumed by value from check_P4_IMP's own "
+         "returned record. They are not re-derived here."
+         % (k_thresh,)),
+        ("Premise inheritance, disclosed: the forward direction of "
+         "check_T_sep is argued through K3, whose physical input S3 is "
+         "stated to be not derived from bare A1, with an A1-compliant "
+         "countermodel supplied. That statement is carried by the Paper 1 "
+         "Technical Supplement v6_pre-v7.0 archive that check_T_sep's own "
+         "docstring names as ITS source of record, NOT by the monograph "
+         "this object cites for the Corollary. This object consumes "
+         "check_T_sep by value and inherits that premise. It does not "
+         "adjudicate it."),
+        ("Ground of the intersections, disclosed: %d of the %d computed "
+         "intersections are pool-versus-anchor and are empty under the "
+         "exhaustion constraint whatever the anchors are. The "
+         "anchor-versus-anchor intersection is not imposed as a "
+         "constraint; on the record consumed the distinction costs "
+         "saturate the substrate outside the pool and it is entailed by "
+         "the cost and exhaustion constraints together, so the channel "
+         "this object "
+         "adds is that the consumed record is internally inconsistent, "
+         "not that kappa might be non-zero. That ground is disclosed in "
+         "the docstring and is not computed here. The same record "
+         "carries a non-disjoint pair (d1, d3) with overlap cost %s."
+         % (n_pool_anchor, n_pairs, deficit)),
+        ("Ties, stated as what they are: the ties to check_T_sep, "
+         "check_P4_IMP and check_L_epsilon_star are same-module ties by "
+         "value. The one different-module leg recomputes K3 additivity "
+         "inside apf/paper1_kernel.py over that module's own "
+         "perturbations and ties none of this object's values."),
+    ]
+
+    if fails:
+        check(False, "kappa_zero_Tsep: " + " | ".join(fails))
 
     return _result(
         name='T_sep => kappa=0: disjoint mechanisms derive zero cross-talk',
         tier=0,
-        epistemic='P',
-        summary=(
-            'Under T_sep disjoint-mechanism condition: '
-            'delta_Gamma (substrate defense, in S_Gamma\\(M_d1 cup M_d2)) and '
-            'delta_i (mechanism defense, in M_di) occupy physically disjoint regions. '
-            'Disjoint regions => zero cross-coverage => kappa = 0 (derived from T_sep, not assumed). '
-            'kappa=0 => Delta = c_Gamma >= epsilon(d_Gamma) > 0 unconditionally. '
-            'L_Delta superadditivity follows from A1 alone (via T_sep as scope condition). '
-            'Contrast: overlapping mechanisms allow kappa >= 1/2, Delta <= 0, classical regime.'
-        ),
-        key_result='kappa=0 derived from T_sep disjoint support; Delta=c_Gamma>0 unconditional',
+        epistemic=_KZT_DECLARED_GRADE,
+        passed=(not notes),
+        fail_reasons=list(notes),
+        summary=" ".join(sentences),
+        key_result=(
+            'kappa = %s computed over the decomposition check_T_sep '
+            'returns; Delta = %s tied by value to check_P4_IMP [%s, '
+            'inheriting %s]'
+            % (kappa_derived if kappa_derived is not None else "undetermined",
+               Delta, _KZT_DECLARED_GRADE, _KZT_INHERITED_PREMISE)),
         dependencies=['A1', 'T_sep', 'P4_IMP', 'L_epsilon*'],
+        cross_refs=['T_FD1_substrate_distinctions_capacity'],
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
         artifacts={
-            'M_d1_size': str(len(M_d1)),
-            'M_d2_size': str(len(M_d2)),
-            'S_substrate_size': str(len(S_substrate)),
-            'substrate_covers_d1': str(substrate_covers_d1),
-            'substrate_covers_d2': str(substrate_covers_d2),
+            'M_d1': sorted(M_d1),
+            'M_d2': sorted(M_d2),
+            'M_d3_overlap_witness': sorted(M_d3),
+            'pool': sorted(pool),
+            'anchor_overlap': sorted(anchor_overlap),
+            'deficit_d1_d3_tied': str(deficit),
             'kappa_derived': str(kappa_derived),
             'c_Gamma': str(c_Gamma),
             'Delta_kappa0': str(Delta),
-            'Delta_kappa_half': str(Delta_overlap),
-            'derivation_note': 'kappa=0 is a theorem of T_sep, not a physical default assumption',
+            'Delta_at_threshold': str(Delta_half),
+            'inherited_premise': _KZT_INHERITED_PREMISE,
+            'inherited_premise_source': (
+                'Papers/Paper 01 - The Enforceability of Distinction/Old/'
+                'Paper_1_Enforceability_of_Distinction_Supplement_v6_pre-v7.0'
+                '.tex -- the archive check_T_sep\'s own docstring names, and '
+                'the file that carries the S3 status statement and the '
+                'noise-bath countermodel. NOT the monograph named below, '
+                'which carries the Corollary and no S3 statement'),
+            'archived_source_of_record': (
+                'Papers/Paper 01 - The Enforceability of Distinction/Old/'
+                'Brooke_EnforceabilityOfDistinction_180 p version.tex, '
+                'Corollary (T_sep => kappa = 0)'),
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared '
+                'leg EXECUTED, not that it could have failed'),
+            'may_not_cite': [
+                'kappa = 0 forces T_sep -- the converse is not computed '
+                'here, and this object may not be cited as having ruled '
+                'the direction',
+                'that S3 or K3 is derived from A1, or that the S3 '
+                'inheritance is discharged',
+                'that the physical default kappa = 0 is established for '
+                'any interface outside the computed decomposition',
+                'as a re-derivation, corroboration or independent '
+                'confirmation of P4_IMP\'s law -- it consumes it',
+                'as evidence about the archive\'s soundness, its '
+                'restoration, or the citation-versus-restoration question',
+                'as evidence that kappa could have come out non-zero on a '
+                'consistent T_sep record -- on the record consumed the '
+                'disjointness is entailed by the constraints the recovery '
+                'already imposes, and the channel this object adds is that '
+                'the consumed record is internally inconsistent',
+                'as an absence claim about other modules -- no scan is '
+                'performed here, and a banked module does carry the '
+                'anchor-overlap deficit identity',
+            ],
+            'held_out_of_the_bank': False,
+            'frozen_claim_surface_sha256': (
+                '5f72fd9a90f40cb4188f1019fce1d21ff42cf9773885108f4f4b23383e4f2465'),
         },
     )
 

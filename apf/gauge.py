@@ -1275,8 +1275,9 @@ def check_T_field():
 
     Phase 1: Scan 4680 templates built from SU(3) reps {3,3b,6,6b,8}
              x SU(2) reps {1,2}, up to 5 field types, 3 colored singlets,
-             2 lepton singlets. 7 filters: AF(SU3), AF(SU2), chirality,
-             [SU(3)]^3, Witten, anomaly, CPT quotient. Minimality selects
+             2 lepton singlets. 7 filters: AF(SU3), AF(SU2),
+             doublet-singlet content, [SU(3)]^3, Witten, anomaly,
+             CPT quotient. Minimality selects
              unique winner = SM at 45 Weyl DOF.
 
     Phase 2: 5 closed-form proofs that ALL categories outside Phase 1
@@ -1298,14 +1299,33 @@ def check_T_field():
                  a further colorless doublet (1), total 8 > 22/3;
                  dim-6 (6+4=10) and dim-8 (8+4=12) doublets bust the
                  budget outright. Computed below in exact Fractions.
-             P4. Two-colored-doublet class: min DOF = 54 > 45 (class
-                 dominance). Corrected enumeration of record 2026-07-14
-                 (review 5.0.01 counterexample ACCEPTED): the class
-                 minimum is the conjugate-pair witness
-                 (3,2)_{Y1}+(3b,2)_{-Y1}+(3,1)_{Y2}+(3b,1)_{-Y2} at
-                 (6+6+3+3)*3 = 54, anomaly-free for ANY rational
-                 (Y1,Y2), no leptons required. The old prose constants
-                 are WITHDRAWN: 'min 81' (covered only a same-chirality
+             P4. Two-colored-doublet class: DOF 54 > 45 (class
+                 dominance), at the scope stated here and no wider.
+                 The conjugate-pair witness
+                 (3,2)_{Y1}+(3b,2)_{-Y1}+(3,1)_{Y2}+(3b,1)_{-Y2} has
+                 (6+6+3+3)*3 = 54 Weyl DOF, no leptons required, and 54
+                 is a MEMBER value: this check does not enumerate the
+                 class and computes no minimum over it.  The leg below
+                 is a comparison of two values one of which is written
+                 into the witness.  Three prior claims are corrected
+                 here (2026-08-28, record only).  (1) "the class
+                 minimum" is withdrawn: nothing here enumerates the
+                 class, so 54 would at most be a minimum over the F1-F5
+                 STRATUM within the declared caps.  `_an`, defined
+                 below in this same function, REJECTS this witness
+                 (computed), so the number belongs to a stratum and not
+                 to the admissible content.  The spectator-reduction F6
+                 variant rejects it too, but that predicate lives in the
+                 companion-repo standalone and is not importable here,
+                 so it is cited and not witnessed.  Dominance survives a
+                 fortiori; the phrase does not.  (2) "anomaly-free for
+                 ANY rational (Y1,Y2)" is withdrawn: the code below
+                 executes ONE assignment, Y1 = 1 and Y2 = 2.  The
+                 universal over Q^2 is plausibly provable symbolically
+                 and NOTHING IN THIS TREE computes it.  (3) "Corrected
+                 enumeration of record 2026-07-14" is withdrawn: there
+                 is no enumeration in P4.  The old prose constants stay
+                 WITHDRAWN: 'min 81' (covered only a same-chirality
                  pair + smuggled lepton content) and the 63-DOF
                  'tightest' witness (7 doublet components with color
                  multiplicity -- Witten-ODD, never admissible).
@@ -2540,8 +2560,9 @@ def check_L_anomaly_free():
           within the derived multiplet structure.
 
     Step (b) is the key: T_field selects the SM multiplet content from
-    4680 templates using SEVEN filters (asymptotic freedom, chirality,
-    [SU(3)]^3, Witten, anomaly solvability, CPT, minimality). The
+    4680 templates using SEVEN filters (asymptotic freedom,
+    doublet-singlet content, [SU(3)]^3, Witten, anomaly solvability,
+    CPT, minimality). The
     anomaly filters are CONSEQUENCES of the capacity structure, not
     external impositions.
 
