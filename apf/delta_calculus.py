@@ -597,10 +597,14 @@ def check_T_cost_count_characterization() -> Dict:
       (X1) COUNT-DEPENDENCE.  kappa(S) = f(n(S)) for some f: N -> R --
            cost depends only on the channel count, not on labels or
            presentation. Banked: L_cost sub-lemma C1 (Ledger
-           Completeness, [P]; A1's universal quantifier makes the
+           Completeness; the universal quantifier of A1 makes the
            capacity ledger exhaustive, so no label-sensitive resource
-           survives) + FD1-sc (check_FD1_structural_completeness,
-           foundation_inputs.py, [P] ADOPTED-FOUNDATIONAL, named here
+           survives).  THE GRADE OF C1 IS NOT STATED HERE: it is
+           consumed from the live check_L_cost record at run time and
+           rendered into the returned summary, so a move of that status
+           appears in the sentence of this record instead of silently
+           falsifying it.  Plus FD1-sc (check_FD1_structural_completeness,
+           foundation_inputs.py, ADOPTED-FOUNDATIONAL, named here
            per the check_T_ew_load_placement_P precedent: an empirical-
            difference-free relabeling is a free coordinative convention,
            zero cost -- executable as Clause E of
@@ -688,12 +692,34 @@ def check_T_cost_count_characterization() -> Dict:
       (F4) No sign claim for Delta once anchors intersect (this
            module's F2).
 
-    GRADE: [P] -- every hypothesis is banked [P] content and the
-    induction is exact/finite-witnessed. The FD1-sc leg of X1 is an
-    ADOPTED foundational clause ([P] under the canonical convention,
-    bank.py legend); it is named in the dependency list, not smuggled --
+    GRADE: [P] -- the induction is exact and finite-witnessed on the
+    count domain N.  NO GRADE TOKEN FOR X1's BANKED SOURCE IS STATED IN
+    THE RECORD THIS CHECK RETURNS.  The status of that source (L_cost
+    sub-lemma C1) is consumed live from check_L_cost and rendered into
+    the summary; this check does NOT gate on which status C1 carries, and
+    it does not claim that its own [P] is independent of it.  That is a
+    grade question this record does not own.  SCOPE, STATED RATHER THAN
+    IMPLIED: FOUR further grade tokens survive inside this check, and
+    none of them is the exposure this pass was scoped to close.  Two are
+    in this docstring -- the X2 and X3 blocks still carry [P] tokens for
+    L_cost sub-lemma C2 and for L_epsilon*.  Two are in executable
+    strings: the W5 leg message names T_canonical Prop 9.8 as banked
+    [P], and is returned only when that leg fails; and artifacts['NC1']
+    says the n^2 negative control is refuted by banked [P], which IS
+    carried in the returned record on every execution.  Those last two
+    are grade tokens for the banked Delta = 0 theorem and for
+    T_canonical -- not for the sources of X1, X2 or X3 -- and neither
+    matches the search this pass was scoped by.  All four are true on
+    the tree this pass was built against and are unmoved by the landing
+    this pass rides, so all four were left alone; the returned SUMMARY
+    states none of them.  The FD1-sc leg of X1 is an ADOPTED
+    foundational clause named in the dependency list, not smuggled --
     same shape as check_T_ew_load_placement_P and check 2 of this
-    module. Occupancy: not consumed.
+    module.  CONSUMED AT RUN TIME, DECLARED HERE BECAUSE THE DEPENDENCY
+    LIST DOES NOT CARRY IT: this check executes check_L_cost and reads
+    the status of its sub-lemma C1.  The declared dependencies are left
+    as they were found, for the same crystal-graph reason, so the
+    dependency list is not the consume list.  Occupancy: not consumed.
 
     Self-contained arithmetic: stdlib + exact Fractions; epsilon
     deliberately NON-UNIT (7/3) so no step silently uses epsilon = 1.
@@ -865,6 +891,18 @@ def check_T_cost_count_characterization() -> Dict:
           "W6: cost ratios are calibration-invariant (physics lives in "
           "ratios; the unit is the external port)")
 
+    # ---- X1 provenance: consumed from the live banked record, not stated.
+    # Shape gate only.  This check does NOT gate on WHICH status C1
+    # carries -- it renders the status it read into the returned summary,
+    # so that a move of that status moves this sentence.
+    from apf.core import check_L_cost as _check_L_cost
+    _r_cost = _check_L_cost()
+    _sub = (_r_cost.get('artifacts') or {}).get('sub_lemmas') or {}
+    C1_STATUS = (_sub.get('L_cost_C1') or {}).get('status')
+    check(isinstance(C1_STATUS, str) and C1_STATUS != '',
+          "the banked source of X1 (L_cost sub-lemma C1) is reachable on the "
+          "live executed record and carries a non-empty status field")
+
     return _result(
         name='T_cost_count_characterization -- cost = count x epsilon from '
              'X1 (count-dependence) + X2 (disjoint additivity) + X3 (MD '
@@ -873,10 +911,12 @@ def check_T_cost_count_characterization() -> Dict:
         epistemic='P',
         summary=(
             'CHARACTERIZATION: any kappa satisfying X1 count-dependence '
-            '(L_cost_C1 [P] + FD1-sc [P] adopted-foundational), X2 '
+            f'(L_cost sub-lemma C1, whose status is consumed live from '
+            f'check_L_cost at run time and is {C1_STATUS!r} on this '
+            f'execution, plus FD1-sc adopted-foundational), X2 '
             'additivity over anchor-disjoint families (L_cost_C2 = T_M(<=) '
-            '+ L_loc [P]; executable T_delta_disjoint_additivity), and X3 '
-            'the MD floor f(1) = eps > 0 (L_epsilon* [P]) equals '
+            '+ L_loc; executable T_delta_disjoint_additivity), and X3 '
+            'the MD floor f(1) = eps > 0 (L_epsilon*) equals '
             'kappa(S) = n(S)*eps -- by induction on N alone. Continuity, '
             'measurability, and monotonicity are NOT hypotheses: '
             'monotonicity is a corollary (f(n+1)-f(n) = eps > 0), and the '

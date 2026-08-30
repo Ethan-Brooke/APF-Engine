@@ -14324,6 +14324,34 @@ def check_L_full_quantum_theory():
 
     Each level emerges from the previous. No level is postulated.
 
+    THIS RECORD CARRIES NO FOUNDATIONAL LEDGER FIGURE, and the figure it
+    used to carry was DELETED rather than recomputed.  A leg here compared
+    a constant assigned one line above it against itself; that constant
+    was rendered into the returned summary and stored as an artifact
+    field, and a companion literal in the key_result stated a count of
+    its own.  The subject of this record is the UV-finiteness of a
+    partition function; the foundational ledger is not its subject, so
+    the leg, the constant, the artifact field and the companion literal
+    are gone together.  The foundational grades stay readable from the
+    executed tier-(-1) records for any consumer that needs them; this
+    record does not restate them.
+
+    FOUR OTHER LEGS OF THIS FUNCTION REMAIN IDENTITIES over values
+    authored in it.  Each compares a constant against a re-expression of
+    its own authored value and cannot fail as authored: a fermion-mode
+    count (90 against 45 + 45), a capacity-configuration count (2**61
+    against kappa ** C_total), an observable count (9 against len() of a
+    nine-entry authored list) and a hierarchy-level count (5 against
+    len() of a five-entry authored dict).  The last two are the ones
+    computed by len(), and the scope this pass was given licenses them
+    as such; the criterion that separates them from the first two is
+    that licence and not their shape.  NONE OF THE FOUR IS REPAIRED
+    HERE: none states a grade and none states a foundational figure, so
+    all four are outside what this pass was scoped to close.  They are
+    named rather than left unmentioned, and they are counted here under
+    the shape criterion rather than under the licence, so that the
+    number is not quietly reduced by the exemption.
+
     STATUS: [P]. The full quantum theory is defined. All observables
     are computable (in principle — some require lattice Monte Carlo).
     """
@@ -14427,10 +14455,6 @@ def check_L_full_quantum_theory():
     n_levels = len(hierarchy)
     check(n_levels == 5, f"{n_levels} emergent levels")
 
-    # Each level derives from the previous — no postulates at any level
-    n_postulates = 1  # A1 only
-    check(n_postulates == 1, f"{n_postulates} postulate (A1)")
-
     return _result(
         name='L_full_quantum_theory: Complete UV-Finite Quantum Theory',
         tier=5, epistemic='P',
@@ -14444,12 +14468,12 @@ def check_L_full_quantum_theory():
             f'Sum over capacity configs = sum over geometries (2^61 per locus). '
             f'Einstein eqs emergent. Gravitons = capacity excitations. '
             f'{n_observables} classes of computable observables. '
-            f'5-level hierarchy, 1 postulate (A1). UV-finite at all orders.'
+            f'{n_levels}-level hierarchy. UV-finite at all orders.'
         ),
         key_result=(
             f'Z_total = Z_local^N × Z_gauge × Z_matter: '
             f'all factors finite. Full quantum theory defined. '
-            f'Gravity emergent, not path-integrated. 1 axiom. [P]'
+            f'Gravity emergent, not path-integrated. [P]'
         ),
         dependencies=[
             'L_QG_UV_finiteness',    # Z_local
@@ -14480,7 +14504,6 @@ def check_L_full_quantum_theory():
             'sum_over_geometries': f'= sum over 2^{C_total} capacity configs',
             'n_observables': n_observables,
             'n_hierarchy_levels': n_levels,
-            'n_postulates': n_postulates,
             'UV_status': 'FINITE at all orders (no renormalization)',
         },
     )

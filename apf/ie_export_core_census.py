@@ -134,6 +134,22 @@ EXPORT_READING_BOUNDARY = frozenset({
     # (its section-3.3 converse reading is HOLD-NAMED, now named at
     # source). Deliberate re-pin per the tripwire discipline.
     "L_threat_substrate_realization",
+    # 2026-08-29 re-pin (principal ruling, on the E4 repair of
+    # check_OR2_steane).  GENRE: a deliberate advance to meet a
+    # LEGITIMATE new member -- the discipline of the 2026-07-30
+    # recruitment-instrument re-pin, where a pin advances only to an
+    # entrant whose content has been examined, and is never edited to
+    # silence a mismatch.  REASON: check_OR2_steane's grade was repaired
+    # from an unconditional [P] to a conditional form that NAMES the
+    # order-unity window it reads, and this census walks at module
+    # granularity, so apf.core enters the export closures whole and the
+    # entrant is real -- the leg was right to fire on it.  SET-ONLY, no
+    # disposition: nothing here says this member is load-bearing for any
+    # exported claim, and the module docstring's "bounds from ABOVE"
+    # clause governs it as it governs every other member.  Exactly one
+    # name is added and none is removed, so the tripwire stays armed
+    # set-exactly for any further entrant and for any departure.
+    "OR2_steane",
 })
 
 #: Leg 3 -- the named roots the export core bottoms out in: axioms and

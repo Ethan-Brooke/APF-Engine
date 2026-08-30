@@ -1625,6 +1625,17 @@ def check_ITF1_fractional_cell_and_panel_consumed():
 # every returned sentence, and the grade sits below the floor's)
 # --------------------------------------------------------------------------
 
+# INHERITED RED (E1@2026-08-28: sub-lemma L_cost_C1 of check_L_cost
+# demoted off 'P' to a POSTULATE).  THIS CHECK HOLDS NO VIEW ABOUT
+# L_cost_C1: it reddens because its proximate anchor reddened, and that
+# anchor is check_L_selection_ledger_completeness (born_at_ties.py).
+# The leg that reads C1's status literal is in
+# check_L_selection_ledger_completeness (born_at_ties.py); this red is
+# inherited from it, and a reader who counts it as a separate finding
+# over-counts the corpus's damage.
+# NOT to be widened, tuned green, or reverted: the predicate is
+# satisfiable and clears when C1 is discharged or the anchor's
+# predicate is ruled.
 def check_ITF2_conditional_kill_under_granted_readings():
     """ITF2, at the inherited reading grade with all three premises in
     the grade string.  Granted the two banked readings and the named
@@ -2130,6 +2141,17 @@ def check_ITF2_conditional_kill_under_granted_readings():
 # ITF3 -- the sensitivity table: the anti-vacuity evidence, recomputed
 # --------------------------------------------------------------------------
 
+# INHERITED RED (E1@2026-08-28: sub-lemma L_cost_C1 of check_L_cost
+# demoted off 'P' to a POSTULATE).  THIS CHECK HOLDS NO VIEW ABOUT
+# L_cost_C1: it reddens because its proximate anchor reddened, and that
+# anchor is check_L_selection_ledger_completeness (born_at_ties.py).
+# The leg that reads C1's status literal is in
+# check_L_selection_ledger_completeness (born_at_ties.py); this red is
+# inherited from it, and a reader who counts it as a separate finding
+# over-counts the corpus's damage.
+# NOT to be widened, tuned green, or reverted: the predicate is
+# satisfiable and clears when C1 is discharged or the anchor's
+# predicate is ruled.
 def check_ITF3_identification_sensitivity_table():
     """ITF3 [P_math].  Granted the same two readings, the removal set
     tracks the identification premise's content: varying the reference
@@ -2537,6 +2559,17 @@ def _census_row(name, fn, mode, declared_kind, subjects, uniform, eps):
 # ITF5 -- the permanent controls
 # --------------------------------------------------------------------------
 
+# INHERITED RED (E1@2026-08-28: sub-lemma L_cost_C1 of check_L_cost
+# demoted off 'P' to a POSTULATE).  THIS CHECK HOLDS NO VIEW ABOUT
+# L_cost_C1: it reddens because its proximate anchor reddened, and that
+# anchor is check_L_selection_ledger_completeness (born_at_ties.py).
+# The leg that reads C1's status literal is in
+# check_L_selection_ledger_completeness (born_at_ties.py); this red is
+# inherited from it, and a reader who counts it as a separate finding
+# over-counts the corpus's damage.
+# NOT to be widened, tuned green, or reverted: the predicate is
+# satisfiable and clears when C1 is discharged or the anchor's
+# predicate is ruled.
 def check_ITF5_permanent_controls():
     """ITF5 [P_math].  (a) the category-error type adjudication,
     consumed from the banked SCOPE FENCE and executed by value; (b) the

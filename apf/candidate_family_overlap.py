@@ -573,6 +573,17 @@ def check_CF1_candidate_family_construction():
 # CF2 -- the tie
 # ---------------------------------------------------------------------------
 
+# INHERITED RED (E1@2026-08-28: sub-lemma L_cost_C1 of check_L_cost
+# demoted off 'P' to a POSTULATE).  THIS CHECK HOLDS NO VIEW ABOUT
+# L_cost_C1: it reddens because its proximate anchor reddened, and that
+# anchor is check_T_nonlocal_tie_resolution (nonlocal_tie_resolution.py).
+# The leg that reads C1's status literal is in
+# check_L_selection_ledger_completeness (born_at_ties.py); this red is
+# inherited from it, and a reader who counts it as a separate finding
+# over-counts the corpus's damage.
+# NOT to be widened, tuned green, or reverted: the predicate is
+# satisfiable and clears when C1 is discharged or the anchor's
+# predicate is ruled.
 def check_CF2_tie_by_value():
     legs = {}
     members, _, _ = build_family()
@@ -865,12 +876,19 @@ def check_CF4_falsifier_meeting():
         "or any pre-commit pairwise datum",
         "(iii) the stage-split verdict stands with both halves carrying "
         "their stage: disjointness FORCED at the realized/committed "
-        "stage (check_disjoint_partition, banked [P], "
-        "integrality-witnessed, gated green live here; the partition "
-        "argued in the check's own proof text; record-resolution "
-        "orthogonality a named input) and UNFORCED at the pre-commit "
-        "candidate stage")
-    ok = (r_part.get("passed") is True)
+        f"stage (check_disjoint_partition, epistemic "
+        f"{r_part.get('epistemic')!r} consumed from the live record "
+        f"fetched here rather than stated, integrality-witnessed, passed "
+        f"gated green live here; the partition argued in the check's own "
+        f"proof text; record-resolution orthogonality a named input) and "
+        f"UNFORCED at "
+        f"the pre-commit candidate stage -- the stage-split verdict does "
+        f"not depend on which grade that is; this leg requires of that "
+        f"field only that it be present and a non-empty string, and the "
+        f"grade is carried as a datum")
+    ok = (r_part.get("passed") is True
+          and isinstance(r_part.get("epistemic"), str)
+          and r_part.get("epistemic") != "")
     legs["honest_form_scope_statements"] = (ok, (
         "the honest form, in-module (records, disclosed as records, "
         "with the forced half's banked anchor gated live): "

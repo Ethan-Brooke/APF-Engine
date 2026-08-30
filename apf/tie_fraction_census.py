@@ -649,6 +649,17 @@ def check_TC2_tie_census_fraction():
 # TC3 -- the flat floor at ties, consumed as a live gate
 # ---------------------------------------------------------------------------
 
+# INHERITED RED (E1@2026-08-28: sub-lemma L_cost_C1 of check_L_cost
+# demoted off 'P' to a POSTULATE).  THIS CHECK HOLDS NO VIEW ABOUT
+# L_cost_C1: it reddens because its proximate anchor reddened, and that
+# anchor is check_L_selection_ledger_completeness (born_at_ties.py).
+# The leg that reads C1's status literal is in
+# check_L_selection_ledger_completeness (born_at_ties.py); this red is
+# inherited from it, and a reader who counts it as a separate finding
+# over-counts the corpus's damage.
+# NOT to be widened, tuned green, or reverted: the predicate is
+# satisfiable and clears when C1 is discharged or the anchor's
+# predicate is ruled.
 def check_TC3_flat_floor_live_gate():
     legs = {}
     r_born = check_L_selection_ledger_completeness()

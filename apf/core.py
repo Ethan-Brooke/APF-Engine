@@ -202,7 +202,51 @@ def check_NT():
     cost values. The distinction-cost form is canonical because it is
     what T1 directly uses.
 
-    STATUS: POSTULATE (derived from A1 via L_NT_derived [P]).
+    STATUS: POSTULATE -- not derived here.  L_NT_derived is a separate
+    banked object that derives a non-degeneracy statement from
+    gauge-sector content; this record does not claim that derivation as
+    its own grade.
+
+    RECLASSIFIED 2026-08-28.
+    The returned record previously asserted BOTH readings at once: this
+    docstring said POSTULATE while the same sentence, and `epistemic`
+    and `summary`, said derived from A1.  The contradiction is what was
+    repaired; the direction is a LOWERING, which is the conservative
+    one.  NARROWER THAN check_M's, and this record does not inherit
+    check_M's wording: that record carried both readings across five
+    fields including the portmanteau artifacts['type'] =
+    'derived_postulate'; this one carried them across three, and its
+    `key_result` and `artifacts` were already free of a grade and do
+    not move.
+
+    POSTULATE IS NOT NEW VOCABULARY, and this is a REVERSAL rather than
+    a minting.  `apf_utils.result()` lists 'POSTULATE' among its
+    example epistemic values at HEAD, and did so in the v7.1 and v7.3
+    archives; no earlier state was checked.  The bank's v5.3.3 changelog
+    records a distribution containing two of them -- while the v5.3.x
+    entry above it records "M, NT promoted POSTULATE -> [P]. Zero
+    postulates remaining."  This regrade reverses that recorded
+    promotion.  Changelogs are a historical record and entries stand as
+    written, so bank.py's changelog does not move with this.
+
+    THIS RECORD CLAIMS NO VALIDATION OF ITS OWN GRADE TOKEN, and it
+    states what was checked rather than a universal.  What was checked:
+    `apf_utils.result()` accepts `epistemic` as a free string and
+    applies no membership test to it, and a deliberately misspelled
+    token was executed and accepted silently.  This record still
+    renders as a theorem in the Enforcement Crystal, exactly as it did
+    before -- pre-existing behaviour, unchanged and unrepaired here.
+    No search for a validator was exhaustive and none is claimed; the
+    point is only that this record does not rest on one.  The token is
+    a label.
+
+    THREE ACCOUNTS OF L_NT_derived's MECHANISM are on the corpus's
+    record: the sentence this docstring replaced said from A1; the
+    executed check_L_NT_derived computes it from gauge dimensions and
+    their realignment costs; the bank's v5.3.x changelog says from
+    T11.  They are recorded here and are NOT adjudicated.
+    check_L_NT_derived is not touched, and its own grade is
+    deliberately outside this batch.
     """
     from fractions import Fraction
 
@@ -225,13 +269,32 @@ def check_NT():
     return _result(
         name="NT: Non-Degeneracy Postulate",
         tier=-1,
-        epistemic="P",
+        epistemic="POSTULATE",
         summary=(
             "NT: there exist distinctions d_i, d_j with eps(d_i) != eps(d_j). "
-            "Witness: eps(d_1)=2, eps(d_2)=3, C=5 -> residual budgets 3 vs 2 differ. "
-            "Without NT all costs equal eps*, residual budgets C-eps* identical, "
-            "T1 Step 2 produces no asymmetry and order-dependence fails. "
-            "DERIVED from A1 via L_NT_derived [P]."
+            "Non-degeneracy is carried as a POSTULATE: not all enforceable "
+            "distinctions have the same cost. L_NT_derived is a separate "
+            "banked object that derives a non-degeneracy statement from "
+            "gauge-sector content; this record does not claim that "
+            "derivation as its own grade. "
+            f"The witness is arithmetic over the record's own literals: "
+            f"eps(d_1) = {eps_1}, eps(d_2) = {eps_2}, C = {C}, residual "
+            f"budgets {res_after_d1} and {res_after_d2}, which differ. "
+            "This exhibits non-degeneracy on an authored witness; it does "
+            "not derive it. "
+            "Without NT all costs equal eps*, residual budgets C-eps* are "
+            "identical, T1 Step 2 produces no asymmetry and order-dependence "
+            "fails to materialise. "
+            "Three accounts of L_NT_derived's mechanism are on the corpus's "
+            "record: the sentence this record retired said from A1; the "
+            "executed check_L_NT_derived computes it from gauge dimensions "
+            "and their realignment costs; the bank's v5.3.x changelog says "
+            "from T11. They are recorded here and are not adjudicated. "
+            "This regrade reverses a promotion this corpus made and "
+            "recorded; POSTULATE is not new vocabulary. "
+            "This record claims no validation of its grade token: "
+            "apf_utils.result() accepts epistemic as a free string and "
+            "applies no membership test to it."
         ),
         key_result="eps(d_1) != eps(d_2) => distinct residual budgets => T1 noncommutativity",
         dependencies=["A1", "L_epsilon*"],
@@ -243,33 +306,131 @@ def check_NT():
     )
 
 def check_L_M_derived():
-    """L_M_derived: Multiplicity Derived from A1 [P].
+    """L_M_derived: Multiplicity, as a self-consistency confirmation.
 
     v5.3.4 NEW.  Phase 3: M postulate → derived.
+      (Changelog line, retained verbatim.  It records a move this corpus
+      made and recorded; it is not a statement of the state of the bank
+      at the time of execution.  M carries POSTULATE on the record this
+      function executes, so the promotion this line records has since
+      been reversed.)
 
-    STATEMENT: M (multiple distinguishable subsystems exist) is a
-    CONSEQUENCE of A1, not an independent postulate.
+    WHAT THIS RECORD COMPUTES.  With the capacity total carried here as
+    an authored literal attributed to T_field, 61 >= 2, so the content of
+    M -- that multiple distinguishable subsystems exist -- holds, and the
+    authored MECE partition [3, 16, 42] sums to that total.  That is a
+    SELF-CONSISTENCY CONFIRMATION, the sense that the own docstring of
+    check_M already carries: it exhibits that the content of M is
+    consistent with the field content.  It does not derive M.
 
-    PROOF:
-      A1 → T_field [P] → C_total = 61 capacity types.
-      61 ≥ 2 → M satisfied.
-      The 61 types are distinguishable by construction (MECE partition).
+    WHAT THIS RECORD DOES NOT SAY, DELIBERATELY.  No postulate count.  No
+    enumeration of a postulate set, reduced or otherwise.  Not that M is
+    derived, eliminated, or no longer a postulate.  Not that A1 is the
+    sole postulate.  Not that the grade of this record is settled --
+    check_M files that question, and the question of what [P] means in
+    this corpus, as open, and this record inherits both without closing
+    either.
+
+    THE THREE ARITHMETIC LEGS ARE IDENTITIES OVER AUTHORED LITERALS and
+    are disclosed as identities in their own messages.  The capacity
+    total and the partition are written into this function, so those
+    three legs re-assert authored values and cannot fail as authored.
+    They are retained, and no coverage is claimed for them.
+
+    THE ONE LEG HERE THAT CAN FAIL is the grade leg: it consumes the
+    executed check_M record and asserts the epistemic field it finds
+    there lies in an admitted set declared in this function.  A move of
+    that field reddens this check instead of silently falsifying its
+    sentence -- which is what happened to the sentence this record
+    retired: true when written, false on the tree this repair was built
+    against, and green on that tree.
+
+    A DEPARTURE FROM A STATED PREFERENCE OF THE SURFACE, NAMED.
+    Section 4.1 prefers a guard with a BARRED set to an equality pin.
+    This record ships an ADMITTED set instead, and the reason is the
+    control the same surface mandates: a barred set naming the grades M
+    has carried would PASS when that field moves to a third value
+    neither tree has ever carried, and control C2 of section 5 requires
+    exactly that case to FAIL.  An admitted set fires on any move; a
+    barred set fires only on the moves someone thought of in advance.
+
+    WHAT THIS RECORD CONSUMES AT RUN TIME, DECLARED HERE BECAUSE THE
+    DEPENDENCY LIST DOES NOT CARRY IT.  This function executes check_A1,
+    check_M and check_NT and reads the epistemic field of each.  The
+    declared dependencies are left exactly as they were found: moving
+    them has consequences for the crystal graph that this repair does
+    not own.  The dependency list is therefore not the consume list, and
+    this paragraph is where the consume is declared.
+
+    THE RECORD NAME IS NOT MOVED, AND THE EXPOSURE THAT LEAVES IS NAMED.
+    It still reads "Multiplicity Derived from A1".  Renaming it would
+    adjudicate whether a lemma of the *_derived family is a derivation
+    or a self-consistency confirmation, which is one of the open
+    questions above.  This repair leaves the name where it found it and
+    says so rather than moving it quietly.  THE COST OF THAT CHOICE,
+    stated rather than left for a reader to discover: a consumer that
+    reads the name field and nothing else gets the reading this record
+    no longer makes anywhere else.  That is why the disclosure travels
+    in the summary of the same record, beside the name, rather than in
+    this docstring alone.
+
+    NO GRADE MOVES HERE -- not the grade of this record, not M, not A1,
+    not NT.  A1 and NT are REPORTED, their live epistemic fields rendered
+    into the summary, and are NOT gated: a move of either changes the
+    sentence this record returns and does not redden it.
     """
-    C_total = 61  # T_field [P]
-    check(C_total >= 2, f"C_total = {C_total} >= 2 -> M satisfied")
-    check(C_total == 61, "From T_field [P]: 61 capacity types")
+    M_ADMITTED_GRADES = ('POSTULATE',)
+
+    C_total = 61  # authored literal, attributed to T_field; not recomputed here
     partition = [3, 16, 42]
-    check(sum(partition) == C_total, f"Partition: {'+'.join(map(str,partition))} = {C_total}")
+    check(C_total >= 2,
+          f"identity over an authored literal: C_total = {C_total} >= 2, so "
+          f"the content of M holds (cannot fail as authored)")
+    check(C_total == 61,
+          f"identity over an authored literal: C_total is {C_total} as "
+          f"written in this function (cannot fail as authored)")
+    check(sum(partition) == C_total,
+          f"identity over authored literals: {'+'.join(map(str,partition))} "
+          f"= {C_total} (cannot fail as authored)")
+
+    # The one leg here that can fail.  Consume the records; do not restate.
+    r_A1, r_M, r_NT = check_A1(), check_M(), check_NT()
+    a1_grade = r_A1.get('epistemic')
+    m_grade = r_M.get('epistemic')
+    nt_grade = r_NT.get('epistemic')
+    check(m_grade in M_ADMITTED_GRADES,
+          f"M carries epistemic {m_grade!r} on the executed record, outside "
+          f"the admitted set {M_ADMITTED_GRADES!r} that the sentence of this "
+          f"record was written against")
 
     return _result(
         name='L_M_derived: Multiplicity Derived from A1',
         tier=0, epistemic='P',
         summary=(
-            f'M derived: A1 -> T_field [P] -> C_total = {C_total} types. '
-            f'{C_total} >= 2 -> M. MECE partition {partition}. '
-            f'Postulate count reduced: {{A1, M, NT}} -> {{A1}}.'
+            f'Self-consistency confirmation, not a derivation. With the '
+            f'capacity total carried as an authored literal attributed to '
+            f'T_field, {C_total} >= 2, so the content of M (multiple '
+            f'distinguishable subsystems exist) holds, and the authored '
+            f'MECE partition {partition} sums to {C_total}. Those three '
+            f'arithmetic legs are identities over authored literals and are '
+            f'disclosed as identities. Foundational grades are consumed from '
+            f'the executed tier-(-1) records at run time and are not stated '
+            f'here: A1 {a1_grade!r}, M {m_grade!r}, NT {nt_grade!r}. Only M '
+            f'is gated, against the admitted set {M_ADMITTED_GRADES!r} '
+            f'declared in this function; A1 and NT are reported and not '
+            f'gated. The name of this record is retained verbatim and is '
+            f'not a claim of derivation: it still carries the *_derived '
+            f'reading, which this summary does not make, so a consumer '
+            f'reading the name field alone would take the reading this '
+            f'record has otherwise retired. Moving it would adjudicate '
+            f'whether a lemma of that family is a derivation, which is '
+            f'one of the questions this repair leaves open.'
         ),
-        key_result=f'M derived: C_total = {C_total} >= 2 from T_field [P]',
+        key_result=(
+            f'{C_total} >= 2 on the authored capacity total: the content of '
+            f'M holds as a self-consistency confirmation; M carries '
+            f'{m_grade!r} on the executed record'
+        ),
         dependencies=['A1', 'T_field', 'P_exhaust'],
     )
 
@@ -1829,15 +1990,88 @@ def check_L_cost():
     longer depends on T3 or L_nc. Consumers of the gauge clause cite
     L_cost_gauge; consumers of the abstract form cite this lemma.
 
-    PROOF STRUCTURE (3 sub-lemmas, all [P]):
+    PROOF STRUCTURE (3 sub-lemmas; C1 is a POSTULATE, C2 and
+    L_cost_MAIN are [P]):
 
-    L_cost_C1 (Ledger Completeness):
-      A1's universal quantifier 'any S' means the capacity ledger is
-      exhaustive. A hidden resource R would support distinctions beyond
-      C(Gamma), but those distinctions are members of some S at Gamma,
-      and A1 constrains ALL such S. Therefore cost = f(channel_count).
-      Proof by contradiction: hidden resource either registers in |S|
-      (counted) or doesn't support admissibility (not a resource).
+    L_cost_C1 (Ledger Completeness) -- a stated commitment of the
+    framework, not a proved sub-lemma:
+      The argument. A1's universal quantifier 'any S' means the capacity
+      ledger is exhaustive. A hidden resource R would support
+      distinctions beyond C(Gamma), but those distinctions are members
+      of some S at Gamma, and A1 constrains ALL such S. Therefore
+      cost = f(channel_count). By contradiction: a hidden resource
+      either registers in |S| (counted) or does not support
+      admissibility (not a resource).
+
+      That argument is stated here and is NOT EXECUTED ANYWHERE IN THIS
+      CHECK: its stage below is a comment block carrying no executable
+      statement. What this check executes is the additivity pairs, the
+      monotonicity range, the normalisation f(1) = epsilon, and the
+      elimination of the rival family f(n) = n^alpha over its authored
+      exponent list. The uniqueness step among additive solutions
+      normalised at 1 is executed in a sibling
+      (check_T_cost_count_characterization, delta_calculus.py), NOT
+      here.
+
+      THE DEMOTION IS A GRADE MOVEMENT, NOT A REFUTATION. Nothing here
+      decides whether C1 is true. What moved is the label the bank
+      attaches to it. Exactly one sub-lemma's status moves: C2,
+      L_cost_MAIN, L_cost_gauge, and this check's own [P] are untouched.
+
+      MAY NOT BE CITED: as evidence that C1 is false, doubtful or
+      refuted, or that a hidden resource exists; as a claim that
+      label-blindness has no executable presence anywhere in the bank
+      (it has -- a different object, at a different grade, in
+      apf/cosmology.py); as a demotion of L_cost, L_cost_C2,
+      L_cost_MAIN or L_cost_gauge; as a ruling on what [P] means in
+      this corpus; as a discharge of X1, of FD1-sc, or of the
+      count-only property of the banked cost; or as authority on the
+      archived monograph, which this record does not re-read.
+
+      REPORTED, NOT REPAIRED (1) -- A SIBLING'S SENTENCE:
+      check_T_cost_count_characterization (delta_calculus.py, tier 4
+      [P]) returns a summary containing the literal 'L_cost_C1 [P]'.
+      This edit makes that sentence false. It is a string, so nothing
+      reddens on it. The cascade question -- whether that check's own
+      grade moves -- is escalated and NOT taken here.
+
+      REPORTED, NOT REPAIRED (2) -- THIS CHECK'S OWN TWO SENTENCES.
+      check_L_cost stays green at tier 0 with epistemic 'P' and keeps
+      returning, byte for byte, the key_result
+        'C(E) = n(E)*epsilon is FORCED (unique cost under A1)'
+      and a summary reading 'A1 cardinality bound + Cauchy functional
+      equation -> the UNIQUE realignment cost ...' and closing
+        'Cost functional freedom under A1 is ZERO.'
+      The warrant for the words 'under A1' is precisely the sub-lemma
+      this edit relabels a POSTULATE. After E1 the chain reads A1 PLUS
+      A STATED COMMITMENT -> the cost functional, so both sentences
+      now claim more than the grades behind them carry.
+
+      NEITHER IS REPAIRED HERE, and the reason is a hard bar rather
+      than a judgement: the key_result string is pinned as CONTENT by
+      a live assertion in hold_cost_dominance.py, which reads this
+      exact substring off this check's returned record, and checks
+      there go red if it moves. Repairing the wording is therefore a
+      change with its own blast radius, and it belongs to a ruled pass
+      that takes that radius deliberately -- not to a patch whose
+      whole scope is one sub-lemma's grade.
+
+      NOTE TO A LATER EDITOR: the two strings quoted just above are
+      QUOTATIONS of what this check returns, so each of them now occurs
+      TWICE in this file -- once here as prose, once at the assignment
+      that actually produces it. A needle aimed at either must carry
+      its assignment context ('key_result=...', 'summary=(...') or it
+      will match this docstring as well. The existing needles do, and
+      their exactly-once assertions are what will say so if that ever
+      stops being true.
+
+      THE DEFENCE, stated rather than left implicit: on this record C1
+      is not EXECUTED in this check at all -- its stage is the comment
+      block described above -- so these two sentences were already
+      looser than they read, at every version before this one. E1
+      REVEALS that looseness; it does not create it. That is a reason
+      to name them here, not a reason to leave them unnamed. Silence
+      would be the flattering direction.
 
     L_cost_C2 (Additive Independence):
       T_M proves independence <-> disjoint anchor sets (biconditional).
@@ -1932,8 +2166,11 @@ def check_L_cost():
     sub_lemmas = {
         'L_cost_C1': {
             'name': 'Ledger Completeness',
-            'status': 'P',
-            'mechanism': 'A1 universal quantifier -> exhaustive ledger',
+            'status': 'POSTULATE',
+            'mechanism': 'STATED COMMITMENT: A1 universal quantifier -> '
+                         'exhaustive ledger; argued in this docstring, not '
+                         'executed in this check (stage 1 is a comment '
+                         'block). Grade movement, not a refutation.',
         },
         'L_cost_C2': {
             'name': 'Additive Independence',
@@ -5804,64 +6041,635 @@ def check_OR2_repetition():
     )
 
 
-def check_OR2_steane():
-    """OR2-strong for Steane [[7,1,3]] stabilizer code (Appendix F.3).
+# ══════════════════════════════════════════════════════════════════════
+# check_OR2_steane -- declared constants, the window predicate, and the
+# grade declaration.
+#
+# Read from module level by the check; never rebound locally.  A comment
+# here may state a genre and a reason; it states no derived number.
+# Every figure the record returns is computed at return time.
+# ══════════════════════════════════════════════════════════════════════
 
-    Verifies: destruction cost = d_min = 3 Paulis;
-    detection cost (bare logical) = 30 elementary operations (6 stabilizers x 5);
-    OR2-strong recovered when ancilla syndrome apparatus included in interface
-    (L_loc: co-located systems share capacity budget).
+# THE ORDER-UNITY WINDOW.  Genre: DECLARED JUDGEMENT PREMISE.  Reason:
+# it is a numeric rendering of a qualitative phrase in the archived
+# source of record ("to within a factor of order unity").  Unit: a
+# dimensionless cost ratio (elementary operations / elementary
+# operations).  Envelope: an open interval, strict at both ends.  The
+# strictness is load-bearing and the record exhibits where the verdict
+# turns.  Nothing here derives these bounds.
+_OR2_STEANE_WINDOW_LO = Fraction(1, 10)
+_OR2_STEANE_WINDOW_HI = Fraction(10)
+
+# THE CODE'S QUOTED FAULT-TOLERANCE THRESHOLD.  Genre: NAMED LITERATURE
+# IMPORT.  Nothing here derives it, verifies it, or claims anything
+# about fault tolerance.  It is declared SEPARATELY from the noise range
+# below, and a leg asserts the relation the archived source states
+# between the two.  In the pre-repair check the threshold and the
+# evaluation point were one constant.
+_OR2_STEANE_P_TH = Fraction(1, 100)
+
+# THE DECADE the archived source states for the noise range.  Genre:
+# DECLARED READING of the source's stated interval.
+_OR2_STEANE_SOURCE_DECADE = 10
+
+# THE DECLARED NOISE RANGE for the composite reading.  Each endpoint is
+# its own literal, and neither is derived from the threshold constant.
+# The relation the archived source states between the three is asserted
+# by a leg, not built into the constants.
+_OR2_STEANE_P_LO = Fraction(1, 1000)
+_OR2_STEANE_P_HI = Fraction(1, 100)
+
+# [[n,k,d]] CODE PARAMETERS.  Genre: NAMED LITERATURE IMPORTS.  Nothing
+# here verifies the code's error-correcting properties.  The triple is
+# declared ONCE, as a triple; the "[[n,k,d]]" string the record returns
+# is built from it at return time rather than written as a literal, so
+# no returned sentence can carry a stale copy.  A leg ties the triple to
+# the two places the COMPUTATION consumes these numbers -- the
+# destruction cost is the distance, and the stabilizer count is the
+# code's redundancy n - k -- so a single-site edit to any of them is
+# visible.  That leg asserts the imports are MUTUALLY CONSISTENT; it
+# verifies nothing about the code and derives nothing.
+_OR2_STEANE_CODE_PARAMS = (7, 1, 3)     # (n physical, k logical, d min)
+_OR2_STEANE_N_PHYSICAL = 7
+_OR2_STEANE_N_STABILIZERS = 6
+_OR2_STEANE_D_MIN = Fraction(3)
+_OR2_STEANE_N_CNOT = 4
+_OR2_STEANE_N_MEAS = 1
+_OR2_STEANE_DETECT_OPS = Fraction(30)   # the pinned detection product
+
+# THE ANCILLA RESET COST, with the decomposition the archived source
+# gives it.  Genre: NAMED LITERATURE IMPORT.  The source states the
+# per-ancilla reset as one measurement plus one conditional Pauli; those
+# two components are declared here, the cost the computation consumes is
+# built from them, and a leg ties that computed sum to the pinned
+# constant -- the same shape as the detection product above.  In the
+# pre-repair check the decomposition lived in a comment and the number
+# was a bare literal that no leg read.
+_OR2_STEANE_ANCILLA_MEAS = 1
+_OR2_STEANE_ANCILLA_PAULI = 1
+_OR2_STEANE_ANCILLA_RESET = Fraction(2)   # the pinned reset sum
+
+# THE CONTROL WINDOW.  Genre: PERMANENT SHIPPED NEGATIVE CONTROL -- the
+# frozen surface's negative-control row 2.  Reason: it exists so that no
+# reader mistakes the bare case's failing verdict for a derived one.  It
+# is a SECOND window, strictly wider than the declared one at both ends
+# and wide enough to admit the bare ratio; the record reports the bare
+# case's verdict against it, and a leg asserts the two verdicts DIFFER
+# on the same computed ratio.  It decides nothing: no other quantity,
+# leg or sentence in this check reads it.
+_OR2_STEANE_CONTROL_WINDOW_LO = Fraction(1, 100)
+_OR2_STEANE_CONTROL_WINDOW_HI = Fraction(100)
+
+# The probe offset used to exercise the window's endpoints, and the
+# offset used to construct a rational whose float image is not inside
+# the window while the rational itself is.
+_OR2_STEANE_EDGE_DELTA = Fraction(1, 10 ** 6)
+_OR2_STEANE_SEPARATOR_DELTA = Fraction(1, 10 ** 20)
+
+# THE GRADE, and the premise it is conditional on.  The conclusion is
+# conditional on the named premise; bare tokens are barred on this
+# check.  Form follows the landed precedent in this same file
+# (`check_L_nc`, `_LNC_DECLARED_GRADE`): base + separator + premise,
+# RECOMPUTED by a leg rather than compared against a second copy of the
+# same string.  RESIDUAL ESCAPE, DISCLOSED: a coordinated edit moving
+# the base, the premise name and the declared grade together passes the
+# recomputation by construction -- the record then discloses itself, but
+# no leg refuses it.  SELF-TIE, DISCLOSED: the six sub-grade names below
+# are transcribed here from the `apf/bank.py` legend, so this leg ties
+# the returned token to a LOCAL transcription and to nothing else --
+# and nothing here would notice if that legend moved.  The barred list
+# below is a local transcription in the same way; the leg asserts it
+# still contains the two bare tokens this corpus retired, so emptying it
+# reddens rather than passing vacuously, and no external list is read.
+# Consumers of the grade field DO exist elsewhere in the bank -- see the
+# EXPORT_READING_BOUNDARY note in the banner -- and no leg here reads
+# any of them.
+_OR2_STEANE_GRADE_BASE = "P_structural_reading"
+_OR2_STEANE_GRADE_SEPARATOR = " | "
+_OR2_STEANE_NAMED_PREMISE = "R_ORDER_UNITY_WINDOW"
+_OR2_STEANE_DECLARED_GRADE = "P_structural_reading | R_ORDER_UNITY_WINDOW"
+_OR2_STEANE_BARRED_GRADES = ("P", "P_structural", "AXIOM", "POSTULATE")
+_OR2_STEANE_SUBGRADES = (
+    "P_structural_seam",
+    "P_structural_partial",
+    "P_structural_exhaustive",
+    "P_structural_instrument",
+    "P_structural_reading",
+    "P_structural_convention",
+)
+
+_OR2_STEANE_LEGS = frozenset({
+    'the imported code parameters are consistent with the destruction cost and the stabilizer count the computation uses',
+    'detection cost equals stabilizers x ops-per-stabilizer, against the pinned product',
+    'ancilla reset cost equals measurement plus conditional Pauli, against the pinned sum',
+    'the bare detect/destroy ratio lies outside the declared window',
+    'the bare case is reported as passing under a strictly wider control window',
+    'the declared noise range matches the imported threshold and the decade the source states',
+    'the declared noise range lies strictly inside the computed window-exit locus',
+    'the verdict turns at both declared window endpoints',
+    'the exhibited separating rational is inside the window in exact arithmetic and outside it under float',
+    'the returned grade is the canonical conditional form recomputed from base and premise',
+})
+
+
+def _or2_steane_in_window(ratio):
+    """The window predicate: exact rationals, open at both ends.
+
+    This is the only place this check's verdict is decided.  `float`
+    does not appear in it.
     """
-    from fractions import Fraction
+    return _OR2_STEANE_WINDOW_LO < ratio < _OR2_STEANE_WINDOW_HI
 
-    d_min = Fraction(3)         # code distance
-    eps_destr = d_min           # weight-3 Z-type error destroys logical qubit
-    eps_maint_per_event = Fraction(1)  # ~1 Pauli at small p
 
-    # Detection cost: 6 stabilizers x (4 CNOTs + 1 measurement) = 30 ops
-    stabilizers = 6
-    ops_per_stabilizer = 5      # 4 CNOTs + 1 ancilla measurement
-    eps_detect_bare = Fraction(stabilizers * ops_per_stabilizer)  # = 30
+def check_OR2_steane():
+    """OR2-strong for the Steane [[7,1,3]] stabilizer code (Appendix F.3).
 
-    check(eps_destr == d_min, "destruction = code distance = 3 Paulis")
-    check(eps_detect_bare == 30, "detection (bare logical) = 30 elementary ops")
-    check(eps_detect_bare > eps_destr,
-          "OR2-strong fails for bare logical: detect >> destruction")
+    WHAT THIS CHECK DECIDES, AND ON WHAT.  It computes two cost ratios
+    for the [[7,1,3]] code -- a bare-logical detect/destroy ratio, and a
+    composite-interface maintenance/detection ratio over a declared
+    noise range -- and reports each against a DECLARED ORDER-UNITY
+    WINDOW.  The window is a premise of this check.  It is stated with
+    its unit and its envelope in the constants above and in the returned
+    record, and it is not derived here.
 
-    # Composite interface (L_loc): ancilla resets included
-    # Interface maintenance ~= correction Paulis + ancilla resets
-    # At p = p_th ~ 0.01: 7p + 6*2 = 0.07 + 12 = 12.07 ops
-    p_th = Fraction(1, 100)
-    n_physical = 7
-    ancilla_reset_cost = Fraction(2)   # 1 measurement + 1 conditional Pauli per ancilla
-    maint_composite = n_physical * p_th + stabilizers * ancilla_reset_cost
-    # maint_composite ~ 12.07 ops; detect = 30; ratio ~ 0.4 -> same order of magnitude
-    check(maint_composite > 0, "composite interface maintenance > 0")
-    ratio = float(maint_composite) / float(eps_detect_bare)
-    check(ratio > 0.1 and ratio < 10,
-          "OR2-strong recovered at composite interface: ratio in (0.1, 10)")
+    GRADE.  [P_structural_reading | R_ORDER_UNITY_WINDOW].  The
+    `apf/bank.py` legend for the base token reads, in full:
+
+        P_structural_reading     physics derivation up to an adopted
+            INTERNAL reading/premise (record-state, IJC, PLEC,
+            MD-bridge, categorical ACC stack, evaporation/horizon
+            readings) -- not an external import at all.  (~89)
+
+    That is what this object is: the window is an adopted internal
+    reading of a qualitative phrase, and the rider NAMES it.  The
+    neighbouring token was considered and does not fit; its legend reads,
+    in full:
+
+        P_structural_convention  unit/scale convention; O(1)
+            prefactor (Planck magnitude).  (~8)
+
+    The parenthetical is the discriminating clause.  This object has no
+    PHYSICAL unit, no scale and no magnitude prefactor: it has a decade-wide
+    judgement window on a dimensionless cost ratio in a stabilizer-code
+    cost model.  Lowered from [P]; the lowering is the conservative
+    direction.  The repo-root guard `check_no_bare_pstructural.py`
+    polices only the BARE token, so it says nothing either way about
+    this spelling; the leg below ties the returned token to a local
+    transcription of the legend above and to nothing else.  No leg here
+    reads any other module, and this check makes no claim about how
+    other consumers of the grade field behave.
+
+    EXACT ARITHMETIC.  Every quantity on the decision path is a
+    `Fraction`.  `float` appears only inside display strings in
+    `artifacts`.  At the shipped parameters the exact and the float
+    verdicts agree, so this changes no answer; the record says so.  A
+    rational strictly inside the window whose float image is not is
+    exhibited.
+
+    AN IDENTIFICATION, NOT A MEASUREMENT.  Destruction cost is
+    IDENTIFIED with the imported code distance -- a definitional move in
+    the archived cost model, carrying no computational content.  It is
+    reported as an identification and no leg asserts it.
+
+    WHAT REPLACED THE SAMPLED SWEEP.  The composite maintenance/
+    detection ratio is affine in p, so its behaviour over the declared
+    range is decided exactly by the two values of p at which it would
+    reach the window's endpoints.  Those two values are COMPUTED and the
+    declared range is required to lie strictly inside them.  That is a
+    statement about the whole range rather than about finitely many
+    sampled points, and it is the leg that can move on p.
+
+    LEG INVENTORY.  Set-exact against the module-level frozen set, on
+    the path the bank executes -- bank.py calls this function directly
+    and a module's own run_all() is never invoked by it.  A mismatch is
+    APPENDED AND RECORDED, not raised (D7@2026-08-08).
+
+    THE PERMANENT CONTROL.  A second window, strictly wider than the
+    declared one and wide enough to admit the bare ratio, is declared and
+    the bare case's verdict against it is computed and reported.  A leg
+    asserts the two verdicts DIFFER on the same number.  That is the
+    frozen surface's negative-control row 2, and it exists so no reader
+    mistakes the bare case's failing verdict for a derived one: the
+    declared window's width is what decides it.  The control decides
+    nothing -- no other leg, quantity or sentence reads it.
+
+    STANDING LIMITS, disclosed and measured rather than assumed.  The
+    inventory certifies that a declared leg EXECUTED, not that it COULD
+    HAVE FAILED.  SIX escapes were executed against this object and are
+    listed here; a SEVENTH, on the grade leg, is disclosed at the grade
+    constants above rather than repeated here.  All are stated as
+    executed, not as classes, and they are not claimed to be the only
+    ones.  TWO OF THEM ARE SINGLE-SITE, so this list must not be read as
+    saying that escaping this check requires coordination:
+
+      * NARROWING the declared window's upper bound is a SINGLE-SITE
+        edit that escapes every leg.  The legs BOUND that bound; they do
+        not pin it.  Widening it reddens as soon as the window admits
+        the bare ratio, which sits exactly on it -- but narrowing it
+        leaves every leg true and every returned sentence true OF THE
+        NARROWED WINDOW, down to the point where the composite ratio
+        itself leaves the window.  Executed: 10 -> 5, -> 1, -> 1/2 and
+        -> 41/100 all escape; 10 -> 40/100 reddens, on the locus leg.
+        The window is a DECLARED PREMISE and this record reports
+        whichever premise is declared, so nothing false is returned
+        under this edit; what is lost is any assurance that the premise
+        is the one the archived source was read as giving.  Nothing here
+        pins its value, and a second literal to compare it against would
+        be a self-tie of the kind disclosed at the grade constants.
+      * moving the pinned ancilla reset sum TOGETHER WITH either of the
+        two components it is built from -- two sites -- escapes every
+        leg, and the record then reports a different cost model
+        (7*p + 6*3 rather than 7*p + 6*2).  Each of those three
+        constants moved ALONE reddens.  This is the residual that pinning
+        the sum leaves; before it was pinned the SINGLE-site edit
+        escaped, and that is why the components are declared at all.
+      * renaming a leg label at BOTH the frozen set and the call site
+        escapes the inventory;
+      * moving the stabilizer count to 8, the pinned detection product
+        to 40, the code triple to (9,1,3) and the physical-qubit count
+        to 9 -- four sites, mutually consistent -- escapes every leg
+        here.  The TWO-site version of that move, stabilizer count and
+        pinned product alone, does NOT escape: it parts the
+        code-parameter tie and reddens.  Neither does the coordinated
+        move to 5 and 25;
+      * moving the imported threshold, the declared range's upper end
+        AND the declared range's lower end together, all three, escapes
+        the range leg; the two-site move of the threshold and the upper
+        end alone does NOT escape -- it breaks the decade relation and
+        reddens;
+      * moving the imported threshold, the declared range's upper end
+        AND the source decade together, all three, also escapes the
+        range leg -- a second triple of the same arity and genre as the
+        one above.
+
+    This check ties no value against any sibling's record, and no leg
+    here reads the registry.
+
+    MAY NOT BE CITED FOR.  Eight items, fixed by the frozen claim
+    surface of 2026-08-28 and carried HERE, in the landed text, because
+    this block is the only artifact a future reader opens:
+
+      * "OR2-strong holds for the Steane code", unqualified.  It FAILS
+        for the bare logical distinction and is recovered only under the
+        composite-interface reading, only inside a declared window, and
+        only over a stated noise range.
+      * the window as derived, envelope-justified or corpus-supported.
+        It is a declared premise and this check does not derive it.
+      * as a verification of the imported code's error-correcting
+        properties.  Those are named literature imports; the leg below
+        asserts only that they are mutually consistent.
+      * as any claim about fault tolerance, or about the imported
+        threshold itself.
+      * as closing the D4@2026-08-03(c) declaration question.  This
+        check DECLARES a tolerance with its unit and its envelope at its
+        own site; it derives none, and one site is not the corpus.
+      * as evidence for or against OR2 as a registered object.  OR2 is
+        NOT a registry key under either spelling; this check's
+        dependencies list cites it, repointing it is a bank-edge move
+        this repair does not make, and nothing here makes it one.
+      * as a repair of OR2_spin or OR2_repetition, which are untouched.
+      * as evidence that the exact-rational form corrected a wrong
+        answer.  It did not: the record computes and reports that the
+        exact and the float verdicts agree at the shipped parameters.
+    """
+    from fractions import Fraction as _F
+
+    legs_run = []
+
+    def _leg(condition, label):
+        check(condition, label)
+        legs_run.append(label)
+
+    # ---- imported code parameters, and the two cost quantities --------
+    # d_min IS the destruction cost under the archived cost model.  The
+    # identification is definitional and carries no leg.
+    d_min = _OR2_STEANE_D_MIN
+    ops_per_stabilizer = _F(_OR2_STEANE_N_CNOT + _OR2_STEANE_N_MEAS)
+    eps_detect_bare = _F(_OR2_STEANE_N_STABILIZERS) * ops_per_stabilizer
+    # The reset cost the composite reading consumes is BUILT from the
+    # source's two components, and the pinned constant is what it is
+    # checked against -- the detection product's shape, applied to the
+    # one imported constant that previously had no leg reading it.
+    ancilla_reset_cost = _F(_OR2_STEANE_ANCILLA_MEAS + _OR2_STEANE_ANCILLA_PAULI)
+
+    # The declared code triple, tied to the values this computation
+    # actually consumes: the distance IS the destruction cost used just
+    # above, and the stabilizer count that sets the detection cost IS the
+    # code's redundancy n - k.  Consistency among named imports; it
+    # verifies nothing about the code.  A single-site edit to the
+    # physical-qubit count, the distance or the stabilizer count parts
+    # this tie.
+    n_code, k_code, d_code = _OR2_STEANE_CODE_PARAMS
+    code_str = f'[[{n_code},{k_code},{d_code}]]'
+    _leg(_OR2_STEANE_N_PHYSICAL == n_code
+         and d_min == d_code
+         and _OR2_STEANE_N_STABILIZERS == n_code - k_code,
+         'the imported code parameters are consistent with the destruction cost and the stabilizer count the computation uses')
+
+    _leg(eps_detect_bare == _OR2_STEANE_DETECT_OPS,
+         'detection cost equals stabilizers x ops-per-stabilizer, against the pinned product')
+
+    _leg(ancilla_reset_cost == _OR2_STEANE_ANCILLA_RESET,
+         'ancilla reset cost equals measurement plus conditional Pauli, against the pinned sum')
+
+    # ---- the bare logical reading -------------------------------------
+    ratio_bare = eps_detect_bare / d_min
+    _leg(not _or2_steane_in_window(ratio_bare),
+         'the bare detect/destroy ratio lies outside the declared window')
+
+    # The bare ratio's position relative to the window is COMPUTED, not
+    # asserted: it is reported below, including whether it coincides
+    # with an endpoint, in which case its exclusion rides the window
+    # being open at that end.
+    bare_equals_hi = (ratio_bare == _OR2_STEANE_WINDOW_HI)
+    bare_equals_lo = (ratio_bare == _OR2_STEANE_WINDOW_LO)
+    bare_on_endpoint = bare_equals_hi or bare_equals_lo
+    bare_inside_closed = (_OR2_STEANE_WINDOW_LO <= ratio_bare <= _OR2_STEANE_WINDOW_HI)
+
+    # ---- the permanent control window ---------------------------------
+    # The frozen surface's negative-control row 2, shipped rather than
+    # substituted.  A SECOND window, strictly wider at both ends and wide
+    # enough to admit the bare ratio: the leg asserts that the SAME
+    # computed ratio is reported as passing against it while it is not
+    # against the declared window.  Two verdicts, one number, and the
+    # only difference between them is the width of the window -- which
+    # is what "the window is load-bearing" means here.  Nothing
+    # downstream reads this control.
+    bare_in_control_window = bool(
+        _OR2_STEANE_CONTROL_WINDOW_LO < ratio_bare < _OR2_STEANE_CONTROL_WINDOW_HI)
+    control_strictly_wider = bool(
+        _OR2_STEANE_CONTROL_WINDOW_LO < _OR2_STEANE_WINDOW_LO
+        and _OR2_STEANE_WINDOW_HI < _OR2_STEANE_CONTROL_WINDOW_HI)
+    _leg(bare_in_control_window
+         and not _or2_steane_in_window(ratio_bare)
+         and control_strictly_wider,
+         'the bare case is reported as passing under a strictly wider control window')
+
+    # ---- the declared range against the imported threshold -------------
+    # A PIN, and it reads as one: three independently authored literals
+    # compared under the relation the archived source states.  A
+    # single-site edit to any of the three reddens it; a coordinated
+    # edit of the threshold and the range's upper end escapes it, and
+    # that escape is disclosed above and was executed.
+    _leg(_OR2_STEANE_P_HI == _OR2_STEANE_P_TH
+         and _OR2_STEANE_P_LO * _OR2_STEANE_SOURCE_DECADE == _OR2_STEANE_P_TH
+         and _OR2_STEANE_P_LO < _OR2_STEANE_P_HI,
+         'the declared noise range matches the imported threshold and the decade the source states')
+
+    # ---- the composite-interface reading, over the whole range ---------
+    # maint(p) = N_PHYSICAL*p + N_STABILIZERS*ancilla_reset_cost, so the
+    # maintenance/detection ratio is affine in p.  Solve for the two
+    # values of p at which it would reach the window's endpoints; the
+    # ratio lies inside the window for exactly the p strictly between
+    # them.  Both are computed here, neither is stated anywhere.
+    slope = _F(_OR2_STEANE_N_PHYSICAL) / eps_detect_bare
+    intercept = (_F(_OR2_STEANE_N_STABILIZERS) * ancilla_reset_cost) / eps_detect_bare
+
+    def _ratio_at(p):
+        return (_F(_OR2_STEANE_N_PHYSICAL) * p
+                + _F(_OR2_STEANE_N_STABILIZERS) * ancilla_reset_cost) / eps_detect_bare
+
+    slope_nonzero = (slope != 0)
+    if slope_nonzero:
+        _r1 = (_OR2_STEANE_WINDOW_LO - intercept) / slope
+        _r2 = (_OR2_STEANE_WINDOW_HI - intercept) / slope
+        exit_lo, exit_hi = (_r1, _r2) if _r1 <= _r2 else (_r2, _r1)
+    else:
+        # An affine map with zero slope has no exit locus in p; the leg
+        # below then reddens, and that is the conservative direction.
+        exit_lo = exit_hi = None
+
+    # DISCLOSED: at the shipped parameters the low-side conjunct is
+    # FORCED.  The intercept exceeds the window's lower bound, so the
+    # low exit value is negative and cannot fail to sit below a positive
+    # declared floor; the high-side conjunct is the one that decides
+    # here.  The low-side conjunct is retained because it is the correct
+    # containment statement and stops being forced the moment the
+    # intercept falls below the window's floor.
+    range_inside_locus = bool(
+        slope_nonzero and exit_lo < _OR2_STEANE_P_LO and _OR2_STEANE_P_HI < exit_hi)
+    _leg(range_inside_locus,
+         'the declared noise range lies strictly inside the computed window-exit locus')
+
+    # The two endpoint ratios are the exact range of an affine map over
+    # a closed interval.  Their membership in the window is a
+    # consequence of the locus containment above under a nonzero slope,
+    # not a separate leg.
+    r_at_lo = _ratio_at(_OR2_STEANE_P_LO)
+    r_at_hi = _ratio_at(_OR2_STEANE_P_HI)
+    r_lo, r_hi = (r_at_lo, r_at_hi) if r_at_lo <= r_at_hi else (r_at_hi, r_at_lo)
+    # How far the composite ratio actually moves across the declared
+    # range, as a fraction of its low end.  Computed, not stated.
+    ratio_excursion = (r_hi - r_lo) / r_lo
+
+    # ---- the window's own edges, exercised ------------------------------
+    dd = _OR2_STEANE_EDGE_DELTA
+    edge_probes = [
+        ('window_lo_minus_delta', _OR2_STEANE_WINDOW_LO - dd),
+        ('window_lo',             _OR2_STEANE_WINDOW_LO),
+        ('window_lo_plus_delta',  _OR2_STEANE_WINDOW_LO + dd),
+        ('window_hi_minus_delta', _OR2_STEANE_WINDOW_HI - dd),
+        ('window_hi',             _OR2_STEANE_WINDOW_HI),
+        ('window_hi_plus_delta',  _OR2_STEANE_WINDOW_HI + dd),
+    ]
+    edge_verdicts = {k: _or2_steane_in_window(v) for k, v in edge_probes}
+    _leg(edge_verdicts['window_lo'] is False
+         and edge_verdicts['window_hi'] is False
+         and edge_verdicts['window_lo_plus_delta'] is True
+         and edge_verdicts['window_hi_minus_delta'] is True
+         and edge_verdicts['window_lo_minus_delta'] is False
+         and edge_verdicts['window_hi_plus_delta'] is False,
+         'the verdict turns at both declared window endpoints')
+
+    # ---- the exact/float separation, exhibited --------------------------
+    separator = _OR2_STEANE_WINDOW_HI - _OR2_STEANE_SEPARATOR_DELTA
+    # BOTH sides of the exhibit are computed, and BOTH are asserted.  The
+    # returned sentence says the exhibited rational is inside the window
+    # in exact arithmetic and NOT inside it under float; the leg computes
+    # each of those as its own comparison, so a separator whose float
+    # image is inside the window reddens this check instead of returning
+    # a sentence that contradicts the value it reports.
+    separator_exact_inside = _or2_steane_in_window(separator)
+    separator_float_inside = bool(
+        float(_OR2_STEANE_WINDOW_LO) < float(separator) < float(_OR2_STEANE_WINDOW_HI))
+    _leg(separator_exact_inside and not separator_float_inside,
+         'the exhibited separating rational is inside the window in exact arithmetic and outside it under float')
+    decided = [r_at_lo, r_at_hi, ratio_bare]
+    shipped_float_agrees = all(
+        bool(float(_OR2_STEANE_WINDOW_LO) < float(r) < float(_OR2_STEANE_WINDOW_HI))
+        == _or2_steane_in_window(r)
+        for r in decided)
+
+    # ---- the grade, recomputed ------------------------------------------
+    conditional = [_OR2_STEANE_NAMED_PREMISE]
+    canonical_grade = (_OR2_STEANE_GRADE_BASE
+                       + _OR2_STEANE_GRADE_SEPARATOR
+                       + _OR2_STEANE_NAMED_PREMISE)
+    _leg(_OR2_STEANE_DECLARED_GRADE == canonical_grade
+         and _OR2_STEANE_DECLARED_GRADE not in _OR2_STEANE_BARRED_GRADES
+         and "P" in _OR2_STEANE_BARRED_GRADES
+         and "P_structural" in _OR2_STEANE_BARRED_GRADES
+         and _OR2_STEANE_GRADE_BASE in _OR2_STEANE_SUBGRADES,
+         'the returned grade is the canonical conditional form recomputed from base and premise')
+
+    # ---- the leg inventory: append and record, never raise ---------------
+    missing = sorted(_OR2_STEANE_LEGS - set(legs_run))
+    unexpected = sorted(set(legs_run) - _OR2_STEANE_LEGS)
+    duplicated = sorted({lab for lab in legs_run if legs_run.count(lab) > 1})
+    inventory_ok = not (missing or unexpected or duplicated)
+
+    def _fr(x):
+        return str(x)
+
+    window_str = f'({_fr(_OR2_STEANE_WINDOW_LO)}, {_fr(_OR2_STEANE_WINDOW_HI)})'
+    range_str = f'[{_fr(_OR2_STEANE_P_LO)}, {_fr(_OR2_STEANE_P_HI)}]'
+    control_window_str = (f'({_fr(_OR2_STEANE_CONTROL_WINDOW_LO)}, '
+                          f'{_fr(_OR2_STEANE_CONTROL_WINDOW_HI)})')
+    locus_str = (f'({_fr(exit_lo)}, {_fr(exit_hi)})' if slope_nonzero
+                 else 'undefined (the composite ratio does not vary with p)')
+
+    sentences = [
+        (f'Detection cost is computed as {_OR2_STEANE_N_STABILIZERS} stabilizers '
+         f'x ({_OR2_STEANE_N_CNOT} CNOT + {_OR2_STEANE_N_MEAS} measurement) = '
+         f'{_fr(eps_detect_bare)} elementary operations, from the {code_str} code '
+         f'parameters taken as named literature imports. Those parameters are '
+         f'consistent with the values this computation consumes: the '
+         f'physical-qubit count is the triple\'s n, the destruction cost is the '
+         f'distance, and the stabilizer count is the code\'s redundancy n - k.'),
+
+        (f'Destruction cost is IDENTIFIED with the imported code distance '
+         f'{_fr(d_min)} Pauli operations. That identification is a definitional '
+         f'move in the cost model this check adopts, and no leg here asserts it.'),
+
+        (f'Bare logical distinction: the computed detect/destroy ratio is '
+         f'{_fr(ratio_bare)}, outside the declared order-unity window '
+         f'{window_str}. OR2-strong fails for the bare logical distinction, as '
+         f'the archived source of record states.'),
+
+        (f'The bare ratio {_fr(ratio_bare)} '
+         + ('coincides with the window\'s upper endpoint exactly, so its exclusion '
+            'rides the window being open at that end: under the same bounds read as '
+            'a closed interval the computed verdict for the bare case is '
+            f'{bare_inside_closed}.'
+            if bare_on_endpoint else
+            'lies strictly away from both endpoints; the computed verdict for the '
+            f'bare case under the same bounds read as a closed interval is '
+            f'{bare_inside_closed}.')),
+
+        (f'PERMANENT CONTROL, deciding nothing here: against a second, strictly '
+         f'wider control window {control_window_str} the same computed bare ratio '
+         f'{_fr(ratio_bare)} is reported as PASSING ({bare_in_control_window}), '
+         f'while against the declared window {window_str} it is not. The two '
+         f'verdicts differ on the same number, so it is the declared window\'s '
+         f'width that decides the bare case.'),
+
+        (f'Composite-interface reading: maintenance cost is computed as '
+         f'{_OR2_STEANE_N_PHYSICAL}*p + {_OR2_STEANE_N_STABILIZERS}*'
+         f'{_fr(ancilla_reset_cost)} over the declared noise range p in '
+         f'{range_str}, whose upper end is the imported threshold and whose lower '
+         f'end is that threshold divided by the decade the source states. The '
+         f'maintenance/detection ratio is affine in p and ranges over '
+         f'[{_fr(r_lo)}, {_fr(r_hi)}]. Every quantity in this sentence is computed '
+         f'in exact rationals.'),
+
+        (f'The values of p at which that ratio would reach the window\'s endpoints '
+         f'are computed to be {locus_str}; the declared range lies strictly inside '
+         f'them ({range_inside_locus}), so the ratio lies inside the window at every '
+         f'p in the declared range and not merely at sampled points. Across the whole '
+         f'declared range the ratio moves by a computed '
+         f'{float(ratio_excursion) * 100:.4f}% of its low end, so no p in the '
+         f'declared range can move this verdict. That is a statement about the '
+         f'declared range, computed from it; it is not a claim about any p outside '
+         f'the locus.'),
+
+        (f'The order-unity window {window_str} is a DECLARED JUDGEMENT PREMISE, '
+         f'stated here with its unit -- a dimensionless cost ratio -- and its '
+         f'envelope. It is a numeric rendering of the archived source\'s phrase '
+         f'"to within a factor of order unity". This check does not derive it.'),
+
+        (f'The verdict is decided in exact rationals. It turns at the window\'s own '
+         f'endpoints: the computed verdicts at '
+         f'{", ".join(k + "=" + str(edge_verdicts[k]) for k, _ in edge_probes)}. '
+         f'A rational strictly inside the window whose float image is not inside it '
+         f'is exhibited ({_fr(separator)}: exact verdict {separator_exact_inside}, '
+         f'float verdict {separator_float_inside}). At the shipped parameters the '
+         f'exact and float '
+         f'verdicts agree at all {len(decided)} decided ratios '
+         f'({shipped_float_agrees}), so the exact form changes no answer here.'),
+
+        (f'The cost model that converts stabilizer-code parameters into an OR2 '
+         f'verdict is stated only in the archived source of record. This check ties '
+         f'no value against any sibling\'s record and no leg here reads the '
+         f'registry; it carries an untested convention and an untested window. The '
+         f'grade returned is {_OR2_STEANE_DECLARED_GRADE}, conditional on the named '
+         f'premise {_OR2_STEANE_NAMED_PREMISE}.'),
+    ]
+
+    if not inventory_ok:
+        sentences.append(
+            f'LEG INVENTORY MISMATCH: {len(missing)} missing, '
+            f'{len(unexpected)} unexpected, {len(duplicated)} duplicated.')
 
     return _result(
-        name='check_OR2_steane: OR2-strong for Steane [[7,1,3]] code',
+        name=f'check_OR2_steane: OR2-strong for Steane {code_str} code',
         tier=0,
-        epistemic='P',
-        summary=(
-            'Steane [[7,1,3]] code: destruction = d_min = 3 Paulis. '
-            'Detection (bare logical qubit) = 30 ops; OR2-strong fails for bare logical. '
-            'Resolution (L_loc): ancilla syndrome apparatus is co-located with logical qubit '
-            'and must be included in the enforcement interface. '
-            'Composite interface maintenance ~ 12 ops at p_th; detection = 30 ops. '
-            'Ratio ~ 0.4: same order of magnitude, OR2-strong recovered.'
-        ),
-        key_result='OR2-strong holds at composite (logical + ancilla) interface',
+        epistemic=_OR2_STEANE_DECLARED_GRADE,
+        summary=' '.join(sentences),
+        key_result=(
+            f'OR2-strong FAILS for the bare logical distinction '
+            f'(detect/destroy = {_fr(ratio_bare)}'
+            + (f', exactly the declared window\'s open upper endpoint'
+               if bare_equals_hi else
+               f', exactly the declared window\'s open lower endpoint'
+               if bare_equals_lo else '')
+            + f'); under the composite-interface reading the maintenance/detection '
+            f'ratio lies in [{_fr(r_lo)}, {_fr(r_hi)}], inside the declared window '
+            f'{window_str} at every p in the declared range {range_str}'),
         dependencies=['OR2', 'L_loc', 'L_epsilon*'],
+        conditional_on=conditional,
         artifacts={
             'd_min': str(d_min),
-            'eps_destr': str(eps_destr),
+            'eps_destr_identified_with_d_min': str(d_min),
             'eps_detect_bare': str(eps_detect_bare),
-            'maint_composite_at_pth': str(float(maint_composite)),
-            'ratio_maint_detect': f'{ratio:.3f}',
+            'ratio_bare_exact': str(ratio_bare),
+            'bare_equals_window_hi': str(bare_equals_hi),
+            'bare_inside_closed_window': str(bare_inside_closed),
+            'code_params_imported': str(_OR2_STEANE_CODE_PARAMS),
+            'control_window_exact': control_window_str,
+            'bare_inside_control_window': str(bare_in_control_window),
+            'window_exact': window_str,
+            'noise_range_exact': range_str,
+            'p_threshold_imported': str(_OR2_STEANE_P_TH),
+            'window_exit_locus_in_p': locus_str,
+            'declared_range_strictly_inside_exit_locus': str(range_inside_locus),
+            'ratio_excursion_across_declared_range': str(ratio_excursion),
+            'ratio_composite_lo_exact': str(r_lo),
+            'ratio_composite_hi_exact': str(r_hi),
+            'maint_composite_at_pth': str(float(r_at_hi * eps_detect_bare)),
+            'ratio_maint_detect': f'{float(r_at_hi):.3f}',
+            'ratio_composite_lo_display': f'{float(r_lo):.6f}',
+            'ratio_composite_hi_display': f'{float(r_hi):.6f}',
+            'window_edge_verdicts': {k: str(edge_verdicts[k]) for k, _ in edge_probes},
+            'float_separator_exact': str(separator),
+            'float_separator_inside_under_exact': str(separator_exact_inside),
+            'float_separator_inside_under_float': str(separator_float_inside),
+            'shipped_exact_float_agreement': str(shipped_float_agrees),
+            'grade_returned': _OR2_STEANE_DECLARED_GRADE,
+            'grade_named_premise': _OR2_STEANE_NAMED_PREMISE,
+            'value_ties': ('NONE CARRIED. This object ties no value against any '
+                           'sibling record. No leg here reads the registry, so no '
+                           'claim is made about what other checks compute.'),
         },
+        passed=inventory_ok,
+        # A BROKEN INVENTORY IS NOT A RESULT.  The record no longer
+        # describes what ran, so no field of it should be read or
+        # aggregated.  Recorded, not raised, per D7@2026-08-08.
+        status='PASS' if inventory_ok else 'FAIL',
+        leg_inventory_declared=sorted(_OR2_STEANE_LEGS),
+        leg_inventory_executed=list(legs_run),
+        leg_inventory_missing=missing,
+        leg_inventory_unexpected=unexpected,
+        leg_inventory_duplicated=duplicated,
     )
 
 
@@ -6509,11 +7317,81 @@ def check_D_quotient_forced():
 
 
 def check_disjoint_partition():
-    """Prop: S_{Gamma_1} cap S_{Gamma_2} = emptyset from L_cost integrality.
+    """Prop: S_{Gamma_1} cap S_{Gamma_2} = emptyset -- carried as a CONVENTION.
 
-    Suppose v in overlap.  d_v has eps = 1*eps* (integer).  Must be charged
-    to exactly one budget (no fractional charging by integrality).
-    D-quotient identifies the redundant copy.
+    The argument as previously stated: suppose v in overlap.  d_v has
+    eps = 1*eps* (integer).  Must be charged to exactly one budget (no
+    fractional charging by integrality).  D-quotient identifies the
+    redundant copy.
+
+    RECLASSIFIED 2026-08-28.  The grade moves off [P].  The direction is
+    a LOWERING, which is the conservative one, and no part of this
+    record may be tuned to keep the previous grade.
+
+    WHY.  Two incompatible justifications are on the corpus's record.
+    Paper 1 main v5.10 says the proposition is proved from A1 plus
+    L_cost's integrality and defers to a Technical Supplement; that
+    deferral resolves to nothing located.  The archived 180-page source
+    of record states it instead as set-theoretic bookkeeping from the
+    definition of partition -- "this is not an additivity assumption"
+    -- with overlaps handled by DECOMPOSING into disjoint interfaces,
+    not by proving overlap impossible.  This record adopts the account
+    that carries a written justification, and records the disagreement
+    rather than adjudicating it.  It does NOT assert that substrate
+    disjointness is false, doubtful or refuted, and the absence of the
+    eps*-integrality argument is an absence-of-hit over a searched set,
+    not a proof of absence.
+
+    AND THE LEGS DO NOT REACH IT.  What this check executes is
+    arithmetic identities over literals it writes itself.  None of them
+    mentions a substrate, an interface, or an intersection.  The claim
+    in the check's own name is untouched by its executable content.
+
+    RECORDED, NOT REPAIRED -- the second leg's message misdescribes the
+    second leg.  The message names a half-quantum that is not an
+    integer multiple; what the leg asserts is that two halves make a
+    whole.  The leg is LEFT AS IT STANDS and the discrepancy is carried
+    in the returned record instead.  Deleting or rewriting a leg of an
+    already-banked check moves the leg count and is a retirement
+    question, not a record move; a build seat does not take it.
+
+    THE GRADE TOKEN IS `POSTULATE`, RULED BY THE PRINCIPAL 2026-08-29.
+    E3@2026-08-28 regraded the proposition a convention and named no
+    token; the token is the separate ruling of 2026-08-29, recorded in
+    this batch's record.  POSTULATE is the adopted-outright genre,
+    live in this file at `check_M`.  It is not
+    `P_structural_reading`: that legend covers a derivation
+    carried up to an adopted internal premise, and this record locates
+    no derivation to carry.  It is not `P_structural_convention`: that
+    legend reads "unit/scale convention; O(1) prefactor (Planck
+    magnitude)", a different lane from a set-theoretic carving.  The
+    CONVENTION character ruled by E3@2026-08-28 is stated in the
+    summary below; the machine token is the grade.
+
+    THIS RECORD CLAIMS NO VALIDATION OF ITS OWN GRADE TOKEN, and it
+    states what was checked rather than a universal.  What was checked:
+    `apf_utils.result()` accepts `epistemic` as a free string and
+    applies no membership test to it; and the grade instrument at the
+    repo root (check_no_bare_pstructural.py, unregistered) polices one
+    token by regex and returns the same set of bare fields with this
+    token as without it.  No search for a validator was exhaustive and
+    none is claimed.  The token is a label.
+
+    NOT A CLAIM ABOUT L_loc.  check_L_loc's dependencies at this HEAD
+    are ['A1', 'L_epsilon*', 'M', 'NT'].  Its body does not cite this
+    proposition: over the searched set -- this check's name, its record
+    name, and the bare word 'disjoint' -- the only hit is Step 4(c)'s
+    "Subsystems at disjoint interfaces are independent", which is a
+    conclusion L_loc unpacks and not a citation of this record.  That
+    is an absence-of-hit over a named set, not a proof of absence, and
+    the same discipline is owed here as above.  The L_loc ->
+    disjoint_partition edge is asserted in Paper 1 main and DOES NOT
+    EXIST IN THE CODE, so this reclassification does not reach L_loc,
+    L_nc, L_irr, T_M, T_kappa, T_sep, P_tom or T3.
+
+    NOT TOUCHED: the unregistered names in this record's own
+    `dependencies` ('SC', 'D-quotient') are a vacancy-lane question,
+    named here so they are not found again as if new.
     """
     eps_star = Fraction(1)
     n_dv = 1
@@ -6526,10 +7404,32 @@ def check_disjoint_partition():
 
     return _result(
         name='Disjoint Partition from Exact Accounting',
-        tier=0, epistemic='P',
-        summary='Substrate disjointness derived from L_cost integrality: '
-                'eps* is indivisible across interfaces.',
-        key_result='S_{G1} cap S_{G2} = emptyset [P]',
+        tier=0, epistemic='POSTULATE',
+        summary='Interface substrate disjointness is carried as a CONVENTION '
+                'of the framework, adopted outright. The archived source of '
+                'record states it as set-theoretic bookkeeping from the '
+                'definition of partition, with overlaps handled by '
+                'decomposition into disjoint interfaces rather than by '
+                'proving overlap impossible. The derivation from eps* '
+                'integrality asserted in Paper 1 main is not carried by any '
+                'source located in the corpus and is not established here. '
+                'What this check executes is arithmetic identities over its '
+                'own literals, none of which mentions a substrate, an '
+                'interface, or an intersection. The legs exhibit the '
+                'integrality convention; they do not establish disjointness. '
+                'RECORDED, NOT REPAIRED: the second leg asserts that two '
+                'halves make a whole, under a message naming a half-quantum '
+                'that is not an integer multiple. The message misdescribes '
+                'the leg; the leg is left as it stands and the discrepancy '
+                'is recorded here, because removing a leg from a banked '
+                'check moves the leg count and is a retirement question. '
+                'This record describes its legs and does not read them: it '
+                'states no leg count and could not notice a leg that did '
+                'not run. That limit is disclosed, not machined around. '
+                'This record claims no validation of its grade token: '
+                'apf_utils.result() accepts epistemic as a free string and '
+                'applies no membership test to it.',
+        key_result='S_{G1} cap S_{G2} = emptyset [POSTULATE]',
         dependencies=['A1', 'L_cost', 'SC', 'D-quotient'],
     )
 
