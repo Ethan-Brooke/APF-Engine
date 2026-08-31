@@ -1,12 +1,12 @@
 # APF Reviewer Atlas -- what the framework claims, machine-checked
 
-Generated 2026-07-20 against verdict pin v24.3.430. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
+Generated 2026-08-31 against verdict pin v24.3.430. Every row below is produced by running the banked engine, not written by hand; the committed copy is certified current against the verdict pin by `check_T_ie_reviewer_manifest_current` (a failing bank run means this file is stale).
 
-**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 3948 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
+**How to reproduce**: clone the repo, `python3 verify_all.py --bank-audit` (the full theorem bank, 4233 checks), then `PYTHONPATH=. python3 scripts/gen_reviewer_manifest.py`.
 
 **Reading a verdict**: `EXPORT` = the route exports a global section in the engine's own currency. `held/obstructed` = the route holds with a NAMED obstruction or an honest open disposition -- in this framework obstructions are results (e.g. a Bell/noncontextuality certificate, a no-go, an honest OPEN statement), not defects. Verdicts inherit the grades of the banked theorems they route through; routing confers nothing.
 
-**Coverage**: 220 of 485 loaded modules onboarded (161 directly), 179 of 281 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
+**Coverage**: 220 of 547 loaded modules onboarded (161 directly), 179 of 342 on the physics target surface. Modules not onboarded are honestly so (pipeline stages of banked programs, or abstract interfaces with no payload data).
 
 ## Paper 0 + Paper 13 (foundations)
 
@@ -22,7 +22,7 @@ Generated 2026-07-20 against verdict pin v24.3.430. Every row below is produced 
 | `foundation:base_fiber_allocation` | ROUTE | BLOCKED_SUBSTRATE_REVISION_REQUIRED | Wave 4 probe; the no-B row's OPEN status stated honestly |
 | `foundation:billed_vs_derived_register_criterion` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6 depth; the B5 close (.332) |
 | `foundation:class_transition_primitive` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, the collapse triad as a [P] composition over A1 + occupancy). FIVE checks. ... |
-| `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2... |
+| `foundation:closed_world_regime_gates` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 7; claim text re-cut 2026-08-30 with the gate-(1) scope-down (R1@2026-08-30): the three-gate derivation reading is WITHDRAWN and the... |
 | `foundation:collapse_triad_free_spend_permanent` | ROUTE | **EXPORT** | The v24.3.398 export split: the [P] triad gets its own exporting input, separated from the foundation:class_transition_primitive bundle a... |
 | `foundation:continuation_capacity_floor_bound` | ROUTE | **EXPORT** | Pre-existing Paper 10 capacity-floor identity. It does not by itself assert existence of a finite complete operational basis. |
 | `foundation:d4_unique` | ROUTE | **EXPORT** | Wave 5 probe; all-[P] verified per epistemic fields; export-declared 2026-07-05 (census legs clean) |
@@ -145,7 +145,7 @@ Generated 2026-07-20 against verdict pin v24.3.430. Every row below is produced 
 | `strong:ladder_classical_correlation_control` | CONTEXTUALITY | **EXPORT** | v24.3.298 corrected ladder, rung 1: perfectly-correlated classical table has a global Boolean section -> SepStr (subadditive control) |
 | `strong:lattice_gap_candidate` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 4 probe; the candidate framing is the banked framing |
 | `strong:pentaquark_magic_square` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.295 banked scenario: SU(2) pentaquark M4 hosts the Mermin-Peres magic square (empty global-section support) -> IJCStr; the physical... |
-| `strong:pi0_anomaly_width_row` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; scorecard row 49 (49 total / 40 tested / 33 consistent at the .341 landing) |
+| `strong:pi0_anomaly_width_row` | ROUTE | SOLVED_LOCAL_HELD_FOR_REPAIR | Wave 6; scorecard row 49 (49 total / 40 tested / 32 consistent, the banked headline as of 2026-08-04) |
 | `strong:strong_cp_transport_content_blind` | ROUTE | OBSTRUCTION_NAMED_CLOSURE | Onboards the .359 transport-half no-go onto the ROUTE axis as a closure-by-design obstruction. Paper 46 anchors this ceiling; a future la... |
 | `strong:tetraquark_kcbs` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.293 banked scenario: gauge-invariant tetraquark M3 KCBS -> IJCStr |
 | `strong:tetraquark_yuoh_state_independent` | CONTEXTUALITY | IJC_OBSTRUCTION | v24.3.294 banked scenario: Yu-Oh 13-ray on the tetraquark M3, state-independent -> IJCStr |
