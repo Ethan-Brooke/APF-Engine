@@ -1,5 +1,5 @@
-"""apf/closed_world_completeness.py -- Closed-world completeness derivation
-chain for the regime gates of Paper 5 Supplement v5.97.
+"""apf/closed_world_completeness.py -- Closed-world completeness chain
+for the regime gates of Paper 5 Supplement v5.97.
 
 Phase 22c (2026-04-30): codebase landing of the v5.43 reviewer-response
 unbundling pass.  An external auditor flagged three "regime gates" of
@@ -10,17 +10,33 @@ class axioms requiring deeper justification:
   (2) Stable simple-record completeness
   (3) APF-complete finite composite closure --> selects C over R / H
 
-The framework's response (v5.43 .. v5.97) is not pushback but unbundling.
-All three "regime gates" derive from a deeper APF primitive --
-closed-world ledger conservation + no-phantom-records -- and the v5.43+
-supplement makes the derivation chain explicit.  This module provides
-seven bank-registered checks that exercise the unbundling on small
-finite witnesses:
+The framework's response (v5.43 .. v5.97) was not pushback but unbundling:
+all three "regime gates" were to derive from a deeper APF primitive --
+closed-world ledger conservation + no-phantom-records.  The Phase 22c
+checks below exercise the attempt on small finite witnesses.
 
-  (1) check_T_closed_ledger_reciprocity     (derives gate (1) from
-      no-hidden-debt ledger conservation)
-  (2) check_T_no_phantom_record_quotient    (derives gate (2) from
-      no-phantom-records)
+SCOPE CORRIGENDUM 2026-08-30, and it governs how this header may be read.
+The gate-(1) half of that response is WITHDRAWN.  check_T_closed_ledger_-
+reciprocity took a SCOPE CORRIGENDUM on 2026-07-29 (external audit,
+MAJOR, accepted): what executes there is the polarization identity on a
+witness that DEFINES t := p + m, and its own may_not_cite bars
+"reciprocal calibration is derived".  The sibling
+check_T_closed_read_write_self_duality carries the same corrigendum.  The
+composite check_T_closed_world_completeness_derives_three_gates no longer
+asserts the three-gate reading: it computes a FENCE-ABSENCE inventory --
+which gates have constituents that pass and that neither bar a derivation
+reading nor disclose in their own records that their verdicts are
+literals -- and ABSENCE OF A FENCE IS NOT PRESENCE OF A DERIVATION.  The
+figure is computed in that check's returned record and is deliberately
+not restated here.  No sentence in this header may be cited for "all
+three regime gates derive" or for "APF derives what reconstruction
+programs postulate".
+
+  (1) check_T_closed_ledger_reciprocity     (the gate-(1) attempt; its
+      derivation claim is WITHDRAWN -- ALGEBRAIC IDENTITY ONLY, see the
+      corrigendum in that check's own docstring)
+  (2) check_T_no_phantom_record_quotient    (the gate-(2) attempt: the
+      no-phantom-record quotient on a finite witness algebra)
   (3) check_T_operational_radical_equals_jacobson (Wedderburn-Artin
       bridge that lets the no-phantom argument talk to standard finite
       algebra)
@@ -31,14 +47,15 @@ finite witnesses:
   (6) check_T_split_composite_gates_tomographic_locality (rules out
       R by Wootters-Hardy local-marginal parameter count)
   (7) check_T_split_closed_world_complex_selection (composite of (5)
-      and (6): C is the unique field passing both -- the unbundled
-      sharper form of Paper 5 v7.3's check_T_field_selection_complex)
+      and (6): C is the unique field passing both -- and its own returned
+      record discloses that both leg verdicts there are literals, which
+      it composes and computes neither of)
 
-Each check is bank-registered with epistemic tag indicating the APF
-primitive it traces back to:
-
-  [P_regime + accounting]   -- (1), (4), (5), (6), (7)
-  [P_structural]            -- (2), (3)
+Each check is bank-registered and carries its own epistemic grade in its
+own returned record.  Those grades moved under the 2026-07-29 and
+2026-08-30 corrigenda and are deliberately NOT restated here: a
+hand-maintained grade table in a docstring goes stale against the
+records it summarises.  Read the grades off the records.
 
 Source-of-record:
   Paper 5 Supplement v5.97, sections "Finite closed-world record
@@ -50,7 +67,7 @@ Cross-reference:
   apf/quantum_admissibility.py -- Phase 22b carries the v5.1 baseline
   including check_T_field_selection_complex (uniform-defect form) and
   the SepStr/SepAdm/IJCStr/IJCAdm/IJCPres branch taxonomy.  Phase 22c
-  ADDS the closed-world-completeness derivation chain on top.
+  ADDS the closed-world-completeness chain on top.
 
   apf/aps.py -- Phase 22a carries the AdmissiblePossibilitySpace
   primitive.  Phase 22c's no-phantom-record quotient operates on
@@ -1530,89 +1547,571 @@ def check_T_gate_certified_hilbert_born_pipeline():
 
 
 # =====================================================================
-# (13) Closed-world completeness derives the three regime gates
+# (13) The three-gate derivation INVENTORY (scope corrigendum 2026-08-30)
 # =====================================================================
 
 def check_T_closed_world_completeness_derives_three_gates():
-    """T_closed_world_completeness_derives_three_gates: the three
-    formerly-axiom-class regime gates are jointly derivable from
-    the closed-world-completeness primitive.
+    """T_closed_world_completeness_derives_three_gates: a FENCE-ABSENCE
+    inventory over the three formerly-axiom-class regime gates.  It
+    computes which of them have constituents that pass and that neither
+    bar a derivation reading nor disclose, in their own returned records,
+    that their verdicts are literals.  ABSENCE OF A FENCE IS NOT PRESENCE
+    OF A DERIVATION: no leg here computes a derivation for any gate, and
+    the name of the computed object says what the predicate does.
 
-    Tier 4 [P_structural].  Paper 5 Supplement v5.97 Theorem
-    "Closed-world completeness derives the three regime gates"
-    (the v5.45-consolidated single composite theorem replacing
-    v5.43's per-gate triplet).  This is the headline reviewer-
-    response result: a single APF primitive (closed-world ledger
-    conservation + no-phantom-records) derives all three of
-    (1) reciprocal calibration, (2) stable simple-record
-    completeness, (3) APF-complete composite closure.
+    Tier 4 [P_structural_reading | FENCE-ABSENCE INVENTORY ONLY -- absence
+    of a fence is not presence of a derivation and no gate's derivation is
+    certified here].
 
-    Composes the three Phase 22c derivation theorems:
-      Gate (1): T_closed_ledger_reciprocity        (1.gate-(1) derived)
-      Gate (2): T_no_phantom_record_quotient       (2.gate-(2) derived)
-                + T_operational_radical_equals_jacobson (Wedderburn bridge)
-      Gate (3): T_split_closed_world_complex_selection (3.gate-(3) derived)
+    SCOPE CORRIGENDUM 2026-08-30 (cold repair seat; corrected by a cold
+    fix seat the same day after a blinded audit).  This check previously
+    composed four constituents, asserted each passed, and returned that
+    the three reviewer-flagged gates "are NOT independent postulates; they
+    are joint consequences of a single deeper APF primitive -- closed-world
+    ledger conservation + no-phantom-records", and that this "repositions
+    APF: it derives what reconstruction programs postulate".  THAT IS NOT
+    WHAT EXECUTES, and the three-gate reading is WITHDRAWN.
 
-    All three pass simultaneously on related-but-distinct finite
-    witnesses, certifying that the composition is consistent (no
-    finite witness is required to satisfy all three at once for
-    the *abstract* composition; the meta-theorem only asserts the
-    three derivations hold given the same closed-world-completeness
-    primitive).
+    THE DEFECT, exactly.  Gate (1) -- reciprocal calibration -> self-
+    duality + adjoint -- was derived here THROUGH
+    check_T_closed_ledger_reciprocity, whose own derivation claim was
+    WITHDRAWN by SCOPE CORRIGENDUM 2026-07-29 (external audit, MAJOR,
+    accepted).  That check's grade fell to [P_math | ALGEBRAIC IDENTITY
+    ONLY ...] and its returned record carries a may_not_cite tuple whose
+    first entry is "reciprocal calibration is derived" -- the exact
+    reading this composite was returning.  The consumption was BY
+    VERDICT: the composite read gate1["passed"], and after the
+    corrigendum that field is True precisely when the two DISCLOSURE legs
+    succeed in exhibiting the vacuity (its pass condition is
+    identity_is_definitional and holds_on_negative_costs).  So the
+    composite was reading "gate (1) is derived" off a verdict whose
+    meaning is "gate (1)'s derivation was confirmed definitional".
+    Recorded, unrepaired, by the Occupant Alignment charter's cold head
+    on 2026-08-30 (that charter's section 2.3); repaired here.
+
+    AND THE FIRST REPAIR REPEATED A SOFTER FORM OF IT.  That repair
+    classified a gate DERIVED on the ABSENCE of a may_not_cite bar, and
+    called the result a derivation inventory.  None of the three surviving
+    constituents carries a may_not_cite field at all, so the classification
+    was fence-absence wearing a derivation's name; and gate (3)'s
+    constituent T_split_closed_world_complex_selection discloses IN ITS OWN
+    RECORD that "BOTH LEG VERDICTS HERE ARE LITERALS; this check composes
+    them and computes neither", which a bar-only detector cannot see.  Both
+    are corrected here: the predicate now also reads the constituent's own
+    in-record disclosure, and everything the check returns is named for
+    what the predicate does.  Gate (3) is therefore counted FENCED.  The
+    derivations it composes live in
+    check_T_split_composite_gates_tensor_closure and
+    check_T_split_composite_gates_tomographic_locality, which this check
+    does NOT consume and does not audit.
+
+    NO BANKED SOURCE WAS FOUND FOR GATE (1) -- a stated search result,
+    NOT a universal this check certifies, and no leg here computes it.  A
+    subsumption search on 2026-08-30 (grep over apf/ for self-duality,
+    adjoint and reciprocal-calibration derivations, plus a read of every
+    candidate found) returned no banked check deriving reciprocal
+    calibration, self-duality or the adjoint from any APF primitive.  Its
+    method and date are given so a later seat can re-run it rather than
+    inherit it.  The sibling
+    check_T_closed_read_write_self_duality carries the same 2026-07-29
+    corrigendum for the same reason, and
+    tomographic_completeness_countermodel.py records in its own
+    may-not-cite list that the simplex-cone self-duality does NOT supply
+    the matching effect.  Gate (1) is therefore NOT re-derived here, and
+    it is NOT demoted to a named premise either: a premise would license
+    downstream consumption, and there is nothing here to license.
+
+    WHAT EXECUTES NOW.  Seven legs:
+
+      (i)   the three surviving constituents pass on their own contracts;
+      (ii)  the gate-(1) withdrawal is read BY VALUE off that
+            constituent's own returned record -- its may_not_cite tuple
+            and its epistemic grade -- so removing the corrigendum
+            upstream reddens THIS check instead of silently restoring the
+            old reading;
+      (iii) an INDEPENDENT recomputation rather than a quotation, in
+            EXACT RATIONAL ARITHMETIC: on a family of ledger witnesses
+            spanning both sign regimes, the "closed-world identity" is an
+            exact equality on every member when t := p + m and an exact
+            inequality on every one of the same members when t is ONE
+            independently supplied datum, and each observed gap is tied
+            by value to a closed form that does not mention the pairing
+            at all.  No tolerance and no floor appears in this leg.  The
+            equality holds by ALGEBRA, which is the content: it is an
+            identity of any real inner-product space, not a constraint
+            any ledger had to satisfy, so this clause fails only on a
+            mis-implemented recomputation and that is what it is for.
+            The closed-form tie clause is an identity too, in
+            (p, m, t_independent), so it cannot fail on witness data
+            either; its work is catching a
+            mis-implementation of the INDEPENDENT branch, which the
+            equality clause above cannot see;
+      (iv)  the FENCE-ABSENCE inventory is COMPUTED, not declared: a gate
+            counts UNFENCED iff every constituent passes AND no
+            constituent bars a derivation reading in its structured
+            may_not_cite field AND no constituent discloses in its own
+            key_result or summary that its verdicts are literals.  The
+            computed partition is enforced set-exactly in both directions,
+            and the surviving constituents' VERDICTS are pinned
+            separately from the classification;
+      (v)   the two computed sets are tied BY VALUE to the detectors that
+            produced them, gate by gate, rather than only to the literal
+            sets leg (iv) pins: a gate counted UNFENCED must have every
+            constituent passing and no constituent fenced, and a gate
+            counted FENCED must have a constituent that is fenced or one
+            that does not pass.  The classification branch and the two
+            literals are three sites carrying one convention, and both
+            halves of this were EXHIBITED rather than asserted: with this
+            leg absent a coordinated relabel of those three sites returns
+            the INVERTED inventory with every other leg green, and with it
+            present that same edit raises here (Working Rule 11's
+            corollary: tie by value, not by verdict);
+      (vi)  controls on both detectors: each has a live positive, each is
+            shown NOT to fire on the other's evidence, and synthetic
+            records with an unrelated fence, with no fence at all, and
+            with derivation prose outside the structured field are all
+            classified NOT fenced -- so the detectors discriminate rather
+            than refusing everything;
+      (vii) a self-read of the returned record for the R1@2026-08-30
+            name/content disclosure (append-and-record per D7@2026-08-08).
+
+    Leg (iv) is a tripwire in BOTH directions, and the two set-exact
+    assertions back each other up.  In the LIFT direction leg (ii) raises
+    first -- it reads the upstream bar directly -- and leg (iv)'s growth
+    branch is the backstop that fires if leg (ii) is ever weakened.  In
+    the SHRINK direction leg (i) raises if a surviving constituent stops
+    passing, and leg (iv) fires if a constituent of a gate counted
+    UNFENCED acquires a fence.  Either way the check goes RED and forces
+    a deliberate re-cut rather than a silent re-classification.
+
+    STANDING LIMIT, disclosed and not assumed away (D7@2026-08-08): the
+    leg inventory below certifies that a declared leg RAN, not that it
+    COULD have failed.  Neutering a leg's assertions while leaving its
+    append in place is invisible to it.
+
+    SCOPE.  Every constituent runs on ONE small finite witness apiece.
+    No universal may be stated from any of them.  This check does not
+    audit whether any constituent derives what it claims; it reads
+    verdicts, structured fences and in-record disclosures.
+
+    NAME NOTICE -- RULED R1@2026-08-30.  The registry key and the returned
+    name still read "derives_three_gates", and this check does not certify
+    that.  Ethan ruled the key KEEPS its spelling for now with the mismatch
+    disclosed in the returned record (the rename is queued for the next
+    count-moving landing, when the key-set sha moves anyway).  The
+    disclosure lives in the returned record's name_notice field and leg
+    (vii) reads it back off the record before returning it.  That field
+    also records the one respect in which what is returned here departs
+    from R1's own wording; it is stated there and not repeated here.
+
+    SIBLING, FENCED ELSEWHERE.  check_T_gate_certified_hilbert_born_pipeline
+    consumes the same withdrawn constituent by verdict and is FENCED by
+    R2@2026-08-30 until repaired.  It is neither consumed nor repaired
+    here; that fence is recorded in the decision doc, not in its code.
+
+    MAY NOT BE CITED AS: "closed-world completeness derives the three
+    regime gates"; "the three gates are not independent postulates"; "APF
+    derives what reconstruction programs postulate"; "reciprocal
+    calibration is derived"; "self-duality is derived from
+    no-hidden-debt"; "the Barnum-Wilce axiom is discharged"; "a gate
+    counted UNFENCED here is derived"; "this check audits its
+    constituents' derivations"; or for any universal over interfaces,
+    cones or ledgers.
     """
-    # Compose the three derivations
-    gate1_result = check_T_closed_ledger_reciprocity()
+    from fractions import Fraction as _Q
+
+    _DECLARED_LEGS = (
+        "surviving_constituents_pass",
+        "gate1_withdrawal_read_by_value",
+        "gate1_identity_recomputed_exactly",
+        "fence_absence_inventory_computed_set_exact",
+        "partition_tied_to_detectors_by_value",
+        "detector_controls",
+        "name_notice_self_read",
+    )
+    legs_run = []
+    fail_reasons = []
+
+    # ---- constituents --------------------------------------------------
+    gate1_result   = check_T_closed_ledger_reciprocity()
     gate2_quotient = check_T_no_phantom_record_quotient()
     gate2_jacobson = check_T_operational_radical_equals_jacobson()
-    gate3_result = check_T_split_closed_world_complex_selection()
+    gate3_result   = check_T_split_closed_world_complex_selection()
 
-    # All four constituent results must pass
-    constituents = [gate1_result, gate2_quotient, gate2_jacobson, gate3_result]
-    for r in constituents:
-        assert r["passed"], f"constituent {r['name']} did not pass"
+    # ---- LEG (i): the three SURVIVING constituents ---------------------
+    # gate1_result is deliberately NOT asserted here.  Its "passed" field
+    # means its disclosure legs exhibited the vacuity; it is evidence
+    # about the withdrawal, not about a derivation.  DISCLOSED, not
+    # machined around: that convention is not executably guarded --
+    # re-adding gate1_result to this tuple would be silent, and it is the
+    # regression path of the defect the corrigendum above records.
+    for r in (gate2_quotient, gate2_jacobson, gate3_result):
+        assert r["passed"], \
+            f"surviving constituent {r['name']} did not pass"
+    legs_run.append("surviving_constituents_pass")
 
-    # Map back to the three reviewer-flagged regime gates
-    derivation_map = {
-        "gate_1_reciprocal_calibration":   gate1_result["name"],
-        "gate_2_stable_simple_completeness": (
-            gate2_quotient["name"] + " + " + gate2_jacobson["name"]
-        ),
-        "gate_3_apf_complete_composite_closure": gate3_result["name"],
+    # ---- LEG (ii): the withdrawal, read BY VALUE off the constituent ---
+    _GATE1_BAR = "reciprocal calibration is derived"
+    g1_bars = tuple(gate1_result.get("may_not_cite", ()))
+    assert _GATE1_BAR in g1_bars, (
+        "gate (1)'s constituent must still carry its 2026-07-29 "
+        f"may-not-cite bar {_GATE1_BAR!r}; got {g1_bars}.  This pin is "
+        "an exact literal, so a BENIGN REWORD that still fences reddens "
+        "here too: read the bars above before concluding the fence is "
+        "gone.  If the bar has been reworded, or lifted because a real "
+        "derivation now exists, THIS composite must be re-cut "
+        "deliberately -- it may not be silently re-promoted to the "
+        "withdrawn three-gate reading")
+    g1_grade = str(gate1_result.get("epistemic", ""))
+    assert "ALGEBRAIC IDENTITY ONLY" in g1_grade.upper(), (
+        "gate (1)'s constituent must still carry the 2026-07-29 "
+        f"corrigendum grade; got {g1_grade!r}")
+    legs_run.append("gate1_withdrawal_read_by_value")
+
+    # ---- LEG (iii): recompute the gate-(1) content INDEPENDENTLY -------
+    # Not a quotation of the sibling's disclosure legs: this recomputes
+    # the identity on its own witness family, so an upstream edit that
+    # weakened those legs would not weaken this one.  Exact rationals
+    # throughout, so equality and inequality are both exact and this leg
+    # contains no tolerance and no floor.
+    def _dot(u, v):
+        return sum(u[i] * v[i] for i in range(len(u)))
+
+    def _vec(*xs):
+        return tuple(_Q(x) for x in xs)
+
+    witnesses = (
+        (_vec(3, 5, 2),                     _vec(4, 1, 6)),
+        (_vec(-3, 5, -2),                   _vec(4, -1, 6)),
+        (_vec(0, 0, 0),                     _vec(7, -2, 1)),
+        (_vec(_Q(3, 2), _Q(-1, 2), 11),     _vec(-8, _Q(13, 4), 0)),
+    )
+    t_independent = _vec(9, 9, 9)
+    sign_regimes = set()
+    holds_when_t_defined = 0
+    fails_when_t_independent = 0
+    closed_form_ties = 0
+    independent_gaps = []
+    for p, m in witnesses:
+        # "carries a negative cost" == a negative entry on EITHER side.
+        # Spelled over the two vectors separately, not over a tuple
+        # expression that could be read as their element-wise sum.
+        sign_regimes.add("neg" if (min(p) < 0 or min(m) < 0) else "nonneg")
+        t = tuple(p[i] + m[i] for i in range(3))
+        lhs = _dot(p, m)
+        rhs_defined = (_dot(t, t) - _dot(p, p) - _dot(m, m)) / 2
+        if lhs == rhs_defined:
+            holds_when_t_defined += 1
+        rhs_independent = (_dot(t_independent, t_independent)
+                           - _dot(p, p) - _dot(m, m)) / 2
+        gap = abs(lhs - rhs_independent)
+        independent_gaps.append(gap)
+        if gap != 0:
+            fails_when_t_independent += 1
+        # The gap has a closed form that does not mention the pairing at
+        # all: half the difference of the two squared norms.  Computing it
+        # a second way and tying BY VALUE catches an edit to the
+        # independent branch that the equality clause above cannot see.
+        if gap == abs(_dot(t, t) - _dot(t_independent, t_independent)) / 2:
+            closed_form_ties += 1
+
+    min_independent_gap = min(independent_gaps)
+    assert sign_regimes == {"neg", "nonneg"}, (
+        "the witness family must span BOTH sign regimes -- an all-non-"
+        "negative family probes no positivity premise and this leg would "
+        f"exhibit nothing; got {sorted(sign_regimes)}")
+    assert holds_when_t_defined == len(witnesses), (
+        "the identity must hold EXACTLY on every witness when t := p + m "
+        "-- that is what makes it an identity rather than a constraint; "
+        f"held on {holds_when_t_defined} of {len(witnesses)}")
+    assert fails_when_t_independent == len(witnesses), (
+        "the identity must fail on every one of the SAME witnesses when t "
+        "is supplied independently -- that is the disclosure; failed on "
+        f"{fails_when_t_independent} of {len(witnesses)}")
+    assert closed_form_ties == len(witnesses), (
+        "each observed gap must equal its closed form (half the "
+        "difference of the two squared norms) computed independently of "
+        f"the pairing; tied on {closed_form_ties} of {len(witnesses)}")
+    legs_run.append("gate1_identity_recomputed_exactly")
+
+    # ---- LEG (iv): the FENCE-ABSENCE inventory, COMPUTED ---------------
+    def _bars_a_derivation_reading(result):
+        """Read the constituent's own STRUCTURED fence: an entry of its
+        may_not_cite tuple containing the substring "derived", matched
+        case-insensitively.  This reads that field only; it does not
+        infer a fence from prose."""
+        return any("derived" in str(b).lower()
+                   for b in tuple(result.get("may_not_cite", ())))
+
+    # Some constituents carry no may_not_cite field at all and disclose a
+    # non-derivation IN PROSE inside their own returned record.  Reading
+    # only the structured field classifies those as unfenced, which is the
+    # defect this repair exists to remove.  LIMIT, disclosed and not
+    # machined around: the clause below is a fixed-phrase substring test
+    # over the constituent's OWN returned strings.  A constituent that
+    # discloses the same thing in other words is missed, and NO
+    # completeness over disclosure spellings is claimed.  Working Rule 17
+    # applies if anyone tries to generalise it beyond this check.
+    _LITERAL_DISCLOSURE_PHRASES = (
+        "verdicts here are literals",
+        "computes neither",
+        "this is a lookup",
+    )
+
+    def _discloses_a_non_derivation(result):
+        blob = " ".join(str(result.get(f, ""))
+                        for f in ("key_result", "summary")).lower()
+        return any(ph in blob for ph in _LITERAL_DISCLOSURE_PHRASES)
+
+    def _is_fenced(result):
+        return (_bars_a_derivation_reading(result)
+                or _discloses_a_non_derivation(result))
+
+    gate_constituents = {
+        "gate_1_reciprocal_calibration":         (gate1_result,),
+        "gate_2_stable_simple_completeness":     (gate2_quotient,
+                                                  gate2_jacobson),
+        "gate_3_apf_complete_composite_closure": (gate3_result,),
     }
+    assert len(gate_constituents) == 3, \
+        f"three gates expected; got {len(gate_constituents)}"
 
-    # Verify each gate has a derivation entry
-    assert len(derivation_map) == 3
-    for k, v in derivation_map.items():
-        assert v, f"gate {k} has no derivation"
+    unfenced = set()
+    fenced = set()
+    verdict_inventory = {}
+    for gate, parts in gate_constituents.items():
+        all_pass = all(r["passed"] for r in parts)
+        verdict_inventory[gate] = all_pass
+        any_fenced = any(_is_fenced(r) for r in parts)
+        (unfenced if (all_pass and not any_fenced) else fenced).add(gate)
 
-    return {
+    # The surviving constituents' VERDICTS are pinned here independently
+    # of the fence classification.  Gate (1) is deliberately not pinned
+    # in either direction: nothing here consumes its verdict.
+    assert {g for g, ok in verdict_inventory.items() if ok} >= {
+        "gate_2_stable_simple_completeness",
+        "gate_3_apf_complete_composite_closure"}, (
+        "a surviving constituent stopped passing; got "
+        f"{sorted(verdict_inventory.items())}")
+
+    assert unfenced == {"gate_2_stable_simple_completeness"}, (
+        "the computed UNFENCED set moved in one direction or the other.  "
+        "UNFENCED is a fence-absence reading and never a derivation "
+        "claim; if this set has changed, THIS check must be re-cut "
+        "deliberately with its own audit rather than left to re-classify "
+        f"itself; got {sorted(unfenced)}")
+    assert fenced == {"gate_1_reciprocal_calibration",
+                      "gate_3_apf_complete_composite_closure"}, \
+        f"the computed FENCED set moved; got {sorted(fenced)}"
+    assert len(unfenced) + len(fenced) == len(gate_constituents), \
+        "every gate must be classified exactly once"
+    legs_run.append("fence_absence_inventory_computed_set_exact")
+
+    # ---- LEG (v): the partition, tied BY VALUE to the detectors --------
+    # The classification branch above and the two set-exact literals are
+    # three sites carrying one convention.  Tie each set's membership to
+    # the detector values gate by gate: a coordinated relabel of those
+    # three sites then raises HERE rather than returning an inverted
+    # inventory green, which is what it does with this leg removed.  Each
+    # clause names its own cause: a gate lands in FENCED either because a
+    # constituent is fenced or because one does not pass, and those are
+    # different events.
+    for _g in sorted(unfenced):
+        _parts = gate_constituents[_g]
+        assert all(r["passed"] for r in _parts), (
+            "a gate in the UNFENCED set has a constituent that does not "
+            f"pass: {_g}")
+        assert not any(_is_fenced(r) for r in _parts), (
+            f"a gate in the UNFENCED set has a FENCED constituent: {_g}")
+    for _g in sorted(fenced):
+        _parts = gate_constituents[_g]
+        assert (any(_is_fenced(r) for r in _parts)
+                or not all(r["passed"] for r in _parts)), (
+            "a gate in the FENCED set has neither a fenced constituent "
+            f"nor a constituent that fails to pass: {_g}")
+    legs_run.append("partition_tied_to_detectors_by_value")
+
+    # ---- LEG (vi): controls on BOTH detectors --------------------------
+    # A detector that fenced everything would produce the same partition
+    # for the wrong reason; two detectors that fired on each other's
+    # evidence would not be two detectors.
+    assert _bars_a_derivation_reading(gate1_result), \
+        "positive control: gate (1)'s constituent IS barred"
+    assert _discloses_a_non_derivation(gate3_result), \
+        "positive control: gate (3)'s constituent DOES disclose literals"
+    assert not _discloses_a_non_derivation(gate1_result), (
+        "discrimination control: the disclosure detector must not fire on "
+        "the barred constituent's prose")
+    assert not _bars_a_derivation_reading(gate3_result), (
+        "discrimination control: the bar detector must not fire on the "
+        "disclosing constituent")
+    assert not _is_fenced(
+        {"may_not_cite": ("this supports no matching-effect clause",)}), (
+        "negative control: an unrelated fence must NOT read as fencing a "
+        "derivation")
+    assert not _is_fenced({}), \
+        "negative control: a record with no fence must NOT read as fenced"
+    assert not _is_fenced({"key_result": "a fully derived structural "
+                                         "result; every verdict computed"}), (
+        "negative control: the word 'derived' in ordinary prose OUTSIDE "
+        "the structured field must NOT read as a fence")
+    legs_run.append("detector_controls")
+
+    record = {
         "name": "T_closed_world_completeness_derives_three_gates",
-        "passed": True,
+        "passed": None,
         "tier": 4,
-        "epistemic": "P_structural_reading",
+        "epistemic": (
+            "P_structural_reading | FENCE-ABSENCE INVENTORY ONLY -- "
+            "absence of a fence is not presence of a derivation and no "
+            "gate's derivation is certified here"),
         "key_result": (
-            "All three reviewer-flagged regime gates (reciprocal "
-            "calibration, stable simple-record completeness, APF-"
-            "complete composite closure) derived from closed-world-"
-            "completeness primitive via 4 constituent checks; "
-            "v5.43+v5.45 unbundling certified"
+            f"FENCE-ABSENCE INVENTORY: {len(unfenced)} of "
+            f"{len(gate_constituents)} regime gates UNFENCED.  UNFENCED "
+            f"MEANS ONLY that every constituent passes and that none of "
+            f"them bars a derivation reading in its may_not_cite or "
+            f"discloses in its own record that its verdicts are literals; "
+            f"absence of a fence is NOT presence of a derivation and no "
+            f"leg here computes one.  UNFENCED: {tuple(sorted(unfenced))} "
+            f"-- constituent grades read by value: "
+            f"{gate2_quotient['epistemic']!r} and "
+            f"{gate2_jacobson['epistemic']!r}.  FENCED: "
+            f"{tuple(sorted(fenced))} -- gate (1)'s constituent "
+            f"T_closed_ledger_reciprocity took a SCOPE CORRIGENDUM on "
+            f"2026-07-29 and its own may_not_cite bars {_GATE1_BAR!r}; "
+            f"gate (3)'s constituent T_split_closed_world_complex_"
+            f"selection discloses in its own record that its leg verdicts "
+            f"are literals which it composes and computes neither of.  "
+            f"Both read BY VALUE off those records.  Recomputed here in "
+            f"exact rational arithmetic: the closed-world identity holds "
+            f"on {holds_when_t_defined}/{len(witnesses)} witnesses when "
+            f"t := p + m and fails on {fails_when_t_independent}/"
+            f"{len(witnesses)} of the same witnesses when t is ONE "
+            f"independently supplied datum (smallest gap "
+            f"{min_independent_gap} exactly) -- an identity, not a "
+            f"constraint.  The three-gate "
+            f"reading is WITHDRAWN and is NOT certified here."
+        ),
+        "fence_absence_inventory": {
+            "predicate": (
+                "UNFENCED iff every constituent passes AND none bars a "
+                "derivation reading in its structured may_not_cite AND "
+                "none discloses in its own key_result or summary that its "
+                "verdicts are literals.  This is fence-absence; it is not "
+                "a derivation and it is not an audit of one."),
+            "unfenced": tuple(sorted(unfenced)),
+            "fenced": tuple(sorted(fenced)),
+            "gate_1_fence_record": (
+                "SCOPE CORRIGENDUM 2026-07-29 (external audit, MAJOR, "
+                "accepted), in check_T_closed_ledger_reciprocity -- "
+                "structured may_not_cite bar"),
+            "gate_3_fence_record": (
+                "in-record disclosure by check_T_split_closed_world_"
+                "complex_selection that its leg verdicts are literals; "
+                "the derivations it composes live in "
+                "check_T_split_composite_gates_tensor_closure and "
+                "check_T_split_composite_gates_tomographic_locality, "
+                "which this check does not consume and does not audit"),
+            "detector_limit": (
+                "BOTH halves are fixed-substring tests over a "
+                "constituent's own returned strings: the bar half matches "
+                "the substring 'derived' (case-insensitively) in the "
+                "structured may_not_cite field, the disclosure half "
+                "matches fixed phrases in "
+                "key_result and summary.  A fence or a disclosure in "
+                "other words is missed by the half that would have to see "
+                "it, and no completeness over spellings is claimed for "
+                "either half"),
+        },
+        "legs_run": tuple(legs_run),
+        "fail_reasons": tuple(fail_reasons),
+        "name_notice": (
+            "the registry key still reads 'derives_three_gates' and this "
+            "check does not certify that; R1@2026-08-30 RULED that the "
+            "key keeps its spelling for now with the mismatch disclosed "
+            "here, and queued the rename for the next count-moving "
+            "landing.  DISCLOSED SUPERSESSION, pending Ethan's eyes at "
+            "lift: that ruling's own words describe the repair as a "
+            "gate-DERIVATION inventory over two of the three gates.  "
+            "Those words describe the first repair's shape.  A blinded "
+            "audit found that predicate awarded DERIVED on the mere "
+            "ABSENCE of a fence, so what is audited and returned here is "
+            "a FENCE-ABSENCE inventory instead.  The departure is in "
+            "the conservative direction and is recorded here rather than "
+            "by editing the ruling"),
+        "may_not_cite": (
+            "closed-world completeness derives the three regime gates",
+            "the three gates are not independent postulates",
+            "APF derives what reconstruction programs postulate",
+            "reciprocal calibration is derived",
+            "self-duality is derived from no-hidden-debt",
+            "the Barnum-Wilce axiom is discharged",
+            "a gate counted UNFENCED here is derived",
+            "this check audits its constituents' derivations",
+            "any universal over interfaces, cones or ledgers",
         ),
         "summary": (
-            "Headline meta-theorem of the v5.43+v5.45 reviewer-"
-            "response unbundling: the three gates that an external "
-            "auditor flagged as Barnum-Wilce/Hardy/CDP/Masanes-"
-            "Mueller-class axioms are NOT independent postulates; "
-            "they are joint consequences of a single deeper APF "
-            "primitive -- closed-world ledger conservation + "
-            "no-phantom-records.  The composition of the four "
-            "Phase 22c derivation checks (closed-ledger reciprocity "
-            "for gate 1; no-phantom-record quotient + operational-"
-            "radical-equals-Jacobson for gate 2; split closed-world "
-            "complex selection for gate 3) certifies the unbundling "
-            "structurally.  This repositions APF: it derives what "
-            "reconstruction programs postulate."
+            "SCOPE CORRIGENDUM 2026-08-30.  What executes is a computed "
+            "FENCE-ABSENCE inventory over the three regime gates: which "
+            "of them have constituents that pass and that neither bar a "
+            "derivation reading nor disclose in their own records that "
+            "their verdicts are literals.  Absence of a fence is not "
+            "presence of a derivation, and no leg here derives anything "
+            "for any gate.  The prior returned reading -- that the three "
+            "reviewer-flagged gates are joint consequences of one deeper "
+            "APF primitive, and that this repositions APF as deriving "
+            "what reconstruction programs postulate -- is WITHDRAWN: it "
+            "derived gate (1) through T_closed_ledger_reciprocity BY "
+            "VERDICT, and that check's own derivation claim had been "
+            "withdrawn on 2026-07-29, its pass field meaning only that "
+            "its disclosure legs exhibited the vacuity.  The first repair "
+            "of this check awarded DERIVED on the absence of a fence and "
+            "named the result a derivation inventory; that name is "
+            "corrected here and the predicate now also reads a "
+            "constituent's own in-record disclosure, which moves gate (3) "
+            "into the fenced set.  A subsumption search on 2026-08-30 "
+            "found no banked check deriving gate (1) from any APF "
+            "primitive -- a stated search result with its method recorded "
+            "in the docstring, not a universal this check computes and "
+            "not a leg -- so gate (1) is neither re-derived nor demoted "
+            "to a named premise here; a premise would license downstream "
+            "consumption and there is nothing to license.  The upstream "
+            "withdrawal is read BY VALUE, the identity is recomputed in "
+            "exact rational arithmetic on a both-sign witness family, and "
+            "the partition is enforced set-exactly in both directions, so "
+            "a future lift of the upstream fence reddens this check and "
+            "forces a deliberate re-cut instead of a silent "
+            "re-classification."
         ),
     }
+
+    # ---- LEG (vii): self-read of the R1@2026-08-30 disclosure ---------
+    # R1 made the in-record disclosure the condition of keeping the key
+    # spelling.  Read it back off the record that is about to be
+    # returned.  Append-and-record.
+    _notice = str(record.get("name_notice", ""))
+    if "derives_three_gates" not in _notice or "R1@2026-08-30" not in _notice:
+        fail_reasons.append(
+            "the R1@2026-08-30 name/content disclosure is missing or "
+            f"unrecognisable in the returned record; got {_notice!r}")
+    legs_run.append("name_notice_self_read")
+
+    # ---- leg inventory (D7@2026-08-08: append and record, never raise) -
+    # Standing limit, disclosed in the docstring: an append certifies that
+    # a declared leg RAN, not that it COULD have failed.
+    missing = set(_DECLARED_LEGS) - set(legs_run)
+    extra = set(legs_run) - set(_DECLARED_LEGS)
+    if missing or extra:
+        fail_reasons.append(
+            f"leg inventory mismatch: missing={sorted(missing)}, "
+            f"extra={sorted(extra)}")
+    if len(legs_run) != len(set(legs_run)):
+        fail_reasons.append(f"a leg was recorded twice: {legs_run}")
+
+    record["legs_run"] = tuple(legs_run)
+    record["fail_reasons"] = tuple(fail_reasons)
+    record["passed"] = not fail_reasons
+    return record
 
 
 # =====================================================================
@@ -1749,7 +2248,7 @@ _CHECKS = {
 
 
 def register(registry):
-    """Register closed-world-completeness derivation chain into the
+    """Register the closed-world-completeness chain into the
     global bank.  Phase 22c lands seven new bank checks tied to the
     Paper 5 Supplement v5.97 reviewer-response unbundling pass.
     """
@@ -1793,35 +2292,46 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "The Phase 22c unbundling: the three externally-flagged 'regime "
-            "gates' of the quantum-reconstruction chain (reciprocal calibration "
-            "-> self-duality + adjoint; stable simple-record completeness; finite "
-            "composite closure selecting C over R and H) are DERIVED from the "
-            "deeper closed-world primitive of ledger conservation + no-phantom- "
+            "The Phase 22c unbundling ATTEMPT, and its 2026-08-30 scope-down. "
+            "The three externally-flagged 'regime gates' of the quantum- "
+            "reconstruction chain (reciprocal calibration -> self-duality + "
+            "adjoint; stable simple-record completeness; finite composite "
+            "closure selecting C over R and H) were to follow from the deeper "
+            "closed-world primitive of ledger conservation + no-phantom- "
             "records, exercised on small finite witnesses across 14 bank- "
-            "registered checks. Field selection is the sharp result: H is ruled "
-            "out by tensor closure M_n(H) x_R M_m(H) ~= M_4nm(R) "
-            "(check_T_split_composite_gates_tensor_closure, epistemic P_math), R "
-            "by the Wootters-Hardy tomographic-locality parameter count "
-            "(check_T_split_composite_gates_tomographic_locality, P_math), and "
-            "the composed check_T_split_closed_world_complex_selection lands at "
-            "P_regime+P_math -- the unbundled sharper form of "
-            "check_T_field_selection_complex. Machine grades span "
-            "P_regime+accounting (check_T_closed_ledger_reciprocity, "
-            "check_T_closed_read_write_self_duality), P_structural_reading "
-            "(check_T_no_phantom_record_quotient, "
-            "check_T_operational_radical_equals_jacobson, "
-            "check_T_capacity_only_distinct_from_structural_ijc, "
-            "check_T_gate_certified_hilbert_born_pipeline, "
-            "check_T_closed_world_completeness_derives_three_gates), P_math "
-            "(check_T_positive_cone_quotient_compatible, both split gates, "
-            "check_T_constructive_commuting_realization), P_regime "
-            "(check_T_preservation_ijc_obstruction), and P_regime+P_math (complex "
-            "selection, check_T_adjoint_closure_reversible_lock_cycles). Scope is "
-            "closed-world by construction: finite witnesses exercising the "
-            "derivation chain of Paper 5 Supplement v5.97, not an operational- "
-            "axioms reconstruction billed from outside. "
+            "registered checks. THAT THREE-GATE DERIVATION READING IS "
+            "WITHDRAWN, and this declaration does not assert it. The gate-(1) "
+            "half took a SCOPE CORRIGENDUM on 2026-07-29 (external audit, "
+            "MAJOR, accepted): what executes in check_T_closed_ledger_"
+            "reciprocity is an algebraic identity on a witness that defines "
+            "its own third datum, and that check's own may-not-cite list bars "
+            "'reciprocal calibration is derived'; the sibling "
+            "check_T_closed_read_write_self_duality carries the same "
+            "corrigendum. The composite "
+            "check_T_closed_world_completeness_derives_three_gates -- whose "
+            "registry key keeps a spelling it does not certify, disclosed in "
+            "its own returned record under R1@2026-08-30 -- now computes a "
+            "FENCE-ABSENCE inventory: which gates have constituents that pass "
+            "and that neither bar a derivation reading nor disclose in their "
+            "own records that their verdicts are literals. ABSENCE OF A FENCE "
+            "IS NOT PRESENCE OF A DERIVATION; the inventory figure lives in "
+            "that check's returned record and is deliberately not restated "
+            "here. H is ruled out by tensor closure "
+            "M_n(H) x_R M_m(H) ~= M_4nm(R) "
+            "(check_T_split_composite_gates_tensor_closure), R by the "
+            "Wootters-Hardy tomographic-locality parameter count "
+            "(check_T_split_composite_gates_tomographic_locality), and the "
+            "composed check_T_split_closed_world_complex_selection discloses "
+            "in its own record that both its leg verdicts are literals which "
+            "it composes and computes neither of. Machine grades are NOT "
+            "restated here: they moved under the 2026-07-29 and 2026-08-30 "
+            "corrigenda, a hand-maintained grade list goes stale against the "
+            "records it summarises, and each grade is read off the check's "
+            "own returned record. Scope is closed-world by construction: "
+            "finite witnesses, no universal over interfaces, cones or "
+            "ledgers, and not an operational-axioms reconstruction billed "
+            "from outside. "
         ),
-        "note": "Wave 7; flag: the header docstring grade table is STALE vs the machine fields -- it lists gates (4)-(7) as [P_regime + accounting] and (2)-(3) as [P_structural], while the fields give P_math for (4)-(6), P_regime+P_math for (7), and P_structural_reading for (2)-(3); fields win.",
+        "note": "Wave 7; claim text re-cut 2026-08-30 with the gate-(1) scope-down (R1@2026-08-30): the three-gate derivation reading is WITHDRAWN and the composite check returns a fence-absence inventory, so this declaration asserts no derivation for any gate. It states no machine grade either -- the grades moved under the 2026-07-29 and 2026-08-30 corrigenda and are read off the checks' own returned records; the header grade table this note used to flag as stale was deleted in the same pass. The 2026-07-29 corrigendum on check_T_closed_ledger_reciprocity and check_T_closed_read_write_self_duality is the source of the withdrawal; check_T_gate_certified_hilbert_born_pipeline consumes the same withdrawn constituent and is FENCED by R2@2026-08-30 until repaired.",
     },
 )
