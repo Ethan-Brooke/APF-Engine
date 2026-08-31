@@ -130,7 +130,11 @@ def check_M():
     trivially by a single subsystem with capacity C, and no physics
     can emerge (no locality, no gauge structure, no particles).
 
-    Used only by L_loc (locality derivation). M + NT + A1 -> locality.
+    Used only by L_loc (locality derivation). M + BW + A1 -> locality.
+    The third name read NT until NT-BW@2026-08-30 retired that input and
+    its content passed to BW.  This sentence is a pointer at a sibling's
+    derivation; it executes nothing here, and the rename moves no
+    premise, no predicate and no grade.
 
     STATUS: POSTULATE -- not derived from A1.  Multiplicity is a
     CONSTITUTIVE PRESUPPOSITION of A1, not a consequence of it.
@@ -3630,7 +3634,7 @@ def check_T_M():
 def check_T_canonical():
     """T_canonical: The Canonical Object (Theorem 9.16, Paper 13 Section 9).
 
-    STATEMENT: The admissibility structure determined by A1 + M + NT is:
+    STATEMENT: The admissibility structure determined by A1 + M + BW is:
 
     I. LOCAL STRUCTURE at each interface Gamma:
        (L1) Finite capacity.  (L2) Positive granularity.
@@ -3666,6 +3670,52 @@ def check_T_canonical():
     check_T_delta_not_an_information_functional [P] (delta_calculus.py).
     The two must never be quoted side by side unfenced; a sign
     comparison between them is a category error, not a tension.
+
+    THE STATEMENT LINE AND THE RETURNED SUMMARY WERE RE-POINTED AFTER
+    v24.3.482 (2026-08-30).  Both named NT as the third input of this
+    theorem's hypothesis triple.  NT-BW@2026-08-30 retired NT as a
+    separate framework input -- "its content is subsumed by BW
+    (cost-spectrum non-degeneracy)" -- so the statement line now names
+    BW.  THIS IS A NAMING MOVE AT THE STATEMENT LEVEL AND NOTHING MORE:
+    no witness value, no proposition, no predicate and no verdict moves,
+    and the returned record differs from its predecessor in the summary
+    field alone.  Whether any leg below witnesses the renamed premise is
+    a question this pass does not open and the rename does not answer.
+    The content is not withdrawn, it is BW's; and nothing here is
+    evidence for or against the domain question the ruling fences in
+    both directions.
+
+    THE RETURNED SUMMARY'S CLOSING SENTENCE IS NOW COMPUTED, NOT
+    RESTATED, AND THAT REPAIRS A SECOND DEFECT THE RENAME ONLY EXPOSED.
+    The sentence read "All [P] from A1 + M + NT chain" -- a chain that
+    was not this record's declared dependency list, and is not that list
+    in any commit of this repository, and a grade restated as a literal.
+    It now renders this record's own epistemic field and its own
+    declared dependencies, single-sourced below and the same premises
+    the PROOF line above names (spelled there `L_eps*`, here by the
+    registry key `L_epsilon*`).  Nothing enforces that correspondence
+    either: an edit to _DEPENDENCIES below moves the rendered chain and
+    leaves the PROOF line as it stands.  The sentence's subject is this
+    record: it does not quantify over the propositions counted in the
+    sentence before it.  Editing either name moves the field and the
+    sentence together; re-typing either field as a literal at its
+    _result site diverges them again, and nothing here compares the two.
+    So the sentence is true OF THIS RECORD by construction; it is not a
+    check that the chain is the right chain, and it grades nothing.  The
+    repaired sentence names neither NT nor BW: the rename is confined to
+    the STATEMENT line above.  That line states this theorem's
+    hypothesis triple; this record's declared dependency list is a
+    different list, and this pass does not reconcile them.
+
+    NOT REPAIRED, AND NAMED RATHER THAN LEFT FOR A READER TO FIND: the
+    summary's proposition count and witness-model count are authored
+    literals, not computed from anything this function builds, and the
+    proposition count has a second authored site in the same _result
+    call -- artifacts['propositions_verified'] -- so a seat repairing
+    one must repair both.  Nothing in this pass moved either.  Computing
+    them would mean authoring a proposition inventory this record does
+    not have, which is machinery, not hygiene, and belongs to a seat
+    with its own frozen surface.
     """
     from fractions import Fraction
     from itertools import combinations
@@ -3907,10 +3957,21 @@ def check_T_canonical():
     # R6 verified: lines above (gluing of a_1, a_2 into S_star)
     # Therefore: uniqueness holds.
 
+    # Single source for the grade and the chain: the epistemic and
+    # dependencies fields below and the returned summary's closing
+    # sentence are all built from these two names, so editing a name
+    # here moves the field and the sentence together.  That is a
+    # convention of this construction and not an enforced invariant --
+    # nothing in this check compares the sentence against the fields,
+    # and re-typing either field as a literal at its _result site
+    # diverges them in one edit.
+    _EPISTEMIC = 'P'
+    _DEPENDENCIES = ['A1', 'L_epsilon*', 'L_loc', 'L_nc', 'T_Bek', 'T_tensor']
+
     return _result(
         name='T_canonical: The Canonical Object (Theorem 9.16)',
         tier=0,
-        epistemic='P',
+        epistemic=_EPISTEMIC,
         summary=(
             'Paper 13 Ãƒâ€šÃ‚Â§9. The admissibility structure is a sheaf of '
             'distinction sets with non-local cost. '
@@ -3924,13 +3985,14 @@ def check_T_canonical():
             'UNIQUENESS: sheaf determined by stalks (Adm_Gamma from A1) + '
             'restriction maps (from L_loc). R5+R6 verified => unique. '
             'Verified: 15 propositions on 2 witness models. '
-            'All [P] from A1 + M + NT chain.'
+            f'Record grade [{_EPISTEMIC}]; declared chain: '
+            f'{" + ".join(_DEPENDENCIES)}.'
         ),
         key_result=(
             'Sheaf of sets + non-local cost: sets compose (separatedness + gluing), '
             'costs do not (Omega_inter = entanglement)'
         ),
-        dependencies=['A1', 'L_epsilon*', 'L_loc', 'L_nc', 'T_Bek', 'T_tensor'],
+        dependencies=_DEPENDENCIES,
         artifacts={
             'structure': 'sheaf of distinction sets with non-local cost functional',
             'local_witness': {
@@ -7943,11 +8005,44 @@ def check_T1b():
     T1b: the algebra Alg_R{E_d} is a real *-algebra with E_d1 != E_d2
     as self-adjoint generators.  This is the bridge from operational
     order-dependence to algebraic structure.
+
+    THE FIRST LEG'S MESSAGE WAS RE-POINTED AFTER v24.3.482 (2026-08-30),
+    AND IT IS A RENAME AND NOTHING MORE.  That message named NT, a
+    separate framework input retired by NT-BW@2026-08-30: "NT is
+    formally retired as a separate framework input.  Its content is
+    subsumed by BW (cost-spectrum non-degeneracy)."  The message now
+    names BW and renders its own two values, which is the form this
+    module already carries for the identical predicate (the BW step of
+    check_T_no_IJC_no_noncommutativity).  A leg message is a
+    failure-path object, and on the FAILURE path the text `check` raises
+    with is recorded: verify_all's run_module writes str(e) into the
+    result record's `error` field, which is a field the heavy-pass
+    records carry, and bank.run_all writes it into its own per-check
+    `error`.  Those readers are named because that is where the rename
+    becomes observable.  On a PASS `check` returns without retaining the
+    message, and this module's returned records are unmoved by its
+    content.  THE PREDICATE, ITS WITNESS VALUES AND ITS
+    VERDICT DO NOT MOVE: the leg still computes eps1 != eps2 on the same
+    literals, and this record's returned fields are byte-identical
+    before and after.  This is a change in what the leg is CALLED, not
+    in what it COMPUTES.  It does not make this leg a BW witness, it
+    declares no framework input among this record's dependencies before
+    or after, and nothing here is evidence for or against the domain
+    question that ruling fences in both directions.
+
+    NOTHING GUARDS THE RETIRED NAME OUT OF A LEG MESSAGE, AND A READER
+    SHOULD NOT INFER A GATE THAT DOES NOT EXIST.  The v24.3.482 commit
+    body names the mechanism -- this lane's no-consumer control sweeps
+    for CALLS, not NAMES -- and renaming this message back at both of
+    the sites in this module that carry it leaves this module's returned
+    records unmoved and no check red.  That follows from the paragraph
+    above; it is stated because the class this pass closes by hand stays
+    invisible to the control that missed it.
     """
     # T1 witness: E_d1 != E_d2 as operators
     C = Fraction(5)
     eps1, eps2 = Fraction(2), Fraction(3)
-    check(eps1 != eps2, "NT: eps(d1) != eps(d2)")
+    check(eps1 != eps2, f"BW: eps(d1) = {eps1} != eps(d2) = {eps2}")
 
     # OR2/T_adj: generators are self-adjoint
     # In the M_2(C) witness: E_d1 = (I+sigma_z)/2, E_d2 = (I-sigma_z)/2
