@@ -22,7 +22,7 @@ MAJOR, accepted): what executes there is the polarization identity on a
 witness that DEFINES t := p + m, and its own may_not_cite bars
 "reciprocal calibration is derived".  The sibling
 check_T_closed_read_write_self_duality carries the same corrigendum.  The
-composite check_T_closed_world_completeness_derives_three_gates no longer
+composite check_T_closed_world_gate_fence_inventory no longer
 asserts the three-gate reading: it computes a FENCE-ABSENCE inventory --
 which gates have constituents that pass and that neither bar a derivation
 reading nor disclose in their own records that their verdicts are
@@ -473,10 +473,7 @@ def check_T_positive_cone_quotient_compatible():
 
     Tier 3 [P_math].  Paper 5 Supplement v5.97 section "Records and
     positivity", Theorem "Positive-cone compatibility of record
-    products and quotients".  This is the positivity gate of the
-    gate-certified pipeline; it certifies that the no-phantom-record
-    quotient does not destroy the order structure that the Born
-    trace rule will eventually need.
+    products and quotients".
 
     Witness construction.  Take A = R[x]/(x^2) (2-dim, basis {1, x})
     with the natural pointwise positivity (a + b*x is "positive"
@@ -546,13 +543,15 @@ def check_T_positive_cone_quotient_compatible():
             "cone(A/r_op) = pi(cone(A)); positivity gate licensed"
         ),
         "summary": (
-            "The positivity gate of the v5.97 gate-certified Hilbert-"
-            "Born pipeline asserts that quotienting by the operational "
-            "radical does not destroy the order structure on the "
-            "finite record algebra.  Verified on the 2-dim witness: "
-            "the cone is preserved under quotient and order-reflecting "
-            "on canonical lifts.  This is what licenses the Born trace "
-            "rule downstream: positivity survives the radical quotient."
+            "Three legs executed on the 2-dim witness A = R[x]/(x^2) "
+            "with the pointwise cone (a + b*x positive iff a >= 0), each "
+            "over the shipped elements: every shipped positive element "
+            "has a non-negative image under the quotient by the radical "
+            "direction; the canonical lift (a, 0) is positive in A at "
+            "each shipped non-negative a; and each pair of shipped "
+            "elements with non-negative images has a product with a "
+            "non-negative image.  Those three legs on that witness are "
+            "what this check computes."
         ),
     }
 
@@ -1449,109 +1448,11 @@ def check_T_capacity_only_distinct_from_structural_ijc():
 
 
 # =====================================================================
-# (12) Gate-certified Hilbert-Born pipeline (v5.65)
-# =====================================================================
-
-def check_T_gate_certified_hilbert_born_pipeline():
-    """T_gate_certified_hilbert_born_pipeline: the four gates
-    (positivity, reciprocal, radical, composite) jointly license
-    the Hilbert-Born endpoint on a finite witness.
-
-    Tier 4 [P_structural].  Paper 5 Supplement v5.97 section
-    "Gate-certification layer" + "Final gate-lock audit", Theorem
-    "Gate-certified finite Hilbert-Born pipeline".  Composite
-    meta-theorem: each individual gate is necessary; their
-    conjunction is sufficient for the matrix-sector + Born trace
-    classification.
-
-    Construction.  On a single finite witness (the 3-dim algebra
-    A = R[x]/(x^3) augmented with the standard cone and ledger),
-    compose the four gate checks:
-      Gate I  -- positivity gate: cone preserved under quotient
-                 (wraps check_T_positive_cone_quotient_compatible)
-      Gate II -- reciprocity gate: closed-ledger pairing exists
-                 (wraps check_T_closed_ledger_reciprocity)
-      Gate III -- radical gate: r_op = Jac
-                  (wraps check_T_operational_radical_equals_jacobson)
-      Gate IV  -- composite gate: split closure passes for C
-                  (wraps check_T_split_closed_world_complex_selection)
-
-    All four gates pass on the witness, so the Hilbert-Born
-    classification is licensed.  If any gate fails, the
-    classification is withheld (fallback to operational quotient).
-    """
-    # Run the four upstream gates
-    gate_I   = check_T_positive_cone_quotient_compatible()
-    gate_II  = check_T_closed_ledger_reciprocity()
-    gate_III = check_T_operational_radical_equals_jacobson()
-    gate_IV  = check_T_split_closed_world_complex_selection()
-
-    gates = {
-        "I_positivity":  gate_I,
-        "II_reciprocity": gate_II,
-        "III_radical":    gate_III,
-        "IV_composite":   gate_IV,
-    }
-
-    # All four must pass for the pipeline to license H-B
-    all_pass = all(g["passed"] for g in gates.values())
-    assert all_pass, (
-        "Gate-certified pipeline requires all four gates to pass; "
-        f"got {[(k, v['passed']) for k, v in gates.items()]}"
-    )
-
-    # The Hilbert-Born classification is licensed iff all gates pass
-    HB_licensed = all_pass
-
-    # Verify that disabling any single gate would break the chain
-    # (necessary-condition check on each gate)
-    for name in gates:
-        # Construct hypothetical "what if this gate failed"
-        modified = {k: (v["passed"] if k != name else False)
-                    for k, v in gates.items()}
-        would_license = all(modified.values())
-        assert not would_license, (
-            f"if gate '{name}' failed, H-B should not be licensed"
-        )
-
-    return {
-        "name": "T_gate_certified_hilbert_born_pipeline",
-        "passed": True,
-        "tier": 4,
-        "epistemic": "P_structural_reading",
-        "key_result": (
-            f"All four gates (positivity / reciprocity / radical / "
-            f"composite) PASS on the 3-dim canonical witness; "
-            f"Hilbert-Born endpoint licensed; necessary-condition "
-            f"check verifies any single gate failure breaks the "
-            f"chain ({len(gates)} gates audited)"
-        ),
-        "summary": (
-            "v5.65's gate-certified pipeline is the composite meta-"
-            "theorem of the framework: the four closed-world-"
-            "completeness gates -- positivity preservation, "
-            "closed-ledger reciprocity, operational-radical-equals-"
-            "Jacobson, split-composite-gates ℂ-selection -- jointly "
-            "license the Hilbert-Born matrix-sector + trace-rule "
-            "classification.  Each gate is independently necessary "
-            "(verified by the disable-one-and-test routine); their "
-            "conjunction is sufficient.  If any gate fails, the "
-            "framework stops at the corresponding fallback rather "
-            "than silently importing quantum formalism.  This is "
-            "the v5.97 supplement's 'no hidden quantum inputs' "
-            "audit: Hilbert spaces, complex amplitudes, density "
-            "matrices, and Born probabilities enter only after all "
-            "four gates have been certified."
-        ),
-    }
-
-
-# =====================================================================
 # (13) The three-gate derivation INVENTORY (scope corrigendum 2026-08-30)
 # =====================================================================
 
-def check_T_closed_world_completeness_derives_three_gates():
-    """T_closed_world_completeness_derives_three_gates: a FENCE-ABSENCE
+def check_T_closed_world_gate_fence_inventory():
+    """T_closed_world_gate_fence_inventory: a FENCE-ABSENCE
     inventory over the three formerly-axiom-class regime gates.  It
     computes which of them have constituents that pass and that neither
     bar a derivation reading nor disclose, in their own returned records,
@@ -1694,20 +1595,18 @@ def check_T_closed_world_completeness_derives_three_gates():
     audit whether any constituent derives what it claims; it reads
     verdicts, structured fences and in-record disclosures.
 
-    NAME NOTICE -- RULED R1@2026-08-30.  The registry key and the returned
-    name still read "derives_three_gates", and this check does not certify
-    that.  Ethan ruled the key KEEPS its spelling for now with the mismatch
-    disclosed in the returned record (the rename is queued for the next
-    count-moving landing, when the key-set sha moves anyway).  The
-    disclosure lives in the returned record's name_notice field and leg
-    (vii) reads it back off the record before returning it.  That field
-    also records the one respect in which what is returned here departs
-    from R1's own wording; it is stated there and not repeated here.
-
-    SIBLING, FENCED ELSEWHERE.  check_T_gate_certified_hilbert_born_pipeline
-    consumes the same withdrawn constituent by verdict and is FENCED by
-    R2@2026-08-30 until repaired.  It is neither consumed nor repaired
-    here; that fence is recorded in the decision doc, not in its code.
+    NAME NOTICE -- RULED R1@2026-08-30, AND PERFORMED HERE.  The registry
+    key and the returned name previously read "derives_three_gates", which
+    this check does not certify.  That ruling kept the spelling for the
+    time being with the mismatch disclosed in the returned record, and
+    QUEUED the rename for the next count-moving landing; this is that
+    landing, so the rename is performed and the key and the name now say
+    what the predicate does.  The disclosure lives in the returned
+    record's name_notice field and leg (vii) reads it back off the record
+    before returning it, tied to the returned NAME by value rather than to
+    a literal spelling.  That field also records the one respect in which
+    what is returned here departs from R1's own wording; it is stated
+    there and not repeated here.
 
     MAY NOT BE CITED AS: "closed-world completeness derives the three
     regime gates"; "the three gates are not independent postulates"; "APF
@@ -1958,7 +1857,7 @@ def check_T_closed_world_completeness_derives_three_gates():
     legs_run.append("detector_controls")
 
     record = {
-        "name": "T_closed_world_completeness_derives_three_gates",
+        "name": "T_closed_world_gate_fence_inventory",
         "passed": None,
         "tier": 4,
         "epistemic": (
@@ -2026,19 +1925,22 @@ def check_T_closed_world_completeness_derives_three_gates():
         "legs_run": tuple(legs_run),
         "fail_reasons": tuple(fail_reasons),
         "name_notice": (
-            "the registry key still reads 'derives_three_gates' and this "
-            "check does not certify that; R1@2026-08-30 RULED that the "
-            "key keeps its spelling for now with the mismatch disclosed "
-            "here, and queued the rename for the next count-moving "
-            "landing.  DISCLOSED SUPERSESSION, pending Ethan's eyes at "
-            "lift: that ruling's own words describe the repair as a "
-            "gate-DERIVATION inventory over two of the three gates.  "
-            "Those words describe the first repair's shape.  A blinded "
-            "audit found that predicate awarded DERIVED on the mere "
-            "ABSENCE of a fence, so what is audited and returned here is "
-            "a FENCE-ABSENCE inventory instead.  The departure is in "
-            "the conservative direction and is recorded here rather than "
-            "by editing the ruling"),
+            "RENAME PERFORMED at this landing under R1@2026-08-30.  The "
+            "registry key and this name previously read "
+            "'derives_three_gates', which this check does not certify; "
+            "that ruling kept the spelling with the mismatch disclosed "
+            "here and queued the rename for the next count-moving "
+            "landing, and this is that landing.  The key and this name "
+            "now read T_closed_world_gate_fence_inventory, which is what "
+            "the predicate computes.  DISCLOSED SUPERSESSION, pending "
+            "Ethan's eyes at lift: that ruling's own words describe the "
+            "repair as a gate-DERIVATION inventory over two of the three "
+            "gates.  Those words describe the first repair's shape.  A "
+            "blinded audit found that predicate awarded DERIVED on the "
+            "mere ABSENCE of a fence, so what is audited and returned "
+            "here is a FENCE-ABSENCE inventory instead.  The departure "
+            "is in the conservative direction and is recorded here "
+            "rather than by editing the ruling"),
         "may_not_cite": (
             "closed-world completeness derives the three regime gates",
             "the three gates are not independent postulates",
@@ -2086,11 +1988,16 @@ def check_T_closed_world_completeness_derives_three_gates():
     }
 
     # ---- LEG (vii): self-read of the R1@2026-08-30 disclosure ---------
-    # R1 made the in-record disclosure the condition of keeping the key
-    # spelling.  Read it back off the record that is about to be
-    # returned.  Append-and-record.
+    # R1 made the in-record disclosure the condition of the key spelling
+    # and queued the rename this landing performs.  Read the notice back
+    # off the record that is about to be returned, tying it to the
+    # returned NAME by value rather than to a literal spelling, so a
+    # future rename cannot leave the notice stale without firing here.
+    # Append-and-record.
     _notice = str(record.get("name_notice", ""))
-    if "derives_three_gates" not in _notice or "R1@2026-08-30" not in _notice:
+    _name = str(record.get("name", ""))
+    if (not _name or _name not in _notice
+            or "R1@2026-08-30" not in _notice):
         fail_reasons.append(
             "the R1@2026-08-30 name/content disclosure is missing or "
             f"unrecognisable in the returned record; got {_notice!r}")
@@ -2229,7 +2136,7 @@ _CHECKS = {
         check_T_split_composite_gates_tomographic_locality,
     "T_split_closed_world_complex_selection":
         check_T_split_closed_world_complex_selection,
-    # Phase 22d (2026-04-30 evening) -- 7 checks
+    # Phase 22d (2026-04-30 evening) -- 6 checks
     "T_preservation_ijc_obstruction":
         check_T_preservation_ijc_obstruction,
     "T_constructive_commuting_realization":
@@ -2238,10 +2145,8 @@ _CHECKS = {
         check_T_closed_read_write_self_duality,
     "T_capacity_only_distinct_from_structural_ijc":
         check_T_capacity_only_distinct_from_structural_ijc,
-    "T_gate_certified_hilbert_born_pipeline":
-        check_T_gate_certified_hilbert_born_pipeline,
-    "T_closed_world_completeness_derives_three_gates":
-        check_T_closed_world_completeness_derives_three_gates,
+    "T_closed_world_gate_fence_inventory":
+        check_T_closed_world_gate_fence_inventory,
     "T_adjoint_closure_reversible_lock_cycles":
         check_T_adjoint_closure_reversible_lock_cycles,
 }
@@ -2274,8 +2179,7 @@ if __name__ == "__main__":
         check_T_constructive_commuting_realization,
         check_T_closed_read_write_self_duality,
         check_T_capacity_only_distinct_from_structural_ijc,
-        check_T_gate_certified_hilbert_born_pipeline,
-        check_T_closed_world_completeness_derives_three_gates,
+        check_T_closed_world_gate_fence_inventory,
         check_T_adjoint_closure_reversible_lock_cycles,
     ):
         result = fn()
@@ -2298,8 +2202,9 @@ IE_DECLARATIONS = (
             "adjoint; stable simple-record completeness; finite composite "
             "closure selecting C over R and H) were to follow from the deeper "
             "closed-world primitive of ledger conservation + no-phantom- "
-            "records, exercised on small finite witnesses across 14 bank- "
-            "registered checks. THAT THREE-GATE DERIVATION READING IS "
+            "records, exercised on small finite witnesses across this "
+            "module's bank-registered checks. THAT THREE-GATE DERIVATION "
+            "READING IS "
             "WITHDRAWN, and this declaration does not assert it. The gate-(1) "
             "half took a SCOPE CORRIGENDUM on 2026-07-29 (external audit, "
             "MAJOR, accepted): what executes in check_T_closed_ledger_"
@@ -2308,9 +2213,9 @@ IE_DECLARATIONS = (
             "'reciprocal calibration is derived'; the sibling "
             "check_T_closed_read_write_self_duality carries the same "
             "corrigendum. The composite "
-            "check_T_closed_world_completeness_derives_three_gates -- whose "
-            "registry key keeps a spelling it does not certify, disclosed in "
-            "its own returned record under R1@2026-08-30 -- now computes a "
+            "check_T_closed_world_gate_fence_inventory -- renamed at this "
+            "landing under R1@2026-08-30, its former key having read a "
+            "derivation spelling the check does not certify -- now computes a "
             "FENCE-ABSENCE inventory: which gates have constituents that pass "
             "and that neither bar a derivation reading nor disclose in their "
             "own records that their verdicts are literals. ABSENCE OF A FENCE "
@@ -2332,6 +2237,6 @@ IE_DECLARATIONS = (
             "ledgers, and not an operational-axioms reconstruction billed "
             "from outside. "
         ),
-        "note": "Wave 7; claim text re-cut 2026-08-30 with the gate-(1) scope-down (R1@2026-08-30): the three-gate derivation reading is WITHDRAWN and the composite check returns a fence-absence inventory, so this declaration asserts no derivation for any gate. It states no machine grade either -- the grades moved under the 2026-07-29 and 2026-08-30 corrigenda and are read off the checks' own returned records; the header grade table this note used to flag as stale was deleted in the same pass. The 2026-07-29 corrigendum on check_T_closed_ledger_reciprocity and check_T_closed_read_write_self_duality is the source of the withdrawal; check_T_gate_certified_hilbert_born_pipeline consumes the same withdrawn constituent and is FENCED by R2@2026-08-30 until repaired.",
+        "note": "Wave 7; claim text re-cut 2026-08-30 with the gate-(1) scope-down (R1@2026-08-30): the three-gate derivation reading is WITHDRAWN and the composite check returns a fence-absence inventory, so this declaration asserts no derivation for any gate. It states no machine grade either -- the grades moved under the 2026-07-29 and 2026-08-30 corrigenda and are read off the checks' own returned records; the header grade table this note used to flag as stale was deleted in the same pass. The 2026-07-29 corrigendum on check_T_closed_ledger_reciprocity and check_T_closed_read_write_self_duality is the source of the withdrawal.",
     },
 )

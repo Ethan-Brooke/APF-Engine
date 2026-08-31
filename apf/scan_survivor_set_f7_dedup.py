@@ -1107,10 +1107,13 @@ def check_L_scan_survivor_set_and_F7_dedup_equivalence():
 _CHECKS = {
     # LANDING REWIRE, disclosed: the audited table also carried the
     # "check_"-prefixed spelling of this same function, which would have
-    # made this the only callable in the bank held under two keys
-    # (measured at HEAD: 4234 keys, 4234 distinct callables).  D6@2026-08-03
-    # makes the BARE NAME canonical for a new module and puts the
-    # both-spellings obligation on by-name GATES, not on registration.
+    # made this the only callable in the bank held under two keys -- the
+    # key count and the distinct-callable count were measured equal at the
+    # HEAD this module landed against, and that measurement lives in the
+    # module's landing record, not here (R7@2026-08-10: a comment states a
+    # genre and a reason, never a derived number).  D6@2026-08-03 makes
+    # the BARE NAME canonical for a new module and puts the both-spellings
+    # obligation on by-name GATES, not on registration.
     CHECK_NAME: check_L_scan_survivor_set_and_F7_dedup_equivalence,
 }
 

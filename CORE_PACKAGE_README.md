@@ -23,7 +23,7 @@ This package is a **tight subset** of the full APF codebase (v7.5; ~70 files) �
 
 ### Phase 22 quantum derivations (Paper 5 supplement landing)
 - `apf/quantum_admissibility.py` — Phase 22b. SepStr/SepAdm/IJCStr/IJCAdm/IJCPres branch taxonomy, κ_Bool minimum, capacity lower-bound certificate, Quantum Admissibility Condition, ℂ-field selection (uniform-defect form), Born trace rule.
-- `apf/closed_world_completeness.py` — Phase 22c + 22d. The closed-world ledger conservation + no-phantom-records chain, exercised on small finite witnesses over the three formerly-axiom-class regime gates (reciprocal calibration, stable simple-record completeness, APF-complete composite closure). The three-gate derivation reading was WITHDRAWN by the 2026-08-30 scope corrigendum: `T_closed_world_completeness_derives_three_gates` returns a fence-absence inventory over those gates, and absence of a fence is not presence of a derivation.
+- `apf/closed_world_completeness.py` — Phase 22c + 22d. The closed-world ledger conservation + no-phantom-records chain, exercised on small finite witnesses over the three formerly-axiom-class regime gates (reciprocal calibration, stable simple-record completeness, APF-complete composite closure). The three-gate derivation reading was WITHDRAWN by the 2026-08-30 scope corrigendum: `T_closed_world_gate_fence_inventory` returns a fence-absence inventory over those gates, and absence of a fence is not presence of a derivation.
 
 ### Registry + runner
 - `apf/bank.py` — global theorem registry, `EXPECTED_THEOREM_COUNT = 454`.
