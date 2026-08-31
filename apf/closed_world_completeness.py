@@ -32,6 +32,21 @@ not restated here.  No sentence in this header may be cited for "all
 three regime gates derive" or for "APF derives what reconstruction
 programs postulate".
 
+CONSTITUENT REPAIR 2026-08-30, and it moves this module's computed
+fence-absence figure.  Three checks below -- (2), (3) and (4) -- were
+measured hollow by a soundness audit the same day: authored literals
+compared to authored literals, an index sum standing in for an algebra,
+and three tautologies of the form "if P(x), assert P(x)".  Each now
+COMPUTES the object its name promises, in exact rational arithmetic on
+finite algebras given by structure constants, with negative controls
+executed rather than described.  In re-cutting what they RETURN down to
+what they compute, checks (2) and (3) acquired structured may-not-cite
+bars, which moved gate (2) of the fence-absence inventory from UNFENCED
+to FENCED.  That movement is a fence being written where the audit found
+one missing; it is not a weakening of any constituent, and it is not a
+refutation of any gate.  The figure itself is computed in check (12)'s
+returned record and is deliberately not restated here.
+
   (1) check_T_closed_ledger_reciprocity     (the gate-(1) attempt; its
       derivation claim is WITHDRAWN -- ALGEBRAIC IDENTITY ONLY, see the
       corrigendum in that check's own docstring)
@@ -76,6 +91,7 @@ Cross-reference:
 
 from __future__ import annotations
 from dataclasses import dataclass
+from fractions import Fraction as _Q
 from typing import Dict, List, Tuple
 
 
@@ -256,107 +272,903 @@ def check_T_closed_ledger_reciprocity():
 
 
 # =====================================================================
+# Shared exact-rational machinery for the record-algebra constituents
+# =====================================================================
+# REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  Three
+# checks below -- the no-phantom-record quotient, the operational-
+# radical/Jacobson bridge and the positive-cone quotient -- previously
+# compared authored literals to authored literals, stood an index sum in
+# for an algebra, or asserted a predicate of an element that satisfies it
+# by construction.  The machinery in this section is what lets them
+# COMPUTE instead.  Exact Fraction arithmetic throughout: no float and no
+# tolerance appears anywhere in those three checks.
+#
+# Nothing here is bank-registered and nothing here makes a claim.  These
+# are constructors and linear algebra; every claim lives in a check.
+
+
+def _rref(rows, ncols):
+    """Row-reduced echelon form over Q.  Returns (rows, pivot columns)."""
+    M = [list(r) for r in rows]
+    pivots = []
+    r = 0
+    for c in range(ncols):
+        p = None
+        for i in range(r, len(M)):
+            if M[i][c] != 0:
+                p = i
+                break
+        if p is None:
+            continue
+        M[r], M[p] = M[p], M[r]
+        inv = _Q(1, 1) / M[r][c]
+        M[r] = [x * inv for x in M[r]]
+        for i in range(len(M)):
+            if i != r and M[i][c] != 0:
+                f = M[i][c]
+                M[i] = [a - f * b for a, b in zip(M[i], M[r])]
+        pivots.append(c)
+        r += 1
+        if r == len(M):
+            break
+    return [tuple(row) for row in M[:r]], tuple(pivots)
+
+
+def _nullspace(rows, ncols):
+    """A basis of {v : Mv = 0}, in reduced form, exact."""
+    R, pivots = _rref(rows, ncols) if rows else ([], ())
+    free = [c for c in range(ncols) if c not in pivots]
+    basis = []
+    for f in free:
+        v = [_Q(0)] * ncols
+        v[f] = _Q(1)
+        for i, c in enumerate(pivots):
+            v[c] = -R[i][f]
+        basis.append(tuple(v))
+    return basis
+
+
+def _span_basis(vectors, ncols):
+    """Canonical (reduced) basis of the span -- two subspaces are equal
+    iff their canonical bases are equal, so span comparison never
+    depends on the order a caller happened to supply."""
+    nz = [v for v in vectors if any(x != 0 for x in v)]
+    if not nz:
+        return []
+    R, _ = _rref(nz, ncols)
+    return R
+
+
+def _same_span(a, b, ncols):
+    return _span_basis(a, ncols) == _span_basis(b, ncols)
+
+
+def _in_span(v, basis, ncols):
+    return _span_basis(list(basis) + [v], ncols) == _span_basis(basis, ncols)
+
+
+def _contains_span(outer, inner, ncols):
+    return all(_in_span(v, outer, ncols) for v in inner)
+
+
+def _intersect_spans(bases, ncols):
+    """Intersection of subspaces, computed as the null space of the
+    stacked constraint systems of each."""
+    constraints = []
+    for B in bases:
+        constraints.extend(_nullspace([tuple(v) for v in B], ncols))
+    if not constraints:
+        return _span_basis(
+            [tuple(_Q(1) if k == i else _Q(0) for k in range(ncols))
+             for i in range(ncols)], ncols)
+    return _span_basis(_nullspace(constraints, ncols), ncols)
+
+
+class _FiniteAlgebra:
+    """A finite-dimensional associative unital algebra over Q, given by
+    structure constants.  Elements are tuples of Fractions in the fixed
+    basis; `table[(i, j)]` is the product of the i-th and j-th basis
+    elements, as a coordinate tuple.
+
+    Associativity and unitality are NOT assumed: `is_associative` and
+    `is_unital` compute them, and every check below runs both before it
+    asserts anything about the algebra."""
+
+    def __init__(self, name, dim, table, unit):
+        self.name = name
+        self.dim = dim
+        self.table = table
+        self.unit = unit
+
+    def basis(self, i):
+        return tuple(_Q(1) if k == i else _Q(0) for k in range(self.dim))
+
+    def mul(self, a, b):
+        out = [_Q(0)] * self.dim
+        for i, ai in enumerate(a):
+            if ai == 0:
+                continue
+            for j, bj in enumerate(b):
+                if bj == 0:
+                    continue
+                coeff = ai * bj
+                for k, ck in enumerate(self.table[(i, j)]):
+                    if ck != 0:
+                        out[k] += coeff * ck
+        return tuple(out)
+
+    def left_mult_matrix(self, a):
+        cols = [self.mul(a, self.basis(j)) for j in range(self.dim)]
+        return [[cols[j][i] for j in range(self.dim)]
+                for i in range(self.dim)]
+
+    def left_mult_trace(self, a):
+        M = self.left_mult_matrix(a)
+        return sum(M[i][i] for i in range(self.dim))
+
+    def is_associative(self):
+        for i in range(self.dim):
+            for j in range(self.dim):
+                for k in range(self.dim):
+                    ei, ej, ek = self.basis(i), self.basis(j), self.basis(k)
+                    if (self.mul(self.mul(ei, ej), ek)
+                            != self.mul(ei, self.mul(ej, ek))):
+                        return False
+        return True
+
+    def is_unital(self):
+        for i in range(self.dim):
+            e = self.basis(i)
+            if self.mul(self.unit, e) != e or self.mul(e, self.unit) != e:
+                return False
+        return True
+
+    def is_commutative(self):
+        for i in range(self.dim):
+            for j in range(self.dim):
+                if (self.mul(self.basis(i), self.basis(j))
+                        != self.mul(self.basis(j), self.basis(i))):
+                    return False
+        return True
+
+
+def _jacobson_radical(alg, form="product"):
+    """The Jacobson radical by Dickson's characteristic-zero criterion:
+    the null space of the trace form T(a, b) = tr(L_{ab}).
+
+    `form` selects which bilinear form is built.  "product" is Dickson's
+    form and is the only one that computes the radical.  "factored"
+    builds tr(L_a) * tr(L_b) instead -- a rank-one form that is NOT the
+    trace form, supplied so a check can execute the broken definition as
+    a negative control rather than describe it."""
+    G = []
+    for i in range(alg.dim):
+        row = []
+        for j in range(alg.dim):
+            if form == "factored":
+                row.append(alg.left_mult_trace(alg.basis(i))
+                           * alg.left_mult_trace(alg.basis(j)))
+            else:
+                row.append(alg.left_mult_trace(
+                    alg.mul(alg.basis(i), alg.basis(j))))
+        G.append(row)
+    return _span_basis(_nullspace(G, alg.dim), alg.dim)
+
+
+def _is_two_sided_ideal(alg, basis):
+    for v in basis:
+        for i in range(alg.dim):
+            e = alg.basis(i)
+            if not _in_span(alg.mul(e, v), basis, alg.dim):
+                return False
+            if not _in_span(alg.mul(v, e), basis, alg.dim):
+                return False
+    return True
+
+
+def _is_nilpotent_subspace(alg, basis):
+    """True when some power of the subspace is zero.  Iterated to the
+    dimension of the algebra, which bounds the nilpotency index of a
+    nilpotent ideal."""
+    current = _span_basis(list(basis), alg.dim)
+    for _ in range(alg.dim + 1):
+        if not current:
+            return True
+        products = []
+        for u in current:
+            for v in basis:
+                products.append(alg.mul(u, v))
+        current = _span_basis(products, alg.dim)
+    return not current
+
+
+def _one_dim_rep(covector):
+    """A candidate one-dimensional representation, as the 1x1 matrices a
+    caller can hand to _is_representation.  Whether it IS one is not
+    assumed anywhere: every family member is verified by computation."""
+    return tuple([[c]] for c in covector)
+
+
+def _mat_mul(A, B):
+    d = len(A)
+    return [[sum(A[i][k] * B[k][j] for k in range(d)) for j in range(d)]
+            for i in range(d)]
+
+
+def _rep_apply(alg, pi, a):
+    d = len(pi[0])
+    return [[sum(a[i] * pi[i][r][c] for i in range(alg.dim))
+             for c in range(d)] for r in range(d)]
+
+
+def _is_representation(alg, pi):
+    """pi(1) = I and pi(e_i e_j) = pi(e_i) pi(e_j) on every basis pair,
+    which by bilinearity is multiplicativity on the whole algebra."""
+    d = len(pi[0])
+    I = [[_Q(1) if r == c else _Q(0) for c in range(d)] for r in range(d)]
+    if _rep_apply(alg, pi, alg.unit) != I:
+        return False
+    for i in range(alg.dim):
+        for j in range(alg.dim):
+            prod = alg.mul(alg.basis(i), alg.basis(j))
+            if _rep_apply(alg, pi, prod) != _mat_mul(pi[i], pi[j]):
+                return False
+    return True
+
+
+def _rep_kernel(alg, pi):
+    d = len(pi[0])
+    rows = []
+    for r in range(d):
+        for c in range(d):
+            rows.append(tuple(pi[i][r][c] for i in range(alg.dim)))
+    return _span_basis(_nullspace(rows, alg.dim), alg.dim)
+
+
+def _joint_kernel(alg, family):
+    """The operational radical of a declared family: the elements on
+    which every member returns zero.  Computed as an intersection of
+    computed kernels, never as a named subspace."""
+    return _intersect_spans([_rep_kernel(alg, pi) for pi in family], alg.dim)
+
+
+def _quotient_algebra(alg, ideal_basis):
+    """Build A/I by computation: a complement basis from the ideal's own
+    row reduction, a projection that reduces a vector modulo the ideal,
+    the canonical lift back, and induced structure constants.  Returns
+    (complement columns, proj, lift, quotient algebra)."""
+    R, pivots = _rref(ideal_basis, alg.dim) if ideal_basis else ([], ())
+    complement = [c for c in range(alg.dim) if c not in pivots]
+
+    # DISCLOSED LIMIT, stated in place rather than machined around:
+    # where the ideal is spanned by standard basis vectors the reduction
+    # inside proj subtracts nothing, so that path of this construction is
+    # not exercised by such a witness.  Whether each shipped witness is
+    # of that kind is COMPUTED and reported in the no-phantom check's own
+    # record rather than asserted here; a witness whose ideal is not
+    # coordinate-spanned would exercise the path.
+    def proj(v):
+        w = list(v)
+        for i, c in enumerate(pivots):
+            f = w[c]
+            if f != 0:
+                w = [a - f * b for a, b in zip(w, R[i])]
+        return tuple(w[c] for c in complement)
+
+    def lift(u):
+        v = [_Q(0)] * alg.dim
+        for k, c in enumerate(complement):
+            v[c] = u[k]
+        return tuple(v)
+
+    n = len(complement)
+
+    def qbasis(i):
+        return tuple(_Q(1) if k == i else _Q(0) for k in range(n))
+
+    table = {}
+    for i in range(n):
+        for j in range(n):
+            table[(i, j)] = proj(alg.mul(lift(qbasis(i)), lift(qbasis(j))))
+    return complement, proj, lift, _FiniteAlgebra(
+        alg.name + "/I", n, table, proj(alg.unit))
+
+
+# ---- the witness algebras -------------------------------------------
+# Each is authored as a structure-constant table and is verified
+# associative and unital by computation at every site that uses it.
+
+def _witness_upper_triangular_2():
+    """Upper-triangular 2x2 matrices over Q, basis (e11, e12, e22).  The
+    lane's principal witness: it is the smallest one carrying more than
+    one simple sector, which is what lets the incompleteness control
+    below fire at all."""
+    def z(*v):
+        return tuple(_Q(x) for x in v)
+
+    t = {}
+    t[(0, 0)] = z(1, 0, 0); t[(0, 1)] = z(0, 1, 0); t[(0, 2)] = z(0, 0, 0)
+    t[(1, 0)] = z(0, 0, 0); t[(1, 1)] = z(0, 0, 0); t[(1, 2)] = z(0, 1, 0)
+    t[(2, 0)] = z(0, 0, 0); t[(2, 1)] = z(0, 0, 0); t[(2, 2)] = z(0, 0, 1)
+    return _FiniteAlgebra("UpperTriangular_2(Q)", 3, t, z(1, 0, 1))
+
+
+def _witness_truncated_polynomial(n):
+    """Q[x]/(x^n), basis (1, x, ..., x^(n-1)) -- the witness the two
+    repaired checks already name in their own docstrings, retained so
+    the figures they used to author as literals are recovered by
+    computation instead of discarded."""
+    table = {}
+    for i in range(n):
+        for j in range(n):
+            v = [_Q(0)] * n
+            if i + j < n:
+                v[i + j] = _Q(1)
+            table[(i, j)] = tuple(v)
+    unit = [_Q(0)] * n
+    unit[0] = _Q(1)
+    return _FiniteAlgebra("Q[x]/(x^%d)" % n, n, table, tuple(unit))
+
+
+def _witness_aps_observables():
+    """The algebra of Q-valued functions on the physical state space of
+    the canonical APS witness, under pointwise multiplication.
+
+    The CROSS-MODULE VALUE TIE of this lane, and the honest form of the
+    module header's aps.py cross-reference: the dimension is read live
+    off apf.aps rather than authored here, so a change to that witness's
+    state space moves this algebra.  Returns (algebra, state count).
+
+    Stated because it is the point of the control rather than a
+    shortfall hidden by it: this algebra is semisimple, so it supplies
+    no radical.  The APS primitive gives the record-reading INDEX SET;
+    it does not supply a witness carrying phantom directions, and the
+    checks below say so by computing its radical rather than by claiming
+    a witness was built from it."""
+    from apf import aps as _aps
+    n = len(_aps._build_canonical_witness().physical_state_space())
+    table = {}
+    for i in range(n):
+        for j in range(n):
+            v = [_Q(0)] * n
+            if i == j:
+                v[i] = _Q(1)
+            table[(i, j)] = tuple(v)
+    return _FiniteAlgebra("Q^Omega(APS)", n, table,
+                          tuple(_Q(1) for _ in range(n))), n
+
+
+def _coordinate_sector_family(alg, indices):
+    """One-dimensional candidate sectors reading the named coordinates.
+    Candidates only -- every caller verifies each with
+    _is_representation before using it."""
+    return tuple(_one_dim_rep(
+        tuple(_Q(1) if k == i else _Q(0) for k in range(alg.dim)))
+        for i in indices)
+
+
+# =====================================================================
 # (2) No-phantom-record quotient --> stable simple-record completeness
 # =====================================================================
 
 def check_T_no_phantom_record_quotient():
-    """T_no_phantom_record_quotient: in a finite record algebra, the
-    operational radical (elements that do no enforceable distinguishing
-    work) can be quotiented out without information loss.
+    """T_no_phantom_record_quotient: on a finite record algebra built as
+    structure constants, the phantom ideal -- the elements on which every
+    declared record-reading sector returns zero -- is COMPUTED, the
+    quotient by it is CONSTRUCTED, and the joint reading map is computed
+    to be injective on that quotient; while quotienting by a strictly
+    larger ideal is executed and computed to identify a pair the reading
+    separates.
 
-    Tier 3 [P_structural].  Paper 5 Supplement v5.97 section
-    "Finite closed-world record completeness", Theorem
-    "No-phantom-record quotient".  This is the v5.43 unbundling
-    response to reviewer point 2: stable simple-record completeness
-    is not postulated as a Hardy-CDP perfect-distinguishability
-    axiom, it is a consequence of the framework's primitive
-    insistence on enforceable distinctions.
+    Tier 3 [P_structural_reading].  Paper 5 Supplement v5.97 section
+    "Finite closed-world record completeness", Theorem "No-phantom-record
+    quotient".
 
-    Witness construction.  Build a finite-dimensional commutative
-    algebra A = R[x] / (x^3) over R (3-dim, basis {1, x, x^2}).
-    The element x^2 is nilpotent: it is in the operational radical
-    because x^2 * y = 0 for any y in (x), so x^2 distinguishes no
-    pair of states reachable by enforceable record operations.
+    REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  What
+    executed before that date was integer addition.  The "finite-
+    dimensional algebra R[x]/(x^3)" was a two-line function returning
+    i + j below a cutoff; the annihilation leg asserted that two index
+    sums exceed that cutoff; the commutativity leg asserted the
+    commutativity of integer addition; and the quotient basis and the
+    projection were authored dictionaries verified against themselves.
+    No algebra, no radical, no quotient and no projection were computed,
+    and the check returned "passed" as a source literal.  This was the
+    one gate the module's fence-absence inventory counted UNFENCED, and
+    the scoping return of 2026-08-30 named the mechanism without
+    euphemism: the gate was unfenced because nobody had written its
+    fence.  Both halves are addressed here -- the mathematics is
+    computed, and the reading the check does not compute is barred.
 
-    Closed-world completeness asserts that quotienting by such
-    operationally-null directions is information-preserving; the
-    quotient A / (x^2) ~= R[x] / (x^2) (2-dim) retains every
-    distinction visible to record-locking protocols.
+    WHAT IS COMPUTED NOW, on two witnesses (the upper-triangular 2x2
+    matrices, and Q[x]/(x^3) -- the witness this check has always named,
+    retained so the figures it used to author are recovered rather than
+    discarded):
 
-    The check verifies on this concrete 3-dim algebra:
-      (i)   The radical R = (x^2) is operationally null: every
-            element of R produces zero on every nontrivial product.
-      (ii)  The quotient A/R is 2-dimensional and commutative.
-      (iii) The natural projection pi: A -> A/R is information-
-            preserving on the operationally-distinguishable
-            elements (1 and x both survive with distinct images).
+      (i)   the witness is verified associative and unital from its own
+            structure constants;
+      (ii)  each declared record-reading sector is verified to BE a
+            representation, and a non-multiplicative candidate is
+            exhibited as rejected;
+      (iii) the phantom ideal is computed as the intersection of the
+            computed kernels of those sectors, and is certified to be a
+            two-sided ideal -- which is what makes the quotient exist;
+      (iv)  the quotient is CONSTRUCTED: a complement basis from the
+            ideal's own row reduction, induced structure constants, and
+            the result verified associative and unital.  DISCLOSED
+            LIMIT: where the ideal is spanned by standard basis vectors
+            the projection's modular reduction subtracts nothing, so
+            that path of the construction goes unexercised; which
+            witnesses are of that kind is computed and reported in the
+            record below;
+      (v)   every sector DESCENDS: the descended sector is verified to
+            be a representation of the quotient, and its composition
+            with the projection is computed to equal the original
+            sector exactly, as an identity of covectors;
+      (vi)  the kernel of the joint reading map is computed and is
+            EQUAL to the phantom ideal.  DEFINITIONAL AT THIS
+            CONSTRUCTION, and recorded as such rather than read as a
+            measurement: the phantom ideal is DEFINED here as that same
+            joint kernel, so no witness datum -- no structure constant,
+            no sector, no family membership -- can make this clause
+            fail.  What it holds against each other are the two
+            subspace routines, and only so far as they do not share the
+            row-reduction primitives both descend through: a defect
+            inside those cancels on both sides and is invisible here.
+
+    WHERE "NO RECORD DISTINCTION IS LOST" ACTUALLY CARRIES A RISK OF
+    FAILING here: the executed control below, which enlarges the ideal
+    past the joint kernel and exhibits a separated pair collapsing; and
+    the value tie in leg (ix), where the same subspace is reached by the
+    sibling's trace-form route and compared by value.
+
+    THE LEG THAT CAN FAIL.  A strictly larger two-sided ideal is
+    computed to be an ideal and to contain the phantom ideal strictly,
+    the quotient by it is constructed, and a pair of elements the
+    reading SEPARATES is exhibited as IDENTIFIED there.  So
+    "information-preserving" is not a property of quotients in general
+    and this check does not treat it as one: it is the phantom ideal's
+    minimality doing the work, and enlarging the ideal breaks it,
+    executed.
+
+    THE APS BOUNDARY CONTROL, and it is where the module header's
+    cross-reference is made honest.  The algebra of functions on the
+    canonical APS state space -- dimension read live off apf.aps, not
+    authored here -- is computed to have a ZERO phantom ideal, so the
+    no-phantom quotient is the identity map there.  The APS primitive
+    supplies the record-reading index set; it does NOT supply a witness
+    carrying phantom directions, and this check computes that rather
+    than claiming a witness was built from it.
+
+    STANDING LIMIT, disclosed and not assumed away (D7@2026-08-08): the
+    leg inventory below certifies that a declared leg RAN, not that it
+    COULD have failed.  Neutering a leg's assertions while leaving its
+    append in place is invisible to it.
+
+    MAY NOT BE CITED AS: "stable simple-record completeness is derived";
+    "the Hardy-CDP perfect-distinguishability axiom is discharged";
+    "the no-phantom-record quotient is structural" without its witness;
+    as certifying gate (2) of the closed-world chain; for any universal
+    over record algebras, APF interfaces or ledgers; or for any Born-arc
+    reading.
     """
-    # Finite-dim algebra: R[x] / (x^3), basis {1, x, x^2}.
-    # Multiplication table: 1*1=1, 1*x=x, 1*x^2=x^2, x*x=x^2,
-    # x*x^2=0 (since x^3 = 0), x^2*x^2=0.
-    # Index basis as 0=1, 1=x, 2=x^2.
-    def mult(i, j):
-        if i + j >= 3:
-            return None  # zero (annihilation in R[x]/(x^3))
-        return i + j
+    _DECLARED_LEGS = (
+        "witnesses_are_associative_unital_algebras",
+        "declared_sectors_are_representations",
+        "phantom_ideal_computed_and_certified_ideal",
+        "quotient_constructed_by_computation",
+        "sectors_descend_exactly",
+        "reading_kernel_equals_phantom_ideal",
+        "larger_ideal_loses_a_separated_pair",
+        "aps_boundary_phantom_ideal_is_zero",
+        "phantom_ideal_tied_by_value_to_the_sibling",
+    )
+    legs_run = []
+    fail_reasons = []
 
-    # (i) operational radical = span{x^2} -- verify x^2 acts as 0
-    # on every basis element (well, on x and x^2 — and on 1 it just
-    # returns x^2 which is in the radical so it's still
-    # "phantom" in the operational sense).
-    for j in (1, 2):  # check action on x, x^2
-        out = mult(2, j)
-        assert out is None, \
-            f"x^2 should annihilate basis-element {j}, got index {out}"
+    witnesses = (
+        (_witness_upper_triangular_2(), (0, 2)),
+        (_witness_truncated_polynomial(3), (0,)),
+    )
 
-    # The action on 1 returns x^2 itself (in the radical), so
-    # operationally-distinguishable record states cannot tell x^2
-    # apart from any other radical element.
-    out_on_1 = mult(2, 0)
-    assert out_on_1 == 2, \
-        f"x^2 * 1 should equal x^2 (basis index 2), got {out_on_1}"
+    # ---- LEG (i) -------------------------------------------------------
+    verified = 0
+    for alg, _ in witnesses:
+        assert alg.is_associative(), f"{alg.name} is not associative"
+        assert alg.is_unital(), f"{alg.name} is not unital"
+        verified += 1
+    assert verified == len(witnesses), \
+        f"every witness must be verified; verified {verified}"
+    legs_run.append("witnesses_are_associative_unital_algebras")
 
-    # (ii) quotient A/R has dimension 2 (basis {1, x})
-    quotient_basis = [0, 1]  # {1, x} mod (x^2)
-    assert len(quotient_basis) == 2, "A/R should be 2-dimensional"
+    # ---- LEG (ii) ------------------------------------------------------
+    families = []
+    sectors_verified = 0
+    for alg, indices in witnesses:
+        family = _coordinate_sector_family(alg, indices)
+        for pi in family:
+            assert _is_representation(alg, pi), (
+                f"a declared record-reading sector of {alg.name} is not "
+                f"a representation")
+            sectors_verified += 1
+        families.append(family)
+    assert sectors_verified == sum(len(f) for f in families), \
+        "every declared sector must be verified"
+    _t2 = witnesses[0][0]
+    assert not _is_representation(
+        _t2, _one_dim_rep((_Q(0), _Q(1), _Q(0)))), (
+        "detector control: a candidate failing the unit condition must "
+        "be REJECTED")
+    assert not _is_representation(
+        _t2, _one_dim_rep((_Q(1, 2), _Q(0), _Q(1, 2)))), (
+        "detector control: a UNITAL but non-multiplicative candidate "
+        "must be REJECTED, or multiplicativity is untested")
+    legs_run.append("declared_sectors_are_representations")
 
-    # Verify commutativity in the quotient
-    for i in quotient_basis:
-        for j in quotient_basis:
-            ij = mult(i, j)
-            ji = mult(j, i)
-            # Both products either both None or equal indices
-            assert ij == ji, f"non-commutative: {i}*{j}={ij}, {j}*{i}={ji}"
+    # ---- LEG (iii) -----------------------------------------------------
+    phantom_ideals = []
+    for (alg, _), family in zip(witnesses, families):
+        r_op = _joint_kernel(alg, family)
+        assert _is_two_sided_ideal(alg, r_op), (
+            f"the computed phantom ideal of {alg.name} is not a "
+            f"two-sided ideal, so no quotient algebra exists")
+        phantom_ideals.append(r_op)
+    assert len(phantom_ideals) == len(witnesses), \
+        "a phantom ideal must be computed on every witness"
+    legs_run.append("phantom_ideal_computed_and_certified_ideal")
 
-    # (iii) projection pi : A -> A/R is information-preserving on
-    # operationally-distinguishable elements.  pi(1) = 1, pi(x) = x,
-    # pi(x^2) = 0.  The two operationally distinguishable elements
-    # (1 and x) survive with distinct images.
-    pi = {0: 0, 1: 1, 2: None}  # None == 0 in quotient
-    assert pi[0] != pi[1], "pi(1) and pi(x) should be distinct in quotient"
-    assert pi[2] is None, "pi(x^2) should be 0 in quotient (radical killed)"
+    # ---- LEG (iv) ------------------------------------------------------
+    quotients = []
+    for (alg, _), r_op in zip(witnesses, phantom_ideals):
+        complement, proj, lift, qalg = _quotient_algebra(alg, r_op)
+        assert qalg.is_associative() and qalg.is_unital(), (
+            f"the constructed quotient of {alg.name} is not an "
+            f"associative unital algebra")
+        # ENTAILED by how _quotient_algebra builds the complement, not
+        # independent of it; recorded as such rather than read as a
+        # measurement (the sibling's tomographic check sets the
+        # precedent for naming an entailed clause in place).
+        assert qalg.dim == alg.dim - len(r_op), (
+            f"quotient dimension arithmetic fails on {alg.name}")
+        for i in range(qalg.dim):
+            u = qalg.basis(i)
+            assert proj(lift(u)) == u, (
+                "the projection must invert the canonical lift on the "
+                f"quotient; {alg.name}")
+        quotients.append((complement, proj, lift, qalg))
+    assert len(quotients) == len(witnesses), \
+        "a quotient must be constructed on every witness"
+    legs_run.append("quotient_constructed_by_computation")
+
+    # ---- LEG (v) -------------------------------------------------------
+    descents = 0
+    for (alg, _), family, (complement, proj, _lift, qalg) in zip(
+            witnesses, families, quotients):
+        for pi in family:
+            covector = tuple(pi[i][0][0] for i in range(alg.dim))
+            descended = _one_dim_rep(tuple(covector[c]
+                                           for c in complement))
+            assert _is_representation(qalg, descended), (
+                f"a sector of {alg.name} does not descend to a "
+                f"representation of the quotient")
+            # The composition of the descended sector with the
+            # projection must reproduce the original sector on every
+            # basis element -- an exact identity of covectors, not a
+            # sampled agreement.
+            matches = 0
+            for i in range(alg.dim):
+                image = proj(alg.basis(i))
+                value = sum(descended[k][0][0] * image[k]
+                            for k in range(qalg.dim))
+                if value == covector[i]:
+                    matches += 1
+            # Counted rather than asserted pointwise.
+            assert matches == alg.dim, (
+                "the descended sector reproduces the original on only "
+                f"{matches} of {alg.dim} basis elements of {alg.name}")
+            descents += 1
+    assert descents == sum(len(f) for f in families), \
+        "every sector must be shown to descend"
+    legs_run.append("sectors_descend_exactly")
+
+    # ---- LEG (vi): the two kernel routines, against each other ---------
+    # DEFINITIONAL AT THIS CONSTRUCTION, disclosed here rather than
+    # presented as a measurement: the phantom ideal above is the joint
+    # kernel of this same family, and an intersection of kernels IS the
+    # kernel of the stacked covectors as a matter of linear algebra.  No
+    # witness datum can make this clause fail; what it can catch is a
+    # divergence between the two subspace routines, which is why it is
+    # kept -- and not a defect inside the row-reduction primitives both
+    # of them descend through, which cancels on both sides.
+    kernel_equalities = 0
+    for (alg, _), family, r_op in zip(witnesses, families, phantom_ideals):
+        rows = [tuple(pi[i][0][0] for i in range(alg.dim))
+                for pi in family]
+        reading_kernel = _span_basis(_nullspace(rows, alg.dim), alg.dim)
+        assert _same_span(reading_kernel, r_op, alg.dim), (
+            "the kernel of the joint reading map must BE the phantom "
+            f"ideal, or the quotient loses a distinction; {alg.name}")
+        kernel_equalities += 1
+    assert kernel_equalities == len(witnesses), \
+        "the kernel equality must be computed on every witness"
+    legs_run.append("reading_kernel_equals_phantom_ideal")
+
+    # ---- LEG (vii): the negative control, executed ---------------------
+    # A strictly larger ideal on the multi-sector witness.  Everything
+    # about it is computed: that it is an ideal, that it contains the
+    # phantom ideal strictly, and that a separated pair collapses in its
+    # quotient.
+    t2 = witnesses[0][0]
+    t2_family = families[0]
+    t2_phantom = phantom_ideals[0]
+    larger = _span_basis([t2.basis(1), t2.basis(2)], t2.dim)
+    assert _is_two_sided_ideal(t2, larger), \
+        "the control subspace must itself be a two-sided ideal"
+    assert _contains_span(larger, t2_phantom, t2.dim), \
+        "the control ideal must contain the phantom ideal"
+    assert not _same_span(larger, t2_phantom, t2.dim), \
+        "the control ideal must be STRICTLY larger, or it is the same "\
+        "quotient and exhibits nothing"
+    _c2, proj_larger, _l2, _q2 = _quotient_algebra(t2, larger)
+    proj_phantom = quotients[0][1]
+
+    def _profile(a):
+        return tuple(sum(pi[i][0][0] * a[i] for i in range(t2.dim))
+                     for pi in t2_family)
+
+    # The probe family is an AUTHORED rational grid, one axis per
+    # coordinate of the witness.  Named here and reported in the record
+    # below, because every pair count quoted from this leg is a count
+    # over this grid and a reader cannot reproduce a ratio whose support
+    # is not stated.
+    probe_axes = ((-2, -1, 0, 1, 3), (-1, 0, 2), (-3, 0, 1, 4))
+    assert len(probe_axes) == t2.dim, (
+        "the probe grid must carry one axis per coordinate of "
+        f"{t2.name}; got {len(probe_axes)} axes for dimension {t2.dim}")
+    probe = [()]
+    for axis in probe_axes:
+        probe = [row + (_Q(v),) for row in probe for v in axis]
+    separated_pairs = 0
+    collapsed_in_larger = 0
+    collapsed_in_phantom = 0
+    for a in probe:
+        for b in probe:
+            if _profile(a) == _profile(b):
+                continue
+            separated_pairs += 1
+            difference = tuple(a[i] - b[i] for i in range(t2.dim))
+            # Tie by value, not by verdict: a pair collapses in a
+            # quotient exactly when its difference lies in the ideal, so
+            # the collapse count is checked against ideal membership
+            # computed independently rather than trusted.
+            if proj_larger(a) == proj_larger(b):
+                collapsed_in_larger += 1
+                assert _in_span(difference, larger, t2.dim), (
+                    "a pair collapsed in the quotient by the control "
+                    "ideal whose difference is not IN that ideal")
+            else:
+                assert not _in_span(difference, larger, t2.dim), (
+                    "a pair whose difference lies in the control ideal "
+                    "did not collapse in its quotient")
+            if proj_phantom(a) == proj_phantom(b):
+                collapsed_in_phantom += 1
+    assert separated_pairs > 0, \
+        "the probe family must contain pairs the reading separates"
+    assert collapsed_in_larger > 0, (
+        "quotienting by the strictly larger ideal must IDENTIFY a pair "
+        "the reading separates -- if it identifies none, this control "
+        "exhibits nothing and 'information-preserving' is untested")
+    # The contrast.  Entailed by leg (vi) rather than independent of it,
+    # and recorded as an exercise of that universal on live data, not as
+    # a second proof of it.
+    assert collapsed_in_phantom == 0, (
+        "no pair the reading separates may collapse in the quotient by "
+        f"the phantom ideal; {collapsed_in_phantom} did")
+    legs_run.append("larger_ideal_loses_a_separated_pair")
+
+    # ---- LEG (viii): the APS boundary control --------------------------
+    aps_algebra, aps_state_count = _witness_aps_observables()
+    assert aps_algebra.is_associative() and aps_algebra.is_unital(), \
+        "the APS observable algebra is not an associative unital algebra"
+    # The dimension and the state count come from the same read, so
+    # comparing them to each other would be true by construction and
+    # would certify nothing.  Tie the figure BY VALUE to the BANKED APS
+    # check's own returned record instead, so authoring the dimension
+    # here in place of the live read reddens as soon as the APS witness
+    # moves.  DISCLOSED LIMIT: this is a fixed-format substring read of
+    # that record's key_result, and it claims no completeness over
+    # spellings -- a reformat of that record reddens here and must be
+    # re-cut deliberately rather than loosened.
+    from apf import aps as _aps_module
+    _aps_record = _aps_module.check_T_APS_construction()
+    assert _aps_record["passed"], \
+        "the banked APS construction check must pass before its state "\
+        "count is consumed here"
+    assert f"|Omega|={aps_state_count}" in str(_aps_record["key_result"]), (
+        "the APS state space this witness is built on disagrees with "
+        "the banked APS check's own returned record: "
+        f"{_aps_record['key_result']!r} against {aps_state_count}")
+    aps_family = _coordinate_sector_family(
+        aps_algebra, tuple(range(aps_algebra.dim)))
+    for pi in aps_family:
+        assert _is_representation(aps_algebra, pi), \
+            "an APS coordinate sector is not a representation"
+    aps_phantom = _joint_kernel(aps_algebra, aps_family)
+    assert aps_phantom == [], (
+        "the APS observable algebra must have a ZERO phantom ideal -- "
+        "that is the content of the boundary control, and a non-zero "
+        "one would mean the APS state space is not what is read here")
+    _apsc, _apsp, _apsl, aps_quotient = _quotient_algebra(
+        aps_algebra, aps_phantom)
+    assert aps_quotient.dim == aps_algebra.dim, (
+        "with a zero phantom ideal the no-phantom quotient is the "
+        "identity, and the dimension must be unchanged")
+    legs_run.append("aps_boundary_phantom_ideal_is_zero")
+
+    # ---- LEG (ix): the in-module value tie -----------------------------
+    # The sibling reaches the same subspace by a different UPSTREAM
+    # construction -- the null space of the trace form, not an
+    # intersection of representation kernels -- though both descend
+    # through the same row-reduction primitives, so this tie is not
+    # independent of those.  Tie the two BY VALUE on the shared witness,
+    # so a divergence between the two computations reddens here rather
+    # than standing unnoticed in two green checks.  The sibling is
+    # executed at each site in this module that consumes it; at the
+    # present witness sizes that repetition costs nothing, and a larger
+    # witness set would multiply it at every one of those sites.
+    sibling = check_T_operational_radical_equals_jacobson()
+    sibling_rows = [row for row in sibling["computed"]
+                    if row["witness"] == t2.name]
+    assert len(sibling_rows) == 1, (
+        "the sibling must report exactly one row for the shared "
+        f"witness {t2.name}; got {len(sibling_rows)}")
+    rendered_here = tuple(tuple(str(x) for x in v) for v in t2_phantom)
+    assert sibling_rows[0]["radical_basis"] == rendered_here, (
+        "the phantom ideal computed here and the radical computed by "
+        "the sibling are DIFFERENT subspaces on the same witness: "
+        f"{rendered_here} vs {sibling_rows[0]['radical_basis']}")
+    legs_run.append("phantom_ideal_tied_by_value_to_the_sibling")
+
+    # ---- leg inventory (D7@2026-08-08: append and record, never raise) -
+    missing = set(_DECLARED_LEGS) - set(legs_run)
+    extra = set(legs_run) - set(_DECLARED_LEGS)
+    if missing or extra:
+        fail_reasons.append(
+            f"leg inventory mismatch: missing={sorted(missing)}, "
+            f"extra={sorted(extra)}")
+    if len(legs_run) != len(set(legs_run)):
+        fail_reasons.append(f"a leg was recorded twice: {legs_run}")
+
+    # DISCLOSED LIMIT, computed rather than stated: an ideal spanned by
+    # standard basis vectors leaves the quotient projection's modular
+    # reduction with nothing to subtract, so that path of
+    # _quotient_algebra goes unexercised on such a witness.  Reported,
+    # not asserted -- this is a limit of the witness set, and a witness
+    # whose ideal is not coordinate-spanned would move the figure.  And
+    # because it is reported rather than asserted, a defect in the
+    # detector below is invisible to every leg here: measured, not
+    # assumed away.
+    def _is_coordinate_vector(v):
+        return (sum(1 for x in v if x != 0) == 1
+                and all(x == 0 or x == 1 for x in v))
+
+    coordinate_spanned_ideals = tuple(
+        alg.name for (alg, _), r_op in zip(witnesses, phantom_ideals)
+        if all(_is_coordinate_vector(v) for v in r_op))
+
+    computed = tuple(
+        {
+            "witness": alg.name,
+            "dim": alg.dim,
+            "sectors": len(family),
+            "phantom_ideal_dim": len(r_op),
+            "quotient_dim": q[3].dim,
+            "ideal_is_coordinate_spanned":
+                alg.name in coordinate_spanned_ideals,
+        }
+        for (alg, _), family, r_op, q in zip(
+            witnesses, families, phantom_ideals, quotients))
+
+    summary_rows = tuple(
+        (c["witness"], c["dim"], c["sectors"], c["phantom_ideal_dim"],
+         c["quotient_dim"]) for c in computed)
 
     return {
         "name": "T_no_phantom_record_quotient",
-        "passed": True,
+        "passed": not fail_reasons,
         "tier": 3,
         "epistemic": "P_structural_reading",
         "key_result": (
-            "Finite witness A = R[x]/(x^3) has operational radical "
-            "(x^2) of dim 1; quotient A/R is 2-dim and information-"
-            "preserving on the two operationally-distinguishable "
-            "basis elements {1, x}; the no-phantom-record quotient "
-            "is structural"
+            f"COMPUTED ON {len(witnesses)} WITNESS ALGEBRAS, each "
+            f"verified associative and unital from its own structure "
+            f"constants.  The phantom ideal is computed as the "
+            f"intersection of the computed kernels of verified "
+            f"record-reading sectors and certified a two-sided ideal; "
+            f"the quotient is CONSTRUCTED from a complement basis and "
+            f"induced structure constants and verified associative and "
+            f"unital; and every sector descends, its composition "
+            f"with the projection reproducing it exactly as a covector "
+            f"identity.  The kernel of the joint reading map is "
+            f"computed EQUAL to the phantom ideal -- DEFINITIONAL at "
+            f"this construction, since the phantom ideal is defined "
+            f"here as that same joint kernel: that clause holds the "
+            f"two subspace routines against each other -- and only so "
+            f"far as they do not share the row-reduction primitives "
+            f"both descend through -- and no witness datum can make it "
+            f"fail.  What carries 'no record distinction is lost' as "
+            f"something a witness could break is the control below; "
+            f"the value tie further holds this subspace against the "
+            f"radical the sibling reaches by the trace-form route, a "
+            f"different upstream construction though not an "
+            f"independent one.  Per witness "
+            f"(dim, sectors, phantom dim, quotient dim): "
+            f"{summary_rows}.  "
+            f"FALSIFIABILITY EXHIBITED: quotienting by a "
+            f"strictly larger two-sided ideal IDENTIFIES "
+            f"{collapsed_in_larger} of {separated_pairs} pairs the "
+            f"reading separates, while the phantom quotient identifies "
+            f"none -- so information preservation is the phantom "
+            f"ideal's minimality doing work, not a property of "
+            f"quotients.  BOTH OF THOSE COUNTS ARE COUNTS OVER AN "
+            f"AUTHORED RATIONAL PROBE GRID on {t2.name} -- the axes "
+            f"{probe_axes}, {len(probe)} elements -- named here "
+            f"because a ratio whose support is unstated cannot be "
+            f"reproduced by a reader, and the grid is authored, not "
+            f"derived.  DISCLOSED LIMIT: the phantom ideal is computed "
+            f"spanned by standard basis vectors on "
+            f"{coordinate_spanned_ideals}, and where that holds the "
+            f"quotient projection's modular reduction subtracts "
+            f"nothing, so that path of the construction goes "
+            f"unexercised on those witnesses -- and it is not the only "
+            f"path this witness set leaves unexercised: the "
+            f"free-variable sign convention in the shared null-space "
+            f"routine and the pivot normalisation in the shared row "
+            f"reduction are unexercised in the same way -- the sign "
+            f"can be flipped and the normalisation dropped without "
+            f"moving "
+            f"any verdict in this module.  "
+            f"BOUNDARY CONTROL: the observable algebra on "
+            f"the canonical APS state space (dimension "
+            f"{aps_state_count}, read live off apf.aps) has a ZERO "
+            f"phantom ideal, so the quotient is the identity there.  "
+            f"Two small algebras; no universal."
+        ),
+        "computed": computed,
+        "legs_run": tuple(legs_run),
+        "fail_reasons": tuple(fail_reasons),
+        "may_not_cite": (
+            "stable simple-record completeness is derived",
+            "the Hardy-CDP perfect-distinguishability axiom is "
+            "discharged",
+            "the no-phantom-record quotient is structural, stated "
+            "without its witness",
+            "this certifies gate (2) of the closed-world chain",
+            "any universal over record algebras, APF interfaces or "
+            "ledgers",
+            "the APS primitive supplies a witness carrying phantom "
+            "directions",
+            "any Born-arc reading",
         ),
         "summary": (
-            "Stable simple-record completeness is not a free Hardy-"
-            "CDP perfect-distinguishability axiom; it is a "
-            "consequence of the framework's insistence on "
-            "enforceable distinctions.  Any element of the operational "
-            "radical does no record-distinguishing work and can be "
-            "quotiented away without losing the operational content.  "
-            "This is the v5.43 reviewer-response unbundling for "
-            "regime gate (2)."
+            "On two small algebras over Q the phantom ideal, the "
+            "quotient by it and the descent of every record-reading "
+            "sector are all COMPUTED, and the negative control is "
+            "EXECUTED: a strictly larger two-sided ideal identifies "
+            "pairs the reading separates, so the preservation result "
+            "belongs to the phantom ideal and not to quotients in "
+            "general.  The injectivity of the joint reading map on the "
+            "quotient is computed as well, but it is DEFINITIONAL at "
+            "this construction -- the ideal is defined as that kernel "
+            "-- and is recorded as a cross-check of two subspace "
+            "routines rather than as a measurement of the witness.  "
+            "REPAIRED 2026-08-30: what executed before that "
+            "date was the commutativity of integer addition on an "
+            "index sum with a cutoff, plus two authored dictionaries "
+            "verified against themselves, under a returned literal "
+            "verdict.  The Hardy-CDP-axiom reading this check used to "
+            "return is WITHDRAWN: nothing computed it before and "
+            "nothing computes it now, and the reading is barred in "
+            "this record.  What is here is a theorem about two named "
+            "finite algebras; it derives no regime gate."
         ),
     }
 
@@ -366,98 +1178,381 @@ def check_T_no_phantom_record_quotient():
 # =====================================================================
 
 def check_T_operational_radical_equals_jacobson():
-    """T_operational_radical_equals_jacobson: under stable-simple-
-    completeness (no-phantom-records), the operational radical
-    coincides with the algebraic Jacobson radical of the finite
-    record algebra.
+    """T_operational_radical_equals_jacobson: on each of four named
+    finite-dimensional algebras over Q, the operational radical of a
+    declared family of stable simple sectors and the Jacobson radical
+    are COMPUTED SEPARATELY and compared computed-to-computed; and when
+    the family is made incomplete the equality FAILS, computed.
 
-    Tier 3 [P_structural].  Paper 5 Supplement v5.97 section
-    "Strengthened no-defect derivations of the regime gates",
-    Theorem "Operational radical equals Jacobson radical under
-    stable simple completeness" + the sufficient-conditions
-    theorem.
+    Tier 3 [P_structural_reading].  Paper 5 Supplement v5.97 section
+    "Strengthened no-defect derivations of the regime gates", Theorem
+    "Operational radical equals Jacobson radical under stable simple
+    completeness" + the sufficient-conditions theorem.
 
-    This is the algebraic bridge between the no-phantom argument
-    (operational, framework-internal) and standard Wedderburn-
-    Artin theory (mathematical, off-the-shelf).  When the bridge
-    is licensed, the framework can invoke matrix-sector
-    classification on the operational quotient.
+    REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  What
+    this check executed before that date was three separately authored
+    frozensets of the same value compared to each other, a non-emptiness
+    test on a one-element list of the string "pi", and a subtraction of
+    one authored length from an authored dimension.  No maximal ideal
+    was computed, no intersection was taken, no radical was calculated,
+    and the bridge the module header assigns to this check was asserted
+    nowhere.  Its high constant-mutation score was the de-synchronising
+    of authored twins, which is the tell and not the certificate.  The
+    mathematics was believed true and remains so; what was missing was
+    the computation, and that is what is supplied here.
 
-    Witness construction.  On the same R[x]/(x^3) algebra used
-    in check_T_no_phantom_record_quotient:
-      r_op  = intersection of kernels of every stable simple
-              representation.  The unique simple rep of A is
-              the 1-dim rep pi : A -> R sending 1 -> 1, x -> 0,
-              x^2 -> 0; ker(pi) = span{x, x^2}.  Wait -- but
-              that's not minimal.  Actually for A = R[x]/(x^3)
-              the unique simple module is R = A/(x), so
-              r_op = (x).  And Jac(A) = (x) too (the unique
-              maximal ideal).  They agree.  This is the
-              Wedderburn statement: for finite-dim algebras,
-              the radical is the intersection of maximal-
-              ideal kernels = Jacobson radical.
+    WHAT IS COMPUTED NOW.  Four witnesses -- the upper-triangular 2x2
+    matrices, Q[x]/(x^3), Q[x]/(x^2), and the pointwise-multiplication
+    algebra on the canonical APS state space whose dimension is read
+    live off apf.aps.  For each:
 
-    The check verifies on the 3-dim witness:
-      (i)   The unique stable simple rep has kernel (x).
-      (ii)  The Jacobson radical Jac(A), computed as the
-            intersection of maximal-ideal kernels, equals (x).
-      (iii) r_op = Jac(A) by direct comparison.
-      (iv)  Under stable-simple completeness (the unique simple
-            is in the family), the bridge is licensed.
+      (i)   the witness is verified associative and unital from its own
+            structure constants before anything is claimed of it;
+      (ii)  each declared sector is verified to BE a representation
+            (unit to identity, multiplicative on every basis pair), and
+            a candidate that is not one is exhibited as rejected, so
+            the verification is not vacuous.  Every sector here is
+            one-dimensional, so simplicity holds by dimension -- and
+            the multi-entry path of the kernel construction is
+            therefore not exercised by this witness set;
+      (iii) the Jacobson radical is computed by Dickson's
+            characteristic-zero criterion -- the null space of the
+            trace form T(a, b) = tr(L_{ab}) -- and the computed
+            subspace is then certified independently as a two-sided
+            ideal and as nilpotent, so a mis-implemented criterion is
+            caught by something other than itself;
+      (iv)  COMPLETENESS of the declared family is computed rather than
+            declared: the quotient by the computed radical is built and
+            verified associative, unital and commutative, and the
+            family's cardinality is compared to that quotient's
+            dimension.  Its SEMISIMPLICITY is not computed anywhere in
+            this check -- it is the classical theorem
+            rad(A/rad A) = 0, a named inheritance, and the word is kept
+            out of what this check returns;
+      (v)   the operational radical is computed as the intersection of
+            the computed kernels of the family, and compared to the
+            computed Jacobson radical as subspaces.
+
+    THE LEG THAT MAKES THE EQUALITY FALSIFIABLE.  On the two witnesses
+    carrying more than one sector, deleting a member of the family is
+    executed, and the resulting operational radical is computed to
+    CONTAIN the Jacobson radical STRICTLY.  So the equality is not an
+    identity of the construction: it is the completeness hypothesis
+    doing work, and dropping the hypothesis breaks it, exhibited.
+
+    AND A BROKEN DEFINITION IS EXECUTED, NOT DESCRIBED.  A rank-one form
+    tr(L_a) * tr(L_b) is substituted for the trace form and the
+    resulting subspace is computed; on the multi-sector witness it
+    differs from the radical and is caught by the ideal certificate.
+    The check records which witnesses the substitution is visible on:
+    on the local witnesses it is NOT, and that is reported rather than
+    smoothed, because it is why the control needs the multi-sector
+    witness.
+
+    SCOPE, and it is the whole of it.  Four small algebras.  No
+    universal over record algebras, over APF interfaces, or over "the
+    finite record algebra" follows from any of them, and completeness
+    here is a computed property of a declared family on a witness, not
+    a derived fact about the framework.
+
+    STANDING LIMIT, disclosed and not assumed away (D7@2026-08-08): the
+    leg inventory below certifies that a declared leg RAN, not that it
+    COULD have failed.  Neutering a leg's assertions while leaving its
+    append in place is invisible to it.
+
+    MAY NOT BE CITED AS: "stable simple-record completeness is derived";
+    "the Hardy-CDP perfect-distinguishability axiom is discharged";
+    "the Wedderburn bridge is licensed" without its witness and its
+    computed completeness condition; as licensing any downstream
+    construction; as certifying gate (2) of the closed-world chain; or
+    for any Born-arc reading.
     """
-    # A = R[x] / (x^3).  Bases of ideals expressed as sets of
-    # basis-element indices in {0, 1, 2} = {1, x, x^2}.
+    _DECLARED_LEGS = (
+        "witnesses_are_associative_unital_algebras",
+        "declared_sectors_are_representations",
+        "jacobson_radical_certified_ideal_and_nilpotent",
+        "stable_family_completeness_computed",
+        "operational_radical_equals_jacobson_computed",
+        "incompleteness_breaks_the_equality",
+        "broken_trace_form_executed",
+    )
+    legs_run = []
+    fail_reasons = []
 
-    # The unique simple module is A/(x) ~= R, rep pi: 1 |-> 1,
-    # x |-> 0, x^2 |-> 0.  Stable sectors set Pi_st = {pi}.
+    aps_algebra = _witness_aps_observables()[0]
+    witnesses = (
+        (_witness_upper_triangular_2(), (0, 2)),
+        (_witness_truncated_polynomial(3), (0,)),
+        (_witness_truncated_polynomial(2), (0,)),
+        (aps_algebra, tuple(range(aps_algebra.dim))),
+    )
 
-    # (i) operational radical = ker(pi) = span{x, x^2}
-    r_op = frozenset({1, 2})
-    ker_pi = frozenset({1, 2})  # indices that pi sends to 0
-    assert r_op == ker_pi, f"r_op = {r_op}, ker(pi) = {ker_pi}"
+    # ---- LEG (i) -------------------------------------------------------
+    algebra_checks = 0
+    for alg, _ in witnesses:
+        assert alg.is_associative(), \
+            f"witness {alg.name} is not associative"
+        assert alg.is_unital(), \
+            f"witness {alg.name} is not unital"
+        algebra_checks += 1
+    assert algebra_checks == len(witnesses), \
+        f"every witness must be verified; verified {algebra_checks}"
+    legs_run.append("witnesses_are_associative_unital_algebras")
 
-    # (ii) Jacobson radical = intersection of all maximal-ideal
-    # kernels.  The unique maximal ideal of R[x]/(x^3) is (x).
-    # Intersection over the singleton family is just (x) itself.
-    # (x) = span{x, x^2} = {1, 2}.
-    jac_A = frozenset({1, 2})
+    # ---- LEG (ii) ------------------------------------------------------
+    sectors_verified = 0
+    families = []
+    for alg, indices in witnesses:
+        family = _coordinate_sector_family(alg, indices)
+        for pi in family:
+            assert _is_representation(alg, pi), (
+                f"a declared sector of {alg.name} is not a "
+                f"representation")
+            assert len(pi[0]) == 1, (
+                "sectors here are one-dimensional, which is what makes "
+                "them simple by dimension rather than by assertion")
+            sectors_verified += 1
+        families.append(family)
+    assert sectors_verified == sum(len(f) for f in families), \
+        "every declared sector must be verified"
+    # The verification is not vacuous: a candidate that reads the
+    # nilpotent coordinate of the multi-sector witness is rejected.
+    _t2 = witnesses[0][0]
+    # Two controls, because one is not enough: the first candidate fails
+    # the unit condition, so on its own it cannot show that
+    # multiplicativity is being tested at all.  The second sends the unit
+    # to the identity and is NOT multiplicative, so only the
+    # multiplicativity clause can reject it.
+    assert not _is_representation(_t2, _one_dim_rep(
+        (_Q(0), _Q(1), _Q(0)))), (
+        "detector control: a candidate failing the unit condition must "
+        "be REJECTED")
+    assert not _is_representation(_t2, _one_dim_rep(
+        (_Q(1, 2), _Q(0), _Q(1, 2)))), (
+        "detector control: a UNITAL but non-multiplicative candidate "
+        "must be REJECTED, or the sector verification is carried by the "
+        "unit condition alone and multiplicativity is untested")
+    legs_run.append("declared_sectors_are_representations")
 
-    # (iii) r_op == Jac(A)
-    assert r_op == jac_A, f"r_op {r_op} != Jac(A) {jac_A}"
+    # ---- LEG (iii) -----------------------------------------------------
+    radicals = []
+    radical_certificates = 0
+    for alg, _ in witnesses:
+        jac = _jacobson_radical(alg)
+        assert _is_two_sided_ideal(alg, jac), (
+            f"the computed radical of {alg.name} is not a two-sided "
+            f"ideal, so the criterion is mis-implemented")
+        assert _is_nilpotent_subspace(alg, jac), (
+            f"the computed radical of {alg.name} is not nilpotent")
+        assert not _is_nilpotent_subspace(alg, [alg.unit]), (
+            "detector control: the span of the unit is NOT nilpotent, "
+            "and a nilpotency test that accepts it certifies nothing; "
+            f"{alg.name}")
+        radicals.append(jac)
+        radical_certificates += 1
+    assert radical_certificates == len(witnesses), \
+        "every computed radical must carry both certificates"
+    legs_run.append("jacobson_radical_certified_ideal_and_nilpotent")
 
-    # (iv) stable-simple completeness: the unique simple module is in
-    # the family Pi_st.  Witnessed by Pi_st having a member.
-    Pi_st = ["pi"]
-    assert len(Pi_st) >= 1, "Pi_st must be non-empty for completeness"
+    # ---- LEG (iv) ------------------------------------------------------
+    quotients = []
+    completeness_checks = 0
+    for (alg, _), jac, family in zip(witnesses, radicals, families):
+        _, _, _, qalg = _quotient_algebra(alg, jac)
+        assert qalg.is_associative() and qalg.is_unital(), (
+            f"the quotient of {alg.name} by its radical is not an "
+            f"associative unital algebra")
+        assert qalg.is_commutative(), (
+            "the completeness count below reads the quotient's "
+            "DIMENSION as its number of one-dimensional sectors, which "
+            f"is a step only a commutative quotient licenses; {alg.name}")
+        if len(family) == qalg.dim:
+            completeness_checks += 1
+        quotients.append(qalg)
+    assert completeness_checks == len(witnesses), (
+        f"only {completeness_checks} of {len(witnesses)} declared "
+        "families are complete: a family's cardinality must equal the "
+        "dimension of its quotient by the computed radical")
+    legs_run.append("stable_family_completeness_computed")
 
-    # (v) Quotient A / r_op is the simple algebra R (1-dimensional,
-    # commutative), so it's eligible for matrix-sector classification
-    # (Wedderburn).
-    quotient_dim = 3 - len(r_op)
-    assert quotient_dim == 1, f"quotient should be 1-dim, got {quotient_dim}"
+    # ---- LEG (v): the theorem, computed-to-computed --------------------
+    equalities = 0
+    for (alg, _), jac, family in zip(witnesses, radicals, families):
+        r_op = _joint_kernel(alg, family)
+        assert _same_span(r_op, jac, alg.dim), (
+            f"on {alg.name} the operational radical and the Jacobson "
+            f"radical are DIFFERENT subspaces: {r_op} vs {jac}")
+        equalities += 1
+    assert equalities == len(witnesses), \
+        "the equality must be computed on every witness"
+    legs_run.append("operational_radical_equals_jacobson_computed")
+
+    # ---- LEG (vi): incompleteness breaks it ----------------------------
+    # Not a description of what would happen: the deletion is executed
+    # and the strict containment is computed.
+    expected_drops = sum(len(f) for f in families if len(f) > 1)
+    assert expected_drops > 0, (
+        "at least one witness must carry more than one sector, or this "
+        "leg exhibits nothing and the equality above is untested")
+    drops_exhibited = 0
+    drops_attempted = 0
+    multi_sector_names = []
+    for (alg, _), jac, family in zip(witnesses, radicals, families):
+        if len(family) < 2:
+            continue
+        multi_sector_names.append(alg.name)
+        for k in range(len(family)):
+            reduced = tuple(family[i] for i in range(len(family))
+                            if i != k)
+            r_partial = _joint_kernel(alg, reduced)
+            if (_contains_span(r_partial, jac, alg.dim)
+                    and not _same_span(r_partial, jac, alg.dim)):
+                drops_exhibited += 1
+            drops_attempted += 1
+    # Counted, not asserted per deletion: every executed deletion must
+    # STRICTLY enlarge the operational radical, and the count is what
+    # carries that.
+    assert drops_attempted == expected_drops, (
+        f"every deletion must be executed; executed {drops_attempted} "
+        f"of {expected_drops}")
+    assert drops_exhibited == expected_drops, (
+        f"only {drops_exhibited} of {expected_drops} deletions strictly "
+        "enlarged the operational radical -- where one does not, the "
+        "equality above was not the completeness hypothesis doing work")
+    legs_run.append("incompleteness_breaks_the_equality")
+
+    # ---- LEG (vii): the broken definition, executed --------------------
+    broken_visible = []
+    broken_invisible = []
+    for (alg, _), jac in zip(witnesses, radicals):
+        broken = _jacobson_radical(alg, form="factored")
+        if _same_span(broken, jac, alg.dim):
+            broken_invisible.append(alg.name)
+        else:
+            broken_visible.append(alg.name)
+            assert not _is_two_sided_ideal(alg, broken), (
+                "where the broken form differs from the radical, the "
+                "ideal certificate is what catches it; on "
+                f"{alg.name} it did not")
+    assert broken_visible, (
+        "the broken trace form must be visible on at least one witness, "
+        "or this control exhibits nothing")
+    assert len(broken_visible) + len(broken_invisible) == len(witnesses), \
+        "every witness must be classified by the broken-form control"
+    legs_run.append("broken_trace_form_executed")
+
+    # A leg asserting the quotient's dimension against alg.dim minus the
+    # radical's, and against the sector count, was DELETED here rather
+    # than shipped: the first clause is how _quotient_algebra builds the
+    # quotient and the second is leg (iv)'s completeness comparison in
+    # other words, so no mutation could make either fail.  A leg that
+    # cannot fail is the defect this repair exists to remove, and
+    # shipping one inside the repair would be the corrective pass
+    # introducing the genre it is correcting.  The quotient dimension is
+    # still COMPUTED and reported in the record below.
+
+    computed = tuple(
+        {
+            "witness": alg.name,
+            "dim": alg.dim,
+            "sectors": len(family),
+            "radical_dim": len(jac),
+            "radical_basis": tuple(tuple(str(x) for x in v) for v in jac),
+            "quotient_dim": qalg.dim,
+        }
+        for (alg, _), jac, family, qalg in zip(
+            witnesses, radicals, families, quotients))
+
+    summary_rows = tuple(
+        (c["witness"], c["dim"], c["sectors"], c["radical_dim"],
+         c["quotient_dim"]) for c in computed)
+
+    # ---- leg inventory (D7@2026-08-08: append and record, never raise) -
+    missing = set(_DECLARED_LEGS) - set(legs_run)
+    extra = set(legs_run) - set(_DECLARED_LEGS)
+    if missing or extra:
+        fail_reasons.append(
+            f"leg inventory mismatch: missing={sorted(missing)}, "
+            f"extra={sorted(extra)}")
+    if len(legs_run) != len(set(legs_run)):
+        fail_reasons.append(f"a leg was recorded twice: {legs_run}")
 
     return {
         "name": "T_operational_radical_equals_jacobson",
-        "passed": True,
+        "passed": not fail_reasons,
         "tier": 3,
         "epistemic": "P_structural_reading",
         "key_result": (
-            f"On A = R[x]/(x^3) under stable-simple completeness "
-            f"(unique pi: A -> R), r_op = Jac(A) = (x) and the "
-            f"quotient A/r_op is 1-dim semisimple (R itself); "
-            f"the Wedderburn bridge is licensed"
+            f"COMPUTED ON {len(witnesses)} WITNESS ALGEBRAS, each "
+            f"verified associative and unital from its own structure "
+            f"constants: the operational radical (intersection of the "
+            f"computed kernels of a declared family of verified "
+            f"one-dimensional sectors) and the Jacobson radical (null "
+            f"space of the trace form tr(L_ab), certified independently "
+            f"as a two-sided ideal and as nilpotent) are the SAME "
+            f"subspace on every one -- compared computed-to-computed, "
+            f"neither side authored.  Per witness "
+            f"(dim, sectors, radical dim, quotient dim): "
+            f"{summary_rows}.  "
+            f"Completeness of each family is COMPUTED, not declared: "
+            f"cardinality against the dimension of the quotient by the "
+            f"computed radical, itself verified associative, unital "
+            f"and commutative.  FALSIFIABILITY EXHIBITED: "
+            f"{drops_exhibited} sector deletions executed on "
+            f"{tuple(multi_sector_names)}, each yielding an operational "
+            f"radical that strictly CONTAINS the Jacobson radical, so "
+            f"the equality is the completeness hypothesis doing work "
+            f"and not an identity of the construction.  A broken "
+            f"rank-one substitute for the trace form is EXECUTED: "
+            f"visible on {tuple(broken_visible)} and caught there by "
+            f"the ideal certificate, and NOT visible on "
+            f"{tuple(broken_invisible)} -- reported rather than "
+            f"smoothed, since it is why the control needs a "
+            f"multi-sector witness.  DISCLOSED LIMIT: no witness here "
+            f"separates that two-sided certificate from a one-sided "
+            f"one -- dropping either multiplication clause of it "
+            f"leaves every verdict in this module unchanged on these "
+            f"witnesses.  Four small algebras; no universal."
+        ),
+        "computed": computed,
+        "legs_run": tuple(legs_run),
+        "fail_reasons": tuple(fail_reasons),
+        "may_not_cite": (
+            "stable simple-record completeness is derived",
+            "the Hardy-CDP perfect-distinguishability axiom is "
+            "discharged",
+            "the Wedderburn bridge is licensed, stated without its "
+            "witness and its computed completeness condition",
+            "this licenses any downstream construction",
+            "this certifies gate (2) of the closed-world chain",
+            "any universal over record algebras, APF interfaces or "
+            "ledgers",
+            "any Born-arc reading",
         ),
         "summary": (
-            "Under stable-simple completeness (the family Pi_st of "
-            "stable simple sectors is exhaustive), the operational "
-            "radical (intersection of stable simple kernels) "
-            "coincides with the Jacobson radical (intersection of "
-            "maximal-ideal kernels) of the finite record algebra.  "
-            "The quotient is then a finite semisimple algebra "
-            "eligible for Wedderburn-Artin matrix-sector "
-            "classification.  When stable-simple completeness "
-            "fails, this bridge is not licensed and the framework "
-            "stops at the operational quotient."
+            "Under a completeness condition that is COMPUTED rather "
+            "than declared -- the declared family's cardinality equals "
+            "the dimension of the quotient by the computed radical, "
+            "itself verified associative, unital and commutative -- "
+            "the operational radical, computed as the "
+            "intersection of the computed kernels of the family, "
+            "coincides with the Jacobson radical, computed by "
+            "Dickson's characteristic-zero trace-form criterion and "
+            "certified independently as a two-sided ideal and as "
+            "nilpotent.  The quotient by that radical is computed "
+            "associative, unital and commutative, and its dimension "
+            "equals the number of sectors, computed; its "
+            "semisimplicity is a classical theorem and is not computed "
+            "here.  When completeness fails the coincidence fails: "
+            "every single-sector deletion is EXECUTED and yields an "
+            "operational radical strictly containing the Jacobson "
+            "radical.  This is a statement about four small algebras "
+            "over Q, one of which reads its dimension live off the "
+            "canonical APS witness; it is not a statement about record "
+            "algebras in general, and it derives no regime gate.  "
+            "REPAIRED 2026-08-30: before that date this check compared "
+            "three separately authored frozensets of equal value to "
+            "each other and computed nothing."
         ),
     }
 
@@ -467,91 +1562,529 @@ def check_T_operational_radical_equals_jacobson():
 # =====================================================================
 
 def check_T_positive_cone_quotient_compatible():
-    """T_positive_cone_quotient_compatible: on a finite ordered record
-    algebra, the positive cone is preserved under operationally-null
-    ideal quotients.
+    """T_positive_cone_quotient_compatible: on a finite record algebra
+    the positive cone read by the record-reading sectors is computed to
+    DESCEND to the quotient by the phantom ideal, the image of the cone
+    is computed EQUAL to the quotient's own cone, and both are exhibited
+    to FAIL when their computed preconditions are dropped.
 
     Tier 3 [P_math].  Paper 5 Supplement v5.97 section "Records and
-    positivity", Theorem "Positive-cone compatibility of record
-    products and quotients".
+    positivity", Theorem "Positive-cone compatibility of record products
+    and quotients".
 
-    Witness construction.  Take A = R[x]/(x^2) (2-dim, basis {1, x})
-    with the natural pointwise positivity (a + b*x is "positive"
-    iff a >= 0).  The trivial ideal {0} and the radical (x) are
-    the two ideals.  Verify:
-      (i)   pi : A -> A/(x) ~= R sends positive elements to
-            positive elements (cone preserved under quotient).
-      (ii)  pi is order-reflecting on operationally-distinguish-
-            able pairs (a >= 0 in quotient => some lift is >= 0
-            in A).
-      (iii) Positivity-preserving products: if a, b have
-            positive image in A/(x), so does a*b.
+    REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  What
+    executed before that date was three tautologies.  Positivity was
+    `a >= 0` on the first coordinate, the quotient map returned that
+    same coordinate, and the legs read `if a >= 0: assert a >= 0`, `if
+    a >= 0: assert a >= 0` again in other words, and `a product of two
+    non-negatives is non-negative`.  A prior sweep's random witnesses
+    produced zero leg failures across all three, and the record's claim
+    that the cone is preserved under the operationally-null radical
+    quotient was a source literal that no leg computed: no cone, no
+    quotient and no radical appeared anywhere in the body.
 
-    The "operationally null" condition on the ideal is what
-    makes the cone-preservation work: an ideal that is operationally
-    distinguishable would carry positivity information that the
-    quotient would lose.
+    THE LICENSING CLAUSE IS CUT, and the cut is disclosed as what it
+    is: this is the SECOND returned field of this still-banked check to
+    move, the first being the summary re-cut of R5@2026-08-30.  Both
+    movements run in the same direction: withdrawing a licensing
+    reading that no leg computed.
+
+    WHAT IS COMPUTED NOW, on two witnesses -- the upper-triangular 2x2
+    matrices, whose cone is cut by two independent functionals, and
+    Q[x]/(x^2), the witness this check has always named:
+
+      (i)   the witness is an associative unital algebra, computed, and
+            each record-reading sector is verified to BE a
+            representation -- so the multiplicativity the product leg
+            rests on is computed rather than assumed;
+      (ii)  the cone is DEFINED BY THE SECTORS -- an element is
+            positive when every sector returns a non-negative value --
+            so it is a computed polyhedral object and not a predicate
+            on one coordinate;
+      (iii) every defining functional is computed to VANISH on a
+            basis of the phantom ideal, which is exactly the condition
+            for positivity to be well defined on cosets.  AUTOMATIC AT
+            THIS CONSTRUCTION, and recorded as that rather than as a
+            certification: the functionals cutting the cone are the
+            same family whose joint kernel DEFINES the phantom ideal,
+            so each of those evaluations is an evaluation of a
+            definition and no witness datum can make one fail.  A
+            witness sweep exercises the consequence; DESCENT ITSELF is
+            exhibited FAILING in LEG (vii) below, where the ideal is
+            enlarged past that joint kernel and the vanishing condition
+            no longer holds;
+      (iv)  the image of the cone EQUALS the quotient's cone, certified
+            by three exact identities -- the descended functional
+            composed with the projection reproduces the original, the
+            original composed with the canonical lift reproduces the
+            descended one, and the projection inverts the lift.  Those
+            three give both inclusions for EVERY element, not for a
+            sample.  The first is entailed by (iii) rather than
+            independent of it, computed a different way and recorded as
+            such;
+      (v)   the cone is closed under multiplication, which follows for
+            every pair from the computed multiplicativity of each
+            sector plus the fact that a product of non-negative
+            rationals is non-negative; a product sweep exercises it.
+
+    THE TWO LEGS THAT CAN FAIL, both EXECUTED rather than described:
+
+      (a) quotienting by a strictly larger two-sided ideal on which a
+          defining functional does NOT vanish breaks descent -- a cone
+          element and an ideal element are exhibited whose sum leaves
+          the cone, so positivity is not well defined on those cosets;
+      (b) a cone cut by a NON-multiplicative functional is exhibited
+          not closed under multiplication -- two of its elements are
+          computed to have a product outside it.
+
+    So neither result is a property of quotients or of cones in
+    general, and this check does not treat either as one.
+
+    AND ONE VALUE TIE, leg (ix) in the body.  The phantom ideal this
+    cone descends along is compared BY VALUE, on the shared witness,
+    against the radical the sibling check reaches by the trace-form
+    route -- a different upstream construction, though not an
+    independent one, since both descend through the same row-reduction
+    primitives.
+
+    SCOPE.  Two small algebras over Q with the cone their own sectors
+    read.  No universal over cones, ordered algebras or interfaces
+    follows, and nothing here licenses anything downstream.
+
+    STANDING LIMIT, disclosed and not assumed away (D7@2026-08-08): the
+    leg inventory below certifies that a declared leg RAN, not that it
+    COULD have failed.  Neutering a leg's assertions while leaving its
+    append in place is invisible to it.
+
+    MAY NOT BE CITED AS: "the positivity gate is licensed"; as
+    licensing the trace rule, the Born rule or any downstream endpoint;
+    as showing positivity descends in general; or for any universal
+    over cones, ordered algebras, interfaces or ledgers.
     """
-    # A = R[x]/(x^2), basis {1, x}.  Element a + b*x is "positive"
-    # iff a >= 0 (the sign of the leading coefficient; b is a
-    # phantom direction in the quotient).
+    _DECLARED_LEGS = (
+        "witnesses_are_algebras_with_verified_sectors",
+        "cone_is_cut_by_the_sectors",
+        "functionals_vanish_on_the_phantom_ideal",
+        "descent_exercised_on_a_witness_family",
+        "image_cone_equals_quotient_cone_by_identity",
+        "cone_closed_under_products",
+        "larger_ideal_breaks_descent",
+        "non_multiplicative_functional_breaks_closure",
+        "phantom_ideal_tied_by_value_to_the_sibling",
+    )
+    legs_run = []
+    fail_reasons = []
 
-    def is_positive(a, b):
-        return a >= 0
+    witnesses = (
+        (_witness_upper_triangular_2(), (0, 2)),
+        (_witness_truncated_polynomial(2), (0,)),
+    )
 
-    # Quotient pi: (a, b) -> a (drop the radical direction)
-    def pi(a, b):
-        return a
+    # The probe family is an AUTHORED rational value set, one axis per
+    # coordinate of whichever space is handed to _probe.  Named here and
+    # reported in the record below: every count this check quotes is a
+    # count over this grid, and a count whose support is unstated cannot
+    # be reproduced by a reader.
+    probe_values = (_Q(-2), _Q(-1), _Q(0), _Q(1), _Q(3))
 
-    # (i) cone preserved: every positive element of A maps to a
-    # positive element of A/(x).
-    test_elements = [
-        (1.0, 0.5), (2.0, -1.0), (0.0, 3.0), (5.0, 0.0),
-    ]
-    for a, b in test_elements:
-        if is_positive(a, b):
-            assert pi(a, b) >= 0, \
-                f"pi({a}+{b}x) = {pi(a, b)} should be >= 0"
+    def _probe(alg):
+        """The authored value set above raised to the dimension it is
+        handed -- the quotient algebras below have their own dimensions
+        and a family shaped for the wrong one would silently probe a
+        different space."""
+        out = [()]
+        for _ in range(alg.dim):
+            out = [row + (v,) for row in out for v in probe_values]
+        return out
 
-    # (ii) order-reflecting on lifts: if pi(a, b) >= 0, then the
-    # element (a, 0) in A is positive (canonical lift).
-    for a in [0.0, 1.0, 2.5, 10.0]:
-        if a >= 0:
-            assert is_positive(a, 0.0), \
-                f"canonical lift ({a}, 0) should be positive"
+    # ---- LEG (i) -------------------------------------------------------
+    families, cones = [], []
+    for alg, indices in witnesses:
+        assert alg.is_associative() and alg.is_unital(), \
+            f"{alg.name} is not an associative unital algebra"
+        family = _coordinate_sector_family(alg, indices)
+        for pi in family:
+            assert _is_representation(alg, pi), (
+                f"a sector of {alg.name} is not a representation, so "
+                f"the multiplicativity the product leg rests on is "
+                f"absent")
+        families.append(family)
+    assert len(families) == len(witnesses), \
+        "every witness must carry a verified sector family"
+    legs_run.append("witnesses_are_algebras_with_verified_sectors")
 
-    # (iii) positivity-preserving products under pi:
-    # In A: (a1 + b1 x)(a2 + b2 x) = a1 a2 + (a1 b2 + a2 b1) x
-    # In A/(x): (a1)(a2) = a1 a2.
-    # Verify pi(prod) = pi(a) * pi(b) when pi(a), pi(b) >= 0.
-    for (a1, b1) in test_elements:
-        for (a2, b2) in test_elements:
-            if pi(a1, b1) >= 0 and pi(a2, b2) >= 0:
-                prod_a = a1 * a2
-                # prod_b = a1*b2 + a2*b1  (not used for cone test)
-                assert pi(prod_a, 0.0) >= 0, \
-                    f"product image not positive: {a1}*{a2}"
+    # ---- LEG (ii) ------------------------------------------------------
+    for (alg, _), family in zip(witnesses, families):
+        covectors = tuple(tuple(pi[i][0][0] for i in range(alg.dim))
+                          for pi in family)
+        assert len(covectors) == len(family), \
+            f"one defining functional per sector on {alg.name}"
+        cones.append(covectors)
+    # The cone must not be all of the algebra, or every statement below
+    # is about the whole space and exhibits nothing.
+    for (alg, _), covectors in zip(witnesses, cones):
+        outside = [a for a in _probe(alg)
+                   if any(sum(f[i] * a[i] for i in range(alg.dim)) < 0
+                          for f in covectors)]
+        assert outside, (
+            f"the cone on {alg.name} must be a PROPER subset of the "
+            f"algebra, or positivity is vacuous here")
+    legs_run.append("cone_is_cut_by_the_sectors")
+
+    def _in_cone(alg, covectors, a):
+        return all(sum(f[i] * a[i] for i in range(alg.dim)) >= 0
+                   for f in covectors)
+
+    # ---- LEG (iii): the vanishing condition, evaluated -----------------
+    # AUTOMATIC AT THIS CONSTRUCTION, disclosed here rather than
+    # presented as a certification: the cone's defining functionals ARE
+    # the family whose joint kernel defines the phantom ideal, so every
+    # evaluation below is an evaluation of that definition and no
+    # structure constant, sector or family membership can make one fail.
+    # Descent being automatic HERE is exactly what LEG (vii) shows is not
+    # true of quotients in general, and that is where the falsifiable
+    # content of this check's descent half lives.
+    phantoms, quotients = [], []
+    vanishing_checks = 0
+    for (alg, _), family, covectors in zip(witnesses, families, cones):
+        r_op = _joint_kernel(alg, family)
+        assert _is_two_sided_ideal(alg, r_op), \
+            f"the computed phantom ideal of {alg.name} is not an ideal"
+        vanishing_here = 0
+        evaluated_here = 0
+        for f in covectors:
+            for v in r_op:
+                value = sum(f[i] * v[i] for i in range(alg.dim))
+                evaluated_here += 1
+                if value == 0:
+                    vanishing_here += 1
+        assert vanishing_here == evaluated_here, (
+            f"{evaluated_here - vanishing_here} of {evaluated_here} "
+            "evaluations found a defining functional of the cone that "
+            "does NOT vanish on the phantom ideal, so positivity is not "
+            f"well defined on cosets; {alg.name}")
+        vanishing_checks += evaluated_here
+        phantoms.append(r_op)
+        quotients.append(_quotient_algebra(alg, r_op))
+    assert vanishing_checks == sum(
+        len(c) * len(r) for c, r in zip(cones, phantoms)), \
+        "every functional must be evaluated on every ideal basis vector"
+    assert vanishing_checks > 0, (
+        "at least one witness must carry a non-zero phantom ideal, or "
+        "this leg evaluates nothing")
+    legs_run.append("functionals_vanish_on_the_phantom_ideal")
+
+    # ---- LEG (iv): descent, exercised ----------------------------------
+    descent_pairs = 0
+    for (alg, _), covectors, r_op in zip(witnesses, cones, phantoms):
+        for a in _probe(alg):
+            if not _in_cone(alg, covectors, a):
+                continue
+            for v in r_op:
+                for scale in (_Q(-3), _Q(-1), _Q(1), _Q(5)):
+                    shifted = tuple(a[i] + scale * v[i]
+                                    for i in range(alg.dim))
+                    assert _in_cone(alg, covectors, shifted), (
+                        "adding a phantom-ideal element to a cone "
+                        f"element left the cone on {alg.name}")
+                    descent_pairs += 1
+    assert descent_pairs > 0, \
+        "the descent sweep must evaluate at least one shifted element"
+    legs_run.append("descent_exercised_on_a_witness_family")
+
+    # ---- LEG (v): the image cone, by exact identity --------------------
+    identity_checks = 0
+    sweep_forward = 0
+    sweep_back = 0
+    for (alg, _), covectors, (complement, proj, lift, qalg) in zip(
+            witnesses, cones, quotients):
+        descended = tuple(tuple(f[c] for c in complement)
+                          for f in covectors)
+        for f, fbar in zip(covectors, descended):
+            # (a) fbar . proj == f on every basis element.  ENTAILED by
+            # the vanishing leg above rather than independent of it,
+            # computed by a different route and recorded as such.
+            forward_matches = sum(
+                1 for i in range(alg.dim)
+                if sum(fbar[k] * proj(alg.basis(i))[k]
+                       for k in range(qalg.dim)) == f[i])
+            assert forward_matches == alg.dim, (
+                "the descended functional reproduces the original "
+                f"through the projection on only {forward_matches} of "
+                f"{alg.dim} basis elements; {alg.name}")
+            identity_checks += alg.dim
+            # (b) f . lift == fbar on every quotient basis element.
+            # ENTAILED by the definition of the lift, which is zero off
+            # the complement coordinates; computed here rather than
+            # asserted, and not independent of (a).
+            back_matches = sum(
+                1 for k in range(qalg.dim)
+                if sum(f[i] * lift(qalg.basis(k))[i]
+                       for i in range(alg.dim)) == fbar[k])
+            assert back_matches == qalg.dim, (
+                "the original functional reproduces the descended one "
+                f"through the lift on only {back_matches} of "
+                f"{qalg.dim} quotient basis elements; {alg.name}")
+            identity_checks += qalg.dim
+        # (c) the projection inverts the lift, so (b) gives the reverse
+        # inclusion for EVERY element of the quotient cone and not for a
+        # sample of it.  ENTAILED as well: the lift writes zeros into
+        # the pivot coordinates, so the projection's reduction has
+        # nothing to subtract from them.
+        for k in range(qalg.dim):
+            assert proj(lift(qalg.basis(k))) == qalg.basis(k), (
+                f"the projection does not invert the lift; {alg.name}")
+            identity_checks += 1
+        for a in _probe(alg):
+            if _in_cone(alg, covectors, a):
+                assert _in_cone(qalg, descended, proj(a)), (
+                    "a cone element has an image outside the quotient "
+                    f"cone; {alg.name}")
+                sweep_forward += 1
+        for u in _probe(qalg):
+            if _in_cone(qalg, descended, u):
+                back = lift(u)
+                assert _in_cone(alg, covectors, back), (
+                    "a quotient-cone element has a canonical lift "
+                    f"outside the cone; {alg.name}")
+                assert proj(back) == u, \
+                    f"the lift is not a preimage; {alg.name}"
+                sweep_back += 1
+    assert identity_checks > 0 and sweep_forward > 0 and sweep_back > 0, \
+        "each half of the cone-image equality must be exercised"
+    legs_run.append("image_cone_equals_quotient_cone_by_identity")
+
+    # ---- LEG (vi): products --------------------------------------------
+    # The universal is carried by the verified multiplicativity of each
+    # sector plus the non-negativity of a product of non-negative
+    # rationals; the sweep exercises it on live data.
+    product_pairs = 0
+    for (alg, _), covectors in zip(witnesses, cones):
+        cone_elements = [a for a in _probe(alg)
+                         if _in_cone(alg, covectors, a)]
+        assert cone_elements, f"empty cone sample on {alg.name}"
+        for a in cone_elements:
+            for b in cone_elements:
+                product = alg.mul(a, b)
+                # Tie by value: each sector's reading of the product must
+                # BE the product of its readings, so substituting either
+                # factor for the product is caught here rather than
+                # passing because a factor happens to be in the cone.
+                for f in covectors:
+                    fa = sum(f[i] * a[i] for i in range(alg.dim))
+                    fb = sum(f[i] * b[i] for i in range(alg.dim))
+                    fab = sum(f[i] * product[i] for i in range(alg.dim))
+                    assert fab == fa * fb, (
+                        "a sector is not multiplicative on this pair, so "
+                        "the cone's closure under products is not "
+                        f"carried by what this leg says carries it; "
+                        f"{alg.name}")
+                assert _in_cone(alg, covectors, product), (
+                    "the product of two cone elements left the cone on "
+                    f"{alg.name}")
+                product_pairs += 1
+    assert product_pairs > 0, "the product sweep must evaluate a pair"
+    legs_run.append("cone_closed_under_products")
+
+    # ---- LEG (vii): descent BREAKS on a larger ideal -------------------
+    t2, _t2_indices = witnesses[0]
+    t2_cov = cones[0]
+    t2_phantom = phantoms[0]
+    larger = _span_basis([t2.basis(1), t2.basis(2)], t2.dim)
+    assert _is_two_sided_ideal(t2, larger), \
+        "the control subspace must be a two-sided ideal"
+    assert (_contains_span(larger, t2_phantom, t2.dim)
+            and not _same_span(larger, t2_phantom, t2.dim)), \
+        "the control ideal must contain the phantom ideal strictly"
+    non_vanishing = [f for f in t2_cov
+                     if any(sum(f[i] * v[i] for i in range(t2.dim)) != 0
+                            for v in larger)]
+    assert non_vanishing, (
+        "the control ideal must carry a functional that does NOT "
+        "vanish on it, or it breaks nothing")
+    broken_descent = 0
+    for a in _probe(t2):
+        if not _in_cone(t2, t2_cov, a):
+            continue
+        for v in larger:
+            for scale in (_Q(-3), _Q(-1), _Q(1), _Q(5)):
+                shifted = tuple(a[i] + scale * v[i]
+                                for i in range(t2.dim))
+                if not _in_cone(t2, t2_cov, shifted):
+                    broken_descent += 1
+    assert broken_descent > 0, (
+        "quotienting by the larger ideal must break descent on an "
+        "EXHIBITED pair -- if it breaks none, this control exhibits "
+        "nothing and the descent leg above is untested")
+    legs_run.append("larger_ideal_breaks_descent")
+
+    # ---- LEG (viii): a non-multiplicative functional breaks closure ----
+    difference = tuple(t2_cov[0][i] - t2_cov[1][i] for i in range(t2.dim))
+
+    def phi(a):
+        return sum(difference[i] * a[i] for i in range(t2.dim))
+
+    multiplicative = all(
+        phi(t2.mul(t2.basis(i), t2.basis(j)))
+        == phi(t2.basis(i)) * phi(t2.basis(j))
+        for i in range(t2.dim) for j in range(t2.dim))
+    assert not multiplicative, (
+        "the control functional must be NON-multiplicative, or it is "
+        "just another sector and exhibits nothing")
+    broken_closure = 0
+    phi_cone = [a for a in _probe(t2) if phi(a) >= 0]
+    assert phi_cone, "the control cone must be non-empty"
+    for a in phi_cone:
+        for b in phi_cone:
+            if phi(t2.mul(a, b)) < 0:
+                broken_closure += 1
+    assert broken_closure > 0, (
+        "a cone cut by a non-multiplicative functional must be "
+        "EXHIBITED not closed under multiplication, or the product leg "
+        "above is carried by nothing")
+    legs_run.append("non_multiplicative_functional_breaks_closure")
+
+    # ---- LEG (ix): the in-module value tie -----------------------------
+    sibling = check_T_operational_radical_equals_jacobson()
+    sibling_rows = [row for row in sibling["computed"]
+                    if row["witness"] == t2.name]
+    assert len(sibling_rows) == 1, (
+        "the sibling must report exactly one row for the shared "
+        f"witness {t2.name}; got {len(sibling_rows)}")
+    rendered_here = tuple(tuple(str(x) for x in v) for v in t2_phantom)
+    assert sibling_rows[0]["radical_basis"] == rendered_here, (
+        "the phantom ideal the cone descends along and the radical the "
+        "sibling computes are DIFFERENT subspaces on the same witness: "
+        f"{rendered_here} vs {sibling_rows[0]['radical_basis']}")
+    legs_run.append("phantom_ideal_tied_by_value_to_the_sibling")
+
+    # ---- leg inventory (D7@2026-08-08: append and record, never raise) -
+    missing = set(_DECLARED_LEGS) - set(legs_run)
+    extra = set(legs_run) - set(_DECLARED_LEGS)
+    if missing or extra:
+        fail_reasons.append(
+            f"leg inventory mismatch: missing={sorted(missing)}, "
+            f"extra={sorted(extra)}")
+    if len(legs_run) != len(set(legs_run)):
+        fail_reasons.append(f"a leg was recorded twice: {legs_run}")
+
+    # Every count returned below is a count over the authored grid
+    # named above, raised to the dimension of whichever space was
+    # probed.  The per-space sizes are computed here rather than left
+    # implicit in the body.
+    probe_sizes = tuple(
+        (alg.name, len(_probe(alg)), q[3].name, len(_probe(q[3])))
+        for (alg, _), q in zip(witnesses, quotients))
+
+    computed = tuple(
+        {
+            "witness": alg.name,
+            "dim": alg.dim,
+            "cone_functionals": len(covectors),
+            "phantom_ideal_dim": len(r_op),
+            "quotient_dim": q[3].dim,
+            "probe_grid_values": tuple(str(v) for v in probe_values),
+            "probe_grid_size": len(_probe(alg)),
+            "quotient_probe_grid_size": len(_probe(q[3])),
+        }
+        for (alg, _), covectors, r_op, q in zip(
+            witnesses, cones, phantoms, quotients))
+
+    summary_rows = tuple(
+        (c["witness"], c["dim"], c["cone_functionals"],
+         c["phantom_ideal_dim"], c["quotient_dim"]) for c in computed)
 
     return {
         "name": "T_positive_cone_quotient_compatible",
-        "passed": True,
+        "passed": not fail_reasons,
         "tier": 3,
         "epistemic": "P_math",
         "key_result": (
-            "On A = R[x]/(x^2) the natural positive cone is "
-            "preserved under the operationally-null radical quotient; "
-            "cone(A/r_op) = pi(cone(A)); positivity gate licensed"
+            f"COMPUTED ON {len(witnesses)} WITNESS ALGEBRAS.  The cone "
+            f"is cut by the record-reading sectors themselves and is "
+            f"computed to be a PROPER subset of each algebra.  "
+            f"DESCENT IS AUTOMATIC AT THIS CONSTRUCTION and is "
+            f"recorded as that rather than as a certification: the "
+            f"functionals cutting the cone are the same family whose "
+            f"joint kernel defines the phantom ideal, so the "
+            f"{vanishing_checks} evaluations computing that every "
+            f"defining functional vanishes on every basis vector of "
+            f"that ideal are evaluations of a definition, and the "
+            f"{descent_pairs} shifted elements of the sweep exercise a "
+            f"consequence of it; DESCENT ITSELF is exhibited FAILING "
+            f"in the larger-ideal control below, where the ideal is "
+            f"enlarged past that joint kernel.  The image of the cone "
+            f"EQUALS the quotient cone by three exact identities "
+            f"({identity_checks} evaluations) which give both "
+            f"inclusions for every element rather than for a sample -- "
+            f"identities of this construction, the first entailed by "
+            f"the vanishing above and the other two by how the lift is "
+            f"defined, so those evaluations exercise them rather than "
+            f"test them -- exercised forward on {sweep_forward} and "
+            f"back on {sweep_back} elements.  Closure under products "
+            f"rests on the computed multiplicativity of each sector "
+            f"and is exercised on {product_pairs} pairs.  Per witness "
+            f"(dim, functionals, phantom dim, quotient dim): "
+            f"{summary_rows}.  THE SWEEP COUNTS -- the descent shifts, "
+            f"the two cone sweeps, the product pairs and both control "
+            f"counts -- ARE COUNTS OVER AN AUTHORED RATIONAL PROBE "
+            f"GRID: the value set "
+            f"{tuple(str(v) for v in probe_values)} raised to the "
+            f"dimension of the space probed, giving (algebra, size, "
+            f"quotient, size) {probe_sizes}.  Named because a count "
+            f"whose support is unstated cannot be reproduced by a "
+            f"reader, and the grid is authored, not derived.  The "
+            f"vanishing and identity counts are not grid counts: they "
+            f"are counts over basis elements.  "
+            f"BOTH FAILURE MODES EXHIBITED: a strictly "
+            f"larger two-sided ideal breaks descent on "
+            f"{broken_descent} exhibited shifts, and a cone cut by a "
+            f"computed non-multiplicative functional is not closed "
+            f"under multiplication on {broken_closure} exhibited "
+            f"pairs.  The phantom ideal this cone descends along is "
+            f"tied BY VALUE to the radical the sibling check reaches "
+            f"by the trace-form route, a different upstream "
+            f"construction though not an independent one.  Two small "
+            f"algebras; no universal, and nothing licensed."
+        ),
+        "computed": computed,
+        "legs_run": tuple(legs_run),
+        "fail_reasons": tuple(fail_reasons),
+        "may_not_cite": (
+            "the positivity gate is licensed",
+            "this licenses the trace rule, the Born rule or any "
+            "downstream endpoint",
+            "positivity descends under ideal quotients in general",
+            "any universal over cones, ordered algebras, interfaces or "
+            "ledgers",
         ),
         "summary": (
-            "Three legs executed on the 2-dim witness A = R[x]/(x^2) "
-            "with the pointwise cone (a + b*x positive iff a >= 0), each "
-            "over the shipped elements: every shipped positive element "
-            "has a non-negative image under the quotient by the radical "
-            "direction; the canonical lift (a, 0) is positive in A at "
-            "each shipped non-negative a; and each pair of shipped "
-            "elements with non-negative images has a product with a "
-            "non-negative image.  Those three legs on that witness are "
-            "what this check computes."
+            "On two small algebras over Q the positive cone is the one "
+            "the record-reading sectors cut, and four things are "
+            "computed on it: that it is a proper subset of the "
+            "algebra; that every functional cutting it vanishes on the "
+            "phantom ideal, which is the exact condition for "
+            "positivity to be well defined on cosets -- automatic "
+            "here, since those functionals are the family whose joint "
+            "kernel defines the ideal, which is why the larger-ideal "
+            "control below is what carries that half of the result; "
+            "that the image of the cone equals the quotient's own "
+            "cone, by covector identities of the projection and the "
+            "lift that carry both inclusions for every element rather "
+            "than for a sample; and that the cone is closed under "
+            "multiplication, carried by the computed multiplicativity "
+            "of each sector.  Two negative controls "
+            "are EXECUTED: a strictly larger ideal breaks descent on "
+            "exhibited elements, and a cone cut by a computed "
+            "non-multiplicative functional is exhibited not closed "
+            "under products.  REPAIRED 2026-08-30: what executed "
+            "before that date was three tautologies of the form 'if "
+            "P(x), assert P(x)', unfalsifiable on every witness a "
+            "prior sweep supplied, beneath a returned claim about cones "
+            "and quotients that no leg computed.  That claim's "
+            "trailing licensing clause is withdrawn with it: what is "
+            "computed here is a fact about two named finite algebras "
+            "and it licenses nothing."
         ),
     }
 
@@ -1506,6 +3039,36 @@ def check_T_closed_world_gate_fence_inventory():
     check_T_split_composite_gates_tomographic_locality, which this check
     does NOT consume and does not audit.
 
+    RE-CUT 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8), AND IT
+    IS A MOVEMENT OF THIS CHECK'S COMPUTED FIGURE.  Gate (2)'s two
+    constituents -- check_T_no_phantom_record_quotient and
+    check_T_operational_radical_equals_jacobson -- were repaired the
+    same day, and gate (2) has moved from UNFENCED to FENCED.  THE
+    MECHANISM, stated exactly, because the movement invites a wrong
+    reading in both directions.  Those two checks were measured hollow:
+    one stood integer addition in for an algebra, the other compared
+    three separately authored frozensets of equal value to each other.
+    The repair makes both COMPUTE -- radicals, quotients, kernels and
+    their negative controls, in exact rational arithmetic -- and, in
+    re-cutting what they RETURN down to what they compute, both
+    acquired a structured may_not_cite barring the reading that gate
+    (2) is derived, which neither ever computed and neither computes
+    now.  Writing that fence is what moved the classification.  So the
+    movement is a fence appearing where the scoping audit of 2026-08-30
+    said one was missing -- its words were that the gate was unfenced
+    because nobody had written its fence -- and it is NOT a
+    constituent's content weakening: both constituents compute strictly
+    more than they did, and both still pass.  Every gate is now FENCED
+    and the computed figure is zero of three.  THAT IS NOT A
+    REFUTATION OF ANY GATE.  Absence of a fence was never presence of a
+    derivation, and presence of a fence is not presence of a
+    refutation; the empty UNFENCED set says that every gate now carries
+    a constituent that declines the derivation reading, and it says
+    nothing whatever about whether any such derivation exists.  The
+    classification branch is factored below and exercised in BOTH arms
+    on synthetic records, so an empty live UNFENCED set does not leave
+    that arm dead.
+
     NO BANKED SOURCE WAS FOUND FOR GATE (1) -- a stated search result,
     NOT a universal this check certifies, and no leg here computes it.  A
     subsumption search on 2026-08-30 (grep over apf/ for self-duality,
@@ -1775,14 +3338,21 @@ def check_T_closed_world_gate_fence_inventory():
     assert len(gate_constituents) == 3, \
         f"three gates expected; got {len(gate_constituents)}"
 
+    def _classify(parts):
+        """The classification branch, factored rather than inlined so
+        that it can be exercised in BOTH arms.  Every live gate is now
+        fenced, so an inline branch would leave the unfenced arm dead
+        code; leg (v) runs this same function on synthetic records."""
+        all_pass = all(r["passed"] for r in parts)
+        any_fenced = any(_is_fenced(r) for r in parts)
+        return "unfenced" if (all_pass and not any_fenced) else "fenced"
+
     unfenced = set()
     fenced = set()
     verdict_inventory = {}
     for gate, parts in gate_constituents.items():
-        all_pass = all(r["passed"] for r in parts)
-        verdict_inventory[gate] = all_pass
-        any_fenced = any(_is_fenced(r) for r in parts)
-        (unfenced if (all_pass and not any_fenced) else fenced).add(gate)
+        verdict_inventory[gate] = all(r["passed"] for r in parts)
+        (unfenced if _classify(parts) == "unfenced" else fenced).add(gate)
 
     # The surviving constituents' VERDICTS are pinned here independently
     # of the fence classification.  Gate (1) is deliberately not pinned
@@ -1793,13 +3363,17 @@ def check_T_closed_world_gate_fence_inventory():
         "a surviving constituent stopped passing; got "
         f"{sorted(verdict_inventory.items())}")
 
-    assert unfenced == {"gate_2_stable_simple_completeness"}, (
+    assert unfenced == set(), (
         "the computed UNFENCED set moved in one direction or the other.  "
-        "UNFENCED is a fence-absence reading and never a derivation "
-        "claim; if this set has changed, THIS check must be re-cut "
-        "deliberately with its own audit rather than left to re-classify "
-        f"itself; got {sorted(unfenced)}")
+        "It was re-cut to EMPTY on 2026-08-30 when gate (2)'s repaired "
+        "constituents acquired structured fences; UNFENCED is a "
+        "fence-absence reading and never a derivation claim, and an "
+        "empty UNFENCED set is not a refutation of anything.  If this "
+        "set has changed, THIS check must be re-cut deliberately with "
+        "its own audit rather than left to re-classify itself; got "
+        f"{sorted(unfenced)}")
     assert fenced == {"gate_1_reciprocal_calibration",
+                      "gate_2_stable_simple_completeness",
                       "gate_3_apf_complete_composite_closure"}, \
         f"the computed FENCED set moved; got {sorted(fenced)}"
     assert len(unfenced) + len(fenced) == len(gate_constituents), \
@@ -1828,6 +3402,37 @@ def check_T_closed_world_gate_fence_inventory():
                 or not all(r["passed"] for r in _parts)), (
             "a gate in the FENCED set has neither a fenced constituent "
             f"nor a constituent that fails to pass: {_g}")
+    # Both arms of the factored branch are exercised on synthetic
+    # records, so the now-empty live UNFENCED set does not leave the
+    # unfenced arm dead.  A relabel of the branch is caught here whether
+    # or not any live gate populates that arm.
+    _synthetic_unfenced = {"name": "synthetic", "passed": True,
+                           "key_result": "a computed structural result"}
+    _synthetic_fenced = {"name": "synthetic", "passed": True,
+                         "may_not_cite": ("this gate is derived",)}
+    _synthetic_failing = {"name": "synthetic", "passed": False,
+                          "key_result": "a computed structural result"}
+    assert _classify((_synthetic_unfenced,)) == "unfenced", (
+        "the unfenced arm of the classification branch must still be "
+        "reachable, or an empty live UNFENCED set has left it dead")
+    assert _classify((_synthetic_fenced,)) == "fenced", \
+        "a fenced constituent must classify its gate FENCED"
+    assert _classify((_synthetic_failing,)) == "fenced", \
+        "a constituent that does not pass must classify its gate FENCED"
+    assert _classify((_synthetic_unfenced, _synthetic_fenced)) == "fenced", (
+        "one fenced constituent among several must classify the gate "
+        "FENCED")
+    # The record below reports how many of gate (2)'s constituents carry
+    # the structured bar.  The classification above is satisfied by ONE
+    # fenced constituent, so it does not establish that figure: the
+    # figure is computed here and interpolated into the record rather
+    # than authored there.
+    _g2_parts = gate_constituents["gate_2_stable_simple_completeness"]
+    _g2_bars = tuple(_bars_a_derivation_reading(r) for r in _g2_parts)
+    assert all(_g2_bars), (
+        "a constituent of gate (2) no longer carries the structured "
+        f"bar; computed {_g2_bars} over "
+        f"{tuple(r['name'] for r in _g2_parts)}")
     legs_run.append("partition_tied_to_detectors_by_value")
 
     # ---- LEG (vi): controls on BOTH detectors --------------------------
@@ -1871,17 +3476,25 @@ def check_T_closed_world_gate_fence_inventory():
             f"them bars a derivation reading in its may_not_cite or "
             f"discloses in its own record that its verdicts are literals; "
             f"absence of a fence is NOT presence of a derivation and no "
-            f"leg here computes one.  UNFENCED: {tuple(sorted(unfenced))} "
-            f"-- constituent grades read by value: "
-            f"{gate2_quotient['epistemic']!r} and "
-            f"{gate2_jacobson['epistemic']!r}.  FENCED: "
+            f"leg here computes one -- and the mirror holds too: an "
+            f"empty UNFENCED set is NOT a refutation of any gate.  "
+            f"UNFENCED: {tuple(sorted(unfenced))}.  FENCED: "
             f"{tuple(sorted(fenced))} -- gate (1)'s constituent "
             f"T_closed_ledger_reciprocity took a SCOPE CORRIGENDUM on "
             f"2026-07-29 and its own may_not_cite bars {_GATE1_BAR!r}; "
             f"gate (3)'s constituent T_split_closed_world_complex_"
             f"selection discloses in its own record that its leg verdicts "
-            f"are literals which it composes and computes neither of.  "
-            f"Both read BY VALUE off those records.  Recomputed here in "
+            f"are literals which it composes and computes neither of; and "
+            f"gate (2)'s {len(_g2_parts)} constituents, repaired on "
+            f"2026-08-30 to compute radicals, quotients and kernels in "
+            f"exact rational arithmetic, bar the reading that gate (2) "
+            f"is derived in their own may_not_cite in {sum(_g2_bars)} "
+            f"of {len(_g2_bars)} cases -- a reading none of them "
+            f"computed.  "
+            f"Their grades, read by value: "
+            f"{gate2_quotient['epistemic']!r} and "
+            f"{gate2_jacobson['epistemic']!r}.  All three read BY VALUE "
+            f"off those records.  Recomputed here in "
             f"exact rational arithmetic: the closed-world identity holds "
             f"on {holds_when_t_defined}/{len(witnesses)} witnesses when "
             f"t := p + m and fails on {fails_when_t_independent}/"
@@ -1904,6 +3517,16 @@ def check_T_closed_world_gate_fence_inventory():
                 "SCOPE CORRIGENDUM 2026-07-29 (external audit, MAJOR, "
                 "accepted), in check_T_closed_ledger_reciprocity -- "
                 "structured may_not_cite bar"),
+            "gate_2_fence_record": (
+                f"structured may_not_cite bars in {sum(_g2_bars)} of "
+                f"{len(_g2_bars)} constituents, "
+                f"{tuple(r['name'] for r in _g2_parts)}, written "
+                "on 2026-08-30 when those checks were repaired from "
+                "hollow to computing and their returned claims were "
+                "re-cut to what they compute.  A fence appearing where "
+                "one was missing, not a constituent weakening: they "
+                "compute strictly more than they did, and their "
+                "verdicts are pinned above"),
             "gate_3_fence_record": (
                 "in-record disclosure by check_T_split_closed_world_"
                 "complex_selection that its leg verdicts are literals; "
@@ -1949,6 +3572,10 @@ def check_T_closed_world_gate_fence_inventory():
             "self-duality is derived from no-hidden-debt",
             "the Barnum-Wilce axiom is discharged",
             "a gate counted UNFENCED here is derived",
+            "a gate counted FENCED here is refuted, underivable, or "
+            "shown to have no derivation",
+            "the empty UNFENCED set is evidence for or against any "
+            "gate's derivability",
             "this check audits its constituents' derivations",
             "any universal over interfaces, cones or ledgers",
         ),
@@ -1959,7 +3586,15 @@ def check_T_closed_world_gate_fence_inventory():
             "derivation reading nor disclose in their own records that "
             "their verdicts are literals.  Absence of a fence is not "
             "presence of a derivation, and no leg here derives anything "
-            "for any gate.  The prior returned reading -- that the three "
+            "for any gate; the mirror holds too, and matters now that "
+            "the computed figure is zero -- a fence is not a refutation, "
+            "and an empty UNFENCED set is evidence about what the "
+            "constituents DECLINE to claim and about nothing else.  "
+            "RE-CUT 2026-08-30: gate (2) moved from UNFENCED to FENCED "
+            "when its two constituents were repaired from hollow to "
+            "computing and their returned claims were re-cut to what "
+            "they compute, which is what gave them their fences.  The "
+            "prior returned reading -- that the three "
             "reviewer-flagged gates are joint consequences of one deeper "
             "APF primitive, and that this repositions APF as deriving "
             "what reconstruction programs postulate -- is WITHDRAWN: it "
