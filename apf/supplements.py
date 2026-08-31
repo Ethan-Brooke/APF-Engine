@@ -13485,10 +13485,14 @@ def check_L_spatial_from_cost():
 
     (A) MULTIPLE POINTS EXIST — from capacity overflow (L_loc [P]):
         A1 says each interface can enforce ≤ floor(C/ε) distinctions.
-        M + NT say the universe has MORE distinctions than one interface
+        M + BW say the universe has MORE distinctions than one interface
         can handle. Therefore admissibility MUST distribute over multiple
         independent interfaces. These independent interfaces ARE the
-        spatial points.
+        spatial points.  (BW carries the heterogeneity premise here from
+        v24.3.482; the separate input it replaces was retired by
+        NT-BW@2026-08-30.  A naming move at the premise-declaration
+        level -- the richness content is unchanged and no leg below
+        computes it.)
 
     (B) DISTANCE EXISTS — from realignment cost (L_cost [P]):
         The cost function C(Γ) = dim(Γ)·ε satisfies the metric axioms:
@@ -13566,8 +13570,9 @@ def check_L_spatial_from_cost():
     max_per_interface = int(C_total / epsilon)  # = 61
     check(max_per_interface == 61, f"Max distinctions per interface = {max_per_interface}")
 
-    # The universe has N_phys > max_per_interface distinctions (M + NT)
-    # This is guaranteed by M (|D| ≥ 2) and NT (heterogeneous)
+    # The universe has N_phys > max_per_interface distinctions (M + BW)
+    # This is guaranteed by M (|D| ≥ 2) and BW (cost-spectrum
+    # non-degeneracy; heterogeneous)
     # The MINIMUM number of loci needed:
     # N_loci ≥ ceil(N_phys / max_per_interface)
 
@@ -13766,7 +13771,7 @@ def check_L_spacetime_emergence_v2():
     from A1 through FOUR mechanisms:
 
     MECHANISM 1 — CAPACITY OVERFLOW → MULTIPLE POINTS:
-      A1 (finite capacity per interface) + M (richness) + NT (heterogeneity)
+      A1 (finite capacity per interface) + M (richness) + BW (heterogeneity)
       → L_loc [P]: admissibility must distribute over multiple independent loci.
       The number of loci is bounded below by:
         N_loci ≥ ceil(N_distinctions / max_per_interface)
@@ -13807,7 +13812,8 @@ def check_L_spacetime_emergence_v2():
     WHAT IS ASSUMED:
     A1: Finite admissibility capacity (C > 0, C < ∞)
     M: Universe contains multiple distinct sectors (|D| ≥ 2)
-    NT: Distinctions are heterogeneous (non-trivial universe)
+    BW: Cost-spectrum non-degeneracy -- not all enforceable distinctions
+        have the same cost (heterogeneous)
 
     NOTE ON ENTANGLEMENT:
     The earlier L_metric_from_entanglement_data used the RT formula

@@ -674,10 +674,18 @@ def check_R_extra_axiom_NT_killed():
     docstring previously cited L_PLEC_components_essentiality, which has
     never existed in the bank under any spelling. The nearest banked
     content runs the other way: check_T_PLEC_derived_from_spine
-    (apf/foundation_inputs.py) derives A1/MD/A2/BW from the four-input
-    declaration, with BW derived from MD, so the four are NOT asserted
-    to be logically independent. This kill does not rest on their
-    independence — only on the enumerated candidate reductions below.
+    (apf/foundation_inputs.py) exhibits A1, MD and A2 on its canonical
+    witness as consequences of the four-input declaration, so the four
+    are NOT asserted to be logically independent. That sibling's clause
+    for BW was corrected at v24.3.482 (2026-08-30) and this sentence
+    with it: BW is now carried there under its statement of record and
+    is EXHIBITED, not derived, and the sibling's own executed control
+    separates the increment condition it used to be stated by from that
+    statement. The correction is to the description of a sibling; it
+    reaches no leg of this check, verified by reading — no leg here
+    references BW, and this check's kill does not rest on the
+    independence of the four, only on the enumerated candidate
+    reductions below.
     STATUS: [P_structural].
     """
     # -- Leg A: the admitted-mode vocabulary refuses at least one string.

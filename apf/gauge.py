@@ -905,7 +905,7 @@ def check_L_gauge_template_uniqueness():
            T_confinement + L_irr_uniform).
       AS2: Lie classification is imported math (same status as
            Piron-Soler for T1).
-      AS3: Faithfulness excludes SO(3) (mitigated by A1:NT).
+      AS3: Faithfulness excludes SO(3) (mitigated by A1:BW).
 
     CORRIGENDUM (2026-07-13, count-neutral; principal ruling 'bank'
     2026-07-13): Step 4's former sentence "The driver is A1's

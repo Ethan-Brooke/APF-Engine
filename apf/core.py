@@ -4,10 +4,11 @@ Machine-verifiable theorem checks for 'The Enforceability of Distinction'.
 Every check function corresponds to a named result in Paper 1; coderefs
 in the LaTeX point here.  All arithmetic uses fractions.Fraction (exact).
 
-49 checks total:
+60 checks total (hand-maintained inventory; re-derived against the
+module's own _CHECKS table at v24.3.482, where it was found stale at 49):
 
-  Axiom & sub-clauses:   A1, M, NT, A1_disjoint_scope
-  Derived sub-clauses:   L_M_derived, L_NT_derived
+  Axiom & sub-clauses:   A1, M, A1_disjoint_scope
+  Derived sub-clauses:   L_M_derived
   Foundational lemmas:   L_epsilon_star, L_NZ, L_loc, L_nc, L_cost,
                          L_irr, L_irr_uniform, L_Omega_sign, L_Pi
   Propositions:          D_quotient_forced, disjoint_partition,
@@ -179,132 +180,6 @@ def check_M():
     )
 
 
-def check_NT():
-    """NT: Non-Degeneracy Postulate.
-
-    STATEMENT: Not all enforceable distinctions have the same cost.
-    There exist distinctions d_i, d_j in D with eps(d_i) != eps(d_j).
-
-    This is the form used in T1 Step 2: unequal distinction costs mean
-    unequal residual budgets after the first admissibility step, which (via
-    OR0) produces distinct states in Omega and hence operational
-    noncommutativity.
-
-    Without NT, all distinctions cost eps* identically, so C - eps* = C - eps*
-    after any first admissibility step: residual budgets are equal regardless
-    of ordering, T1 Step 2 produces no asymmetry, and order-dependence
-    fails to materialise.
-
-    Relation to subsystem capacities: the earlier formulation
-    "there exist S_i, S_j with C(S_i) != C(S_j)" stated non-degeneracy
-    at the subsystem-capacity level. The present form is equivalent given
-    L_epsilon*: different subsystem budgets imply at least two admissible
-    cost values. The distinction-cost form is canonical because it is
-    what T1 directly uses.
-
-    STATUS: POSTULATE -- not derived here.  L_NT_derived is a separate
-    banked object that derives a non-degeneracy statement from
-    gauge-sector content; this record does not claim that derivation as
-    its own grade.
-
-    RECLASSIFIED 2026-08-28.
-    The returned record previously asserted BOTH readings at once: this
-    docstring said POSTULATE while the same sentence, and `epistemic`
-    and `summary`, said derived from A1.  The contradiction is what was
-    repaired; the direction is a LOWERING, which is the conservative
-    one.  NARROWER THAN check_M's, and this record does not inherit
-    check_M's wording: that record carried both readings across five
-    fields including the portmanteau artifacts['type'] =
-    'derived_postulate'; this one carried them across three, and its
-    `key_result` and `artifacts` were already free of a grade and do
-    not move.
-
-    POSTULATE IS NOT NEW VOCABULARY, and this is a REVERSAL rather than
-    a minting.  `apf_utils.result()` lists 'POSTULATE' among its
-    example epistemic values at HEAD, and did so in the v7.1 and v7.3
-    archives; no earlier state was checked.  The bank's v5.3.3 changelog
-    records a distribution containing two of them -- while the v5.3.x
-    entry above it records "M, NT promoted POSTULATE -> [P]. Zero
-    postulates remaining."  This regrade reverses that recorded
-    promotion.  Changelogs are a historical record and entries stand as
-    written, so bank.py's changelog does not move with this.
-
-    THIS RECORD CLAIMS NO VALIDATION OF ITS OWN GRADE TOKEN, and it
-    states what was checked rather than a universal.  What was checked:
-    `apf_utils.result()` accepts `epistemic` as a free string and
-    applies no membership test to it, and a deliberately misspelled
-    token was executed and accepted silently.  This record still
-    renders as a theorem in the Enforcement Crystal, exactly as it did
-    before -- pre-existing behaviour, unchanged and unrepaired here.
-    No search for a validator was exhaustive and none is claimed; the
-    point is only that this record does not rest on one.  The token is
-    a label.
-
-    THREE ACCOUNTS OF L_NT_derived's MECHANISM are on the corpus's
-    record: the sentence this docstring replaced said from A1; the
-    executed check_L_NT_derived computes it from gauge dimensions and
-    their realignment costs; the bank's v5.3.x changelog says from
-    T11.  They are recorded here and are NOT adjudicated.
-    check_L_NT_derived is not touched, and its own grade is
-    deliberately outside this batch.
-    """
-    from fractions import Fraction
-
-    # NT: at least two distinct realignment costs exist.
-    # Witness from worked example: d_1 costs eps_1=2, d_2 costs eps_2=3.
-    eps_1 = Fraction(2)   # realignment cost of d_1 (spin-z)
-    eps_2 = Fraction(3)   # realignment cost of d_2 (spin-x)
-    C     = Fraction(5)   # interface budget
-
-    check(eps_1 > 0 and eps_2 > 0, "Both costs positive (L_epsilon*)")
-    check(eps_1 < C and eps_2 < C,  "Both distinctions individually admissible (A1)")
-    check(eps_1 != eps_2,           "NT: realignment costs are not all equal")
-
-    # Consequence for T1: residual budgets differ after first admissibility step.
-    res_after_d1 = C - eps_1   # = 3
-    res_after_d2 = C - eps_2   # = 2
-    check(res_after_d1 != res_after_d2,
-          "NT => distinct residual budgets => distinct states in Omega (T1 Step 2)")
-
-    return _result(
-        name="NT: Non-Degeneracy Postulate",
-        tier=-1,
-        epistemic="POSTULATE",
-        summary=(
-            "NT: there exist distinctions d_i, d_j with eps(d_i) != eps(d_j). "
-            "Non-degeneracy is carried as a POSTULATE: not all enforceable "
-            "distinctions have the same cost. L_NT_derived is a separate "
-            "banked object that derives a non-degeneracy statement from "
-            "gauge-sector content; this record does not claim that "
-            "derivation as its own grade. "
-            f"The witness is arithmetic over the record's own literals: "
-            f"eps(d_1) = {eps_1}, eps(d_2) = {eps_2}, C = {C}, residual "
-            f"budgets {res_after_d1} and {res_after_d2}, which differ. "
-            "This exhibits non-degeneracy on an authored witness; it does "
-            "not derive it. "
-            "Without NT all costs equal eps*, residual budgets C-eps* are "
-            "identical, T1 Step 2 produces no asymmetry and order-dependence "
-            "fails to materialise. "
-            "Three accounts of L_NT_derived's mechanism are on the corpus's "
-            "record: the sentence this record retired said from A1; the "
-            "executed check_L_NT_derived computes it from gauge dimensions "
-            "and their realignment costs; the bank's v5.3.x changelog says "
-            "from T11. They are recorded here and are not adjudicated. "
-            "This regrade reverses a promotion this corpus made and "
-            "recorded; POSTULATE is not new vocabulary. "
-            "This record claims no validation of its grade token: "
-            "apf_utils.result() accepts epistemic as a free string and "
-            "applies no membership test to it."
-        ),
-        key_result="eps(d_1) != eps(d_2) => distinct residual budgets => T1 noncommutativity",
-        dependencies=["A1", "L_epsilon*"],
-        artifacts={
-            "eps_1": str(eps_1), "eps_2": str(eps_2), "C": str(C),
-            "res_after_d1": str(res_after_d1), "res_after_d2": str(res_after_d2),
-            "type": "distinction_cost_non_degeneracy",
-        },
-    )
-
 def check_L_M_derived():
     """L_M_derived: Multiplicity, as a self-consistency confirmation.
 
@@ -355,12 +230,29 @@ def check_L_M_derived():
     barred set fires only on the moves someone thought of in advance.
 
     WHAT THIS RECORD CONSUMES AT RUN TIME, DECLARED HERE BECAUSE THE
-    DEPENDENCY LIST DOES NOT CARRY IT.  This function executes check_A1,
-    check_M and check_NT and reads the epistemic field of each.  The
-    declared dependencies are left exactly as they were found: moving
-    them has consequences for the crystal graph that this repair does
-    not own.  The dependency list is therefore not the consume list, and
-    this paragraph is where the consume is declared.
+    DEPENDENCY LIST DOES NOT CARRY IT.  This function executes check_A1
+    and check_M and reads the epistemic field of each.  The declared
+    dependencies are left exactly as they were found: moving them has
+    consequences for the crystal graph that this repair does not own.
+    The dependency list is therefore not the consume list, and this
+    paragraph is where the consume is declared.
+
+    v24.3.482 (2026-08-30), RECORDED HERE BECAUSE A DOCSTRING IS THIS
+    CODE'S OWN CHANGELOG ANALOGUE.  A third foundational record --
+    check_NT, the separate non-degeneracy input -- was executed here and
+    its grade rendered into the summary alongside A1's and M's.  That
+    input was retired as a separate framework input by NT-BW@2026-08-30
+    and its content is carried by BW under the statement of record of
+    OHC_N@2026-08-30.  The call, its binding and the third rendered
+    grade are DELETED.  The summary now reports the two surviving
+    foundational grades, and both are still read live off executed
+    records rather than restated here, so the sentence stays true AND
+    computed.  NO SUBSTITUTE GRADE WAS PUT IN ITS PLACE: BW is not a
+    registered check, and reading the grade of its source-most anchor as
+    BW's own grade would be an identification no ruling licenses --
+    that would convert a deletion into a new claim.  The gate does not
+    move: M_ADMITTED_GRADES is unchanged and the M grade leg is still
+    the one leg here that can fail.
 
     THE RECORD NAME IS NOT MOVED, AND THE EXPOSURE THAT LEAVES IS NAMED.
     It still reads "Multiplicity Derived from A1".  Renaming it would
@@ -374,10 +266,10 @@ def check_L_M_derived():
     in the summary of the same record, beside the name, rather than in
     this docstring alone.
 
-    NO GRADE MOVES HERE -- not the grade of this record, not M, not A1,
-    not NT.  A1 and NT are REPORTED, their live epistemic fields rendered
-    into the summary, and are NOT gated: a move of either changes the
-    sentence this record returns and does not redden it.
+    NO GRADE MOVES HERE -- not the grade of this record, not M, not A1.
+    A1 is REPORTED, its live epistemic field rendered into the summary,
+    and is NOT gated: a move of it changes the sentence this record
+    returns and does not redden it.
     """
     M_ADMITTED_GRADES = ('POSTULATE',)
 
@@ -394,10 +286,9 @@ def check_L_M_derived():
           f"= {C_total} (cannot fail as authored)")
 
     # The one leg here that can fail.  Consume the records; do not restate.
-    r_A1, r_M, r_NT = check_A1(), check_M(), check_NT()
+    r_A1, r_M = check_A1(), check_M()
     a1_grade = r_A1.get('epistemic')
     m_grade = r_M.get('epistemic')
-    nt_grade = r_NT.get('epistemic')
     check(m_grade in M_ADMITTED_GRADES,
           f"M carries epistemic {m_grade!r} on the executed record, outside "
           f"the admitted set {M_ADMITTED_GRADES!r} that the sentence of this "
@@ -415,9 +306,9 @@ def check_L_M_derived():
             f'arithmetic legs are identities over authored literals and are '
             f'disclosed as identities. Foundational grades are consumed from '
             f'the executed tier-(-1) records at run time and are not stated '
-            f'here: A1 {a1_grade!r}, M {m_grade!r}, NT {nt_grade!r}. Only M '
+            f'here: A1 {a1_grade!r}, M {m_grade!r}. Only M '
             f'is gated, against the admitted set {M_ADMITTED_GRADES!r} '
-            f'declared in this function; A1 and NT are reported and not '
+            f'declared in this function; A1 is reported and not '
             f'gated. The name of this record is retained verbatim and is '
             f'not a claim of derivation: it still carries the *_derived '
             f'reading, which this summary does not make, so a consumer '
@@ -434,81 +325,6 @@ def check_L_M_derived():
         dependencies=['A1', 'T_field', 'P_exhaust'],
     )
 
-
-def check_L_NT_derived():
-    """L_NT_derived: Non-Degeneracy Derived from A1 [P].
-
-    STATEMENT: NT (not all enforceable distinctions have the same cost)
-    is a CONSEQUENCE of A1's field content.
-
-    PROOF:
-      A1 -> field content (Paper 4A) -> at least two distinct admissibility-
-      cost classes exist: gauge bosons, fermions, and Higgs carry distinct
-      coupling constants and therefore distinct realignment costs at the
-      interface level.
-
-      Concretely: the SU(3)xSU(2)xU(1) gauge algebra has generators of
-      dimension 8, 3, 1 respectively. Realignment cost scales with the
-      dimension of the local algebra block (L_cost + L_cost_gauge:
-      C(G) = dim(G) * eps*).
-      Since 8 != 3 != 1, at least two distinct realignment costs exist
-      among the gauge-boson distinctions alone.
-
-      Therefore: exists d_i (SU(3) gluon, dim-8 sector) and d_j (U(1)
-      photon, dim-1 sector) with eps(d_i) = 8*eps* != 1*eps* = eps(d_j).
-    """
-    from fractions import Fraction
-
-    # Gauge group dimension costs
-    dim_su3 = 8    # SU(3): 8 generators
-    dim_su2 = 3    # SU(2): 3 generators
-    dim_u1  = 1    # U(1):  1 generator
-
-    eps_star = Fraction(1)  # minimum cost quantum
-
-    eps_su3 = dim_su3 * eps_star   # = 8
-    eps_su2 = dim_su2 * eps_star   # = 3
-    eps_u1  = dim_u1  * eps_star   # = 1
-
-    check(eps_su3 > 0 and eps_su2 > 0 and eps_u1 > 0,
-          "All realignment costs positive (L_epsilon*)")
-    check(eps_su3 != eps_u1,
-          "NT: SU(3) and U(1) distinctions have different realignment costs")
-    check(eps_su3 != eps_su2,
-          "SU(3) and SU(2) realignment costs differ")
-    check(eps_su2 != eps_u1,
-          "SU(2) and U(1) realignment costs differ")
-    check(len({eps_su3, eps_su2, eps_u1}) == 3,
-          "All three gauge sector costs are distinct")
-
-    # Total capacity check: all three fit individually
-    C_interface = Fraction(61)   # total capacity (T_field [P])
-    check(eps_su3 < C_interface, "SU(3) sector admissible")
-    check(eps_su2 < C_interface, "SU(2) sector admissible")
-    check(eps_u1  < C_interface, "U(1) sector admissible")
-
-    return _result(
-        name="L_NT_derived: Non-Degeneracy Derived from A1",
-        tier=0,
-        epistemic="P",
-        summary=(
-            f"NT derived from field content: gauge dimensions {dim_su3}, "
-            f"{dim_su2}, {dim_u1} give realignment costs {eps_su3}, "
-            f"{eps_su2}, {eps_u1} (all distinct). "
-            f"Therefore exists d_i, d_j in D with eps(d_i) != eps(d_j). NT holds."
-        ),
-        key_result=(
-            f"eps(SU3)={eps_su3} != eps(SU2)={eps_su2} != eps(U1)={eps_u1}: "
-            "NT (distinction-cost form) derived from field content"
-        ),
-        dependencies=["A1", "L_epsilon*", "L_cost", "L_cost_gauge", "T_field"],
-        artifacts={
-            "gauge_dims": [dim_su3, dim_su2, dim_u1],
-            "realignment_costs": [str(eps_su3), str(eps_su2), str(eps_u1)],
-            "all_distinct": True,
-            "derivation": "L_cost: C(G)=dim(G)*eps* => distinct dims => distinct costs",
-        },
-    )
 
 def check_L_epsilon_star():
     """L_epsilon*: Minimum Enforceable Distinction.
@@ -1781,8 +1597,9 @@ def check_L_col():
 def check_L_loc():
     """L_loc: Locality from Admissibility Physics.
 
-    CLAIM: A1 (admissibility physics) + M (multiplicity) + NT (non-triviality)
-           ==> A3 (locality / admissibility decomposition over interfaces).
+    CLAIM: A1 (admissibility physics) + M (multiplicity) + BW (cost-spectrum
+           non-degeneracy) ==> A3 (locality / admissibility decomposition
+           over interfaces).
 
     PROOF (4 steps):
 
@@ -1791,7 +1608,7 @@ def check_L_loc():
         A single interface can enforce at most floor(C/epsilon) distinctions.
 
     Step 2 -- Richness exceeds single-interface capacity.
-        M + NT: the number of independently meaningful distinctions
+        M + BW: the number of independently meaningful distinctions
         N_phys exceeds any single interface's capacity: N_phys > floor(C_max/epsilon).
 
     Step 3 -- Distribution is forced.
@@ -1806,7 +1623,7 @@ def check_L_loc():
         This IS A3 (locality).
 
     NO CIRCULARITY:
-        L_loc uses only A1 + M + NT (not L_nc, not A3).
+        L_loc uses only A1 + M + BW (not L_nc, not A3).
         Then L_nc uses A1 + A3 (= L_loc).
         Then L_irr uses A1 + L_nc.
         Each step uses only prior results.
@@ -1822,9 +1639,30 @@ def check_L_loc():
         Confirms M (multiplicity) is necessary.
 
     DEFINITIONAL POSTULATES (not physics axioms):
-        M (Multiplicity):     |D| >= 2. "The universe contains stuff."
-        NT (Non-Triviality):  Distinctions are heterogeneous.
+        M (Multiplicity):  |D| >= 2. "The universe contains stuff."
         These are boundary conditions like ZFC's axiom of infinity, not physics.
+
+    THE SECOND DECLARED PREMISE WAS RE-POINTED AT v24.3.482 (2026-08-30),
+    AND THE MOVE IS A NAMING MOVE AND NOTHING MORE.  This record declared
+    a separate framework input, NT, alongside A1, L_epsilon* and M.  That
+    input was retired as a separate input by NT-BW@2026-08-30 and its
+    content -- not all enforceable distinctions have the same cost -- is
+    carried by BW under the statement of record of OHC_N@2026-08-30.  The
+    declaration was RE-POINTED to BW rather than deleted: deleting the
+    string would leave this record declaring three premises where its own
+    argument uses four, which is a strengthening by omission.
+
+    WHAT DID NOT MOVE, STATED PLAINLY BECAUSE IT IS THE HONEST HALF.  The
+    premise content Step 2 uses -- that the number of independently
+    meaningful distinctions exceeds a single interface's capacity -- is
+    unchanged, and it is EXECUTED BY NO LEG, before or after.  The witness
+    below runs one uniform epsilon = 2 for every distinction and reads no
+    cost difference anywhere; the richness of Step 2 is asserted in this
+    docstring and is not computed.  So the re-point is at the
+    premise-DECLARATION level only.  It does not make the richness step
+    derived, it does not make it a BW witness, and nothing here is
+    evidence that BW's formal statements entail the distinction-level
+    sentence -- that delta is scoped, not closed.
     """
     # Witness verification (numerical)
     C_interface = Fraction(10)
@@ -1852,14 +1690,14 @@ def check_L_loc():
         tier=0,
         epistemic='P',
         summary=(
-            'A1 + M + NT ==> A3. Chain: admissibility physics (floor(C/epsilon) bound) + '
+            'A1 + M + BW ==> A3. Chain: admissibility physics (floor(C/epsilon) bound) + '
             'sufficient richness (N_phys > C/epsilon) -> admissibility must distribute '
             'over multiple independent loci -> locality. Verified: 6 distinctions '
             'with epsilon=2 fail at single interface (cost 19.5 > C=10) but succeed '
             'distributed (8.25 each <= 10). Countermodel: |D|=1 needs no locality.'
         ),
-        key_result='A1 + M + NT ==> A3 (locality derived, not assumed)',
-        dependencies=['A1', 'L_epsilon*', 'M', 'NT'],
+        key_result='A1 + M + BW ==> A3 (locality derived, not assumed)',
+        dependencies=['A1', 'L_epsilon*', 'M', 'BW'],
         artifacts={
             'witness': {
                 'single_interface_max': 'floor(10/2) = 5, but full set costs 19.5 > 10',
@@ -1870,17 +1708,19 @@ def check_L_loc():
             'countermodel': 'CM_single_distinction: |D|=1 -> single interface sufficient',
             'postulates': {
                 'M': '|D| >= 2 (universe contains stuff)',
-                'NT': 'Distinctions are heterogeneous (not all clones)',
+                'BW': 'cost-spectrum non-degeneracy (not all enforceable '
+                      'distinctions have the same cost)',
             },
-            'derivation_order': 'A1 + M + NT -> L_loc -> A3',
+            'derivation_order': 'A1 + M + BW -> L_loc -> A3',
             'no_circularity': (
-                'L_loc uses A1+M+NT only. '
+                'L_loc uses A1+M+BW only. '
                 'L_nc uses A1+A3(=L_loc). '
                 'L_irr uses A1+L_nc. No circular dependencies.'
             ),
             'proof_steps': [
                 '(1) A1 + L_epsilon* -> single interface enforces <= floor(C/epsilon) distinctions',
-                '(2) M + NT -> N_phys > floor(C_max/epsilon) (richness exceeds capacity)',
+                '(2) M + BW -> N_phys > floor(C_max/epsilon) (richness exceeds capacity); '
+                'a declared premise, executed by no leg here',
                 '(3) Single-interface admissibility inadmissible -> must distribute',
                 '(4) Multiple independent interfaces = locality (A3)',
             ],
@@ -4722,16 +4562,31 @@ def check_T_alg():
     What T_alg's load-bearing route (via L_Pi) establishes is that no
     faithful commutative representation exists, which is the hypothesis
     required by Wedderburn (T2a) -> GNS (T2b-c).
+
+    RE-POINT AT v24.3.482 (2026-08-30), AND WHAT IT DOES NOT DO.  A
+    separate framework input, NT, stood in this record's declared
+    dependency list and named its first leg.  That input was retired by
+    NT-BW@2026-08-30; its content is carried by BW under the statement of
+    record of OHC_N@2026-08-30, and both the declaration and the leg
+    MESSAGE now name BW.  THE LEG'S PREDICATE, ITS LITERALS AND ITS
+    VERDICT DO NOT MOVE: C = 5, eps1 = 2, eps2 = 3 are exactly as they
+    were, and the leg still computes eps1 != eps2.  This is a change in
+    what the leg is CALLED, not in what it COMPUTES.  It does not upgrade
+    the standing of the witness -- the Phase-19h audit block above still
+    governs, this route is a STRUCTURAL SKETCH and not load-bearing, and
+    the load-bearing route remains L_Pi -> T_alg_FPi.  The rename does
+    not make this leg a BW witness.
     """
     from fractions import Fraction
 
     # Concrete witness from T1: C, eps1 != eps2, eps3 fitting d1 but not d2
     C = Fraction(5)
     eps1 = Fraction(2)   # epsilon(d1)
-    eps2 = Fraction(3)   # epsilon(d2), eps1 != eps2 (NT)
+    eps2 = Fraction(3)   # epsilon(d2), eps1 != eps2 (BW non-degeneracy)
     eps3 = Fraction(3)   # epsilon(d3): C - eps1 >= eps3 > C - eps2
 
-    check(eps1 != eps2, "NT: epsilon(d1) != epsilon(d2)")
+    check(eps1 != eps2,
+          "BW (cost-spectrum non-degeneracy): epsilon(d1) != epsilon(d2)")
     check(C - eps1 >= eps3, "d3 fits after d1: budget C-eps1 >= eps3")
     check(C - eps2 < eps3,  "d3 fails after d2: budget C-eps2 < eps3")
 
@@ -4773,7 +4628,7 @@ def check_T_alg():
             'sec 6.4 for the audit record.'
         ),
         key_result='A = Alg{E_d} has no faithful commutative representation [via L_Pi route, [P+IJC] post-cascade]',
-        dependencies=['T1', 'L_Delta', 'NT', 'OR0', 'L_Pi', 'T_alg_FPi'],
+        dependencies=['T1', 'L_Delta', 'BW', 'OR0', 'L_Pi', 'T_alg_FPi'],
         artifacts={
             'C': str(C), 'eps1': str(eps1), 'eps2': str(eps2), 'eps3': str(eps3),
             'residual_d1_d3': str(residual_after_d1_d3),
@@ -7377,8 +7232,13 @@ def check_disjoint_partition():
     token as without it.  No search for a validator was exhaustive and
     none is claimed.  The token is a label.
 
-    NOT A CLAIM ABOUT L_loc.  check_L_loc's dependencies at this HEAD
-    are ['A1', 'L_epsilon*', 'M', 'NT'].  Its body does not cite this
+    NOT A CLAIM ABOUT L_loc.  check_L_loc's dependency list is READ AT
+    RUN TIME from its own executed record and rendered into the summary
+    of this record, rather than quoted here as a literal.  It was quoted
+    here as a literal until v24.3.482 (2026-08-30), where the sibling's
+    list was re-pointed and this sentence became false -- the same
+    silent-falsehood genre repaired one version earlier.  A quotation
+    goes stale silently; a read cannot.  Its body does not cite this
     proposition: over the searched set -- this check's name, its record
     name, and the bare word 'disjoint' -- the only hit is Step 4(c)'s
     "Subsystems at disjoint interfaces are independent", which is a
@@ -7401,6 +7261,13 @@ def check_disjoint_partition():
     half = Fraction(1, 2) * eps_star
     check(half * 2 == eps_star, "half-quantum not an integer multiple")
     check(n_dv == int(n_dv), "n(d_v) integer => no fractional charging")
+
+    # The sibling's declared premises are READ, not quoted.  This is a
+    # run-time consume and not a declared dependency: it renders a fact
+    # about the sibling's record into this record's sentence, and it adds
+    # no edge to the derivation graph.  A quoted list goes stale silently
+    # when the sibling moves; a read cannot.
+    _l_loc_deps = tuple(check_L_loc().get('dependencies') or ())
 
     return _result(
         name='Disjoint Partition from Exact Accounting',
@@ -7426,6 +7293,10 @@ def check_disjoint_partition():
                 'This record describes its legs and does not read them: it '
                 'states no leg count and could not notice a leg that did '
                 'not run. That limit is disclosed, not machined around. '
+                'NOT A CLAIM ABOUT L_loc: its declared premises are '
+                f'{list(_l_loc_deps)!r}, read at run time off its own '
+                'executed record rather than quoted, so this sentence '
+                'cannot go stale when that list moves. '
                 'This record claims no validation of its grade token: '
                 'apf_utils.result() accepts epistemic as a free string and '
                 'applies no membership test to it.',
@@ -10402,11 +10273,9 @@ _CHECKS = {
     # Axiom & sub-clauses
     'A1': check_A1,
     'M': check_M,
-    'NT': check_NT,
     'A1_disjoint_scope': check_A1_disjoint_scope,
     # Derived sub-clauses
     'L_M_derived': check_L_M_derived,
-    'L_NT_derived': check_L_NT_derived,
     # Propositions (new in v15.3)
     'D_quotient_forced': check_D_quotient_forced,
     'disjoint_partition': check_disjoint_partition,

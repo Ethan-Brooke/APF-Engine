@@ -29,12 +29,34 @@ This module provides two bank-registered checks witnessing the foundation:
     APS satisfies all four inputs and that no other primitive commitment is
     needed to support the spine.
 
-  * check_T_PLEC_derived_from_spine -- certifies that A1, MD, A2, BW are
-    each derivable from the four-input declaration: A1 = finite-physical-
-    regime hypothesis directly; MD-value = ε* > 0 as the second half of the
-    finite-physical-regime hypothesis with the tested/gauge cleavage from
-    FD2; A2 = argmin from cost-as-infimum + no-waste under saturation; BW =
-    cost-spectrum non-degeneracy from MD via the Lemma BW reduction.
+  * check_T_PLEC_derived_from_spine -- exhibits A1, MD and A2 on the
+    canonical witness as consequences of the four-input declaration: A1 =
+    finite-physical-regime hypothesis directly; MD-value = ε* > 0 as the
+    second half of the finite-physical-regime hypothesis with the
+    tested/gauge cleavage from FD2; A2 = argmin from cost-as-infimum +
+    no-waste under saturation.  BW is carried under its STATEMENT OF
+    RECORD (OHC_N@2026-08-30) -- cost-spectrum non-degeneracy at the
+    element-distinction level -- and the increment condition it used to
+    be stated by is retained beside it as MD's content under MD's name.
+
+    THE INCREMENT-FORM WAS RETIRED AS A STATEMENT OF BW AT v24.3.482
+    (2026-08-30), on an executed control rather than on a reading.  The
+    form "every admissible cost increment is ≥ μ*_Γ, so the spectrum is
+    graded at scale μ*_Γ" is satisfied by the FLAT WORLD -- every
+    distinction at one cost at or above the floor -- which is Paper 0's
+    own countermodel to BW and precisely the world BW exists to exclude.
+    The canonical witness was itself flat, so the leg passed on a
+    maximally degenerate cost spectrum while its sentence claimed
+    non-degeneracy.  The flat world is now BUILT AND EXECUTED in this
+    module as a permanent negative control: it FAILS the repaired BW leg
+    and PASSES the A1, MD-value and increment legs, which is the whole
+    content of the repair.
+
+    WHAT THAT CONTROL DOES NOT SHOW, named here so it is not read off the
+    code: it does not show that BW is underivable from MD, that Lemma BW
+    of Paper 10 v1.12 §3.5 is wrong, or that BW is an axiom.  Nobody in
+    this lane opened Paper 10 §3.5.  The honest statement is about the
+    TRANSCRIPTION that ships in this module.
 
 Checks here are tier 4; FD1_structural_completeness is [P] (Assumption 1 at
 full strength, per the canonical [P] convention), the other two [P_structural].
@@ -94,7 +116,19 @@ def _build_canonical_witness() -> FourInputWitness:
     }
     # Distinctions: separate the two continuation-equivalence classes
     distinctions = frozenset({(0, 2), (0, 3), (1, 2), (1, 3)})
-    distinction_costs = {d: 1.5 for d in distinctions}  # all > μ* = 1
+    # NON-DEGENERATE cost spectrum (v24.3.482): two distinct values, every
+    # value > 0 and >= μ*, so the witness satisfies FD3, the marginal-floor
+    # bound AND BW's statement of record.  It was a FLAT map (every
+    # distinction at 1.5) until this version, and a flat map is the world
+    # BW exists to exclude -- see the module docstring.  The costs are
+    # keyed by distinction, never by position, so no reading here depends
+    # on the iteration order of a frozenset.
+    distinction_costs = {
+        (0, 2): 1.5,
+        (0, 3): 1.5,
+        (1, 2): 1.5,
+        (1, 3): 2.0,
+    }
     capacity = 5.0  # finite
     marginal_floor = 1.0  # μ* > 0
     return FourInputWitness(
@@ -105,6 +139,96 @@ def _build_canonical_witness() -> FourInputWitness:
         capacity=capacity,
         marginal_floor=marginal_floor,
     )
+
+
+# Declared leg inventory for check_T_PLEC_derived_from_spine.  Set-exact:
+# the check asserts BOTH directions (nothing declared failed to run, and
+# nothing ran undeclared) and records a mismatch as a failure reason
+# rather than raising (D7@2026-08-08, append-and-record).
+_PLEC_SPINE_LEGS: FrozenSet[str] = frozenset({
+    "A1_capacity_finite",
+    "MD_value_floor_positive",
+    "MD_tested_gauge_cleavage",
+    "A2_argmin_counting_bound",
+    "MD_increment_at_least_floor",
+    "BW_non_degeneracy_statement_of_record",
+    "BW_order_independence",
+    "CONTROL_flat_world_fails_BW",
+    "CONTROL_flat_world_passes_A1_MD_and_increment",
+    "CONTROL_two_valued_witness_passes_BW",
+    "TIE_worked_example_cost_spectrum_by_value",
+})
+
+
+def _build_flat_witness() -> FourInputWitness:
+    """Paper 0's own BW countermodel, built so it can be executed.
+
+    Paper 0 v6.2.56: "a world in which every distinction costs exactly
+    μ*, with total capacity C ... satisfies A1 and MD but has maximally
+    degenerate cost spectrum."  This witness is that world at the scale
+    the canonical witness uses: the SAME substrate, continuations and
+    distinctions, with every distinction carrying ONE cost at or above
+    the floor.  It is byte-for-byte the cost map the canonical witness
+    carried before v24.3.482, which is what makes it the sharp control:
+    it is the world the retired increment-form leg passed on.
+    """
+    base = _build_canonical_witness()
+    return FourInputWitness(
+        substrate=base.substrate,
+        continuations=base.continuations,
+        distinctions=base.distinctions,
+        distinction_costs={d: 1.5 for d in base.distinctions},
+        capacity=base.capacity,
+        marginal_floor=base.marginal_floor,
+    )
+
+
+def _cost_spectrum(costs) -> Tuple[float, ...]:
+    """The multiset of element-distinction costs, as a SORTED tuple.
+
+    Sorting is what makes every reading below independent of the
+    iteration order of the underlying frozenset (a stated requirement of
+    the repair, not an accident of this implementation).
+    """
+    return tuple(sorted(costs))
+
+
+def _bw_non_degeneracy(costs) -> bool:
+    """BW under its STATEMENT OF RECORD (OHC_N@2026-08-30).
+
+    Informal, canonical: not all enforceable distinctions have the same
+    cost -- there exist distinctions d_i, d_j with eps(d_i) != eps(d_j).
+
+    DOMAIN, and it is a recorded scope and NOT a theorem: the
+    quantification ranges over ELEMENT distinctions -- the objects the
+    implemented ledger charges.  Round 10 closed OHC_N, so neither a
+    wider domain (a loop-class charge) nor the completeness of this one
+    (a derived absence) is established, and nothing computed by this
+    function may be cited for either direction of the domain question.
+
+    Non-degeneracy, not gradedness: the predicate is on the SIZE OF THE
+    VALUE SET, and it is order-independent by construction.
+    """
+    return len(set(_cost_spectrum(costs))) >= 2
+
+
+def _md_increment_at_least_floor(w: FourInputWitness, order) -> bool:
+    """MD's content, under MD's name -- NOT a statement of BW.
+
+    Greedily admit distinctions in the given order while the capacity
+    holds, and verify every admitted increment is >= μ*_Γ.  This is TRUE,
+    it is MD's, and it is retained for exactly that reason.  It is
+    satisfied by the flat world, which is why it is no longer called BW.
+    """
+    cost_S = 0.0
+    for d in order:
+        if cost_S + w.distinction_costs[d] > w.capacity:
+            continue
+        new_cost = cost_S + w.distinction_costs[d]
+        if new_cost - cost_S < w.marginal_floor:
+            return False
+        cost_S = new_cost
+    return True
 
 
 # =====================================================================
@@ -221,18 +345,58 @@ def check_T_PLEC_derived_from_spine():
             the infimum-over-admissible-protocols valuation convention) +
             no-waste under saturation: when capacity is fully committed, no
             spare resource can be allocated to a non-extremal protocol.
-      (iv)  BW (cost-spectrum non-degeneracy) is derived from MD (Lemma BW
-            of Paper 10 v1.12 §3.5): every admissible cost increment is
-            ≥ μ*_Γ, so the cost spectrum is graded at scale μ*_Γ.
+      (iv)  MD-increment: every admissible cost increment is ≥ μ*_Γ.  This
+            is TRUE and it is MD's content, and it is retained under MD's
+            name.  IT IS NOT A STATEMENT OF BW -- the flat world satisfies
+            it, and the flat world is what BW exists to exclude.
+      (v)   BW under its STATEMENT OF RECORD (OHC_N@2026-08-30):
+            cost-spectrum non-degeneracy at the element-distinction level,
+            there exist d_i, d_j with eps(d_i) != eps(d_j).  The domain
+            restriction to element distinctions is a RECORDED SCOPE and
+            not a theorem; the distinction-level/configuration-level delta
+            is scoped, not closed.
 
-    Each derivation is exhibited on the canonical witness; no PLEC feature
-    is added as an axiom.
+    A1, MD and A2 are exhibited on the canonical witness as consequences of
+    the four-input declaration.  BW is EXHIBITED, not derived here: what
+    this record establishes about the (iv)/(v) pair is a SEPARATION, and it
+    establishes it by execution --
+
+      * the flat world (every distinction at one cost at or above the
+        floor) PASSES (i), (ii) and (iv) and FAILS (v);
+      * a two-valued world PASSES (v).
+
+    Both directions are executed as permanent controls.  So the increment
+    condition AS EXECUTED HERE does not entail the statement of record.
+    That is a statement about this transcription and about nothing else:
+    it is NOT a claim that BW is underivable from MD, NOT a claim that
+    Lemma BW of Paper 10 v1.12 §3.5 is wrong, and NOT a claim that BW is
+    an axiom.  Nobody in this lane opened Paper 10 §3.5.
+
+    LEG INVENTORY.  Set-exact against the module-level frozen set, on the
+    bank path, append-and-record (D7@2026-08-08): a mismatch contributes a
+    failure reason and does not raise, and `passed` is COMPUTED from the
+    reasons rather than written as a literal.
+
+    DISCLOSED RESIDUAL, stated because it is real and NOT machined around.
+    The discrimination in (v) is carried by the flat-world control, not by
+    the threshold inside the predicate.  A COORDINATED TWO-SITE EDIT
+    escapes with every leg green: weaken `_bw_non_degeneracy` from
+    `>= 2` to `>= 1` AND invert this function's `if flat_bw:` test to
+    `if not flat_bw:`.  Neither the two-valued control nor the
+    cross-module value tie discriminates the threshold -- both are
+    satisfied at `>= 1` -- so no leg here catches that pair.  It is a
+    deletion of the guard together with the thing the guard guards, and a
+    third guard would move the escape to a three-site edit rather than
+    close it.  The single-site forms of both edits ARE caught.
     """
     w = _build_canonical_witness()
+    legs_run: List[str] = []
+    failure_reasons: List[str] = []
 
     # (i) A1: capacity bound = finite-physical-regime half-1
     A1_witnessed = w.capacity < float("inf")
     assert A1_witnessed, "A1 derivation failed: C_Γ not finite"
+    legs_run.append("A1_capacity_finite")
 
     # (ii) MD-value: μ*_Γ > 0 = finite-physical-regime half-2
     MD_value_witnessed = w.marginal_floor > 0
@@ -251,6 +415,8 @@ def check_T_PLEC_derived_from_spine():
         )
         assert cost > 0, f"MD tested distinction {d} has non-positive cost"
     MD_cleavage_witnessed = True
+    legs_run.append("MD_value_floor_positive")
+    legs_run.append("MD_tested_gauge_cleavage")
 
     # (iii) A2: argmin from cost-as-infimum + no-waste under saturation.
     # Test: among admissible families S of distinctions with total cost ≤ C_Γ,
@@ -275,44 +441,179 @@ def check_T_PLEC_derived_from_spine():
         f"A2 argmin counting bound violated: {max_size} > ⌊C_Γ/μ*_Γ⌋ = {expected_max}"
     )
     A2_witnessed = max_size > 0  # there exists an admissible argmin family
+    legs_run.append("A2_argmin_counting_bound")
 
-    # (iv) BW: cost-spectrum non-degeneracy from MD.  Every admissible
-    # cost increment from adding a tested distinction is ≥ μ*_Γ.
-    # Test: starting from S = ∅, add distinctions one-by-one and verify
-    # each increment is ≥ μ*_Γ.
-    S = set()
-    cost_S = 0.0
-    for d in distinctions_list[:max_size]:
-        if cost_S + w.distinction_costs[d] > w.capacity:
-            continue
-        new_cost = cost_S + w.distinction_costs[d]
-        increment = new_cost - cost_S
-        assert increment >= w.marginal_floor, (
-            f"BW increment violated at {d}: {increment} < μ*_Γ = {w.marginal_floor}"
+    # (iv) MD-increment, under MD's name.  TRUE, retained, and no longer
+    # called BW: the flat world satisfies it (control below).
+    increment_ok = _md_increment_at_least_floor(w, distinctions_list[:max_size])
+    assert increment_ok, (
+        f"MD increment condition violated on the canonical witness "
+        f"(some admitted increment < μ*_Γ = {w.marginal_floor})"
+    )
+    legs_run.append("MD_increment_at_least_floor")
+
+    # (v) BW under its statement of record: element-distinction-level
+    # cost-spectrum NON-DEGENERACY.  Not gradedness.
+    spectrum = _cost_spectrum(w.distinction_costs.values())
+    distinct_costs = sorted(set(spectrum))
+    assert _bw_non_degeneracy(w.distinction_costs.values()), (
+        f"BW (statement of record) violated: the canonical witness carries "
+        f"{len(distinct_costs)} distinct element-distinction cost(s) "
+        f"{distinct_costs}; the statement requires d_i, d_j with "
+        f"eps(d_i) != eps(d_j)"
+    )
+    legs_run.append("BW_non_degeneracy_statement_of_record")
+
+    # (v-b) ORDER-INDEPENDENCE of the BW reading, executed rather than
+    # asserted in prose: the predicate is evaluated on a reversed and on a
+    # rotated presentation of the same cost multiset and must agree.
+    _vals = list(w.distinction_costs.values())
+    assert (_bw_non_degeneracy(_vals)
+            == _bw_non_degeneracy(list(reversed(_vals)))
+            == _bw_non_degeneracy(_vals[1:] + _vals[:1])), (
+        "BW reading is not order-independent"
+    )
+    legs_run.append("BW_order_independence")
+
+    # ---- PERMANENT CONTROL 1 (the load-bearing one): the flat world ----
+    # Paper 0's own BW countermodel, EXECUTED.  It must FAIL the BW leg
+    # and PASS A1, MD-value and the increment leg.  If this control ever
+    # stops firing, the BW leg has stopped discriminating and this check
+    # must go red rather than quietly certify a degenerate world.
+    #
+    # THIS TEST IS THE DISCRIMINATION.  The predicate's threshold is not
+    # independently tied by any leg here, so weakening _bw_non_degeneracy
+    # to `>= 1` AND inverting the `if flat_bw:` below escapes all eleven
+    # legs.  Disclosed in the docstring, deliberately not machined around.
+    flat = _build_flat_witness()
+    flat_bw = _bw_non_degeneracy(flat.distinction_costs.values())
+    if flat_bw:
+        failure_reasons.append(
+            "CONTROL FAILED: the flat world satisfies the BW leg, so the "
+            "leg does not discriminate the world BW exists to exclude"
         )
-        S.add(d)
-        cost_S = new_cost
-    BW_witnessed = True
+    legs_run.append("CONTROL_flat_world_fails_BW")
+
+    flat_list = sorted(flat.distinctions)
+    flat_max_size = 0
+    for mask in range(1 << len(flat_list)):
+        S = [flat_list[i] for i in range(len(flat_list)) if (mask >> i) & 1]
+        if sum(flat.distinction_costs[d] for d in S) <= flat.capacity:
+            flat_max_size = max(flat_max_size, len(S))
+    flat_A1 = flat.capacity < float("inf")
+    flat_MD = flat.marginal_floor > 0
+    flat_incr = _md_increment_at_least_floor(flat, flat_list[:flat_max_size])
+    if not (flat_A1 and flat_MD and flat_incr):
+        failure_reasons.append(
+            f"CONTROL FAILED: the flat world was expected to satisfy A1, "
+            f"MD-value and the increment condition; got A1={flat_A1}, "
+            f"MD={flat_MD}, increment={flat_incr}.  The separation between "
+            f"the increment condition and the statement of record is what "
+            f"this control exhibits, and it is not exhibited"
+        )
+    legs_run.append("CONTROL_flat_world_passes_A1_MD_and_increment")
+
+    # ---- PERMANENT CONTROL 2 (the other direction) ----
+    # A two-valued world -- built here, NOT the canonical witness, so the
+    # control is not the thing it is controlling -- must PASS the BW leg.
+    two_valued = [1.0, 1.0, 1.0, 3.0]
+    if not _bw_non_degeneracy(two_valued):
+        failure_reasons.append(
+            f"CONTROL FAILED: a two-valued cost spectrum {sorted(set(two_valued))} "
+            f"was refused by the BW leg, so the leg is not satisfiable"
+        )
+    legs_run.append("CONTROL_two_valued_witness_passes_BW")
+
+    # ---- CROSS-MODULE VALUE TIE ----
+    # The corpus's executed element-distinction non-degeneracy witness is
+    # check_worked_example (apf/core.py), BW's source-most anchor per
+    # apf/crystal_axiom_roots.py.  Its costs are PARSED OUT OF ITS OWN
+    # EXECUTED RECORD and run through THIS module's predicate -- a tie by
+    # VALUE and not by verdict, and not a fifth re-typing of its literals.
+    import re as _re
+    from fractions import Fraction as _Fr
+    from apf.core import check_worked_example as _cwe
+    _we = _cwe()
+    _eps = [_Fr(m) for m in _re.findall(r"eps\(d\d\)=([0-9]+(?:/[0-9]+)?)",
+                                       _we.get("summary", ""))]
+    if len(_eps) < 2:
+        failure_reasons.append(
+            f"VALUE TIE FAILED: could not recover at least two element "
+            f"costs from the executed record of the corpus's "
+            f"non-degeneracy anchor (recovered {len(_eps)})"
+        )
+    elif not _bw_non_degeneracy(_eps):
+        failure_reasons.append(
+            f"VALUE TIE FAILED: this module's BW predicate refuses the "
+            f"anchor's own executed cost spectrum {sorted(set(_eps))}"
+        )
+    legs_run.append("TIE_worked_example_cost_spectrum_by_value")
+
+    # ---- leg inventory, append-and-record (D7@2026-08-08) ----
+    _ran = set(legs_run)
+    _missing = sorted(_PLEC_SPINE_LEGS - _ran)
+    _extra = sorted(_ran - _PLEC_SPINE_LEGS)
+    if _missing or _extra:
+        failure_reasons.append(
+            f"LEG INVENTORY MISMATCH: {len(_missing)} declared leg(s) did "
+            f"not run {_missing}; {len(_extra)} leg(s) ran undeclared {_extra}"
+        )
+    if len(legs_run) != len(_ran):
+        failure_reasons.append(
+            f"LEG INVENTORY MISMATCH: {len(legs_run)} leg records for "
+            f"{len(_ran)} distinct legs (a leg recorded itself twice)"
+        )
 
     return {
         "name": "T_PLEC_derived_from_spine",
-        "passed": True,
+        "passed": not failure_reasons,
+        "failure_reasons": list(failure_reasons),
+        "legs_run": sorted(_ran),
         "key_result": (
-            f"PLEC features derived from 4-input declaration on canonical witness: "
+            f"PLEC features on the canonical witness -- A1/MD/A2 exhibited as "
+            f"consequences of the 4-input declaration, BW exhibited under its "
+            f"statement of record: "
             f"A1 = finite-physical-regime half-1 ({w.capacity} < ∞); "
             f"MD-value = finite-physical-regime half-2 (μ*_Γ = {w.marginal_floor} > 0); "
             f"MD tested/gauge cleavage = FD2 distinction definition; "
             f"A2 = argmin from cost-as-infimum + no-waste (admissible-max-size {max_size} ≤ ⌊C_Γ/μ*_Γ⌋ = {expected_max}); "
-            f"BW = cost-spectrum non-degeneracy from MD (every increment ≥ μ*_Γ)."
+            f"MD-increment = every admitted increment ≥ μ*_Γ (MD's content, under MD's name); "
+            f"BW = cost-spectrum non-degeneracy at the element-distinction level "
+            f"(statement of record, OHC_N@2026-08-30): {len(distinct_costs)} distinct "
+            f"element costs {distinct_costs}, so there exist d_i, d_j with "
+            f"eps(d_i) != eps(d_j).  The flat world PASSES the increment leg and "
+            f"FAILS the BW leg, executed here as a permanent control."
         ),
         "summary": (
-            "PLEC's four constitutive features A1/MD/A2/BW are derivable consequences "
-            "of the 4-input declaration under Paper 10 v1.12 §3.5 reductions.  Each "
-            "derivation is exhibited on the canonical witness: A1 + MD-value are the "
-            "two halves of the finite-physical-regime hypothesis; the MD tested/gauge "
-            "cleavage is FD2's separator-vs-relabeling distinction; A2 is derived "
-            "from cost-as-infimum + no-waste; BW is derived from MD via Lemma BW.  "
-            "No PLEC feature is added as an axiom; all are spine-derivable."
+            "A1, MD and A2 are exhibited on the canonical witness as consequences "
+            "of the 4-input declaration: A1 + MD-value are the two halves of the "
+            "finite-physical-regime hypothesis; the MD tested/gauge cleavage is "
+            "FD2's separator-vs-relabeling distinction; A2 is argmin from "
+            "cost-as-infimum + no-waste.  BW is carried under its STATEMENT OF "
+            "RECORD (OHC_N@2026-08-30) -- not all enforceable distinctions have "
+            "the same cost, there exist d_i, d_j with eps(d_i) != eps(d_j) -- and "
+            "is EXHIBITED on the witness, not derived here.  THE DOMAIN OF THAT "
+            "QUANTIFICATION IS A RECORDED SCOPE AND NOT A THEOREM: it ranges over "
+            "element distinctions, the objects the implemented ledger charges, and "
+            "neither a wider domain nor the completeness of this one is "
+            "established; this record may not be cited for either direction of "
+            "the domain question.  The distinction-level/configuration-level delta "
+            "remains scoped, not closed.  WHAT IS ESTABLISHED HERE BY EXECUTION IS "
+            "A SEPARATION: the increment condition AS EXECUTED IN THIS MODULE does "
+            "not entail the statement of record, because the flat world -- every "
+            "distinction at one cost at or above the floor, Paper 0's own BW "
+            "countermodel -- is built and run here and PASSES the A1, MD-value and "
+            "increment legs while FAILING the BW leg; a two-valued world passes it, "
+            "so the leg is satisfiable in both directions.  The increment form was "
+            "this record's statement of BW until v24.3.482 and is retained beside "
+            "it under MD's name, because it is true and it is MD's.  THIS IS NOT a "
+            "claim that BW is underivable from MD, that Lemma BW of Paper 10 v1.12 "
+            "§3.5 is wrong, or that BW is an axiom -- nobody in this lane opened "
+            "that section, and the statement is about the transcription that ships "
+            "here.  The BW predicate is tied BY VALUE to the executed record of "
+            "check_worked_example (apf/core.py), the corpus's element-distinction "
+            "non-degeneracy anchor, whose costs are parsed from its own returned "
+            "record rather than re-typed here."
         ),
         "tier": 4,
         "epistemic": "[P_structural]",

@@ -144,7 +144,7 @@ WHAT THIS CLOSES / WHAT STAYS OPEN:
   - Structurally closes the FLAT CASE of the named open carried by
     check_T_selection_approximate_A2 ('A2 tie-selection + BW non-degeneracy
     remain named opens') AT READING GRADE. BW non-degeneracy stays open
-    (BW is suspended on ties by construction; neither A2 nor BW/NT can
+    (BW is suspended on ties by construction; neither A2 nor BW can
     force the tie-break -- why the route runs through the readings, not
     the PLEC selection primitives).
   - The SUP question is now SHAPED, not dissolved: R-sel-LC is its honest
