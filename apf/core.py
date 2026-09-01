@@ -1917,6 +1917,14 @@ def check_L_cost():
       to name them here, not a reason to leave them unnamed. Silence
       would be the flattering direction.
 
+      WHERE THIS GRADE LIVES, AND WHO CANNOT SEE IT
+      (E2R4@2026-08-30): C1's POSTULATE is carried three dicts deep in
+      this check's returned record -- artifacts -> sub_lemmas ->
+      L_cost_C1 -- under the key 'status' rather than under 'epistemic',
+      the record's own grade field, whose top-level value here is 'P',
+      so a field-level census reading only the top-level epistemic is
+      blind to it.
+
     L_cost_C2 (Additive Independence):
       T_M proves independence <-> disjoint anchor sets (biconditional).
       L_loc gives factorization at disjoint interfaces. Independent
@@ -6115,7 +6123,7 @@ def check_OR2_steane():
         P_structural_reading     physics derivation up to an adopted
             INTERNAL reading/premise (record-state, IJC, PLEC,
             MD-bridge, categorical ACC stack, evaporation/horizon
-            readings) -- not an external import at all.  (~89)
+            readings) -- not an external import at all.
 
     That is what this object is: the window is an adopted internal
     reading of a qualitative phrase, and the rider NAMES it.  The
@@ -6123,7 +6131,7 @@ def check_OR2_steane():
     in full:
 
         P_structural_convention  unit/scale convention; O(1)
-            prefactor (Planck magnitude).  (~8)
+            prefactor (Planck magnitude).
 
     The parenthetical is the discriminating clause.  This object has no
     PHYSICAL unit, no scale and no magnitude prefactor: it has a decade-wide

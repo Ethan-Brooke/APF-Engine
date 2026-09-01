@@ -40,6 +40,13 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                     Assumption-1 structural completeness as [P_structural].
                     See "Reference - Canonical [P] vs [P_structural]
                     Definition (2026-06-25)".)
+  [P_math]          Mathematics proved outright -- a result that stands on
+                    standard mathematics alone, independent of the
+                    framework's premises.  Contrast [P], which rests on the
+                    Paper 0 base, and [P_structural_*], which rests on a
+                    NAMED premise.  Declared per GT1@2026-08-30; the
+                    declaration records usage already in the tree and
+                    mints no token.
   [P_structural_*]  Structural-meta result, proved up to a NAMED premise.  The
                     grade was split (2026-06-22) after a corpus audit found the
                     bare [P_structural] doing six distinct jobs; the premise's
@@ -49,26 +56,25 @@ EPISTEMIC TAG LEGEND (v7.0+ — Phase 19f):
                       P_structural_seam        external COMPLETION-theorem import:
                           finite->infinite (operator algebra), the emergent-field
                           w prop g^2 dictionary, or NP/transmutation.  The genuine
-                          completion-seam core (Paper 44).  (~16)
+                          completion-seam core (Paper 44).
                       P_structural_partial     native continuum-PERTURBATIVE
                           machinery (w_trace self-energy / PV reduction), pending
                           scheme-export assembly.  Counts as seam ONLY under the
                           "loops are math" reading -- kept distinct so the bank
                           stays agnostic; the seam claim lives in Paper 44 prose.
-                          (~35)
                       P_structural_exhaustive  uniqueness among FINITE
                           alternatives: rival elimination, projection
-                          essentiality, OSR enumeration, census.  (~26)
+                          essentiality, OSR enumeration, census.
                       P_structural_instrument  classical FINITE MATH imported to
                           analyze/verify the bank: crystal graph metrics
                           (Brandes/Menger/Tarjan), OSW harnesses, YM finite-model
-                          ports, export guards.  (~26)
+                          ports, export guards.
                       P_structural_reading     physics derivation up to an adopted
                           INTERNAL reading/premise (record-state, IJC, PLEC,
                           MD-bridge, categorical ACC stack, evaporation/horizon
-                          readings) -- not an external import at all.  (~89)
+                          readings) -- not an external import at all.
                       P_structural_convention  unit/scale convention; O(1)
-                          prefactor (Planck magnitude).  (~8)
+                          prefactor (Planck magnitude).
                       MODULE-BESPOKE TOKENS (v24.3.317 legend rows, audit
                           by-catch from the Wave 4/5 letter-accuracy passes):
                           P_allocation / P_ceiling (base_fiber_allocation:
