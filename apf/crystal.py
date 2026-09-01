@@ -355,8 +355,93 @@ def _module_of(check_name: str) -> str:
     return _module_of._cache.get(check_name, "?")  # type: ignore[attr-defined]
 
 
+# The canonical axiom grade token, per GT1@2026-08-30 (the twelve-token
+# canonical set) and GT4@2026-08-30 (grade vocabulary is case-sensitive,
+# uppercase canonical).  Matched EXACTLY, never as a prefix, so that a
+# longer ``AXIOM_``-prefixed token — ``AXIOM_COROLLARY`` is the live one —
+# does not become an axiom grade here.  This constant names an
+# already-declared token; it declares nothing (Grade-Token Docket §1, the
+# anti-minting fence).
+_AXIOM_GRADE = "AXIOM"
+
+
+def _grade_base(epistemic) -> str:
+    """The base grade token of an ``epistemic`` field value.
+
+    Reads the field the way the ruled mapping says it is written:
+    surrounding brackets carry no information (GT2/GT3@2026-08-30 — ``[X]``
+    and ``X`` are the same token on read), a pipe introduces a NAMED PREMISE
+    rider (GT5@2026-08-30, spelled ``<base> | R_NAME [+ R_NAME…]``), and a
+    comma introduces a trailing qualifier.  THE COMMA CLAUSE IS ANCHORED TO
+    NO RULING.  Unlike the bracket and pipe clauses it cites no dated
+    ruling ID, because none governs the form; it records an observed legend
+    spelling (``[C, parked]``, ``apf/bank.py``), and it is disclosed as
+    unruled rather than presented as ruled.  It is inert for the test
+    below — the canonical axiom token carries no comma — and if a ruling
+    ever names the form, cite it here.
+    Whitespace is stripped; CASE IS PRESERVED, because GT4@2026-08-30 rules
+    the vocabulary case-sensitive and folding case here would silently widen
+    the token set this module recognises.
+
+    Exactly what it does, and no more: brackets are stripped only when they
+    enclose the whole field, so ``[base] | rider`` is left as written; the
+    pipe split is on the character, not on the spaced form.
+
+    STATED LIMITATION — NOT A GENERAL GRADE NORMALISER, whatever the name
+    suggests.  This is an AXIOM-equality predicate helper: sound for the
+    ``== _AXIOM_GRADE`` test below and for nothing else.  The comma split
+    truncates any pipe-free grade carrying a parenthetical or a trailing
+    clause, so a second consumer reusing it to normalise a paragraph-shaped
+    grade would get a MANGLED token back rather than a visible failure.  It
+    is private to this module and exists for the axiom test below; a
+    consumer that needs general normalisation needs a different helper, not
+    this one.
+
+    Classification only.  This helper mints no token and validates none; a
+    grade-token validator is a comparator and remains unauthorised (Corpus
+    Hygiene's standing fence; GT12@2026-08-30).
+    """
+    s = str(epistemic).strip()
+    if s.startswith("[") and s.endswith("]"):
+        s = s[1:-1].strip()
+    s = s.split("|", 1)[0]
+    s = s.split(",", 1)[0]
+    return s.strip()
+
+
 def _node_kind(check_name: str, epistemic: str) -> str:
-    if epistemic == "axiom" or check_name.startswith("A") and len(check_name) <= 3:
+    """Classify a crystal node as ``axiom`` / ``lemma`` / ``theorem``.
+
+    The axiom test reads the GRADE.  It formerly read the NAME: the branch
+    was ``epistemic == "axiom" or check_name.startswith("A") and
+    len(check_name) <= 3``, whose lowercase spelling is not the canonical
+    token (GT4@2026-08-30 rules the vocabulary case-sensitive, uppercase
+    canonical), so a check graded ``AXIOM`` came back ``theorem`` and the
+    axiom branch was reachable only through a name-length coincidence — a
+    name test doing a grade test's job.  The name test is gone; the grade
+    decides.
+
+    The lemma/theorem split below is UNCHANGED and remains a name
+    convention (``L_`` / ``Δ_`` / ``Delta_`` prefixes).  A grade this
+    function does not recognise as ``AXIOM`` is therefore not defaulted to
+    ``theorem`` by fiat — it falls to that pre-existing convention, which
+    is what every non-axiom grade has always fallen to.  Nothing here
+    reports on unrecognised grades: a per-node grade report would either
+    move the walker's ``notes`` (and with them the dashboard payload and
+    ``check_T_crystal_v69_consistent``'s returned ``json_bytes``) or amount
+    to a new census, and neither is authorised by this lane.
+
+    Reachability, stated so a reader of this function alone is not misled:
+    the caller OVERWRITES this value with ``plec_anchor`` when the node is
+    a PLEC anchor (``_build_one_view``, the ``kind=`` argument).  A node
+    that is both graded ``AXIOM`` and a PLEC anchor therefore never carries
+    kind ``axiom``, whichever version of this test runs.  Whether any live
+    node's kind moves is a measurement — made at the landing and recorded
+    there, not asserted here.  What the repair changes is that the branch
+    is reachable FOR THE RIGHT REASON: a check graded ``AXIOM`` that is NOT
+    an anchor classifies ``axiom``, where the retired name test missed it.
+    """
+    if _grade_base(epistemic) == _AXIOM_GRADE:
         return "axiom"
     if check_name.startswith("L_") or check_name.startswith("Δ_") or check_name.startswith("Delta_"):
         return "lemma"
