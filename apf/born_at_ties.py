@@ -180,8 +180,7 @@ typing + Omega exemption + R8 + indifference guard, all untouched),
 T_selection_approximate_A2 (the named-opens fence),
 T_Born_trace_rule (compatibility anchor),
 T_no_phantom_record_quotient (sibling A1-closure site,
-closed_world_completeness -- graded P_structural_reading, the precedent
-this module's grade follows), L_frustrated_witness (sibling lane).
+closed_world_completeness), L_frustrated_witness (sibling lane).
 
 Walk of record: walk_born_at_ties_flat_floor.py v0.2 (box-native vs
 v24.3.417; the load-bearing subset is the dep consumption + clause (b) +
@@ -560,8 +559,7 @@ def check_L_selection_ledger_completeness():
             'T_selection_approximate_A2 (the named-opens fence; flat case '
             'closed at reading grade)',
             'T_Born_trace_rule (compatibility anchor only)',
-            'T_no_phantom_record_quotient (sibling A1-closure site; the '
-            'P_structural_reading grade precedent)',
+            'T_no_phantom_record_quotient (sibling A1-closure site)',
             'L_frustrated_witness (Becoming-Frontier sibling lane)',
         ],
         'artifacts': {
