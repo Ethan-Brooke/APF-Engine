@@ -670,7 +670,7 @@ def check_L_symmetric_reference_comparison_is_circular() -> Dict[str, object]:
 
     return _result(
         'L_symmetric_reference_comparison_is_circular',
-        '[P_math]',
+        'P_math',
         ("THE SYMMETRIC-REFERENCE COMPARISON ROUTE TO THE PREPARATION LOAD IS "
          "CIRCULAR.  A same-preparation symmetric reference induces "
          "Tr_2[(I (x) rho)(I + SWAP)/2] = (Tr(rho) I + rho)/2 = (I + rho)/2, "

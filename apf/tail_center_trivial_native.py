@@ -141,7 +141,7 @@ def check_L_tail_center_trivial_native():
         "name": "L_tail_center_trivial_native",
         "passed": True,
         "tier": 3,
-        "epistemic": "[P]",
+        "epistemic": "P",
         "key_result": (
             "Z(M) cap tail = C.1 NATIVELY: a tail element that is also CENTRAL is a scalar operator "
             "(N4 scalar-on-Omega + centrality pass-through on the dense M.Omega + cyclicity; no separating, "

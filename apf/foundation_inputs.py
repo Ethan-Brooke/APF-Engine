@@ -726,7 +726,7 @@ def check_FD1_structural_completeness():
             "3/13 ledger share)."
         ),
         "tier": 4,
-        "epistemic": "[P]",
+        "epistemic": "P",
         "dependencies": ["FD1"],
     }
 

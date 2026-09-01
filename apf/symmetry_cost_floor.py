@@ -425,7 +425,7 @@ def check_L_orbit_count_monotone_in_symmetry():
     return {
         "name": name,
         "passed": passed,
-        "epistemic": "[P_math]",
+        "epistemic": "P_math",
         "physical_premises_certified": False,
         "tier": 4,
         "key_result": (

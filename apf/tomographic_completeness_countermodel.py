@@ -520,7 +520,7 @@ def check_L_tomographic_completeness_omits_matching_effect() -> Dict[str, object
 
     return _result(
         'L_tomographic_completeness_omits_matching_effect',
-        '[P_math]',
+        'P_math',
         ("TOMOGRAPHIC COMPLETENESS DOES NOT SUPPLY THE MATCHING RANK-ONE "
          "EFFECT.  The convex hull of {0, I, the six axis projectors} is "
          "order-sound, convex, complement-closed (decided by hull membership "

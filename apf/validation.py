@@ -1805,17 +1805,17 @@ def check_L_Sakharov():
             'condition_1': {
                 'name': 'Baryon number violation',
                 'source': 'P_exhaust partition not enforced pre-saturation',
-                'status': '[P]',
+                'status': 'P',
             },
             'condition_2': {
                 'name': 'C and CP violation',
                 'source': 'L_holonomy_phase: phi=pi/4, sin(2phi)=1 (maximal)',
-                'status': '[P]',
+                'status': 'P',
             },
             'condition_3': {
                 'name': 'Departure from thermal equilibrium',
                 'source': 'M_Omega caveat + L_irr irreversibility',
-                'status': '[P]',
+                'status': 'P',
             },
             'coexistence_regime': 'pre-saturation (k < C_total)',
             'freeze_out': 'irreversible transition to full saturation',

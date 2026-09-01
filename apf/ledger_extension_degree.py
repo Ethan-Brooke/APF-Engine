@@ -403,7 +403,7 @@ def check_L_ledger_extension_degree_free() -> Dict[str, object]:
         ck(False, f"the banked cost could not be imported, so nothing here was "
                   f"tested against it: {exc!r}")
         return _result(
-            'L_ledger_extension_degree_free', '[P_math]',
+            'L_ledger_extension_degree_free', 'P_math',
             'REFUSED: the banked cost was not importable.', {}, fails, 3,
             (), (), (), (), fail_count=tally[0])
 

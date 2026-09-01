@@ -747,7 +747,7 @@ def check_L_record_layer_consumed_gated_live():
            len(r_clu.get("forbidden_premises", [])))))
 
     ok = (r_pd.get("passed") is True and not r_pd.get("fail_reasons")
-          and r_pd.get("epistemic_tag") == "[P_math]"
+          and r_pd.get("epistemic_tag") == "P_math"
           and r_pd.get("tier") == 3
           and "scoped to this index-set model" in r_pd.get("key_result", "")
           and len(r_pd.get("may_not_cite", [])) > 0)

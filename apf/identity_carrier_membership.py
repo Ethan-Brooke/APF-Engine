@@ -758,7 +758,7 @@ def check_L_identity_carrier_membership_boundary() -> Dict[str, object]:
 
     return _result(
         _NAME,
-        '[P_math]',
+        'P_math',
         ("THE MEMBERSHIP BOUNDARY IS ALL-OR-NOTHING.  For commuting local "
          "subsystem embeddings a -> a (x) I and b -> I (x) b generating "
          "C = A (x) B, the entangled identity carrier lies in C IF AND ONLY "

@@ -331,7 +331,7 @@ def _result(name, legs, key_result, dependencies=(), cross_refs=(),
         "held_out_of_the_bank": HELD_OUT_OF_THE_BANK,
         "claim_surface_sha256": CLAIM_SURFACE_SHA256,
         "tier": 3,
-        "epistemic_tag": "[P_math]",
+        "epistemic_tag": "P_math",
         "physical_premises_certified": False,
         "leg_inventory_contract": (
             "append-and-record (D7@2026-08-08): certifies a declared leg "

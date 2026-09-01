@@ -572,7 +572,7 @@ def check_L_atomic_equal_cost_frame_forces_trace() -> Dict[str, object]:
 
     return _result(
         'L_atomic_equal_cost_frame_forces_trace',
-        '[P_math]',
+        'P_math',
         ("AN EQUAL-COST ATOMIC FRAME FORCES THE TRACE, AND NEEDS n^2 MEMBERS.  "
          "Equal normalized self-cost q_R(v) = v*Rv/<v,v> across the n^2 rank-one "
          "rays {e_i, e_i + e_j, e_i + i e_j} forces R = cI: the system is SOLVED "

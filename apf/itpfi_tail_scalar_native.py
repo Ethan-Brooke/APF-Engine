@@ -148,7 +148,7 @@ def check_L_itpfi_tail_acts_scalar_on_omega_native():
         "name": "L_itpfi_tail_acts_scalar_on_omega_native",
         "passed": True,
         "tier": 3,
-        "epistemic": "[P]",
+        "epistemic": "P",
         "key_result": (
             f"M_2-ITPFI tail elements act as scalars on Omega NATIVELY: "
             f"z Omega = phi(z).Omega via ampliation + product-GNS factorization + cyclicity "

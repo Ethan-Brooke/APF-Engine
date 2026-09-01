@@ -88,7 +88,7 @@ PLEC_AXIOM_ROOTS = OrderedDict([
         "check_func":  "check_A1",
         "module":      "apf.core",
         "module_path": "apf/core.py",
-        "epistemic":   "axiom",
+        "epistemic":   "AXIOM",
         "essentiality_ref": "Paper 1 Supplement v2 §1 box 'A1'",
     }),
     ("A2", {

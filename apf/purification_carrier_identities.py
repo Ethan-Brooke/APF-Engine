@@ -682,7 +682,7 @@ def check_L_identity_carrier_vectorization() -> Dict[str, object]:
 
     return _result(
         'L_identity_carrier_vectorization',
-        '[P_math]',
+        'P_math',
         ("The four carrier identities at RECTANGULAR shapes (2,2), (3,2), (2,3), "
          "(3,3), (4,3): the local marginal of |b>> is the load b b*, its norm is "
          "Tr(b* b), a LOCAL effect e (x) I contracts to the sandwich "
