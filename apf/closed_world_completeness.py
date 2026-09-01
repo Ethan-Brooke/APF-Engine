@@ -648,6 +648,40 @@ def _coordinate_sector_family(alg, indices):
 
 
 # =====================================================================
+# The two declared grades of GR1@2026-08-31
+# =====================================================================
+# GR1@2026-08-31 RULES that the two checks below take the form
+# `<base> | R_NAME`, and moves nothing itself: the base is declared by
+# GT1@2026-08-30, the separator and the UNDERSCORED premise spelling by
+# GT5@2026-08-30, and the movement is this pass.  Each declared
+# grade is COMPOSED here from its parts rather than authored a second
+# time as a fused string: the `epistemic` field and the summary
+# sentence that names it both read this one name.  (The sibling
+# fence-inventory check renders the same string a third time -- by
+# reading the constituent's record, not by authoring it.)  GT5's
+# reference implementation (`_OR2_STEANE_DECLARED_GRADE`, apf/core.py)
+# authors the fused string and ties it to its parts with a leg; this
+# pass is count-neutral and may not add a leg, so it composes instead,
+# which makes the same identity hold by construction rather than by a
+# leg.  The grade is NOT on the verdict path.  No leg in this module
+# reads any of these names, so nothing here fails when one of them is
+# edited; what an edit does is move both of that check's returned
+# sites together.
+# These are local transcriptions -- no leg here reads apf/bank.py's
+# legend, and nothing here would notice if that legend moved.  The
+# `Tier 3 [...]` grade tags in the two docstrings are prose and are not
+# read from these names.
+_GR1_GRADE_BASE = "P_math"
+_GR1_GRADE_SEPARATOR = " | "
+_GR1_PHANTOM_NAMED_PREMISE = "R_PHANTOM_IDEAL_READING"
+_GR1_RADICAL_NAMED_PREMISE = "R_OPERATIONAL_RADICAL_IDENTIFICATION"
+_GR1_PHANTOM_DECLARED_GRADE = (
+    _GR1_GRADE_BASE + _GR1_GRADE_SEPARATOR + _GR1_PHANTOM_NAMED_PREMISE)
+_GR1_RADICAL_DECLARED_GRADE = (
+    _GR1_GRADE_BASE + _GR1_GRADE_SEPARATOR + _GR1_RADICAL_NAMED_PREMISE)
+
+
+# =====================================================================
 # (2) No-phantom-record quotient --> stable simple-record completeness
 # =====================================================================
 
@@ -660,9 +694,26 @@ def check_T_no_phantom_record_quotient():
     larger ideal is executed and computed to identify a pair the reading
     separates.
 
-    Tier 3 [P_structural_reading].  Paper 5 Supplement v5.97 section
-    "Finite closed-world record completeness", Theorem "No-phantom-record
-    quotient".
+    Tier 3 [P_math | R_PHANTOM_IDEAL_READING].  Paper 5 Supplement
+    v5.97 section "Finite closed-world record completeness", Theorem
+    "No-phantom-record quotient".
+
+    THE GRADE, AND WHAT IT RESTS ON (GR1@2026-08-31; the base declared
+    by GT1@2026-08-30, the rider form by GT5@2026-08-30).  The base is
+    P_math: what runs below is exact finite-dimensional algebra over Q
+    on the witnesses named below -- "mathematics proved outright,
+    independent of the framework's premises", which is what GT1
+    declares that token to mean.  The rider names what is READ and not
+    computed.  R_PHANTOM_IDEAL_READING: that the declared coordinate
+    sectors of a witness ARE that witness's record reading, so that the
+    joint kernel computed below is what the framework calls
+    phantom-record content.  No leg computes that identification and no
+    witness datum could refute it -- which is the same reason the
+    kernel identity in leg (vi) is DEFINITIONAL at this construction
+    rather than a measurement.  The premise token is NAMED AT THIS
+    PASS; the ruling constrains the form and does not mint it.  The
+    grade moved here and the mathematics did not: what changed is what
+    this record says about what it already computed.
 
     REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  What
     executed before that date was integer addition.  The "finite-
@@ -1076,7 +1127,7 @@ def check_T_no_phantom_record_quotient():
         "name": "T_no_phantom_record_quotient",
         "passed": not fail_reasons,
         "tier": 3,
-        "epistemic": "P_structural_reading",
+        "epistemic": _GR1_PHANTOM_DECLARED_GRADE,
         "key_result": (
             f"COMPUTED ON {len(witnesses)} WITNESS ALGEBRAS, each "
             f"verified associative and unital from its own structure "
@@ -1168,7 +1219,18 @@ def check_T_no_phantom_record_quotient():
             "return is WITHDRAWN: nothing computed it before and "
             "nothing computes it now, and the reading is barred in "
             "this record.  What is here is a theorem about two named "
-            "finite algebras; it derives no regime gate."
+            "finite algebras; it derives no regime gate.  "
+            "GRADE, MOVED AT THIS PASS (GR1@2026-08-31): "
+            f"{_GR1_PHANTOM_DECLARED_GRADE}.  The base grades the "
+            "computation, which is exact algebra over Q on the named "
+            "witnesses; the rider names what is READ and not computed "
+            "-- that the declared coordinate sectors of a witness ARE "
+            "its record reading, so that the joint kernel computed "
+            "here is what the framework calls phantom-record content.  "
+            "That identification is not computed anywhere here and no "
+            "witness datum could refute it.  The mathematics did not "
+            "move at this pass; what moved is what this record says "
+            "about it."
         ),
     }
 
@@ -1184,10 +1246,30 @@ def check_T_operational_radical_equals_jacobson():
     are COMPUTED SEPARATELY and compared computed-to-computed; and when
     the family is made incomplete the equality FAILS, computed.
 
-    Tier 3 [P_structural_reading].  Paper 5 Supplement v5.97 section
-    "Strengthened no-defect derivations of the regime gates", Theorem
-    "Operational radical equals Jacobson radical under stable simple
-    completeness" + the sufficient-conditions theorem.
+    Tier 3 [P_math | R_OPERATIONAL_RADICAL_IDENTIFICATION].  Paper 5
+    Supplement v5.97 section "Strengthened no-defect derivations of the
+    regime gates", Theorem "Operational radical equals Jacobson radical
+    under stable simple completeness" + the sufficient-conditions
+    theorem.
+
+    THE GRADE, AND WHAT IT RESTS ON (GR1@2026-08-31; the base declared
+    by GT1@2026-08-30, the rider form by GT5@2026-08-30).  The base is
+    P_math: the equality below is exact finite-dimensional algebra over
+    Q on the witnesses named below -- Dickson's criterion, a radical
+    certified independently as an ideal and as nilpotent, an
+    intersection of computed kernels -- "mathematics proved outright,
+    independent of the framework's premises", which is what GT1
+    declares that token to mean.  The rider names what is READ and not
+    computed.  R_OPERATIONAL_RADICAL_IDENTIFICATION: that
+    the declared family of one-dimensional sectors on a witness IS the
+    framework's family of stable simple record-reading sectors, so that
+    the intersection of their computed kernels is what the framework
+    calls the operational radical.  COMPLETENESS of that family is
+    computed here; the identification of the family itself is not, and
+    no witness datum could refute it.  The premise token is NAMED AT
+    THIS PASS; the ruling constrains the form and does not mint it.
+    The grade moved here and the mathematics did not: what changed is
+    what this record says about what it already computed.
 
     REPAIR 2026-08-30 (cold repair seat, DP-3@2026-08-30 / R8).  What
     this check executed before that date was three separately authored
@@ -1481,7 +1563,7 @@ def check_T_operational_radical_equals_jacobson():
         "name": "T_operational_radical_equals_jacobson",
         "passed": not fail_reasons,
         "tier": 3,
-        "epistemic": "P_structural_reading",
+        "epistemic": _GR1_RADICAL_DECLARED_GRADE,
         "key_result": (
             f"COMPUTED ON {len(witnesses)} WITNESS ALGEBRAS, each "
             f"verified associative and unital from its own structure "
@@ -1552,7 +1634,20 @@ def check_T_operational_radical_equals_jacobson():
             "algebras in general, and it derives no regime gate.  "
             "REPAIRED 2026-08-30: before that date this check compared "
             "three separately authored frozensets of equal value to "
-            "each other and computed nothing."
+            "each other and computed nothing.  "
+            "GRADE, MOVED AT THIS PASS (GR1@2026-08-31): "
+            f"{_GR1_RADICAL_DECLARED_GRADE}.  The base "
+            "grades the computation, which is exact algebra over Q on "
+            "the named witnesses; the rider names what is READ and "
+            "not computed -- that the declared family of "
+            "one-dimensional sectors on a witness IS the framework's "
+            "family of stable simple record-reading sectors, so that "
+            "the intersection of their computed kernels is what the "
+            "framework calls the operational radical.  Completeness of "
+            "that family is computed here; that identification is not, "
+            "and no witness datum could refute it.  The mathematics "
+            "did not move at this pass; what moved is what this record "
+            "says about it."
         ),
     }
 
