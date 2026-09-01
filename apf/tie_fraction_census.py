@@ -1,8 +1,8 @@
 """The tie-census fraction of one enumerated fixture family, computed exactly.
 
 COLD BUILD SEAT 2 (built 2026-08-16) + COLD FIX SEAT (re-aim, same day),
-APF Network Sign-Coherence program, banking lane.  Build-seat scratch
-object, wired into no live bank.  NOTHING BANKS WITHOUT ETHAN'S LIFT.
+APF Network Sign-Coherence program, banking lane.  BANKED v24.3.478
+(2026-08-16; see the _module_manifest entry).
 
 PROVENANCE AND DISCLOSURES (carried per the dispatched briefs):
   1. The briefs under which this module was built and fixed were written

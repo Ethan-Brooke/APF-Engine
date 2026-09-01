@@ -114,9 +114,9 @@ RETURN_tie_event_adversarial_2026-08-12.md, quoted verbatim in the
 FALSIFIER_ARM_2A constant (an external falsifier text, quoted, not
 re-derived).  Executed: the CF1 family is (a) registry-shaped under
 bare-name keys (executed on a fresh registry; the banked clause is met
-in full at landing -- this is a build-seat scratch object, wired into no
-live bank); (b) co-present (typed as ONE hold's pre-commit alternatives,
-gated on the live banked hold-arc check, with the FREE leg's zero
+in full at landing); (b) co-present (typed as ONE hold's pre-commit
+alternatives, gated on the live banked hold-arc check, with the FREE
+leg's zero
 pre-commit booking computed); (c) overlapping (every pair intersects on
 S, executed); (d) its overlap pattern DERIVED from banked transition
 structure -- the extension type plus the K1-UT increment pricing --

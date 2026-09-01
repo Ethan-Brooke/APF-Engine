@@ -1,11 +1,11 @@
-# HELD build-seat scratch (2026-08-16): built by COLD BUILD SEAT 1 of the
+# Build-seat object (2026-08-16): built by COLD BUILD SEAT 1 of the
 # APF Network Sign-Coherence program's banking lane, to Surface 1 of the
-# frozen claim-surface document pinned below.  HELD_OUT_OF_THE_BANK = True.
-# NOTHING BANKS WITHOUT ETHAN'S LIFT.
+# frozen claim-surface document pinned below.  BANKED v24.3.478 (2026-08-16;
+# manifest entry live); HELD_OUT_OF_THE_BANK below reads False.
 """Realization-triviality under the M3-mandated encoding, computed exactly.
 
-HELD build-seat scratch object (2026-08-16).  NOTHING BANKS WITHOUT
-ETHAN'S LIFT.  Built by COLD BUILD SEAT 1 to SURFACE 1 ONLY
+BANKED v24.3.478 (2026-08-16; manifest entry live).  Built by COLD BUILD
+SEAT 1 to SURFACE 1 ONLY
 (realization-triviality) of the FROZEN claim surface (binding; weakening
 with disclosure is the permitted direction, strengthening is not; no check
 returns a sentence the surface does not license):
@@ -1120,7 +1120,7 @@ def check_L_rank_one_adjacency_value_tie():
 
 # ---------------------------------------------------------------------------
 # check table + register() (bare-name keys per D6@2026-08-03) + standalone
-# execution.  HELD: this scratch object is wired into no live bank.
+# execution.  Banked v24.3.478; the manifest entry is live.
 # ---------------------------------------------------------------------------
 
 _CHECKS = {

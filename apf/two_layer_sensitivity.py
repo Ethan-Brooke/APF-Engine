@@ -1,6 +1,6 @@
-# UNBANKED BUILD (2026-08-16): cold build seat 4, APF Network Sign-Coherence
-# program, banking lane.  Built to Surface 4 of the frozen claim-surface
-# document (sha256 pinned below).  NOTHING BANKS WITHOUT ETHAN'S LIFT.
+# BANKED v24.3.478 (2026-08-16; see the _module_manifest entry): built by
+# cold build seat 4, APF Network Sign-Coherence program, banking lane, to
+# Surface 4 of the frozen claim-surface document (sha256 pinned below).
 """The two-layer sensitivity split (Surface 4, surviving parts): the geometry
 layer's switching-class sensitivity computed at executed scope, and the record
 layer's blindness consumed as banked.
@@ -16,8 +16,6 @@ BUILD PROVENANCE, DISCLOSED.
       value byte-for-byte).  The surface's permitted sentences are the only
       claims this module makes; its may-not-cite list and the header's
       standing fences bind every sentence here.
-  (4) UNBANKED: this module is a lane build, registered nowhere; nothing in
-      it banks anything.
 
 WHAT THIS MODULE COMPUTES (exact Fraction arithmetic on every verdict path;
 stdlib + fractions; the banked machinery is executed BY VALUE, never
@@ -1026,8 +1024,7 @@ def check_T_sign_conjugation_consumed_and_retied():
 
 
 # ---------------------------------------------------------------------------
-# module surface -- NO registration (unbanked lane build; nothing banks
-# without Ethan's lift)
+# module surface -- registration (banked v24.3.478; manifest entry live)
 # ---------------------------------------------------------------------------
 
 ALL_CHECKS = [

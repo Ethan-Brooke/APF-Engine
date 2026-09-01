@@ -1,8 +1,8 @@
 """The tie read-separation census: banked read functionals executed at banked flat ties.
 
 COLD BUILD, Surface 3 (APF Network Sign-Coherence program, banking lane,
-2026-08-16).  NOT BANKED: a build-seat scratch object, wired into no live
-bank; NOTHING BANKS WITHOUT ETHAN'S LIFT.  Built to the FROZEN claim surface
+2026-08-16).  BANKED v24.3.478 (2026-08-16; see the _module_manifest
+entry).  Built to the FROZEN claim surface
 (binding; its permitted sentences are the ONLY claims this module makes;
 weakening is the permitted direction, strengthening is not):
   /home/claude/freeze_out/claim_surfaces_FROZEN_2026-08-16.md
@@ -732,8 +732,8 @@ def check_S3c_off_tie_separation_redundancy():
 
 
 # ---------------------------------------------------------------------------
-# registration (house shape, bare-name keys per D6@2026-08-03; this module
-# is a build-seat scratch object wired into NO live bank)
+# registration (house shape, bare-name keys per D6@2026-08-03; banked
+# v24.3.478, manifest entry live)
 # ---------------------------------------------------------------------------
 
 _CHECKS = {

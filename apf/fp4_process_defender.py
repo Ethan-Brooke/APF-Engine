@@ -9,7 +9,8 @@ Target: T_FP4, the Completion-Process No-Defender Theorem -- the kill-or-close
         admit NO faithful classical / commuting / finite ontological process
         defender?
 
-Status: standalone research module. NOT bank-registered. ppc = False.
+Status: self-contained research module, bank-registered at v24.3.435 (see
+        the _module_manifest entry). ppc = False.
         Non-exporting. Tier 4. Exact arithmetic (fractions.Fraction); no floats.
 
 RESULT OF RECORD (computed, honest): **FP4 as a purely STRUCTURAL theorem is

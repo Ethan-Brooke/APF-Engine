@@ -2,7 +2,8 @@
 refining_break_candidate.py
 ===========================
 
-RESEARCH-LANE BANK **CANDIDATE** -- NOT WIRED INTO THE LIVE BANK.
+BANK-REGISTERED at v24.3.437 (the `apf.order_refining_break` entry in
+_module_manifest).
 Self-contained. stdlib only (fractions, itertools). No numpy / scipy / apf / pool.
 
 WHAT THIS SETTLES
@@ -673,8 +674,7 @@ _CHECKS = [
 
 
 def register(registry):
-    """Optional bank hook. This is a RESEARCH-LANE CANDIDATE and is NOT wired
-    into the live bank; provided only for contract compatibility."""
+    """Bank hook: the live registration path for this module's checks."""
     for chk in _CHECKS:
         try:
             registry.register(chk)

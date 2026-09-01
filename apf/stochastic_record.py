@@ -6,8 +6,8 @@
 BANKED v24.3.476 (2026-08-14; lifted by Ethan).  Built by a cold build seat under the
 Supplier Search charter (2026-08-14) Phase 2, prerequisite 1 of 3, on the
 Situational Sign program (2026-08-11); the program's section-4 fences bind in
-full.  No register() is defined; run_all() exists for standalone execution
-only; nothing may consume this module until Ethan lifts the hold.
+full.  register() below carries bare-name keys per D6@2026-08-03; run_all()
+exists for standalone execution.
 
 Built to the FROZEN claim surface (binding; weakening with disclosure is the
 permitted direction, strengthening is not; no check returns a sentence the
@@ -30,8 +30,7 @@ RECORDED, NOT COUNTED into any selection, pricing, or dynamics; no check in
 this module consumes the form-(b) sign-class slot, and any future consumer of
 this object banks under its own audit trail.
 
-THE CHECKS (bare-name keys reserved per D6@2026-08-03; nothing registers
-while the hold stands).
+THE CHECKS.
 
 SR1 (check_T_stochastic_record_construction).  The object exists as a finite
 exact construction: the candidate pair is taken in the CF1 genre with

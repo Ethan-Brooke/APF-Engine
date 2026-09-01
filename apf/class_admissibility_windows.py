@@ -1,7 +1,7 @@
 # COLD BUILD SEAT 5 (2026-08-16): built to the frozen claim surface
 # claim_surfaces_FROZEN_2026-08-16.md (Surface 5), raw sha256 verified by
 # this seat BEFORE reading (the constant below is the same value
-# byte-for-byte).  NOT BANKED.  NOTHING BANKS WITHOUT ETHAN'S LIFT.
+# byte-for-byte).  BANKED v24.3.478 (2026-08-16; manifest entry live).
 """Surface 5: the per-class admissibility window on the equicorrelated
 carrier family, computed through the banked elliptope and switching
 machinery by value.
@@ -637,8 +637,8 @@ def run_all():
 
 
 # ---------------------------------------------------------------------------
-# registration surface -- house pattern; this module is registered in no
-# manifest (held out of the bank; NOTHING BANKS WITHOUT ETHAN'S LIFT)
+# registration surface -- house pattern; banked v24.3.478 (manifest entry
+# live)
 # ---------------------------------------------------------------------------
 
 _CHECKS = {

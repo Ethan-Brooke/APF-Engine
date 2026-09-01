@@ -1,8 +1,8 @@
 """
 rent_exclusion_gate.py -- The Rent-Exclusion Gate on the Hidden Order
 ================================================================================
-RESEARCH-LANE BANK CANDIDATE. NOT wired into the bank (no verify_all edit, no
-_module_manifest bump, non-exporting, physical_premises_certified = False).
+BANK-REGISTERED at v24.3.437 (see the _module_manifest entry).
+Non-exporting, physical_premises_certified = False.
 Self-contained: fractions.Fraction + itertools + stdlib ONLY. No scipy, no numpy,
 no multiprocessing/pool, no apf imports. The CHSH (2,2,2) local polytope is
 re-implemented inline (clean-room; it mirrors the banked sibling

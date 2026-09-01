@@ -82,9 +82,9 @@ invariance (extended_carrier_elliptope EE5(d), executed live and
 CITED, never computed as a result here).  No boundary, no window and no
 per-character factorization is computed here at all, and no other
 cell is; the exact m-table, the boundaries and the panel are the
-sibling module's content, cited BY NAME.  DISCLOSED: the sibling is
-unbanked at HEAD, so no executable consumption of it is available and
-none is performed -- the panel is AUTHORED in this file, and the
+sibling module's content, cited BY NAME.  DISCLOSED: the sibling was
+unbanked at build, so no executable consumption of it was available;
+none is performed here -- the panel is AUTHORED in this file, and the
 set-exact comparison that checks it is a comparison against a second
 declaration in this same file, a self-tie and not a cross-module
 value tie.  The panel's ten classes and their representatives ARE
@@ -219,8 +219,8 @@ survivors are computed indistinguishable under every clause here" is
 weakened IN THE SENTENCE to every REMOVAL clause, with the one
 non-verdict property that separates the constant uniform law carried
 inside the same sentence; (6) the frozen surface's "consumed from the
-sibling's route" is unreachable while that sibling is unbanked, and
-the panel is authored here and disclosed as authored; (7) the shared
+sibling's route" was unreachable at build, the sibling then unbanked,
+and the panel is authored here and disclosed as authored; (7) the shared
 MAY-NOT-CITE and the M3 MAY-NOT-CITE items are carried in this
 module's own compressed rendering -- all twenty-one present, each
 under its own tag, none deleted, markdown emphasis and provenance
@@ -566,8 +566,8 @@ M_DOMAIN = (F(0), F(1, 2), F(1))
 
 # THE PANEL -- ten refined ordinal classes with their representatives.
 # The panel's class structure, counts and splits are the sibling module's
-# content, cited BY NAME and claimed nowhere in this file; the sibling is
-# unbanked at HEAD, so the panel is AUTHORED here and no executable
+# content, cited BY NAME and claimed nowhere in this file; the sibling
+# was unbanked at build, so the panel is AUTHORED here and no executable
 # consumption of it is performed.  The classes ARE recomputed below as a
 # self-consistency check, and nothing here is concluded from them.  The representative of a class is the
 # lexicographically smallest member of that class over the authored value
