@@ -30,6 +30,22 @@ ATLAS_ROUTE = "coherent_phase:laser_coherence"
 ATLAS_PAYLOAD_NAME = "laser_coherence_codomain_adapter_live"
 ATLAS_AXIS = "CODOMAIN"
 
+# THE DECLARED STATUS TOKENS.  Each is the token this module's corresponding
+# check declares, hoisted out of a conditional `status` field per GT8@2026-08-30
+# (the grade is a constant; the verdict goes in `passed`) under CR4@2026-09-01,
+# batch B3.  Each string is the site's own former true-branch literal, verbatim
+# -- this records existing vocabulary and mints nothing (Grade-Token Docket
+# standing fence, section 1).  The run outcome is carried by `passed`, which
+# every one of these records already returned, bound to the same expression the
+# retired conditional tested.  DISCLOSED: the sibling `epistemic` field at each
+# site still carries its own copy of the same literal; the plan's section 6.4
+# holds `epistemic` out of scope for this batch, so these constants have one
+# consumer each and the GR1 single-sourcing property is NOT achieved here.
+_DECLARED_STATUS_PAYLOAD_CONTRACT = "P_codomain_adapter_contract"
+_DECLARED_STATUS_VERDICT_CONSISTENT = "P_codomain_adapter_verdict_consistent"
+_DECLARED_STATUS_AUDIT_FIRST = "P_codomain_adapter_audit_first"
+_DECLARED_STATUS_ATLAS_CONTRACT = "P_codomain_adapter_atlas_contract"
+
 _FIXTURES = _json.loads(r"""[
   {
     "name": "select_structural",
@@ -189,7 +205,7 @@ def check_T_laser_coherence_codomain_adapter_payload_contract_P() -> Dict[str, A
           and p["target_value_consumed"] is False and isinstance(p["verdict"], dict)
           and "status" in p["verdict"])
     return {"name": "check_T_laser_coherence_codomain_adapter_payload_contract_P", "consistent": ok, "passed": ok,
-            "tier": 4, "status": "P_codomain_adapter_contract" if ok else "FAIL",
+            "tier": 4, "status": _DECLARED_STATUS_PAYLOAD_CONTRACT,
             "epistemic": "P_codomain_adapter_contract",
             "summary": "Laser coherence codomain adapter payload carries the required fields and routes through the engine.",
             "dependencies": ["apf.codomain_selection_engine.adjudicate_codomain_competition", "apf.laser_coherence_ie"],
@@ -209,7 +225,7 @@ def check_T_laser_coherence_codomain_adapter_verdict_consistent_P() -> Dict[str,
         ok = ok and m
         results[fx.get("name")] = {"expected": exp, "got": native, "ok": m}
     return {"name": "check_T_laser_coherence_codomain_adapter_verdict_consistent_P", "consistent": ok, "passed": ok,
-            "tier": 4, "status": "P_codomain_adapter_verdict_consistent" if ok else "FAIL",
+            "tier": 4, "status": _DECLARED_STATUS_VERDICT_CONSISTENT,
             "epistemic": "P_codomain_adapter_verdict_consistent",
             "summary": "Installed Laser coherence runtime reproduces every fixture verdict through the engine.",
             "dependencies": ["apf.codomain_selection_engine._adjudicate_laser_coherence"],
@@ -224,7 +240,7 @@ def check_T_laser_coherence_codomain_adapter_audit_first_P() -> Dict[str, Any]:
            and "engine_module" in p["external_evaluator_ledger"])
     ok = nc and p["target_value_consumed"] is False and led
     return {"name": "check_T_laser_coherence_codomain_adapter_audit_first_P", "consistent": ok, "passed": ok,
-            "tier": 4, "status": "P_codomain_adapter_audit_first" if ok else "FAIL",
+            "tier": 4, "status": _DECLARED_STATUS_AUDIT_FIRST,
             "epistemic": "P_codomain_adapter_audit_first",
             "summary": "Audit-first non-claims preserved; target not consumed; evaluator ledger declared.",
             "dependencies": ["apf.codomain_selection_engine.PRESERVED_NON_CLAIMS"],
@@ -249,7 +265,7 @@ def check_T_laser_coherence_codomain_adapter_atlas_contract_P() -> Dict[str, Any
         err = f"{type(exc).__name__}: {exc}"
     ok = attrs and aok
     return {"name": "check_T_laser_coherence_codomain_adapter_atlas_contract_P", "consistent": ok, "passed": ok,
-            "tier": 4, "status": "P_codomain_adapter_atlas_contract" if ok else "FAIL",
+            "tier": 4, "status": _DECLARED_STATUS_ATLAS_CONTRACT,
             "epistemic": "P_codomain_adapter_atlas_contract",
             "summary": "Laser coherence adapter declares the CODOMAIN atlas contract; live payload reaches COHERENT via the engine.",
             "dependencies": ["apf.interface_atlas", "apf.codomain_selection_engine.adjudicate_codomain_competition"],

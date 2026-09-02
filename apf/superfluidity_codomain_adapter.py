@@ -245,6 +245,23 @@ ATLAS_ROUTE = "coherent_phase:superfluidity"
 ATLAS_PAYLOAD_NAME = "superfluidity_codomain_adapter_live"
 ATLAS_AXIS = "CODOMAIN"
 
+# THE DECLARED STATUS TOKENS.  Each is the token this module's corresponding
+# check declares, hoisted out of a conditional `status` field per GT8@2026-08-30
+# (the grade is a constant; the verdict goes in `passed`) under CR4@2026-09-01,
+# batch B3.  Each string is the site's own former true-branch literal, verbatim
+# -- this records existing vocabulary and mints nothing (Grade-Token Docket
+# standing fence, section 1).  The run outcome is carried by `passed`, which
+# every one of these records already returned, bound to the same expression the
+# retired conditional tested.  DISCLOSED: the sibling `epistemic` field at each
+# site still carries its own copy of the same literal; the plan's section 6.4
+# holds `epistemic` out of scope for this batch, so these constants have one
+# consumer each and the GR1 single-sourcing property is NOT achieved here.
+_DECLARED_STATUS_PAYLOAD_CONTRACT = "P_codomain_adapter_contract"
+_DECLARED_STATUS_VERDICT_CONSISTENT = "P_codomain_adapter_verdict_consistent"
+_DECLARED_STATUS_AUDIT_FIRST = "P_codomain_adapter_audit_first"
+_DECLARED_STATUS_ATLAS_CONTRACT = "P_codomain_adapter_atlas_contract"
+_DECLARED_STATUS_V4_AUDIT_LADDER = "P_codomain_adapter_v4_audit_ladder"
+
 
 def build_live_atlas_payload() -> Dict[str, Any]:
     """Build the live codomain-axis atlas payload using the positive SF fixture.
@@ -295,7 +312,7 @@ def check_T_superfluidity_codomain_adapter_payload_contract_P() -> Dict[str, Any
         "consistent": consistent,
         "passed": consistent,
         "tier": 4,
-        "status": "P_codomain_adapter_contract" if consistent else "FAIL",
+        "status": _DECLARED_STATUS_PAYLOAD_CONTRACT,
         "epistemic": "P_codomain_adapter_contract",
         "summary": (
             "SF codomain adapter payload carries the required 9 fields with correct "
@@ -342,7 +359,7 @@ def check_T_superfluidity_codomain_adapter_verdict_consistent_P() -> Dict[str, A
         "consistent": consistent,
         "passed": consistent,
         "tier": 4,
-        "status": "P_codomain_adapter_verdict_consistent" if consistent else "FAIL",
+        "status": _DECLARED_STATUS_VERDICT_CONSISTENT,
         "epistemic": "P_codomain_adapter_verdict_consistent",
         "summary": (
             "Adapter verdicts match fixture expectations through the engine: "
@@ -385,7 +402,7 @@ def check_T_superfluidity_codomain_adapter_audit_first_P() -> Dict[str, Any]:
         "consistent": consistent,
         "passed": consistent,
         "tier": 4,
-        "status": "P_codomain_adapter_audit_first" if consistent else "FAIL",
+        "status": _DECLARED_STATUS_AUDIT_FIRST,
         "epistemic": "P_codomain_adapter_audit_first",
         "summary": (
             "Audit-first discipline preserved: numeric_critical_temperature + "
@@ -461,7 +478,7 @@ def check_T_superfluidity_codomain_adapter_atlas_contract_P() -> Dict[str, Any]:
         "consistent": consistent,
         "passed": consistent,
         "tier": 4,
-        "status": "P_codomain_adapter_atlas_contract" if consistent else "FAIL",
+        "status": _DECLARED_STATUS_ATLAS_CONTRACT,
         "epistemic": "P_codomain_adapter_atlas_contract",
         "summary": (
             "SF codomain adapter declares full atlas live-runner contract for the CODOMAIN "
@@ -712,7 +729,7 @@ def check_T_superfluidity_codomain_adapter_v4_audit_ladder_P() -> Dict[str, Any]
         "consistent": all_match,
         "passed": all_match,
         "tier": 4,
-        "status": "P_codomain_adapter_v4_audit_ladder" if all_match else "FAIL",
+        "status": _DECLARED_STATUS_V4_AUDIT_LADDER,
         "epistemic": "P_codomain_adapter_v4_audit_ladder",
         "summary": (
             "Installed SF runtime reproduces the v4 audit-ladder verdict lattice on all "
