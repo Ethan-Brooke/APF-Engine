@@ -368,7 +368,8 @@ def check_T_no_inverse_fit_transport_theorem() -> Dict[str, Any]:
         "passed": True,
         "status": "PASS",
         "tier": 4,
-        "epistemic": THEOREM_STATUS + " | no-smuggling",
+        "epistemic": THEOREM_STATUS,
+        "branch_tag": "no-smuggling",
         "stage_consumers_of_target_observables": [],
         "certificate_target_consumers": [],
         "forbidden_inputs": [

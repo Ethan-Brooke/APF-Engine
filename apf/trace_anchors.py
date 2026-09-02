@@ -45,7 +45,8 @@ def check_L_top_apf_trace_anchor():
     return {
         'name': 'L_top_apf_trace_anchor',
         'passed': True,
-        'epistemic': 'P_local | trace-anchor from prior closed local chain',
+        'epistemic': 'P_local',
+        'branch_tag': 'trace-anchor from prior closed local chain',
         'codomain': 'APF_TRACE',
         'm_t_APF_TRACE_GeV': MT_APF_TRACE_GEV,
         'dependencies': ['L_residual_up_normalizer_local', 'TraceToSchemeTransport boundary theorem'],
@@ -61,7 +62,8 @@ def check_L_bottom_apf_trace_from_ratio():
     return {
         'name': 'L_bottom_apf_trace_from_ratio',
         'passed': True,
-        'epistemic': 'P_local | bank-hardened formula',
+        'epistemic': 'P_local',
+        'branch_tag': 'bank-hardened formula',
         'codomain': 'APF_TRACE',
         'ratio_b_over_t': ratio,
         'm_b_APF_TRACE_GeV': mb,
@@ -124,13 +126,13 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Trace-anchor centralization: check_L_top_apf_trace_anchor ['P_local "
-            "| trace-anchor from prior closed local chain'] pins the top "
+            "Trace-anchor centralization: check_L_top_apf_trace_anchor [P_local, "
+            "branch tag 'trace-anchor from prior closed local chain'] pins the top "
             "APF_TRACE anchor m_t = 168.1690557938 GeV as a module constant "
             "inherited from the prior "
             "DominantChannel/WBranch/TraceToSchemeTransport chain -- an anchor "
             "declaration, not a rederivation here. "
-            "check_L_bottom_apf_trace_from_ratio ['P_local | bank-hardened "
+            "check_L_bottom_apf_trace_from_ratio [P_local, branch tag 'bank-hardened "
             "formula'] makes the bottom anchor computable rather than an opaque "
             "downstream literal: m_b_TRACE = m_t_TRACE x (Lambda_d/Lambda_u) x "
             "(L2_d/L2_u) x (E3/(2 C_EW)) / (sv_d/sv_u) = 4.1775 GeV. "

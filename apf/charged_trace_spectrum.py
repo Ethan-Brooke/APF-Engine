@@ -16,7 +16,12 @@ def check_T_charged_fermion_apf_trace_spectrum():
     return {
         'name':'T_charged_fermion_apf_trace_spectrum',
         'passed': True,
-        'epistemic': 'P_local | upstream-banking-ready',
+        'epistemic': 'P_local',
+        # STATED LIMITATION (CR3@2026-09-01), the key's introduction site:
+        # `branch_tag` is presentation and not vocabulary, so no standing
+        # instrument in this repository asserts a tag's value -- deleting or
+        # swapping one is caught by no bank check, no script gate and no census.
+        'branch_tag': 'upstream-banking-ready',
         'codomain':'APF_TRACE',
         'masses_GeV': masses,
         'status':'FULL_LOCAL_TRACE_VECTOR_CLOSED__GRAM_TO_TRACE_BRIDGE_STRENGTHENED',
@@ -75,8 +80,9 @@ IE_DECLARATIONS = (
             "Compositional master module for the charged-fermion trace sector: "
             "check_T_charged_fermion_apf_trace_spectrum composes the up-family "
             "and down/lepton APF_TRACE vectors into the full nine-mass charged- "
-            "fermion spectrum at machine grade 'P_local | upstream-banking- "
-            "ready', codomain APF_TRACE, exports_physical_scheme_masses = False. "
+            "fermion spectrum at machine grade P_local, branch tag "
+            "'upstream-banking-ready', codomain APF_TRACE, "
+            "exports_physical_scheme_masses = False. "
             "check_T_no_inverse_inputs_charged_trace certifies no observed "
             "charged-fermion masses, target-fitted transport, or physical scheme "
             "identities are consumed; check_T_up_bridge_strengthened records that "
