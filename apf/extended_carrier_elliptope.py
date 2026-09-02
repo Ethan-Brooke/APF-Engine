@@ -120,7 +120,7 @@ below certifies that a declared leg EXECUTED, not that it COULD HAVE
 FAILED; a multi-site rename or a computed verdict replaced by a constant
 escapes it, as it escapes the raising form equally.
 
-MAY NOT CITE while the hold stands (and the first five permanently):
+MAY NOT CITE (PERMANENT, ruled CR5@2026-09-01):
 - Any tradeoff law in any form; none appears here and none may be
   attributed to this module.
 - Any Englert or visibility/distinguishability identification; no record
