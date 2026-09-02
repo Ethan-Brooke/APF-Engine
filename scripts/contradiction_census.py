@@ -1338,9 +1338,16 @@ _LIB = _resolve_library_root()
 DEF_PAPERS = os.path.join(_LIB, "Papers") if _LIB else None
 DEF_CODE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'apf')
 
+# BOTH control targets are ARCHIVED paths, and that is load-bearing.
+# CONTROL_NEG previously named the LIVE top-level file; the house archive
+# convention moves a superseded version into Old/ on every version bump, so
+# that constant went dead and the negative control silently stopped running
+# while the tool kept printing a number. An Old/ path is never renamed or
+# overwritten by that convention (a name collision there takes a suffix),
+# so it survives paper versioning. Do not re-point either at a live path.
 CONTROL_POS = ("Paper 01 - The Enforceability of Distinction/Old/"
                "Paper_1_Enforceability_of_Distinction_v5.9.tex")
-CONTROL_NEG = ("Paper 01 - The Enforceability of Distinction/"
+CONTROL_NEG = ("Paper 01 - The Enforceability of Distinction/Old/"
                "Paper_1_Enforceability_of_Distinction_v5.10.tex")
 
 
