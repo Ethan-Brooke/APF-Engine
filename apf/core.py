@@ -3268,105 +3268,1397 @@ def check_T3():
     )
 
 
-def check_T_Born():
-    """T_Born: Born Rule from Admissibility Invariance.
+# ---------------------------------------------------------------------------
+# T_Born -- exact effect-route machinery.
+#
+# Added at the T_Born repair.  Every name below is private to this block and
+# is used by check_T_Born alone.  Gaussian rationals are carried as ordered
+# pairs (re, im) of Fraction, matrices as tuples of tuples of such pairs --
+# the representation the exact Born-side siblings already use
+# (apf/operational_score_linearity.py, apf/dense_sandwich_born.py), so a
+# value tie can be taken against their objects without a conversion step
+# that could itself be wrong.  No float, no tolerance and no seeded RNG
+# enters the executed content, and no dependency on numpy or sympy is
+# introduced: the exact siblings use none.
+# ---------------------------------------------------------------------------
 
-    Paper 5 _5, Paper 13 Appendix C.
+_TB_GZERO = (Fraction(0), Fraction(0))
+_TB_GONE = (Fraction(1), Fraction(0))
+_TB_GI = (Fraction(0), Fraction(1))
 
-    STATEMENT: In dim >= 3, any probability assignment p(rho, E) satisfying:
-      P1 (Additivity):  p(rho, E_1+E_2) = p(rho,E_1) + p(rho,E_2) for E_1_|_E_2
-      P2 (Positivity):  p(rho, E) >= 0
-      P3 (Normalization): p(rho, I) = 1
-      P4 (Admissibility invariance): p(UrhoU+, UEU+) = p(rho, E) for unitary U
-    must be p(rho, E) = Tr(rhoE).   [Gleason's theorem]
 
-    PROOF (computational witness on dim=3):
-    Construct frame functions on R^3 and verify they must be quadratic forms
-    (hence representable as Tr(rho*) for density operator rho).
+def _tb_g(re=0, im=0):
+    return (Fraction(re), Fraction(im))
+
+
+def _tb_gadd(x, y):
+    return (x[0] + y[0], x[1] + y[1])
+
+
+def _tb_gsub(x, y):
+    return (x[0] - y[0], x[1] - y[1])
+
+
+def _tb_gmul(x, y):
+    return (x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0])
+
+
+def _tb_gconj(x):
+    return (x[0], -x[1])
+
+
+def _tb_gscale(s, x):
+    return (s * x[0], s * x[1])
+
+
+def _tb_gdiv(x, y):
+    n = y[0] * y[0] + y[1] * y[1]
+    num = _tb_gmul(x, _tb_gconj(y))
+    return (num[0] / n, num[1] / n)
+
+
+def _tb_gzero(x):
+    return x[0] == 0 and x[1] == 0
+
+
+def _tb_gsum(items):
+    acc = _TB_GZERO
+    for x in items:
+        acc = _tb_gadd(acc, x)
+    return acc
+
+
+def _tb_zeros(d):
+    return tuple(tuple(_TB_GZERO for _ in range(d)) for _ in range(d))
+
+
+def _tb_eye(d):
+    return tuple(tuple(_TB_GONE if i == j else _TB_GZERO for j in range(d))
+                 for i in range(d))
+
+
+def _tb_unit(d, i, j):
+    return tuple(tuple(_TB_GONE if (r == i and c == j) else _TB_GZERO
+                       for c in range(d)) for r in range(d))
+
+
+def _tb_add(a, b):
+    d = len(a)
+    return tuple(tuple(_tb_gadd(a[i][j], b[i][j]) for j in range(d))
+                 for i in range(d))
+
+
+def _tb_sub(a, b):
+    d = len(a)
+    return tuple(tuple(_tb_gsub(a[i][j], b[i][j]) for j in range(d))
+                 for i in range(d))
+
+
+def _tb_scale(s, a):
+    d = len(a)
+    return tuple(tuple(_tb_gscale(s, a[i][j]) for j in range(d))
+                 for i in range(d))
+
+
+def _tb_gscale_m(z, a):
+    d = len(a)
+    return tuple(tuple(_tb_gmul(z, a[i][j]) for j in range(d))
+                 for i in range(d))
+
+
+def _tb_mul(a, b):
+    d = len(a)
+    return tuple(tuple(_tb_gsum([_tb_gmul(a[i][k], b[k][j])
+                                 for k in range(d)]) for j in range(d))
+                 for i in range(d))
+
+
+def _tb_dag(a):
+    d = len(a)
+    return tuple(tuple(_tb_gconj(a[j][i]) for j in range(d)) for i in range(d))
+
+
+def _tb_trace(a):
+    return _tb_gsum([a[i][i] for i in range(len(a))])
+
+
+def _tb_is_hermitian(a):
+    return a == _tb_dag(a)
+
+
+def _tb_sum_matrices(mats, d):
+    out = _tb_zeros(d)
+    for m in mats:
+        out = _tb_add(out, m)
+    return out
+
+
+def _tb_det(a):
+    """Exact determinant over Q(i) by elimination.  Q(i) is a field."""
+    n = len(a)
+    work = [list(row) for row in a]
+    det = _TB_GONE
+    sign = 1
+    for col in range(n):
+        piv = None
+        for r in range(col, n):
+            if not _tb_gzero(work[r][col]):
+                piv = r
+                break
+        if piv is None:
+            return _TB_GZERO
+        if piv != col:
+            work[col], work[piv] = work[piv], work[col]
+            sign = -sign
+        det = _tb_gmul(det, work[col][col])
+        inv = _tb_gdiv(_TB_GONE, work[col][col])
+        work[col] = [_tb_gmul(inv, x) for x in work[col]]
+        for r in range(col + 1, n):
+            if not _tb_gzero(work[r][col]):
+                f = work[r][col]
+                work[r] = [_tb_gsub(work[r][k], _tb_gmul(f, work[col][k]))
+                           for k in range(n)]
+    return _tb_gscale(Fraction(sign), det)
+
+
+def _tb_subsets(pool, k):
+    """Ordered index subsets of size k drawn from pool."""
+    pool = list(pool)
+    if k == 0:
+        yield ()
+        return
+    for idx in range(len(pool) - k + 1):
+        for rest in _tb_subsets(pool[idx + 1:], k - 1):
+            yield (pool[idx],) + rest
+
+
+def _tb_principal_minor(a, idx):
+    sub = tuple(tuple(a[i][j] for j in idx) for i in idx)
+    return _tb_det(sub)
+
+
+def _tb_psd(a):
+    """Exact positive-semidefinite verdict for a Hermitian matrix over Q(i).
+
+    Every principal minor of a positive semidefinite Hermitian matrix is a
+    non-negative real; one negative principal minor refutes positivity.  The
+    failing index set and its value are returned so that a rejection is
+    EXHIBITED rather than asserted.
     """
-    # Gleason's theorem: in dim >= 3, any frame function is a trace functional.
-    # We verify on a 3D witness.
-    d = 3  # dimension (Gleason requires d >= 3)
+    n = len(a)
+    for k in range(1, n + 1):
+        for idx in _tb_subsets(range(n), k):
+            m = _tb_principal_minor(a, idx)
+            if m[1] != 0:
+                return False, idx, None
+            if m[0] < 0:
+                return False, idx, m[0]
+    return True, None, None
 
-    # Step 1: Construct a density matrix rho
-    # Diagonal pure state
-    rho = _zeros(d, d)
-    rho[0][0] = 1.0  # pure state |00|
-    check(abs(_tr(rho) - 1.0) < 1e-12, "rho must have trace 1")
-    eigvals = _eigvalsh(rho)
-    check(all(ev >= -1e-12 for ev in eigvals), "rho must be positive semidefinite")
 
-    # Step 2: Construct a complete set of orthogonal projectors (POVM = PVM)
-    projectors = []
-    for k in range(d):
-        P = _zeros(d, d)
-        P[k][k] = 1.0
-        projectors.append(P)
+def _tb_is_effect(e):
+    """0 <= E <= I, exactly."""
+    if not _tb_is_hermitian(e):
+        return False
+    return _tb_psd(e)[0] and _tb_psd(_tb_sub(_tb_eye(len(e)), e))[0]
 
-    # Step 3: Verify POVM completeness
-    total = projectors[0]
-    for P in projectors[1:]:
-        total = _madd(total, P)
-    check(_aclose(total, _eye(d)), "Projectors must sum to identity")
 
-    # Step 4: Born rule probabilities
-    probs = [_tr(_mm(rho, P)).real for P in projectors]
-    check(abs(sum(probs) - 1.0) < 1e-12, "P3: probabilities must sum to 1")
-    check(all(p >= -1e-12 for p in probs), "P2: probabilities must be non-negative")
+def _tb_pair(x, e):
+    """Tr(X E) as an exact Fraction, for Hermitian X and E.
 
-    # Step 5: Admissibility invariance -- verify p(UrhoU+, UPU+) = p(rho, P)
-    # Random unitary (Hadamard-like)
-    theta = _math.pi / 4
-    U = _mat([
-        [_math.cos(theta), -_math.sin(theta), 0],
-        [_math.sin(theta),  _math.cos(theta), 0],
-        [0, 0, 1]
+    The trace of a product needs only the diagonal of that product, so this
+    sums X[i][k] * E[k][i] directly rather than forming the product.  Same
+    value, exactly; it is the same sum the definition of the trace names.
+    """
+    t = _tb_gsum([_tb_gmul(x[i][k], e[k][i])
+                  for i in range(len(x)) for k in range(len(x))])
+    if t[1] != 0:
+        raise CheckFailure(
+            "T_Born: the trace pairing of two Hermitian matrices must be "
+            "real; a non-real value means a Hermiticity or a conjugation "
+            "convention has moved")
+    return t[0]
+
+
+def _tb_rank(rows):
+    """Exact rank of a rational matrix given as rows."""
+    work = [[Fraction(x) for x in row] for row in rows]
+    work = [row for row in work if any(x != 0 for x in row)]
+    if not work:
+        return 0
+    r = 0
+    ncols = len(work[0])
+    for col in range(ncols):
+        piv = None
+        for i in range(r, len(work)):
+            if work[i][col] != 0:
+                piv = i
+                break
+        if piv is None:
+            continue
+        work[r], work[piv] = work[piv], work[r]
+        pv = work[r][col]
+        work[r] = [x / pv for x in work[r]]
+        for i in range(len(work)):
+            if i != r and work[i][col] != 0:
+                q = work[i][col]
+                work[i] = [a - q * b for a, b in zip(work[i], work[r])]
+        r += 1
+    return r
+
+
+def _tb_solve(mat, rhs):
+    """Exact square solve; None if singular."""
+    n = len(mat)
+    work = [[Fraction(x) for x in mat[i]] + [Fraction(rhs[i])]
+            for i in range(n)]
+    for col in range(n):
+        piv = None
+        for i in range(col, n):
+            if work[i][col] != 0:
+                piv = i
+                break
+        if piv is None:
+            return None
+        work[col], work[piv] = work[piv], work[col]
+        pv = work[col][col]
+        work[col] = [x / pv for x in work[col]]
+        for i in range(n):
+            if i != col and work[i][col] != 0:
+                q = work[i][col]
+                work[i] = [a - q * b for a, b in zip(work[i], work[col])]
+    return [work[i][n] for i in range(n)]
+
+
+def _tb_nullvec(rows, ncols):
+    """One non-zero vector in the null space of the given rows, or None."""
+    work = [[Fraction(x) for x in row] for row in rows]
+    pivots = []
+    r = 0
+    for col in range(ncols):
+        piv = None
+        for i in range(r, len(work)):
+            if work[i][col] != 0:
+                piv = i
+                break
+        if piv is None:
+            continue
+        work[r], work[piv] = work[piv], work[r]
+        pv = work[r][col]
+        work[r] = [x / pv for x in work[r]]
+        for i in range(len(work)):
+            if i != r and work[i][col] != 0:
+                q = work[i][col]
+                work[i] = [a - q * b for a, b in zip(work[i], work[r])]
+        pivots.append(col)
+        r += 1
+    free = [c for c in range(ncols) if c not in pivots]
+    if not free:
+        return None
+    fc = free[0]
+    v = [Fraction(0)] * ncols
+    v[fc] = Fraction(1)
+    for i, pc in enumerate(pivots):
+        v[pc] = -work[i][fc]
+    return v
+
+
+def _tb_sector_basis(d, sector):
+    """Ordered basis of the sector read as a REAL vector space.
+
+    'real'    -> Sym_d(Q),      dimension d(d+1)/2
+    'complex' -> Herm_d(Q(i)),  real dimension d^2
+    """
+    basis = []
+    names = []
+    for j in range(d):
+        basis.append(_tb_unit(d, j, j))
+        names.append('E_%d%d' % (j, j))
+    for j in range(d):
+        for k in range(j + 1, d):
+            basis.append(_tb_add(_tb_unit(d, j, k), _tb_unit(d, k, j)))
+            names.append('S_%d%d' % (j, k))
+    if sector == 'complex':
+        for j in range(d):
+            for k in range(j + 1, d):
+                m = _tb_sub(_tb_unit(d, j, k), _tb_unit(d, k, j))
+                basis.append(_tb_gscale_m(_TB_GI, m))
+                names.append('A_%d%d' % (j, k))
+    return tuple(basis), tuple(names)
+
+
+def _tb_sector_dim(d, sector):
+    return d * (d + 1) // 2 if sector == 'real' else d * d
+
+
+def _tb_effect_family(d, sector):
+    """The named spanning effect family F(d, K), constructed explicitly.
+
+    Every member is a rank-one orthogonal projector with rational (resp.
+    Gaussian-rational) entries, hence an effect: the diagonal projectors,
+    the projectors onto (e_j + e_k)/sqrt(2) for j < k, and -- in the complex
+    sector -- the projectors onto (e_j + i e_k)/sqrt(2).  The VECTORS are
+    irrational; the PROJECTORS are not, which is what makes the family
+    exhibitable in exact arithmetic at all.
+    """
+    fam = []
+    names = []
+    for j in range(d):
+        fam.append(_tb_unit(d, j, j))
+        names.append('P_%d' % j)
+    half = Fraction(1, 2)
+    for j in range(d):
+        for k in range(j + 1, d):
+            m = [[_TB_GZERO] * d for _ in range(d)]
+            m[j][j] = _tb_g(half)
+            m[k][k] = _tb_g(half)
+            m[j][k] = _tb_g(half)
+            m[k][j] = _tb_g(half)
+            fam.append(tuple(tuple(row) for row in m))
+            names.append('Pplus_%d%d' % (j, k))
+    if sector == 'complex':
+        for j in range(d):
+            for k in range(j + 1, d):
+                m = [[_TB_GZERO] * d for _ in range(d)]
+                m[j][j] = _tb_g(half)
+                m[k][k] = _tb_g(half)
+                m[j][k] = _tb_g(0, -half)
+                m[k][j] = _tb_g(0, half)
+                fam.append(tuple(tuple(row) for row in m))
+                names.append('Pi_%d%d' % (j, k))
+    return tuple(fam), tuple(names)
+
+
+def _tb_projector_family(d):
+    """P(d): the diagonal rank-one projectors -- the commit-record read."""
+    return tuple(_tb_unit(d, j, j) for j in range(d))
+
+
+def _tb_from_coords(coords, basis):
+    out = _tb_zeros(len(basis[0]))
+    for c, b in zip(coords, basis):
+        out = _tb_add(out, _tb_scale(c, b))
+    return out
+
+
+def _tb_pairing_matrix(family, basis):
+    return [[_tb_pair(b, e) for b in basis] for e in family]
+
+
+def _tb_state(d, sector):
+    """The candidate state of the executed instance, per sector."""
+    q = Fraction(1, 4)
+    m = [[_TB_GZERO] * d for _ in range(d)]
+    m[0][0] = _tb_g(q)
+    m[1][1] = _tb_g(q)
+    if sector == 'real':
+        m[0][1] = _tb_g(q)
+        m[1][0] = _tb_g(q)
+    else:
+        m[0][1] = _tb_g(0, -q)
+        m[1][0] = _tb_g(0, q)
+    rho = tuple(tuple(row) for row in m)
+    return _tb_add(rho, _tb_scale(Fraction(1, 2), _tb_unit(d, d - 1, d - 1)))
+
+
+def _tb_binary_povm(d):
+    """A NON-projective binary POVM: E1 unsharp, E2 = I - E1."""
+    e1 = _tb_scale(Fraction(1, 2), _tb_eye(d))
+    off = _tb_add(_tb_unit(d, 0, 1), _tb_unit(d, 1, 0))
+    e1 = _tb_add(e1, _tb_scale(Fraction(1, 4), off))
+    return e1, _tb_sub(_tb_eye(d), e1)
+
+
+def _tb_unitaries(d, sector):
+    """Exact Gaussian-rational unitaries.  The rational rotation comes from
+    a Pythagorean triple; the phase is Gaussian-rational by construction."""
+    rot = [[_TB_GONE if i == j else _TB_GZERO for j in range(d)]
+           for i in range(d)]
+    rot[0][0] = _tb_g(Fraction(3, 5))
+    rot[0][1] = _tb_g(Fraction(-4, 5))
+    rot[1][0] = _tb_g(Fraction(4, 5))
+    rot[1][1] = _tb_g(Fraction(3, 5))
+    out = [('rotation_3_4_5', tuple(tuple(r) for r in rot))]
+    if sector == 'complex':
+        ph = [[_TB_GONE if i == j else _TB_GZERO for j in range(d)]
+              for i in range(d)]
+        ph[0][0] = _TB_GI
+        out.append(('phase_i', tuple(tuple(r) for r in ph)))
+    return tuple(out)
+
+
+def _tb_shear(d):
+    """I + E_01: determinant one, NOT unitary.  The negative control."""
+    return _tb_add(_tb_eye(d), _tb_unit(d, 0, 1))
+
+
+def _tb_singular(d):
+    """diag(0, 1, ..., 1): determinant zero, NOT unitary."""
+    m = [[_TB_GONE if i == j else _TB_GZERO for j in range(d)]
+         for i in range(d)]
+    m[0][0] = _TB_GZERO
+    return tuple(tuple(r) for r in m)
+
+
+# The retired predicate, reproduced ONLY inside the N2 regression control so
+# that the control exhibits what the retired leg actually did.  Its
+# tolerance is the retired literal, carried exactly as a Fraction rather
+# than as the float it was, so the control reproduces the retired verdicts
+# while no float enters this object.  NO LIVE LEG USES A TOLERANCE.
+_TBORN_RETIRED_DET_TOLERANCE = Fraction(1, 10 ** 12)
+
+
+def _tb_retired_det_predicate(u):
+    """The retired unitarity leg: abs(det U) - 1 < tol.  One-sided."""
+    dt = _tb_det(u)
+    if dt[1] != 0:
+        return None
+    return abs(dt[0]) - 1 < _TBORN_RETIRED_DET_TOLERANCE
+
+
+def _tb_unitary(u):
+    """The replacement predicate: U U* == I, exactly."""
+    return _tb_mul(u, _tb_dag(u)) == _tb_eye(len(u))
+
+
+def _tb_nonlinear_candidate(e, d):
+    """The named NONLINEAR normalized candidate E -> (Tr E / d)^2.
+
+    At d = 2 this is the impostor the operational-score sibling carries as
+    its own adversary, which is what makes the T3 value tie available.
+    """
+    t = _tb_trace(e)
+    if t[1] != 0:
+        raise CheckFailure(
+            "T_Born: the nonlinear candidate is defined on Hermitian "
+            "arguments, whose trace is real")
+    return (t[0] / d) ** 2
+
+
+def _tb_d2_onb_family():
+    """One exhibited finite family of orthonormal bases of R^2.
+
+    Rational unit vectors come from Pythagorean triples; each basis is a
+    vector and its orthogonal complement.  This is ONE named family, not a
+    quantification over bases, and nothing below reads it as one.
+    """
+    triples = ((Fraction(1), Fraction(0)),
+               (Fraction(3, 5), Fraction(4, 5)),
+               (Fraction(5, 13), Fraction(12, 13)),
+               (Fraction(8, 17), Fraction(15, 17)))
+    vectors = []
+    bases = []
+    for a, b in triples:
+        start = len(vectors)
+        vectors.append((a, b))
+        vectors.append((-b, a))
+        bases.append((start, start + 1))
+    return tuple(vectors), tuple(bases)
+
+
+def _tb_vector_projector(v):
+    return tuple(tuple(_tb_g(v[i] * v[j]) for j in range(2)) for i in range(2))
+
+
+def t_born_weight_instance(d, sector, rho, povm):
+    """The typed hosting interface of the T_Born instance class.
+
+    A caller supplies an instance -- a dimension, a sector, a candidate
+    state and a candidate outcome family, all in exact arithmetic -- and
+    receives a per-input validity certificate, the exact rational weight
+    tuple, and the forcing certificate at that (d, sector).
+
+    THE OBJECT ACCEPTS THE IMAGE, NEVER THE PRE-IMAGE.  It takes no graph,
+    no partition, no switching class, no class read, no magnitude and no
+    measure, and it knows nothing about where an instance came from.
+    Constructing a map from any other instance genre into this signature is
+    not this function's problem and is performed nowhere in this module.
+    """
+    valid = {
+        'state_is_hermitian': _tb_is_hermitian(rho),
+        'state_trace_is_one': _tb_trace(rho) == _TB_GONE,
+        'state_is_psd': _tb_psd(rho)[0],
+        'each_outcome_is_an_effect': all(_tb_is_effect(e) for e in povm),
+        'outcomes_sum_to_identity': _tb_sum_matrices(povm, d) == _tb_eye(d),
+    }
+    weights = tuple(_tb_pair(rho, e) for e in povm)
+    basis, _bn = _tb_sector_basis(d, sector)
+    family, _fn = _tb_effect_family(d, sector)
+    forcing = {
+        'sector_dimension': _tb_sector_dim(d, sector),
+        'family_size': len(family),
+        'family_rank': _tb_rank(_tb_pairing_matrix(family, basis)),
+    }
+    return {'validity': valid, 'weights': weights, 'forcing': forcing}
+
+# ---------------------------------------------------------------------------
+# T_Born declared constants.  The grade is COMPOSED here from its base and
+# its named premises and consumed at every site (the GR1@2026-08-31 form),
+# so a base move or a premise rename moves the returned grade rather than
+# leaving two declarations to drift apart.
+# ---------------------------------------------------------------------------
+
+_TBORN_D_RANGE = (2, 3, 4, 5)
+_TBORN_SECTORS = ('real', 'complex')
+
+_TBORN_GRADE_BASE = "P_math"
+_TBORN_GRADE_SEPARATOR = " | "
+_TBORN_NAMED_PREMISES = (
+    "R_BOUNDED_ADDITIVE_EXTENSION",
+    "R_EFFECT_SPACE_MODEL",
+)
+_TBORN_DECLARED_GRADE = (
+    _TBORN_GRADE_BASE + _TBORN_GRADE_SEPARATOR
+    + " + ".join(_TBORN_NAMED_PREMISES))
+_TBORN_BARRED_GRADES = ("P", "AXIOM", "POSTULATE")
+
+# Set-exact leg inventory.  Enforced on the returning path, append-and-record
+# (D7@2026-08-08): a missing or an extra leg contributes a failure reason and
+# does not raise.
+_TBORN_EXPECTED_LEGS = (
+    "C1", "C2", "C3", "C4",
+    "F1", "F2", "F3", "F4", "F5", "F6",
+    "N1", "N2", "N3", "N4",
+    "T1", "T2", "T3", "T4",
+)
+
+_TBORN_MAY_NOT_CITE = (
+    'that the Born rule is derived, in any form, unconditionally or by '
+    'paraphrase',
+    'that Gleason is internalised, in any form -- this object executes no '
+    'projective forcing at any scope, and the reading is barred even '
+    'conditionally',
+    '"unique" without, in the same sentence, the named effect family and '
+    'its rational span, and the premise R_BOUNDED_ADDITIVE_EXTENSION',
+    'any A1-derivation reading -- that the Born form follows from A1, from '
+    'L_irr, from "admissibility", or from the Paper 0 base',
+    'any statement about a counting measure, a measure-to-Gleason bridge, '
+    'sep graphs, switching classes, cell measures, or any m-value',
+    'any embedding claim -- that an embedding exists, is canonical, is '
+    'admissible, or that an admissible-embedding class exists',
+    'any identification of the two Born threads with each other, or of a '
+    'computed weight with any counting ratio',
+    'anything the network sign-coherence and Born Reconstruction fence '
+    'lists bar that touches this arc, by reference',
+    "the tie targets' own premises -- counted_ledger_underdetermination is "
+    'consumed for its arithmetic only, and its conditional_on premises are '
+    'not imported here and appear nowhere in this record',
+    'as progress on the Born Reconstruction questions, on any bridge, or '
+    'on any regime-gate derivability question',
+    'its own completeness -- not "every probability assignment", not "all '
+    'effects", not "any dimension"; every universal is bounded by the '
+    'executed range and the named family, computed at return time',
+    'the N3 contrast as a dimension floor, as "the floor is d >= 2", as '
+    '"the effect route has no floor", as a statement about the projective '
+    "route above dimension two, or as evidence for or against Gleason's "
+    'theorem -- this object states no dimension floor of any kind',
+    'as excluding the coordinate score a -> a_11: that assignment is the '
+    'trace form against a non-identity operator, and the effect route '
+    'recovers it as a member of the class.  What separates it from the '
+    'normalized trace is cyclicity, which lives in a sibling packet and '
+    'outside this object',
+)
+
+_TBORN_LIMITATIONS = (
+    'The premise is not executed.  R_BOUNDED_ADDITIVE_EXTENSION covers the '
+    'passage from rational-linear extension on the span of the named family '
+    'to real-linearity on the whole effect space.  A rationally-linear, '
+    'non-real-linear counterexample requires a Hamel basis and cannot be '
+    'constructively exhibited, so the premise has no negative control and '
+    'will not get one.  Stated, not machined around.',
+    "The forcing is scoped to the named family's rational span.  The "
+    'unrestricted statement -- that the trace form is the unique '
+    'probability assignment on all of the effect space -- is executed at no '
+    'dimension.',
+    'The executed dimension range is finite, and its upper bound is a '
+    'property of the construction and of what fits inside a bank pass, not '
+    'a theorem.  It is computed and returned; it is not a claim about all '
+    'dimensions.',
+    'The projective route is unexecuted above dimension two.  Control N3 '
+    'computes a contrast at one dimension on one exhibited family and '
+    'certifies nothing whatever about the projective route at higher '
+    'dimension.',
+    'C1 through C4 certify execution and input validity, not falsifiability '
+    'of the Born form.  They are labelled input gates and identities in the '
+    'returned record for exactly that reason.',
+    "The leg inventory's standing limit (D7@2026-08-08): it certifies that "
+    'a declared leg EXECUTED, not that it COULD HAVE FAILED.  Its two known '
+    'escapes are a multi-site rename and a computed verdict replaced by a '
+    'constant.',
+    'The T3 tie is to module-level objects, not to a returned record: that '
+    "sibling's Check dataclass carries no numeric field, so there is no "
+    "returned quantity to read.  The tie pins the sibling's own arithmetic "
+    'objects rather than its verdict -- stronger in one direction, narrower '
+    'in another.',
+    'The T4 tie supplies the tested effect from this module while reading '
+    "the state and the target weight live from the sibling's record.  The "
+    'sibling returns no tested effect, so the effect cannot be read.',
+    'Conjugating the Gaussian convention leaves every leg green.  This is '
+    'a symmetry of the construction and not a defect in it.  What the '
+    'record exposes is the recovered operator in each sector, so the flip '
+    'is visible in the returned record even though no leg refuses it.',
+    'check_L_Gleason_finite is not repaired here.  Its sentences naming '
+    'this check as the consumer of its Gleason replacement go stale on this '
+    'landing.  That is a disclosed accepted exposure with its repair queued '
+    'to its own lane, not a claim that those sentences are correct.',
+    'The declared grade is composed from its base and its named premises '
+    'and is gated only against a barred set of framework grades.  It is '
+    'NOT pinned to the ruling that set it.  A ruling lives outside the '
+    'tree, so an in-module pin would compare a literal of the ruled '
+    'string against another literal in this same file.  '
+    'The grade is a value this record carries, not a tripwire.',
+    'N3 subtracts one from the computed rank of the projector pairing to '
+    'reach the trace-form dimension.  That subtraction is the affine '
+    'correction for the normalization constraint and is ASSERTED here, not '
+    'computed by a second method; no leg refuses its removal.',
+    'The back-substitution branch of the null-vector routine writes only '
+    "zeros at every executed instance, so on this object's data the "
+    'general branch is live-vacuous.  It is retained because deleting it '
+    'would make the routine wrong on an input whose free column is not '
+    'zero.',
+    'The sector of the caller-supplied state is not enforced.  C1 '
+    'validates Hermiticity, trace and positivity; nothing places the state '
+    "in the declared sector's real span, so an instance carried under a "
+    'sector label is not certified to lie in that sector.',
+    'The forcing certificate returned by the typed interface carries the '
+    'sector dimension, the family size and the family rank.  It carries no '
+    'uniqueness field and no exclusion field, and is narrower than the '
+    'interface described in the frozen claim surface.',
+    'Beyond the key list the frozen claim surface sets out, the returned '
+    'artifacts map carries disclosed_limitations, which carries this list, '
+    'and held_out_of_the_bank, which records the landing state; neither '
+    'adds a claim.',
+)
+
+
+def check_T_Born():
+    """T_Born: the trace form on a named spanning effect family.
+
+    WHAT THIS CHECK COMPUTES.  Over an executed finite range of dimensions
+    and over two sectors -- the real symmetric matrices over Q and the
+    Hermitian matrices over Q(i) read as a real vector space -- it
+    constructs an explicit finite family of rational (resp.
+    Gaussian-rational) effects, computes that the family spans its sector,
+    recovers the operator determined by an arbitrary rational value vector
+    on that family, and round-trips the value vector entrywise through the
+    recovered operator.  On an exhibited deficient sub-family it exhibits a
+    rational assignment that the sub-family admits and the full family
+    rejects.  Two candidates are excluded by execution -- a nonlinear
+    normalized candidate, which disagrees with its own additive extension
+    at every exhibited effect off the family, and a candidate whose
+    recovered operator fails positivity, which the positivity leg rejects
+    at an exhibited principal minor.
+
+    THE ROUTE.  This is the EFFECT / positive-functional route, not the
+    projective / Gleason route.  Gleason's theorem quantifies over a
+    continuum of unit vectors, and no finite family of orthonormal bases
+    forces a frame function into trace form; the effect route's hard step
+    in finite dimension is algebraic and is exactly executable over Q and
+    Q(i).  Nothing here executes projective forcing at any scope.
+
+    THE PREMISES, NAMED AND NOT DERIVED.  R_BOUNDED_ADDITIVE_EXTENSION:
+    the passage from rational-linear extension on the rational span of the
+    named family to real-linearity on the whole effect space.  What is
+    executed is the extension on the span; the step beyond it is the
+    premise.  R_EFFECT_SPACE_MODEL: the assignments in question are
+    functions on the effect space of a finite-dimensional complex matrix
+    algebra, an arena granted upstream.  Neither may be described as
+    derived, here or anywhere downstream.
+
+    THE SCOPE.  The dimension range is finite and is returned as computed.
+    The forcing is scoped to the named family's rational span.  This object
+    states no dimension floor of any kind: control N3 computes a contrast
+    at ONE dimension on ONE exhibited family of orthonormal bases, between
+    what the frame constraints admit there and what the trace forms reach
+    there, and the same witness is then presented to that set read as
+    effects and is not realizable against it.  That contrast is not a floor
+    and may not be read as one, in either direction.
+
+    WHAT WAS DELETED AND WHY.  The hardcoded dimension, all float
+    arithmetic and every tolerance, the one-sided determinant inequality
+    that stood in for a unitarity test (it admits singular matrices and it
+    admits a non-unitary shear -- both are exhibited as permanent
+    regression controls), the literal-against-literal dimension comparison,
+    and the unconditional word UNIQUE in the returned record, which nothing
+    executed computed.  The dependencies on the axiom and on the finite
+    Gleason lemma are deleted because the repaired object consumes neither;
+    keeping them would be coupling without a tie.
+
+    Cross-module value ties are taken live against banked callees' returned
+    quantities and module-level objects; a moved sibling quantity fails the
+    leg, which is the point.  The fences and the disclosed limitations are
+    returned in the record and bind every sentence written about this
+    object.
+    """
+    fails = []
+    notes = []
+    legs = {}
+
+    def leg(lid, leg_name, ok, evidence, msg):
+        legs[lid] = (bool(ok), dict(evidence, leg_name=leg_name))
+        if not ok:
+            fails.append("%s (%s): %s" % (lid, leg_name, msg))
+
+    d_range = tuple(_TBORN_D_RANGE)
+    sectors = tuple(_TBORN_SECTORS)
+
+    family_rank = {}
+    sector_dim = {}
+    ext_solution_dim = {}
+    round_trip_ok = {}
+    recovered_entries = {}
+    deficiency = {}
+    f3_gap = {}
+    f3_admitted = {}
+    f4_gaps = {}
+    f4_orientation = {}
+    f4_identity_holds = {}
+    f4_excluded_traces = {}
+    f4_operator_is_scaled_identity = {}
+    f5_minor = {}
+    f5_verdict = {}
+    proj_rank = {}
+    proj_nullity = {}
+    c1_valid = {}
+    c2_valid = {}
+    c3_weights = {}
+    c4_additive = {}
+    n1_cov_ok = {}
+    n1_shear_dev = {}
+
+    for d in d_range:
+        for sector in sectors:
+            tag = '%d/%s' % (d, sector)
+            basis, _bnames = _tb_sector_basis(d, sector)
+            family, _fnames = _tb_effect_family(d, sector)
+            dim = _tb_sector_dim(d, sector)
+            sector_dim[tag] = dim
+            mat = _tb_pairing_matrix(family, basis)
+
+            # ---- F1: the family spans its sector -------------------------
+            rk = _tb_rank(mat)
+            family_rank[tag] = rk
+
+            # ---- F2: entrywise round trip through the recovered operator -
+            svec = [Fraction(m + 1, 2 * m + 3) for m in range(len(family))]
+            coords = _tb_solve(mat, svec)
+            ext_solution_dim[tag] = dim - rk
+            if coords is None:
+                round_trip_ok[tag] = False
+                recovered_entries[tag] = None
+            else:
+                xop = _tb_from_coords(coords, basis)
+                back = [_tb_pair(xop, e) for e in family]
+                round_trip_ok[tag] = (back == svec)
+                recovered_entries[tag] = [
+                    ['%s %s %si' % (xop[i][j][0],
+                                    '-' if xop[i][j][1] < 0 else '+',
+                                    abs(xop[i][j][1]))
+                     for j in range(d)] for i in range(d)]
+
+            # ---- F3: the deletion control --------------------------------
+            sub = mat[:-1]
+            deficiency[tag] = dim - _tb_rank(sub)
+            nvec = _tb_nullvec(sub, dim)
+            if nvec is None:
+                f3_gap[tag] = None
+                f3_admitted[tag] = False
+            else:
+                nop = _tb_from_coords(nvec, basis)
+                on_sub = [_tb_pair(nop, e) for e in family[:-1]]
+                f3_admitted[tag] = all(x == 0 for x in on_sub)
+                f3_gap[tag] = _tb_pair(nop, family[-1])
+
+            # ---- F4: the nonlinear candidate off the family --------------
+            gvals = [_tb_nonlinear_candidate(e, d) for e in family]
+            gcoords = _tb_solve(mat, gvals)
+            gap_list = []
+            orient = []
+            excluded_traces = []
+            if gcoords is None:
+                f4_operator_is_scaled_identity[tag] = False
+            else:
+                gop = _tb_from_coords(gcoords, basis)
+                f4_operator_is_scaled_identity[tag] = (
+                    gop == _tb_scale(Fraction(1, d * d), _tb_eye(d)))
+                for c in (Fraction(1, 3), Fraction(2, 3), Fraction(1)):
+                    for r in range(1, d + 1):
+                        if c * r == 1:
+                            excluded_traces.append(c * r)
+                            # The candidate agrees with its own additive
+                            # extension exactly on the trace-one locus, and
+                            # the named family is a family of trace-one
+                            # projectors.  These points are excluded from
+                            # the exhibited set by that COMPUTED
+                            # characterisation -- verified below against
+                            # every retained point -- and not by inspecting
+                            # the gap they would have produced.
+                            continue
+                        eff = _tb_zeros(d)
+                        for j in range(r):
+                            eff = _tb_add(eff,
+                                          _tb_scale(c, _tb_unit(d, j, j)))
+                        if not _tb_is_effect(eff):
+                            gap_list.append(None)
+                            continue
+                        gp = (_tb_pair(gop, eff)
+                              - _tb_nonlinear_candidate(eff, d))
+                        tr = _tb_trace(eff)[0]
+                        predicted = tr * (1 - tr) / (d * d)
+                        gap_list.append(gp if gp == predicted else None)
+                        # ORIENTATION ANCHOR.  The gap is not merely
+                        # non-zero: its SIGN is determined by the trace,
+                        # positive exactly on 0 < Tr(E) < 1.
+                        orient.append((gp > 0) == (0 < tr < 1))
+            f4_gaps[tag] = gap_list
+            f4_orientation[tag] = (bool(orient) and all(orient))
+            # COMPUTED, not asserted: every retained gap reproduced the
+            # characterisation (a mismatch is stored as None above), and
+            # every point excluded from the exhibited set was excluded
+            # because its computed trace is one.
+            f4_identity_holds[tag] = all(g is not None for g in gap_list)
+            f4_excluded_traces[tag] = [str(t) for t in excluded_traces]
+
+            # ---- F5: positivity rejects a non-PSD recovered operator -----
+            xbad = _tb_sub(_tb_unit(d, 0, 0), _tb_unit(d, 1, 1))
+            sbad = [_tb_pair(xbad, e) for e in family]
+            bcoords = _tb_solve(mat, sbad)
+            if bcoords is None:
+                f5_verdict[tag] = None
+                f5_minor[tag] = None
+            else:
+                xrec = _tb_from_coords(bcoords, basis)
+                ok_psd, idx, val = _tb_psd(xrec)
+                f5_verdict[tag] = (xrec == xbad, ok_psd)
+                f5_minor[tag] = (list(idx) if idx is not None else None,
+                                 str(val) if val is not None else None)
+
+            # ---- F6: the projector-only read -----------------------------
+            pfam = _tb_projector_family(d)
+            prk = _tb_rank(_tb_pairing_matrix(pfam, basis))
+            proj_rank[tag] = prk
+            proj_nullity[tag] = dim - prk
+
+            # ---- C1 / C2 / C3 / C4 through the typed interface -----------
+            rho = _tb_state(d, sector)
+            inst = t_born_weight_instance(d, sector, rho, pfam)
+            c1_valid[tag] = (inst['validity']['state_is_hermitian'],
+                             inst['validity']['state_trace_is_one'],
+                             inst['validity']['state_is_psd'])
+            c2_valid[tag] = (inst['validity']['each_outcome_is_an_effect'],
+                             inst['validity']['outcomes_sum_to_identity'])
+            w = inst['weights']
+            c3_weights[tag] = (sum(w) == 1 and all(0 <= x <= 1 for x in w))
+            e1, e2 = _tb_binary_povm(d)
+            binst = t_born_weight_instance(d, sector, rho, (e1, e2))
+            bw = binst['weights']
+            c4_additive[tag] = (
+                binst['validity']['each_outcome_is_an_effect']
+                and binst['validity']['outcomes_sum_to_identity']
+                and bw[0] + bw[1] == _tb_pair(rho, _tb_add(e1, e2))
+                and bw[0] + bw[1] == 1)
+
+            # ---- N1: unitary covariance, and the shear that breaks it ----
+            cov_ok = True
+            for _uname, u in _tb_unitaries(d, sector):
+                if not _tb_unitary(u):
+                    cov_ok = False
+                    continue
+                rot_rho = _tb_mul(_tb_mul(u, rho), _tb_dag(u))
+                for pk in pfam:
+                    rot_e = _tb_mul(_tb_mul(u, pk), _tb_dag(u))
+                    if _tb_pair(rot_rho, rot_e) != _tb_pair(rho, pk):
+                        cov_ok = False
+            n1_cov_ok[tag] = cov_ok
+            sh = _tb_shear(d)
+            sh_rho = _tb_mul(_tb_mul(sh, rho), _tb_dag(sh))
+            n1_shear_dev[tag] = max(
+                abs(_tb_pair(sh_rho, _tb_mul(_tb_mul(sh, pk), _tb_dag(sh)))
+                    - _tb_pair(rho, pk)) for pk in pfam)
+
+    # ---- F1 --------------------------------------------------------------
+    leg('F1', 'family_rank_equals_sector_dimension',
+        all(family_rank[t] == sector_dim[t] for t in family_rank),
+        {'family_rank_by_instance': {k: family_rank[k]
+                                     for k in sorted(family_rank)},
+         'sector_dimension_by_instance': {k: sector_dim[k]
+                                          for k in sorted(sector_dim)}},
+        'the constructed effect family stopped spanning its sector')
+
+    # ---- F2 --------------------------------------------------------------
+    leg('F2', 'value_vector_round_trips_entrywise_through_recovered_operator',
+        all(round_trip_ok.values()),
+        {'round_trip_entrywise_by_instance': {
+            k: round_trip_ok[k] for k in sorted(round_trip_ok)},
+         'extension_solution_space_dimension': {
+             k: ext_solution_dim[k] for k in sorted(ext_solution_dim)},
+         'uniqueness_label': 'ENTAILED by F1 (rank equals sector dimension '
+                             'equals the number of unknowns), not a second '
+                             'measurement',
+         'recovered_operator_at_the_smallest_instance_per_sector': {
+             sec: recovered_entries.get('%d/%s' % (d_range[0], sec))
+             for sec in sectors}},
+        'the value vector did not round-trip entrywise through the '
+        'recovered operator')
+
+    # ---- F3 --------------------------------------------------------------
+    leg('F3',
+        'deficient_subfamily_admits_an_assignment_the_full_family_rejects',
+        (all(f3_admitted.values())
+         and all(g is not None and g != 0 for g in f3_gap.values())),
+        {'deficiency_by_instance': {k: deficiency[k]
+                                    for k in sorted(deficiency)},
+         'admission_label': 'ENTAILED: the exhibited assignment is '
+                            'returned by the null-space solve over the '
+                            'retained constraints, so its admission by '
+                            'them is not a second measurement.  What this '
+                            'leg computes is the gap at the dropped '
+                            'effect on the full family',
+         'gap_at_the_dropped_effect_on_the_full_family': {
+             k: (str(f3_gap[k]) if f3_gap[k] is not None else None)
+             for k in sorted(f3_gap)}},
+        'the deficient sub-family did not admit an assignment that the full '
+        'family rejects, in one direction or the other')
+
+    # ---- F4 --------------------------------------------------------------
+    all_gaps = [g for gl in f4_gaps.values() for g in gl if g is not None]
+    leg('F4', 'nonlinear_candidate_disagrees_with_its_additive_extension',
+        (all(f4_operator_is_scaled_identity.values())
+         and all(g is not None and g != 0
+                 for gl in f4_gaps.values() for g in gl)
+         and all(len(gl) > 0 for gl in f4_gaps.values())
+         and all(f4_orientation.values())
+         and all(f4_identity_holds.values())
+         and all(t == '1' for v in f4_excluded_traces.values() for t in v)),
+        {'exhibited_effect_count_by_instance': {
+            k: len(f4_gaps[k]) for k in sorted(f4_gaps)},
+         'gaps_by_instance': {k: [str(g) for g in f4_gaps[k]]
+                              for k in sorted(f4_gaps)},
+         'recovered_extension_operator_is_the_computed_scaled_identity': {
+             k: f4_operator_is_scaled_identity[k]
+             for k in sorted(f4_operator_is_scaled_identity)},
+         'every_retained_gap_matches_the_computed_characterisation': {
+             k: f4_identity_holds[k] for k in sorted(f4_identity_holds)},
+         'gap_sign_is_anchored_to_the_computed_trace': {
+             k: f4_orientation[k] for k in sorted(f4_orientation)},
+         'excluded_points_have_computed_trace_one': {
+             k: f4_excluded_traces[k] for k in sorted(f4_excluded_traces)}},
+        'the nonlinear candidate agreed with its own additive extension at '
+        'an exhibited effect, or its extension operator moved')
+
+    # ---- F5 --------------------------------------------------------------
+    leg('F5', 'non_psd_recovered_operator_rejected_by_positivity',
+        (all(v is not None and v[0] and not v[1]
+             for v in f5_verdict.values())
+         and all(m is not None and m[1] is not None and Fraction(m[1]) < 0
+                 for m in f5_minor.values())),
+        {'recovered_operator_equals_the_target_and_is_rejected': {
+            k: (list(f5_verdict[k]) if f5_verdict[k] else None)
+            for k in sorted(f5_verdict)},
+         'failing_principal_minor': {k: f5_minor[k]
+                                     for k in sorted(f5_minor)}},
+        'the positivity leg admitted an operator that is not positive '
+        'semidefinite, or the recovery did not return the target operator')
+
+    # ---- F6 --------------------------------------------------------------
+    leg('F6', 'projector_only_read_does_not_determine_the_operator',
+        (all(proj_rank[t] < sector_dim[t] for t in proj_rank)
+         and all(v > 0 for v in proj_nullity.values())),
+        {'projector_read_rank': {k: proj_rank[k] for k in sorted(proj_rank)},
+         'projector_read_nullity': {k: proj_nullity[k]
+                                    for k in sorted(proj_nullity)}},
+        'the projector-only read spanned the sector, which would make the '
+        'read this check formerly performed determine the operator')
+
+    # ---- C1 .. C4 --------------------------------------------------------
+    leg('C1', 'state_input_gate_trace_one_and_psd',
+        all(all(v) for v in c1_valid.values()),
+        {'label': 'INPUT GATE -- validates a supplied datum; measures '
+                  'nothing',
+         'state_valid_by_instance': {k: list(c1_valid[k])
+                                     for k in sorted(c1_valid)}},
+        'the supplied state failed its input gate')
+    leg('C2', 'povm_input_gate_effects_and_completeness',
+        all(all(v) for v in c2_valid.values()),
+        {'label': 'INPUT GATE -- the off-diagonal indefinite impostor '
+                  'control is carried at tie T2, so the positivity leg is '
+                  'load-bearing',
+         'povm_valid_by_instance': {k: list(c2_valid[k])
+                                    for k in sorted(c2_valid)}},
+        'the supplied outcome family failed its input gate')
+    leg('C3', 'weights_sum_to_one_and_lie_in_the_unit_interval',
+        all(c3_weights.values()),
+        {'label': 'IDENTITY given C1 and C2 -- labelled an identity, not a '
+                  'measurement',
+         'weights_normalized_by_instance': {k: c3_weights[k]
+                                            for k in sorted(c3_weights)}},
+        'the computed weights did not sum to one or left the unit interval')
+    leg('C4', 'binary_povm_weight_additivity',
+        all(c4_additive.values()),
+        {'label': 'IDENTITY -- labelled',
+         'additive_on_the_non_projective_binary_povm_by_instance': {
+             k: c4_additive[k] for k in sorted(c4_additive)}},
+        'weight additivity failed on the non-projective binary POVM')
+
+    # ---- N1 --------------------------------------------------------------
+    leg('N1', 'unitary_covariance_exact_and_the_shear_breaks_it',
+        (all(n1_cov_ok.values())
+         and all(v != 0 for v in n1_shear_dev.values())),
+        {'covariance_exact_by_instance': {k: n1_cov_ok[k]
+                                          for k in sorted(n1_cov_ok)},
+         'shear_covariance_deviation': {k: str(n1_shear_dev[k])
+                                        for k in sorted(n1_shear_dev)}},
+        'covariance failed on an exact unitary, or the non-unitary shear '
+        'did not break it')
+
+    # ---- N2 --------------------------------------------------------------
+    d0 = d_range[0]
+    n2_rows = {}
+    for label, mtx in (('rotation_3_4_5', _tb_unitaries(d0, 'real')[0][1]),
+                       ('shear_I_plus_E01', _tb_shear(d0)),
+                       ('singular_diag_0_1', _tb_singular(d0))):
+        n2_rows[label] = {
+            'determinant': str(_tb_det(mtx)[0]),
+            'retired_one_sided_determinant_predicate':
+                _tb_retired_det_predicate(mtx),
+            'replacement_predicate_U_Udag_equals_I': _tb_unitary(mtx),
+        }
+    leg('N2',
+        'unitarity_predicate_replaces_the_retired_determinant_inequality',
+        (n2_rows['rotation_3_4_5'][
+             'replacement_predicate_U_Udag_equals_I'] is True
+         and n2_rows['shear_I_plus_E01'][
+             'replacement_predicate_U_Udag_equals_I'] is False
+         and n2_rows['singular_diag_0_1'][
+             'replacement_predicate_U_Udag_equals_I'] is False
+         and n2_rows['shear_I_plus_E01'][
+             'retired_one_sided_determinant_predicate'] is True
+         and n2_rows['singular_diag_0_1'][
+             'retired_one_sided_determinant_predicate'] is True),
+        {'rows': n2_rows,
+         'note': 'the retired predicate is reproduced here as a permanent '
+                 'regression control and is exhibited ADMITTING both a '
+                 'non-unitary shear and a singular matrix; if a future edit '
+                 'reinstates it, this control fails'},
+        'the replacement unitarity predicate or the retired-predicate '
+        'regression control did not behave as exhibited')
+
+    # ---- N3: the dimension-two two-route contrast ------------------------
+    vectors, bases2 = _tb_d2_onb_family()
+    cons = [[Fraction(1) if k in bs else Fraction(0)
+             for k in range(len(vectors))] for bs in bases2]
+    frame_solution_dim = len(vectors) - _tb_rank(cons)
+    basis2, _b2n = _tb_sector_basis(2, 'real')
+    vproj = [_tb_vector_projector(v) for v in vectors]
+    pmat = [[_tb_pair(b, p) for b in basis2] for p in vproj]
+    trace_form_dim = _tb_rank(pmat) - 1
+    witness = [Fraction(1, 2)] * len(vectors)
+    witness[2] += Fraction(1, 4)
+    witness[3] -= Fraction(1, 4)
+    frame_sums_ok = all(witness[a] + witness[b] == 1 for a, b in bases2)
+    witness_nonneg = all(x >= 0 for x in witness)
+    aug = [row + [witness[i]] for i, row in enumerate(pmat)]
+    realizable_on_effects = _tb_rank(pmat) == _tb_rank(aug)
+    leg('N3', 'dimension_two_projective_effect_contrast',
+        (frame_solution_dim > trace_form_dim and frame_sums_ok
+         and witness_nonneg and not realizable_on_effects),
+        {'exhibited_basis_count': len(bases2),
+         'exhibited_vector_count': len(vectors),
+         'frame_constraint_solution_dimension': frame_solution_dim,
+         'trace_form_dimension_on_the_same_vector_set': trace_form_dim,
+         'witness': [str(x) for x in witness],
+         'witness_satisfies_every_exhibited_frame_constraint': frame_sums_ok,
+         'witness_is_non_negative': witness_nonneg,
+         'witness_realizable_as_a_trace_pairing_on_that_set_read_as_effects':
+             realizable_on_effects,
+         'SCOPE': 'a contrast at ONE dimension on ONE exhibited family. NOT '
+                  'a dimension floor, NOT a statement about the projective '
+                  'route above dimension two, NOT evidence for or against '
+                  "Gleason's theorem"},
+        'the two-route contrast did not separate, or the witness was not '
+        'admitted projectively, or it was realizable on the effect side')
+
+    # ---- T1 --------------------------------------------------------------
+    t1_ok = False
+    t1_ev = {}
+    try:
+        from apf import counted_ledger_underdetermination as _tb_cl
+        _r1 = (_tb_cl
+               .check_L_counted_ledger_fixes_only_the_commit_record_diagonal())
+        _lr = _r1['legs']['resolution_read_rank_and_nullity_real']['evidence']
+        _lc = _r1['legs']['resolution_read_nullity_complex']['evidence']
+        tie_d = 3
+        mine_real = (proj_rank['%d/real' % tie_d],
+                     proj_nullity['%d/real' % tie_d],
+                     sector_dim['%d/real' % tie_d])
+        mine_cplx = (proj_rank['%d/complex' % tie_d],
+                     proj_nullity['%d/complex' % tie_d],
+                     sector_dim['%d/complex' % tie_d])
+        sib_real = (_lr['rank'], _lr['nullity'], _lr['dim'])
+        sib_cplx = (_lc['rank'], _lc['nullity'], _lc['dim'])
+        t1_ok = (mine_real == sib_real and mine_cplx == sib_cplx)
+        t1_ev = {'tied_dimension': tie_d,
+                 'this_object_real_rank_nullity_dim': list(mine_real),
+                 'sibling_real_rank_nullity_dim': list(sib_real),
+                 'this_object_complex_rank_nullity_dim': list(mine_cplx),
+                 'sibling_complex_rank_nullity_dim': list(sib_cplx),
+                 'read_live_at': "result['legs'][<leg>]['evidence']"
+                                 "[<'rank'|'nullity'|'dim'>]",
+                 'consumed': 'the arithmetic only; that module\'s '
+                             'conditional_on premises are NOT imported'}
+    except Exception as exc:                              # pragma: no cover
+        t1_ev = {'error': repr(exc)}
+    leg('T1', 'tie_projector_read_rank_and_nullity_to_the_counted_ledger',
+        t1_ok, t1_ev,
+        'the projector-read rank and nullity did not equal the banked '
+        'counted-ledger values read live from its returned leg evidence')
+
+    # ---- T2 --------------------------------------------------------------
+    t2_ok = False
+    t2_ev = {}
+    try:
+        from apf import dense_sandwich_born as _tb_ds
+        _rs = _tb_ds.check_T_dense_sandwich_effect_soundness()['artifacts']
+        _rp = _tb_ds.check_T_actual_measurements_are_povms()['artifacts']
+        sib_det = Fraction(_rs['offdiagonal_impostor_det'])
+        imp = ((_tb_g(1), _tb_g(2)), (_tb_g(2), _tb_g(1)))
+        my_det = _tb_det(imp)[0]
+        my_psd, my_idx, my_val = _tb_psd(imp)
+        t2_ok = (my_det == sib_det and my_psd is False
+                 and my_val is not None and my_val < 0
+                 and _rs['offdiagonal_impostor_rejected_by_det_leg'] is True
+                 and _rp['offdiagonal_indefinite_member_rejected_by_det_leg']
+                 is True)
+        t2_ev = {'sibling_impostor_determinant': str(sib_det),
+                 'this_object_determinant': str(my_det),
+                 'this_object_positivity_verdict': my_psd,
+                 'this_object_failing_minor': [
+                     list(my_idx) if my_idx else None, str(my_val)],
+                 'both_sibling_checks_recompute_the_rejection': bool(
+                     _rs['offdiagonal_impostor_rejected_by_det_leg']
+                     and _rp['offdiagonal_indefinite_member_'
+                             'rejected_by_det_leg'])}
+    except Exception as exc:                              # pragma: no cover
+        t2_ev = {'error': repr(exc)}
+    leg('T2', 'tie_indefinite_impostor_rejection_to_dense_sandwich_born',
+        t2_ok, t2_ev,
+        'this object did not reproduce the banked determinant and rejection '
+        'of the off-diagonal indefinite impostor')
+
+    # ---- T3 --------------------------------------------------------------
+    t3_ok = False
+    t3_ev = {}
+    try:
+        from apf import operational_score_linearity as _tb_osl
+        sib_rank = _tb_osl._rank([_tb_osl._sa_coords(e)
+                                  for e in _tb_osl.SPANNING_EFFECTS])
+        mine_rank = family_rank['2/complex']
+        probes = list(_tb_osl.SPANNING_EFFECTS)
+        for c in (Fraction(1, 3), Fraction(2, 3), Fraction(1)):
+            for r in (1, 2):
+                eff = _tb_zeros(2)
+                for j in range(r):
+                    eff = _tb_add(eff, _tb_scale(c, _tb_unit(2, j, j)))
+                probes.append(eff)
+        pairs = []
+        agree = True
+        distinct = set()
+        for e in probes:
+            theirs = _tb_osl.score_nonlinear_impostor(e)
+            mine = _tb_nonlinear_candidate(e, 2)
+            distinct.add(theirs)
+            if theirs != mine:
+                agree = False
+            pairs.append([str(theirs), str(mine)])
+        t3_ok = (sib_rank == mine_rank and agree and len(distinct) > 1)
+        t3_ev = {
+            'sibling_spanning_family_rank_through_its_own_objects': sib_rank,
+            'this_object_family_rank_at_dimension_two_complex': mine_rank,
+            'impostor_values_sibling_vs_this_object': pairs,
+            'distinct_sibling_impostor_values_exercised': len(distinct),
+            'note': 'the sibling spanning family is trace-one throughout, '
+                    'so probes of other traces are added to keep the value '
+                    'tie non-degenerate'}
+    except Exception as exc:                              # pragma: no cover
+        t3_ev = {'error': repr(exc)}
+    leg('T3',
+        'tie_spanning_rank_and_impostor_values_to_operational_score_linearity',
+        t3_ok, t3_ev,
+        'the spanning rank or the nonlinear-candidate values did not '
+        "reproduce the sibling module's own computed objects")
+
+    # ---- T4 --------------------------------------------------------------
+    t4_ok = False
+    t4_ev = {}
+    try:
+        from apf import finite_representation_lemmas as _tb_frl
+        _a4 = _tb_frl.check_L_effects_povm_density_born()['artifacts']
+        sib_weight = Fraction(_a4['born_probability'])
+        sib_rho = tuple(tuple(_tb_g(Fraction(x)) for x in row)
+                        for row in _a4['rho'])
+        tested = ((_tb_g(Fraction(1, 3)), _tb_g(Fraction(1, 6))),
+                  (_tb_g(Fraction(1, 6)), _tb_g(Fraction(2, 3))))
+        my_weight = t_born_weight_instance(
+            2, 'real', sib_rho,
+            (tested, _tb_sub(_tb_eye(2), tested)))['weights'][0]
+        t4_ok = (my_weight == sib_weight)
+        t4_ev = {'sibling_born_probability': str(sib_weight),
+                 'this_object_weight_on_the_sibling_state': str(my_weight),
+                 'state_read_live_from': "artifacts['rho']",
+                 'note': 'the sibling returns no tested effect, so the '
+                         'effect is supplied here'}
+    except Exception as exc:                              # pragma: no cover
+        t4_ev = {'error': repr(exc)}
+    leg('T4', 'tie_weight_to_the_banked_born_probability', t4_ok, t4_ev,
+        'the weight computed on the banked witness did not reproduce the '
+        'banked exact rational')
+
+    # ---- the grade, gated against the barred set -------------------------
+    if _TBORN_GRADE_BASE in _TBORN_BARRED_GRADES:
+        fails.append(
+            "the base grade is a member of the barred set; a bare framework "
+            "grade is barred on this object")
+
+    # ---- N4: the leg inventory, append-and-record ------------------------
+    # N4 enters the leg dict BEFORE the inventory is taken, so it is observed
+    # like every other leg.
+    n4_evidence = {
+        'leg_name': 'leg_inventory_set_exact_append_and_record',
+        'declared': list(_TBORN_EXPECTED_LEGS),
+        'form': 'append-and-record (D7@2026-08-08): a mismatch contributes '
+                'a failure reason and does not raise',
+        'standing_limit': 'certifies that a declared leg EXECUTED, not that '
+                          'it COULD HAVE FAILED',
+    }
+    legs['N4'] = (False, n4_evidence)
+    observed = set(legs)
+    expected = set(_TBORN_EXPECTED_LEGS)
+    missing = sorted(expected - observed)
+    extra = sorted(observed - expected)
+    inventory_ok = (not missing) and (not extra)
+    n4_evidence['observed'] = sorted(observed)
+    n4_evidence['missing'] = missing
+    n4_evidence['extra'] = extra
+    legs['N4'] = (inventory_ok, n4_evidence)
+    if not legs['N4'][0]:
+        notes.append("leg inventory not satisfied -- missing %r, extra %r"
+                     % (missing, extra))
+
+    if fails:
+        check(False, "T_Born: " + " | ".join(fails))
+
+    # ---- the returned record ---------------------------------------------
+    min_gap = min(abs(g) for g in all_gaps) if all_gaps else None
+    min_dev = min(n1_shear_dev.values())
+    tie_r = '3/real'
+    tie_c = '3/complex'
+    f5_example = f5_minor[sorted(f5_minor)[0]]
+    ext_dims = sorted(set(ext_solution_dim.values()))
+    defs = sorted(set(deficiency.values()))
+
+    summary = " ".join([
+        (f'On the effect space of a finite-dimensional complex matrix '
+         f'algebra, over the executed dimension range {list(d_range)} and '
+         f'the sectors {list(sectors)}, an additive normalized assignment '
+         f'on the named spanning effect family extends to the trace form '
+         f'E |-> Tr(rho E) with rho computed exactly; the '
+         f'solution-space dimension of the extension solve is {ext_dims}.'),
+        (f'The family rank equals the sector dimension at every executed '
+         f'instance, and on the exhibited deficient sub-family (deficiency '
+         f'{defs}) an explicit rational assignment is admitted that the '
+         f'full family rejects.'),
+        (f'Two candidates are EXCLUDED by executed legs: a non-trace '
+         f'nonlinear normalized candidate disagrees with its own additive '
+         f'extension by at least {min_gap} in absolute value at every '
+         f'exhibited effect, and a candidate whose recovered operator fails '
+         f'positivity is rejected by the positivity leg at the exhibited '
+         f'minor {f5_example[0]} of value {f5_example[1]}.'),
+        (f'The read this check formerly performed -- one basis of '
+         f'projectors -- does NOT determine the operator: at the tied '
+         f'dimension its computed rank is {proj_rank[tie_r]} with nullity '
+         f'{proj_nullity[tie_r]} in the real sector and '
+         f'{proj_nullity[tie_c]} in the complex sector, tied by value to '
+         f'the banked counted-ledger result.'),
+        (f'Unitary covariance is executed exactly; the non-unitary shear '
+         f'input breaks it by at least {min_dev}.'),
+        (f'At dimension two, on the one exhibited basis family, the frame '
+         f'constraints admit an assignment that is no trace form '
+         f'(solution-space dimension {frame_solution_dim} against '
+         f'trace-form dimension {trace_form_dim}), and the same assignment '
+         f'is not realizable against that set read as effects. This is a '
+         f'contrast at one dimension on one named family; no dimension '
+         f'floor is computed or claimed.'),
+        ('Named premises, not derived: R_BOUNDED_ADDITIVE_EXTENSION (the '
+         'extension from the rational span of the named family to the whole '
+         'effect space); R_EFFECT_SPACE_MODEL (the arena is granted '
+         'upstream).'),
     ])
-    check(abs(_det(U)) - 1.0 < 1e-12, "U must be unitary")
-
-    rho_rot = _mm(_mm(U, rho), _dag(U))
-    for P in projectors:
-        P_rot = _mm(_mm(U, P), _dag(U))
-        p_orig = _tr(_mm(rho, P)).real
-        p_rot = _tr(_mm(rho_rot, P_rot)).real
-        check(abs(p_orig - p_rot) < 1e-12, "P4: invariance under unitary transform")
-
-    # Step 6: Non-projective POVM -- verify Born rule extends
-    # Paper 13 C.6: general effects, not just projectors
-    E1 = _diag([0.5, 0.3, 0.2])
-    E2 = _msub(_eye(d), E1)
-    check(_aclose(_madd(E1, E2), _eye(d)), "POVM completeness")
-    p1 = _tr(_mm(rho, E1)).real
-    p2 = _tr(_mm(rho, E2)).real
-    check(abs(p1 + p2 - 1.0) < 1e-12, "Additivity for general POVM")
-
-    # Step 7: Gleason dimension check for THIS witness (projective route).
-    # In dim=2, PROJECTIVE frame functions exist that are not trace-form, so
-    # projective Gleason needs d >= 3 -- the requirement of this witness, NOT
-    # of the framework's Born forcing. CORRIGENDUM (2026-07-09): the corpus's
-    # primary Born route is Busch/positive-functional (Paper 1 v5.0 Route B,
-    # dim >= 2; Paper 5 supp v5.97 is Gleason-free, dim >= 1), so no dimension
-    # floor rides on d >= 3. Audit record: fermion_gauge_seam lane, AUDIT 2.
-    check(d >= 3, "Gleason's theorem requires dim >= 3")
 
     return _result(
-        name='T_Born: Born Rule from Admissibility',
+        name='T_Born: the trace form on a named spanning effect family',
         tier=0,
-        epistemic='P',
-        summary=(
-            'Born rule p(E) = Tr(rhoE) is the UNIQUE probability assignment '
-            'satisfying positivity, additivity, normalization, and admissibility '
-            'invariance in dim >= 3 (Gleason\'s theorem). '
-            'Verified on 3D witness with projective and non-projective POVMs, '
-            'plus unitary invariance check.'
-        ),
-        key_result='Born rule is unique admissibility-invariant probability (Gleason, d>=3)',
-        dependencies=['T2', 'T_Hermitian', 'A1', 'L_Gleason_finite'],
+        epistemic=_TBORN_DECLARED_GRADE,
+        passed=(not notes),
+        status=('PASS' if not notes else 'FLAG'),
+        fail_reasons=list(notes),
+        summary=summary,
+        key_result=(
+            f'On the named effect family, at every executed instance in '
+            f'{list(d_range)} x {list(sectors)}, the trace form is the '
+            f"unique additive normalized assignment on that family's "
+            f'rational span, conditional on '
+            f'{" + ".join(_TBORN_NAMED_PREMISES)}. Two candidates are '
+            f'excluded by executed legs, one of them non-trace and one of '
+            f'them a trace form against a non-positive operator; the '
+            f'projector-only read leaves nullity {proj_nullity[tie_r]} in '
+            f'the real sector at the tied dimension.'),
+        dependencies=['T2', 'T_Hermitian'],
+        legs={k: {'passed': v[0], 'evidence': v[1]}
+              for k, v in legs.items()},
+        leg_count=len(legs),
         artifacts={
-            'dimension': d,
-            'gleason_requires': 'd >= 3',
-            'born_rule': 'p(E) = Tr(rhoE)',
-            'gleason_status': 'INTERNALIZED by L_Gleason_finite [P]',
+            'executed_dimension_range': list(d_range),
+            'sectors_executed': list(sectors),
+            'family_rank_by_d': {k: family_rank[k]
+                                 for k in sorted(family_rank)},
+            'sector_dim_by_d': {k: sector_dim[k]
+                                for k in sorted(sector_dim)},
+            'extension_solution_dimension': {
+                k: ext_solution_dim[k] for k in sorted(ext_solution_dim)},
+            'deletion_control_dimension_by_d': {
+                k: deficiency[k] for k in sorted(deficiency)},
+            'nonlinear_candidate_gap': {
+                k: [str(g) for g in f4_gaps[k]] for k in sorted(f4_gaps)},
+            'positivity_rejection_minor': {k: f5_minor[k]
+                                           for k in sorted(f5_minor)},
+            'projector_read_rank_and_nullity': {
+                k: [proj_rank[k], proj_nullity[k]]
+                for k in sorted(proj_rank)},
+            'covariance_deviation_on_shear': {
+                k: str(n1_shear_dev[k]) for k in sorted(n1_shear_dev)},
+            'projective_floor_dimensions_at_d2': {
+                'frame_constraint_solution_dimension': frame_solution_dim,
+                'trace_form_dimension_on_the_same_vector_set':
+                    trace_form_dim,
+                'SCOPE': 'a contrast at one dimension on one exhibited '
+                         'family; NOT a dimension floor in either direction',
+            },
+            'named_premises': list(_TBORN_NAMED_PREMISES),
+            'value_ties': {
+                'T1': 'counted_ledger_underdetermination::check_L_counted_'
+                      'ledger_fixes_only_the_commit_record_diagonal '
+                      '(arithmetic only)',
+                'T2': 'dense_sandwich_born::check_T_dense_sandwich_effect_'
+                      'soundness and ::check_T_actual_measurements_are_povms',
+                'T3': 'operational_score_linearity::SPANNING_EFFECTS and '
+                      '::score_nonlinear_impostor',
+                'T4': 'finite_representation_lemmas::check_L_effects_povm_'
+                      'density_born',
+            },
+            'leg_inventory': list(_TBORN_EXPECTED_LEGS),
+            'may_not_cite': list(_TBORN_MAY_NOT_CITE),
+            'disclosed_limitations': list(_TBORN_LIMITATIONS),
+            'held_out_of_the_bank': False,
         },
     )
 
