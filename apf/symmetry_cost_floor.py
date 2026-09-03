@@ -33,11 +33,11 @@ WHAT IS ACTUALLY OPEN, and it is a different question from the one this note
 used to pose. The gap is CROSSED BY DEFINITION at DEF_REALIZATION_SIGNED_CONTRACTION
 (``fd3_valuation_born_chain``), which names itself as the crossing and records
 its excluded alternatives. Independent transfers exist in quantity -- the graph
-Laplacian is PSD, carries the cost linearly, is GL(n)-invariant, injective on
+Laplacian is PSD, carries the cost linearly, is injective on
 configurations and S_n-equivariant, and S |-> eps*|S| I/n reproduces the number
 just as well. So the open question is NOT existence. It is UNIQUENESS: whether
 any transfer is FORCED. An arbitrary map that reproduces a number discharges
-nothing. The prior lanes remain on record and their diagnosis stands -- the held
+nothing. The prior lanes remain on record and their diagnosis stands -- the
 ``atomic_equal_cost_frame`` module (whose own scope note observes that a
 projective ray in M_n(C) is a different carrier from this orbit partition, and
 that the type-transfer is undefined), and the readout-completeness burden of
