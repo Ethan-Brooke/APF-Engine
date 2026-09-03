@@ -155,7 +155,7 @@ NOT CONSUMED: P1 (sandwich realization); P2 (presentation gauge); P3;
 CYCLICITY; the phi := eps*Tr stipulation on the diagonal (that value is
 here an argmin over fibers, not a declaration).
 
-MAY NOT CITE, while the charter is open:
+MAY NOT CITE (PERMANENT, ruled SC1@2026-09-01):
 - "Born is derived" / "the carrier gap is closed" / "P1 is reduced". The
   transfer prices the diagonal of each block, under named premises; the
   off-diagonal is computed to remain free (R4).

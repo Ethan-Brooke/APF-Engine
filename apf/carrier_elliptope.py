@@ -119,7 +119,7 @@ NOT CONSUMED: P1; P2 presentation gauge; P3; CYCLICITY; the eps*Tr
 stipulation; DET_MAX_SELECTION_PRINCIPLE (E4 computes where det-max
 points; it does not adopt det-max); any resolution of the E3 fork.
 
-MAY NOT CITE while the charter is open:
+MAY NOT CITE (PERMANENT, ruled SC1@2026-09-01):
 - "Born is derived" / "the carrier gap is closed". Parametrized and
   located, not closed.
 - "Maximal capacity selects Born" as a result (reading, unlicensed).

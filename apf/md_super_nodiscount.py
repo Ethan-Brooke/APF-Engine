@@ -184,7 +184,7 @@ DET_MAX_SELECTION_PRINCIPLE (no longer load-bearing for this route, per
 the memo's R3); MISSING_LEMMA_EQUALITY_AS_PREMISE (the equality is
 recovered at the solution, N2 -- it is an output, not an input).
 
-MAY NOT CITE, while the residual is undischarged:
+MAY NOT CITE (PERMANENT, ruled SC1@2026-09-01):
 - "Born is derived." The conclusion is conditional on the named residual.
 - "MD implies Born." Whether MD's clause reaches signed superpositions is
   the residual itself (memo Sec. 4 (ii)), not a theorem here.
