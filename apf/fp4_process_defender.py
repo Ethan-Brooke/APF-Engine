@@ -38,7 +38,7 @@ about the interface ("some interface's completion probes have no joint
 distribution"), the plan's s8 "one branch fact" made precise.
 
 CEILINGS:
-  FP4a  [P_structural]        a faithful classical process defender EXISTS for
+  FP4a  [P_structural_exhaustive]        a faithful classical process defender EXISTS for
                              the structural Held scenario (constructive +
                              exhaustive readout enumeration). Kills FP4-as-
                              structural-theorem.
@@ -117,7 +117,7 @@ def _shared_history_chsh_ceiling(n):
 # =====================================================================
 
 def check_L_fp4_structural_defender_exists():
-    """FP4a [P_structural]. Build the Held-completion scenario from Stages A/B
+    """FP4a [P_structural_exhaustive]. Build the Held-completion scenario from Stages A/B
     alone and CONSTRUCT a faithful classical hidden-history process defender.
 
     Scenario (structural, no amplitudes): histories h in {0,1}; current record
@@ -182,7 +182,7 @@ def check_L_fp4_structural_defender_exists():
     passed = (record_null and completion_sensitive and order_dependent
               and recombination and faithful_defender and unfaithful_rejected
               and jointly_measurable and shared_history_bounded)
-    return {"passed": passed, "family": FAMILY, "epistemic": "P_structural",
+    return {"passed": passed, "family": FAMILY, "epistemic": "P_structural_exhaustive",
             "physical_premises_certified": False,
             "held_predicates": {"record_null": record_null,
                                 "completion_sensitive": completion_sensitive,

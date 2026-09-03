@@ -135,7 +135,7 @@ topological sectors out of scope; the convention check's token and grade
 ([P_structural_reading]) stay exactly as they were -- its grounding STORY
 strengthens, nothing regrades.
 
-GRADE [P_structural] tier 4: closed-world constructibility no-go over the
+GRADE [P_structural_reading] tier 4: closed-world constructibility no-go over the
 registered corpus, with P2 disclosed at reading strength. Not [P] -- P1/P2
 are named premises, not A1 theorems.
 """
@@ -294,7 +294,7 @@ def check_T_colour_solder_form_no_go():
              'not constructible from the cost economy (fixed-point no-go; '
              'solderability criterion separates gravity from colour)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Under P1 (closed-world inventory) + P2 (payload-type/'
             'content-blindness reading, DISCLOSED at reading strength, the '
@@ -399,7 +399,7 @@ IE_DECLARATIONS = (
                 "from base-supplied data is a fixed point of a free action "
                 "-- empty. ADOPTION IS THE ONLY DOOR: no-B enters as a "
                 "registered substrate absence (relocated into P1+P2), never "
-                "a derivation. The check grades [P_structural]; premise P2 "
+                "a derivation. The check grades [P_structural_reading]; premise P2 "
                 "carries reading strength (disclosed, heaviest first). "
                 "(check_T_colour_solder_form_no_go, colour_solder_form_no_go.py)"
             ),

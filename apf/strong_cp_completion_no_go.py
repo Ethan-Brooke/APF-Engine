@@ -75,7 +75,7 @@ arg det M_q != 0, part of theta-bar would be carried by the mass texture --
 a record-bearing, content-FIXED datum -- and the no-go would be partial.
 The .354 result localizes the whole content-blindness into the gluonic angle.
 
-GRADE. [P_structural] tier 4. This check certifies the NEGATIVE
+GRADE. [P_structural_reading] tier 4. This check certifies the NEGATIVE
 (content-blindness) as a structural theorem over banked inputs. It does NOT
 derive that theta-bar is physically free -- that content underdetermines
 the angle is the strong CP problem, and the SM is the in-framework witness,
@@ -205,7 +205,7 @@ def check_L_completion_angle_content_blind_native():
         name='L_completion_angle_content_blind_native -- the alpha-completion '
              'is content-blind on theta-bar (the transport-half no-go)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The native->realized completion map is CONTENT-BLIND on the '
             'strong-CP angle. Completion parameters partition by capacity '

@@ -117,7 +117,7 @@ def check_T_gapless_serial_floor():
         'L_epsilon_star': (check_L_epsilon_star, 'P'),
         'T_ledger_rent_excluded': (check_T_ledger_rent_excluded, 'P'),
         'L_local_removability': (check_L_local_removability, 'P'),
-        'T_no_IJC_no_noncommutativity': (check_T_no_IJC_no_noncommutativity, 'P_structural'),
+        'T_no_IJC_no_noncommutativity': (check_T_no_IJC_no_noncommutativity, 'P_structural_exhaustive'),
         'T_realignment_cost_is_transition_energy':
             (check_T_realignment_cost_is_transition_energy, 'P'),
         'T_coherent_free_spend_permanent': (check_T_coherent_free_spend_permanent, 'P'),

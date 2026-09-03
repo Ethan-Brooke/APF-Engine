@@ -515,7 +515,7 @@ def _prod_comb(mult_vec):
 
 
 def check_T_vglobal_slot_identification_no_go():
-    """T_vglobal_slot_identification_no_go: (12, 3, 27) Is Not a G_SM-Invariant Slot Signature [P_structural].
+    """T_vglobal_slot_identification_no_go: (12, 3, 27) Is Not a G_SM-Invariant Slot Signature [P_structural_exhaustive].
 
     v24.3.326 NEW (2026-07-02). Executes the slot-level V_global
     identification walk staged in "Reference - The Vacuum-Content
@@ -599,7 +599,7 @@ def check_T_vglobal_slot_identification_no_go():
     identification raising the Higgs multiplicity (achievable
     intersections stay multiples of 4) — the check re-adjudicates on
     any inventory change, but the load-bearing exclusion is robust to
-    the very change the fence names. Grade [P_structural], closed-world
+    the very change the fence names. Grade [P_structural_exhaustive], closed-world
     over the current corpus by construction.
     """
     from itertools import product as _product
@@ -696,9 +696,9 @@ def check_T_vglobal_slot_identification_no_go():
     # ---- clause (3) is a corollary of clause (1); no further computation ----
 
     return _result(
-        name='T_vglobal_slot_identification_no_go: (12,3,27) is not a G_SM-invariant slot signature [P_structural]',
+        name='T_vglobal_slot_identification_no_go: (12,3,27) is not a G_SM-invariant slot signature',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'The slot-level V_global identification walk, refutation branch: the Higgs '
             'isotypic class of V_61 has multiplicity 1 and dim 4, so every G_SM-invariant '
@@ -976,7 +976,7 @@ IE_DECLARATIONS = (
             "expected dimension while a random subspace of the same dimension "
             "is NOT invariant (the dimension count alone does not do the "
             "work); (ii) the slot-level no-go "
-            "(check_T_vglobal_slot_identification_no_go [P_structural], "
+            "(check_T_vglobal_slot_identification_no_go [P_structural_exhaustive], "
             "v24.3.326): (12, 3, 27) is NOT an achievable slot signature of "
             "any G_SM-invariant 42-dim complement (the Higgs isotypic class "
             "has mult 1 / dim 4; the 16-signature set enumerated and frozen); "

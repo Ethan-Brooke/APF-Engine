@@ -8342,9 +8342,9 @@ def check_T_no_IJC_no_noncommutativity():
           "A_Gamma commutative: arbitrary elements commute")
 
     return _result(
-        name='T_no_IJC_no_noncommutativity: spectator-countermodel falsification test [P_structural]',
+        name='T_no_IJC_no_noncommutativity: spectator-countermodel falsification test',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Spectator countermodel: V = M_d1 (+) M_d2 (+) Pi with Pi inert. '
             'A1 + MD + A2 + BW all PASS. Pair {d1, d2} in branch (Sep) of the '
@@ -8356,7 +8356,7 @@ def check_T_no_IJC_no_noncommutativity():
             'dichotomy) is the load-bearing structural commitment.'
         ),
         key_result=(
-            'A1+MD+A2+BW all hold AND F_Pi=0 AND [E_d1,E_{d1,d2}]=0 [P_structural]; '
+            'A1+MD+A2+BW all hold AND F_Pi=0 AND [E_d1,E_{d1,d2}]=0; '
             'spectator-Pi model is in branch (Sep) of the IJC dichotomy.'
         ),
         dependencies=['A1', 'MD', 'A2', 'BW'],

@@ -248,9 +248,9 @@ def check_L_wg2_dictionary_index_content_blind_native():
     # --- 0. the partition instrument, called live (audit fix R1) -----------
     anchor = check_L_completion_angle_content_blind_native()
     check(isinstance(anchor, dict), "the .359 anchor must return a result record")
-    check(anchor.get('epistemic') == 'P_structural',
+    check(anchor.get('epistemic') == 'P_structural_reading',
           "the .359 partition anchor must hold live at its banked grade "
-          "[P_structural] -- this check consumes the partition, not a mirror")
+          "[P_structural_reading] -- this check consumes the partition, not a mirror")
 
     # --- 1. the index is NO-RECORD: gain(n) = 0 over the probed family -----
     for n in _PROBED_FAMILY:
@@ -348,7 +348,7 @@ def check_L_wg2_dictionary_index_content_blind_native():
         epistemic='P_structural',
         summary=(
             'Under the .354/.359 record-partition (called live: '
-            'check_L_completion_angle_content_blind_native, [P_structural]), '
+            'check_L_completion_angle_content_blind_native, [P_structural_reading]), '
             'the w propto g^n dictionary index is NO-RECORD (zero native '
             'capacity gain; C_total = 61 for every probed n) and '
             'CONTENT-BLIND: completions at n=2 and n=4 share every '
@@ -549,8 +549,8 @@ def check_T_wg2_dictionary_index_no_native_consumer_census():
 
     # --- 1. the instrument + the .364 wall, called live (R1/F6 pattern) ---
     anchor = check_L_completion_angle_content_blind_native()
-    check(anchor.get('epistemic') == 'P_structural',
-          "the .354/.359 partition instrument holds live at [P_structural] "
+    check(anchor.get('epistemic') == 'P_structural_reading',
+          "the .354/.359 partition instrument holds live at [P_structural_reading] "
           "-- this census is CONDITIONAL on it (stated, not silently "
           "strengthened)")
     r1 = check_L_wg2_dictionary_index_content_blind_native()

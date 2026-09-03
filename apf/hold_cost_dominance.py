@@ -1024,8 +1024,8 @@ def check_T_hold_cost_dominance_split():
        "tie-among-equal-cost + BW non-degeneracy stay named opens)")
     r_spec = check_T_no_IJC_no_noncommutativity()
     ck(r_spec.get('passed') is True and
-       r_spec.get('epistemic') == 'P_structural',
-       "anchor T_no_IJC_no_noncommutativity [P_structural] passes (rider (d): "
+       r_spec.get('epistemic') == 'P_structural_exhaustive',
+       "anchor T_no_IJC_no_noncommutativity [P_structural_exhaustive] passes (rider (d): "
        "the Sep spectator satisfies the constitutive base minus "
        "occupancy-hosted structure)")
     ck(sorted(r_spec.get('dependencies', [])) == ['A1', 'A2', 'BW', 'MD'],
