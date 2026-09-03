@@ -3850,6 +3850,830 @@ def check_T_adjoint_closure_reversible_lock_cycles():
         ),
     }
 
+# =====================================================================
+# (15) The closed-ledger per-event conservation law -- a DECLARED INPUT
+# =====================================================================
+
+# Declared leg inventory for check_T_closed_ledger_conservation_declared.
+# Set-exact in BOTH directions on the bank path -- nothing declared failed
+# to run, nothing ran undeclared -- and append-and-record per D7@2026-08-08:
+# a mismatch contributes a failure reason and does not raise.  Mirrors
+# _PLEC_SPINE_LEGS in apf/foundation_inputs.py.  No assertion appears
+# anywhere on this check's leg path, so `python3 -O` executes exactly the
+# same legs as `python3`.
+_CONSERVATION_DECLARED_LEGS = frozenset({
+    "LAW_STATED_VERBATIM",
+    "DOMAIN_CLAUSE_PRESENT",
+    "DECLARED_LAW_HOLDS_ON_RESIDUE_FREE_MEMBER",
+    "CONTROL_INDEPENDENT_T_COUNTERMODEL_FAILS_THE_LAW",
+    "CONTROL_COUNTERMODEL_IS_ADMISSIBLE",
+    "CONTROL_CANCELLING_RESIDUE_COUNTERMODEL_FAILS_THE_LAW",
+    "CONTROL_DEFINITIONAL_FORM_ADMITS_THE_COUNTERMODEL",
+    "CONTROL_T_IS_READ_NOT_RECONSTRUCTED",
+    "TIE_capacity_constant_by_value",
+    "TIE_source_check_records_the_absence",
+    "TIE_rent_theorem_is_record_level_only",
+    "TIE_declared_input_genre_is_live_in_bank",
+    "GAPS_RECOMPUTED_EXACTLY",
+    "MAY_NOT_CITE_CARRIED_SET_EXACT",
+})
+
+
+def check_T_closed_ledger_conservation_declared():
+    """T_closed_ledger_conservation_declared: the closed-ledger per-event
+    conservation law, entering the bank as a DECLARED INPUT.
+
+    Tier 3 [POSTULATE].
+
+    an input declared is a PURCHASE, not a derivation.  That sentence
+    governs every field this check returns.  Nothing below is proved,
+    forced, or derived; a statement of record enters the bank by decision
+    (RC2@2026-09-02, fallback trigger T1), and what this check computes is
+    the price: the witnesses that stand beside the sentence, the delta
+    between them and it, and a countermodel the sentence excludes and the
+    bank does not.
+
+    WHAT THE LAW SAYS.  At every event of a closed finite ledger the entry
+    is exhausted by the two booked kinds -- no third cost kind and no
+    unbooked residue -- so that with t an independently given ledger datum,
+    t_i = p_i + m_i at every event i.  The canonical sentence is carried as
+    a fixed string, byte-compared against the record this check returns,
+    and its sha256 is returned so the comparison against the frozen claim
+    surface of 2026-09-02 can be made mechanically by a reader who has that
+    surface.  The vectors are named p, m and t after the source check
+    beside which this one sits; p carries the formation/realignment
+    commitments and m the per-activation charges, which is a naming
+    convention adopted from that check and from the record-level cost-kind
+    dichotomy, not a claim about either.
+
+    WHAT IS OPEN IS RECORDED AS OPEN.  The domain clause is a RECORDED
+    SCOPE and not a theorem, and it is returned in full: the executed scope
+    of the round that bought this input; the record-level to event-level
+    bridge, which is a PREMISE and never an adjacency; which interfaces
+    present a ledger of this shape, not established; and the completeness
+    of the two booked kinds, which is imported at its own grade and not
+    derived here.
+
+    THE FOUR WITNESSES STAND BESIDE THE SENTENCE, NEVER UNDER IT.  W1, the
+    source check's algebraic identity, is a witness OF THE DEFINITION: its
+    own docstring says the law's content is absent, and its five standing
+    bars are inherited whole.  W2, the fence inventory's exact-rational
+    gaps, shows the identity is an identity and not a constraint.  W3, the
+    record-level two-kind theorem, is exactly ONE LEVEL above the declared
+    sentence, and that level is the load-bearing delta.  W4, the round's
+    containment record, is the reason the input is a purchase rather than a
+    shortcut past an available derivation; it is quotable only whole, it is
+    a record of that round and not a banked callable, and NO LEG HERE TIES
+    TO IT BY VALUE because there is nothing here to tie to.  No leg closes
+    any of these deltas and no field returned here says any is closed.
+
+    THE RETIRED FORM, DESCRIBED.  Installing the entry as t := p + m at the
+    point of construction is not a statement of the law: it is satisfied by
+    construction, exactly as the retired increment-form of
+    apf/foundation_inputs.py was satisfied by the flat world BW exists to
+    exclude.  A world in which every entry is DEFINED as its two terms' sum
+    satisfies it and exhibits nothing.  That form is named here, in this
+    docstring, because naming it is what makes the description checkable;
+    no field this check returns offers it as a witness, or a partial
+    witness, of the law.
+
+    A declared input whose own countermodel passes is not declared, it is
+    decorated.  So both controls execute in the bank rather than being
+    described.  The countermodel is an admissible ledger with t supplied
+    INDEPENDENTLY and a nonzero residue; it is re-derived here from its own
+    definition rather than imported, because the frozen referee that
+    produced it is a library artifact outside the package path and is not
+    shipped with the bank.  It must FAIL the law's leg, and `passed`
+    depends on that failure: if it ever satisfies the leg, the leg has
+    stopped discriminating and this check goes red rather than quietly
+    certifying a world the declared input excludes.  In the other direction
+    the definitional form is built and run and must ADMIT that same
+    countermodel, so the two verdicts DIFFER on it -- which is the executed
+    evidence that the declared law is declared and not decorated.  A third
+    control holds p and m fixed and moves only t: the declared predicate's
+    verdict moves with it and the definitional form's does not, so the
+    predicate demonstrably READS the entry rather than reconstructing it.
+    A fourth control runs the declared predicate on a second admissible
+    ledger whose per-event residue is nonzero and SUMS TO ZERO.  The
+    declared sentence quantifies over EVERY EVENT; a statement about the
+    ledger's booked TOTALS is a materially different statement, true on
+    that ledger where the declared law is false, and this control is what
+    separates the two by execution rather than by wording.
+
+    STANDING LIMIT, disclosed and not machined around.  The two verbatim
+    legs certify that the returned record carries the fixed strings and
+    that those strings have not drifted from the sha256 pinned when this
+    check was authored against the frozen surface.  They do NOT certify
+    that the pinned strings match that surface: a transcription error made
+    at authoring would be stable, and catching it is the blinded audit's
+    work, which is why the digest is returned.  The same holds of the bar
+    list: it is pinned by a digest over its own ordered contents, so a bar
+    dropped, reworded or reordered reddens this check, and a coordinated
+    edit to both the list and its pin defeats that pin.  The leg inventory
+    certifies that a declared leg RAN, not that it COULD have failed
+    (D7@2026-08-08).  And the controls execute the declared predicate on
+    the ledgers this check constructs: a finite set of ledgers cannot pin
+    a predicate, and any rule agreeing with the declared law on all of
+    them passes these legs.  What the fourth ledger buys is therefore
+    stated rather than left implicit -- it is a ledger on which the
+    declared per-event law and a law about booked totals disagree -- and the
+    general limit stands rather than being machined around.
+
+    MAY NOT BE CITED AS: "the conservation law is derived", or forced, or
+    proved, or a consequence of A1 + MD + A2 + BW, or as the conclusion of
+    anything; "the ledger is complete"; progress on the target -- the count
+    moving is bookkeeping; "reciprocal calibration is derived", nor the
+    source check's other four standing bars, which are inherited whole and
+    which this landing does not lift; anything about L_cost_C1's truth in
+    either direction; "the law is false", "no conservation law exists" or
+    "the ledger is incomplete" -- the round's negative is containment at a
+    scope and is quotable only whole; the NT/BW domain question in either
+    direction; fence-absence as derivation-presence, or an empty UNFENCED
+    set as a refutation of any gate; an ADMITTED record at a frozen referee
+    as evidence, an admission there being an extension-match; a
+    framework-supplied rate for any priced route; "Born is derived" in any
+    form; or that any mathematics moved.  Nothing was proved, refuted or
+    repaired.  An input was purchased.
+    """
+    import hashlib as _hashlib
+    import re as _re
+    from apf.operational_completeness import (
+        _CAP as _banked_capacity,
+        check_T_ledger_rent_excluded as _rent_theorem,
+    )
+    from apf.foundation_inputs import (
+        check_T_four_input_declaration as _four_input_declaration,
+    )
+
+    legs_run = []
+    failure_reasons = []
+
+    def _executed(fn, label):
+        """Execute a banked sibling and read its record.  An exception
+        raised upstream is RECORDED as a failure reason rather than
+        propagated, so this check returns a record saying what it found
+        instead of dying inside a sibling's own assertion -- and so each
+        value tie below can be shown to fire on its own evidence rather
+        than being pre-empted by a sibling that raises first."""
+        try:
+            return fn()
+        except Exception as exc:                       # noqa: BLE001
+            failure_reasons.append(
+                f"{label} raised {type(exc).__name__} instead of "
+                f"returning a record: {exc}")
+            return {}
+
+    # ---- the fixed strings -------------------------------------------
+    # Transcribed from the frozen claim surface of 2026-09-02, sections 2
+    # and 3.  The markdown emphasis and code-span delimiters of that
+    # document are formatting and are not part of the sentences; the
+    # punctuation, wording and casing are.  The digests below were cut at
+    # authoring, so a later edit to either string reddens this check.
+    _LAW = (
+        "At every event of a closed finite ledger the entry is exhausted "
+        "by the two booked kinds — no third cost kind and no unbooked "
+        "residue — so that with t an independently given ledger datum, "
+        "t_i = p_i + m_i at every event i."
+    )
+    _LAW_SHA256 = ("4f8b9e529b269ff5123bc36d7efbfedd"
+                   "e83161202d0ac6b121263bdb69a24a6f")
+    _STATUS = (
+        "DECLARED, NOT DERIVED.  an input declared is a PURCHASE, not a "
+        "derivation.  It is a statement of record entering the bank by "
+        "decision (RC2@2026-09-02, fallback trigger T1), not a theorem, "
+        "and it may not be cited as one."
+    )
+    _PURCHASE = "an input declared is a PURCHASE, not a derivation"
+    _PURCHASE_SHA256 = ("00689c947834cf3becb75170eb12f2af"
+                        "a1340050167ea2dbafa555cce2be21d3")
+    _DECORATION = ("A declared input whose own countermodel passes is not "
+                   "declared, it is decorated.")
+    _DECORATION_SHA256 = ("c1694a22f3629eb088b16f0b7a469ac8"
+                          "db813b53b2d25cee3e61e08570654a5f")
+    _DOMAIN = (
+        "DOMAIN, and it is a RECORDED SCOPE, NOT A THEOREM: the "
+        "quantification ranges over the per-event entries of a closed "
+        "finite ledger — the events an implemented ledger books — "
+        "under the two booked kinds the record-level ontology admits "
+        "(formation/realignment commitments and per-activation charges, "
+        "check_T_ledger_rent_excluded, which imports Paper 0 row 9 by "
+        "name).  WHAT IS OPEN, RECORDED AS OPEN.  (1) The executed scope "
+        "of the round that bought this input is twelve ledgers at three "
+        "events in fixed coordinates (RC1@2026-09-02 rules that a scope, "
+        "not a defect); the law's domain beyond that scope is a scope, "
+        "not a theorem, and no leg of this check establishes it.  (2) The "
+        "record-level to event-level bridge is a PREMISE, never an "
+        "adjacency (DP-5); no banked object carries the identification, "
+        "and the search for one was a targeted grep at its stated "
+        "strength.  (3) Which interfaces: the law is declared at the "
+        "ledger, and whether every interface the corpus recognises "
+        "presents a ledger of this shape is not established here and is "
+        "not claimed.  (4) Completeness of the two booked kinds is "
+        "imported, not derived here -- it is check_T_ledger_rent_"
+        "excluded's, at its own grade, carrying its own scope clause (the "
+        "ledger as constituted; a future banked continuation-flow law "
+        "would reopen it) and its own license-class guard."
+    )
+    _DOMAIN_SHA256 = ("66e6b5f78405ff347115b85cfe892565"
+                      "bec37298efadc289b34decee90b013eb")
+
+    _BARS = (
+        "the conservation law is derived",
+        "the conservation law is forced, proved, or a consequence of "
+        "A1 + MD + A2 + BW",
+        "the conservation law is the conclusion of anything",
+        "the ledger is complete",
+        "this landing is progress on the target -- the count moving is "
+        "bookkeeping",
+        "reciprocal calibration is derived",
+        "self-duality is derived from no-hidden-debt",
+        "the Barnum-Wilce axiom is discharged",
+        "the adjoint is structural rather than postulated",
+        "this supports any matching-effect or preparation-load clause",
+        "anything about L_cost_C1's truth, in either direction",
+        "the law is false, no conservation law exists, or the ledger is "
+        "incomplete",
+        "the NT/BW domain question, in either direction",
+        "fence-absence is derivation-presence, or the empty UNFENCED set "
+        "refutes any gate",
+        "an ADMITTED record at a frozen referee is evidence -- an "
+        "admission there is an extension-match",
+        "a framework-supplied rate for any priced route",
+        "Born is derived",
+        "any mathematics moved -- nothing was proved, refuted or "
+        "repaired; an input was purchased",
+    )
+    # The bars are this object's fence, and a fence that can be edited
+    # green is the one thing a declared input must not ship with.  The
+    # bars inherited from the source check are tied to its executed record
+    # below; the ones with no upstream are pinned the way the four fixed
+    # sentences above are pinned -- by a digest cut at authoring, over the
+    # bar count and the bars IN ORDER, so that a bar dropped, reworded or
+    # reordered reddens this check.
+    _BARS_SHA256 = ("8d6fd5a6cf6de2f68d2680fb185831d9"
+                    "eb33135901f2e890de3095993d915036")
+    bars_digest = _hashlib.sha256(
+        "\n".join((str(len(_BARS)),) + _BARS).encode("utf-8")).hexdigest()
+    # The bars this record inherits from the source check, sliced out of the
+    # tuple above rather than retyped: single-sourced, and pinned in order by
+    # the same digest.  Tied to the source check's own executed record in
+    # BOTH directions at the bar leg below.
+    _INHERITED_FROM_SOURCE = _BARS[5:10]
+
+    # ---- the ledger model, and the two predicates ---------------------
+    # A ledger record carries the two booked kinds AND the entry as three
+    # independent fields.  The entry is a datum of the record; nothing
+    # below reconstructs it.
+    def _ledger(p, m, t):
+        return {"p": tuple(_Q(x) for x in p),
+                "m": tuple(_Q(x) for x in m),
+                "t": tuple(_Q(x) for x in t)}
+
+    def _residue(L):
+        return tuple(L["t"][i] - L["p"][i] - L["m"][i]
+                     for i in range(len(L["t"])))
+
+    def _declared_law_holds(L):
+        """The declared law's predicate.  It READS the entry off the
+        record and compares it to the two booked kinds.  It does not
+        reconstruct the entry at any depth, and the control below
+        exhibits that rather than asserting it."""
+        return all(r == 0 for r in _residue(L))
+
+    def _definitional_form_holds(L):
+        """The RETIRED form: the entry is CONSTRUCTED as the sum of the
+        two booked kinds, so the record's own entry field plays no part.
+        Satisfied by construction on every ledger whatsoever, which is
+        exactly why it is not a statement of the law."""
+        entry = tuple(L["p"][i] + L["m"][i] for i in range(len(L["p"])))
+        return all(entry[i] == L["p"][i] + L["m"][i]
+                   for i in range(len(entry)))
+
+    def _admissible(L, cap):
+        return (sum(L["t"]) <= cap
+                and sum(L["p"][i] + L["m"][i]
+                        for i in range(len(L["p"]))) <= cap)
+
+    # The countermodel: an admissible ledger whose entry is supplied
+    # INDEPENDENTLY of the two booked kinds, re-derived here from that
+    # definition.  Its residue is computed, never typed.
+    counter = _ledger((1, 1, 1), (1, 1, 1), (2, 2, _Q(3, 2)))
+    residue_free = _ledger((1, 2, 1), (2, 1, 3), (3, 3, 4))
+
+    # ---- LEG: the canonical sentence, byte-compared -------------------
+    law_digest = _hashlib.sha256(_LAW.encode("utf-8")).hexdigest()
+    if law_digest != _LAW_SHA256:
+        failure_reasons.append(
+            "the canonical sentence has drifted from the digest pinned "
+            "when this check was authored against the frozen claim "
+            f"surface of 2026-09-02; computed {law_digest}")
+    if _PURCHASE not in _STATUS:
+        failure_reasons.append(
+            "the status clause must carry the governing sentence "
+            f"verbatim: {_PURCHASE!r}")
+    purchase_digest = _hashlib.sha256(_PURCHASE.encode("utf-8")).hexdigest()
+    if purchase_digest != _PURCHASE_SHA256:
+        failure_reasons.append(
+            "the governing sentence has drifted from the digest pinned "
+            "when this check was authored; it is verbatim from charter "
+            "section 3 and RC2@2026-09-02, and a paraphrase of it -- by "
+            "wording, by punctuation or by case -- is not it; computed "
+            f"{purchase_digest}")
+    decoration_digest = _hashlib.sha256(
+        _DECORATION.encode("utf-8")).hexdigest()
+    if decoration_digest != _DECORATION_SHA256:
+        failure_reasons.append(
+            "the decoration sentence has drifted from the digest pinned "
+            "when this check was authored against the frozen claim "
+            f"surface of 2026-09-02; computed {decoration_digest}")
+    legs_run.append("LAW_STATED_VERBATIM")
+
+    domain_digest = _hashlib.sha256(_DOMAIN.encode("utf-8")).hexdigest()
+    if domain_digest != _DOMAIN_SHA256:
+        failure_reasons.append(
+            "the domain clause has drifted from the digest pinned when "
+            "this check was authored against the frozen claim surface of "
+            f"2026-09-02; computed {domain_digest}")
+    for _needle in ("RECORDED SCOPE, NOT A THEOREM",
+                    "is a PREMISE, never an adjacency"):
+        if _needle not in _DOMAIN:
+            failure_reasons.append(
+                f"the domain clause no longer records {_needle!r}, which "
+                "is the clause carrying what is open")
+    legs_run.append("DOMAIN_CLAUSE_PRESENT")
+
+    # ---- LEG: the law is satisfiable ----------------------------------
+    rf_holds = _declared_law_holds(residue_free)
+    rf_residue = _residue(residue_free)
+    if not (rf_holds and all(r == 0 for r in rf_residue)):
+        failure_reasons.append(
+            "the residue-free member must satisfy the declared law, or "
+            "the law's leg is vacuously false rather than "
+            f"discriminating; residue {rf_residue}")
+    legs_run.append("DECLARED_LAW_HOLDS_ON_RESIDUE_FREE_MEMBER")
+
+    # ---- LEG: THE LOAD-BEARING CONTROL --------------------------------
+    # A declared input whose own countermodel passes is not declared, it
+    # is decorated.  `passed` depends on this failure.
+    counter_residue = _residue(counter)
+    counter_holds = _declared_law_holds(counter)
+    if counter_holds:
+        failure_reasons.append(
+            "CONTROL FAILED: the independent-t countermodel SATISFIES "
+            "the declared law's leg, so the leg no longer discriminates "
+            "the ledgers the declared input excludes.  A declared input "
+            "whose own countermodel passes is not declared, it is "
+            f"decorated; residue {counter_residue}")
+    if all(r == 0 for r in counter_residue):
+        failure_reasons.append(
+            "CONTROL VACUOUS: the countermodel's residue is zero, so it "
+            "is not a countermodel to anything; it must carry an "
+            f"unbooked residue, computed {counter_residue}")
+    legs_run.append("CONTROL_INDEPENDENT_T_COUNTERMODEL_FAILS_THE_LAW")
+
+    # ---- LEG: the countermodel is not vacuous by inadmissibility ------
+    counter_admissible = _admissible(counter, _banked_capacity)
+    if not counter_admissible:
+        failure_reasons.append(
+            "CONTROL VACUOUS: the countermodel is inadmissible under the "
+            "banked capacity, so the declared law would be excluding a "
+            f"ledger the bank already excludes; capacity "
+            f"{_banked_capacity}, booked total {sum(counter['t'])}")
+    legs_run.append("CONTROL_COUNTERMODEL_IS_ADMISSIBLE")
+
+    # ---- LEG: THE SEPARATING COUNTERMODEL ------------------------------
+    # The first countermodel's residue does not cancel, so a predicate
+    # reading only the ledger's BOOKED TOTALS can agree with the declared
+    # law on it.  This second countermodel is admissible, its per-event
+    # residue is nonzero, and that residue SUMS TO ZERO -- which is the
+    # same statement as "the booked total equals the sum of the two
+    # kinds", so that aggregate statement is TRUE on this ledger while the
+    # declared per-event law is FALSE.  The
+    # declared sentence quantifies over every event; the aggregate
+    # statement is a materially different statement, and this ledger is
+    # what separates them by execution.
+    cancelling = _ledger((1, 1, 1), (1, 1, 1), (3, 1, 2))
+    cancelling_residue = _residue(cancelling)
+    cancelling_holds = _declared_law_holds(cancelling)
+    cancelling_admissible = _admissible(cancelling, _banked_capacity)
+    if cancelling_holds:
+        failure_reasons.append(
+            "CONTROL FAILED: the separating countermodel SATISFIES the "
+            "declared law's leg.  Its per-event residue is nonzero and "
+            "cancels in aggregate, so it is a ledger the declared "
+            "per-event law excludes and a law about booked totals "
+            "admits; a leg that passes it is not the per-event law's "
+            f"leg; residue "
+            f"({', '.join(str(x) for x in cancelling_residue)})")
+    if all(r == 0 for r in cancelling_residue):
+        failure_reasons.append(
+            "CONTROL VACUOUS: the separating countermodel's per-event "
+            "residue is zero, so it separates nothing; computed "
+            f"({', '.join(str(x) for x in cancelling_residue)})")
+    if sum(cancelling_residue) != 0:
+        failure_reasons.append(
+            "CONTROL VACUOUS: the separating countermodel's residue does "
+            "not cancel in aggregate, so it does not separate the "
+            "per-event law from a law about booked totals; residue sum "
+            f"{sum(cancelling_residue)}")
+    if not cancelling_admissible:
+        failure_reasons.append(
+            "CONTROL VACUOUS: the separating countermodel is "
+            "inadmissible under the banked capacity, so it is a ledger "
+            f"the bank already excludes; capacity {_banked_capacity}, "
+            f"booked total {sum(cancelling['t'])}")
+    legs_run.append("CONTROL_CANCELLING_RESIDUE_COUNTERMODEL_FAILS_THE_LAW")
+
+    # ---- LEG: THE DECORATION CONTROL ----------------------------------
+    # The retired form, built and run, must ADMIT the countermodel; the
+    # two verdicts must therefore DIFFER on it.
+    counter_definitional = _definitional_form_holds(counter)
+    if not counter_definitional:
+        failure_reasons.append(
+            "DECORATION CONTROL FAILED: the definitional form must ADMIT "
+            "the countermodel -- it is satisfied by construction, and a "
+            "form that can refuse anything is not the form being "
+            "described")
+    if counter_definitional == counter_holds:
+        failure_reasons.append(
+            "DECORATION CONTROL FAILED: the declared law and the "
+            "definitional form return the SAME verdict on the "
+            "countermodel, so nothing here separates a declared law from "
+            f"a decorated one; both returned {counter_holds}")
+    legs_run.append("CONTROL_DEFINITIONAL_FORM_ADMITS_THE_COUNTERMODEL")
+
+    # ---- LEG: the entry is READ, not reconstructed ---------------------
+    # Hold the two booked kinds fixed and move ONLY the entry.  The
+    # declared predicate's verdict must move with it; the definitional
+    # form's must not.
+    counter_entry_repaired = _ledger(
+        counter["p"], counter["m"],
+        tuple(counter["p"][i] + counter["m"][i]
+              for i in range(len(counter["p"]))))
+    declared_reads_t = (_declared_law_holds(counter)
+                        != _declared_law_holds(counter_entry_repaired))
+    definitional_is_blind = (
+        _definitional_form_holds(counter)
+        == _definitional_form_holds(counter_entry_repaired))
+    if not declared_reads_t:
+        failure_reasons.append(
+            "ANTI-DEFINITIONAL GATE FAILED: the declared predicate's "
+            "verdict did not move when the entry moved with the two "
+            "booked kinds held fixed, so it is not reading the entry off "
+            "the record")
+    if not definitional_is_blind:
+        failure_reasons.append(
+            "ANTI-DEFINITIONAL GATE FAILED: the definitional form's "
+            "verdict moved with the entry, so the form built here is not "
+            "the construction-satisfied form it is named for")
+    legs_run.append("CONTROL_T_IS_READ_NOT_RECONSTRUCTED")
+
+    # ---- LEG: the capacity, tied BY VALUE ------------------------------
+    # The capacity is the banked constant, imported and executed, never a
+    # literal retyped here; and it is READ rather than decorative, which
+    # is exhibited by running the same admissibility function at a
+    # capacity below the countermodel's own booked total.
+    capacity_is_read = not _admissible(counter, _Q(1))
+    if not isinstance(_banked_capacity, _Q):
+        failure_reasons.append(
+            "VALUE TIE FAILED: the banked capacity constant is not an "
+            f"exact rational; got {type(_banked_capacity).__name__}")
+    if not capacity_is_read:
+        failure_reasons.append(
+            "VALUE TIE VACUOUS: the admissibility predicate returns the "
+            "same verdict at a capacity below the countermodel's booked "
+            "total, so the banked constant is decorative here")
+    legs_run.append("TIE_capacity_constant_by_value")
+
+    # ---- LEG: W1, the absence this input purchases, read BY VALUE ------
+    _source = _executed(check_T_closed_ledger_reciprocity,
+                        "the source check T_closed_ledger_reciprocity")
+    _source_bars = tuple(_source.get("may_not_cite", ()))
+    _SOURCE_BAR = "reciprocal calibration is derived"
+    if _SOURCE_BAR not in _source_bars:
+        failure_reasons.append(
+            "VALUE TIE FAILED: the source check must still carry its "
+            f"2026-07-29 bar {_SOURCE_BAR!r}; got {_source_bars}")
+    if "ALGEBRAIC IDENTITY ONLY" not in str(
+            _source.get("epistemic", "")).upper():
+        failure_reasons.append(
+            "VALUE TIE FAILED: the source check must still carry its "
+            "2026-07-29 corrigendum grade; got "
+            f"{_source.get('epistemic')!r}")
+    legs_run.append("TIE_source_check_records_the_absence")
+
+    # ---- LEG: W3, the record-level half, read BY VALUE -----------------
+    # The bridge from that level to this one is a PREMISE.  This leg reads
+    # the theorem's verdict and grade; it does NOT read down to an event,
+    # and nothing here closes the level.
+    _rent = _executed(_rent_theorem,
+                      "the record-level theorem T_ledger_rent_excluded")
+    _rent_grade = str(_rent.get("epistemic", ""))
+    if not _rent.get("passed"):
+        failure_reasons.append(
+            "VALUE TIE FAILED: the record-level two-kind theorem does "
+            "not pass, so the level this declared input sits one step "
+            "below is not standing")
+    if _rent_grade != "P":
+        failure_reasons.append(
+            "VALUE TIE FAILED: the record-level two-kind theorem's grade "
+            f"moved; got {_rent_grade!r}")
+    legs_run.append("TIE_rent_theorem_is_record_level_only")
+
+    # ---- LEG: the declared-input GENRE is live in the bank -------------
+    # A GENRE TIE AND NOTHING ELSE.  It reads the four-input declaration's
+    # verdict and grade BY VALUE and establishes only that the corpus
+    # already banks declared inputs.  It does NOT make this a fifth
+    # framework input; it is not a premise of anything here; and it is
+    # deliberately ABSENT from this check's declared dependencies, which
+    # carry premises only.  The grade is compared to its bare token with
+    # the legend's bracket delimiters stripped, so the normalisation that
+    # is moving bracketed spellings to bare ones across the corpus does
+    # not redden this leg.  A grade string whose bracket-stripped form is
+    # anything other than that token fires.
+    _genre = _executed(_four_input_declaration,
+                       "the four-input declaration "
+                       "T_four_input_declaration")
+    _genre_grade = str(_genre.get("epistemic", ""))
+    _genre_token = _genre_grade.strip().strip("[]")
+    if not _genre.get("passed"):
+        failure_reasons.append(
+            "GENRE TIE FAILED: the four-input declaration does not pass, "
+            "so the declared-input genre this check is recorded against "
+            "is not standing in the bank")
+    if _genre_token != "P_structural":
+        failure_reasons.append(
+            "GENRE TIE FAILED: the four-input declaration's grade moved; "
+            f"got {_genre_grade!r}")
+    legs_run.append("TIE_declared_input_genre_is_live_in_bank")
+
+    # ---- LEG: W2, the gaps, recomputed and tied BY VALUE ---------------
+    # Recomputed here in exact rationals on this check's own transcription
+    # of the witness family, then tied BY VALUE to the fence inventory's
+    # own recomputation, parsed out of its executed record rather than
+    # retyped.  DISCLOSED, as the sibling discloses it: the recomputation
+    # is an identity in the witness data and so fails only on a
+    # mis-implementation; the tie is what makes it more than a private
+    # duplicate.
+    def _dot(u, v):
+        return sum(u[i] * v[i] for i in range(len(u)))
+
+    def _v(*xs):
+        return tuple(_Q(x) for x in xs)
+
+    _family = (
+        (_v(3, 5, 2), _v(4, 1, 6)),
+        (_v(-3, 5, -2), _v(4, -1, 6)),
+        (_v(0, 0, 0), _v(7, -2, 1)),
+        (_v(_Q(3, 2), _Q(-1, 2), 11), _v(-8, _Q(13, 4), 0)),
+    )
+    _t_independent = _v(9, 9, 9)
+    # Every gap is enforced by VALUE, not only the smallest, against the
+    # values pinned when this check was authored against its own
+    # transcription of the family above.  DISCLOSED: only the minimum has a
+    # banked source to tie to -- the fence inventory returns that one and no
+    # other -- so the remaining pins catch drift in this transcription and
+    # are not an independent recomputation of anything.
+    _GAPS_EXPECTED = (_Q(47), _Q(105), _Q(189, 2), _Q(1155, 32))
+    _gaps = []
+    for _p, _m in _family:
+        _t = tuple(_p[i] + _m[i] for i in range(3))
+        _rhs = (_dot(_t_independent, _t_independent)
+                - _dot(_p, _p) - _dot(_m, _m)) / 2
+        _gaps.append(abs(_dot(_p, _m) - _rhs))
+    _min_gap = min(_gaps)
+    if len(_gaps) != len(_family) or any(g == 0 for g in _gaps):
+        failure_reasons.append(
+            "the identity must fail on every member of the witness "
+            f"family when the entry is supplied independently; got "
+            f"{_gaps}")
+    if tuple(_gaps) != _GAPS_EXPECTED:
+        failure_reasons.append(
+            "the gaps recomputed here have drifted from the values pinned "
+            "when this check was authored against its own transcription of "
+            f"the witness family; computed {_gaps}")
+    _fence = _executed(check_T_closed_world_gate_fence_inventory,
+                       "the fence inventory "
+                       "T_closed_world_gate_fence_inventory")
+    _m_gap = _re.search(r"smallest gap (-?\d+(?:/\d+)?) exactly",
+                        str(_fence.get("key_result", "")))
+    if _m_gap is None:
+        failure_reasons.append(
+            "VALUE TIE FAILED: could not recover the smallest gap from "
+            "the fence inventory's own executed record")
+    elif _Q(_m_gap.group(1)) != _min_gap:
+        failure_reasons.append(
+            "VALUE TIE FAILED: the smallest gap recomputed here "
+            f"({_min_gap}) disagrees with the fence inventory's own "
+            f"executed value ({_m_gap.group(1)})")
+    legs_run.append("GAPS_RECOMPUTED_EXACTLY")
+
+    record = {
+        "name": "T_closed_ledger_conservation_declared",
+        "passed": None,
+        "tier": 3,
+        "epistemic": "POSTULATE",
+        "declared_not_derived": _STATUS,
+        "key_result": (
+            f"THE CLOSED-LEDGER PER-EVENT CONSERVATION LAW, DECLARED.  "
+            f"{_LAW}  {_STATUS}  Computed here, and computed is all it "
+            f"is: the declared law holds on a residue-free ledger and "
+            f"FAILS on an admissible ledger whose entry is supplied "
+            f"independently, residue "
+            f"({', '.join(str(x) for x in counter_residue)}) against "
+            f"the banked capacity {_banked_capacity}; the retired "
+            f"construction-satisfied form ADMITS that same ledger, so "
+            f"the two verdicts differ on it "
+            f"({counter_holds} against {counter_definitional}); a second "
+            f"admissible ledger whose per-event residue "
+            f"({', '.join(str(x) for x in cancelling_residue)}) is "
+            f"nonzero and cancels in aggregate FAILS the declared law's "
+            f"leg while its booked totals agree, which is what separates "
+            f"the declared per-event law from a law about totals; and "
+            f"the "
+            f"identity the source check installs definitionally is "
+            f"recomputed in exact rationals on "
+            f"{len(_family)} witnesses, every one failing when the entry "
+            f"is independent, smallest gap {_min_gap} exactly, tied by "
+            f"value to the fence inventory's own recomputation.  "
+            f"{len(_CONSERVATION_DECLARED_LEGS)} legs declared, "
+            f"{len(_BARS)} bars carried under sha256 {bars_digest}, "
+            f"pinned so a bar dropped, reworded or reordered reddens "
+            f"this check.  sha256 of the canonical "
+            f"sentence {law_digest}, of the domain clause "
+            f"{domain_digest}, returned so a reader holding the frozen "
+            f"claim surface of 2026-09-02 can make the comparison "
+            f"mechanically.  NOTHING HERE IS DERIVED."
+        ),
+        "may_not_cite": _BARS,
+        "dependencies": ["T_closed_ledger_reciprocity",
+                         "T_ledger_rent_excluded"],
+    }
+    record["summary"] = (
+        _LAW + "  " + _STATUS + "  " + _DOMAIN + "  "
+        "THE WITNESSES STAND BESIDE THE SENTENCE AND THE DELTA IS SCOPED, "
+        "NOT CLOSED.  W1, check_T_closed_ledger_reciprocity, establishes "
+        "that on a witness whose entry is installed as the sum of the two "
+        "booked kinds the polarization identity holds; it is a witness OF "
+        "THE DEFINITION and not of the law, its own record says the law's "
+        "content is absent, and its five standing bars are inherited "
+        f"whole -- read by value here, grade {_source.get('epistemic')!r}. "
+        "W2, check_T_closed_world_gate_fence_inventory, establishes that "
+        "the identity is an identity and not a constraint, over a "
+        "both-sign witness family recomputed here in exact rationals and "
+        "tied to that check's own value; it establishes nothing about "
+        "whether any law forces the identity, fence-absence is not "
+        "derivation-presence, and an empty UNFENCED set refutes no gate.  "
+        "W3, check_T_ledger_rent_excluded, establishes at the RECORD "
+        "level that the ledger admits exactly two cost kinds and no "
+        "standing rent, importing Paper 0 row 9 by name; it does not read "
+        "down to an event, the record-level to event-level step is the "
+        "named premise, and THAT IS THE LOAD-BEARING DELTA.  W4 is the "
+        "round's containment record, quoted whole or not at all: the law "
+        "is NOT forced by A1 + MD + A2 + BW at the executed scope -- the "
+        "four inputs conjoined admit an under-booked ledger and kill a "
+        "residue-free one on capacity; MD excludes nothing; A1 is "
+        "invariant under all perturbations; BW excludes only residue-free "
+        "ledgers.  W4 is a record of that round and not a banked "
+        "callable, so no leg here ties to it by value; it does not "
+        "establish that the law is false, that no conservation law "
+        "exists, that the ledger is incomplete, or anything about "
+        "L_cost_C1.  THE RETIRED FORM.  Installing the entry as the sum "
+        "of the two booked kinds at the point of construction is not a "
+        "statement of the law -- it is satisfied by construction, as the "
+        "retired increment-form of apf/foundation_inputs.py was satisfied "
+        "by the flat world BW exists to exclude -- and it is named in "
+        "this check's docstring, where naming it makes the description "
+        "checkable, and offered nowhere as a witness of the law.  "
+        + _DECORATION +
+        "  So both controls execute here.  The independent-entry "
+        "countermodel is admissible under the banked capacity and FAILS "
+        "the declared law's leg, and this check's verdict depends on that "
+        "failure; the construction-satisfied form ADMITS it, and the two "
+        "verdicts differ on it, which is the executed evidence that the "
+        "declared law is declared and not decorated; and with the two "
+        "booked kinds held fixed the declared predicate's verdict moves "
+        "with the entry while the construction-satisfied form's does not, "
+        "so the entry is demonstrably read off the record.  A SECOND "
+        "admissible countermodel, whose per-event residue is nonzero and "
+        "cancels in aggregate, FAILS the declared law's leg as well "
+        "while its booked totals agree: the declared sentence quantifies "
+        "over every event, a statement about booked totals is a "
+        "materially different statement, and that ledger separates them "
+        "by execution.  A finite set of ledgers cannot pin a predicate, "
+        "and this record does not claim otherwise.  THE PLACEMENT.  This "
+        "declared input is a LEDGER-LEVEL statement of record, NOT a "
+        "fifth framework input, which is why it is registered beside the "
+        "source check that names its absence rather than beside the "
+        "four-input declaration.  That declaration is read here BY VALUE "
+        "for one purpose and no other -- to record that the "
+        "declared-input GENRE is live in the bank, verdict "
+        f"{_genre.get('passed')!r} at grade {_genre_grade!r} -- and the "
+        "tie establishes nothing further: it is not a premise of "
+        "anything here, it is absent from this check's declared "
+        "dependencies, and nothing in this record may be read as adding "
+        "an input to the framework's declared base.  WHAT MOVED.  "
+        "Nothing was proved, refuted or repaired, no grade moved, and no "
+        "mathematics moved.  An input was purchased, and its price is "
+        "recorded above."
+    )
+
+    # ---- LEG: the bars, carried set-exact and INHERITED BY VALUE ------
+    # The digest pins the declared tuple, cut at authoring over its count
+    # and its contents IN ORDER.  The set-exact guard compares the
+    # record's field to the bars declared above, so an edit to what the
+    # record CARRIES fires; it cannot see an edit to the declared tuple
+    # itself, which is single-sourced and consumed at both sites.  The
+    # inheritance guard is the one with an upstream and it closes that:
+    # the source check's standing bars are inherited WHOLE, read BY VALUE
+    # off its executed record and compared in BOTH DIRECTIONS, so dropping
+    # one here or lifting one upstream reddens this leg.  The last cuts
+    # the same digest over the field the record actually returns, so the
+    # order a consumer reads is pinned and not only the order declared.
+    if bars_digest != _BARS_SHA256:
+        failure_reasons.append(
+            "the may-not-cite bar list has drifted from the digest "
+            "pinned when this check was authored -- a bar has been "
+            "dropped, reworded or reordered.  The bars are this object's "
+            "fence and it is carried whole or not at all; computed "
+            f"{bars_digest}")
+    _returned_bars = tuple(record.get("may_not_cite", ()))
+    if set(_returned_bars) != set(_BARS) or len(_returned_bars) != len(_BARS):
+        failure_reasons.append(
+            "the may-not-cite list returned is not set-exact against the "
+            f"bars this check declares; returned {len(_returned_bars)} "
+            f"entries against {len(_BARS)} declared")
+    _not_inherited = sorted(set(_source_bars) - set(_returned_bars))
+    if _not_inherited:
+        failure_reasons.append(
+            "the source check's standing bars are inherited WHOLE by this "
+            "declared input, and these are not carried in the record "
+            f"returned here: {_not_inherited}")
+    _inheritance_delta = sorted(
+        set(_INHERITED_FROM_SOURCE) ^ set(_source_bars))
+    if _inheritance_delta:
+        failure_reasons.append(
+            "the bars inherited here and the source check's own executed "
+            "may-not-cite list no longer agree in both directions.  They "
+            "are inherited WHOLE, so a bar LIFTED UPSTREAM is as much a "
+            "break as one dropped here, and this declared input may not go "
+            "on asserting a fence its source has stopped carrying: "
+            f"{_inheritance_delta}")
+    _returned_digest = _hashlib.sha256(
+        "\n".join((str(len(_returned_bars)),) + _returned_bars
+                  ).encode("utf-8")).hexdigest()
+    if _returned_digest != _BARS_SHA256:
+        failure_reasons.append(
+            "the may-not-cite list the record RETURNS does not carry the "
+            "declared bars in the pinned order; the field a consumer reads "
+            f"is what is pinned here; computed {_returned_digest}")
+    legs_run.append("MAY_NOT_CITE_CARRIED_SET_EXACT")
+
+    # ---- self-read of the record about to be returned ------------------
+    # The two verbatim sentences and the two fixed clauses must appear in
+    # the record a consumer reads, not only in this function's locals.
+    _blob = " ".join(str(record.get(f, ""))
+                     for f in ("key_result", "summary",
+                               "declared_not_derived"))
+    for _needle, _where in ((_LAW, "the canonical sentence"),
+                            (_DOMAIN, "the domain clause"),
+                            (_PURCHASE, "the governing sentence"),
+                            (_DECORATION, "the decoration sentence")):
+        if _needle not in _blob:
+            failure_reasons.append(
+                f"{_where} is missing from the returned record, so a "
+                "consumer reading the record would not see it")
+    # The merged blob above cannot see one field losing a sentence while a
+    # sibling field still carries it, and the frozen claim surface assigns
+    # the canonical sentence and the domain clause to `summary` in
+    # particular.  Checked there by name.
+    for _needle, _where in ((_LAW, "the canonical sentence"),
+                            (_DOMAIN, "the domain clause")):
+        if _needle not in str(record.get("summary", "")):
+            failure_reasons.append(
+                f"{_where} is missing from the summary field, which is "
+                "the field the frozen claim surface of 2026-09-02 "
+                "assigns it to")
+
+    # ---- leg inventory (D7@2026-08-08: append and record, never raise) -
+    _ran = set(legs_run)
+    _missing = sorted(_CONSERVATION_DECLARED_LEGS - _ran)
+    _extra = sorted(_ran - _CONSERVATION_DECLARED_LEGS)
+    if _missing or _extra:
+        failure_reasons.append(
+            f"LEG INVENTORY MISMATCH: {len(_missing)} declared leg(s) did "
+            f"not run {_missing}; {len(_extra)} leg(s) ran undeclared "
+            f"{_extra}")
+    if len(legs_run) != len(_ran):
+        failure_reasons.append(
+            f"LEG INVENTORY MISMATCH: {len(legs_run)} leg records for "
+            f"{len(_ran)} distinct legs (a leg recorded itself twice)")
+
+    record["legs_run"] = tuple(sorted(_ran))
+    record["failure_reasons"] = tuple(failure_reasons)
+    record["passed"] = not failure_reasons
+    return record
+
 _CHECKS = {
     # Phase 22c (2026-04-30) -- 7 checks
     "T_closed_ledger_reciprocity":
@@ -3879,6 +4703,12 @@ _CHECKS = {
         check_T_closed_world_gate_fence_inventory,
     "T_adjoint_closure_reversible_lock_cycles":
         check_T_adjoint_closure_reversible_lock_cycles,
+    # The declared conservation-law input (2026-09-02): a statement of
+    # record entering the bank by decision, not a theorem, and registered
+    # here rather than beside the framework inputs because it is a
+    # ledger-level statement.
+    "T_closed_ledger_conservation_declared":
+        check_T_closed_ledger_conservation_declared,
 }
 
 
