@@ -1,0 +1,100 @@
+name: Zipper reduction audit candidate
+
+on:
+  push:
+    branches:
+      - "audit/zipper-reduction-v0.1"
+    paths:
+      - "apf/zipper_clearance_occupancy.py"
+      - "apf/zipper_reduction.py"
+      - "apf/zipper_reflection_bridge.py"
+      - "apf/zipper_bridge_bank_concordance.py"
+      - "apf/zipper_reduction_frontier.py"
+      - "apf/_module_manifest.py"
+      - "tests/test_zipper_audit_manifest.py"
+      - "tests/test_zipper_clearance_occupancy.py"
+      - "tests/test_zipper_reduction.py"
+      - "tests/test_zipper_reflection_bridge.py"
+      - "tests/test_zipper_bridge_bank_concordance.py"
+      - "tests/test_zipper_reduction_frontier.py"
+      - "docs/audits/ZIPPER_CLEARANCE_OCCUPANCY_AUDIT_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
+      - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
+      - "docs/audits/ZIPPER_BRIDGE_BANK_CONCORDANCE_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
+      - "docs/audits/ZIPPER_REPOSITORY_INTEGRITY_CORRECTION_v0.1.md"
+      - ".github/workflows/zipper-reduction-audit.yml"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "apf/zipper_clearance_occupancy.py"
+      - "apf/zipper_reduction.py"
+      - "apf/zipper_reflection_bridge.py"
+      - "apf/zipper_bridge_bank_concordance.py"
+      - "apf/zipper_reduction_frontier.py"
+      - "apf/_module_manifest.py"
+      - "tests/test_zipper_audit_manifest.py"
+      - "tests/test_zipper_clearance_occupancy.py"
+      - "tests/test_zipper_reduction.py"
+      - "tests/test_zipper_reflection_bridge.py"
+      - "tests/test_zipper_bridge_bank_concordance.py"
+      - "tests/test_zipper_reduction_frontier.py"
+      - "docs/audits/ZIPPER_CLEARANCE_OCCUPANCY_AUDIT_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_AUDIT_PACKET_v0.1.md"
+      - "docs/audits/ZIPPER_OPERATIONAL_REFLECTION_BRIDGE_v0.1.md"
+      - "docs/audits/ZIPPER_BRIDGE_BANK_CONCORDANCE_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_FRONTIER_PROGRESS_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CROSSWALK_v0.1.md"
+      - "docs/audits/ZIPPER_REDUCTION_PAPER5_CONJUGATED_EXCHANGE_LEMMA_v0.1.md"
+      - "docs/audits/ZIPPER_REPOSITORY_INTEGRITY_CORRECTION_v0.1.md"
+      - ".github/workflows/zipper-reduction-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install APF and audit dependencies
+        run: python -m pip install -q --upgrade pip pytest sympy && python -m pip install -q -e .
+      - name: Compile zipper-reduction modules
+        run: |
+          python -m compileall -q \
+            apf/zipper_clearance_occupancy.py \
+            apf/zipper_reduction.py \
+            apf/zipper_reflection_bridge.py \
+            apf/zipper_bridge_bank_concordance.py \
+            apf/zipper_reduction_frontier.py
+      - name: Verify audit-candidate manifest and focused test presence
+        run: python -m pytest -q tests/test_zipper_audit_manifest.py
+      - name: Run conditional clearance-occupancy certificate
+        run: python -m apf.zipper_clearance_occupancy
+      - name: Run exact moving-exchange certificate
+        run: python -m apf.zipper_reduction
+      - name: Run operational-reflection bridge certificate
+        run: python -m apf.zipper_reflection_bridge
+      - name: Run banked-route concordance certificate
+        run: python -m apf.zipper_bridge_bank_concordance
+      - name: Run downstream frontier certificate
+        run: python -m apf.zipper_reduction_frontier
+      - name: Run all focused adversarial tests
+        run: |
+          python -m pytest -q \
+            tests/test_zipper_audit_manifest.py \
+            tests/test_zipper_clearance_occupancy.py \
+            tests/test_zipper_reduction.py \
+            tests/test_zipper_reflection_bridge.py \
+            tests/test_zipper_bridge_bank_concordance.py \
+            tests/test_zipper_reduction_frontier.py
+      - name: Confirm manifest-defined production bank surface remains unchanged
+        run: python verify_all.py --bank-audit
