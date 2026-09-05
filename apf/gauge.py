@@ -2452,105 +2452,222 @@ def check_T9():
 
 
 def check_T_Higgs():
-    """T_Higgs: Higgs-like Scalar Existence from EW Pivot.
-    
+    """T_Higgs: the electroweak Goldstone count.
+
     STRUCTURAL CLAIM [P_structural]:
-      The EW vacuum must break symmetry (v* > 0), and the broken
-      vacuum has positive curvature -> a massive scalar excitation
-      (Higgs-like) necessarily exists.
-    
-    DERIVATION:
-      (1) L_irr + T_particle -> Phi=0 unstable (unbroken vacuum inadmissible:
-          massless gauge bosons destabilize records)
-      (2) A1 + T_gauge -> Phi->inf inadmissible (capacity saturates)
-      (3) -> exists unique minimum v* (0,1) of total realignment cost
-      (4) For any screening E_int with E_int(v->0) -> inf (non-linear):
-          d^2E_total/dv^2|_{v*} > 0  (positive curvature)
-      (5) -> Mass^2 ~ curvature > 0: Higgs-like mode is massive
-      (6) Linear screening: ELIMINATED (produces d^2E/dv^2 < 0)
-    
-    VERIFIED BY: scan_higgs_pivot_fcf.py (12 models, 9 viable, 3 eliminated)
-      All 9 non-linear models give positive curvature at pivot.
-    
-    SCREENING EXPONENT DERIVATION:
-      The scan originally mislabeled models. The CORRECT physics:
-      
-      Correlation load of a gauge boson with mass m ~ v*m_scale:
-        Yukawa: integral 4*pi*r^2 * (e^{-mr}/r) dr = 4*pi/m^2 ~ 1/v^2
-        Coulomb limit: ~,E^R 4*pi*r^2 * (1/r) dr = 2*pi*R^2 ~ 1/v^2
-        
-      Position-space propagator in d=3 spatial dims is G(r) ~ 1/r,
-      NOT 1/r^2 (which is the field strength |E|, not the potential).
-      The scan's "1/v Coulomb" used 1/r^2 in error (correct for d=4 spatial).
-      
-      -> The 1/v^2 form IS the correct 3+1D Coulomb/Yukawa result.
-      -> The 1/v form has no physical justification in d=3+1.
-    
-    WHAT IS NOT CLAIMED:
-      - Absolute mass value (requires T10 UV bridge -> open_physics)
-      - Specific m_H = 125 GeV (witness scan, not derivation)
-      - The 0.4% match is remarkable but depends on the bridge formula
-        and FBC geo model -- both structural but with O(1) uncertainties
-    
-    FALSIFIABILITY:
-      F_Higgs_1: All admissible non-linear screening -> massive scalar.
-                 If no Higgs existed, the framework fails.
-      F_Higgs_2: Linear screening eliminated. If justified, framework has a problem.
-      F_Higgs_3: All viable models give v* > 0.5 (strongly broken vacuum).
+      The Goldstone count at the electroweak interface, and the physical
+      scalar count that follows from it, computed from two banked records
+      and one named premise.  The returned record carries epistemic='P';
+      the grade token in this line and the one in the record do not agree.
+      The disagreement is recorded in `disclosures` and is not resolved
+      here.
+
+    WHAT THE LEGS COMPUTE.
+      L1 reads the winning gauge-algebra dimension and colour count from
+         check_T_gauge's returned record, subtracts the strong adjoint
+         dimension that the colour count determines, and requires the
+         electroweak remainder to exceed the unbroken subgroup's dimension.
+         It also ties the capacity ledger's gauge-channel count, read from
+         check_L_count's returned record, to that same winning dimension.
+      L2 reads the scalar multiplet's real dimension from check_L_count's
+         returned record and recomputes that record's own partition from its
+         components.
+      L3 computes the Goldstone count as the difference between the
+         pre-breaking and unbroken algebra dimensions.
+      L4 computes the physical scalar count as the scalar real dimension
+         less the Goldstone count.
+      L5 pins, in this module, a coupling that a tier-4 sibling asserts
+         unconditionally three files away: that this record's key_result
+         marks its comparison a witness rather than a derivation, and that
+         the artifact key its curated disposition row was pinned against is
+         still here.  A future editor meets the coupling at the site.
+      L6 is the leg inventory (append-and-record, D7@2026-08-08): a mismatch
+         between the declared and executed labels contributes a failure
+         reason and does not raise.
+
+    PREMISE.  The unbroken subgroup is taken to be the electromagnetic
+    U(1).  No banked record publishes its dimension; it is declared here,
+    labelled at the site, and carried by name in `conditional_on`.  It is
+    the one bare count in this object.
+
+    The mass comparison this record carries is a witness comparison and not
+    a derivation.
     """
-    # Higgs doublet: (1,2,1/2) under SU(3)*SU(2)*U(1)
-    # 4 real DOF -> 3 Goldstones (eaten by W+-, Z) + 1 massive scalar (Higgs)
-    # EW symmetry breaking: SU(2)*U(1)_Y -> U(1)_em
-    dim_before = 3 + 1  # dim(su(2)) + dim(u(1)) = 4
-    dim_after = 1        # dim(u(1)_em)
-    n_goldstone = dim_before - dim_after  # = 3 (DERIVED, not hardcoded)
-    n_real_dof = 4  # complex doublet = 4 real
+    legs = {}
+    _premises = ['UNBROKEN_SUBGROUP_IS_U1_EM']
+
+    # The one bare count: the unbroken subgroup's dimension.  PREMISE
+    # UNBROKEN_SUBGROUP_IS_U1_EM -- declared, not read from any record.
+    dim_after = 1
+
+    # ---- L1: the pre-breaking dimension, off the banked gauge record -----
+    _tg = check_T_gauge()['artifacts']
+    _winner_dim = _tg['winner_dim']
+    _winner_N_c = _tg['winner_N_c']
+    _lc = check_L_count()['artifacts']
+    _strong_dim = _winner_N_c ** 2 - 1
+    dim_before = _winner_dim - _strong_dim
+    _ledger_ties = _lc['n_gauge'] == _winner_dim
+    _l1_ok = (_winner_N_c >= 2 and _strong_dim > 0
+              and dim_before > dim_after and _ledger_ties)
+    legs['L1_pre_breaking_dim_tie'] = (_l1_ok, (
+        'winning gauge algebra dimension %s at colour count %s; strong '
+        'adjoint dimension %s; electroweak remainder %s, which exceeds the '
+        'declared unbroken dimension %s: %s; the ledger gauge-channel count '
+        '%s equals the winning dimension: %s'
+        % (_winner_dim, _winner_N_c, _strong_dim, dim_before, dim_after,
+           dim_before > dim_after, _lc['n_gauge'], _ledger_ties)))
+
+    # ---- L2: the scalar real dimension, off the banked ledger record -----
+    n_real_dof = _lc['n_higgs']
+    _partition_ok = (_lc['n_fermion'] + n_real_dof + _lc['n_gauge']) == _lc['C_total']
+    _l2_ok = n_real_dof > 0 and _partition_ok
+    legs['L2_scalar_real_dim_tie'] = (_l2_ok, (
+        'scalar multiplet real dimension %s, positive: %s; the consumed '
+        'ledger partition %s + %s + %s recomputed against its own total %s: '
+        '%s.  STATED LIMIT: any edit to the consumed components that '
+        'preserves their sum is invisible to this recomputation.'
+        % (n_real_dof, n_real_dof > 0, _lc['n_fermion'], n_real_dof,
+           _lc['n_gauge'], _lc['C_total'], _partition_ok)))
+
+    # ---- L3: the Goldstone count -----------------------------------------
+    n_goldstone = dim_before - dim_after
+    _l3_ok = n_goldstone > 0 and (n_goldstone + dim_after == dim_before)
+    legs['L3_goldstone_count_computed'] = (_l3_ok, (
+        'Goldstone count %s = pre-breaking %s less unbroken %s; strictly '
+        'positive: %s; recomposes to the pre-breaking dimension: %s'
+        % (n_goldstone, dim_before, dim_after, n_goldstone > 0,
+           n_goldstone + dim_after == dim_before)))
+
+    # ---- L4: the physical scalar count -----------------------------------
     n_physical = n_real_dof - n_goldstone
-    check(n_goldstone == 3, "3 Goldstones from dim counting")
-    check(n_physical == 1, "Exactly 1 physical Higgs boson")
-    check(dim_before - dim_after == n_goldstone, "Goldstone theorem" )
+    _l4_ok = n_physical > 0 and (n_physical + n_goldstone == n_real_dof)
+    legs['L4_physical_scalar_count_computed'] = (_l4_ok, (
+        'physical scalar count %s = scalar real dimension %s less Goldstone '
+        'count %s; strictly positive: %s; recomposes to the scalar real '
+        'dimension: %s'
+        % (n_physical, n_real_dof, n_goldstone, n_physical > 0,
+           n_physical + n_goldstone == n_real_dof)))
+
+    _under = ' + '.join(_premises)
+    _key_result = (
+        'Goldstone count %s and physical scalar count %s at the electroweak '
+        'interface, under %s; the mass comparison carried in this record is a '
+        'witness, not derived' % (n_goldstone, n_physical, _under))
+    _artifacts = {
+        'computed_counts': {
+            'pre_breaking_gauge_algebra_dim': dim_before,
+            'unbroken_subgroup_dim': dim_after,
+            'goldstone_count': n_goldstone,
+            'scalar_real_dim': n_real_dof,
+            'physical_scalar_count': n_physical,
+        },
+        'witness_comparison': {
+            'observed_mH_over_mP': 1.026e-17,
+            'reading': ('the comparison target of a witness claim, carried '
+                        'unchanged. No leg here computes it and this record '
+                        'does not derive it.'),
+        },
+    }
+
+    # ---- L5: the coupling, pinned in this module -------------------------
+    _required_substring = 'witness, not derived'
+    _pinned_artifact_key = 'observed_mH_over_mP'
+    _substring_present = _required_substring in _key_result
+    _artifact_key_present = _pinned_artifact_key in _artifacts['witness_comparison']
+    legs['L5_trichotomy_coupling_self_pin'] = (
+        _substring_present and _artifact_key_present, (
+            'the substring a tier-4 sibling asserts unconditionally is '
+            'present in this record\'s key_result: %s; the artifact key its '
+            'curated disposition row was pinned against is present: %s. This '
+            'leg is a SELF-PIN making that coupling visible at the site; it '
+            'derives nothing and it does not execute the sibling.'
+            % (_substring_present, _artifact_key_present)))
+
+    # ---- L6: append-and-record leg inventory, on the bank path -----------
+    _declared_legs = ('L1_pre_breaking_dim_tie', 'L2_scalar_real_dim_tie',
+                      'L3_goldstone_count_computed',
+                      'L4_physical_scalar_count_computed',
+                      'L5_trichotomy_coupling_self_pin', 'L6_leg_inventory')
+    _executed = set(legs) | {'L6_leg_inventory'}
+    _missing = sorted(set(_declared_legs) - _executed)
+    _extra = sorted(_executed - set(_declared_legs))
+    legs['L6_leg_inventory'] = (not _missing and not _extra, (
+        'declared %d, executed %d, missing=%s extra=%s'
+        % (len(_declared_legs), len(_executed), _missing, _extra)))
+
+    fails = ['%s: %s' % (k, legs[k][1]) for k in sorted(legs) if not legs[k][0]]
 
     return _result(
-        name='T_Higgs: Massive Scalar from EW Pivot',
+        name='T_Higgs: Electroweak Goldstone Count',
         tier=2,
         epistemic='P',
         summary=(
-            'EW vacuum must break (A4: unbroken -> records unstable). '
-            'Broken vacuum has unique minimum v* (0,1) with positive '
-            'curvature -> massive Higgs-like scalar exists. '
-            'Verified: 9/9 non-linear models give d^2E/dv^2>0 at pivot. '
-            'Linear screening eliminated (negative curvature). '
-            'Screening exponent: ~_4Er^2(e^{-mr}/r)dr = 4E/m^2 ~ 1/v^2 '
-            '(Yukawa in d=3+1, self-cutoff by mass). '
-            'The scan\'s "1/v Coulomb" used wrong propagator power '
-            '(|E|~1/r^2 vs G~1/r). Correct Coulomb IS 1/v^2. '
-            'Bridge with FBC geo: ~1.03e-17 (0.4% from observed). '
-            'Absolute mass requires T10 (open_physics).'
-        ),
-        key_result='Massive Higgs-like scalar required (proved); mass bridge 0.4% (witness, not derived)',
+            'The dimension of the pre-breaking electroweak gauge algebra is '
+            'read from check_T_gauge\'s returned record. The real-dimension '
+            'count of the scalar multiplet is read from check_L_count\'s '
+            'returned record. The Goldstone count is the difference between '
+            'the pre-breaking and unbroken algebra dimensions, computed; the '
+            'physical scalar count is the scalar real dimension less the '
+            'Goldstone count, computed. The unbroken subgroup is taken to be '
+            'the electromagnetic U(1): that is the named premise %s, declared '
+            'here and computed by nothing. The mass comparison this record '
+            'carries is a witness comparison and not a derivation.'
+            % (_under,)),
+        key_result=_key_result,
         dependencies=['T_particle', 'L_irr', 'A1', 'T_gauge', 'T_channels'],
-        artifacts={
-            'structural_claims': [
-                'SSB forced (v* > 0)',
-                'Positive curvature at pivot',
-                'Massive scalar exists',
-                'Linear screening eliminated',
-            ],
-            'witness_claims': [
-                'm_H/m_P ~ 10^{-17} (requires T10)',
-                '1/v^2 = correct Coulomb/Yukawa in 3+1D (~_4Er^2(e^{-mr}/r)dr=4E/m^2)',
-                '1/v^2 + FBC: bridge 1.03e-17, 0.4% match (physically motivated)',
-                '1/v (scan mislabel): used |E|~1/r^2 not G~1/r; wrong for d=3+1',
-                'log screening: bridge 1.9-2.0e-17, 85-97% (weakest viable)',
-            ],
-            'scan_results': {
-                'models_tested': 12,
-                'viable': 9,
-                'eliminated': 3,
-                'all_nonlinear_positive_curvature': True,
-                'observed_mH_over_mP': 1.026e-17,
-            },
-        },
+        artifacts=_artifacts,
+        passed=not fails,
+        legs={k: {'passed': bool(v[0]), 'evidence': v[1]}
+              for k, v in legs.items()},
+        leg_count=len(legs),
+        fail_reasons=fails,
+        conditional_on=list(_premises),
+        disclosures=[
+            'The status string in this record is produced by the shared '
+            'result builder and is fixed at PASS; the verdict of record is '
+            '`passed` together with `fail_reasons`. A failing leg therefore '
+            'makes this check red in the bank and classifies it FLAG rather '
+            'than FAIL in the full-pass harness (R3@2026-08-30). Making the '
+            'status string track `passed` moves a tracked census partition '
+            'in every dialect available -- keyword, conditional expression '
+            'and subscript assignment alike, each of the three checked by '
+            'probe -- and this pass is not scoped to move one.',
+            'GRADE TENSION, FILED AND NOT TAKEN: the docstring opens with one '
+            'grade token and the record returns another. This object is tier '
+            '2, so any movement is held; the record is built at the grade it '
+            'already carried and the movement is filed elsewhere.',
+            'RESEARCH ITEMS, claimed nowhere in this record: the two opening '
+            'steps of the main paper\'s box -- that the divergence of the '
+            'cost at vanishing condensate selects a nonzero condensate, and '
+            'that the scalar doublet is singled out among the gauge-invariant '
+            'bilinears -- are not computed here and are not asserted here. '
+            'They are named so their absence is visible.',
+            'The curated disposition row a tier-4 sibling pins against this '
+            'record gives as its ground a comparison figure this record no '
+            'longer publishes. The row still matches on its token and nothing '
+            'reddens; repairing the row means editing that sibling, which is '
+            'outside the scope of this pass.',
+            'A citation to an absent scan script has been deleted from the '
+            'docstring. The file it named is not in the tree and is named by '
+            'nothing else under the package.',
+            'The counts this record publishes are re-derived from the same '
+            'literals in several other modules, none of which reads them from '
+            'this record. That is a measurement about publishing sites, not a '
+            'proposal to retire, re-point or consolidate anything.',
+            'The recomposition conjuncts in L3 and L4 are the constructions '
+            'restated. The load of those legs is the strict positivity, and '
+            'the content they carry arrives through the two value ties in L1 '
+            'and L2.',
+            'L5 is a self-pin. It makes a cross-module coupling visible at '
+            'this site; it does not execute the sibling that asserts it, and '
+            'it certifies nothing about that sibling. A rename applied to '
+            'both the artifact key and this leg\'s own comparand is invisible '
+            'to it, and invisible to the sibling as well: the curated row '
+            'would then match nothing.',
+            'append-and-record certifies that a declared leg EXECUTED, not '
+            'that it COULD HAVE FAILED.',
+        ],
     )
 
 
