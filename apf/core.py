@@ -9380,36 +9380,49 @@ def check_kappa_zero_Tsep():
 def check_D_quotient_forced():
     """Prop: the quotient by operationally indistinguishable directions.
 
-    STATEMENT.  A direction carrying zero cost leaves the residual budget
-    unchanged and is therefore not separated by any positive-cost
-    comparison.  A direction carrying positive cost changes the residual
-    budget and is therefore separated.  On a declared finite instance the
-    quotient by the relation "equal residual under every declared budget" is
-    constructed, its map is well defined, and it identifies the zero-cost
-    directions while separating the positive-cost ones.
+    STATEMENT (the ceiling, DQ1@2026-09-05).  By MD a zero-cost direction
+    carries no distinction; by OR0 nothing else individuates a state; on a
+    declared finite instance the quotient identifies the zero-cost
+    directions with the trivial direction and separates every positive-cost
+    direction from it and from each other.
+
+    DECLARED INSTANCE.  The directions, their costs, the declared budgets,
+    the shared load and the floor are written down in this function and the
+    construction is scoped to them.  The object quantifies over nothing
+    wider.
+
+    DECLARED RESIDUE.  OR0 -- a physical state is its profile of
+    distinctions and nothing else individuates it -- is DECLARED in this
+    record, not derived and not read from another record.  It is absent
+    from the returned dependency list, and L7 puts that declaration on the
+    path the bank executes.
 
     NAMED IMPORT.  The construction is the standard state-space quotient by
-    operationally indistinguishable directions, named here as an import from
-    the generalised-probabilistic-theories literature and cited as a
-    reference class rather than as a particular paper.  No theorem asserting
-    that this quotient is the singular admissible one is proved here, and
-    none is commissioned.
+    operationally indistinguishable directions, named here as an import
+    from the generalised-probabilistic-theories literature and cited as a
+    reference class rather than as a particular paper, because none was read
+    for this record.
 
-    SCOPE.  The registry key of this object asserts a forcing that this
-    record does not claim.  The key is left as it stands -- changing it
-    moves the registry count -- and the mismatch is carried in
-    `disclosures` instead.
+    SCOPE.  The registry key of this object asserts a property this record
+    does not claim.  The key is left as it stands in this lane and the
+    mismatch is carried in `disclosures`.
 
     WHAT THE LEGS COMPUTE.  L1 and L2 run the two residual comparisons in
     exact Fractions on the declared instance, under every declared budget.
     L3 builds the relation as an explicit table of per-budget arithmetic
     comparisons and checks reflexivity, symmetry and transitivity over that
-    table, together with single-valuedness of the induced residual map.  L4
-    checks the two-sided half: the zero-cost directions land in one class
-    and the positive-cost ones are separated from it and from each other.
-    L5 mirrors, in this module, the dependency list that a live consumer in
-    another module pins by value.  L6 is the leg inventory.
+    table.  L4
+    checks the two-sided half: the zero-cost directions land in one class,
+    every positive-cost direction is separated from that class, and every
+    positive-cost direction is in a class of its own.  L5 consumes MD's
+    anchor record by value and computes the floor condition on this
+    object's declared instance.  L6 mirrors, in this module, the dependency
+    list that a live consumer in another module pins by value.  L7 is the
+    OR0 declaration, read back off this record.  L8 is the leg inventory and the pin on the declared
+    instance.
     """
+    from apf.core import check_L_epsilon_star
+
     legs = {}
 
     C = Fraction(10)
@@ -9418,16 +9431,37 @@ def check_D_quotient_forced():
 
     # The declared finite instance: five directions and three declared
     # budgets.  Costs are declared here and the construction is scoped to
-    # them.
+    # them.  Every positive-cost direction carries a distinct cost.
     _costs = {
         'g1': Fraction(0),
         'g2': Fraction(0),
-        'd1': Fraction(3),
-        'd2': Fraction(3),
-        'd3': Fraction(7),
+        'd1': Fraction(1),
+        'd2': Fraction(2),
+        'd3': Fraction(3),
     }
     _budgets = (C, Fraction(15), Fraction(20))
     _names = sorted(_costs)
+
+    # The declared instance, and the comparand L8 compares it against.
+    _DECLARED_INSTANCE = (
+        (('d1', Fraction(1)), ('d2', Fraction(2)), ('d3', Fraction(3)),
+         ('g1', Fraction(0)), ('g2', Fraction(0))),
+        (Fraction(10), Fraction(15), Fraction(20)),
+        Fraction(5), Fraction(1))
+    _instance_pinned = (
+        tuple(sorted(_costs.items())) == _DECLARED_INSTANCE[0]
+        and _budgets == _DECLARED_INSTANCE[1]
+        and S_cost == _DECLARED_INSTANCE[2]
+        and eps_star == _DECLARED_INSTANCE[3])
+
+    # The OR0 faithfulness clause, declared in this record and read back by
+    # L7 off the disclosure list this function returns.
+    _OR0_CLAUSE = (
+        'OR0 (faithfulness) is DECLARED in this record as the definitional '
+        'residue after MD: a physical state is its profile of distinctions '
+        'and nothing else individuates it. It is not derived here and it is '
+        'not read from another record; it is absent from the dependency '
+        'list this record returns.')
 
     # ---- L1: a zero-cost direction leaves the residual unchanged ---------
     eps_g = _costs['g1']
@@ -9454,15 +9488,13 @@ def check_D_quotient_forced():
         % (eps_d, len(_budgets), all(_l2))))
 
     # ---- L3: the relation, built as a table of per-budget comparisons,
-    #          is an equivalence here and the induced map is single-valued -
+    #          is an equivalence here -
+    _profile = {_x: tuple(_B - S_cost - _costs[_x] for _B in _budgets)
+                for _x in _names}
     _rel = {}
     for _x in _names:
         for _y in _names:
-            _rel[(_x, _y)] = all(
-                (_B - S_cost - _costs[_x]) == (_B - S_cost - _costs[_y])
-                for _B in _budgets)
-    _profile = {_x: tuple(_B - S_cost - _costs[_x] for _B in _budgets)
-                for _x in _names}
+            _rel[(_x, _y)] = _profile[_x] == _profile[_y]
     _refl = all(_rel[(x, x)] for x in _names)
     _symm = all(_rel[(x, y)] == _rel[(y, x)] for x in _names for y in _names)
     _trans = all((not (_rel[(x, y)] and _rel[(y, z)])) or _rel[(x, z)]
@@ -9475,15 +9507,12 @@ def check_D_quotient_forced():
                 break
         else:
             _classes.append([x])
-    _single_valued = all(
-        len({_profile[m] for m in cls}) == 1 for cls in _classes)
     legs['L3_quotient_well_defined'] = (
-        _refl and _symm and _trans and _single_valued, (
+        _refl and _symm and _trans, (
             'relation table over %d declared directions and %d declared '
-            'budgets: reflexive %s, symmetric %s, transitive %s; %d classes; '
-            'induced residual map single-valued on every class: %s'
+            'budgets: reflexive %s, symmetric %s, transitive %s; %d classes'
             % (len(_names), len(_budgets), _refl, _symm, _trans,
-               len(_classes), _single_valued)))
+               len(_classes))))
 
     # ---- L4: the two-sided half -- what the quotient identifies and what
     #          it separates.  L3 alone still passes when every declared cost
@@ -9493,61 +9522,183 @@ def check_D_quotient_forced():
     _zero_together = bool(_zero) and all(_rel[(_zero[0], x)] for x in _zero)
     _pos_separated = bool(_pos) and all(
         not _rel[(p, z)] for p in _pos for z in _zero)
-    _pos_distinct = all(
-        _rel[(p, q)] == (_costs[p] == _costs[q]) for p in _pos for q in _pos)
+    _pos_singleton = all(
+        not _rel[(p, q)] for p in _pos for q in _pos if p != q)
+    _class_count_matches = (
+        len(_classes) == len(_pos) + (1 if _zero else 0))
     legs['L4_quotient_separates_positive_cost'] = (
-        _zero_together and _pos_separated and _pos_distinct, (
+        _zero_together and _pos_separated and _pos_singleton
+        and _class_count_matches, (
             '%d zero-cost directions in one class: %s; %d positive-cost '
-            'directions separated from that class: %s; positive-cost '
-            'directions related exactly when their costs agree: %s'
+            'directions separated from that class: %s; every positive-cost '
+            'direction in a class of its own: %s; %d classes, one per '
+            'positive-cost direction plus one for the zero-cost '
+            'directions: %s'
             % (len(_zero), _zero_together, len(_pos), _pos_separated,
-               _pos_distinct)))
+               _pos_singleton, len(_classes), _class_count_matches)))
 
-    # ---- L5: the dependency list a consumer in another module pins -------
-    _deps = ['A1', 'K1']
-    _pin_ok = sorted(_deps) == ['A1', 'K1']
-    legs['L5_dependency_self_pin'] = (_pin_ok, (
-        'dependency list returned here %s; a live consumer in another module '
-        'calls this check and asserts that same list element for element, '
-        'together with this record\'s verdict and grade string. This leg is a '
-        'SELF-PIN mirroring that coupling at the site; it derives nothing.'
+    # ---- L5: MD's anchor record consumed by value, and the floor
+    #          condition computed on this object's declared instance ------
+    _eps_rec = check_L_epsilon_star()
+    _md_passes = _eps_rec.get('passed') is True
+    _md_named = 'MD' in _eps_rec.get('dependencies', [])
+    _pos_above_floor = all(_costs[p] >= eps_star for p in _pos)
+    _rest_exactly_zero = all(_costs[z] == 0 for z in _zero)
+    legs['L5_md_floor_respected_by_instance'] = (
+        _md_passes and _md_named and _pos_above_floor
+        and _rest_exactly_zero, (
+            "MD's anchor record consumed by value: it passes %s and names MD "
+            'in the dependency list it returns %s; on this declared '
+            'instance all %d positive-cost directions carry cost at least '
+            'the declared floor %s: %s, and all %d remaining directions '
+            'carry cost exactly zero: %s. This leg does not re-derive the '
+            'floor and establishes nothing about any wider structure.'
+            % (_md_passes, _md_named, len(_pos), eps_star, _pos_above_floor,
+               len(_zero), _rest_exactly_zero)))
+
+    # ---- L6: the dependency list a consumer in another module pins -------
+    _deps = ['L_epsilon*']
+    _pin_ok = sorted(_deps) == ['L_epsilon*']
+    legs['L6_dependency_self_pin'] = (_pin_ok, (
+        'dependency list returned here %s. This leg is a SELF-PIN on that '
+        'list; it derives nothing.'
         % (sorted(_deps),)))
 
-    # ---- L6: append-and-record leg inventory, on the bank path -----------
+    # ---- L7: the OR0 declaration, read back off this record --------------
+    _disclosures = [
+        'The status string in this record is produced by the shared '
+        'result builder and is fixed at PASS; the verdict of record is '
+        '`passed` together with `fail_reasons`. A failing leg therefore '
+        'makes this check red in the bank and classifies it FLAG rather '
+        'than FAIL in the full-pass harness (R3@2026-08-30). Making the '
+        'status string track `passed` moves a tracked census partition '
+        'in every dialect available -- keyword, conditional expression '
+        'and subscript assignment alike, each of the three checked by '
+        'probe -- and this pass is not scoped to move one.',
+        'The registry key of this object asserts a property this record '
+        'does not claim. The key is left as it stands in this lane; a '
+        'rename is queued (DQ4@2026-09-05).',
+        'The import is cited as a reference class. No particular paper is '
+        'named, because none was read for this record.',
+        'The construction runs on one declared finite instance and '
+        'quantifies over nothing wider.',
+        'L1 pairs a read of the declared instance with an arithmetic '
+        'identity that holds once that read succeeds. The load of L1 is '
+        'the read; the arithmetic half is the statement restated.',
+        'L2 computes one residual comparison in one direction. A '
+        'coordinated edit that reverses the residual convention at every '
+        'site in this function and reverses that comparison with it '
+        'returns the same verdicts here: executed as a control, and '
+        'disclosed as a standing limit of what this function computes.',
+        'On this instance the relation reduces to equality of residual '
+        'profiles, so its equivalence properties are structural. L3 '
+        'checks them over the constructed table rather than assuming '
+        'them, and that is the whole of what L3 establishes.',
+        'L5 consumes MD\'s anchor record by value -- its verdict and the '
+        'presence of MD in the dependency list it returns -- and computes '
+        'the floor condition on this object\'s own declared instance. It '
+        'does not re-derive the floor, and it does not establish that MD\'s '
+        'floor is the floor of any wider structure. That record names '
+        'other inputs besides MD, so substituting one of those names into '
+        'this leg\'s comparand returns the same verdict: executed as a '
+        'control. What '
+        'the leg computes is that a named input is present in the list '
+        'that record returns. The callee is banked '
+        'and is the anchor this record\'s dependency names; it is defined '
+        'in this same module, so the value tie is intra-module. The '
+        'cross-module tie this object carries is the consumer three files '
+        'away that asserts this record by value.',
+        'L6 is a self-pin: it mirrors, in this module, a dependency list '
+        'that a consumer three files away asserts by value. It is a '
+        'coupling made visible at the site, not an independent '
+        'derivation. An edit applied to both the returned list and this '
+        'leg\'s own comparand is invisible here and is caught by that '
+        'consumer.',
+        'The declared instance is pinned against a comparand written '
+        'in this same function, so an edit applied to both the instance '
+        'and that comparand is invisible here: executed as a control. '
+        'What the pin computes is that the instance this record runs on '
+        'is the instance declared beside it.',
+        'L7 is a LABELLED IDENTITY: it reads a string this same function '
+        'writes and asserts the absence of a name from a list this same '
+        'function writes. It puts the declaration on the path the bank '
+        'executes; it establishes nothing about OR0\'s truth. The clause '
+        'has one definition site in this function and the leg reads it '
+        'back from there, so an edit at that site moves the clause and '
+        'the comparand together and returns the same verdict: executed '
+        'as a control.',
+        _OR0_CLAUSE,
+        'Other functions in this file list a hyphenated dependency '
+        'string that is not a registry key. That is their returned '
+        'record and is outside this object; it is named here so the '
+        'silence is not read as absence.',
+        'append-and-record certifies that a declared leg EXECUTED, not '
+        'that it COULD HAVE FAILED.',
+        'MAY NOT CITE this record, or the pass that repaired it: for or '
+        'against P_tom\'s R-exclusion, the field-selection argument, or '
+        'the quaternion question (DQ4@2026-09-05); as evidence that the '
+        'mathematics moved; as closing any '
+        'escape this record discloses; as a grade adjudication of any '
+        'other check; for the truth of OR0, which is DECLARED; as a heavy '
+        'pass, or as evidence about any census check that pass did not '
+        'run.',
+    ]
+    _or0_declared = _OR0_CLAUSE in _disclosures
+    _or0_not_a_dep = 'OR0' not in _deps
+    legs['L7_or0_residue_declared'] = (
+        _or0_declared and _or0_not_a_dep, (
+            'LABELLED IDENTITY: the OR0 faithfulness clause is present '
+            'verbatim in the disclosure list this record returns: %s; and '
+            'OR0 is absent from the dependency list this record returns: '
+            '%s. Declared, not read.'
+            % (_or0_declared, _or0_not_a_dep)))
+
+    # ---- L8: append-and-record leg inventory, on the bank path -----------
     _declared_legs = ('L1_zero_cost_residual_invariant',
                       'L2_positive_cost_residual_separates',
                       'L3_quotient_well_defined',
                       'L4_quotient_separates_positive_cost',
-                      'L5_dependency_self_pin', 'L6_leg_inventory')
-    _executed = set(legs) | {'L6_leg_inventory'}
+                      'L5_md_floor_respected_by_instance',
+                      'L6_dependency_self_pin',
+                      'L7_or0_residue_declared',
+                      'L8_leg_inventory')
+    _executed = set(legs) | {'L8_leg_inventory'}
     _missing = sorted(set(_declared_legs) - _executed)
     _extra = sorted(_executed - set(_declared_legs))
-    legs['L6_leg_inventory'] = (not _missing and not _extra, (
-        'declared %d, executed %d, missing=%s extra=%s'
-        % (len(_declared_legs), len(_executed), _missing, _extra)))
+    legs['L8_leg_inventory'] = (
+        not _missing and not _extra and _instance_pinned, (
+            'declared %d, executed %d, missing=%s extra=%s; the declared '
+            'instance -- its directions and their costs, its budgets, its '
+            'shared load and its floor -- matches the comparand declared '
+            'beside it: %s'
+            % (len(_declared_legs), len(_executed), _missing, _extra,
+               _instance_pinned)))
 
     fails = ['%s: %s' % (k, legs[k][1]) for k in sorted(legs) if not legs[k][0]]
 
     return _result(
         name='D-quotient: quotient by operationally indistinguishable directions',
-        tier=0, epistemic='P',
-        summary='A direction carrying zero cost leaves the residual budget '
-                'unchanged and is therefore not separated by any '
-                'positive-cost comparison; a direction carrying positive cost '
-                'changes the residual budget and is therefore separated. On a '
-                'declared finite instance the quotient by the relation "equal '
-                'residual under every declared budget" is constructed, its '
-                'map is well defined, and it identifies the zero-cost '
-                'directions while separating the positive-cost ones. The '
-                'construction is the standard state-space quotient by '
-                'operationally indistinguishable directions, named here as an '
-                'import from the generalised-probabilistic-theories '
-                'literature; no theorem asserting that this quotient is the '
-                'singular admissible one is proved here, and none is '
-                'commissioned.',
-        key_result='On a declared finite instance: zero-cost directions are '
-                   'identified and positive-cost directions separated by the '
-                   'residual-budget relation (named import)',
+        tier=0, epistemic='AXIOM_COROLLARY',
+        summary='By MD a zero-cost direction carries no distinction; by OR0 '
+                'nothing else individuates a state; on a declared finite '
+                'instance the quotient identifies the zero-cost directions '
+                'with the trivial direction and separates every positive-cost '
+                'direction from it and from each other. The instance is '
+                'declared here -- its directions, its costs, its budgets, its '
+                'shared load and its floor -- and the construction is scoped '
+                'to them; it quantifies over nothing wider. OR0 is declared '
+                'in this record as the definitional residue after MD, not '
+                'derived and not read from another record. The construction '
+                'is the standard state-space quotient by operationally '
+                'indistinguishable directions, named here as an import from '
+                'the generalised-probabilistic-theories literature and cited '
+                'as a reference class rather than as a particular paper, '
+                'because none was read for this record.',
+        key_result='On a declared finite instance: zero-cost directions '
+                   'identified with the trivial direction and every '
+                   'positive-cost direction separated from it and from each '
+                   'other, by the residual-budget relation (MD plus the '
+                   'declared OR0 clause; named import)',
         dependencies=_deps,
         artifacts={
             'declared_instance': {
@@ -9563,48 +9714,7 @@ def check_D_quotient_forced():
               for k, v in legs.items()},
         leg_count=len(legs),
         fail_reasons=fails,
-        disclosures=[
-            'The status string in this record is produced by the shared '
-            'result builder and is fixed at PASS; the verdict of record is '
-            '`passed` together with `fail_reasons`. A failing leg therefore '
-            'makes this check red in the bank and classifies it FLAG rather '
-            'than FAIL in the full-pass harness (R3@2026-08-30). Making the '
-            'status string track `passed` moves a tracked census partition '
-            'in every dialect available -- keyword, conditional expression '
-            'and subscript assignment alike, each of the three checked by '
-            'probe -- and this pass is not scoped to move one.',
-            'The registry key of this object asserts a forcing that this '
-            'record does not claim. The key is left as it stands because '
-            'changing it moves the registry count.',
-            'The import is cited as a reference class. No particular paper is '
-            'named, because none was read for this record.',
-            'The construction runs on one declared finite instance and '
-            'quantifies over nothing wider.',
-            'L1 pairs a read of the declared instance with an arithmetic '
-            'identity that holds once that read succeeds. The load of L1 is '
-            'the read; the arithmetic half is the statement restated.',
-            'On this instance the relation reduces to equality of residual '
-            'profiles, so its equivalence properties are structural. L3 '
-            'checks them over the constructed table rather than assuming '
-            'them, and that is the whole of what L3 establishes.',
-            'L5 is a self-pin: it mirrors, in this module, a dependency list '
-            'that a consumer three files away asserts by value. It is a '
-            'coupling made visible at the site, not an independent '
-            'derivation. An edit applied to both the returned list and this '
-            'leg\'s own comparand is invisible here and is caught by that '
-            'consumer.',
-            'Other functions in this file list a hyphenated dependency '
-            'string that is not a registry key. That is their returned '
-            'record and is outside this object; it is named here so the '
-            'silence is not read as absence.',
-            'Another module records a structural decision -- an exclusion '
-            'from a premise inventory, and an alias of a dependency string -- '
-            'whose stated ground is the derivation reading this record '
-            'withdraws. Neither site reads this record: one is prose, the '
-            'other maps names to names. The repair is outside this object.',
-            'append-and-record certifies that a declared leg EXECUTED, not '
-            'that it COULD HAVE FAILED.',
-        ],
+        disclosures=_disclosures,
     )
 
 

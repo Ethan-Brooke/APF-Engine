@@ -89,11 +89,13 @@ from apf.apf_utils import check, _result
 #: UB_usage_billing_adopted already in the boundary set); reading boundary 16 -> 19 at .400
 #: (the three core IJC-sector reading members the .398 decline kept out
 #: enter with apf.core's module closure -- exactly the three the .398
-#: narrative predicted); union-closure roots 14 -> 22 at .400 (see the
-#: inventory comments; all eight entrants premise-genre); roots 22 -> 21
+#: narrative predicted); union-closure roots at .400 (see the
+#: inventory comments; all eight entrants premise-genre); roots
 #: at v24.3.401 (audit M1, 2026-07-05: D-quotient left -- it is DERIVED,
-#: aliased to the registered check_D_quotient_forced [P] in
-#: crystal._DEP_ALIASES, the .396 A4 precedent).
+#: aliased to the registered check_D_quotient_forced in
+#: crystal._DEP_ALIASES, the .396 A4 precedent).  The de-premising stands;
+#: its ground is a corollary of MD plus the declared OR0 clause
+#: (DQ1@2026-09-05).
 EXPORT_READING_BOUNDARY = frozenset({
     # T_no_IJC_no_noncommutativity left at the v24.3.410 re-pin (lifted to
     # P_structural per the 2026-07-07 ruling; see the re-pin comment below).
@@ -200,16 +202,19 @@ EXPORT_ROOT_INVENTORY = frozenset({
     # foundation premises core's spine cites); NOTHING left; ZERO
     # conjecture-class members entered any closure. The certified
     # sentence keeps its shape: constitutive premises + occupancy +
-    # L_Delta, NO non-premise debts. Roots 14 -> 22.
-    # (D-quotient REMOVED at v24.3.401, audit M1 (2026-07-05) -- roots
-    #  22 -> 21: it is DERIVED, not premised; core.py's registered
-    #  check_D_quotient_forced [P] pins "D-quotient derived from A1 + K1",
-    #  so the dep string is aliased to the registered key in
-    #  crystal._DEP_ALIASES per the .396 A4 precedent. The certified
-    #  sentence gets STRONGER: one fewer premise, same shape.)
+    # L_Delta, NO non-premise debts.
+    # (D-quotient REMOVED at v24.3.401, audit M1 (2026-07-05):
+    #  it is DERIVED, not premised; core.py's registered
+    #  check_D_quotient_forced grades it a corollary of MD plus the
+    #  declared OR0 clause (DQ1@2026-09-05), so the dep string is aliased
+    #  to the registered key in crystal._DEP_ALIASES per the .396 A4
+    #  precedent. The certified sentence gets STRONGER: one fewer premise,
+    #  same shape.)
+    # (K1 REMOVED at DQ2@2026-09-05: the one bank check that returned it as
+    #  a dependency label no longer does, so this walk does not produce it
+    #  as an unresolved name.)
     "D_positivity",
     "FD3",
-    "K1",
     "O4",
     "OR0",
     "OR2",
@@ -667,9 +672,9 @@ def check_T_ie_export_core_dependency_census():
 # =============================================================================
 
 #: Typed root inventory for the FULL surface (scope="full", all 209 pinned
-#: atlas inputs since v24.3.400): 61 names, 7 genres (67 -> 62 at
-#: v24.3.399, the debt-registration wave; 62 -> 61 at v24.3.401, the
-#: audit-M1 D-quotient de-premising -- premise genre 23 -> 22); every
+#: atlas inputs since v24.3.400) (the v24.3.399 debt-registration wave;
+#: the v24.3.401 audit-M1 D-quotient de-premising, its ground
+#: a corollary of MD plus the declared OR0 clause, DQ1@2026-09-05); every
 #: unresolved dependency name the full walk produces is pinned here BY
 #: NAME with its
 #: adjudicated genre.
@@ -685,11 +690,14 @@ FULL_SURFACE_TYPED_ROOTS = {
     #  framework ASSUMES irreversibility, against its own headline chain.)
     "A2": "premise", "BW": "premise", "MD": "premise",
     "FD1": "premise", "FD2": "premise", "FD3": "premise", "FD4": "premise",
-    "K1": "premise", "SP": "premise", "SC": "premise",
+    "SP": "premise", "SC": "premise",
     # (D-quotient is NOT here since v24.3.401, audit M1 (2026-07-05):
-    #  it is DERIVED -- check_D_quotient_forced [P], "A1 + K1 ==>
-    #  D-quotient"; aliased in crystal._DEP_ALIASES like A4 -> L_irr.
-    #  Premise genre 23 -> 22, typed roots 62 -> 61.)
+    #  it is DERIVED -- check_D_quotient_forced grades it a corollary of MD
+    #  plus the declared OR0 clause (DQ1@2026-09-05); aliased in
+    #  crystal._DEP_ALIASES like A4 -> L_irr.)
+    # (K1 is NOT here since DQ2@2026-09-05: the one bank check that
+    #  returned it as a dependency label no longer does, so the full walk
+    #  does not produce it as an unresolved name.)
     "D_positivity": "premise",
     "finite_physical_regime": "premise",
     "occupancy": "premise",  # the empirical bit (QAC); constitutive per the 2026-07-01 ruling
@@ -868,8 +876,12 @@ def check_T_ie_full_surface_input_inventory():
         + 23 pinned conjectures, full surface, machine-verified.
 
     (One premise FEWER since v24.3.401, audit M1: D-quotient left the
-    premise genre -- it is DERIVED, check_D_quotient_forced [P] from
-    A1 + K1; the certified sentence got strictly stronger.)
+    premise genre -- it is DERIVED; check_D_quotient_forced grades it a
+    corollary of MD plus the declared OR0 clause (DQ1@2026-09-05). The
+    certified sentence got strictly stronger.)
+
+    (K1 left the premise genre at DQ2@2026-09-05: the one bank check that
+    returned it as a dependency label no longer does.)
 
     (A1 itself is a REGISTERED bank member -- it appears inside the walk,
     never as an unresolved root. The roots below are what the walk could
@@ -881,9 +893,10 @@ def check_T_ie_full_surface_input_inventory():
       1. INTEGRITY: zero run errors (a cached error entry from a stale
          seeding cache FAILS here -- the cache-honesty design of .390/.395).
       2. TYPED ROOTS: the unresolved-name set is EXACTLY the typed
-         inventory (61 names, 7 genres; 67 -> 62 at v24.3.399, the
-         debt-registration wave; 62 -> 61 at v24.3.401, the audit-M1
-         D-quotient de-premising). Set-only tripwire: a new root,
+         inventory (the v24.3.399 debt-registration wave; the v24.3.401
+         audit-M1 D-quotient de-premising, its ground a corollary of MD
+         plus the declared OR0 clause, DQ1@2026-09-05). Set-only
+         tripwire: a new root,
          a vanished root, or an unadjudicated genre fails the bank
          (fired live twice in-session: the audit-M1 A4 de-premising and
          the audit-m3 reachability growth were both leg-2 catches).
@@ -1021,8 +1034,8 @@ def check_T_ie_full_surface_input_inventory():
         epistemic="P_structural_instrument",
         summary=(
             "The full-surface input inventory over all 209 pinned atlas "
-            "inputs: every unresolved dependency name typed and pinned "
-            "(61 roots / 7 genres), the declared external-ledger surface "
+            "inputs: every unresolved dependency name typed and pinned, "
+            "the declared external-ledger surface "
             "pinned (13), the [C]-reachable surface pinned (23), the heavy "
             "skip set pinned and disclosed (13), the engine-native class "
             "pinned (15). Set-exact tripwires throughout; genre "

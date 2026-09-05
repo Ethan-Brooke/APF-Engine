@@ -97,11 +97,10 @@ THE TWO SCOPED NAMED PREMISES (stage-1 fix 2; disambiguation = stage-2 F3):
     commits nothing (FREE leg [P] + the 2026-07-04 superadditivity ruling:
     coherent realignment commits no distinction) and is OUTSIDE K1-UT's
     range -- its zero booking is an exemption, not a violation.
-    DISAMBIGUATION (stage-2 F3): K1-UT is NOT the bank's K1 (the dependency
-    label of check_D_quotient_forced -- bank-kinematic content), and NOT
-    .411's K1 (check_T_gapless_serial_floor's candidate-switch premise,
-    scoped inside the all-Sep antecedent).  Three distinct labels; this
-    module's premise is registered as K1-UT everywhere.
+    DISAMBIGUATION (stage-2 F3): K1-UT is NOT .411's K1
+    (check_T_gapless_serial_floor's candidate-switch premise, scoped inside
+    the all-Sep antecedent).  Two distinct labels; this module's premise is
+    registered as K1-UT everywhere.
   Omega-conditioning, SCOPED to CLASSICAL/Sep MECHANISMS: every classical
     mechanism's admissible conditioning factors through the D-quotient (the
     Omega-visible state).  The hold conditions on coherent structure
@@ -825,14 +824,17 @@ def check_L_mechanism_trichotomy():
     ck('MD' in r_eps.get('dependencies', []),
        "the eps > 0 floor is MD's content (the only imported inequality)")
     r_dq = check_D_quotient_forced()
-    ck(r_dq.get('passed') is True and r_dq.get('epistemic') == 'P',
-       "anchor D_quotient_forced [P] passes (row-8 constancy's KINEMATIC "
-       "half; the operational half stays the scoped Omega-conditioning "
-       "named premise)")
-    ck(sorted(r_dq.get('dependencies', [])) == ['A1', 'K1'],
-       "D-quotient rides A1 + the BANK's K1 -- which is NOT this module's "
-       "K1-UT premise (stage-2 F3 disambiguation: bank-kinematic content vs "
-       "the lane's universal-transition form scoped to committed realignments)")
+    ck(r_dq.get('passed') is True
+       and r_dq.get('epistemic') == 'AXIOM_COROLLARY',
+       "anchor D_quotient_forced passes at AXIOM_COROLLARY (row-8 "
+       "constancy's KINEMATIC half; the operational half stays the scoped "
+       "Omega-conditioning named premise)")
+    ck(sorted(r_dq.get('dependencies', [])) == ['L_epsilon*'],
+       "the D-quotient rides MD (anchor key L_epsilon*) per DQ2@2026-09-05; "
+       "this module's K1-UT premise has no bank-side namesake on that edge "
+       "(stage-2 F3 disambiguation: K1-UT is this lane's "
+       "universal-transition form, scoped to committed realignments, and it "
+       "is not read from that record)")
     r_triad = check_T_coherent_free_spend_permanent()
     ck(r_triad.get('passed') is True and r_triad.get('epistemic') == 'P',
        "anchor T_coherent_free_spend_permanent [P] passes")
@@ -939,9 +941,8 @@ def check_L_mechanism_trichotomy():
                                'classical/Sep mechanisms; the hold exempt from '
                                'both (exemption 1 price-shaped grant-free; '
                                'exemption 2 capability-shaped -- exact selection is A2 constitutive under A2-exact)'),
-            'k1_ut_disambiguation': ("K1-UT is NOT the bank's K1 "
-                                     "(D_quotient_forced dep label) and NOT "
-                                     ".411's candidate-switch K1 (stage-2 F3)"),
+            'k1_ut_disambiguation': ("K1-UT is NOT .411's candidate-switch "
+                                     "K1 (stage-2 F3)"),
             'f1_firing_modes': ('UNBINNED fires on (1) untagged hold facts '
                                 '(bin (ii) is type-assigned, not '
                                 'cost-computed) and (2) world-heterogeneous '
