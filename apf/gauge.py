@@ -21,73 +21,559 @@ from apf.apf_utils import (
 )
 
 
+# ---------------------------------------------------------------------------
+# check_T4: the set-exact leg inventory.  Every leg consumes a record another
+# check returns; no integer in this object is one this object wrote down.
+# Append-and-record (D7@2026-08-08): a mismatch contributes a failure reason
+# and does not raise.  Standing limit, disclosed: an inventory certifies that
+# a declared leg EXECUTED, not that it could have failed.
+# ---------------------------------------------------------------------------
+# The two comparands legs 4 and 5 use, declared rather than inlined.
+# PROVENANCE, not targets: 2 is the dimension named in requirement R2
+# itself (a faithful pseudoreal fundamental of that dimension), and 1 is
+# the abelian-factor count of requirement R3 + minimality, which
+# check_L_gauge_template_uniqueness enforces at its own Step 4 and does
+# not return.  Both are DISCLOSED as authored comparands in this record;
+# neither is computed here.
+_T4_DOUBLET_DIM = 2
+_T4_ABELIAN_FACTORS = 1
+
+_T4_EXPECTED_LEGS = (
+    "exactly_one_R1_carrier_and_exactly_one_R2_carrier",
+    "template_classification_record_consumed_by_value",
+    "the_R1_carrier_rank_is_the_capacity_optimal_winner",
+    "the_R2_carrier_is_two_dimensional",
+    "three_factors_and_one_abelian_grading",
+)
+
+
 def check_T4():
     """T4: Minimal Anomaly-Free Chiral Gauge Net.
-    
-    Constraints: confinement, chirality, Witten anomaly, anomaly cancellation.
-    Selects SU(N_c) * SU(2) * U(1) structure.
 
-    v4.3.2: Confinement and asymptotic freedom INTERNALIZED.
-      - AF: L_AF_capacity [P] derives UV fixed point from det(A)=m>0.
-      - Confinement: T_confinement [P] derives charged-state exclusion
-        at IR saturation from L_AF_capacity + T4F + L_epsilon*.
-      - Both former imports removed. Zero physics imports remain.
+    The gauge template SU(N_c) x SU(2) x U(1) is PROVED unique by
+    check_L_gauge_template_uniqueness, by exhaustive classification of compact
+    simple Lie algebras under the Theorem_R carrier requirements.  This check
+    consumes that classification by value, together with the capacity-optimal
+    winner check_T_gauge returns.
 
-    v5.4.0: TEMPLATE UNIQUENESS now proved by L_gauge_template_uniqueness [P].
-      - Exhaustive Lie algebra classification (17 algebras tested).
-      - Product structure forced by admissibility independence (T_M + L_loc).
-      - SU(N_c>=3) is unique complex-fund family; SU(2) is unique pseudoreal-2-dim.
-      - Even N_c excluded by Witten; N_c=3 by capacity minimality.
+    WHAT THIS CHECK NO LONGER DOES.  It formerly read
+
+        Nc = 3; Nw = 2
+        check(Nc >= 2, ...); check(Nw == 2, ...)
+
+    -- two authored integers compared to two authored integers.  It returned
+    no artifacts at all and was green at Nc = 17.  Neither of those literals
+    is compared to another literal now: the 3 is consumed from a returned
+    record, and the 2 survives as one of the two comparands this module
+    declares and names in authored_comparands_disclosed.
+
+    RE-POINT UNDER BL1@2026-09-02.  The mathematics does not move in this
+    pass: what moves is what the code does and what the record claims.  In
+    particular this check does not derive the template, the winner, or
+    N_c = 3, and it computes neither confinement nor anomaly freedom.
+
+    v4.3.2: Confinement and asymptotic freedom INTERNALIZED (AF from
+    L_AF_capacity; confinement from T_confinement).  Zero physics imports.
+    v5.4.0: template uniqueness proved by L_gauge_template_uniqueness
+    (exhaustive Lie classification, 17 algebras).
+
+    FAILURE CHANNEL, disclosed.  The consumed calls are wrapped, so "the
+    subsumer did not return a record" is part of this object's failure
+    surface.  A corruption of a SUBSUMER'S COMPUTATION reddens this check
+    because that check's own legs raise; a corruption of its RETURNED VALUES
+    reddens it by value.  The two channels are different and are not
+    aggregated.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08).  Standing limit, disclosed: an inventory certifies that
+    a declared leg EXECUTED, not that it could have failed.
     """
-    Nc = 3; Nw = 2
-    check(Nc >= 2, "Confinement requires Nc >= 2")
-    check(Nw == 2, "Chirality + pseudo-reality selects SU(2)")
+    import re as _re
+
+    legs = {}
+    fails = []
+    notes = []
+
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
+
+    # -- (1) consume the template classification, by value ---------------
+    r1, r2 = {}, {}
+    su_n, witten, template = [], [], ''
+    tpl_ok = False
+    tpl_note = ''
+    try:
+        _art = check_L_gauge_template_uniqueness().get('artifacts', {})
+        r1 = dict(_art.get('r1_classification', {}))
+        r2 = dict(_art.get('r2_classification', {}))
+        su_n = list(_art.get('su_n_complex_candidates', ()))
+        witten = list(_art.get('witten_survivors', ()))
+        template = _art.get('template', '')
+        tpl_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        tpl_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    leg("template_classification_record_consumed_by_value",
+        tpl_ok and len(r1) >= 17 and len(r2) >= 17
+        and bool(su_n) and bool(witten) and isinstance(template, str)
+        and template.strip() != '',
+        ("read r1_classification (%d entries), r2_classification (%d "
+         "entries), %d complex-fundamental SU(N) candidates, %d Witten "
+         "survivors and the template string %r from "
+         "check_L_gauge_template_uniqueness's returned artifacts; the counts "
+         "are computed here, not written down"
+         % (len(r1), len(r2), len(su_n), len(witten), template))
+        if tpl_ok else
+        ("check_L_gauge_template_uniqueness did not return a record: %s"
+         % (tpl_note,)))
+
+    def _passers(classification, marker):
+        out = []
+        for name, row in sorted(classification.items()):
+            ex = row.get('excluded_by')
+            if isinstance(ex, str) and ex.strip().upper() == marker:
+                out.append(name)
+        return out
+
+    r1_pass = _passers(r1, 'PASSES R1')
+    r2_pass = _passers(r2, 'PASSES R2')
+
+    # -- (2) exactly one carrier passes each requirement -----------------
+    leg("exactly_one_R1_carrier_and_exactly_one_R2_carrier",
+        len(r1_pass) == 1 and len(r2_pass) == 1,
+        ("filtering the consumed classifications by their own excluded_by "
+         "field gives R1 passers %r (size %d) and R2 passers %r (size %d); "
+         "both sizes are computed and enforced, not printed"
+         % (r1_pass, len(r1_pass), r2_pass, len(r2_pass))))
+
+    def _rank(name):
+        m = _re.match(r'^S?U\((\d+)\)$', str(name).strip())
+        return int(m.group(1)) if m else None
+
+    r1_rank = _rank(r1_pass[0]) if len(r1_pass) == 1 else None
+
+    # -- (3) the R1 carrier's rank IS the capacity-optimal winner --------
+    winner = None
+    tg_ok = False
+    tg_note = ''
+    try:
+        winner = check_T_gauge().get('artifacts', {}).get('winner_N_c')
+        tg_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        tg_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    leg("the_R1_carrier_rank_is_the_capacity_optimal_winner",
+        tg_ok and r1_rank is not None and winner is not None
+        and r1_rank == winner,
+        ("rank of the unique R1 passer %r is %r; check_T_gauge's returned "
+         "winner_N_c is %r; both are read from returned records and neither "
+         "is authored here"
+         % (r1_pass[0] if r1_pass else None, r1_rank, winner))
+        if tg_ok else
+        ("check_T_gauge did not return a record: %s" % (tg_note,)))
+
+    # -- (4) the R2 carrier is two-dimensional, from its own field -------
+    r2_fund = (r2.get(r2_pass[0], {}).get('fund_dim')
+               if len(r2_pass) == 1 else None)
+    r2_rank = _rank(r2_pass[0]) if len(r2_pass) == 1 else None
+    leg("the_R2_carrier_is_two_dimensional",
+        r2_fund is not None and r2_rank is not None and r2_fund == r2_rank
+        and r2_fund == _T4_DOUBLET_DIM,
+        ("the unique R2 passer %r carries fund_dim = %r in the consumed "
+         "classification, equal to its independently parsed rank %r, and "
+         "equal to the declared R2 doublet dimension %r. GROUND, DISCLOSED: "
+         "the fund_dim and the rank are both read from the consumed record; "
+         "the comparand %r is authored here and named as such"
+         % (r2_pass[0] if r2_pass else None, r2_fund, r2_rank,
+            _T4_DOUBLET_DIM, _T4_DOUBLET_DIM)))
+
+    # -- (5) three factors, exactly one abelian grading ------------------
+    factors = [f.strip() for f in str(template).split(' x ') if f.strip()]
+    n_abelian = sum(1 for f in factors if _re.match(r'^U\(\d+\)$', f))
+    n_simple = sum(1 for f in factors if _re.match(r'^SU\(', f))
+    leg("three_factors_and_one_abelian_grading",
+        bool(factors) and n_simple + n_abelian == len(factors)
+        and n_simple == len(r1_pass) + len(r2_pass)
+        and n_abelian == _T4_ABELIAN_FACTORS,
+        ("the template string returned by the subsumer, %r, parses into %d "
+         "factors, every one of them classified (%d of SU form, %d of U "
+         "form); the SU-form count equals the number of computed R1 + R2 "
+         "carriers (%d + %d), and the abelian count equals the declared R3 "
+         "abelian-factor count %r. GROUND, DISCLOSED: the factor list is "
+         "computed from the consumed string; the abelian comparand is "
+         "authored here and named as such"
+         % (template, len(factors), n_simple, n_abelian,
+            len(r1_pass), len(r2_pass), _T4_ABELIAN_FACTORS)))
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_T4_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+
+    if fails:
+        check(False, "T4: " + " | ".join(fails))
 
     return _result(
         name='T4: Minimal Anomaly-Free Chiral Gauge Net',
         tier=1,
         epistemic='P',
+        passed=(not notes),
+        fail_reasons=list(notes),
         summary=(
-            'Confinement + chirality + Witten anomaly freedom + anomaly cancellation '
-            'select SU(N_c) * SU(2) * U(1) as the unique minimal structure. '
-            'N_c = 3 is the smallest confining group with chiral matter. '
+            'The gauge template SU(N_c) x SU(2) x U(1) is PROVED unique by '
+            'check_L_gauge_template_uniqueness, by exhaustive classification of compact '
+            'simple Lie algebras under the Theorem_R carrier requirements. This check '
+            'consumes that classification by value. '
+            'Computed over the consumed record: exactly one algebra in the R1 '
+            'classification is marked as passing (%s), exactly one in the R2 '
+            'classification is (%s, fundamental dimension %s), and the rank of the unique '
+            'R1 passer equals the capacity-optimal winner check_T_gauge returns (%s). The '
+            'passing sets are obtained by filtering the consumed classifications; their '
+            'sizes are computed and enforced, not printed. '
+            'WHAT THIS CHECK NO LONGER DOES. It formerly compared two authored integers to '
+            'two authored integers, returned no artifacts, and was green at Nc = 17. '
+            'Neither of those literals is compared to another literal now: the 3 is '
+            'consumed from a returned record, and the 2 survives as one of the two '
+            'comparands this module declares and names in authored_comparands_disclosed. '
             'v4.3.2: AF derived from L_AF_capacity (det(A)=m>0 => UV attractor). '
             'Confinement derived from T_confinement (saturation + L_epsilon*). '
-            'v5.4.0: Template uniqueness proved by L_gauge_template_uniqueness '
-            '(exhaustive Lie classification, 17 algebras). Zero physics imports.'
+            'Zero physics imports.'
+            % (r1_pass[0] if r1_pass else 'undetermined',
+               r2_pass[0] if r2_pass else 'undetermined',
+               r2_fund, winner)
         ),
         key_result='Gauge structure = SU(N_c) * SU(2) * U(1) [P, zero imports]',
         dependencies=['A1', 'L_nc', 'T3', 'T_confinement', 'L_AF_capacity',
                       'L_gauge_template_uniqueness'],
         imported_theorems={},
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
+        artifacts={
+            'consumed_from': (
+                'check_L_gauge_template_uniqueness (classification, by value); '
+                'check_T_gauge (winner_N_c, by value)'),
+            'r1_passers_computed': r1_pass,
+            'r2_passers_computed': r2_pass,
+            'r1_classification_size': len(r1),
+            'r2_classification_size': len(r2),
+            'r1_carrier_rank_computed': r1_rank,
+            'r2_carrier_fund_dim_consumed': r2_fund,
+            'winner_N_c_consumed': winner,
+            'template_consumed': template,
+            'template_factors_computed': factors,
+            'su_n_complex_candidates_consumed': su_n,
+            'witten_survivors_consumed': witten,
+            'authored_comparands_disclosed': {
+                '_T4_DOUBLET_DIM': _T4_DOUBLET_DIM,
+                '_T4_ABELIAN_FACTORS': _T4_ABELIAN_FACTORS,
+                'ground': (
+                    'legs 4 and 5 each compare a value read from the consumed '
+                    'record against one comparand authored in this module. '
+                    'Every other quantity in every leg is read or computed '
+                    'from a returned record.')},
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared leg '
+                'EXECUTED, not that it could have failed'),
+            'may_not_cite': [
+                'for "N_c = 3 is the smallest confining group with chiral '
+                'matter" -- no leg here computes minimality over confining '
+                'groups and that sentence is cut',
+                'as deriving the template, the capacity-optimal winner, or '
+                'N_c = 3 -- all three are consumed from other records',
+                'as computing confinement or anomaly freedom -- neither is '
+                'computed here',
+            ],
+        },
     )
+
+
+# ---------------------------------------------------------------------------
+# check_T5: the set-exact leg inventory.  Every quantity is read from
+# check_T_gauge's returned winner row or derived here from the consumed
+# winner; no root, coefficient or discriminant is authored.  Append-and-record
+# (D7@2026-08-08): a mismatch contributes a failure reason and does not raise.
+# ---------------------------------------------------------------------------
+# The one comparand this object authors, declared rather than inlined.
+# PROVENANCE, not a target: the linear coefficient of the reduced anomaly
+# quadratic z^2 - 2z - (N_c^2 - 1) = 0, which check_T_gauge derives from the
+# four anomaly conditions and states in its own returned `quadratic` string.
+# It is N_c-independent, so it is not a per-winner value and does not appear
+# in the winner row this check consumes.  DISCLOSED as authored here; every
+# other quantity in every leg below is read from that row or derived from the
+# consumed winner.
+_T5_LINEAR_COEFF = -2
+
+_T5_EXPECTED_LEGS = (
+    "gauge_winner_row_consumed_by_value",
+    "the_consumed_roots_solve_the_derived_quadratic",
+    "the_discriminant_is_recomputed_from_the_consumed_winner",
+    "the_quadratic_coefficient_is_derived_from_the_consumed_winner",
+    "the_root_pair_is_distinct_and_ud_related",
+)
 
 
 def check_T5():
     """T5: Minimal Anomaly-Free Chiral Matter Completion.
-    
-    Given SU(3)*SU(2)*U(1), anomaly cancellation forces the SM fermion reps.
+
+    Given the gauge template, anomaly cancellation constrains the SM fermion
+    hypercharges.  The reduced anomaly quadratic z^2 - 2z - (N_c^2 - 1) = 0 is
+    DERIVED and SOLVED per N_c by check_T_gauge.  This check consumes that
+    check's winner row by value: it takes the returned winner, derives the
+    coefficient N_c^2 - 1 from it, recomputes the discriminant as 4*N_c^2, and
+    verifies in exact rationals that the roots that record returns solve the
+    quadratic so derived.
+
+    WHAT THIS CHECK NO LONGER DOES.  It formerly read
+
+        z_roots = [4, -2]
+        discriminant = 4 + 32
+        check(discriminant == 36)
+        check(all(z**2 - 2*z - 8 == 0 for z in z_roots))
+
+    -- it wrote the coefficient 8 and the root pair {4, -2} by hand and
+    checked them against each other.  Neither is authored any more.
+
+    DISCLOSED, AND MEASURED.  These legs are winner-relative by construction:
+    they verify the roots of whatever winner check_T_gauge returns.  Measured
+    with check_T_gauge's own N_c enforcement leg neutered so that it returns
+    a record for a moved winner: under a flipped Witten parity the winner
+    moves to 2, the consumed roots become {3, -1}, the derived coefficient
+    becomes 3, and ALL FIVE LEGS HERE STILL HOLD; under a flipped cost sign
+    the winner moves to 7 and all five still hold.  With that enforcement leg
+    in place check_T_gauge reddens first and this check inherits the failure
+    through its wrapper -- so the corruption is caught in the bank, and it is
+    NOT caught by anything this check computes.  THIS CHECK DOES NOT ENFORCE
+    N_c = 3.  That enforcement is a leg of check_T_gauge.
+
+    RE-POINT UNDER BL1@2026-09-02.  The mathematics does not move in this
+    pass: what moves is what the code does and what the record claims.
+
+    FAILURE CHANNEL, disclosed.  The consumed call is wrapped, so "the
+    subsumer did not return a record" is part of this object's failure
+    surface.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08).  Standing limit, disclosed: an inventory certifies that
+    a declared leg EXECUTED, not that it could have failed.
     """
-    # The quadratic uniqueness proof:
-    # ======================================================================
-    z_roots = [4, -2]
-    discriminant = 4 + 32  # b^2 - 4ac = 4 + 32 = 36
-    check(discriminant == 36)
-    check(all(z**2 - 2*z - 8 == 0 for z in z_roots))
+    legs = {}
+    fails = []
+    notes = []
+
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
+
+    # -- (1) consume check_T_gauge's winner row, by value ----------------
+    winner, winner_dim, row = None, None, {}
+    tg_ok = False
+    tg_note = ''
+    try:
+        _art = check_T_gauge().get('artifacts', {})
+        winner = _art.get('winner_N_c')
+        winner_dim = _art.get('winner_dim')
+        # constraint_log keys are int in-process; index with the winner
+        # itself, never with a stringified key.
+        row = dict(_art.get('constraint_log', {}).get(winner, {}))
+        tg_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        tg_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    leg("gauge_winner_row_consumed_by_value",
+        tg_ok and isinstance(winner, int) and bool(row)
+        and row.get('all_pass') is True and row.get('dim') == winner_dim,
+        ("read winner_N_c = %r and winner_dim = %r from check_T_gauge's "
+         "returned artifacts, and its own constraint_log row for that "
+         "winner: all_pass = %r, dim = %r, anomaly_roots = %r. The row's "
+         "dim is compared against the returned winner_dim"
+         % (winner, winner_dim, row.get('all_pass'), row.get('dim'),
+            row.get('anomaly_roots')))
+        if tg_ok else
+        ("check_T_gauge did not return a record: %s" % (tg_note,)))
+
+    # -- (2) the quadratic coefficient, derived from the consumed winner -
+    coeff = (winner * winner - 1) if isinstance(winner, int) else None
+    leg("the_quadratic_coefficient_is_derived_from_the_consumed_winner",
+        coeff is not None and coeff > 0,
+        ("coefficient N_c^2 - 1 = %r^2 - 1 = %r, derived here from the "
+         "consumed winner; it is not written down"
+         % (winner, coeff)))
+
+    # -- (3) the consumed roots solve the derived quadratic --------------
+    roots, parse_ok = [], True
+    for _r in row.get('anomaly_roots', ()) or ():
+        try:
+            if isinstance(_r, float):
+                parse_ok = False
+            roots.append(Fraction(_r))
+        except Exception:                          # noqa: BLE001
+            parse_ok = False
+    solves = (parse_ok and coeff is not None and len(roots) >= 2
+              and all(z * z + _T5_LINEAR_COEFF * z - coeff == 0
+                      for z in roots))
+    leg("the_consumed_roots_solve_the_derived_quadratic",
+        solves,
+        ("the %d roots %r returned in the winner row all satisfy "
+         "z^2 + (%r)z - %r = 0 in exact Fractions, with the coefficient "
+         "derived from the consumed winner and the linear coefficient the "
+         "declared N_c-independent one"
+         % (len(roots), [str(z) for z in roots], _T5_LINEAR_COEFF, coeff)))
+
+    # -- (4) the discriminant, recomputed from the consumed winner -------
+    disc_from_coeff = (_T5_LINEAR_COEFF ** 2 + 4 * coeff) if coeff is not None else None
+    disc_from_winner = (4 * winner * winner) if isinstance(winner, int) else None
+    leg("the_discriminant_is_recomputed_from_the_consumed_winner",
+        disc_from_coeff is not None and disc_from_coeff == disc_from_winner,
+        ("b^2 - 4ac = (%r)^2 + 4*%r = %r and 4*N_c^2 = 4*%r^2 = %r; both "
+         "sides are computed from the consumed winner and no discriminant "
+         "literal is written"
+         % (_T5_LINEAR_COEFF, coeff, disc_from_coeff, winner,
+            disc_from_winner)))
+
+    # -- (5) the root pair is distinct and up/down related ---------------
+    leg("the_root_pair_is_distinct_and_ud_related",
+        len(roots) >= 2 and len(set(roots)) == len(roots)
+        and sum(roots, Fraction(0)) == -_T5_LINEAR_COEFF,
+        ("the consumed root multiset %r has %d distinct members and sums to "
+         "%s, which is -b/a for the derived quadratic (Vieta) and the fixed "
+         "point of the up/down swap z -> %r - z"
+         % ([str(z) for z in roots], len(set(roots)),
+            sum(roots, Fraction(0)) if roots else 'undetermined',
+            -_T5_LINEAR_COEFF)))
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_T5_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+
+    if fails:
+        check(False, "T5: " + " | ".join(fails))
 
     return _result(
         name='T5: Minimal Anomaly-Free Matter Completion',
         tier=1,
         epistemic='P',
+        passed=(not notes),
+        fail_reasons=list(notes),
         summary=(
-            'Anomaly cancellation with SU(3)*SU(2)*U(1) and template {Q,L,u,d,e} '
-            'forces unique hypercharge pattern. Analytic proof: z^2 - 2z - 8 = 0 '
-            'gives z {4, -2}, which are ud related. Pattern is UNIQUE.'
+            'The reduced anomaly quadratic z^2 - 2z - (N_c^2 - 1) = 0 is DERIVED and '
+            'SOLVED per N_c by check_T_gauge. This check consumes that check\'s winner row '
+            'by value: it takes the returned winner, derives the coefficient N_c^2 - 1 '
+            'from it, recomputes the discriminant as 4*N_c^2, and verifies in exact '
+            'rationals that the roots that record returns solve the quadratic so derived. '
+            'Executed on the consumed winner row: coefficient %r, discriminant %r, roots '
+            '%r, distinct, and up/down related (sum == %s). '
+            'WHAT THIS CHECK NO LONGER DOES. It formerly wrote the coefficient 8 and the '
+            'root pair {4, -2} by hand and checked them against each other. '
+            'DISCLOSED, AND MEASURED. These legs are winner-relative by construction: they '
+            'verify the roots of whatever winner check_T_gauge returns. Measured with '
+            'check_T_gauge\'s own N_c enforcement leg neutered so that it returns a record '
+            'for a moved winner: under a flipped Witten parity the winner moves to 2, the '
+            'consumed roots become {3, -1}, the derived coefficient becomes 3, and all five '
+            'legs here still hold; under a flipped cost sign the winner moves to 7 and all '
+            'five still hold. With that enforcement leg in place check_T_gauge reddens '
+            'first and this check inherits the failure through its wrapper, so the '
+            'corruption is caught in the bank and is not caught by anything this check '
+            'computes. THIS CHECK DOES NOT ENFORCE N_c = 3. That enforcement is a leg of '
+            'check_T_gauge.'
+            % (coeff, disc_from_coeff, [str(z) for z in roots],
+               -_T5_LINEAR_COEFF)
         ),
-        key_result='Hypercharge ratios uniquely determined (quadratic proof)',
+        key_result='Hypercharge root pair verified against the quadratic derived from the consumed winner',
         dependencies=['T4'],
-        artifacts={'quadratic': 'z^2 - 2z - 8 = 0', 'roots': z_roots},
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
+        artifacts={
+            'consumed_from': 'check_T_gauge (winner row of its own constraint_log, by value)',
+            'winner_N_c_consumed': winner,
+            'winner_dim_consumed': winner_dim,
+            'anomaly_roots_consumed': list(row.get('anomaly_roots', ()) or ()),
+            'quadratic_derived': (
+                'z^2 %s %dz - %s = 0'
+                % ('-' if _T5_LINEAR_COEFF < 0 else '+',
+                   abs(_T5_LINEAR_COEFF), coeff)),
+            'coefficient_derived': coeff,
+            'discriminant_recomputed': disc_from_coeff,
+            'root_sum_computed': str(sum(roots, Fraction(0))) if roots else None,
+            'winner_relativity_disclosed': (
+                'every leg here is relative to the winner check_T_gauge '
+                'returns. Executed with that check\'s N_c enforcement leg '
+                'neutered: at a flipped Witten parity (winner 2) and at a '
+                'flipped cost sign (winner 7), all five legs here still '
+                'hold. With the enforcement leg in place check_T_gauge '
+                'reddens first and this check inherits it through the '
+                'wrapper. This check does not enforce N_c = 3.'),
+            'authored_comparands_disclosed': {
+                '_T5_LINEAR_COEFF': _T5_LINEAR_COEFF,
+                'ground': (
+                    'the quadratic\'s N_c-independent linear coefficient, '
+                    'derived by check_T_gauge and not carried in the winner '
+                    'row. Every other quantity in every leg is read from that '
+                    'row or derived from the consumed winner.'),
+                'sign_convention_invariance_disclosed': (
+                    'EXECUTED. Negating this constant and negating the roots '
+                    'check_T_gauge publishes is a two-site convention edit '
+                    'that leaves all five legs here green: z -> -z with '
+                    'b -> -b preserves both the discriminant and Vieta. The '
+                    'two returned fields that print this quadratic\'s linear '
+                    'term -- quadratic_derived and the root-sum clause of '
+                    'the summary -- are formatted from this constant, so '
+                    'under that edit they track the consumed roots instead '
+                    'of contradicting them. The theorem statement quoted at '
+                    'the head of this record is carried verbatim and is not '
+                    'formatted from it. No leg here detects the convention '
+                    'flip.')},
+            'construction_asserted_legs': [
+                'the_quadratic_coefficient_is_derived_from_the_consumed_winner'
+                ' -- a presence-and-derivation leg, listed here '
+                'because its content is that the coefficient is DERIVED here '
+                'rather than authored, which is a statement about this '
+                'function\'s construction. Its predicate is '
+                'coeff = N_c^2 - 1 > 0. EXECUTED at this HEAD: '
+                'check_T_gauge\'s constraint_log carries the winners 2..7, '
+                'whose coefficients are 3, 8, 15, 24, 35, 48, so no winner '
+                'the consumed record can currently return makes it fail. NO '
+                'CONTROL REDDENS THIS LEG; it reddens through the wrapper '
+                'when the consumed call raises. The measurement is over the '
+                'candidate range as it stands, not a proof that no mutation '
+                'anywhere could redden it.'],
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared leg '
+                'EXECUTED, not that it could have failed'),
+            'may_not_cite': [
+                'for "Pattern is UNIQUE" -- no leg here computes uniqueness '
+                'of the hypercharge pattern and that sentence is cut',
+                'as pinning, forcing or enforcing N_c = 3 or SU(3) in any '
+                'form -- the legs are winner-relative and the escape is '
+                'disclosed',
+                'as deriving or solving the anomaly quadratic -- both are '
+                'done by check_T_gauge and consumed here',
+            ],
+        },
     )
+
+
+# ---------------------------------------------------------------------------
+# check_T_gauge: the set-exact leg inventory for the N_c enforcement legs
+# added under BL1@2026-09-02.  These are the only legs this check declares;
+# every other assertion in it is a `check(...)` call and is unchanged.
+# Append-and-record (D7@2026-08-08): a mismatch contributes a failure reason
+# and does not raise.  Standing limit, disclosed: an inventory certifies that
+# a declared leg EXECUTED, not that it could have failed.
+# ---------------------------------------------------------------------------
+_TGAUGE_EXPECTED_LEGS = (
+    "the_two_witten_implementations_are_independent_and_agree",
+    "winner_selection_tied_to_the_template_survivor_record",
+)
 
 
 def check_T_gauge():
@@ -95,6 +581,13 @@ def check_T_gauge():
     
     Capacity optimization with COMPUTED anomaly constraints.
     The cubic anomaly equation is SOLVED per N_c -- no hardcoded winners.
+
+    TWO LEGS ARE DECLARED HERE UNDER BL1@2026-09-02 and are part of this
+    check's failure surface:
+        winner_selection_tied_to_the_template_survivor_record
+        the_two_witten_implementations_are_independent_and_agree
+    Their statement, their measured ground and their may-not-cite list are
+    carried in artifacts['nc_enforcement_leg'] of the returned record.
     """
     def _solve_anomaly_for_Nc(N_c: int) -> dict:
         """
@@ -245,6 +738,112 @@ def check_T_gauge():
             derivation=f'dim(su({winner}))+dim(su(2))+dim(u(1)) = '
                        f'{winner**2-1}+3+1')
 
+    # ══════════════════════════════════════════════════════════════════
+    # N_c ENFORCEMENT LEGS (added under BL1@2026-09-02).  Everything above
+    # this point is unchanged: this check still recomputes and reports
+    # whatever wins.  What is added is a value tie between the winner this
+    # check selects and the classification check_L_gauge_template_uniqueness
+    # computes independently, so the two cannot move apart silently.
+    #
+    # The Witten parity constraint is implemented independently in two
+    # checks in this module: here, as witten_safe above, and inside
+    # check_L_gauge_template_uniqueness, which publishes its result as a
+    # survivor list.  These legs compare the two AS VALUES, never as
+    # verdicts: no `passed` or `status` field of the consumed record enters
+    # any predicate below.
+    # ══════════════════════════════════════════════════════════════════
+    _legs = {}
+    _fails = []
+    _notes = []
+
+    def _leg(label, ok, evidence):
+        _legs[label] = (bool(ok), evidence)
+        if not ok:
+            _fails.append("%s: %s" % (label, evidence))
+
+    # survivor list built HERE, from this check's own constraint_log
+    surv_here = sorted(
+        [(N, r['dim']) for N, r in constraint_log.items() if r['all_pass']],
+        key=lambda p: p[1])
+
+    tpl_surv, tpl_cand, tpl_dim = [], [], None
+    _tpl_ok = False
+    _tpl_note = ''
+    try:
+        _tart = check_L_gauge_template_uniqueness().get('artifacts', {})
+        tpl_surv = [tuple(p) for p in _tart.get('witten_survivors', ())]
+        tpl_cand = [tuple(p) for p in _tart.get('su_n_complex_candidates', ())]
+        tpl_dim = _tart.get('optimal_dim_G')
+        _tpl_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - wrapped
+        _tpl_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    # C3: solve for the rank whose dimension is the published optimum, two
+    # ways -- through this check's own dimension formula, and through the
+    # dim column of its own constraint_log.
+    sol_formula = [N for N in sorted(constraint_log)
+                   if (N ** 2 - 1) + 3 + 1 == tpl_dim]
+    sol_record = [N for N in sorted(constraint_log)
+                  if constraint_log[N]['dim'] == tpl_dim]
+
+    _c1 = _tpl_ok and bool(surv_here) and surv_here == sorted(
+        tpl_surv, key=lambda p: p[1])
+    _c2 = (_tpl_ok and bool(surv_here) and bool(tpl_surv)
+           and (winner, candidates[winner]['dim']) == surv_here[0]
+           and (winner, candidates[winner]['dim'])
+           == tuple(sorted(tpl_surv, key=lambda p: p[1])[0]))
+    _c3 = (_tpl_ok and sol_formula == sol_record == [winner]
+           and len(sol_formula) == 1)
+
+    _leg("winner_selection_tied_to_the_template_survivor_record",
+         _c1 and _c2 and _c3,
+         ("C1 survivor lists compared element for element: built here from "
+          "this check's own constraint_log as %r, published by "
+          "check_L_gauge_template_uniqueness as %r -- equal: %r. "
+          "C2 the selected winner pair %r is the cheapest entry of both -- "
+          "%r. C3 solving for the rank whose dimension is the published "
+          "optimum %r gives %r by this check's dimension formula and %r by "
+          "its own dim column; required to be the singleton equal to the "
+          "computed winner -- %r."
+          % (surv_here, sorted(tpl_surv, key=lambda p: p[1]), _c1,
+             (winner, candidates[winner]['dim']), _c2, tpl_dim,
+             sol_formula, sol_record, _c3))
+         if _tpl_ok else
+         ("check_L_gauge_template_uniqueness did not return a record: %s"
+          % (_tpl_note,)))
+
+    # A second, independent read of the consumed record: the survivor list
+    # must be a strict non-empty subset of that check's own pre-Witten
+    # candidate list, and the ranks it keeps and the ranks it drops must
+    # fall in two different parity classes.  No parity literal is written
+    # here; the classes are computed.
+    _sr = set(N for N, _ in tpl_surv)
+    _cr = set(N for N, _ in tpl_cand)
+    _excl = _cr - _sr
+    _pin = set(N % 2 for N in _sr)
+    _pout = set(N % 2 for N in _excl)
+    _leg("the_two_witten_implementations_are_independent_and_agree",
+         _tpl_ok and bool(_sr) and _sr < _cr and bool(_excl)
+         and len(_pin) == 1 and len(_pout) == 1 and _pin != _pout,
+         ("the consumed survivor ranks %r are a strict subset of that "
+          "check's own pre-Witten candidate ranks %r; the ranks kept fall in "
+          "parity class %r and the ranks dropped in %r, computed, distinct. "
+          "This leg reads only the consumed record; the comparison against "
+          "this check's own parity computation is the leg above."
+          % (sorted(_sr), sorted(_cr), sorted(_pin), sorted(_pout)))
+         if _tpl_ok else
+         ("check_L_gauge_template_uniqueness did not return a record: %s"
+          % (_tpl_note,)))
+
+    _have = tuple(sorted(_legs))
+    _want = tuple(sorted(_TGAUGE_EXPECTED_LEGS))
+    if _have != _want:
+        _notes.append("leg inventory mismatch: missing=%r extra=%r"
+                      % (sorted(set(_want) - set(_have)),
+                         sorted(set(_have) - set(_want))))
+
+    if _fails:
+        check(False, "T_gauge: " + " | ".join(_fails))
     return _result(
         name='T_gauge: Gauge Group from Capacity Budget',
         tier=1,
@@ -264,10 +863,61 @@ def check_T_gauge():
         key_result=f'SU({winner})*SU(2)*U(1) = capacity-optimal (dim={candidates[winner]["dim"]})',
         dependencies=['T4', 'T5', 'A1', 'L_cost', 'L_cost_gauge', 'Theorem_R', 'B1_prime',
                       'L_gauge_template_uniqueness'],
+        passed=(not _notes),
+        fail_reasons=list(_notes),
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in _legs.items()},
+        leg_count=len(_legs),
         artifacts={
             'winner_N_c': winner,
             'winner_dim': candidates[winner]['dim'],
             'constraint_log': constraint_log,
+            'nc_enforcement_leg': {
+                'statement': (
+                    'The Witten parity constraint is implemented '
+                    'independently in two checks in this module: here, and '
+                    'inside check_L_gauge_template_uniqueness, which '
+                    'publishes its result as a survivor list. This leg '
+                    'compares the two AS VALUES: the survivor list built '
+                    'here from this check\'s own constraint_log is required '
+                    'to equal that check\'s witten_survivors element for '
+                    'element, the selected winner is required to be the '
+                    'cheapest entry of both, and the integer N satisfying '
+                    'N^2 + 3 = dim over the candidate range is solved for '
+                    'and required to be the singleton equal to the computed '
+                    'winner.'),
+                'survivors_built_here': surv_here,
+                'survivors_consumed': sorted(tpl_surv, key=lambda p: p[1]),
+                'winner_pair': (winner, candidates[winner]['dim']),
+                'solved_rank_by_formula': sol_formula,
+                'solved_rank_by_record_dim': sol_record,
+                'optimal_dim_G_consumed': tpl_dim,
+                'why_three_conjuncts': (
+                    'EXECUTED. A cost-function change that moves the winner '
+                    'to 7 leaves both survivor lists agreeing; the list '
+                    'comparison alone does not catch it. The winner '
+                    'comparison and the solved-rank comparison do.'),
+                'ground_disclosed': (
+                    'The list comparison and the winner comparison are '
+                    'computed on both sides. The solved-rank conjunct rides '
+                    'optimal_dim_G, a value check_L_gauge_template_uniqueness '
+                    'writes down and its own legs enforce; it is '
+                    'corroboration, not the load-bearing conjunct.'),
+                'what_this_leg_does_not_do': (
+                    'It does not derive N_c = 3. It computes that the winner '
+                    'this check selects and the classification the template '
+                    'check computes cannot move independently of one '
+                    'another.'),
+                'may_not_cite': [
+                    'as "N_c = 3 is derived here", or any equivalent',
+                    'as making the selection forced, unique, or immune to a '
+                    'coordinated edit',
+                    'as "the corpus previously failed to enforce N_c = 3" '
+                    'without the companion measurement that three DAG '
+                    'consumers read N_c with default=3 through a verifying '
+                    'accessor that raises ChainInconsistency -- neither half '
+                    'may be quoted alone',
+                ],
+            },
         },
     )
 

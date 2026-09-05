@@ -5421,39 +5421,239 @@ def check_T_entropy():
     )
 
 
+# ---------------------------------------------------------------------------
+# check_T_epsilon: the set-exact leg inventory and the premise set this
+# object consumes from check_L_epsilon_star's own returned record.  The
+# premise tuple is compared set-exactly; it is not restated as prose.
+# ---------------------------------------------------------------------------
+_TEPS_FLOOR_PREMISES = ('A1', 'BW', 'MD')
+
+_TEPS_EXPECTED_LEGS = (
+    "every_witnessed_cost_is_an_exact_rational",
+    "floor_premise_set_consumed_from_L_epsilon_star_record",
+    "floor_statement_consumed_from_that_record_not_restated_here",
+    "magnitudes_are_not_identified_across_modules",
+    "positive_floor_witnessed_on_the_tsep_substrate",
+)
+
+
 def check_T_epsilon():
     """T_epsilon: Admissibility Granularity.
-    
-    Finite capacity A1 + L_epsilon* (no infinitesimal meaningful distinctions)
-    -> minimum admissibility quantum > 0.
-    
-    Previously: required "finite distinguishability" as a separate premise.
-    Now: L_epsilon* derives this from meaning = robustness + A1.
+
+    A strictly positive minimum realignment cost eps_Gamma > 0 is PROVED by
+    check_L_epsilon_star from A1 + MD + BW.  This check consumes that record:
+    it reads that check's own returned dependency set, set-exactly, and
+    carries that check's own returned floor statement verbatim rather than
+    restating it.  A numeric witness of positivity is then computed over
+    check_T_sep's returned record, which is the reachable banked record that
+    publishes exact positive costs.
+
+    WHAT THIS CHECK NO LONGER DOES.  It formerly asserted epsilon > 0 about a
+    literal it assigned on the line above (epsilon = Fraction(1)), and was
+    green for any positive value of that literal.  No literal remains.
+
+    MAGNITUDES ARE NOT IDENTIFIED.  The minima this check reads and the unit
+    normalisation this record formerly asserted are different numbers in
+    different models.  check_T_realignment_floor_is_epsilon_star states that
+    the identification is structural and not numeric; this check reads no
+    magnitude across modules and declares none.
+
+    A SECOND-BEST NAMED AND NOT TAKEN.  The strictly better repair is for
+    check_L_epsilon_star to return its executed C_total / epsilon_min / N_max
+    as artifacts, so a real numeric floor could be consumed.  Its returned
+    record carries four string artifacts and no numeric field, so that repair
+    moves a sixth object's returned record and is not folded into this pass.
+
+    FAILURE CHANNEL, disclosed.  The consumed calls are wrapped, so "the
+    subsumer did not return a record" is part of this object's failure
+    surface.  A premise-set change inside check_L_epsilon_star reddens this
+    check by value; a numeric change inside that check reddens it because
+    that check's own legs raise, not because this object's arithmetic
+    disagrees.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08): a mismatch contributes a failure reason and does not
+    raise.  Standing limit, disclosed: an inventory certifies that a declared
+    leg EXECUTED, not that it could have failed.  Leg 5 is a DISCLOSURE leg:
+    it records what this check does not do and is asserted by construction.
     """
-    # Computational verification: epsilon is the infimum over meaningful
-    # distinction costs. By L_epsilon*, each costs > 0. By A1, capacity
-    # is finite, so finitely many distinctions exist. Infimum of
-    # a finite set of positive values is positive.
-    epsilon = Fraction(1)  # normalized: epsilon = 1 in natural units
-    check(epsilon > 0, "epsilon must be positive")
-    check(isinstance(epsilon, Fraction), "epsilon must be exact (rational)")
+    legs = {}
+    fails = []
+    notes = []
+
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
+
+    # -- (1) the premise set, consumed set-exactly from the floor's record
+    floor_deps, floor_statement = (), ''
+    floor_ok = False
+    floor_note = ''
+    try:
+        _floor = check_L_epsilon_star()
+        floor_deps = tuple(sorted(_floor.get('dependencies', ())))
+        floor_statement = _floor.get('key_result', '')
+        floor_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        floor_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    leg("floor_premise_set_consumed_from_L_epsilon_star_record",
+        floor_ok and floor_deps == tuple(sorted(_TEPS_FLOOR_PREMISES)),
+        ("consumed premise set %r from check_L_epsilon_star's own returned "
+         "record, compared set-exactly against %r"
+         % (list(floor_deps), list(tuple(sorted(_TEPS_FLOOR_PREMISES)))))
+        if floor_ok else
+        ("check_L_epsilon_star did not return a record: %s" % (floor_note,)))
+
+    # -- (2) the floor statement, carried verbatim, not restated ---------
+    leg("floor_statement_consumed_from_that_record_not_restated_here",
+        floor_ok and isinstance(floor_statement, str)
+        and floor_statement.strip() != '',
+        ("carried verbatim from check_L_epsilon_star's returned key_result: "
+         "%r -- this check authors no floor statement of its own"
+         % (floor_statement,)))
+
+    # -- (3) a positive numeric witness on the T_sep substrate -----------
+    from fractions import Fraction
+
+    sub_ok = False
+    sub_note = ''
+    costs, dcosts = {}, {}
+    exact = True
+    try:
+        _art = check_T_sep().get('artifacts', {})
+        for _k, _v in _art.get('costs', {}).items():
+            if isinstance(_v, float):
+                exact = False
+            costs[int(_k)] = Fraction(_v)
+        for _k, _v in _art.get('eps', {}).items():
+            if isinstance(_v, float):
+                exact = False
+            dcosts[_k] = Fraction(_v)
+        sub_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        sub_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    min_cost = min(costs.values()) if costs else None
+    min_dcost = min(dcosts.values()) if dcosts else None
+    leg("positive_floor_witnessed_on_the_tsep_substrate",
+        sub_ok and bool(costs) and bool(dcosts)
+        and all(c > 0 for c in costs.values())
+        and all(c > 0 for c in dcosts.values()),
+        ("over check_T_sep's returned record: all %d per-direction costs and "
+         "all %d per-distinction costs are strictly positive; the minima are "
+         "%s and %s respectively (computed, not authored)"
+         % (len(costs), len(dcosts), min_cost, min_dcost))
+        if sub_ok else
+        ("check_T_sep did not return a record: %s" % (sub_note,)))
+
+    # -- (4) exactness of every witnessed cost ---------------------------
+    leg("every_witnessed_cost_is_an_exact_rational",
+        sub_ok and exact
+        and all(isinstance(v, Fraction) for v in costs.values())
+        and all(isinstance(v, Fraction) for v in dcosts.values()),
+        ("%d + %d witnessed costs all parsed as exact Fractions; no float "
+         "entered any predicate above" % (len(costs), len(dcosts)))
+        if sub_ok and exact else
+        "a witnessed cost was a float or did not parse exactly")
+
+    # -- (5) DISCLOSURE leg: no cross-module magnitude is identified -----
+    magnitudes_read = [m for m in (min_cost, min_dcost) if m is not None]
+    leg("magnitudes_are_not_identified_across_modules",
+        True,
+        ("DISCLOSURE, asserted by construction and not measured: %d magnitude"
+         "(s) were read from check_T_sep's record (%s) and 0 were identified "
+         "with any magnitude of check_L_epsilon_star, of this record, or of "
+         "any other module. This check states no cross-module magnitude "
+         "equality."
+         % (len(magnitudes_read),
+            ", ".join(str(m) for m in magnitudes_read) or "none")))
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_TEPS_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+
+    if fails:
+        check(False, "T_epsilon: " + " | ".join(fails))
 
     return _result(
         name='T_epsilon: Admissibility Granularity',
         tier=0,
         epistemic='P',
+        passed=(not notes),
+        fail_reasons=list(notes),
         summary=(
-            'Minimum nonzero realignment cost epsilon > 0 exists. '
-            'From L_epsilon* (meaningful distinctions have minimum admissibility '
-            'quantum eps_Gamma > 0) + A1 (admissibility physics bounds total cost). '
-            'eps = eps_Gamma is the infimum over all independent meaningful '
-            'distinctions. Previous gap ("finite distinguishability premise") '
-            'now closed by L_epsilon*.'
+            'A strictly positive minimum realignment cost eps_Gamma > 0 is PROVED by '
+            'check_L_epsilon_star from A1 + MD + BW. This check consumes that record: it '
+            'reads that check\'s own returned dependency set, set-exactly, and carries that '
+            'check\'s own returned floor statement verbatim rather than restating it. '
+            'Consumed premise set, executed: %r. '
+            'A numeric witness of positivity is computed over check_T_sep\'s returned '
+            'record: every per-direction cost and every per-distinction cost is a strictly '
+            'positive exact rational; the minima are %s and %s respectively. '
+            'MAGNITUDES ARE NOT IDENTIFIED. Those minima and the unit normalisation this '
+            'record formerly asserted are different numbers in different models. '
+            'check_T_realignment_floor_is_epsilon_star states the identification is '
+            'structural and not numeric; this check reads no magnitude across modules and '
+            'declares none. '
+            'WHAT THIS CHECK NO LONGER DOES. It formerly asserted epsilon > 0 about a '
+            'literal it assigned on the line above, and was green for any positive value of '
+            'that literal. No literal remains.'
+            % (list(floor_deps), min_cost, min_dcost)
         ),
-        key_result='epsilon = min nonzero realignment cost > 0',
+        key_result='epsilon = min nonzero realignment cost > 0 [proved by L_epsilon*, consumed here]',
         dependencies=['L_epsilon*', 'A1'],
-        artifacts={'epsilon_is_min_quantum': True,
-                   'gap_closed_by': 'L_epsilon* (no infinitesimal meaningful distinctions)'},
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
+        artifacts={
+            'consumed_from': (
+                'check_L_epsilon_star (premise set + floor statement, by value); '
+                'check_T_sep (numeric positivity witness, by value)'),
+            'floor_premise_set_consumed': list(floor_deps),
+            'floor_statement_consumed': floor_statement,
+            'gap_closed_by': 'L_epsilon* (no infinitesimal meaningful distinctions)',
+            'min_per_direction_cost_witnessed': str(min_cost),
+            'min_per_distinction_cost_witnessed': str(min_dcost),
+            'magnitudes_read': len(magnitudes_read),
+            'magnitudes_identified': 0,
+            'authored_comparands_disclosed': {
+                '_TEPS_FLOOR_PREMISES': list(_TEPS_FLOOR_PREMISES),
+                'ground': (
+                    'the premise set leg 1 compares the consumed dependency '
+                    'set against, single-sourced as a module constant. '
+                    'EXECUTED: dropping MD from BOTH this constant and '
+                    'check_L_epsilon_star\'s declared dependencies leaves '
+                    'this check green, while either site alone reddens it. '
+                    'That two-site edit is caught by check_kappa_zero_Tsep '
+                    'and check_L_nc, whose premise tuples are inline -- '
+                    'executed over apf/core.py and apf/gauge.py, no wider '
+                    'sweep run. A value tie is defeated by a coordinated '
+                    'edit at every site it ties.')},
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared leg '
+                'EXECUTED, not that it could have failed'),
+            'construction_asserted_legs': [
+                'magnitudes_are_not_identified_across_modules -- a disclosure '
+                'of what this check does not do; no control reddens it'],
+            'may_not_cite': [
+                'for any infimum claim -- no leg in this object or in '
+                'check_L_epsilon_star computes an infimum over anything, and '
+                'the sentence asserting one is cut',
+                'as asserting eps = eps_Gamma, or any cross-module magnitude '
+                'equality',
+                'as repairing the two verdict-gating consumers in '
+                'apf/cost_energy_identity.py and '
+                'apf/thermo_four_laws_synthesis.py -- those are a filed '
+                'referral and are untouched by this pass',
+                'as a re-derivation of the admissibility floor -- it is '
+                'consumed, not derived here',
+            ],
+        },
     )
 
 
@@ -5878,6 +6078,22 @@ def check_P4_IMP():
     )
 
 
+# ---------------------------------------------------------------------------
+# check_T_alg: the set-exact leg inventory.  Legs 1-3 consume
+# check_T_alg_FPi's returned commutator record by value; legs 4-5 are the
+# preserved order-dependence witness, labelled as the demoted structural
+# sketch the Phase-19h audit already made it; leg 6 is a DISCLOSURE leg.
+# ---------------------------------------------------------------------------
+_TALG_EXPECTED_LEGS = (
+    "BW_cost_spectrum_non_degeneracy_on_the_witness",
+    "fpi_commutator_record_consumed_by_value",
+    "order_dependence_phenomenon_exhibited_STRUCTURAL_SKETCH_ONLY",
+    "sector_subalgebra_commutes_and_the_pool_operator_does_not",
+    "the_sketch_is_not_consumed_by_the_conclusion",
+    "three_sector_route_agrees_with_the_M2C_witness",
+)
+
+
 def check_T_alg():
     """T_alg: Admissibility algebra A = Alg{E_d} cannot be faithfully represented
     by a commutative algebra.
@@ -5938,64 +6154,263 @@ def check_T_alg():
     governs, this route is a STRUCTURAL SKETCH and not load-bearing, and
     the load-bearing route remains L_Pi -> T_alg_FPi.  The rename does
     not make this leg a BW witness.
+
+    CONSUMPTION SCOPE, DISCLOSED AND MEASURED.  Exactly one consumed
+    magnitude is tied to a value: commutator_M2C_norm, which leg 1 requires
+    to equal the Frobenius norm of i*sigma_y/2 recomputed here from sigma_y.
+    The other two -- commutator_3sector_norm and sector_commutator_norm --
+    are consumed for their SIGN STRUCTURE only (zero / non-zero / ordering);
+    no leg here constrains their magnitudes, and a returned record carrying a
+    numerically wrong but sign-correct commutator_3sector_norm passes.  This
+    is a limitation of what these legs compute, stated because "consumed by
+    value" would otherwise be read as covering all three.  MEASURED, and a
+    second limitation of the same tie: scaling the authored sigma_y here by 2
+    and the returned commutator_M2C_norm in check_T_alg_FPi by 2 leaves this
+    check and check_T_alg_FPi both green, while either site alone reddens
+    this check.  Legs 2 and 3, which read the sign structure alone, stayed
+    green under that edit.
+
+    RE-POINT UNDER BL1@2026-09-02: THE EXECUTABLE LAYER NOW SAYS WHAT THIS
+    DOCSTRING HAS SAID SINCE 2026-04-26.  The conclusion -- no faithful
+    commutative representation -- is PROVED by check_T_alg_FPi, which
+    computes [pi(E_d1), pi(F_Pi)] = i*sigma_y/2 != 0 directly from operator
+    definitions.  This check now CONSUMES that check's returned commutator
+    record by value (commutator_M2C_norm, commutator_3sector_norm,
+    sector_commutator_norm) and computes nothing about the commutator
+    itself beyond recomputing the Frobenius norm of the operator identity
+    that check publishes, which leg 1 ties the consumed norm to.  The leg
+    that formerly asserted, in executable form, the implication the
+    Phase-19h block above says does not follow is DELETED.  The witness is
+    preserved
+    and is labelled, in its own leg name, as the structural sketch it
+    already is.  THE CONCLUSION LEG CONSUMES NONE OF THE WITNESS'S
+    QUANTITIES.
+
+    WHAT THIS RE-POINT DOES NOT DO.  It does not upgrade the standing of
+    the witness, move any grade, make the sketch load-bearing, or re-derive
+    anything.  The mathematics does not move in this pass: what moves is
+    what the code does and what the record claims.
+
+    FAILURE CHANNEL, disclosed.  The consumed call is wrapped, so "the
+    subsumer did not return a record" is part of this object's failure
+    surface.  A corruption of the SUBSUMER'S COMPUTATION reddens this check
+    because that check's own legs raise, not because this object's
+    arithmetic disagrees; a corruption of its RETURNED NORMS reddens this
+    check by value.  The two channels are different and are not aggregated.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08): a mismatch contributes a failure reason and does not
+    raise.  Standing limit, disclosed: an inventory certifies that a
+    declared leg EXECUTED, not that it could have failed.  Leg 6 is a
+    DISCLOSURE leg, asserted by construction.
     """
     from fractions import Fraction
 
-    # Concrete witness from T1: C, eps1 != eps2, eps3 fitting d1 but not d2
+    legs = {}
+    fails = []
+    notes = []
+
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
+
+    # -- (1) consume check_T_alg_FPi's returned commutator record --------
+    m3, mM2C, msec = None, None, None
+    fpi_ok = False
+    fpi_note = ''
+    try:
+        _art = check_T_alg_FPi().get('artifacts', {})
+        m3 = _art.get('commutator_3sector_norm')
+        mM2C = _art.get('commutator_M2C_norm')
+        msec = _art.get('sector_commutator_norm')
+        fpi_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        fpi_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    _nums = all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                for v in (m3, mM2C, msec))
+
+    # The MAGNITUDE tie.  check_T_alg_FPi's published operator identity is
+    # [pi(E_d1), pi(F_Pi)] = i*sigma_y/2.  That operator is rebuilt HERE from
+    # sigma_y and its Frobenius norm recomputed, and the consumed
+    # commutator_M2C_norm is required to equal it exactly.
+    _sigma_y = ((0, -1j), (1j, 0))
+    _i_sy_2 = tuple(tuple(1j * _e / 2 for _e in _row) for _row in _sigma_y)
+    _m2c_sq = sum(abs(_e) ** 2 for _row in _i_sy_2 for _e in _row)
+    _m2c_expected = _math.sqrt(_m2c_sq)
+    _m2c_tied = (mM2C == _m2c_expected)
+
+    leg("fpi_commutator_record_consumed_by_value",
+        fpi_ok and _nums and _m2c_tied,
+        ("read commutator_3sector_norm = %r, commutator_M2C_norm = %r and "
+         "sector_commutator_norm = %r from check_T_alg_FPi's returned "
+         "artifacts; all three present and numeric. The M_2(C) norm is tied "
+         "BY VALUE to %r, the Frobenius norm of i*sigma_y/2 rebuilt here "
+         "from sigma_y = %r -- the operator identity that check publishes -- "
+         "and the two are required to be equal: %r. SCOPE, DISCLOSED: only "
+         "this norm is tied to a magnitude. commutator_3sector_norm and "
+         "sector_commutator_norm are consumed for their SIGN STRUCTURE "
+         "(zero / non-zero / ordering) alone, by the legs below."
+         % (m3, mM2C, msec, _m2c_expected, _sigma_y, _m2c_tied))
+        if fpi_ok else
+        ("check_T_alg_FPi did not return a record: %s" % (fpi_note,)))
+
+    # -- (2) the separation: sectors commute, the pool operator does not -
+    leg("sector_subalgebra_commutes_and_the_pool_operator_does_not",
+        fpi_ok and _nums and msec == 0 and mM2C > 0 and mM2C > msec,
+        ("sector_commutator_norm = %r (the sector projections commute) while "
+         "commutator_M2C_norm = %r > 0 (the pool operator does not); the "
+         "separation %r > %r is computed from the consumed record and neither "
+         "side is authored here" % (msec, mM2C, mM2C, msec))
+        if fpi_ok and _nums else
+        "not computed: the consumed commutator record is absent or non-numeric")
+
+    # -- (3) the two routes inside the subsumer agree in sign ------------
+    leg("three_sector_route_agrees_with_the_M2C_witness",
+        fpi_ok and _nums and m3 > 0 and mM2C > 0,
+        ("commutator_3sector_norm = %r and commutator_M2C_norm = %r are two "
+         "independent computations inside check_T_alg_FPi and are strictly "
+         "positive in the same returned record" % (m3, mM2C))
+        if fpi_ok and _nums else
+        "not computed: the consumed commutator record is absent or non-numeric")
+
+    # -- (4)-(5) the preserved order-dependence witness ------------------
+    # STRUCTURAL SKETCH ONLY.  Phase-19h governs: this route does not prove
+    # non-commutativity and no leg above consumes any quantity computed here.
     C = Fraction(5)
     eps1 = Fraction(2)   # epsilon(d1)
     eps2 = Fraction(3)   # epsilon(d2), eps1 != eps2 (BW non-degeneracy)
     eps3 = Fraction(3)   # epsilon(d3): C - eps1 >= eps3 > C - eps2
 
-    check(eps1 != eps2,
-          "BW (cost-spectrum non-degeneracy): epsilon(d1) != epsilon(d2)")
-    check(C - eps1 >= eps3, "d3 fits after d1: budget C-eps1 >= eps3")
-    check(C - eps2 < eps3,  "d3 fails after d2: budget C-eps2 < eps3")
-
-    # E_d3 * E_d1: success
     residual_after_d1 = C - eps1
     residual_after_d1_d3 = residual_after_d1 - eps3
-    check(residual_after_d1_d3 >= 0, "E_d3 E_d1 sigma_empty: admissible state")
-
-    # E_d3 * E_d2: failure (budget exceeded)
     residual_after_d2 = C - eps2
-    check(residual_after_d2 - eps3 < 0, "E_d3 E_d2 sigma_empty: budget exceeded (bot)")
 
-    # OR0: distinct physical outcomes -> distinct states in Omega
-    # Commutative A would require E_d1 sigma_empty = E_d2 sigma_empty (same intermediate)
-    # which would force E_d3 E_d1 = E_d3 E_d2: contradiction with above
-    # Therefore A cannot be faithfully commutative
-    outcomes_distinct = (residual_after_d1_d3 >= 0) and (residual_after_d2 - eps3 < 0)
-    check(outcomes_distinct, "T_alg: outcomes distinct -> A non-commutative")
+    leg("order_dependence_phenomenon_exhibited_STRUCTURAL_SKETCH_ONLY",
+        (C - eps1 >= eps3) and (C - eps2 < eps3)
+        and residual_after_d1_d3 >= 0 and (residual_after_d2 - eps3) < 0,
+        ("at finite capacity C = %s: d3 fits after d1 (budget %s >= %s, "
+         "residual %s) and fails after d2 (budget %s < %s). STRUCTURAL "
+         "SKETCH ONLY -- the phenomenon, not the proof"
+         % (C, C - eps1, eps3, residual_after_d1_d3, C - eps2, eps3)))
 
-    # Note: the explicit commutator [E_d1, E_d2] in End(V) is computed post-GNS (T2)
-    # Here we only need: no faithful commutative representation exists
+    leg("BW_cost_spectrum_non_degeneracy_on_the_witness",
+        eps1 != eps2,
+        ("BW (cost-spectrum non-degeneracy) on the same witness: "
+         "epsilon(d1) = %s != %s = epsilon(d2)" % (eps1, eps2)))
+
+    # -- (6) DISCLOSURE leg: the conclusion does not ride the sketch -----
+    leg("the_sketch_is_not_consumed_by_the_conclusion",
+        True,
+        ("DISCLOSURE, asserted by construction and not measured: the "
+         "conclusion leg (sector_subalgebra_commutes_and_the_pool_operator_"
+         "does_not) evaluates only values read from check_T_alg_FPi's "
+         "returned record. None of C, eps1, eps2, eps3 or any residual "
+         "computed by the witness legs enters it. CORROBORATED BY "
+         "MEASUREMENT, though this leg itself still cannot fail: moving the "
+         "witness capacity C reddens the witness leg alone and leaves the "
+         "conclusion leg green."))
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_TALG_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+
+    if fails:
+        check(False, "T_alg: " + " | ".join(fails))
 
     return _result(
         name='T_alg: Admissibility algebra is non-commutative (no faithful commutative rep) [P+IJC, via L_Pi route]',
         tier=0,
         epistemic='P+IJC',
+        passed=(not notes),
+        fail_reasons=list(notes),
         summary=(
             'The algebra A = Alg{E_d} generated by admissibility maps has no faithful '
-            'commutative representation.  Phase 19h AUDIT (2026-04-26): the abstract '
-            'order-dependence route in the original docstring is a STRUCTURAL SKETCH, '
-            'not load-bearing; the implication "commutativity => E_d3 E_d1 = E_d3 E_d2" '
-            'does not follow.  The LOAD-BEARING proof is the explicit-commutator route: '
-            'L_Pi constructs F_Pi := E_{d1,d2} - E_d1 - E_d2 from superadditivity '
-            '(Delta > 0); T_alg_FPi computes [E_d1, F_Pi] != 0 directly.  Post-Phase-19e '
-            'L_Pi refactor + 19g cascade, T_alg inherits [P+IJC] tag (proved given '
-            'PLEC + IJC at quantum-capable interface).  The witness below preserves '
-            'the order-dependence phenomenon as physical motivation but is not the '
-            'load-bearing argument.  See Reference - IJC Dichotomy Theorem (2026-04-26) '
-            'sec 6.4 for the audit record.'
+            'commutative representation. THAT CONCLUSION IS PROVED BY check_T_alg_FPi, '
+            'which computes [pi(E_d1), pi(F_Pi)] = i*sigma_y/2 != 0 directly from operator '
+            'definitions. This check consumes that check\'s returned commutator record by '
+            'value and computes nothing about the commutator itself beyond recomputing '
+            'the Frobenius norm of the operator identity that check publishes, which '
+            'leg 1 ties the consumed norm to. '
+            'Consumed and computed: the sector projections commute '
+            '(sector_commutator_norm = %r) while the pool operator does not '
+            '(commutator_M2C_norm = %r); the separation between the two is computed from '
+            'the consumed record, and both the three-sector route '
+            '(commutator_3sector_norm = %r) and the M_2(C) witness inside that record '
+            'return a strictly positive norm. '
+            'CONSUMPTION SCOPE, DISCLOSED. Exactly one consumed magnitude is tied to a '
+            'value: commutator_M2C_norm, required to equal the Frobenius norm of '
+            'i*sigma_y/2 recomputed here from sigma_y. The other two norms are consumed '
+            'for their SIGN STRUCTURE only (zero / non-zero / ordering); no leg here '
+            'constrains their magnitudes. '
+            'The Phase 19h AUDIT decision stands: the abstract order-dependence route is a '
+            'STRUCTURAL SKETCH, not load-bearing; the implication "commutativity => '
+            'E_d3 E_d1 = E_d3 E_d2" does not follow. The witness below exhibits the '
+            'order-dependence phenomenon at finite capacity and is labelled as the demoted '
+            'sketch it already is. THE CONCLUSION LEG DOES NOT CONSUME IT. '
+            'Post-Phase-19e L_Pi refactor + 19g cascade, T_alg carries the [P+IJC] tag '
+            '(proved given PLEC + IJC at quantum-capable interface). '
+            'WHAT THIS RE-POINT DOES NOT DO. It does not upgrade the standing of the '
+            'witness, move any grade, or make the sketch load-bearing. It brings the '
+            'executable layer into line with a docstring that has said this since '
+            '2026-04-26. '
+            'See Reference - IJC Dichotomy Theorem (2026-04-26) sec 6.4 for the audit record.'
+            % (msec, mM2C, m3)
         ),
-        key_result='A = Alg{E_d} has no faithful commutative representation [via L_Pi route, [P+IJC] post-cascade]',
+        key_result='A = Alg{E_d} has no faithful commutative representation [proved by T_alg_FPi via the L_Pi route, consumed here, [P+IJC] post-cascade]',
         dependencies=['T1', 'L_Delta', 'BW', 'OR0', 'L_Pi', 'T_alg_FPi'],
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
         artifacts={
+            'consumed_from': 'check_T_alg_FPi (returned commutator record, by value)',
+            'commutator_M2C_norm_consumed': mM2C,
+            'commutator_3sector_norm_consumed': m3,
+            'sector_commutator_norm_consumed': msec,
+            'm2c_norm_recomputed_here': _m2c_expected,
+            'consumption_scope_disclosed': (
+                'commutator_M2C_norm is tied BY VALUE to the Frobenius norm '
+                'of i*sigma_y/2 rebuilt here from sigma_y -- the operator '
+                'identity check_T_alg_FPi publishes. commutator_3sector_norm '
+                'and sector_commutator_norm are consumed for their SIGN '
+                'STRUCTURE only (zero / non-zero / ordering); no leg here '
+                'constrains their magnitudes. EXECUTED, a second limitation '
+                'of the same tie: scaling the authored sigma_y here by 2 and '
+                'the returned commutator_M2C_norm in check_T_alg_FPi by 2 '
+                'leaves this check and check_T_alg_FPi both green, while '
+                'either site alone reddens this check.'),
             'C': str(C), 'eps1': str(eps1), 'eps2': str(eps2), 'eps3': str(eps3),
             'residual_d1_d3': str(residual_after_d1_d3),
             'residual_d2_d3': 'bot (< 0)',
+            'witness_standing': (
+                'STRUCTURAL SKETCH ONLY (Phase-19h Route 2 demotion); the '
+                'conclusion leg consumes none of its quantities'),
             'note': '[E_d1,F_Pi]!=0 is proved directly in check_T_alg_FPi (no GNS needed)',
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared leg '
+                'EXECUTED, not that it could have failed'),
+            'construction_asserted_legs': [
+                'the_sketch_is_not_consumed_by_the_conclusion -- a structural '
+                'statement about which quantities enter the conclusion leg. '
+                'NO CONTROL REDDENS THIS LEG. Its content is corroborated '
+                'separately: a mutation of the witness capacity reddens the '
+                'witness leg alone and leaves the conclusion leg green.'],
+            'may_not_cite': [
+                'for any executable or prose form of "outcomes distinct -> A '
+                'non-commutative" -- that implication does not follow and its '
+                'executable form is deleted',
+                'as evidence that the order-dependence witness establishes '
+                'non-commutativity',
+                'for any grade movement, or for any claim that [P+IJC] is now '
+                'better earned -- the anti-minting fence binds and the '
+                'recorded grade tension is not adjudicated here',
+                'as a re-derivation or independent confirmation of the '
+                'commutator -- it is consumed from check_T_alg_FPi',
+            ],
         },
     )
 
@@ -7890,104 +8305,258 @@ def check_OR2_steane():
     )
 
 
+# ---------------------------------------------------------------------------
+# check_A1_disjoint_scope: the set-exact leg inventory.  Append-and-record
+# (D7@2026-08-08): a mismatch contributes a failure reason and does not
+# raise.  Standing limit, disclosed: an inventory certifies that a declared
+# leg EXECUTED, not that it could have failed.
+# ---------------------------------------------------------------------------
+_A1DS_EXPECTED_LEGS = (
+    "every_consumed_value_is_an_exact_rational",
+    "exact_accounting_on_the_disjoint_pair_computed",
+    "overcount_is_the_cost_of_a_substrate_direction",
+    "overcount_on_the_overlap_pair_computed",
+    "the_predicate_separates_on_this_record",
+    "tsep_record_consumed_by_value",
+)
+
+
 def check_A1_disjoint_scope():
     """A1 Scope Remark: exact accounting holds iff admissibility mechanisms are disjoint.
 
     A1's admissibility sum  sum_d epsilon(d) <= C  is always a valid budget bound.
-    But it is an EXACT accounting of capacity consumed only when all admissibility
-    mechanisms M_d are pairwise disjoint.
+    It is an EXACT accounting of capacity consumed iff all M_d are pairwise
+    disjoint.
 
-    When mechanisms overlap (M_d1 cap M_d2 != empty), the shared substrate capacity
-    is counted once in epsilon(d1) and once in epsilon(d2), so the sum overcounts
-    the capacity actually consumed:
+    T_sep (disjoint-mechanism condition) is the scope condition for exact
+    accounting, not additional physics imposed on A1.
 
-        actual_capacity_consumed < epsilon(d1) + epsilon(d2)
+    WHAT THIS CHECK COMPUTES.  That biconditional is PROVED by check_T_sep,
+    which computes it over a six-direction substrate with an exact-rational
+    cost functional.  This check computes nothing about it independently: it
+    consumes check_T_sep's returned record -- its per-direction `costs`, its
+    per-distinction `eps`, its `pool` and its `deficit_d1_d3` -- by value, and
+    computes the inclusion-exclusion accounting over those values.  Nothing in
+    this check is a number this check wrote down.
 
-    The sum still satisfies sum <= C (the inequality is preserved, just loose),
-    but it is no longer an exact account.  A1's exact-accounting regime therefore
-    coincides precisely with the disjoint-mechanism condition of T_sep.
+    RE-POINT UNDER BL1@2026-09-02.  This record formerly asserted the
+    accounting over six authored literals (eps1 = 3, eps2 = 2, C = 10,
+    shared_cap = 1, exclusive_1 = 2, exclusive_2 = 1); three of its legs
+    compared two names assigned the identical expression, and it returned
+    passed=True for arbitrary capacities.  All six literals are deleted.  The
+    mathematics does not move in this pass: what moves is what the code does
+    and what the record claims.
 
-    Two admissibility regimes within A1's umbrella:
-      1. Quantum regime  (M_d1 cap M_d2 = empty): sum is exact; P1-P4, L_Delta, T1 follow.
-      2. Classical regime (mechanisms overlap):    sum is a loose upper bound;
-                                                   Delta <= 0 possible; knapsack model.
+    FAILURE CHANNEL, disclosed.  The channel is "the record check_T_sep
+    returns is arithmetically inconsistent with the cost multiset it returns",
+    not "the accounting might be inexact".  The consumed call is wrapped, so
+    "the subsumer did not return a record" is also part of this object's
+    failure surface.
+
+    REACH OF THAT CHANNEL, MEASURED AND PARTIAL.  A returned deficit_d1_d3
+    corrupted to a value outside the returned cost multiset reddens this
+    check.  A corruption to another value that IS in that multiset and is
+    strictly below min(eps(d1), eps(d3)) does not; at the value equal to that
+    minimum this check does redden.  Measured at all five distinct values in
+    that multiset: of the four corruptions, three leave this check green and
+    one reddens it.  At one of the three check_kappa_zero_Tsep also stays
+    green, so that corruption escapes both checks; at the other two that
+    sibling reddens and this check does not.  This check does not close that
+    sibling's disclosed escape, and does not narrow it -- no measured value
+    reddens this check while leaving that sibling green.
+
+    LEG INVENTORY.  Set-exact, on the bank path, append-and-record
+    (D7@2026-08-08): a mismatch contributes a failure reason and does not
+    raise.  Standing limit, disclosed: an inventory certifies that a declared
+    leg EXECUTED, not that it could have failed.
     """
     from fractions import Fraction
 
-    # --- Witness: disjoint mechanisms => exact accounting ---
-    # Two distinctions, each with dedicated substrate capacity
-    eps1 = Fraction(3)   # capacity of M_d1 (exclusive)
-    eps2 = Fraction(2)   # capacity of M_d2 (exclusive)
-    C = Fraction(10)
+    legs = {}
+    fails = []
+    notes = []
 
-    # Disjoint case: M_d1 cap M_d2 = empty
-    # Actual capacity consumed = eps1 + eps2 (each substrate counted once)
-    actual_disjoint = eps1 + eps2
-    sum_disjoint = eps1 + eps2
-    check(sum_disjoint == actual_disjoint, "Disjoint: sum = actual capacity (exact accounting)")
-    check(sum_disjoint <= C, "Disjoint: budget constraint satisfied (exact)")
+    def leg(label, ok, evidence):
+        legs[label] = (bool(ok), evidence)
+        if not ok:
+            fails.append("%s: %s" % (label, evidence))
 
-    # --- Witness: overlapping mechanisms => overcount ---
-    # Shared substrate carries capacity shared_cap; counted in both epsilon(d1), epsilon(d2)
-    shared_cap = Fraction(1)
-    # With overlap: epsilon(d1) = exclusive_1 + shared_cap
-    #               epsilon(d2) = exclusive_2 + shared_cap
-    exclusive_1 = Fraction(2)
-    exclusive_2 = Fraction(1)
-    eps1_overlap = exclusive_1 + shared_cap   # = 3
-    eps2_overlap = exclusive_2 + shared_cap   # = 2
-    sum_overlap = eps1_overlap + eps2_overlap  # = 5 (shared_cap counted twice)
-    actual_overlap = exclusive_1 + exclusive_2 + shared_cap  # = 4 (shared counted once)
-    check(sum_overlap > actual_overlap, "Overlap: sum overcounts actual capacity consumed")
-    overcount = sum_overlap - actual_overlap
-    check(overcount == shared_cap, "Overcount equals shared substrate capacity")
-    check(sum_overlap <= C, "Overlap: budget inequality still satisfied (just loose)")
+    exact = [True]
 
-    # --- Key structural fact ---
-    # The sum is exact iff mechanisms are disjoint.
-    # The overcount is zero iff shared_cap = 0 iff no shared substrate.
-    check(overcount == 0 or shared_cap > 0,
-          "Overcount > 0 iff mechanisms share substrate")
-    check(sum_disjoint == actual_disjoint,
-          "Disjoint mechanisms: zero overcount, exact accounting confirmed")
+    def _frac(v):
+        """Exact parse.  A float is refused rather than silently converted."""
+        if isinstance(v, float):
+            exact[0] = False
+            raise TypeError("float in a consumed field: %r" % (v,))
+        return Fraction(v)
 
-    # --- Regime delineation ---
-    # Quantum regime: sum is exact, full admissibility algebra follows
-    # Classical regime: sum is loose, Delta <= 0, additive accounting
-    # T_sep names the boundary precisely: M_d1 cap M_d2 = empty
-    quantum_regime_exact = (sum_disjoint == actual_disjoint)
-    classical_regime_loose = (sum_overlap > actual_overlap)
-    check(quantum_regime_exact, "Quantum regime: exact accounting under disjoint mechanisms")
-    check(classical_regime_loose, "Classical regime: loose accounting under overlapping mechanisms")
+    # -- (1) consume check_T_sep's own returned record, by value ---------
+    costs, eps, pool, deficit = {}, {}, frozenset(), None
+    have_keys = ()
+    consumed = False
+    consume_note = ""
+    try:
+        _art = check_T_sep().get('artifacts', {})
+        have_keys = tuple(sorted(k for k in ('costs', 'deficit_d1_d3', 'eps', 'pool')
+                                 if k in _art))
+        costs = {int(k): _frac(v) for k, v in _art.get('costs', {}).items()}
+        eps = {k: _frac(v) for k, v in _art.get('eps', {}).items()}
+        pool = frozenset(int(i) for i in _art.get('pool', ()))
+        deficit = _frac(_art['deficit_d1_d3']) if 'deficit_d1_d3' in _art else None
+        consumed = True
+    except Exception as _exc:                      # noqa: BLE001 - S4 wrapper
+        consume_note = "%s: %s" % (type(_exc).__name__, _exc)
+
+    S = frozenset(costs)
+    want_keys = ('costs', 'deficit_d1_d3', 'eps', 'pool')
+    leg("tsep_record_consumed_by_value",
+        consumed and have_keys == want_keys and bool(costs) and bool(eps)
+        and deficit is not None and pool <= S
+        and all(c > 0 for c in costs.values()),
+        ("read %d substrate directions and %d distinction costs from "
+         "check_T_sep's returned artifacts; keys %r; pool of size %d; "
+         "deficit_d1_d3 = %s (exact Fractions, no value re-entered here)"
+         % (len(costs), len(eps), list(have_keys), len(pool),
+            deficit if deficit is not None else "absent"))
+        if consumed else
+        ("check_T_sep did not return a record: %s" % (consume_note,)))
+
+    def kappa(sub):
+        return sum((costs[i] for i in sub), Fraction(0))
+
+    # -- (2) exact accounting on the disjoint pair, computed -------------
+    outside_pool = S - pool
+    lhs = eps.get('d1', Fraction(0)) + eps.get('d2', Fraction(0)) if consumed else None
+    rhs = kappa(outside_pool) if consumed else None
+    overcount_disjoint = (lhs - rhs) if consumed else None
+    leg("exact_accounting_on_the_disjoint_pair_computed",
+        consumed and 'd1' in eps and 'd2' in eps and bool(outside_pool)
+        and lhs == rhs,
+        ("eps(d1) + eps(d2) = %s and kappa(S \\ pool) = kappa(%s) = %s; "
+         "overcount = %s (both sides computed over the consumed record)"
+         % (lhs, sorted(outside_pool), rhs, overcount_disjoint))
+        if consumed else "not computed: the consumed record is absent")
+
+    # -- (3) overcount on the overlap pair, computed ---------------------
+    pair_min = (min(eps['d1'], eps['d3'])
+                if consumed and 'd1' in eps and 'd3' in eps else None)
+    leg("overcount_on_the_overlap_pair_computed",
+        consumed and deficit is not None and pair_min is not None
+        and deficit > 0 and deficit < pair_min,
+        ("deficit_d1_d3 = %s, strictly positive and strictly below "
+         "min(eps(d1), eps(d3)) = %s -- a proper overlap, not a swallowed "
+         "distinction" % (deficit, pair_min))
+        if consumed else "not computed: the consumed record is absent")
+
+    # -- (4) the overcount is the cost of a substrate direction ----------
+    realising = sorted(i for i, c in costs.items() if c == deficit)
+    leg("overcount_is_the_cost_of_a_substrate_direction",
+        consumed and deficit is not None and bool(realising),
+        ("deficit_d1_d3 = %s is realised by the substrate direction set %r, "
+         "computed by filtering the consumed cost functional over its %d "
+         "directions" % (deficit, realising, len(costs))))
+
+    # -- (5) the predicate separates on this record ----------------------
+    overcount_overlap = deficit
+    leg("the_predicate_separates_on_this_record",
+        consumed and overcount_disjoint is not None
+        and overcount_overlap is not None
+        and ((overcount_disjoint == 0) != (overcount_overlap == 0)),
+        ("disjoint pair overcount %s vs overlapping pair overcount %s -- the "
+         "exact-accounting predicate takes both values on the same consumed "
+         "record" % (overcount_disjoint, overcount_overlap))
+        if consumed else "not computed: the consumed record is absent")
+
+    # -- (6) exactness of every consumed value ---------------------------
+    leg("every_consumed_value_is_an_exact_rational",
+        consumed and exact[0]
+        and all(isinstance(v, Fraction) for v in costs.values())
+        and all(isinstance(v, Fraction) for v in eps.values())
+        and isinstance(deficit, Fraction),
+        ("%d costs, %d distinction costs and the deficit all parsed as exact "
+         "Fractions; no float entered any predicate above"
+         % (len(costs), len(eps)))
+        if consumed and exact[0] else
+        "a consumed field was a float or did not parse exactly")
+
+    # -- leg inventory, set-exact, append-and-record ---------------------
+    have = tuple(sorted(legs))
+    want = tuple(sorted(_A1DS_EXPECTED_LEGS))
+    if have != want:
+        notes.append("leg inventory mismatch: missing=%r extra=%r"
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+
+    if fails:
+        check(False, "A1_disjoint_scope: " + " | ".join(fails))
 
     return _result(
         name='A1 Scope Remark: exact accounting iff disjoint admissibility mechanisms',
         tier=-1,
         epistemic='AXIOM_COROLLARY',
+        passed=(not notes),
+        fail_reasons=list(notes),
         summary=(
             'A1 sum_d epsilon(d) <= C is always a valid budget bound. '
             'It is an EXACT accounting of capacity consumed iff all M_d are pairwise disjoint. '
-            'Overlapping mechanisms cause double-counting of shared substrate: '
-            'sum > actual capacity consumed (overcount = shared_cap). '
             'T_sep (disjoint-mechanism condition) is the scope condition for exact accounting, '
             'not additional physics imposed on A1. '
-            'Quantum regime (disjoint): sum exact, P1-P4 + L_Delta + T1 follow. '
-            'Classical regime (overlap): sum loose, Delta <= 0, knapsack model.'
+            'That biconditional is PROVED by check_T_sep, which computes it over a '
+            'six-direction substrate with an exact-rational cost functional. This check '
+            'computes nothing about it independently: it consumes check_T_sep\'s returned '
+            'record -- its per-direction costs, its per-distinction eps, its pool and its '
+            'deficit_d1_d3 -- by value, and computes the inclusion-exclusion accounting over '
+            'those values. '
+            'Computed over that record: the two disjoint distinctions\' costs sum to %s, '
+            'which equals the cost of the substrate outside the pool, so the overcount is '
+            'exactly %s; the overlapping pair carries an overcount of %s, which is the cost '
+            'of a single substrate direction. The predicate separates on this record. '
+            'FAILURE CHANNEL, disclosed: the channel is that the record check_T_sep returns '
+            'is arithmetically inconsistent with the cost multiset it returns, not that the '
+            'accounting might be inexact. '
+            'REACH OF THAT CHANNEL, MEASURED AND PARTIAL: a returned deficit_d1_d3 corrupted '
+            'to a value outside the returned cost multiset reddens this check; a corruption '
+            'to another value that IS in that multiset and strictly below '
+            'min(eps(d1), eps(d3)) does not, while at the value equal to that minimum this '
+            'check does redden -- measured at all five distinct values in that multiset, '
+            'with check_kappa_zero_Tsep staying green at one of the three corruptions that '
+            'leave this check green and reddening at the other two. This check does not '
+            'close that sibling\'s disclosed escape, and does not narrow it -- no measured '
+            'value reddens this check while leaving that sibling green. '
+            'Nothing in this check is a number this check wrote down.'
+            % (lhs if consumed else 'undetermined',
+               overcount_disjoint if consumed else 'undetermined',
+               overcount_overlap if consumed else 'undetermined')
         ),
         key_result='A1 exact-accounting regime = disjoint-mechanism condition of T_sep',
         dependencies=['A1'],
+        cross_refs=['T_sep'],
+        legs={k: {'passed': v[0], 'evidence': v[1]} for k, v in legs.items()},
+        leg_count=len(legs),
         artifacts={
-            'eps1_disjoint': str(eps1),
-            'eps2_disjoint': str(eps2),
-            'sum_disjoint': str(sum_disjoint),
-            'actual_disjoint': str(actual_disjoint),
-            'overcount_disjoint': '0',
-            'eps1_overlap': str(eps1_overlap),
-            'eps2_overlap': str(eps2_overlap),
-            'sum_overlap': str(sum_overlap),
-            'actual_overlap': str(actual_overlap),
-            'overcount_overlap': str(overcount),
-            'regime_note': 'T_sep delineates quantum (exact) from classical (loose) regime',
+            'consumed_from': 'check_T_sep (returned record, by value)',
+            'costs_consumed': {str(k): str(v) for k, v in sorted(costs.items())},
+            'eps_consumed': {k: str(v) for k, v in sorted(eps.items())},
+            'pool_consumed': sorted(pool),
+            'deficit_d1_d3_consumed': str(deficit),
+            'substrate_outside_pool': sorted(outside_pool),
+            'kappa_outside_pool_computed': str(rhs) if consumed else None,
+            'overcount_disjoint_computed': str(overcount_disjoint) if consumed else None,
+            'overcount_overlap_computed': str(overcount_overlap) if consumed else None,
+            'deficit_realising_directions': realising,
+            'inventory_note': (
+                'append-and-record (D7@2026-08-08): certifies a declared leg '
+                'EXECUTED, not that it could have failed'),
+            'may_not_cite': [
+                'as a quantum-regime / classical-regime delineation -- no leg '
+                'here computes P1-P4, L_Delta, T1, Delta <= 0 or a knapsack '
+                'model, and those clauses are cut',
+                'for any claim about arbitrary substrates or arbitrary '
+                'capacities -- one consumed record is computed over',
+                'as deriving the finite-volume composition law -- it is '
+                'consumed from check_T_sep, not derived here',
+                'as closing check_kappa_zero_Tsep\'s disclosed deficit escape',
+            ],
         },
     )
 
