@@ -8471,156 +8471,754 @@ def check_L_QEC_product_structure():
 
 
 def check_L_QEC_knill_laflamme():
-    """L_QEC_knill_laflamme: KL Conditions Satisfied for Maximally Mixed Code State [P].
+    """L_QEC_knill_laflamme: The HS Gram Identity Is Not the KL Condition;
+    KL Fails on the Declared Unit-Rate Code [P_math].
 
-    v5.2.9 NEW.  Target 10 — Holographic Error Correction (Theorem 3 of 5).
+    WHAT THIS COMPUTES, in exact Fractions and Gaussian rationals.  There is
+    no float and no tolerance in the arithmetic this object computes; the
+    floats that appear are confined to the comparison with the banked object
+    it consumes.
 
-    STATEMENT: For each capacity type i, the single-type code state
-    ρ_i = I_{d_eff}/d_eff satisfies the Knill-Laflamme (KL) conditions
-    for the full single-type operator algebra B(ℂ^{d_eff}):
+    (1) THE HS GRAM IDENTITY.  Tr(rho E_ab^dag E_ce) = delta_ac delta_be / d
+        with rho = I/d, over all d^4 pairs, at d in {2, 3, 4}.  This is the
+        normalised Hilbert-Schmidt Gram matrix of an ORTHONORMAL OPERATOR
+        BASIS and it is nothing else.  The same table is computed over a
+        SECOND orthonormal operator basis -- the clock-and-shift basis at
+        d = 4, where the 1/sqrt(d) normalisation is rational -- so the scope
+        is a leg rather than a sentence: the identity is a fact about
+        orthonormal bases, not a fact about this framework's code.
 
-        Tr(ρ_i E_a†E_b) = C_{ab}
+    (2) THE KNILL-LAFLAMME CONDITION, which is the OPERATOR identity
+        P E_a^dag E_b P = c_ab P on a declared code projector P.  The scalar
+        of (1) is the normalised trace of that left-hand side: the value
+        c_ab would take if the identity held, and not the identity.  On the
+        code this framework declares -- L_QEC_code_space, whose code rate is
+        read BY VALUE from its own returned record, hence P = I_d -- and
+        with the matrix-unit span, the operator identity FAILS on exactly
+        the d^3 pairs with a = c, at the first pair, at every d executed,
+        with the exact deviation returned.
 
-    where C_{ab} = Tr(E_a†E_b)/d_eff is a positive matrix with all
-    eigenvalues equal to Tr(E_a†E_b)/d_eff.
+    (3) TWO FURTHER EXECUTED FACTS about that same span.  A non-scalar
+        unitary (the cyclic shift) leaves I/d exactly fixed.  An in-span
+        trace-preserving channel (Kraus operators |0><j|) sends three
+        distinct inputs to one output, so no map inverts it on the code --
+        and it does move I/d.  Those are different properties, and the
+        scalar of (1) computes neither.
 
-    For the complete orthonormal basis {E_{ab}} = |a⟩⟨b| of B(ℂ^{d_eff}):
+    (4) A CODE ON WHICH THE OPERATOR IDENTITY HOLDS, with a declared span:
+        the [[5,1,3]] code, 16^2 identities with C_ab = delta_ab exactly.
+        The certificate is CONSUMED BY VALUE from apf.vacuum_label_code
+        (_fiveq_codewords, _fiveq_kl_certificate) rather than rebuilt: the
+        projector this check forms from the four cyclic stabilizer strings is
+        compared entrywise to the projector formed from that module's banked
+        codewords.  Adding one weight-2 operator to the span makes the
+        identity fail, executed, so the positive control is not a leg that
+        cannot fail.
 
-        Tr(ρ E_{ab}†E_{cd}) = (1/d_eff) · δ_{ac} δ_{bd}
+    SCOPE, stated rather than generalised.  Dimensions 2, 3 and 4 for the
+    declared code and the matrix-unit span; the [[5,1,3]] code with the
+    weight-<=1 span.  Nothing is claimed for any other d, code, span or
+    projector.  "On the declared code and span, no" is the whole of the
+    negative content, and no wider sentence is available from these legs.
 
-    The C matrix is (1/d_eff) · I_{d_eff²} — the identity, scaled.
-    This is the non-degenerate code condition: C is proportional to identity.
+    LEG INVENTORY: append-and-record per D7@2026-08-08, sited on the path the
+    bank executes.  ITS STANDING LIMIT, disclosed: it certifies that a
+    declared leg EXECUTED, not that it COULD HAVE FAILED.
 
-    PROOF (exact algebra, 2 steps):
+    DISCLOSED, measured at the build (1).  The value tie in
+    `code_projector_tie_to_declared_code_space` calls the sibling check, and
+    the sibling reads the shared DAG cache, whose per-key consumer log is
+    returned inside a red-team check's own record.  One entry is appended to
+    that log for the key C_total.  No verdict moves -- the figure that log
+    feeds is asserted against a minimum -- but a returned FIELD of that other
+    record does move, in any run where the key is already present.  Recorded
+    here rather than worked around, because a value tie that quietly writes
+    to shared state is worse than one that says so.
 
-    Step 1: E_{ab}†E_{cd} = (|a⟩⟨b|)†(|c⟩⟨d|) = |b⟩⟨a|c⟩⟨d| = δ_{ac}|b⟩⟨d|
+    DISCLOSED, measured at the build (2).  The matrix-unit index-order
+    convention (E_ab = |a><b| against |b><a|) is a symmetry of the Gram table
+    and of the failing COUNT: a build that swapped it end to end would return
+    the same numbers.  It is pinned instead by the set-exact identification
+    of the failing pairs, which names a = c; a swapped convention reddens
+    that leg unless the expected-set predicate is swapped with it -- the
+    coordinated two-site edit escapes, measured.  The count alone would not
+    have caught it.
 
-    Step 2: Tr(ρ · δ_{ac}|b⟩⟨d|) = δ_{ac} Tr((I/d)|b⟩⟨d|)
-                                   = δ_{ac} (1/d) ⟨d|b⟩ = (1/d) δ_{ac} δ_{bd}
+    DISCLOSED, measured against this object (3).  Single-conjunct neuters of
+    the append-and-record genre: a constant C_ab-shape flag, a neutered Gram
+    deviation counter, and an emptied barred-vocabulary tuple each disable
+    its own support without reddening a leg.  The scalar-multiple helper
+    was a fourth such site and is now exercised in the true direction on
+    the invariance leg.  The remaining three are a stated limitation of
+    the append-and-record form, not machinery.
 
-    INTERPRETATION: The maximally mixed code state ρ_i = I/d_eff has the
-    unique property that ANY error operator E on ℂ^{d_eff} is detectable:
-    if E ≠ cI (not a scalar), then E[ρ_i] ≠ ρ_i, so the error changes the
-    state and can be detected by syndrome measurement. The KL condition
-    with C ∝ I means the code is maximally information-efficient.
-
-    NUMERICAL VERIFICATION: All d⁴ = 81 cases verified for d=3 representative.
-    The same algebra holds exactly for d_eff = 102 by identical argument.
+    DISCLOSED (4).  A banked near-neighbour is inside
+    apf/vacuum_label_code.py inside the banked
+    check_T_vacuum_logical_sector_classical_ceiling, which computes that a
+    generic compression of a type operator onto the carrier is non-scalar.
+    It does not subsume this object: the condition tested there is erasure
+    rather than the operator identity this object tests, and it is a
+    randomly sampled floating-point bound rather than exact arithmetic over
+    a declared span.  Named here so a later reader does not re-find it as a
+    contradiction.
     """
-    import math as _m
+    from fractions import Fraction as _F
 
-    d = 3  # representative (same algebra holds for d_eff = 102)
+    _Q0 = (_F(0), _F(0))
+    _Q1 = (_F(1), _F(0))
 
-    # Build maximally mixed code state: ρ = I_d / d
-    rho = [[complex(1.0/d if i == j else 0) for j in range(d)]
-           for i in range(d)]
+    # ---- exact Gaussian rationals: (re, im) pairs of Fractions -----------
+    def qadd(x, y):   return (x[0] + y[0], x[1] + y[1])
+    def qsub(x, y):   return (x[0] - y[0], x[1] - y[1])
+    def qmul(x, y):   return (x[0] * y[0] - x[1] * y[1],
+                              x[0] * y[1] + x[1] * y[0])
+    def qconj(x):     return (x[0], -x[1])
+    def qscale(x, s): return (x[0] * s, x[1] * s)
+    def qabs2(x):     return x[0] * x[0] + x[1] * x[1]
 
-    # Build all d² basis operators E_{ab} = |a><b|
-    def E_op(a, b, d):
-        return [[complex(1 if i==a and j==b else 0) for j in range(d)]
-                for i in range(d)]
+    # ---- sparse operators: dict[(row, col)] -> Gaussian rational ---------
+    def op_trim(A):  return {k: v for k, v in A.items() if v != _Q0}
+    def op_eye(n):   return {(i, i): _Q1 for i in range(n)}
+    def op_dag(A):   return {(c, r): qconj(a) for (r, c), a in A.items()}
 
-    def mat_tr(M):
-        return sum(M[i][i] for i in range(len(M)))
+    def op_add(A, B):
+        out = dict(A)
+        for k, v in B.items():
+            out[k] = qadd(out.get(k, _Q0), v)
+        return op_trim(out)
 
-    def mat_mult(A, B):
-        return _mm(A, B)
+    def op_scale(A, s):
+        return op_trim({k: qscale(v, s) for k, v in A.items()})
 
-    def mat_dag(A):
-        return _dag(A)
+    def op_mul(A, B):
+        rows = {}
+        for (r, c), a in B.items():
+            rows.setdefault(r, []).append((c, a))
+        out = {}
+        for (r, k), a in A.items():
+            for c, b in rows.get(k, ()):
+                v = qmul(a, b)
+                if v != _Q0:
+                    out[(r, c)] = qadd(out.get((r, c), _Q0), v)
+        return op_trim(out)
 
-    n_violations = 0
-    total_checks = 0
+    def op_eq(A, B):
+        return op_trim(A) == op_trim(B)
 
-    for a in range(d):
-        for b in range(d):
-            Eab = E_op(a, b, d)
-            Eab_dag = mat_dag(Eab)  # = E_{ba}
-            for c in range(d):
-                for dd_ in range(d):
-                    Ecd = E_op(c, dd_, d)
-                    # Compute Tr(ρ E_{ab}† E_{cd})
-                    EabdagEcd = mat_mult(Eab_dag, Ecd)
-                    rho_EabdagEcd = mat_mult(rho, EabdagEcd)
-                    tr_val = mat_tr(rho_EabdagEcd)
+    def op_apply(A, vec):
+        out = {}
+        for (r, c), a in A.items():
+            b = vec.get(c)
+            if b is None:
+                continue
+            v = qmul(a, b)
+            if v != _Q0:
+                out[r] = qadd(out.get(r, _Q0), v)
+        return {k: v for k, v in out.items() if v != _Q0}
 
-                    # Expected: (1/d) * δ_{ac} * δ_{b,dd_}
-                    expected = complex((1.0/d) if (a == c and b == dd_) else 0)
+    def vec_ip(u, v):
+        s = _Q0
+        for k, a in u.items():
+            b = v.get(k)
+            if b is not None:
+                s = qadd(s, qmul(qconj(a), b))
+        return s
 
-                    if abs(tr_val - expected) > 1e-12:
-                        n_violations += 1
-                    total_checks += 1
+    def is_scalar_multiple_of_eye(A, n):
+        c = A.get((0, 0), _Q0)
+        for i in range(n):
+            for j in range(n):
+                want = c if i == j else _Q0
+                if A.get((i, j), _Q0) != want:
+                    return False
+        return True
 
-    check(n_violations == 0,
-          f"KL condition: all {total_checks} cases satisfy "
-          f"Tr(ρ E_ab†E_cd) = (1/d)δ_ac·δ_bd ({n_violations} violations)")
+    # ---- THE ONE ROUTINE.  Every code and every span in this check goes
+    # ---- through it, which is what makes the discriminating leg one
+    # ---- computation on two codes rather than two computations that agree
+    # ---- by construction.
+    def code_tables(basis, errors):
+        """basis: orthonormal vectors spanning the code space, so that
+        P = sum_i |b_i><b_i| and P E_a^dag E_b P = sum_ij m_ij |b_i><b_j|.
+        errors: list of (label, operator).  Returns, per ordered pair,
+        (m, operator_condition_holds, scalar), where
+        m_ij = <b_i| E_a^dag E_b |b_j>, the operator condition is
+        m_ij = c delta_ij, and the scalar is Tr(rho E_a^dag E_b) with
+        rho = P / Tr(P)."""
+        k = len(basis)
+        img = {lab: [op_apply(op, b) for b in basis] for lab, op in errors}
+        out = {}
+        for la, _oa in errors:
+            for lb, _ob in errors:
+                m = [[vec_ip(img[la][i], img[lb][j]) for j in range(k)]
+                     for i in range(k)]
+                c = m[0][0]
+                holds = all(m[i][j] == (c if i == j else _Q0)
+                            for i in range(k) for j in range(k))
+                tr = _Q0
+                for i in range(k):
+                    tr = qadd(tr, m[i][i])
+                out[(la, lb)] = (m, holds, qscale(tr, _F(1, k)))
+        return out
 
-    # Verify C matrix is (1/d) * I_{d²}
-    C_diag_expected = 1.0 / d
-    for a in range(d):
-        for b in range(d):
-            Eab = E_op(a, b, d)
-            Eab_dag = mat_dag(Eab)
-            EabdagEab = mat_mult(Eab_dag, Eab)
-            rho_E = mat_mult(rho, EabdagEab)
-            c_diag = mat_tr(rho_E).real
-            check(abs(c_diag - C_diag_expected) < 1e-12,
-                  f"C_{{({a}{b}),({a}{b})}} = {c_diag:.6f} = 1/d = {C_diag_expected:.6f}")
+    # ---- five-qubit Pauli machinery (exact) ------------------------------
+    _P1 = {'I': ((0, _Q1), (1, _Q1)),
+           'X': ((1, _Q1), (0, _Q1)),
+           'Z': ((0, _Q1), (1, (_F(-1), _F(0)))),
+           'Y': ((1, (_F(0), _F(1))), (0, (_F(0), _F(-1))))}
 
-    # Verify C is proportional to identity (non-degenerate code condition)
-    # All diagonal entries = 1/d, all off-diagonal = 0: already verified above
+    def pauli_op(s):
+        n = len(s)
+        out = {}
+        for col in range(1 << n):
+            row, amp = 0, _Q1
+            for q, ch in enumerate(s):
+                bit = (col >> (n - 1 - q)) & 1
+                nb, a = _P1[ch][bit]
+                row |= nb << (n - 1 - q)
+                amp = qmul(amp, a)
+            out[(row, col)] = amp
+        return out
 
-    # Verify for a trace-zero operator (Pauli X for d=2, generalized for d=3):
-    # E = |0><1| - |1><0| (anti-hermitian, trace-zero)
-    # Tr(ρ E†E) = (1/d)Tr(E†E) > 0 → error is detectable
-    E_test = E_op(0, 1, d)  # |0><1|
-    E_test_dag = mat_dag(E_test)
-    E_test_dag_E_test = mat_mult(E_test_dag, E_test)  # = |1><1|
-    rho_E = mat_mult(rho, E_test_dag_E_test)
-    c_test = mat_tr(rho_E).real
-    check(abs(c_test - 1.0/d) < 1e-12,
-          f"Tr(ρ E†E) = {c_test:.6f} = 1/d > 0: non-identity errors detectable")
+    # ---- append-and-record leg inventory --------------------------------
+    DECLARED_LEGS = (
+        'hs_gram_of_matrix_units_exact',
+        'hs_gram_is_basis_general',
+        'kl_operator_condition_fails_on_declared_code',
+        'maximally_mixed_is_invariant_under_a_nonscalar_error',
+        'in_span_channel_is_not_injective',
+        'code_projector_tie_to_declared_code_space',
+        'positive_control_tie_to_banked_five_qubit_certificate',
+        'positive_control_falsifiable',
+        'scalar_is_not_the_operator_condition',
+        'd_eff_arithmetic_is_arithmetic',
+        'returned_record_is_free_of_the_barred_vocabulary',
+    )
+    legs_run = []
+    fails = []
 
-    # Scale to APF: d_eff = 102
-    # All d⁴ KL conditions hold with C_{(ab),(cd)} = (1/d_eff) δ_ac δ_bd
-    # by exact same algebra (no numerical approximation)
-    d_eff = 102
-    C_scale_apf = 1.0 / d_eff
-    check(C_scale_apf > 0,
-          f"For d_eff={d_eff}: C diagonal = 1/{d_eff} = {C_scale_apf:.6f} > 0")
-    check(abs(C_scale_apf - 1.0/d_eff) < 1e-15,
-          f"C ∝ I_{{d_eff²}}: non-degenerate code condition satisfied for d_eff={d_eff}")
+    def leg(label, ok, evidence):
+        legs_run.append(label)
+        if not ok:
+            fails.append('%s: %s' % (label, evidence))
+
+    D_VALUES = (2, 3, 4)
+
+    # =====================================================================
+    # LEG 1 (identity) -- the HS Gram matrix of the matrix units
+    # =====================================================================
+    gram_pairs = {}
+    gram_bad = 0
+    declared_tables = {}
+    declared_errors = {}
+    for d in D_VALUES:
+        basis = [{i: _Q1} for i in range(d)]
+        errs = [((a, b), {(a, b): _Q1}) for a in range(d) for b in range(d)]
+        declared_errors[d] = errs
+        tab = code_tables(basis, errs)
+        declared_tables[d] = tab
+        gram_pairs[d] = len(tab)
+        for (la, lb), (_m, _h, sc) in tab.items():
+            want = (_F(1, d), _F(0)) if la == lb else _Q0
+            if sc != want:
+                gram_bad += 1
+    n_gram_total = sum(gram_pairs.values())
+    leg('hs_gram_of_matrix_units_exact',
+        gram_bad == 0 and gram_pairs == {d: d ** 4 for d in D_VALUES}
+        and tuple(D_VALUES) == (2, 3, 4)
+        and all(len(declared_errors[d]) == d * d for d in D_VALUES),
+        {'pairs_per_d': gram_pairs, 'deviations': gram_bad,
+         'span_size_per_d': dict((str(d), len(declared_errors[d]))
+                                 for d in D_VALUES),
+         'dimensions_pinned': list(D_VALUES),
+         'note': 'the normalised Hilbert-Schmidt Gram matrix of an '
+                 'orthonormal operator basis, exact; the executed dimension '
+                 'set and the span size are enforced here, not reported'})
+
+    # =====================================================================
+    # LEG 2 (identity) -- the same table on a SECOND orthonormal basis
+    # =====================================================================
+    d2 = 4
+    w4 = (_Q1, (_F(0), _F(1)), (_F(-1), _F(0)), (_F(0), _F(-1)))
+    cs_errors = []
+    for j in range(d2):
+        for k in range(d2):
+            op = {}
+            for m in range(d2):
+                op[((m + j) % d2, m)] = qscale(w4[(k * m) % d2], _F(1, 2))
+            cs_errors.append(((j, k), op))
+    cs_tab = code_tables([{i: _Q1} for i in range(d2)], cs_errors)
+    cs_bad = 0
+    for (la, lb), (_m, _h, sc) in cs_tab.items():
+        want = (_F(1, d2), _F(0)) if la == lb else _Q0
+        if sc != want:
+            cs_bad += 1
+    leg('hs_gram_is_basis_general',
+        cs_bad == 0 and len(cs_tab) == d2 ** 4 and len(cs_errors) == d2 ** 2,
+        {'basis': 'clock-and-shift X^j Z^k / sqrt(d) at d=%d' % d2,
+         'pairs': len(cs_tab), 'deviations': cs_bad,
+         'note': 'the identity is a fact about orthonormal operator bases; '
+                 'a second basis executes that scope'})
+
+    # =====================================================================
+    # LEG 3 (forcing) -- the KL OPERATOR condition on the declared code
+    # =====================================================================
+    kl_fail_per_d = {}
+    kl_expect_per_d = {}
+    first_failing = {}
+    max_dev = {}
+    set_exact_ok = True
+    for d in D_VALUES:
+        tab = declared_tables[d]
+        failing = set(k for k, (_m, holds, _s) in tab.items() if not holds)
+        first = None
+        for a in range(d):
+            for b in range(d):
+                for c in range(d):
+                    for e in range(d):
+                        if first is None and ((a, b), (c, e)) in failing:
+                            first = ((a, b), (c, e))
+        expected = set(((a, b), (c, e))
+                       for a in range(d) for b in range(d)
+                       for c in range(d) for e in range(d) if a == c)
+        if failing != expected:
+            set_exact_ok = False
+        kl_fail_per_d[d] = len(failing)
+        kl_expect_per_d[d] = d ** 3
+        first_failing[d] = str(first)
+        if first is None:
+            max_dev[d] = None
+        else:
+            m_first = tab[first][0]
+            dev2 = max(qabs2(qsub(m_first[i][j],
+                                  (_F(1, d), _F(0)) if i == j else _Q0))
+                       for i in range(d) for j in range(d))
+            max_dev[d] = _F(d - 1, d) if dev2 == _F(d - 1, d) ** 2 else None
+    leg('kl_operator_condition_fails_on_declared_code',
+        set_exact_ok
+        and kl_fail_per_d == kl_expect_per_d
+        and all(kl_fail_per_d[d] > 0 for d in D_VALUES)
+        and all(first_failing[d] == '((0, 0), (0, 0))' for d in D_VALUES)
+        and all(max_dev[d] == _F(d - 1, d) for d in D_VALUES),
+        {'failing_per_d': kl_fail_per_d, 'expected_per_d': kl_expect_per_d,
+         'failing_set_is_exactly_a_equals_c': set_exact_ok,
+         'first_failing_pair': first_failing,
+         'max_deviation_exact': dict((d, str(max_dev[d])) for d in D_VALUES),
+         'note': 'P = I_d from the declared unit rate; the pairs with a != c '
+                 'come out zero and pass vacuously'})
+
+    # =====================================================================
+    # LEG 4 (forcing) -- a non-scalar unitary that fixes I/d exactly
+    # =====================================================================
+    inv_ok = True
+    inv_ev = {}
+    for d in D_VALUES:
+        U = dict((((j + 1) % d, j), _Q1) for j in range(d))
+        Ud = op_dag(U)
+        rho = dict(((i, i), (_F(1, d), _F(0))) for i in range(d))
+        unitary = op_eq(op_mul(Ud, U), op_eye(d))
+        fixed = op_eq(op_mul(op_mul(U, rho), Ud), rho)
+        scalar = is_scalar_multiple_of_eye(U, d)
+        moved = op_apply(U, {0: _Q1}) != {0: _Q1}
+        helper_pos = (is_scalar_multiple_of_eye(op_eye(d), d)
+                      and is_scalar_multiple_of_eye(
+                          op_scale(op_eye(d), _F(2)), d))
+        inv_ev[str(d)] = {'unitary': unitary, 'rho_fixed_exactly': fixed,
+                          'is_scalar_multiple_of_I': scalar,
+                          'moves_ket_0': moved,
+                          'helper_true_on_I_and_on_2I': helper_pos}
+        if not (unitary and fixed and (not scalar) and moved and helper_pos):
+            inv_ok = False
+    leg('maximally_mixed_is_invariant_under_a_nonscalar_error', inv_ok,
+        {'per_d': inv_ev, 'operator': 'cyclic shift U|j> = |j+1 mod d>',
+         'note': 'the operator is inside the declared span, is not a '
+                 'multiple of I, and leaves I/d exactly where it was'})
+
+    # =====================================================================
+    # LEG 5 (forcing) -- an in-span channel with no left inverse
+    # =====================================================================
+    reset_ok = True
+    reset_ev = {}
+    for d in D_VALUES:
+        K = [{(0, j): _Q1} for j in range(d)]
+        S = {}
+        for Kj in K:
+            S = op_add(S, op_mul(op_dag(Kj), Kj))
+        tp = op_eq(S, op_eye(d))
+
+        def R(X, _K=K):
+            out = {}
+            for Kj in _K:
+                out = op_add(out, op_mul(op_mul(Kj, X), op_dag(Kj)))
+            return out
+
+        rho = dict(((i, i), (_F(1, d), _F(0))) for i in range(d))
+        in0 = {(0, 0): _Q1}
+        in1 = {(1, 1): _Q1}
+        inputs_distinct = (not op_eq(rho, in0) and not op_eq(in0, in1)
+                           and not op_eq(rho, in1))
+        o_rho, o_0, o_1 = R(rho), R(in0), R(in1)
+        collapses = op_eq(o_rho, o_0) and op_eq(o_0, o_1)
+        moves_rho = not op_eq(o_rho, rho)
+        tab = code_tables([{i: _Q1} for i in range(d)],
+                          [(j, K[j]) for j in range(d)])
+        n_fail = sum(0 if holds else 1 for (_m, holds, _s) in tab.values())
+        reset_ev[str(d)] = {'trace_preserving': tp,
+                            'three_distinct_inputs_one_output': collapses,
+                            'inputs_distinct': inputs_distinct,
+                            'moves_I_over_d': moves_rho,
+                            'kl_pairs_failing': n_fail, 'kl_pairs': len(tab)}
+        if not (tp and collapses and inputs_distinct and moves_rho
+                and n_fail == d * d and len(tab) == d * d):
+            reset_ok = False
+    leg('in_span_channel_is_not_injective', reset_ok,
+        {'per_d': reset_ev, 'channel': 'Kraus K_j = |0><j|, inside the span',
+         'note': 'three distinct inputs go to one output, so no map inverts '
+                 'the channel on the code -- and the channel does move I/d; '
+                 'the two properties come apart here'})
+
+    # =====================================================================
+    # LEG 6 (value tie) -- P = I_d read from the declared code space
+    # =====================================================================
+    cs_rec = check_L_QEC_code_space()
+    cs_art = cs_rec.get('artifacts', {})
+    code_rate_str = str(cs_art.get('code_rate'))
+    d_eff_declared = cs_art.get('d_eff')
+    try:
+        rate_is_unity = _F(code_rate_str) == 1
+    except (ValueError, ZeroDivisionError):
+        rate_is_unity = False
+    leg('code_projector_tie_to_declared_code_space',
+        rate_is_unity and code_rate_str == '1'
+        and isinstance(d_eff_declared, int) and d_eff_declared == 102
+        and cs_rec.get('passed') is True,
+        {'code_rate_read': code_rate_str, 'd_eff_read': d_eff_declared,
+         'source': 'check_L_QEC_code_space returned record',
+         'note': 'unit rate with the full per-type operator algebra is what '
+                 'makes P = I_d; if that record moves off unity this leg '
+                 'moves with it'})
+
+    # =====================================================================
+    # LEG 7 (value tie) -- the [[5,1,3]] certificate, CONSUMED
+    # =====================================================================
+    FIVEQ_STABS = ('XZZXI', 'IXZZX', 'XIXZZ', 'ZXIXZ')
+    P5 = op_eye(32)
+    for g in FIVEQ_STABS:
+        P5 = op_mul(P5, op_scale(op_add(op_eye(32), pauli_op(g)), _F(1, 2)))
+    cw_mine = []
+    for col in (0, 31):
+        v = dict((r, a) for (r, c), a in P5.items() if c == col)
+        nrm2 = sum(qabs2(a) for a in v.values())
+        cw_mine.append(dict((r, qscale(a, _F(4))) for r, a in v.items())
+                       if nrm2 == _F(1, 16) else v)
+    ortho = (vec_ip(cw_mine[0], cw_mine[0]) == _Q1
+             and vec_ip(cw_mine[1], cw_mine[1]) == _Q1
+             and vec_ip(cw_mine[0], cw_mine[1]) == _Q0
+             and vec_ip(cw_mine[1], cw_mine[0]) == _Q0)
+    P_from_cw = {}
+    for b in cw_mine:
+        for r, a in b.items():
+            for c, e in b.items():
+                v = qmul(a, qconj(e))
+                if v != _Q0:
+                    P_from_cw[(r, c)] = qadd(P_from_cw.get((r, c), _Q0), v)
+    reduction_ok = op_eq(P_from_cw, P5)
+    hermitian = op_eq(op_dag(P5), P5)
+    tr_P5 = _Q0
+    for i in range(32):
+        tr_P5 = qadd(tr_P5, P5.get((i, i), _Q0))
+    stab_fixed = all(op_eq(op_mul(pauli_op(g), P5), P5) for g in FIVEQ_STABS)
+
+    E5_LABELS = ['IIIII']
+    for q in range(5):
+        for ch in 'XYZ':
+            p = list('IIIII')
+            p[q] = ch
+            E5_LABELS.append(''.join(p))
+    tab5 = code_tables(cw_mine, [(lab, pauli_op(lab)) for lab in E5_LABELS])
+    n5_pairs = len(tab5)
+    n5_fail = sum(0 if holds else 1 for (_m, holds, _s) in tab5.values())
+    c_is_delta = all(tab5[(la, lb)][0][0][0] == (_Q1 if la == lb else _Q0)
+                     for la in E5_LABELS for lb in E5_LABELS)
+
+    from apf import vacuum_label_code as _vlc
+    cw_banked = _vlc._fiveq_codewords()
+    banked_worst = _vlc._fiveq_kl_certificate(cw_banked)
+    max_projector_gap = 0.0
+    for r in range(32):
+        for c in range(32):
+            pb = sum(cw_banked[i].get(r, 0j)
+                     * cw_banked[i].get(c, 0j).conjugate() for i in range(2))
+            pm = P5.get((r, c), _Q0)
+            gap = abs(pb - complex(float(pm[0]), float(pm[1])))
+            if gap > max_projector_gap:
+                max_projector_gap = gap
+    leg('positive_control_tie_to_banked_five_qubit_certificate',
+        ortho and reduction_ok and hermitian and stab_fixed
+        and tr_P5 == (_F(2), _F(0))
+        and n5_pairs == len(E5_LABELS) ** 2 and len(E5_LABELS) == 16
+        and n5_fail == 0 and c_is_delta
+        and max_projector_gap == 0.0 and banked_worst == 0.0,
+        {'codewords_orthonormal': ortho,
+         'projector_equals_sum_of_codeword_outer_products': reduction_ok,
+         'projector_hermitian': hermitian,
+         'trace_of_projector': str(tr_P5[0]),
+         'fixed_by_all_four_stabilizers': stab_fixed,
+         'pairs': n5_pairs, 'failing': n5_fail,
+         'C_ab_equals_delta_ab': c_is_delta,
+         'max_projector_gap_to_banked': max_projector_gap,
+         'banked_certificate_worst_deviation': banked_worst,
+         'consumed_from': 'apf.vacuum_label_code._fiveq_codewords, '
+                          'apf.vacuum_label_code._fiveq_kl_certificate',
+         'note': 'the projector '
+                 'this check forms from the four stabilizer strings is '
+                 'compared entrywise to the projector formed from the banked '
+                 'codewords'})
+
+    # =====================================================================
+    # LEG 8 (control) -- the positive control can go red
+    # =====================================================================
+    E5B_LABELS = E5_LABELS + ['XXIII']
+    tab5b = code_tables(cw_mine, [(lab, pauli_op(lab)) for lab in E5B_LABELS])
+    fail_b = set(k for k, (_m, holds, _s) in tab5b.items() if not holds)
+    first_b = None
+    for la in E5B_LABELS:
+        for lb in E5B_LABELS:
+            if first_b is None and (la, lb) in fail_b:
+                first_b = (la, lb)
+    leg('positive_control_falsifiable',
+        len(fail_b) > 0 and len(fail_b) == 2
+        and len(tab5b) == len(E5B_LABELS) ** 2 and len(E5B_LABELS) == 17
+        and first_b == ('IIIZI', 'XXIII'),
+        {'span_size': len(E5B_LABELS), 'pairs': len(tab5b),
+         'failing': len(fail_b), 'first_failing_pair': str(first_b),
+         'note': 'one weight-2 operator added to a weight-<=1 span; without '
+                 'this the positive control would be a leg that cannot fail'})
+
+    # =====================================================================
+    # LEG 9 (control) -- one computation, two codes, opposite verdicts
+    # =====================================================================
+    d_disc = 3
+    tab_A = declared_tables[d_disc]
+    errs_A = declared_errors[d_disc]
+    scalar_pattern_A = all(
+        tab_A[(la, lb)][2] == ((_F(1, d_disc), _F(0)) if la == lb else _Q0)
+        for la, _x in errs_A for lb, _y in errs_A)
+    operator_A = all(holds for (_m, holds, _s) in tab_A.values())
+    scalar_pattern_B = all(tab5[(la, lb)][2] == (_Q1 if la == lb else _Q0)
+                           for la in E5_LABELS for lb in E5_LABELS)
+    operator_B = all(holds for (_m, holds, _s) in tab5.values())
+    leg('scalar_is_not_the_operator_condition',
+        scalar_pattern_A and scalar_pattern_B
+        and (operator_A is False) and (operator_B is True),
+        {'declared_code': {'scalar_has_the_c_times_delta_shape':
+                           scalar_pattern_A,
+                           'operator_identity_holds': operator_A},
+         'five_qubit_code': {'scalar_has_the_c_times_delta_shape':
+                             scalar_pattern_B,
+                             'operator_identity_holds': operator_B},
+         'note': 'both rows come out of code_tables, the single routine in '
+                 'this check; the scalar returns the same shape on both '
+                 'codes and the operator identity returns opposite verdicts'})
+
+    # =====================================================================
+    # LEG 10 (control) -- literal arithmetic on a declared constant
+    # =====================================================================
+    diag_by_d = {}
+    for d in tuple(D_VALUES) + (5,):
+        diag_by_d[d] = code_tables([{i: _Q1} for i in range(d)],
+                                   [((0, 0), {(0, 0): _Q1})])[((0, 0),
+                                                               (0, 0))][2]
+    d_eff_scalar = _F(1, d_eff_declared) if d_eff_declared else None
+    leg('d_eff_arithmetic_is_arithmetic',
+        all(diag_by_d[d] == (_F(1, d), _F(0)) for d in diag_by_d)
+        and d_eff_scalar == _F(1, 102),
+        {'scalar_diagonal_by_d': dict((str(d), str(diag_by_d[d][0]))
+                                      for d in diag_by_d),
+         'scalar_at_the_declared_constant': str(d_eff_scalar),
+         'label': 'literal_arithmetic_on_a_declared_constant',
+         'note': 'the diagonal is 1/d at every d, including a d with no '
+                 'standing in this framework; the value at the declared '
+                 'constant is that same arithmetic and carries no further '
+                 'content about it'})
+
+    # =====================================================================
+    # The returned strings, every number in them computed
+    # =====================================================================
+    name = ('L_QEC_knill_laflamme: The HS Gram Identity Is Not the KL '
+            'Condition; KL Fails on the Declared Unit-Rate Code [P_math]')
+    summary = (
+        'Computes, at d in %s: the '
+        'normalised Hilbert-Schmidt Gram matrix of the matrix-unit basis, '
+        'Tr((I/d) E_ab^dag E_ce) = delta_ac delta_be / d over all %d pairs, '
+        'and the same table over a second orthonormal operator basis '
+        '(clock-and-shift at d=%d, %d pairs). It is named for what it is: '
+        'the HS Gram identity of an orthonormal operator basis, executed here '
+        'on two different orthonormal operator bases and not on all of them. '
+        'It is not the Knill-Laflamme condition, '
+        'which is the operator identity P E_a^dag E_b P = c_ab P on a '
+        'declared code projector; the scalar is the normalised trace of that '
+        'left-hand side. On the code this framework declares '
+        '(L_QEC_code_space, code rate %s read by value -- a reading of that '
+        'record on which P = I_d) with the matrix-unit span, the '
+        'operator identity FAILS: %s of %s pairs per d, exactly the pairs '
+        'with a = c, first at ((0, 0), (0, 0)), exact deviation from '
+        '(1/d)I %s. A '
+        'non-scalar unitary (the cyclic shift) leaves I/d exactly fixed at '
+        'every d executed. An in-span trace-preserving channel (Kraus '
+        '|0><j|) sends three distinct inputs to one output, so no map '
+        'inverts it on the code, while it does move I/d. The operator '
+        'identity DOES hold on a declared code with a declared span: the '
+        '[[5,1,3]] code, %d of %d identities with C_ab = delta_ab, on a code '
+        "space tied entrywise by value to vacuum_label_code's banked "
+        'codewords (max projector gap %s over 1024 '
+        'entries), and it goes red when one weight-2 operator is added (%d '
+        'of %d pairs). Scope: d in %s for the declared code and span; the '
+        '[[5,1,3]] code with the weight-<=1 span; nothing beyond.'
+        % (str(list(D_VALUES)), n_gram_total, d2, len(cs_tab), code_rate_str,
+           str([kl_fail_per_d[d] for d in D_VALUES]),
+           str([d ** 4 for d in D_VALUES]),
+           str(dict((d, str(max_dev[d])) for d in D_VALUES)),
+           n5_pairs - n5_fail, n5_pairs, str(max_projector_gap),
+           len(fail_b), len(tab5b), str(list(D_VALUES))))
+    key_result = (
+        'The HS Gram identity of the matrix units holds exactly at d in %s; '
+        'it is not the KL condition; on the declared unit-rate code (P = I) '
+        'the KL operator identity fails on every pair with a = c (%s of %s); '
+        'KL holds on the [[5,1,3]] code, %d of %d, on a code space tied '
+        "entrywise by value to vacuum_label_code's banked codewords. "
+        '[P_math]'
+        % (str(list(D_VALUES)), str([kl_fail_per_d[d] for d in D_VALUES]),
+           str([d ** 4 for d in D_VALUES]), n5_pairs - n5_fail, n5_pairs))
+    may_not_cite = (
+        'as evidence that the Knill-Laflamme operator identity holds on this '
+        "framework's code: on the declared unit-rate reading, with P = I and "
+        'the full matrix-unit span, it fails at the first pair, executed',
+        'as evidence about the code-theoretic character of that code (the C '
+        'proportional to I reading and anything read off it): no leg here '
+        'computes it',
+        'as evidence that a non-scalar error moves the state I/d -- a '
+        'non-scalar unitary that leaves it exactly fixed is executed here -- '
+        'or that moving the state would be enough, since an in-span channel '
+        'that moves it and has no left inverse is also executed here',
+        'as establishing that there is no code: what is executed is a '
+        'verdict on the declared code and the declared span; a subsystem '
+        'code, a smaller span or a different projector are untested',
+        'as an adjudication of L_QEC_code_space, L_QEC_product_structure, '
+        'L_QEC_distance or L_QEC_wedge_duality',
+        'as a claim about the Markov condition I(A;C|B) = 0, the Petz map, '
+        'strong subadditivity or T_QEC-Markov: no leg computes any of them',
+        'as a claim about the horizon, the de Sitter entropy, the Bekenstein '
+        'bound, the wedge, entanglement-wedge reconstruction, the Page '
+        'curve, Omega_Lambda, Omega_m, the 42/19 partition or the 61 types',
+        'as evidence about physics: no capacity, dimension, entropy or '
+        'horizon quantity is asserted, moved or evaluated by any leg',
+        'as carrying the Target 10 framing: this is one lemma of five and '
+        'the framing is prose elsewhere',
+        "as a discovery that this corpus's claim was scope-limited: a "
+        'docstring in another module named the scope limit on 2026-07-02 and '
+        'declined to act; it is cited here as subsumption evidence',
+        'as evidence for or against anything on the Born arc, and as '
+        'lifting or approaching any standing fence',
+        'as a statement about all d: the executed dimensions are 2, 3 and 4 '
+        'and this object states that bound rather than generalising past it',
+        'as a heavy pass, a crystal-signature run or a native run of '
+        'anything: none was performed by this object',
+    )
+    artifacts = {
+        'd_values_executed':               list(D_VALUES),
+        'hs_gram_pairs_per_d':             dict((str(d), gram_pairs[d])
+                                                for d in D_VALUES),
+        'hs_gram_pairs_second_basis':      len(cs_tab),
+        'kl_operator_pairs_failing_per_d': dict((str(d), [kl_fail_per_d[d],
+                                                          kl_expect_per_d[d]])
+                                                for d in D_VALUES),
+        'first_failing_pair':              dict((str(d), first_failing[d])
+                                                for d in D_VALUES),
+        'max_operator_deviation_exact':    dict((str(d), str(max_dev[d]))
+                                                for d in D_VALUES),
+        'invariant_nonscalar_error':       inv_ev,
+        'reset_channel_noninjective':      reset_ev,
+        'five_qubit_kl_pairs':             n5_pairs,
+        'five_qubit_kl_failing':           n5_fail,
+        'five_qubit_falsifier':            [len(fail_b), len(tab5b),
+                                            str(first_b)],
+        'five_qubit_certificate_consumed_from':
+            'apf.vacuum_label_code._fiveq_codewords / _fiveq_kl_certificate; '
+            'max projector gap %s over 1024 entries; banked worst deviation '
+            '%s'
+            % (max_projector_gap, banked_worst),
+        'code_rate_consumed':              code_rate_str,
+        'd_eff_declared':                  d_eff_declared,
+        'leg_inventory':                   list(DECLARED_LEGS),
+    }
+
+    # =====================================================================
+    # LEG 11 (control) -- the returned vocabulary, count ENFORCED at 0
+    # =====================================================================
+    BARRED = ('satisf', 'degener', 'detect', 'recover', 'correct', 'protect',
+              'shield', 'information-efficient', 'optimal', 'strongest',
+              'unique', 'propagat', 'syndrome', 'holds for d_eff')
+
+    def _strings(obj):
+        if isinstance(obj, str):
+            yield obj
+        elif isinstance(obj, dict):
+            for k, v in obj.items():
+                yield str(k)
+                for s in _strings(v):
+                    yield s
+        elif isinstance(obj, (list, tuple)):
+            for v in obj:
+                for s in _strings(v):
+                    yield s
+
+    scanned = [name, summary, key_result]
+    scanned.extend(may_not_cite)
+    scanned.extend(_strings(artifacts))
+    scanned.extend(['L_QEC_code_space', 'L_QEC_product_structure',
+                    'L_self_exclusion', 'T_deSitter_entropy',
+                    'L_QEC_distance', 'L_TN_product_state'])
+    scanned.append(check_L_QEC_knill_laflamme.__doc__ or '')
+    hits = []
+    for s in scanned:
+        low = s.lower()
+        for w in BARRED:
+            if w in low:
+                hits.append((w, s[:60]))
+    leg('returned_record_is_free_of_the_barred_vocabulary',
+        len(hits) == 0 and len(scanned) > 20,
+        {'fields_scanned': len(scanned), 'hits': len(hits),
+         'first_hits': hits[:3],
+         'note': 'the vocabulary the retired record used is described in the '
+                 'lane record and not reproduced here; a retraction that '
+                 'quotes what it retires is counted by every text instrument '
+                 'as a fresh use of it (R4@2026-08-09)'})
+
+    # ---- append-and-record leg-inventory contract, on the bank path ------
+    have = tuple(sorted(legs_run))
+    want = tuple(sorted(DECLARED_LEGS))
+    if have != want:
+        fails.append('leg inventory mismatch: missing=%s extra=%s'
+                     % (sorted(set(want) - set(have)),
+                        sorted(set(have) - set(want))))
+    if len(legs_run) != len(set(legs_run)):
+        fails.append('leg inventory: a declared leg ran more than once')
 
     return _result(
-        name='L_QEC_knill_laflamme: KL Conditions Satisfied for Maximally Mixed State [P]',
-        tier=4, epistemic='P',
-        summary=(
-            f'Verified all {total_checks} KL conditions for d={d} representative: '
-            f'Tr(ρ E_ab†E_cd) = (1/{d})δ_ac·δ_bd (0 violations). '
-            f'C matrix = (1/{d})·I_{{d²}}: non-degenerate code. '
-            f'Same algebra holds exactly for d_eff=102 (same proof, larger d). '
-            f'Interpretation: ρ=I/d_eff is the unique maximally mixed code state '
-            f'such that any non-scalar error is detectable from the entropy decrease. '
-            f'KL condition with C∝I is the strongest form (no degenerate errors).'
-        ),
-        key_result=(
-            f'KL satisfied: Tr(ρ E_ab†E_cd)=(1/d_eff)δ_ac·δ_bd for all a,b,c,d. '
-            f'C=(1/d_eff)·I: non-degenerate code. Verified d=3 → holds d_eff=102. [P]'
-        ),
+        name=name,
+        tier=4, epistemic='P_math',
+        summary=summary,
+        key_result=key_result,
         dependencies=['L_QEC_code_space', 'L_QEC_product_structure',
                       'L_self_exclusion', 'T_deSitter_entropy'],
         cross_refs=['L_QEC_distance', 'L_TN_product_state'],
-        artifacts={
-            'd_representative': d,
-            'd_eff_APF':        102,
-            'n_KL_checks':      total_checks,
-            'n_violations':     0,
-            'C_matrix':         f'(1/d)·I_{{d²}}: diagonal = {round(C_diag_expected, 6)}',
-            'C_apf_diagonal':   round(C_scale_apf, 8),
-            'code_type':        'non-degenerate (C ∝ identity)',
-        },
+        artifacts=artifacts,
+        fails=fails,
+        may_not_cite=may_not_cite,
+        passed=not fails,
+        status='PASS' if not fails else 'FAIL',
     )
-
 
 def check_L_QEC_distance():
     """L_QEC_distance: Two-Sector Code Distance from T11 Block Structure [P].
