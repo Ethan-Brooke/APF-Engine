@@ -1798,113 +1798,401 @@ def check_L_gauge_template_uniqueness():
     )
 
 
+# Named premises of the conditional theorem this record states.  They are
+# premise names in the GT5 underscored spelling, they are not grade tokens
+# and nothing about `epistemic` follows from them; they are single-sourced
+# here and consumed at every site that states the theorem.
+R_B1_PRIME_ORIENTED_ROBUSTNESS = 'R_B1_PRIME_ORIENTED_ROBUSTNESS'
+R_B1_PRIME_ANTIUNITARY_SYMMETRY_COMPLETENESS = (
+    'R_B1_PRIME_ANTIUNITARY_SYMMETRY_COMPLETENESS')
+_B1_PRIME_PREMISES = (R_B1_PRIME_ORIENTED_ROBUSTNESS,
+                      R_B1_PRIME_ANTIUNITARY_SYMMETRY_COMPLETENESS)
+
+
 def check_B1_prime():
-    """B1_prime: Complex Carrier from Oriented Composite Robustness.
+    """B1_prime: the conditional complex-selection theorem, and the
+    restricted family minimum this record actually computes.
 
-    STATEMENT: Let V be a faithful irreducible carrier for the confining
-    sector. Suppose:
-      (1) L_irr-stable gauge-singlet composites B and B* exist whose
-          oriented distinction is robust under admissible refinements.
-      (2) This distinction is not enforced by an independent external
-          grading channel (minimality clause from A1).
-    Then V must be of complex type: V is not isomorphic to V* as
-    G-modules.
+    THE THEOREM THIS RECORD STATES, AND DOES NOT COMPUTE.  The live home
+    of this lemma is the Paper 2 Technical Supplement II v2.9, Section 10,
+    Theorem 10.5 (thm:complex-selection), titled "Conditional complex
+    representation-type selection": under two named assumptions -- Oriented
+    robustness (Assumption 10.3) and Antiunitary symmetry completeness
+    (Assumption 10.4) -- an admissible irreducible carrier supporting the
+    distinguished oriented composite is of complex type.  The collapse
+    step is Lemma 10.2 (lem:orientation-collapse).  NEITHER ASSUMPTION IS
+    COMPUTED HERE AND NO BANKED CHECK COMPUTES EITHER.  They are premises
+    before this record and premises after it, and the supplement says so
+    in its own words: an antiunitary may fail to preserve the cost, the
+    anchors or the selected invariant line, so antiunitary symmetry
+    completeness is a substantive premise.  The archived Paper 2
+    Supplement v4.1 Section 3.3 is this lemma's earlier provenance and is
+    not its live home.
 
-    SOURCE: Paper 7 v8.5, Section 6.3 (Lemma B1').
-    FORMER STATUS: Bridge B1 was [Ps]. NOW CLOSED at [P].
+    WHAT IS COMPUTED HERE.  Proposition 10.8 (prop:su-family), the
+    supplement's own restricted and provable minimum, over the defining
+    representations of the special-unitary family:
+      (1) the defining carrier's representation type, from the diagram
+          symmetry of its own highest weight;
+      (2) the degree at which the exterior powers of that carrier first
+          carry a one-dimensional invariant line, which is the rank plus
+          one;
+      (3) the adjoint dimensions of the family and their strict increase,
+          READ BY VALUE from check_L_gauge_template_uniqueness's returned
+          record rather than re-derived;
+    and the least adjoint dimension among the members that are of complex
+    type and carry that line at degree three.
 
-    PROOF:
-      Suppose V is real or pseudoreal. Then V ~ V*, so there exists a
-      G-equivariant antilinear map J: V -> V. Extend tensorially:
-      J^{otimes n}: V^{otimes n} -> V^{otimes n}. This is a G-module
-      isomorphism between the composite space and its conjugate. It
-      identifies any gauge-invariant singlet subspace built from V^{otimes n}
-      with its conjugate built from V*^{otimes n}.
+    WHAT IS NOT COMPUTED HERE.  Whatever this record computes about the
+    family, it computes NOTHING about the conditional theorem above, and
+    it computes nothing about the pseudoreal branch: the live theorem
+    covers that branch by premise rather than by a case split, and no leg
+    here claims it.  The correspondence between self-conjugacy and the
+    existence of an equivariant antilinear map is definitional; it is
+    asserted, not computed, and it is not legged.
 
-      Therefore the theory admits an admissibility-preserving refinement --
-      a relabeling internal to the carrier -- that exchanges B <-> B*.
-      The oriented distinction is not robust: it can be removed without
-      adding capacity.
+    THE UNRESTRICTED CLAIM IS FALSE, and its refutation is a permanent
+    control here.  The supplement's own appendix of elementary
+    counterexamples exhibits the compact finite group Z_3 with a faithful
+    one-dimensional character whose third tensor power is trivial.  The
+    restriction to the declared family is what makes the minimum
+    load-bearing rather than decorative.
 
-      To block this identification requires an independent external label
-      channel, violating assumption (2) and capacity minimality (A1).
-      Hence V is not isomorphic to V*: the carrier must be complex type.
-
-    COUNTEREXAMPLE (pseudoreal confinement):
-      SU(2) with fundamental rep (pseudoreal, V ~ V* via epsilon-tensor):
-      the epsilon-tensor provides exactly the J map. 'Baryon' and
-      'antibaryon' are the same singlet reached by different paths.
-
-    CONSEQUENCE: The ternary carrier (R1) must be complex 3-dim, not
-    real or pseudoreal. This closes bridge B1 and upgrades it from [Ps]
-    to [P].
-
-    STATUS: [P]. Dependencies: L_irr, L_irr_uniform, T3, A1.
+    DIRECTION OF THE VALUE TIE.  The record this check consumes declares
+    this one among its own dependencies, so the consumption runs against
+    the declared edge.  It is a value read at the pass and not a runtime
+    cycle: this check is called from the registry table alone and the
+    consumed check does not call it.  No dependency list moves.
     """
+    def _binom(n, k):
+        """Exact integer binomial coefficient; 0 outside 0 <= k <= n."""
+        if k < 0 or k > n:
+            return 0
+        num, den = 1, 1
+        for i in range(k):
+            num *= (n - i)
+            den *= (i + 1)
+        return num // den
 
-    # Verify the key mathematical facts
+    legs = {}
 
-    # SU(3) fundamental: complex (V != V*)
-    # Dynkin labels of fund = [1,0], conjugate = [0,1] -- distinct
-    su3_fund_dynkin = (1, 0)
-    su3_conj_dynkin = (0, 1)
-    su3_is_complex = (su3_fund_dynkin != su3_conj_dynkin)
-    check(su3_is_complex, "SU(3) fundamental must be complex")
+    # The declared family: defining representations of SU(n).  The rank of
+    # SU(n) is n - 1, so the rank-one member is n = 2.  Proposition 10.8
+    # declares n >= 3; the rank-one member is enumerated here as the
+    # boundary case and is absent from the consumed record for the same
+    # reason.
+    _family = tuple(range(2, 8))
 
-    # SU(2) fundamental: pseudoreal (V ~ V* via epsilon)
-    # Dynkin label [1] is self-conjugate
-    su2_fund_dynkin = (1,)
-    su2_conj_dynkin = (1,)
-    su2_is_pseudoreal = (su2_fund_dynkin == su2_conj_dynkin)
-    check(su2_is_pseudoreal, "SU(2) fundamental must be pseudoreal")
+    # ---- L1: representation type from the diagram's own reversal --------
+    # The defining carrier of SU(n) has highest weight (1, 0, ..., 0) in
+    # the Dynkin basis of A_{n-1}.  Conjugation acts by the diagram
+    # automorphism, which REVERSES the label tuple.  Self-conjugate iff
+    # the tuple is a palindrome.  No rule keyed on n is used.
+    _weights = {}
+    _self_conjugate = {}
+    for _n in _family:
+        _hw = tuple([1] + [0] * (_n - 2))
+        _conj = tuple(reversed(_hw))
+        _weights[_n] = (_hw, _conj)
+        _self_conjugate[_n] = (_hw == _conj)
+    _rank_one_self_conj = _self_conjugate[min(_family)]
+    _higher_all_complex = all(not _self_conjugate[_n] for _n in _family
+                              if _n > min(_family))
+    legs['L1_complex_type_over_the_family'] = (
+        _rank_one_self_conj and _higher_all_complex, (
+            'highest weight against its diagram reversal, member by '
+            'member: %s. The rank-one member comes back self-conjugate '
+            '(%s) and every larger member comes back of complex type '
+            '(%s).'
+            % ({_n: (list(_weights[_n][0]), list(_weights[_n][1]),
+                     _self_conjugate[_n]) for _n in _family},
+               _rank_one_self_conj, _higher_all_complex)))
 
-    # SU(3) admits trilinear invariant (epsilon_ijk) -- irreducible
-    # This cannot be factored into bilinear forms
-    su3_has_trilinear = True  # epsilon_{ijk} is the 3-form
-    check(su3_has_trilinear, "SU(3) must admit trilinear invariant")
+    # ---- L2: the invariant volume line and its degree --------------------
+    _line_degrees = {}
+    _exterior_dims = {}
+    _degree_matches_rank_plus_one = True
+    _unique_degree = True
+    for _n in _family:
+        _dims = {_k: _binom(_n, _k) for _k in range(1, _n + 1)}
+        _exterior_dims[_n] = _dims
+        _ones = sorted(_k for _k in _dims if _dims[_k] == 1)
+        _line_degrees[_n] = _ones
+        if len(_ones) != 1:
+            _unique_degree = False
+        elif _ones[0] != (_n - 1) + 1:
+            _degree_matches_rank_plus_one = False
+    _trilinear_line = {_n: (3 in _line_degrees[_n]) for _n in _family}
+    _bilinear_line = {_n: (2 in _line_degrees[_n]) for _n in _family}
+    legs['L2_invariant_volume_line_degree'] = (
+        _unique_degree and _degree_matches_rank_plus_one, (
+            'exterior-power dimensions of the defining carrier, member by '
+            'member: %s; exactly one non-trivial degree carries a '
+            'one-dimensional line in every member (%s) and it is the rank '
+            'plus one in every member (%s). Read off the same '
+            'computation: the members carrying that line at degree three '
+            'are %s and at degree two are %s. The degree equality is an '
+            'identity of this family, computed two ways here: from the '
+            'exterior-power dimensions and from the rank formula.'
+            % (_exterior_dims, _unique_degree, _degree_matches_rank_plus_one,
+               sorted(_n for _n in _family if _trilinear_line[_n]),
+               sorted(_n for _n in _family if _bilinear_line[_n]))))
 
-    # SU(2) singlets form from even-constituent composites only
-    # 2 x 2 -> 1 + 3 (has singlet), but 2 x 2 x 2 -> 2 + 2 + 4 (no singlet)
-    su2_bilinear_singlet = True  # 2-tensor epsilon_{ij} gives singlet
-    su2_trilinear_singlet = False  # no 3-tensor singlet for SU(2)
-    check(su2_bilinear_singlet, "SU(2) must have bilinear singlet")
-    check(not su2_trilinear_singlet, "SU(2) must lack trilinear singlet")
+    # ---- L3: the adjoint dimensions, CONSUMED by value -------------------
+    # The shared assertion helper of this module raises. The consumption
+    # is guarded in the form already landed in this file so that a raising
+    # sibling reddens the leg below instead of halting this check.
+    _consumed = {}
+    _consumed_ok = False
+    _consumed_note = ''
+    try:
+        _consumed = check_L_gauge_template_uniqueness().get('artifacts', {})
+        _consumed_ok = True
+    except Exception as _exc:                      # noqa: BLE001 - wrapped
+        _consumed_note = '%s: %s' % (type(_exc).__name__, _exc)
+    _pairs = [tuple(p) for p in _consumed.get('su_n_complex_candidates', ())]
+    _consumed_ranks = [p[0] for p in _pairs]
+    _consumed_dims = [p[1] for p in _pairs]
+    _dims_increasing = all(_consumed_dims[i] < _consumed_dims[i + 1]
+                           for i in range(len(_consumed_dims) - 1))
+    _dims_tie = all(d == n * n - 1 for n, d in _pairs)
+    _rank_one_absent = min(_family) not in _consumed_ranks
+    _rank_one_dim = min(_family) ** 2 - 1
+    _rank_one_below = bool(_consumed_dims) and _rank_one_dim < min(_consumed_dims)
+    legs['L3_adjoint_dimension_tie'] = (
+        _consumed_ok and bool(_pairs) and _dims_increasing and _dims_tie
+        and _rank_one_absent and _rank_one_below, (
+            'adjoint dimensions consumed from '
+            'check_L_gauge_template_uniqueness by value: %s; strictly '
+            'increasing across the consumed order: %s; each consumed '
+            'dimension against n^2 - 1 computed here: %s. The rank-one '
+            'member is absent from that record (%s) -- the consumed scan '
+            'declares n >= 3 -- so its adjoint dimension %s is computed '
+            'here and is below the least consumed dimension: %s. The '
+            'consumed record was read at this pass: %s.'
+            % (_pairs, _dims_increasing, _dims_tie, _rank_one_absent,
+               _rank_one_dim, _rank_one_below,
+               _consumed_note or _consumed_ok)))
 
-    # The J map: for pseudoreal V ~ V*, J^{otimes n} identifies
-    # composite with conjugate. For complex V != V*, no such map exists.
-    pseudoreal_has_J = True
-    complex_has_J = False
-    check(pseudoreal_has_J != complex_has_J, "Complex blocks J map")
+    # ---- L4: the restricted minimum, tied to the consumed optimum --------
+    _eligible = [(n, d) for n, d in _pairs
+                 if not _self_conjugate.get(n, True)
+                 and 3 in _line_degrees.get(n, ())]
+    _min_dim = min((d for _n, d in _eligible), default=None)
+    _argmin_rank = min((n for n, d in _eligible if d == _min_dim),
+                       default=None)
+    _optimal_N_c = _consumed.get('optimal_N_c')
+    _optimal_dim_G = _consumed.get('optimal_dim_G')
+    _argmin_tie = (_argmin_rank is not None
+                   and _argmin_rank == _optimal_N_c)
+    # The two further summand dimensions this file's own template solve
+    # adds at its own site.
+    _template_summands = (3, 1)
+    _template_tie = (isinstance(_optimal_dim_G, int)
+                     and _min_dim is not None
+                     and _min_dim + sum(_template_summands) == _optimal_dim_G)
+    legs['L4_restricted_minimum'] = (
+        bool(_eligible) and _min_dim is not None and _argmin_tie
+        and _template_tie, (
+            'members of complex type carrying the invariant line at '
+            'degree three: %s; least adjoint dimension among them: %s, at '
+            'rank %s, which is the value the consumed record publishes as '
+            'its optimal rank (%s): %s. The consumed record\'s '
+            'optimal_dim_G is %s -- the whole template\'s dimension, of '
+            'which this minimum is the special-unitary summand -- and '
+            'this minimum together with the two further summand dimensions '
+            '%s that this file\'s own template solve adds at its own site '
+            'equals it: %s.'
+            % (_eligible, _min_dim, _argmin_rank, _optimal_N_c, _argmin_tie,
+               _optimal_dim_G, list(_template_summands), _template_tie)))
 
+    # ---- L5: PERMANENT CONTROL -- the unrestricted claim is false --------
+    # Z_m, character index j: chi_j(k) = omega^{jk} with omega a primitive
+    # m-th root of unity.  Everything below is the exponent arithmetic mod
+    # m, in exact integers.
+    _cx_order = 3
+    _cx_index = 1
+    _cx_dim = 1
+    _cx_exponents = tuple((_cx_index * k) % _cx_order
+                          for k in range(_cx_order))
+    _cx_faithful = (len(_cx_exponents) == _cx_order
+                    and {e % _cx_order for e in _cx_exponents}
+                    == set(range(_cx_order)))
+    _cx_cube_trivial = all((3 * e) % _cx_order == 0 for e in _cx_exponents)
+    legs['L5_unrestricted_claim_is_false_control'] = (
+        _cx_faithful and _cx_cube_trivial and _cx_dim < 3, (
+            'a finite cyclic group of order %s with character exponents '
+            '%s: the character is faithful (%s), its third tensor power '
+            'is trivial (%s) and its carrier dimension is %s, below the '
+            'unrestricted claim\'s own bound of three. The dimension is '
+            'one BY CONSTRUCTION -- a linear character -- and that '
+            'clause is definitional and labelled as such; the computed '
+            'content of this leg is faithfulness, its exponent tuple '
+            'matched to the order in length and in residues, and a '
+            'character index that kills distinctness reddens it. The '
+            'third-tensor-power clause is entailed at this order, and a '
+            'move of the order reddens it. An '
+            'unrestricted claim over all compact groups and all faithful '
+            'irreducible carriers is therefore refuted, and the '
+            'restriction to the declared family above is load-bearing.'
+            % (_cx_order, list(_cx_exponents), _cx_faithful,
+               _cx_cube_trivial, _cx_dim)))
+
+    # ---- L6: append-and-record leg inventory, on the bank path -----------
+    _declared_legs = ('L1_complex_type_over_the_family',
+                      'L2_invariant_volume_line_degree',
+                      'L3_adjoint_dimension_tie',
+                      'L4_restricted_minimum',
+                      'L5_unrestricted_claim_is_false_control',
+                      'L6_leg_inventory')
+    _executed = set(legs) | {'L6_leg_inventory'}
+    _missing = sorted(set(_declared_legs) - _executed)
+    _extra = sorted(_executed - set(_declared_legs))
+    legs['L6_leg_inventory'] = (not _missing and not _extra, (
+        'declared %d, executed %d, missing=%s extra=%s'
+        % (len(_declared_legs), len(_executed), _missing, _extra)))
+
+    fails = ['%s: %s' % (k, legs[k][1]) for k in sorted(legs) if not legs[k][0]]
+
+    _under = ' + '.join(_B1_PRIME_PREMISES)
     return _result(
-        name='B1_prime: Complex Carrier from Oriented Composite Robustness',
+        name=('B1_prime: Conditional Complex Selection (its premises named) '
+              '+ the Restricted Family Minimum'),
         tier=1,
         epistemic='P',
         summary=(
-            'If V is real or pseudoreal, G-equivariant antilinear map J^{otimes n} '
-            'provides admissibility-preserving identification B <-> B*, collapsing '
-            'oriented composite distinctions. Complex type forced by L_irr robustness '
-            '+ minimality clause (no added grading). '
-            'Closes bridge B1 from [Ps] to [P]. '
-            'Counterexample: SU(2) pseudoreal confinement (J = epsilon-tensor).'
-        ),
-        key_result='Confining carrier must be complex type (V != V*) [P]',
+            'The live home of this lemma is the Paper 2 Technical '
+            'Supplement II v2.9, Section 10, Theorem 10.5, and the theorem '
+            'recorded there is conditional on two named assumptions, '
+            'oriented robustness and antiunitary symmetry completeness '
+            '(%s). Neither is computed here and no banked check computes '
+            'either. What is computed here is the supplement\'s own '
+            'restricted minimum, Proposition 10.8, over the special-unitary '
+            'family: the defining carrier\'s representation type from the '
+            'diagram symmetry of its own highest weight, with the '
+            'self-conjugate case exhibited at the one rank where it occurs; '
+            'the degree at which the exterior powers first carry a '
+            'one-dimensional invariant line, which is the rank plus one, '
+            'with the trilinear and bilinear cases falling out of that same '
+            'computation; the adjoint dimensions read by value from '
+            'check_L_gauge_template_uniqueness\'s returned record together '
+            'with their strict increase, the rank-one member being absent '
+            'from that record and computed here; and the least adjoint '
+            'dimension among the members of complex type carrying the line '
+            'at degree three, tied by value to the rank that same record '
+            'publishes as its optimum. The corresponding unrestricted '
+            'statement is FALSE and a finite counterexample is executed '
+            'here as a permanent control. WHATEVER THIS RECORD COMPUTES '
+            'ABOUT THE FAMILY, IT COMPUTES NOTHING ABOUT THE CONDITIONAL '
+            'THEOREM AND NOTHING ABOUT THE PSEUDOREAL BRANCH.'
+            % (_under,)),
+        key_result=(
+            'Under %s the live source states a conditional selection this '
+            'record does not compute; what this record computes is the '
+            'restricted special-unitary family minimum of Proposition '
+            '10.8, with the unrestricted claim refuted by an executed '
+            'counterexample. It computes nothing about the conditional '
+            'theorem and nothing about the pseudoreal branch.'
+            % (_under,)),
         dependencies=['L_irr', 'L_irr_uniform', 'T3', 'A1'],
+        cross_refs=[],
         artifacts={
-            'su3_complex': su3_is_complex,
-            'su2_pseudoreal': su2_is_pseudoreal,
-            'su3_trilinear': su3_has_trilinear,
-            'mechanism': (
-                'Pseudoreal V ~ V* => J^{otimes n} identifies B <-> B* '
-                '(admissibility-preserving relabeling). Complex V != V* '
-                'blocks this: no G-equivariant antilinear map exists.'
-            ),
-            'bridge_status': 'B1: [Ps] -> [P] (closed by this lemma)',
-            'minimality_clause': (
-                'Introducing independent external grading solely to protect '
-                'composite orientation is non-minimal under A1'
-            ),
+            'family_ranks': list(_family),
+            'highest_weight_vs_diagram_reversal': {
+                n: {'highest_weight': list(_weights[n][0]),
+                    'diagram_reversal': list(_weights[n][1]),
+                    'self_conjugate': _self_conjugate[n]}
+                for n in _family},
+            'exterior_power_dimensions': {n: _exterior_dims[n]
+                                          for n in _family},
+            'invariant_line_degrees': {n: _line_degrees[n] for n in _family},
+            'su_n_adjoint_pairs_consumed': _pairs,
+            'restricted_minimum': {'adjoint_dimension': _min_dim,
+                                   'at_rank': _argmin_rank},
+            'optimal_N_c_consumed': _optimal_N_c,
+            'optimal_dim_G_consumed': _optimal_dim_G,
+            'unrestricted_counterexample': {
+                'group_order': _cx_order,
+                'character_exponents': list(_cx_exponents),
+                'faithful': _cx_faithful,
+                'third_tensor_power_trivial': _cx_cube_trivial,
+                'carrier_dimension': _cx_dim},
+            'source': (
+                'Paper 2 Technical Supplement II v2.9, Section 10: '
+                'Lemma 10.2, Assumption 10.3 (oriented robustness), '
+                'Assumption 10.4 (antiunitary symmetry completeness), '
+                'Theorem 10.5, Proposition 10.8; the counterexample from '
+                'that supplement\'s appendix of elementary counterexamples. '
+                'Archived provenance: Paper 2 Supplement v4.1 Section 3.3. '
+                'A source line naming a Paper 7 version that does not exist '
+                'in the live tree was struck; the archives were not swept, '
+                'so that is a struck line and not a finding that the source '
+                'is absent.'),
         },
+        passed=not fails,
+        legs={k: {'passed': bool(v[0]), 'evidence': v[1]}
+              for k, v in legs.items()},
+        leg_count=len(legs),
+        fail_reasons=fails,
+        conditional_on=list(_B1_PRIME_PREMISES),
+        disclosures=[
+            'THE TWO NAMED PREMISES ARE PREMISES BEFORE THIS RECORD AND '
+            'PREMISES AFTER IT. They are premise names in the GT5 '
+            'underscored spelling; they are not grade tokens, they are not '
+            'legend rows, and nothing about this record\'s epistemic field '
+            'follows from them.',
+            'THE PSEUDOREAL BRANCH IS NOT EXECUTED. The live theorem covers '
+            'real-type and pseudoreal-type carriers uniformly by premise '
+            'rather than by a case split, and no leg here claims it.',
+            'THE SELF-CONJUGACY / ANTILINEAR-MAP CORRESPONDENCE IS '
+            'DEFINITIONAL. A carrier is self-conjugate exactly when an '
+            'equivariant antilinear map exists. That is asserted here, not '
+            'computed, and it is not legged: the leg that stood here '
+            'compared two booleans authored on the two lines above it and '
+            'has been deleted rather than reworded.',
+            'THREE DEPENDENCY SETS NAME THIS ONE OBJECT AND NO TWO AGREE: '
+            'this record\'s own declared list, the Paper 2 main register\'s '
+            'dependency column, and the live theorem\'s own premises. The '
+            'divergence is named here and NOTHING IS CHANGED -- editing a '
+            'dependency list moves the crystal, and this pass is '
+            'count-neutral in the graph as well as in the bank.',
+            'THE VALUE TIE RUNS AGAINST THE DECLARED EDGE. The consumed '
+            'record declares this object among its own dependencies. There '
+            'is no runtime cycle: this check is called from the registry '
+            'table alone and the consumed check does not call it. The '
+            'direction is stated rather than hidden.',
+            'EXECUTED ESCAPES, DISCLOSED RATHER THAN WORKED AROUND. A '
+            'rank-keyed literal rule substituted for the diagram '
+            'computation in the first leg returns the same verdicts over '
+            'this family, because the two agree there; what separates them '
+            'is a highest weight that is palindromic at a higher rank, and '
+            'that mutation does redden the leg. A coherent relabelling of '
+            'the Dynkin ordering, applied at the construction site and the '
+            'conjugation site together, is a true invariance -- '
+            'self-conjugacy does not depend on the labelling -- and no leg '
+            'here catches it, though the published weights move. A '
+            'constant substituted for the computed failure list escapes '
+            'every leg here, as it does wherever this form is used.',
+            'PROSE ELSEWHERE ASSERTS THIS OBJECT\'S GRADE. Sites in two '
+            'other functions of this file, one comment in another module '
+            'and one returned field in an unregistered standalone state it; '
+            'those four are LEFT and filed. The grade token this record '
+            'itself spelled inside a returned string is struck.',
+            'GRADE TENSION, FILED AND NOT TAKEN: the live source is titled '
+            'conditional and is graded with a premise in its own claims '
+            'table, and this record returns P. Nothing in this pass mints '
+            'or moves a token. At the pass: no consumer reads this '
+            'record\'s epistemic field.',
+            'The status string in this record is produced by the shared '
+            'result builder and is fixed at PASS; the verdict of record is '
+            '`passed` together with `fail_reasons`. This module\'s shared '
+            'assertion helper raises; this record uses the leg-dict form '
+            'already landed in this file so that a failing leg reports '
+            'alongside the others instead of halting the check. The leg '
+            'inventory appends a failure reason and does not raise '
+            '(D7@2026-08-08); its standing limit is that it certifies a '
+            'declared leg EXECUTED, not that it COULD HAVE FAILED.',
+        ],
     )
 
 

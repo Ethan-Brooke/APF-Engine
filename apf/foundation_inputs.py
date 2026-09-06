@@ -527,22 +527,45 @@ def check_T_PLEC_derived_from_spine():
     # ---- CROSS-MODULE VALUE TIE ----
     # The corpus's executed element-distinction non-degeneracy witness is
     # check_worked_example (apf/core.py), BW's source-most anchor per
-    # apf/crystal_axiom_roots.py.  Its costs are PARSED OUT OF ITS OWN
+    # apf/crystal_axiom_roots.py.  Its costs are READ AS A FIELD OF ITS OWN
     # EXECUTED RECORD and run through THIS module's predicate -- a tie by
     # VALUE and not by verdict, and not a fifth re-typing of its literals.
-    import re as _re
+    # The field carries exact rationals as strings because a returned record
+    # must stay JSON-serializable; they parse back with Fraction, which
+    # round-trips exactly.  THERE IS NO FALLBACK AND NO DEFAULT: a tie that
+    # quietly substitutes one when the field is missing compares nothing and
+    # reports green.  This read replaces a regular expression over the
+    # anchor's summary prose, which was a value tie only for as long as
+    # nobody edited the prose.
     from fractions import Fraction as _Fr
     from apf.core import check_worked_example as _cwe
     _we = _cwe()
-    _eps = [_Fr(m) for m in _re.findall(r"eps\(d\d\)=([0-9]+(?:/[0-9]+)?)",
-                                       _we.get("summary", ""))]
-    if len(_eps) < 2:
+    _raw_costs = _we.get("artifacts", {}).get("element_costs")
+    _eps = None
+    if not isinstance(_raw_costs, (list, tuple)):
         failure_reasons.append(
-            f"VALUE TIE FAILED: could not recover at least two element "
-            f"costs from the executed record of the corpus's "
-            f"non-degeneracy anchor (recovered {len(_eps)})"
+            f"VALUE TIE FAILED: the non-degeneracy anchor's executed record "
+            f"publishes no element_costs sequence (found {_raw_costs!r}); "
+            f"no default is substituted"
         )
-    elif not _bw_non_degeneracy(_eps):
+    elif len(_raw_costs) < 2:
+        failure_reasons.append(
+            f"VALUE TIE FAILED: the anchor published fewer than two element "
+            f"costs ({len(_raw_costs)}: {list(_raw_costs)!r}); no default is "
+            f"substituted"
+        )
+    else:
+        try:
+            _eps = [_Fr(str(_c)) for _c in _raw_costs]
+        except (ValueError, TypeError, ZeroDivisionError,
+                ArithmeticError) as _exc:
+            _eps = None
+            failure_reasons.append(
+                f"VALUE TIE FAILED: an element cost published by the anchor "
+                f"does not parse as an exact rational "
+                f"({list(_raw_costs)!r}: {_exc}); no default is substituted"
+            )
+    if _eps is not None and not _bw_non_degeneracy(_eps):
         failure_reasons.append(
             f"VALUE TIE FAILED: this module's BW predicate refuses the "
             f"anchor's own executed cost spectrum {sorted(set(_eps))}"

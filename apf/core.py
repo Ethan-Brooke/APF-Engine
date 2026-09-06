@@ -12,7 +12,7 @@ module's own _CHECKS table at v24.3.482, where it was found stale at 49):
   Foundational lemmas:   L_epsilon_star, L_NZ, L_loc, L_nc, L_cost,
                          L_irr, L_irr_uniform, L_Omega_sign, L_Pi
   Propositions:          D_quotient_forced, disjoint_partition,
-                         P_tom, P_cls, state_sensitivity, P_exhaust,
+                         P_cls, state_sensitivity, P_exhaust,
                          P4_IMP, kappa_zero_Tsep, M_Omega
   Bridge theorems:       T0, T1, T1b, T_alg, T_alg_FPi, T_adj_commutes
   Main theorems:         T2, T3, T_Born, T_CPTP, T_Hermitian, T_M,
@@ -6775,7 +6775,7 @@ def check_T_sep():
     named-unregistered debt row "T_sep" of the full-surface input
     inventory. Long-standing citation sites: T_adj_commutes,
     kappa_zero_Tsep (the banked consequence surface), A1_disjoint_scope,
-    P_tom, P_cls. The K3 forced-additivity theorem is independently
+    P_cls. The K3 forced-additivity theorem is independently
     certified on a finite substrate in paper1_kernel
     (T_FD1_substrate_distinctions_capacity) -- a registered bank
     DEPENDENCY here, load-bearing for the [P] grade (moved from
@@ -7078,7 +7078,9 @@ def check_T2b():
     acting faithfully on H = (+)_k C^{n_k}: the Hilbert-space
     representation consumed by the field-selection step T2c and by
     T_Born downstream. Field SELECTION (C over R, H) is T2c's content
-    and is NOT claimed here (P_tom / P_cls carry those exclusions).
+    and is NOT claimed here: P_cls carries the compositional-closure
+    exclusion, and the local-tomography exclusion is carried by
+    T_split_composite_gates_tomographic_locality.
 
     PROOF (supplement): Step 1, complexification preserves the
     *-algebra axioms (symbolic identities; the involution extends
@@ -9794,7 +9796,7 @@ def check_disjoint_partition():
     the same discipline is owed here as above.  The L_loc ->
     disjoint_partition edge is asserted in Paper 1 main and DOES NOT
     EXIST IN THE CODE, so this reclassification does not reach L_loc,
-    L_nc, L_irr, T_M, T_kappa, T_sep, P_tom or T3.
+    L_nc, L_irr, T_M, T_kappa, T_sep or T3.
 
     NOT TOUCHED: the unregistered names in this record's own
     `dependencies` ('SC', 'D-quotient') are a vacancy-lane question,
@@ -9852,39 +9854,13 @@ def check_disjoint_partition():
     )
 
 
-def check_P_tom():
-    """P_tom: Local Tomographic Closure from D-quotient + L_loc.
-
-    Layer 1: no capacity-based holistic DOF (L_loc: C_AB = C_A + C_B).
-    Layer 2: exhaustion over anchor loci excludes algebra-structural DOF.
-    """
-    C_A = Fraction(5)
-    C_B = Fraction(4)
-    C_AB = C_A + C_B
-    check(C_AB == C_A + C_B, "L_loc: no surplus")
-
-    # Over C: local measurements determine joint state
-    N_A, N_B = 2, 2
-    K_joint_C = (N_A * N_B) ** 2
-    K_local_C = N_A**2 * N_B**2
-    check(K_joint_C == K_local_C, "Over C: tomography holds")
-
-    # Over R: local measurements do NOT determine joint state
-    K_joint_R = (N_A * N_B) * (N_A * N_B + 1) // 2
-    K_local_R = (N_A * (N_A + 1) // 2) * (N_B * (N_B + 1) // 2)
-    check(K_joint_R > K_local_R, "Over R: tomography fails")
-
-    return _result(
-        name='P_tom: Local Tomographic Closure',
-        tier=0, epistemic='P',
-        summary=f'Layer 1: L_loc gives surplus=0. Layer 2: exhaustion excludes '
-                f'zero-cost antisymmetric correlator. K_joint(C)={K_joint_C}=K_local; '
-                f'K_joint(R)={K_joint_R}>{K_local_R}=K_local.',
-        key_result='P_tom: local measurements determine joint state [P]',
-        dependencies=['L_loc', 'T_sep', 'D-quotient'],
-    )
-
-
+# A check was retired from this file at this pass. Its retirement record,
+# its subsumption ground and its citation bars are the module manifest's
+# own lane entry. The retired identifier survives outside this file in a
+# reporting instrument under scripts/ (a pattern-table key and its
+# regexes) and in committed crystal-graph snapshot artifacts in this
+# package; no module here reads either, this pass edits neither, and both
+# are filed rows.
 # Declared leg count for check_P_cls (counted contract; see that check's
 # docstring for the caveat about the still-owed counted-vs-set-exact ruling).
 # The count INCLUDES the inventory leg itself.
@@ -10633,70 +10609,236 @@ def check_T_Tsirelson():
 
 
 def check_worked_example():
-    """Worked example: explicit P1-P4, L_Delta, order-dependence witness.
+    """Worked example: an authored budget-window witness (P1-P4, L_Delta, T1).
 
-    Interface Gamma with C=5, three distinctions d1(2), d2(3), d3(2.5).
-    Joint costs: eps({d1,d2})=9, eps({d1,d3})=4.5, eps({d2,d3})=5.5.
-    Delta(d1,d2) = 9 - 2 - 3 = 4 > 0  (superadditivity).
-    T1 witness: {d1,d3} admissible but {d2,d3} inadmissible.
+    STATEMENT.  On one authored interface with an authored capacity and
+    three authored element costs, the joint cost of the first pair
+    exceeds the sum of its parts and the surplus is computed.  The
+    substrate-attack cost of the example is an authored parameter and is
+    strictly positive.  It equals the computed surplus because it was
+    CHOSEN equal to it: that is the example's calibration at vanishing
+    offset, not a quantity the example derives.  The third distinction is
+    affordable after the cheaper of the first two and unaffordable after
+    the dearer, in exact rational arithmetic; that pair of comparisons is
+    the budget-window witness and it is this object's load-bearing
+    content.
+
+    Every value in this example is authored.  It exhibits the condition;
+    it derives nothing.
+
+    THE RESIDUAL FORM IS THE SAME COMPARISON WRITTEN TWICE.  Capacity
+    less joint cost, admissible iff non-negative, is algebraically
+    identical to marginal cost against residual capacity, since
+    (C - eps_i) - (eps_ij - eps_i) = C - eps_ij.  The identity is stated
+    here and is NOT asserted as a further leg: an equality leg over
+    authored values cannot fail.  The two residual VALUES are still
+    computed, reported and published, because they are values and not
+    legs.
+
+    PUBLISHED FIELDS.  The element costs, the interface capacity, the
+    joint costs and the two residuals are published in this record's
+    `artifacts` as exact rational strings, so a consumer reads them
+    without parsing a sentence.  The PLEC spine tie in
+    apf/foundation_inputs.py is the consumer this pass re-routed onto
+    those fields.
     """
+    # Exact rational values are published as str(Fraction(...)) and read
+    # back with Fraction(...), which round-trips exactly.  Fraction is not
+    # JSON-serializable and a sibling check certifies that the bank's
+    # returned records are; a later editor who "improves" these strings
+    # into Fraction objects turns that check red.
     C = Fraction(5)
     eps1, eps2, eps3 = Fraction(2), Fraction(3), Fraction(5, 2)
 
-    # Joint costs
+    # Joint costs (authored)
     eps_12 = Fraction(9)
-    eps_13 = Fraction(9, 2)   # 4.5
-    eps_23 = Fraction(11, 2)  # 5.5
+    eps_13 = Fraction(9, 2)
+    eps_23 = Fraction(11, 2)
 
-    # P1: substrate attack exists with positive cost
+    # The substrate-attack cost is an authored parameter of the example.
     c_Gamma = Fraction(4)
-    check(c_Gamma > 0, "P1: substrate attack cost > 0")
 
-    # P2: joint vulnerability
-    check(eps_12 > eps1 + eps2, "P2: joint cost exceeds sum")
+    legs = {}
 
-    # P3: strict enlargement of perturbation class
+    # ---- L1: the authored substrate-attack cost is strictly positive ----
+    _c_positive = c_Gamma > 0
+    legs['L1_substrate_attack_cost_positive'] = (_c_positive, (
+        'the substrate-attack cost of this example is the authored '
+        'parameter %s and is strictly positive: %s'
+        % (c_Gamma, _c_positive)))
+
+    # ---- L2: superadditivity of the first pair, and its surplus ---------
+    _parts_12 = eps1 + eps2
+    _superadditive = eps_12 > _parts_12
     Delta_12 = eps_12 - eps1 - eps2
-    check(Delta_12 == 4, f"Delta(d1,d2) = {Delta_12} = c_Gamma = 4")
+    _surplus_positive = Delta_12 > 0
+    legs['L2_joint_cost_superadditive'] = (
+        _superadditive and _surplus_positive, (
+            'joint cost %s of the first pair against the sum %s of its '
+            'parts (strictly greater: %s); the surplus computed from the '
+            'same three values is %s and is strictly positive: %s. The '
+            'positivity clause is entailed by the strict inequality on '
+            'those same three values -- one fact carried at one label, '
+            'not two legs.'
+            % (eps_12, _parts_12, _superadditive, Delta_12,
+               _surplus_positive)))
 
-    # P4: defense-cost bound
-    check(Delta_12 == c_Gamma, "P4: Delta = c_Gamma (kappa=0)")
+    # ---- L3: the kappa = 0 calibration ----------------------------------
+    _calibrated = (c_Gamma == Delta_12)
+    legs['L3_kappa_zero_calibration'] = (_calibrated, (
+        'the authored substrate-attack cost %s against the computed '
+        'surplus %s: equal (%s). This is the example\'s calibration at '
+        'vanishing offset and it is not an equality this example '
+        'discovers; the leg is a real comparison between an authored '
+        'parameter and a computed quantity, and moving the parameter '
+        'reddens it.'
+        % (c_Gamma, Delta_12, _calibrated)))
 
-    # L_Delta: strict superadditivity
-    check(Delta_12 > 0, "L_Delta: superadditive gap > 0")
+    # ---- L4/L5: the budget window ---------------------------------------
+    # Convention, fixed here and used at every site: residual capacity
+    # after a distinction is capacity less that distinction's cost, and a
+    # further distinction is affordable iff its marginal cost does not
+    # exceed the residual.
+    _residual_after_d1 = C - eps1
+    _marginal_d3_after_d1 = eps_13 - eps1
+    _fits_after_d1 = _marginal_d3_after_d1 <= _residual_after_d1
+    legs['L4_budget_window_admissible'] = (_fits_after_d1, (
+        'after the cheaper of the first two distinctions the residual '
+        'capacity is %s and the third distinction\'s marginal cost is '
+        '%s; affordable: %s'
+        % (_residual_after_d1, _marginal_d3_after_d1, _fits_after_d1)))
 
-    # BW condition (T1 Step 3): d3 fits after d1 but not d2
-    residual_after_d1 = C - eps1         # 3
-    marginal_d3_with_d1 = eps_13 - eps1  # 2.5
-    check(marginal_d3_with_d1 <= residual_after_d1,
-          f"d3 fits after d1: {marginal_d3_with_d1} <= {residual_after_d1}")
+    _residual_after_d2 = C - eps2
+    _marginal_d3_after_d2 = eps_23 - eps2
+    _fits_after_d2 = _marginal_d3_after_d2 <= _residual_after_d2
+    legs['L5_budget_window_inadmissible'] = (not _fits_after_d2, (
+        'after the dearer of the first two distinctions the residual '
+        'capacity is %s and the third distinction\'s marginal cost is '
+        '%s; affordable: %s, so unaffordable: %s'
+        % (_residual_after_d2, _marginal_d3_after_d2, _fits_after_d2,
+           not _fits_after_d2)))
 
-    residual_after_d2 = C - eps2         # 2
-    marginal_d3_with_d2 = eps_23 - eps2  # 2.5
-    check(marginal_d3_with_d2 > residual_after_d2,
-          f"d3 fails after d2: {marginal_d3_with_d2} > {residual_after_d2}")
+    # The residual form of the same two comparisons, computed as values.
+    sigma_13 = C - eps_13
+    sigma_23 = C - eps_23
 
-    # Order-dependence: E_d1 then E_d3 succeeds; E_d2 then E_d3 fails
-    sigma_13 = C - eps_13  # 0.5 >= 0: admissible
-    sigma_23 = C - eps_23  # -0.5 < 0: inadmissible
-    check(sigma_13 >= 0, f"sigma_13 residual = {sigma_13} >= 0: admissible")
-    check(sigma_23 < 0, f"sigma_23 residual = {sigma_23} < 0: inadmissible")
+    # ---- L6: append-and-record leg inventory, on the bank path -----------
+    _declared_legs = ('L1_substrate_attack_cost_positive',
+                      'L2_joint_cost_superadditive',
+                      'L3_kappa_zero_calibration',
+                      'L4_budget_window_admissible',
+                      'L5_budget_window_inadmissible',
+                      'L6_leg_inventory')
+    _executed = set(legs) | {'L6_leg_inventory'}
+    _missing = sorted(set(_declared_legs) - _executed)
+    _extra = sorted(_executed - set(_declared_legs))
+    legs['L6_leg_inventory'] = (not _missing and not _extra, (
+        'declared %d, executed %d, missing=%s extra=%s'
+        % (len(_declared_legs), len(_executed), _missing, _extra)))
+
+    fails = ['%s: %s' % (k, legs[k][1]) for k in sorted(legs) if not legs[k][0]]
 
     return _result(
         name='Worked Example: P1-P4 + L_Delta + T1 witness',
         tier=0, epistemic='P',
-        summary=f'C=5, eps(d1)=2, eps(d2)=3, eps(d3)=5/2. '
+        summary=f'C={C}, eps(d1)={eps1}, eps(d2)={eps2}, eps(d3)={eps3}. '
                 f'Delta(d1,d2)={Delta_12}>0 (superadditivity). '
                 f'BW: {{d1,d3}} admissible (residual {sigma_13}), '
                 f'{{d2,d3}} inadmissible (residual {sigma_23}). '
                 f'T1 witness: order-dependent admissibility outcomes.',
-        key_result='Explicit P1-P4, L_Delta, T1 verification [P]',
+        key_result=(
+            'An authored interface exhibiting a budget window: the third '
+            'distinction is affordable after the cheaper of the first two '
+            'and unaffordable after the dearer, in exact rational '
+            'arithmetic. It exhibits the condition; it derives nothing.'),
         dependencies=['A1', 'L_Delta'],
         # SCC-hygiene adjudication 2026-07-05 (D1): 'T1' moved to cross_refs --
         # the example ILLUSTRATES T1's order-dependence witness, it does not
         # consume the theorem; worked_example is the BW PLEC anchor and an
         # anchor with a derivational in-edge inverts root semantics.
         cross_refs=['T1 (illustrated by this example, not consumed; SCC-hygiene move 2026-07-05)'],
+        artifacts={
+            'element_costs': [str(eps1), str(eps2), str(eps3)],
+            'interface_capacity': str(C),
+            'joint_costs': {'d1+d2': str(eps_12), 'd1+d3': str(eps_13),
+                            'd2+d3': str(eps_23)},
+            'residuals': {'d1+d3': str(sigma_13), 'd2+d3': str(sigma_23)},
+            'field_contract': (
+                'Exact rationals are published as str(Fraction(...)) and are '
+                'read back with Fraction(...), which round-trips exactly. '
+                'They are strings and not Fraction objects because Fraction '
+                'is not JSON-serializable and a sibling check certifies that '
+                'the bank\'s returned records are.'),
+        },
+        passed=not fails,
+        legs={k: {'passed': bool(v[0]), 'evidence': v[1]}
+              for k, v in legs.items()},
+        leg_count=len(legs),
+        fail_reasons=fails,
+        disclosures=[
+            'THE WITNESS IS AUTHORED. Every cost, every capacity and every '
+            'joint cost in this example is chosen, not derived. This is a '
+            'disclosure and not a premise, which is why this record carries '
+            'no conditional_on: naming a premise that names nothing '
+            'consumed would be minting a decoration.',
+            'A DECLARED DEPENDENCY OF THIS RECORD IS NOT A REGISTRY KEY. '
+            'One entry of `dependencies` resolves to no registered check and '
+            'to no walker alias, so the crystal walker drops it; this '
+            'record\'s crystal in-edges are A1 alone in both views and its '
+            'only out-edge is the Phase-14b bank edge to L_count. The '
+            'string is NOT removed: deleting a dependency string moves the '
+            'crystal, and this pass is count-neutral in the graph as well '
+            'as in the bank. A dangling-name row is filed instead.',
+            'THE RESIDUAL FORM IS AN IDENTITY, NOT A LEG. Capacity less '
+            'joint cost and marginal cost against residual capacity are the '
+            'same comparison written twice. Three legs were removed from '
+            'this record for that reason and none is re-introduced; a leg '
+            'asserting the two forms agree could not fail. The residual '
+            'values are reported and published.',
+            'EXECUTED ESCAPES, DISCLOSED RATHER THAN WORKED AROUND. A '
+            'coordinated sign reversal confined to the two published '
+            'residual values is not caught by any leg here. Neither is a '
+            'consistent permutation of the element costs carried into the '
+            'published field: the budget window survives it and the '
+            'consuming predicate reads a set of values. Both move this '
+            'returned record and are visible to a whole-record diff; '
+            'neither is caught by a leg. And a constant substituted for '
+            'the computed failure list escapes every leg here, as it does '
+            'wherever this form is used -- the leg inventory watches the '
+            'declared label set, not the verdict path.',
+            'THIS RECORD\'S SUMMARY WAS, UNTIL THIS REPAIR, READ ACROSS A '
+            'MODULE BOUNDARY BY A REGULAR EXPRESSION. The values are now '
+            'published as fields for that purpose. That does not say the '
+            'prose is unreadable and it does not claim no other reader '
+            'exists: a source grep is a source grep.',
+            'THIS RECORD\'S NAME AND ITS SUMMARY CARRY THE PHRASE T1 '
+            'WITNESS AND THIS PASS HOLDS THEM BYTE-IDENTICAL. They are '
+            'the illustration this record\'s cross_refs already scopes '
+            '-- illustrated, not consumed -- and no leg here establishes, '
+            'verifies or witnesses that theorem.',
+            'THE BW TRI-STATEMENT IS LIVE AND UNRECONCILED. One surface '
+            'reads this object as the source-most anchor for budget-window '
+            'richness; another runs its costs through a cost-spectrum '
+            'non-degeneracy predicate; Paper 1 says in terms that the '
+            'corpus does not reconcile the two readings, and the module '
+            'manifest says the defect is not closed. This record names the '
+            'mismatch and adjudicates neither reading. What it computes is '
+            'a budget window; it supplies no non-degeneracy statement.',
+            'THE ROOT SEMANTICS ARE UNCHANGED BY THIS REPAIR. This object '
+            'remains the BW anchor and its declared in-edge is untouched. '
+            'The half-fixed root-semantics question the 2026-07-05 '
+            'SCC-hygiene move left open is named here and not touched.',
+            'GRADE TENSION, FILED AND NOT TAKEN: tier 0 at epistemic P on '
+            'an authored witness. P\'s legend meaning is derived from A1; '
+            'A1 is declared here and no leg touches it. Nothing in this '
+            'pass mints or moves a token.',
+            'The status string in this record is produced by the shared '
+            'result builder and is fixed at PASS; the verdict of record is '
+            '`passed` together with `fail_reasons`. The leg inventory '
+            'appends a failure reason and does not raise (D7@2026-08-08); '
+            'its standing limit is that it certifies a declared leg '
+            'EXECUTED, not that it COULD HAVE FAILED.',
+        ],
     )
 
 
@@ -12859,7 +13001,6 @@ _CHECKS = {
     # Propositions (new in v15.3)
     'D_quotient_forced': check_D_quotient_forced,
     'disjoint_partition': check_disjoint_partition,
-    'P_tom': check_P_tom,
     'P_cls': check_P_cls,
     'state_sensitivity': check_state_sensitivity,
     # Foundational lemmas
