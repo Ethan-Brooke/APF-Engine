@@ -3071,100 +3071,569 @@ def check_L_count():
     )
 
 
+# ---------------------------------------------------------------------------
+# check_L_Weinberg_dim: the declared enumeration scope.
+#
+# These constants are the DECLARATION the enumeration below is complete
+# relative to.  They are authored here, not read from any record, and the
+# returned record says so.  Nothing in this block is a physics value the
+# framework derives: the charges are read from banked records inside the
+# check, and the scalar charge is computed there from two of them.
+#
+# The one exception is the convention marker: the quark-doublet hypercharge
+# that the Q = T_3 + Y convention assigns.  It is an authored comparand in
+# the sense of _T4_DOUBLET_DIM above -- PROVENANCE, not a target.  The tree
+# carries a second live hypercharge convention in which the same quantity
+# takes twice this value, so a consumed charge set has to be pinned to one
+# of them before any insertion count means anything.
+# ---------------------------------------------------------------------------
+_WEINBERG_Q_EQ_T3_PLUS_Y_QUARK_DOUBLET_Y = Fraction(1, 6)
+
+# Building blocks: (label, lepton-doublet count, charged-singlet count).
+# Each carries two lepton fields, so each is a Delta_L = 2 block BY
+# DECLARATION; nothing here computes lepton number.
+_WEINBERG_BLOCKS = (
+    ('LL', 2, 0),
+    ('Le_R', 1, 1),
+    ('e_Re_R', 0, 2),
+)
+
+# Scalar insertions: (label, sign of the scalar hypercharge carried).  The
+# conjugate insertion is declared; the pre-repair code inserted only the
+# first of these.
+_WEINBERG_INSERTIONS = (
+    ('H', 1),
+    ('Hc', -1),
+)
+
+# Caps.  Authored, and load-bearing: the dimension cap kills neutral
+# candidates, and raising it admits a second survivor.
+_WEINBERG_MAX_FERMIONS = 2
+_WEINBERG_MAX_INSERTIONS = 4
+_WEINBERG_DIM_CAP = Fraction(5)
+
+# The survivor's label, declared so that a survivor set of the right size
+# and the wrong member cannot pass.
+_WEINBERG_SURVIVOR_LABEL = 'LL+H^2'
+
+# The enumerated candidate labels, frozen.  Adding a block or an insertion
+# without updating this tuple is REPORTED by the inventory leg.
+_WEINBERG_CANDIDATE_LABELS = (
+    'LL', 'LL+H', 'LL+Hc', 'LL+H^2', 'LL+H.Hc', 'LL+Hc^2', 'LL+H^3',
+    'LL+H^2.Hc', 'LL+H.Hc^2', 'LL+Hc^3', 'LL+H^4', 'LL+H^3.Hc',
+    'LL+H^2.Hc^2', 'LL+H.Hc^3', 'LL+Hc^4',
+    'Le_R', 'Le_R+H', 'Le_R+Hc', 'Le_R+H^2', 'Le_R+H.Hc', 'Le_R+Hc^2',
+    'Le_R+H^3', 'Le_R+H^2.Hc', 'Le_R+H.Hc^2', 'Le_R+Hc^3', 'Le_R+H^4',
+    'Le_R+H^3.Hc', 'Le_R+H^2.Hc^2', 'Le_R+H.Hc^3', 'Le_R+Hc^4',
+    'e_Re_R', 'e_Re_R+H', 'e_Re_R+Hc', 'e_Re_R+H^2', 'e_Re_R+H.Hc',
+    'e_Re_R+Hc^2', 'e_Re_R+H^3', 'e_Re_R+H^2.Hc', 'e_Re_R+H.Hc^2',
+    'e_Re_R+Hc^3', 'e_Re_R+H^4', 'e_Re_R+H^3.Hc', 'e_Re_R+H^2.Hc^2',
+    'e_Re_R+H.Hc^3', 'e_Re_R+Hc^4',
+)
+
+_WEINBERG_EXPECTED_LEGS = (
+    'L1_spacetime_dimension_tie',
+    'L2_lepton_hypercharge_tie',
+    'L3_normalisation_discriminator',
+    'L4_scalar_hypercharge_from_yukawa_closure',
+    'L5_candidate_inventory_enumerated',
+    'L6_hypercharge_neutrality_filter',
+    'L7_dimension_filter',
+    'L8_survivor_identity',
+    'L9_leg_inventory',
+)
+
+
 def check_L_Weinberg_dim():
-    """L_Weinberg_dim: Weinberg Operator Dimension d_W = 5 [P].
+    """L_Weinberg_dim: the lowest-dimension Delta_L = 2 operator, enumerated.
 
-    STATEMENT: The unique lowest-dimension operator that generates
-    Majorana neutrino masses has mass dimension 5.
+    STATEMENT.  Over a declared building-block inventory, a declared scalar
+    insertion set that includes the conjugate insertion, and declared caps,
+    the Delta_L = 2 candidate operators are enumerated, their total
+    hypercharge and total mass dimension are computed in exact rational
+    arithmetic, and the neutrality and dimension filters are applied.  The
+    survivor is unique AMONG THE ENUMERATED CANDIDATES OVER THOSE
+    DECLARATIONS and over nothing wider, and the enumeration is complete
+    relative to those declarations and to nothing wider.  That scope clause
+    is mandatory: it is the check_T_field Phase-1 form in this same file.
 
-    v4.3.2: Import removed. Classification derived by EXHAUSTIVE ENUMERATION
-    of Delta_L = 2 operators from derived field content.
+    WHAT THE LEGS COMPUTE.
+      L1 reads the spacetime dimension from check_T8's returned record and
+         re-derives that record's own selection from the two tables the
+         same record publishes, so a moved selection with unmoved tables
+         fails here.  The fermion and scalar mass dimensions are computed
+         from the dimension read.
+      L2 reads the lepton-doublet and charged-singlet hypercharges from
+         check_T_field's returned record.  Both are rendered there as
+         strings; the parse is strict and its verdict is carried as a named
+         conjunct of this leg, so an unrecognised rendering fails loudly
+         and nothing is defaulted.  The two charges are then tied to the
+         quark-doublet charge the same record publishes through the colour
+         count check_T_gauge's record returns.  Upstream spells the
+         charged singlet Y_e; this object's local name differs, and the
+         difference is recorded rather than quietly reconciled.
+      L3 compares the quark-doublet charge against the convention marker
+         declared at module level.  The corpus carries two hypercharge
+         conventions and this comparison is what separates them.  The
+         comparand is AUTHORED, not read; that is disclosed.
+      L4 computes the scalar hypercharge from the two consumed lepton
+         charges by charged-lepton Yukawa neutrality, under the named
+         premise WEINBERG_YUKAWA_CLOSURE.  No scalar hypercharge is read
+         from any record, because no banked record publishes one, and no
+         literal scalar hypercharge appears anywhere in this function.
+      L5 enumerates the candidates over the declared inventory, the
+         declared insertion set and the declared insertion cap, and
+         asserts the enumerated label set against the frozen declaration.
+         Adding a block or an insertion without updating the declaration is
+         reported.
+      L6 computes each candidate's total hypercharge in exact Fractions and
+         applies the neutrality filter, and asserts that the filter is
+         exercised rather than vacuous.
+      L7 computes each candidate's total mass dimension from L1's
+         dimensions and applies the declared dimension cap, and asserts
+         that the cap removes at least one neutral candidate -- so the cap
+         is load-bearing and not decorative.
+      L8 makes THREE separate assertions: the survivor count, the
+         survivor's label against the declared one, and the survivor's
+         computed dimension, which must recompose from the survivor's own
+         content and must lie strictly above the spacetime dimension and
+         at or below the declared cap.
+      L9 is the leg inventory (append-and-record, D7@2026-08-08): a
+         mismatch between the declared and executed labels contributes a
+         failure reason and does not raise.
 
-    DERIVATION (all from [P], no external classification):
-      (1) T8 [P]: d = 4.  dim(fermion) = 3/2, dim(scalar) = 1.
-      (2) T_gauge [P]: SU(3)xSU(2)xU(1).
-      (3) T_field [P]: L = (nu,e)_L with Y=-1/2, e_R with Y=-1,
-          H with Y=+1/2.  No nu_R in spectrum.
+    PREMISES, carried by name in `conditional_on`.
+      WEINBERG_YUKAWA_CLOSURE -- the charged-lepton Yukawa term exists and
+        the scalar of the spectrum is what closes it.  This is what
+        licenses computing the scalar hypercharge from the consumed lepton
+        charges instead of declaring it.
+      SCALAR_SPECTRUM_IS_ONE_DOUBLET -- no check in the tree derives the
+        scalar sector's SU(2) x U(1) representation content.  The insertion
+        set and the absence of a triplet contraction both rest on this
+        premise.  They formerly cited check_T_field, whose derivation is
+        the fermion spectrum and does not contain the claim; that citation
+        is deleted.
 
-    EXHAUSTIVE CLASSIFICATION of Delta_L = 2 operators at dim <= 5:
-      Building blocks: need exactly 2 lepton fields (LL, Le_R, or e_Re_R)
-      plus Higgs insertions for gauge closure.
-
-      Case A (LL + Higgs): dim(LL) = 3, Y(LL) = -1.
-        Need n_H copies of H (Y=+1/2) to neutralize Y: n_H = 2.
-        dim = 3 + 2*1 = 5.  SU(2) singlet via eps contraction.  VIABLE.
-
-      Case B (Le_R + Higgs): dim(Le_R) = 3, Y = -3/2.
-        SU(2): 2x1 = 2 (not singlet, need H to close).
-        Y(Le_RH) = -1.  Y(Le_RHH) = -1/2.  Cannot reach Y=0 at dim<=5.  FAILS.
-
-      Case C (e_Re_R + Higgs): dim(e_Re_R) = 3, Y = -2.
-        Need 4 copies of H for Y closure.  dim = 3+4 = 7 > 5.  FAILS.
-
-      SU(2) triplet contraction of LL: no SU(2) triplet scalar in derived
-      spectrum (T_field).  FAILS.
-
-    UNIQUENESS: Only Case A succeeds.  O_W = (LH)(LH)/Lambda is the
-    unique Delta_L = 2 gauge-invariant operator at dim <= 5.
+    Neither premise is banked, derived or supplied here, and nothing about
+    the grade token in this record follows from either.
     """
-    from fractions import Fraction
-    d_spacetime = 4
-    dim_fermion = Fraction(d_spacetime - 1, 2)
-    dim_scalar = Fraction(d_spacetime - 2, 2)
-    check(dim_fermion == Fraction(3, 2))
-    check(dim_scalar == 1)
+    legs = {}
+    _premises = ['WEINBERG_YUKAWA_CLOSURE', 'SCALAR_SPECTRUM_IS_ONE_DOUBLET']
 
-    # Hypercharges (T5/T_field [P])
-    Y_L = Fraction(-1, 2)
-    Y_eR = Fraction(-1)
-    Y_H = Fraction(1, 2)
+    def _insertion_label(counts):
+        # Canonical label for a multiset of insertions, in the order the
+        # insertion set is DECLARED.  Driven by the declaration, so deleting
+        # a declared insertion type changes the enumeration rather than
+        # raising.
+        parts = []
+        for _lab, _sign in _WEINBERG_INSERTIONS:
+            _n = counts.get(_lab, 0)
+            if _n:
+                parts.append(_lab if _n == 1 else '%s^%d' % (_lab, _n))
+        return '.'.join(parts)
 
-    # Case A: LL + Higgs
-    dim_LL = 2 * dim_fermion  # = 3
-    Y_LL = 2 * Y_L            # = -1
-    n_H_needed = Fraction(-Y_LL, Y_H)  # = 2
-    check(n_H_needed == 2)
-    d_W = dim_LL + n_H_needed * dim_scalar
-    check(d_W == 5)
+    # ---- L1: the spacetime dimension, off check_T8's returned record -----
+    # Function-local import.  apf.spacetime imports nothing from apf.gauge,
+    # so this is not circular.  The dag_get(default=...) idiom the adjacent
+    # sibling uses is DELIBERATELY NOT USED here: a default that supplies
+    # the answer when the key is absent is a leg that cannot fail.
+    from itertools import combinations_with_replacement as _combinations_with_replacement
+    from apf.spacetime import check_T8 as _check_T8
 
-    # Case B: Le_R + Higgs Ã¢â‚¬â€ cannot reach Y=0
-    Y_LeR = Y_L + Y_eR  # = -3/2
-    Y_LeRH = Y_LeR + Y_H  # = -1
-    Y_LeRHH = Y_LeRH + Y_H  # = -1/2
-    check(Y_LeRHH != 0, "Case B: still not neutral at dim 5")
+    _t8 = _check_T8()['artifacts']
+    _t8_keys = ('d_selected', 'dof_by_dim', 'lovelock_unique')
+    _t8_present = [k for k in _t8_keys if k in _t8]
+    _l1_read_ok = len(_t8_present) == len(_t8_keys)
+    if _l1_read_ok:
+        d_spacetime = _t8['d_selected']
+        _dof = _t8['dof_by_dim']
+        _lov = _t8['lovelock_unique']
+        _selected_here = sorted(k for k in _dof
+                                if _dof[k] > 0 and _lov.get(k) is True)
+        _l1_selection_ok = _selected_here == [d_spacetime]
+        dim_fermion = Fraction(d_spacetime - 1, 2)
+        dim_scalar = Fraction(d_spacetime - 2, 2)
+        _l1_dims_ok = (dim_fermion > 0 and dim_scalar > 0
+                       and 2 * dim_fermion + 1 == d_spacetime
+                       and 2 * dim_scalar + 2 == d_spacetime)
+        _l1_ok = _l1_selection_ok and _l1_dims_ok
+        _l1_msg = (
+            'spacetime dimension %s read from the upstream record; that '
+            'record\'s own tables select %s, which equals the dimension it '
+            'publishes: %s; fermion mass dimension %s and scalar mass '
+            'dimension %s computed from it, both positive and both '
+            'recomposing to the dimension read: %s.  STATED LIMIT: the '
+            'recomposition conjuncts invert the two definitions and are '
+            'the construction restated; the load of this leg is the read '
+            'and the re-derived selection.'
+            % (d_spacetime, _selected_here, _l1_selection_ok,
+               dim_fermion, dim_scalar, _l1_dims_ok))
+    else:
+        d_spacetime = None
+        dim_fermion = dim_scalar = None
+        _l1_ok = False
+        _l1_msg = ('the upstream record does not publish %s; nothing is '
+                   'defaulted and no dimension is used'
+                   % (sorted(set(_t8_keys) - set(_t8_present)),))
+    legs['L1_spacetime_dimension_tie'] = (_l1_ok, _l1_msg)
 
-    # Case C: e_Re_R Ã¢â‚¬â€ needs 4 Higgs, dim = 7
-    Y_eReR = 2 * Y_eR  # = -2
-    n_H_C = Fraction(-Y_eReR, Y_H)  # = 4
-    dim_C = 2 * dim_fermion + n_H_C * dim_scalar  # = 7
-    check(dim_C == 7, "Case C: exceeds dim 5")
+    # ---- L2: the lepton hypercharges, off check_T_field's record ---------
+    # Upstream renders these as STRINGS.  The parse is strict: an
+    # unrecognised rendering fails this leg and quotes what it saw.
+    _tf = check_T_field()['artifacts']
+    _hc = _tf.get('hypercharges') if isinstance(_tf, dict) else None
+    _charge_names = ('Y_L', 'Y_e', 'Y_Q')
+    _parsed = {}
+    _parse_errors = []
+    if isinstance(_hc, dict):
+        for _n in _charge_names:
+            if _n not in _hc:
+                _parse_errors.append('%s: absent' % _n)
+                continue
+            _raw = _hc[_n]
+            try:
+                _parsed[_n] = Fraction(str(_raw))
+            except (ValueError, ZeroDivisionError, TypeError):
+                _parse_errors.append('%s: unparsed rendering %r' % (_n, _raw))
+    else:
+        _parse_errors.append('hypercharges: absent or not a mapping')
+    _parse_ok = not _parse_errors and len(_parsed) == len(_charge_names)
+
+    # This object's local name for the charged singlet differs from the
+    # upstream spelling; the two are recorded, not silently reconciled.
+    _upstream_singlet_name = 'Y_e'
+    _local_singlet_name = 'Y_eR'
+
+    _N_c = check_T_gauge()['artifacts'].get('winner_N_c')
+    if _parse_ok and isinstance(_N_c, int):
+        Y_L = _parsed['Y_L']
+        Y_eR = _parsed[_upstream_singlet_name]
+        Y_Q = _parsed['Y_Q']
+        _doublet_relation = (Y_L == -_N_c * Y_Q)
+        _singlet_relation = (Y_eR == -2 * _N_c * Y_Q)
+        _l2_ok = _doublet_relation and _singlet_relation
+        _l2_msg = (
+            'parse of the upstream string renderings succeeded: %s; lepton '
+            'doublet charge %s and charged singlet charge %s (upstream '
+            'spelling %s, local name %s) tied to the quark-doublet charge '
+            '%s the same record publishes through the colour count %s that '
+            'check_T_gauge\'s record returns: doublet relation %s, singlet '
+            'relation %s'
+            % (_parse_ok, Y_L, Y_eR, _upstream_singlet_name,
+               _local_singlet_name, Y_Q, _N_c, _doublet_relation,
+               _singlet_relation))
+    else:
+        Y_L = Y_eR = Y_Q = None
+        _l2_ok = False
+        _l2_msg = ('parse or colour-count read failed, nothing defaulted: '
+                   'parse errors %s; colour count %r'
+                   % (_parse_errors, _N_c))
+    legs['L2_lepton_hypercharge_tie'] = (_l2_ok, _l2_msg)
+
+    # ---- L3: which hypercharge convention the consumed charges are in ----
+    _marker = _WEINBERG_Q_EQ_T3_PLUS_Y_QUARK_DOUBLET_Y
+    if Y_Q is not None:
+        _l3_ok = (Y_Q == _marker)
+        _l3_msg = (
+            'quark-doublet charge %s from the consumed record against the '
+            'declared convention marker %s: %s.  The comparand is AUTHORED '
+            'at module level, not read from any record; it names the '
+            'Q = T_3 + Y convention, and the tree carries a second live '
+            'convention in which the same quantity is twice it.  A charge '
+            'set in that other convention fails here.'
+            % (Y_Q, _marker, _l3_ok))
+    else:
+        _l3_ok = False
+        _l3_msg = 'no quark-doublet charge was parsed; nothing is compared'
+    legs['L3_normalisation_discriminator'] = (_l3_ok, _l3_msg)
+
+    # ---- L4: the scalar hypercharge, computed, never read ----------------
+    # PREMISE WEINBERG_YUKAWA_CLOSURE.  Charged-lepton Yukawa neutrality:
+    # the conjugate doublet, the charged singlet and the scalar sum to zero.
+    if Y_L is not None and Y_eR is not None:
+        Y_S = Y_L - Y_eR
+        _closure_identity = (-Y_L + Y_eR + Y_S == 0)
+        _nonzero = (Y_S != 0)
+        _opposes_leptons = (Y_S * Y_L < 0)
+        _l4_ok = _closure_identity and _nonzero and _opposes_leptons
+        _l4_msg = (
+            'scalar hypercharge %s computed from the two consumed lepton '
+            'charges under %s; the neutrality identity closes: %s; it is '
+            'non-zero, so insertion counting is defined: %s; it opposes '
+            'the lepton charges in sign, so neutralisation by insertion is '
+            'possible at all: %s.  STATED LIMIT: the closure identity is '
+            'the definition restated once the two charges are in hand; the '
+            'load of this leg is the other two conjuncts.'
+            % (Y_S, _premises[0], _closure_identity, _nonzero,
+               _opposes_leptons))
+    else:
+        Y_S = None
+        _l4_ok = False
+        _l4_msg = 'no lepton charges were parsed; no scalar charge is computed'
+    legs['L4_scalar_hypercharge_from_yukawa_closure'] = (_l4_ok, _l4_msg)
+
+    # ---- L5: the enumeration, over the declared inventory ----------------
+    _candidates = []
+    for _blabel, _n_L, _n_e in _WEINBERG_BLOCKS:
+        for _size in range(0, _WEINBERG_MAX_INSERTIONS + 1):
+            for _combo in _combinations_with_replacement(
+                    _WEINBERG_INSERTIONS, _size):
+                _counts = {}
+                _net = 0
+                for _lab, _sign in _combo:
+                    _counts[_lab] = _counts.get(_lab, 0) + 1
+                    _net += _sign
+                _il = _insertion_label(_counts)
+                _candidates.append({
+                    'label': _blabel if not _il else '%s+%s' % (_blabel, _il),
+                    'n_L': _n_L, 'n_e': _n_e,
+                    'n_insertions': _size, 'net_insertion_sign': _net,
+                })
+    _enumerated = [c['label'] for c in _candidates]
+    _declared = set(_WEINBERG_CANDIDATE_LABELS)
+    _missing_cand = sorted(_declared - set(_enumerated))
+    _extra_cand = sorted(set(_enumerated) - _declared)
+    _conjugate_declared = any(sign < 0 for _, sign in _WEINBERG_INSERTIONS)
+    _l5_ok = (not _missing_cand and not _extra_cand and _conjugate_declared
+              and len(_enumerated) == len(_declared)
+              and len(_enumerated) > 0)
+    legs['L5_candidate_inventory_enumerated'] = (_l5_ok, (
+        'enumerated %d candidates over %d declared blocks, %d declared '
+        'insertion types and an insertion cap of %d; against the frozen '
+        'declaration of %d labels: missing=%s extra=%s; the conjugate '
+        'insertion is declared: %s'
+        % (len(_enumerated), len(_WEINBERG_BLOCKS), len(_WEINBERG_INSERTIONS),
+           _WEINBERG_MAX_INSERTIONS, len(_declared), _missing_cand,
+           _extra_cand, _conjugate_declared)))
+
+    # ---- L6: the hypercharge neutrality filter ---------------------------
+    if Y_L is not None and Y_eR is not None and Y_S is not None:
+        for _c in _candidates:
+            _c['Y_total'] = (_c['n_L'] * Y_L + _c['n_e'] * Y_eR
+                             + _c['net_insertion_sign'] * Y_S)
+        _neutral = [c for c in _candidates if c['Y_total'] == 0]
+        _l6_ok = 0 < len(_neutral) < len(_candidates)
+        _l6_msg = (
+            'total hypercharge computed in exact Fractions for all %d '
+            'candidates, including the conjugate insertion; %d are neutral; '
+            'the filter is exercised rather than vacuous: %s'
+            % (len(_candidates), len(_neutral), _l6_ok))
+    else:
+        _neutral = []
+        _l6_ok = False
+        _l6_msg = 'no charges in hand; no hypercharge filter was applied'
+    legs['L6_hypercharge_neutrality_filter'] = (_l6_ok, _l6_msg)
+
+    # ---- L7: the mass-dimension filter, against the declared cap ---------
+    if dim_fermion is not None and _neutral:
+        for _c in _candidates:
+            _c['dim_total'] = ((_c['n_L'] + _c['n_e']) * dim_fermion
+                               + _c['n_insertions'] * dim_scalar)
+        _survivors = [c for c in _neutral
+                      if c['dim_total'] <= _WEINBERG_DIM_CAP]
+        _cap_removes = len(_neutral) - len(_survivors)
+        _l7_ok = len(_survivors) > 0 and _cap_removes > 0
+        _l7_msg = (
+            'total mass dimension computed in exact Fractions from the '
+            'dimensions of L1; the DECLARED cap is %s; of %d neutral '
+            'candidates the cap removes %d and leaves %d.  The cap is '
+            'load-bearing rather than decorative: %s'
+            % (_WEINBERG_DIM_CAP, len(_neutral), _cap_removes,
+               len(_survivors), _l7_ok))
+    else:
+        _survivors = []
+        _l7_ok = False
+        _l7_msg = ('no dimensions or no neutral candidates in hand; no '
+                   'dimension filter was applied')
+    legs['L7_dimension_filter'] = (_l7_ok, _l7_msg)
+
+    # ---- L8: the survivor, three separate assertions ---------------------
+    _count_ok = (len(_survivors) == 1)
+    _label_ok = _count_ok and (_survivors[0]['label']
+                               == _WEINBERG_SURVIVOR_LABEL)
+    _d_W = None
+    _dim_ok = False
+    _recompose_ok = False
+    _bounds_ok = False
+    if _count_ok:
+        _s = _survivors[0]
+        _d_W = _s['dim_total']
+        _recomposed = ((_s['n_L'] + _s['n_e']) * dim_fermion
+                       + _s['n_insertions'] * dim_scalar)
+        _recompose_ok = (_recomposed == _d_W)
+        _bounds_ok = (_d_W > d_spacetime
+                      and _d_W <= _WEINBERG_DIM_CAP
+                      and _d_W.denominator == 1)
+        _dim_ok = _recompose_ok and _bounds_ok
+    _l8_ok = _count_ok and _label_ok and _dim_ok
+    legs['L8_survivor_identity'] = (_l8_ok, (
+        'survivor count is one: %s; the survivor carries the declared '
+        'label %s: %s; the survivor\'s mass dimension %s is an integer, '
+        'lies strictly above the spacetime dimension read at L1 and at or '
+        'below the declared cap: %s; recomposes from its own content: '
+        '%s (STATED LIMIT: a label, the construction restated).  Three '
+        'assertions, not one.'
+        % (_count_ok, _WEINBERG_SURVIVOR_LABEL, _label_ok, _d_W, _bounds_ok,
+           _recompose_ok)))
+
+    # ---- L9: append-and-record leg inventory, on the bank path -----------
+    _executed = set(legs) | {'L9_leg_inventory'}
+    _missing = sorted(set(_WEINBERG_EXPECTED_LEGS) - _executed)
+    _extra = sorted(_executed - set(_WEINBERG_EXPECTED_LEGS))
+    legs['L9_leg_inventory'] = (not _missing and not _extra, (
+        'declared %d, executed %d, missing=%s extra=%s'
+        % (len(_WEINBERG_EXPECTED_LEGS), len(_executed), _missing, _extra)))
+
+    fails = ['%s: %s' % (k, legs[k][1]) for k in sorted(legs) if not legs[k][0]]
+
+    _d_W_display = (int(_d_W) if (_d_W is not None and _d_W.denominator == 1)
+                    else 'undetermined')
+    _under = ' + '.join(_premises)
+    _key_result = (
+        'd_W = %s: over the declared building-block inventory, the declared '
+        'scalar insertion set and the declared caps, %d candidates are '
+        'enumerated and %d survives the neutrality and dimension filters; '
+        'the survivor is unique among the enumerated candidates over those '
+        'declarations and over nothing wider, under %s'
+        % (_d_W_display, len(_candidates), len(_survivors), _under))
 
     return _result(
-        name='L_Weinberg_dim: Weinberg Operator d_W = 5',
+        name='L_Weinberg_dim: Weinberg Operator d_W = %s' % (_d_W_display,),
         tier=2,
         epistemic='P',
         summary=(
-            f'Unique Delta_L=2 operator has dimension {d_W}. '
-            'EXHAUSTIVE CLASSIFICATION from derived fields (no import): '
-            'Case A (LL+HH): dim=5, Y=0, SU(2) singlet. UNIQUE at dim<=5. '
-            'Case B (Le_R+H): Y never neutralizes at dim<=5. '
-            'Case C (e_Re_R+H): needs 4 Higgs, dim=7. '
-            'Triplet contraction: no triplet scalar in spectrum. '
-            'v4.3.2: Weinberg (1979) import removed.'
-        ),
-        key_result=f'd_W = {d_W}: unique Delta_L=2 operator (exhaustive, no import) [P]',
+            'The spacetime dimension is read from check_T8\'s returned '
+            'record and the fermion and scalar mass dimensions are computed '
+            'from it. The lepton-doublet and charged-singlet hypercharges '
+            'are read from check_T_field\'s returned record, in that '
+            'record\'s own normalisation, and their renderings are parsed '
+            'strictly. The normalisation of the consumed charges is checked '
+            'against the quark-doublet hypercharge the same record '
+            'publishes; the corpus carries two hypercharge normalisations '
+            'and that comparison is what separates them. The scalar '
+            'hypercharge is read from no record -- none publishes one -- '
+            'and is computed from the two consumed lepton hypercharges by '
+            'charged-lepton Yukawa neutrality, under the named premise %s. '
+            'Over a declared building-block inventory, a declared scalar '
+            'insertion set including the conjugate insertion, and declared '
+            'caps, %d candidates are enumerated and the enumerated label '
+            'set is asserted against a frozen declaration. Each candidate\'s '
+            'total hypercharge and total mass dimension are computed in '
+            'exact rational arithmetic and the neutrality and dimension '
+            'filters applied, leaving %d. '
+            'The survivor count, the survivor\'s label and the survivor\'s '
+            'computed mass dimension are three separate assertions. The '
+            'survivor is unique among the enumerated candidates over the '
+            'declared inventory and caps, and the enumeration is complete '
+            'relative to those declarations and to nothing wider. No banked '
+            'check derives the scalar sector\'s representation content: the '
+            'insertion set and the absence of a triplet contraction both '
+            'rest on the named premise %s, not on check_T_field.'
+            % (_premises[0], len(_candidates), len(_survivors),
+               _premises[1])),
+        key_result=_key_result,
         dependencies=['T8', 'T_gauge', 'T_field'],
         artifacts={
+            'spacetime_dimension': d_spacetime,
             'dim_fermion': str(dim_fermion),
             'dim_scalar': str(dim_scalar),
-            'd_W': int(d_W),
-            'uniqueness': 'Exhaustive over {LL, Le_R, e_Re_R} x Higgs insertions',
-            'cases': {
-                'A_LL_HH': 'dim=5, Y=0 VIABLE',
-                'B_LeR_H': f'Y={Y_LeRHH} at dim=5 FAILS',
-                'C_eReR_H': f'dim={int(dim_C)} FAILS',
+            'scalar_hypercharge_computed': str(Y_S),
+            'd_W': _d_W_display,
+            'candidates_enumerated': len(_candidates),
+            'candidates_neutral': len(_neutral),
+            'candidates_surviving': len(_survivors),
+            'survivor_label': (_survivors[0]['label'] if len(_survivors) == 1
+                               else None),
+            'declared_caps': {
+                'max_fermions': _WEINBERG_MAX_FERMIONS,
+                'max_insertions': _WEINBERG_MAX_INSERTIONS,
+                'max_mass_dimension': str(_WEINBERG_DIM_CAP),
             },
+            'declared_blocks': [b[0] for b in _WEINBERG_BLOCKS],
+            'declared_insertions': [i[0] for i in _WEINBERG_INSERTIONS],
+            'scope': ('complete relative to the declared inventory, the '
+                      'declared insertion set and the declared caps, and to '
+                      'nothing wider'),
         },
+        passed=not fails,
+        legs={k: {'passed': bool(v[0]), 'evidence': v[1]}
+              for k, v in legs.items()},
+        leg_count=len(legs),
+        fail_reasons=fails,
+        conditional_on=list(_premises),
+        disclosures=[
+            'The status string in this record is produced by the shared '
+            'result builder and is fixed at PASS; the verdict of record is '
+            '`passed` together with `fail_reasons`. A failing leg therefore '
+            'makes this check red in the bank and classifies it FLAG rather '
+            'than FAIL in the full-pass harness (R3@2026-08-30). Making the '
+            'status string track `passed` moves a tracked census partition, '
+            'and this pass is not scoped to move one.',
+            'No check in the tree derives the scalar sector\'s '
+            'representation content. The triplet-contraction clause '
+            'formerly cited check_T_field, whose derivation is the fermion '
+            'spectrum and does not contain the claim. That citation is '
+            'deleted and the clause now rests on the named premise '
+            'SCALAR_SPECTRUM_IS_ONE_DOUBLET, which is not banked, not '
+            'derived and not supplied here.',
+            'THE ENUMERATION\'S RESIDUE, named and not argued away: '
+            'derivative insertions, gauge field-strength insertions, quark '
+            'fields, operators with more than two fermions, and any '
+            'spectrum containing a right-handed neutrino are outside the '
+            'declared inventory. They are excluded in fact by the declared '
+            'spectrum and the caps; NONE is excluded in code, and this '
+            'record does not claim they are.',
+            'A value tie realised as a call re-executes the sibling. One of '
+            'the siblings called here reads the derivation graph, so that '
+            're-execution appends consumer entries and can move the '
+            'present/missing artifacts of the graph-integrity check. That '
+            'check\'s verdict is governed by a required-key set and per-key '
+            'minimum bounds and does not move. This is disclosed rather '
+            'than engineered around.',
+            'append-and-record certifies that a declared leg EXECUTED, not '
+            'that it COULD HAVE FAILED.',
+            'ESCAPES, disclosed rather than smoothed. (i) A re-rendering of '
+            'a consumed charge that PRESERVES its exact value passes: the '
+            'ties here are by value, not by rendering, so a decimal spelling '
+            'of the same rational '
+            'is invisible; a lossy or unparseable rendering fails loudly. '
+            '(ii) Replacing the survivor\'s computed dimension with a '
+            'literal EQUAL to the value in hand is invisible; a literal '
+            'that differs is caught. (iii) Substituting a constant verdict '
+            'for the one this record computes is invisible while every leg '
+            'passes, and where a leg does fail it hides the verdict while '
+            'leaving the failing leg and its reason in the record. That is '
+            'the standing limit of the append-and-record form, not a '
+            'property this object repairs. (iv) Reversing the two declared '
+            'premise names inverts every attribution; no leg moves.',
+            'AUTHORED COMPARANDS, declared at module level and computed by '
+            'nothing: the convention marker L3 compares against, the '
+            'building-block inventory, the insertion set, the three caps, '
+            'the survivor label and the frozen candidate-label tuple. They '
+            'are the DECLARATION this enumeration is complete relative to. '
+            'They are provenance, not targets. The dimension cap is one of '
+            'them, and L8 asserts the survivor\'s dimension is an integer '
+            'strictly above the spacetime dimension read at L1 and at or '
+            'below that cap.',
+            'The convention marker pins the consumed charge set to one of '
+            'the two conventions the tree carries. A rescaling applied '
+            'CONSISTENTLY to the whole consumed charge set fails L3 and '
+            'does not move the survivor\'s computed dimension, which is a '
+            'dimension and is convention-independent; what L3 protects '
+            'against is a charge set consumed in one convention and read '
+            'in the other.',
+            'GRADE TENSION, FILED AND NOT TAKEN: this record now returns a '
+            'scoped uniqueness sentence and carries two named unbanked '
+            'premises in `conditional_on`, at the grade and tier it '
+            'already had. Any movement on a tier-2 member is held; the '
+            'tension is filed elsewhere and nothing here licenses a move.',
+            'A sibling in this file re-derives one of these arithmetic '
+            'cases in line rather than consuming this record, and a sibling '
+            'in another module assigns the same integer to a differently '
+            'named variable. Both are named so the silence is not read as '
+            'absence; neither is repaired here, and this record publishes '
+            'nothing to the derivation graph for them to read.',
+        ],
     )
 
 
