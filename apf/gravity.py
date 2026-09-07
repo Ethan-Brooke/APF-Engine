@@ -2282,7 +2282,6 @@ def check_T_which_v_no_registered_interior_reader():
         'ie_wall_shadow_census.py': ('VL', 'infra'),
         'interface_atlas_v02_inputs.py': ('VLD', 'consumer'),
         'internalization_geo.py': ('L', 'fence'),
-        'kappa_int_bounds.py': ('L', 'fence'),
         'lambda_absolute.py': ('VL', 'consumer'),
         'lambda_operator_derivation.py': ('VL', 'consumer'),
         'light_quark_real_adapter.py': ('L', 'fence'),

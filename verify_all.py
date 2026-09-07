@@ -623,13 +623,13 @@ def main():
                 if r["status"] == "FAIL":
                     print(f"  FAIL  {r['name']}")
                     if r["error"]:
-                        print(f"        {r['error'][:120]}")
+                        print(f"        {str(r['error'])[:120]}")
         if n_flag > 0:
             for r in results:
                 if r["status"] == "FLAG":
                     print(f"  FLAG  {r['name']}")
                     if r["error"]:
-                        print(f"        {r['error'][:120]}")
+                        print(f"        {str(r['error'])[:120]}")
 
     elapsed = time.time() - t_start
 
@@ -673,7 +673,7 @@ def main():
             if r["status"] == "FLAG":
                 print(f"  {r['name']}")
                 if r["error"]:
-                    print(f"    {r['error'][:200]}")
+                    print(f"    {str(r['error'])[:200]}")
     else:
         print(f"\u2717 FAILURES: {total_fail}/{total} checks FAILED  ({elapsed:.1f}s)")
         if total_flag > 0:
@@ -683,7 +683,7 @@ def main():
             if r["status"] == "FAIL":
                 print(f"  {r['name']}")
                 if r["error"]:
-                    print(f"    {r['error'][:200]}")
+                    print(f"    {str(r['error'])[:200]}")
 
     if not args.no_scorecard:
         print_prediction_scorecard()

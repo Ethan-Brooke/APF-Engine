@@ -672,11 +672,8 @@ def check_R_extra_axiom_NT_killed():
     DEPENDENCIES: A1.
     NOTE: no PLEC-components essentiality result is banked. This
     docstring previously cited L_PLEC_components_essentiality, which has
-    never existed in the bank under any spelling. The nearest banked
-    content runs the other way: check_T_PLEC_derived_from_spine
-    (apf/foundation_inputs.py) exhibits A1, MD and A2 on its canonical
-    witness as consequences of the four-input declaration, so the four
-    are NOT asserted to be logically independent. That sibling's clause
+    never existed in the bank under any spelling. The sibling
+    check_T_PLEC_derived_from_spine (apf/foundation_inputs.py) clause
     for BW was corrected at v24.3.482 (2026-08-30) and this sentence
     with it: BW is now carried there under its statement of record and
     is EXHIBITED, not derived, and the sibling's own executed control

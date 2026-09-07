@@ -328,7 +328,7 @@ def check_T_w_real_row_bundle_admission_states_exhaustive():
 def check_T_w_real_row_bundle_bank_closure():
     deps = [check_T_w_real_row_bundle_status_declared(), check_T_w_real_row_bundle_depends_on_v108_schema(), check_T_w_real_row_bundle_default_empty_certificate(), check_T_w_real_row_bundle_dry_rows_can_admit_when_not_shipped_default(), check_T_w_real_row_bundle_preserves_release_lock()]
     p = all(_passed(d) for d in deps) and not manifest()["real_row_bundle_admitted"] and not manifest()["physical_W_export_enabled"]
-    return _res("bank_closure", p, dependencies=deps, closed_now="real row-bundle admission/absence/rejection report gate", not_closed="actual shipped real rows, component-sum certificate, covariance/uncertainty propagation, physical W export")
+    return _res("bank_closure", p, dependencies=["T_w_real_row_bundle_status_declared", "T_w_real_row_bundle_depends_on_v108_schema", "T_w_real_row_bundle_default_empty_certificate", "T_w_real_row_bundle_dry_rows_can_admit_when_not_shipped_default", "T_w_real_row_bundle_preserves_release_lock"], dependency_results=deps, closed_now="real row-bundle admission/absence/rejection report gate", not_closed="actual shipped real rows, component-sum certificate, covariance/uncertainty propagation, physical W export")
 
 _CHECKS: Dict[str, Any] = {
     "T_w_real_row_bundle_status_declared": check_T_w_real_row_bundle_status_declared,

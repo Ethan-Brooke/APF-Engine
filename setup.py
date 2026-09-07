@@ -7,14 +7,9 @@
 # New module apf/foundation_inputs.py with two checks:
 #  - check_T_four_input_declaration: canonical 4-input set (FD1 + FD2 + FD3 +
 #    finite-physical-regime hypothesis); names them, asserts no fifth input
-#    is invoked; PLEC and downstream commitments are derivable consequences.
-#  - check_T_PLEC_derived_from_spine: A1/MD/A2/BW each derived from the
-#    4-input set under Paper 10 v1.12 §3.5 reductions.
+#    is invoked.
 #
 # apf/kappa_int_bounds.py extended with two checks:
-#  - check_T_R1_R4_spine_derivable: R1 (compactness) automatic for finite
-#    interrogation; R2 (robustness) built into FD2; R3 (LSC) from cost-
-#    positive-only-on-physical structure; R4 (finite capacity) = A1 itself.
 #  - check_T_minimum_distinction_floor_via_MD: floor theorem proved via
 #    MD's uniform floor pointwise; no compactness, LSC, or Weierstrass
 #    infimum-attainment theorem invoked.
@@ -86,7 +81,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="apf",
-    version='24.3.500',
+    version='24.3.501',
     description=(
         "Admissibility Physics Framework: a machine-verifiable theorem bank "
         "deriving the Standard Model and cosmological structure from finite "

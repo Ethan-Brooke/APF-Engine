@@ -396,34 +396,26 @@ def check_T_kappa_int_two_sided_rigidity():
 
 
 # =====================================================================
-# R1-R4 spine-derivation + MD-uniform-floor floor theorem
-# (Phase 42, 2026-05-04 LATER: codebase landing of Paper 1 sup v8.31 §11
-# reframing — R1-R4 as derivable consequences of the spine + operational
-# interrogation, not added regularity hypotheses)
 # =====================================================================
 
 def check_T_R1_R4_spine_derivable():
-    """T_R1_R4_spine_derivable: each of R1-R4 is a derivable consequence
-    of the spine + operational structure of physical interrogation.
+    """R1-R4 scope on the finite toy interface (legacy registry key retained).
 
-    Tier 4 [P_structural]. Paper 1 Supplement v8.31 §11
+    Tier 4 [P_structural]. Paper 1 Supplement v9.23
     (subsec:R1-R4-mathematical-import).
 
-    Verifies on the canonical 4-input witness that:
-      (i)   R1 (compactness) — automatic for finite Q via the finite-
-            interrogation theorem (Paper 1 sup §10 Theorem
-            thm:finite-tested-normal-form): a finite APF interrogation
-            protocol induces a finite query family by construction.
-      (ii)  R2 (robustness) — built into FD2's definition of physical
-            distinction: every distinction is by construction a separator
-            of continuation profiles, and stability under admissible
-            perturbation is the spine's primitive content.
-      (iii) R3 (lower semicontinuity) — automatic from the cost-positive-
-            only-on-physical structure: cost can jump upward at boundary
-            (becoming physical adds the floor) but cannot jump downward
-            (every physical distinction has cost ≥ ε* > 0).
-      (iv)  R4 (finite capacity) — A1 itself, the finite-physical-regime
-            hypothesis already in the spine.
+    Checks only finite query size, disjoint positive supports, singleton
+    costs at least the toy floor, and a positive toy floor. These finite
+    computations are not a derivation of R1-R4: no general-family
+    compactness, general perturbation robustness, LSC, or finite-capacity
+    certificate is tested here. In particular, the positive-floor leg
+    does not verify finite capacity, and positivity does not imply LSC.
+
+    The cited source treats R1 for non-finite families and R3 as additional
+    modeling assumptions for the alternative Weierstrass route; it treats
+    R2 and R4 as restatements of source commitments. These are attributed
+    source interpretations, not conclusions of the toy computation.
+    The source's MD floor route needs neither R1 nor R3.
     """
     iface = _build_toy_interface()
     sites = iface["sites"]
@@ -433,55 +425,47 @@ def check_T_R1_R4_spine_derivable():
     phi_d1 = iface["phi_d1"]
     phi_d2 = iface["phi_d2"]
 
-    # (i) R1 — finite interrogation gives finite Q
+    # (i) Finite query list on this toy interface.
     Q = [phi_d1, phi_d2]  # finite query family
-    assert len(Q) < float("inf"), "R1 finite-Q witness failed"
-    R1_derivable = True
+    assert len(Q) < float("inf"), "Finite-Q witness failed"
 
-    # (ii) R2 — FD2 stability built into definition.  Verify by exhibiting
-    # that the toy distinctions are separators of distinct profiles
-    # (i.e., φ_d1 and φ_d2 have disjoint supports — the most extreme
-    # form of profile separation).
+    # (ii) Disjoint positive supports of the two fixed toy profiles.
+    # This does not test robustness under general admissible perturbations.
     supp_d1 = {x for x in sites if phi_d1[x] > 0}
     supp_d2 = {x for x in sites if phi_d2[x] > 0}
-    assert supp_d1.isdisjoint(supp_d2), "R2 FD2 separation witness failed"
-    R2_derivable = True
+    assert supp_d1.isdisjoint(supp_d2), "Toy support-separation witness failed"
 
-    # (iii) R3 — LSC from cost-positive-only-on-physical.  The cost map
-    # κ takes positive values exactly on physical distinctions.  Verify
-    # that κ is bounded below by ε* uniformly (cost-positive-only-on-
-    # physical implies LSC by construction).
+    # (iii) Singleton-cost floor comparisons, not an LSC certificate.
     k_d1 = _kappa_Gamma_singleton(phi_d1, eps_local, kernel, sites)
     k_d2 = _kappa_Gamma_singleton(phi_d2, eps_local, kernel, sites)
-    assert k_d1 >= eps_star, f"R3 LSC: κ(d_1) = {k_d1} < ε* = {eps_star}"
-    assert k_d2 >= eps_star, f"R3 LSC: κ(d_2) = {k_d2} < ε* = {eps_star}"
-    # Cost cannot jump downward at boundary: if a sequence converges to
-    # a physical distinction, the limit cost is ≥ ε* (uniform lower bound)
-    R3_derivable = True
+    assert k_d1 >= eps_star, f"Singleton-cost floor: κ(d_1) = {k_d1} < ε* = {eps_star}"
+    assert k_d2 >= eps_star, f"Singleton-cost floor: κ(d_2) = {k_d2} < ε* = {eps_star}"
 
-    # (iv) R4 — A1 = finite-physical-regime.  Verified by ε* > 0.
-    R4_derivable = eps_star > 0
-    assert R4_derivable, "R4 = A1: finite-physical-regime hypothesis failed"
+    # (iv) Positive toy floor; finite capacity is not verified here.
+    floor_positive = eps_star > 0
+    assert floor_positive, "Positive toy-floor witness failed"
 
     return {
-        "name": "T_R1_R4_spine_derivable",
+        "name": "R1-R4 scope on the finite toy interface",
         "passed": True,
         "key_result": (
-            f"R1-R4 each derivable from the spine: "
-            f"R1 = finite-interrogation gives finite Q (|Q| = {len(Q)}); "
-            f"R2 = FD2 stability built in (supports disjoint); "
-            f"R3 = LSC from cost-positive-only-on-physical "
-            f"(κ ≥ ε* = {eps_star} uniformly); "
-            f"R4 = A1 = finite-physical-regime hypothesis."
+            f"Finite toy interface: |Q| = {len(Q)}; positive supports disjoint; "
+            f"singleton costs κ(d_1) = {k_d1}, κ(d_2) = {k_d2} "
+            f"are each ≥ ε* = {eps_star}; ε* > 0. "
+            f"These checks do not certify R1-R4."
         ),
         "summary": (
-            "R1-R4 are derivable consequences of the 4-input declaration + the "
-            "operational structure of physical interrogation, not four regularity "
-            "hypotheses added on top of the spine.  R1 is automatic via the finite-"
-            "interrogation theorem; R2 is built into FD2's definition; R3 is "
-            "structurally automatic from the cost-positive-only-on-physical structure "
-            "of κ_Γ; R4 is A1 itself.  No new commitment beyond the spine is added; "
-            "the structural shape is exposed rather than imposed."
+            "Checks finite query size, disjoint positive supports, singleton-cost "
+            "floor comparisons and a positive floor on the fixed toy interface. "
+            "It does not test compactness of a general family, general perturbation "
+            "robustness, LSC, or finite capacity, and is not a derivation of R1-R4. "
+            "The positive-floor leg does not verify finite capacity; the cost-floor "
+            "comparisons do not supply an LSC certificate. Paper 1 Supplement v9.23 "
+            "(subsec:R1-R4-mathematical-import) treats R1 for non-finite families "
+            "and R3 as additional modeling assumptions for the alternative route, "
+            "and R2 and R4 as restatements of source commitments. That is the "
+            "source's interpretation, not a result tested here. MD's floor route "
+            "does not need R1 or R3."
         ),
         "tier": 4,
         "epistemic": "[P_structural]",
@@ -849,9 +833,9 @@ IE_DECLARATIONS = (
             "valid ONLY in the C1-C5 continuum-bridge regime), "
             "check_T_kappa_int_two_sided_rigidity (the residue sits between "
             "explicit substrate-derived endpoints in the C1-C5 regime, no "
-            "remaining structural freedom), check_T_R1_R4_spine_derivable (R1-R4 "
-            "are derivable consequences of the spine + interrogation structure on "
-            "the canonical 4-input witness), and "
+            "remaining structural freedom), check_T_R1_R4_spine_derivable (legacy "
+            "key for finite toy query/support/floor checks, not a derivation of "
+            "R1-R4 or an LSC/finite-capacity certificate), and "
             "check_T_minimum_distinction_floor_via_MD (the floor theorem "
             "mu_Gamma(Q) >= eps* > 0 from MD's uniform floor alone -- no "
             "compactness, no LSC, no Weierstrass). The sixth, "
@@ -863,8 +847,7 @@ IE_DECLARATIONS = (
             "cooperative couplings U_i <= Delta_top, gap/floor independence) -- "
             "precondition (3) is genuinely load-bearing (39/74 witness failures "
             "when U > Delta_top), and the bound is undefined outside the regime. "
-            "All six are finite-witness certifications of supplement theorems; "
-            "the upper-bound side is regime-conditional throughout, never "
+            "The upper-bound side is regime-conditional throughout, never "
             "unconditional. "
         ),
         "note": "Wave 7; module docstring line 34 says all checks are [P_structural] but the sixth carries the narrower regime-restricted token (field wins)",

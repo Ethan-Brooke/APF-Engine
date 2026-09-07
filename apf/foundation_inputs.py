@@ -1,6 +1,6 @@
 """apf/foundation_inputs.py -- Executable witness for the canonical 4-input
-declaration of Admissibility Physics + the derivation of PLEC's four
-constitutive features from that declaration.
+declaration of Admissibility Physics + PLEC witness features and an
+admissible-family counting bound.
 
 Phase 42 (2026-05-04 LATER): codebase landing of the LATER-9 input-set
 collapse 5 → 4 (Paper 0 v6.0.5 + Paper 1 supplement v8.22+).  The framework's
@@ -17,24 +17,17 @@ canonical input set is exactly four:
     3. FD3 -- Physical distinctions carry positive realignment cost.
     4. Finite-physical-regime hypothesis: C_Γ < ∞ at every interface.
 
-All other commitments named anywhere in the corpus (PLEC's four constitutive
-features A1/MD/A2/BW, the marginal floor ε* > 0, the Sep/IJC dichotomy, the
-κ_int two-sided structural rigidity, the R1-R4 robust-finite-interface
-conditions) are derivable consequences of these four under Paper 10 v1.12
-§3.5 reductions.
-
 This module provides two bank-registered checks witnessing the foundation:
 
-  * check_T_four_input_declaration -- certifies that the canonical witness
-    APS satisfies all four inputs and that no other primitive commitment is
-    needed to support the spine.
+  * check_T_four_input_declaration -- witnesses that the canonical
+    APS satisfies the four declared inputs.
 
-  * check_T_PLEC_derived_from_spine -- exhibits A1, MD and A2 on the
-    canonical witness as consequences of the four-input declaration: A1 =
-    finite-physical-regime hypothesis directly; MD-value = ε* > 0 as the
-    second half of the finite-physical-regime hypothesis with the
-    tested/gauge cleavage from FD2; A2 = argmin from cost-as-infimum +
-    no-waste under saturation.  BW is carried under its STATEMENT OF
+  * check_T_PLEC_derived_from_spine -- legacy key for A1 and MD witness
+    features and an admissible-family counting bound: A1 = finite-physical-
+    regime hypothesis directly; MD-value = ε* > 0 as the second half of
+    the finite-physical-regime hypothesis with the tested/gauge cleavage
+    from FD2. The counting bound does not certify saturation, attainment,
+    no-waste, or outcome selection. BW is carried under its STATEMENT OF
     RECORD (OHC_N@2026-08-30) -- cost-spectrum non-degeneracy at the
     element-distinction level -- and the increment condition it used to
     be stated by is retained beside it as MD's content under MD's name.
@@ -54,8 +47,8 @@ This module provides two bank-registered checks witnessing the foundation:
 
     WHAT THAT CONTROL DOES NOT SHOW, named here so it is not read off the
     code: it does not show that BW is underivable from MD, that Lemma BW
-    of Paper 10 v1.12 §3.5 is wrong, or that BW is an axiom.  Nobody in
-    this lane opened Paper 10 §3.5.  The honest statement is about the
+    of Paper 10 v1.12 §3.5 is wrong, or that BW is an axiom.  The prior BW
+    repair did not open Paper 10 §3.5.  The honest statement is about the
     TRANSCRIPTION that ships in this module.
 
 Checks here are tier 4; FD1_structural_completeness is [P] (Assumption 1 at
@@ -87,8 +80,7 @@ class FourInputWitness:
     """A finite witness exhibiting the canonical 4-input declaration.
 
     The witness is a small concrete admissibility space that satisfies all
-    four inputs and from which PLEC's four features can be read off as
-    derived consequences.
+    four declared inputs; it is not a derivation of PLEC's four features.
 
     Substrate Σ = {0, 1, 2, 3} (4 raw configurations).
     Continuation equivalence partitions Σ into 2 physical states.
@@ -149,7 +141,7 @@ _PLEC_SPINE_LEGS: FrozenSet[str] = frozenset({
     "A1_capacity_finite",
     "MD_value_floor_positive",
     "MD_tested_gauge_cleavage",
-    "A2_argmin_counting_bound",
+    "admissible_family_counting_bound",
     "MD_increment_at_least_floor",
     "BW_non_degeneracy_statement_of_record",
     "BW_order_independence",
@@ -251,8 +243,8 @@ def check_T_four_input_declaration():
       (iii) FD3: every distinction has strictly positive realignment cost.
       (iv) Finite-physical-regime hypothesis: C_Γ < ∞ AND μ*_Γ > 0.
 
-    No fifth input is invoked.  PLEC's four features and the marginal floor
-    follow as derived consequences (see check_T_PLEC_derived_from_spine).
+    No fifth input is invoked in this witness check. It does not certify
+    derivability of PLEC's four features or the general R1-R4 conditions.
     """
     w = _build_canonical_witness()
 
@@ -313,11 +305,10 @@ def check_T_four_input_declaration():
             "admissible continuation identity) + FD2 (physical distinction = finite "
             "enforceable separator of continuation profiles) + FD3 (physical "
             "distinctions carry positive realignment cost) + finite-physical-regime "
-            "hypothesis (C_Γ < ∞ AND μ*_Γ > 0).  All other commitments named in the "
-            "corpus -- PLEC's four constitutive features A1/MD/A2/BW, the marginal "
-            "floor ε*, the Sep/IJC dichotomy, the κ_int two-sided rigidity, the "
-            "R1-R4 robust-finite-interface conditions -- are derivable consequences "
-            "of these four under Paper 10 v1.12 §3.5 reductions."
+            "hypothesis (C_Γ < ∞ AND μ*_Γ > 0), witnessed on the canonical finite "
+            "admissibility space. This record checks those declared inputs; it "
+            "does not certify derivability of PLEC's four features or the general "
+            "R1-R4 conditions."
         ),
         "tier": 4,
         "epistemic": "[P_structural]",
@@ -326,13 +317,12 @@ def check_T_four_input_declaration():
 
 
 def check_T_PLEC_derived_from_spine():
-    """T_PLEC_derived_from_spine: PLEC's four features as derived consequences
-    of the 4-input declaration under Paper 10 v1.12 §3.5 reductions.
+    """PLEC witness features and counting bound (legacy registry key retained).
 
     Tier 4 [P_structural].
 
-    Source-of-record: Paper 10 v1.12 §3.5 (Lemmas A2 + BW) + Paper 1
-    Supplement v8.22+ §1 ("PLEC's four features as derived consequences").
+    Historical source pointers: Paper 10 v1.12 §3.5 (Lemmas A2 + BW) +
+    Paper 1 Supplement v8.22+ §1. The executed scope is stated below.
 
     Verifies on the canonical witness that:
       (i)   A1 (capacity bound) is the finite-physical-regime hypothesis
@@ -341,10 +331,12 @@ def check_T_PLEC_derived_from_spine():
             half-2 directly: μ*_Γ > 0; the tested/gauge cleavage is FD2's
             separator-of-continuation-profiles vs. continuation-profile-
             preserving relabeling distinction.
-      (iii) A2 (argmin selection) is derived from cost-as-infimum (FD3 via
-            the infimum-over-admissible-protocols valuation convention) +
-            no-waste under saturation: when capacity is fully committed, no
-            spare resource can be allocated to a non-extremal protocol.
+      (iii) The maximum admissible family size is at most the capacity
+            divided by the marginal floor, rounded down. This is a counting
+            bound, not a saturation, attainment/no-waste, or outcome-selection
+            certificate. The named valuation convention is retained as
+            premise provenance (FD3 via the infimum-over-admissible-protocols valuation convention),
+            not as an inference tested here or a newly adopted premise.
       (iv)  MD-increment: every admissible cost increment is ≥ μ*_Γ.  This
             is TRUE and it is MD's content, and it is retained under MD's
             name.  IT IS NOT A STATEMENT OF BW -- the flat world satisfies
@@ -356,8 +348,8 @@ def check_T_PLEC_derived_from_spine():
             not a theorem; the distinction-level/configuration-level delta
             is scoped, not closed.
 
-    A1, MD and A2 are exhibited on the canonical witness as consequences of
-    the four-input declaration.  BW is EXHIBITED, not derived here: what
+    A1 and MD are exhibited on the canonical witness, alongside the
+    admissible-family counting bound. BW is EXHIBITED, not derived here: what
     this record establishes about the (iv)/(v) pair is a SEPARATION, and it
     establishes it by execution --
 
@@ -370,7 +362,7 @@ def check_T_PLEC_derived_from_spine():
     That is a statement about this transcription and about nothing else:
     it is NOT a claim that BW is underivable from MD, NOT a claim that
     Lemma BW of Paper 10 v1.12 §3.5 is wrong, and NOT a claim that BW is
-    an axiom.  Nobody in this lane opened Paper 10 §3.5.
+    an axiom.  The prior BW repair did not open Paper 10 §3.5.
 
     LEG INVENTORY.  Set-exact against the module-level frozen set, on the
     bank path, append-and-record (D7@2026-08-08): a mismatch contributes a
@@ -418,12 +410,11 @@ def check_T_PLEC_derived_from_spine():
     legs_run.append("MD_value_floor_positive")
     legs_run.append("MD_tested_gauge_cleavage")
 
-    # (iii) A2: argmin from cost-as-infimum + no-waste under saturation.
-    # Test: among admissible families S of distinctions with total cost ≤ C_Γ,
-    # the one with maximum cardinality saturates the budget (no-waste).
+    # (iii) Admissible-family counting bound on the fixed raw-pair witness.
+    # Enumerating additive-cost subsets tests neither saturation nor
+    # attainment/no-waste nor selection of a realized outcome.
     n_distinctions = len(w.distinctions)
     distinctions_list = list(w.distinctions)
-    n_admissible_max_sized = 0
     max_size = 0
     # Enumerate all subsets up to capacity
     for mask in range(1 << n_distinctions):
@@ -432,16 +423,12 @@ def check_T_PLEC_derived_from_spine():
         if total <= w.capacity:
             if len(S) > max_size:
                 max_size = len(S)
-                n_admissible_max_sized = 1
-            elif len(S) == max_size:
-                n_admissible_max_sized += 1
     # The maximum admissible size is bounded by ⌊C_Γ / μ*_Γ⌋ (independent counting)
     expected_max = int(w.capacity // w.marginal_floor)
     assert max_size <= expected_max, (
-        f"A2 argmin counting bound violated: {max_size} > ⌊C_Γ/μ*_Γ⌋ = {expected_max}"
+        f"admissible-family counting bound violated: {max_size} > ⌊C_Γ/μ*_Γ⌋ = {expected_max}"
     )
-    A2_witnessed = max_size > 0  # there exists an admissible argmin family
-    legs_run.append("A2_argmin_counting_bound")
+    legs_run.append("admissible_family_counting_bound")
 
     # (iv) MD-increment, under MD's name.  TRUE, retained, and no longer
     # called BW: the flat world satisfies it (control below).
@@ -588,18 +575,18 @@ def check_T_PLEC_derived_from_spine():
         )
 
     return {
-        "name": "T_PLEC_derived_from_spine",
+        "name": "PLEC witness features and counting bound",
         "passed": not failure_reasons,
         "failure_reasons": list(failure_reasons),
         "legs_run": sorted(_ran),
         "key_result": (
-            f"PLEC features on the canonical witness -- A1/MD/A2 exhibited as "
-            f"consequences of the 4-input declaration, BW exhibited under its "
-            f"statement of record: "
+            f"PLEC witness features and admissible-family counting bound; "
+            f"BW exhibited under its statement of record: "
             f"A1 = finite-physical-regime half-1 ({w.capacity} < ∞); "
             f"MD-value = finite-physical-regime half-2 (μ*_Γ = {w.marginal_floor} > 0); "
             f"MD tested/gauge cleavage = FD2 distinction definition; "
-            f"A2 = argmin from cost-as-infimum + no-waste (admissible-max-size {max_size} ≤ ⌊C_Γ/μ*_Γ⌋ = {expected_max}); "
+            f"maximum admissible family size {max_size} ≤ floor bound ⌊C_Γ/μ*_Γ⌋ = {expected_max}; "
+            f"saturation, attainment/no-waste, and outcome selection are not certified; "
             f"MD-increment = every admitted increment ≥ μ*_Γ (MD's content, under MD's name); "
             f"BW = cost-spectrum non-degeneracy at the element-distinction level "
             f"(statement of record, OHC_N@2026-08-30): {len(distinct_costs)} distinct "
@@ -608,11 +595,12 @@ def check_T_PLEC_derived_from_spine():
             f"FAILS the BW leg, executed here as a permanent control."
         ),
         "summary": (
-            "A1, MD and A2 are exhibited on the canonical witness as consequences "
-            "of the 4-input declaration: A1 + MD-value are the two halves of the "
-            "finite-physical-regime hypothesis; the MD tested/gauge cleavage is "
-            "FD2's separator-vs-relabeling distinction; A2 is argmin from "
-            "cost-as-infimum + no-waste.  BW is carried under its STATEMENT OF "
+            "A1 and MD are exhibited on the canonical witness: A1 + MD-value are "
+            "the two halves of the finite-physical-regime hypothesis; the MD "
+            "tested/gauge cleavage is FD2's separator-vs-relabeling distinction. "
+            "The subset enumeration supplies an admissible-family counting bound, "
+            "not an A2 derivation: saturation, attainment/no-waste, and outcome "
+            "selection are not certified here. BW is carried under its STATEMENT OF "
             "RECORD (OHC_N@2026-08-30) -- not all enforceable distinctions have "
             "the same cost, there exist d_i, d_j with eps(d_i) != eps(d_j) -- and "
             "is EXHIBITED on the witness, not derived here.  THE DOMAIN OF THAT "
@@ -631,8 +619,8 @@ def check_T_PLEC_derived_from_spine():
             "this record's statement of BW until v24.3.482 and is retained beside "
             "it under MD's name, because it is true and it is MD's.  THIS IS NOT a "
             "claim that BW is underivable from MD, that Lemma BW of Paper 10 v1.12 "
-            "§3.5 is wrong, or that BW is an axiom -- nobody in this lane opened "
-            "that section, and the statement is about the transcription that ships "
+            "§3.5 is wrong, or that BW is an axiom -- the prior BW repair did not "
+            "open that section, and the statement is about the transcription that ships "
             "here.  The BW predicate is tied BY VALUE to the executed record of "
             "check_worked_example (apf/core.py), the corpus's element-distinction "
             "non-degeneracy anchor, whose costs are parsed from its own returned "
@@ -795,8 +783,8 @@ IE_DECLARATIONS = (
         "axis": "ROUTE",
         "claim_text": (
             "The canonical foundational base: the four-input declaration "
-            "(FD1, FD2, FD3, finiteness) with PLEC's four features derived "
-            "from it (check_T_four_input_declaration [P_structural]); FD1's "
+            "(FD1, FD2, FD3, finiteness), witnessed on the canonical finite "
+            "admissibility space (check_T_four_input_declaration [P_structural]); FD1's "
             "structural-completeness clause is an ADOPTED clause, banked at "
             "check_FD1_structural_completeness with the canonical [P] "
             "definition resting on the Paper 0 four -- the clause itself "
