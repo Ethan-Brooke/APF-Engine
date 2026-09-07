@@ -109,6 +109,14 @@ Honest scope (preserved non-claims)
 - Export_kappa_l_native_OSW_loop_close           = 0   (open — separate R2..R5 program)
 - Export_kappa_l_extends_to_fermion_channels     = 0   (rule does NOT extend to kappa_b, kappa_c, etc.)
 - Export_effective_leptonic_angle_replacement    = 0   (does NOT replace Paper 18's 3/13 or 3/13+4/5063)
+
+Grade posture, recorded and not acted on: the grade token carried by the value,
+composition and meta checks in this module is not among those declared in
+apf/bank.py's grade-token legend; the discrepancy is recorded and filed, and no
+grade is moved by the repair that gave these checks computed verdicts.
+
+A wholesale redraft of the declaration was executed against the atlas gate and
+withdrawn because the certification route moved.
 """
 from __future__ import annotations
 
@@ -127,7 +135,9 @@ SIN2_THETA_W_OS_CAPACITY_COUNTING: Fraction = Fraction(2, 9)
 COS2_THETA_W_OS_CAPACITY_COUNTING: Fraction = Fraction(7, 9)
 GPRIME2_OVER_G2_CAPACITY_COUNTING: Fraction = Fraction(2, 7)
 MW2_OVER_MZ2_CAPACITY_COUNTING: Fraction = Fraction(7, 9)
-MW_OVER_MZ_CAPACITY_COUNTING_FLOAT: float = math.sqrt(7.0) / 3.0  # sqrt(7)/3 ≈ 0.881917...
+# Retained: check_T_M_W_tree_dimensionful_from_M_Z_GH_OS_codomain_composed_P
+# reads this constant outside the repaired members; deletion would move that consumer.
+MW_OVER_MZ_CAPACITY_COUNTING_FLOAT: float = math.sqrt(7.0) / 3.0
 
 # Composed with Paper 18's sin^2 theta_eff^l = 3/13 [P_structural].
 PAPER_18_SIN2_THETA_EFF_L: Fraction = Fraction(3, 13)
@@ -288,6 +298,90 @@ def _enumerate(filters) -> int:
     return n
 
 
+def _osr_survivors() -> List[Candidate]:
+    """Every candidate in the enumerated space passing all six OSR rules."""
+    out = []
+    for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
+        c = _build_candidate(tup)
+        if all(r(c) for r in _OSR_RULES.values()):
+            out.append(c)
+    return out
+
+
+# ===========================================================================
+# Returned-record assembly for the repaired checks.
+#
+# The bank calls each check function directly. `apf.apf_utils.result` sets
+# 'passed': True as a literal and takes no argument that could change it, so a
+# verdict computed inside a check that returns through it never reaches the
+# record. The repaired checks in this module build the record here instead,
+# with a computed 'passed', a 'failures' list, and a set-exact leg inventory
+# on the executing path.
+#
+# APPEND-AND-RECORD (D7@2026-08-08): an inventory mismatch contributes a
+# failure reason; it does not raise.
+#
+# STANDING LIMIT, disclosed once for every check in this module that carries an
+# inventory: the leg inventory certifies that a declared leg EXECUTED; it does
+# not certify that the leg COULD HAVE FAILED.
+#
+# DIRECTION labels: 'value', 'consistency', 'uniqueness-among-finite',
+# 'control', 'value-tie', 'identity', 'recorded-receipt', 'declared_non_claim'.
+# 'identity', 'recorded-receipt' and 'declared_non_claim' legs are declared and
+# executed but are NOT verdict conjuncts: they append no failure reason. They
+# are labelled as such in the returned inventory.
+# ===========================================================================
+_INVENTORY_LIMIT_NOTE = (
+    "the leg inventory certifies that a declared leg EXECUTED; it does not "
+    "certify that the leg COULD HAVE FAILED. The declared-set controls have a "
+    "single-site limit: coordinated edits to collections and their comparands can escape."
+)
+
+_NON_VERDICT_DIRECTIONS = ("identity", "recorded-receipt", "declared_non_claim")
+
+
+def _finish(*, name, tier, epistemic, summary, artifacts,
+            declared_legs, executed_legs, failures, key_result="") -> Dict[str, Any]:
+    """Assemble the returned record with a computed verdict and a set-exact
+    leg inventory. APPEND-AND-RECORD: a missing or extra leg contributes a
+    failure reason, it does not raise."""
+    failures = list(failures)
+    declared = dict(declared_legs)
+    executed = list(executed_legs)
+    missing = sorted(set(declared) - set(executed))
+    extra = sorted(set(executed) - set(declared))
+    if missing:
+        failures.append("declared legs did not execute: %s" % (missing,))
+    if extra:
+        failures.append("legs executed but not declared: %s" % (extra,))
+    if len(executed) != len(set(executed)):
+        failures.append("a leg id executed more than once: %s" % (sorted(executed),))
+    passed = not failures
+    out = dict(artifacts)
+    out["leg_inventory"] = {
+        "declared": {k: declared[k] for k in sorted(declared)},
+        "executed": sorted(executed),
+        "verdict_conjunct_legs": sorted(
+            k for k, d in declared.items() if d not in _NON_VERDICT_DIRECTIONS),
+        "non_verdict_legs": sorted(
+            k for k, d in declared.items() if d in _NON_VERDICT_DIRECTIONS),
+        "limit": _INVENTORY_LIMIT_NOTE,
+    }
+    return {
+        "name": name,
+        "passed": passed,
+        "status": "PASS" if passed else "FAIL",
+        "tier": tier,
+        "epistemic": epistemic,
+        "summary": summary,
+        "key_result": key_result,
+        "dependencies": [],
+        "cross_refs": [],
+        "artifacts": out,
+        "failures": failures,
+    }
+
+
 # ===========================================================================
 # Bank-registered check_T_* functions.
 # ===========================================================================
@@ -302,17 +396,90 @@ def check_T_sin2_theta_W_OS_capacity_counting_value_P() -> Dict[str, Any]:
     (SU(2)_L × U(1)_Y), and T_Higgs [P] (Higgs doublet, SSB → U(1)_em, dim(G/H)=3) — closing the
     Paper-18-parity chain A1 → banked T's → ranks → flow + KL Lyapunov → x* → r* = 2/7 → 2/9.
     See module docstring for spine inventory."""
-    val = SIN2_THETA_W_OS_CAPACITY_COUNTING
-    cos2 = COS2_THETA_W_OS_CAPACITY_COUNTING
-    g_ratio = GPRIME2_OVER_G2_CAPACITY_COUNTING
-    ok = (val == Fraction(2, 9) and cos2 == Fraction(7, 9) and
-          g_ratio == Fraction(2, 7) and val + cos2 == 1)
-    return _result(
-        name="T_sin2_theta_W_OS_capacity_counting_value: sin^2 theta_W^OS = 2/9 (GH-structural) [P_attractor_structural | GH_OS_codomain]",
+    declared = {
+        "capacity_counted_from_the_OSR_survivor": "value",
+        "sin2_read_off_the_counted_capacity": "consistency",
+        "cos2_is_the_complement": "consistency",
+        "g_ratio_is_the_side_ratio": "value",
+        "sin2_plus_cos2_is_one": "identity",
+        "survivor_is_unique": "control",
+    }
+    executed = []
+    failures = []
+
+    # control: the OSR filter selects exactly one candidate out of the space.
+    survivor_count = _enumerate(list(_OSR_RULES.values()))
+    executed.append("survivor_is_unique")
+    if survivor_count != 1:
+        failures.append("OSR survivor count %d != 1" % survivor_count)
+
+    survivors = _osr_survivors()
+    if not survivors:
+        # every downstream leg reads the survivor; record the absence and stop
+        # short rather than raise.
+        failures.append("no OSR survivor: the value legs could not execute")
+        return _finish(
+            name="T_sin2_theta_W_OS_capacity_counting_value: on-shell share read off the counted capacity of the OSR survivor, GH_OS codomain [P_attractor_structural | GH_OS_codomain]",
+            tier=4,
+            epistemic="P_attractor_structural_GH_OS_codomain",
+            summary="No candidate survives the declared OSR rule set; no value leg executed.",
+            artifacts={}, declared_legs=declared, executed_legs=executed,
+            failures=failures,
+        )
+    surv = survivors[0]
+
+    Csu, Cu, total = _compute_capacity(surv)
+    executed.append("capacity_counted_from_the_OSR_survivor")
+    if (Csu, Cu, total) != (7, 2, 9):
+        failures.append("counted capacity %s != the declared comparand (7, 2, 9)"
+                        % ((Csu, Cu, total),))
+
+    val = _compute_sin2(surv)
+    executed.append("sin2_read_off_the_counted_capacity")
+    if val != SIN2_THETA_W_OS_CAPACITY_COUNTING:
+        failures.append("share read off the counted capacity (%s) != the module "
+                        "constant (%s)" % (val, SIN2_THETA_W_OS_CAPACITY_COUNTING))
+
+    cos2 = 1 - val
+    executed.append("cos2_is_the_complement")
+    if cos2 != COS2_THETA_W_OS_CAPACITY_COUNTING:
+        failures.append("complement of the counted share (%s) != the module "
+                        "constant (%s)" % (cos2, COS2_THETA_W_OS_CAPACITY_COUNTING))
+
+    g_ratio = Fraction(Cu, Csu) if Csu else None
+    executed.append("g_ratio_is_the_side_ratio")
+    if g_ratio != GPRIME2_OVER_G2_CAPACITY_COUNTING:
+        failures.append("side ratio from the counted capacity (%s) != the module "
+                        "constant (%s)" % (g_ratio, GPRIME2_OVER_G2_CAPACITY_COUNTING))
+
+    # IDENTITY, labelled and excluded from the verdict: the sum of a rational and
+    # its own complement is one for any rational whatsoever.
+    sum_is_one = (val + cos2 == 1)
+    executed.append("sin2_plus_cos2_is_one")
+
+    return _finish(
+        name="T_sin2_theta_W_OS_capacity_counting_value: on-shell share read off the counted capacity of the OSR survivor, GH_OS codomain [P_attractor_structural | GH_OS_codomain]",
         tier=4,
         epistemic="P_attractor_structural_GH_OS_codomain",
-        summary=(f"sin^2 theta_W^OS = {val}, cos^2 = {cos2}, g'^2/g^2 = {g_ratio}; sin^2 + cos^2 = 1 verified."),
-        artifacts={"sin2": str(val), "cos2": str(cos2), "gprime2_over_g2": str(g_ratio)},
+        summary=(f"In the GH_OS codomain: the unique survivor of the six declared OSR "
+                 f"rules over {3 ** len(_FIELD_ORDER)} "
+                 f"enumerated candidate assignments carries counted capacity "
+                 f"{Csu}:{Cu}:{total}; the on-shell share read off that count is {val}, "
+                 f"its complement is {cos2}, and the side ratio read off the same count "
+                 f"is {g_ratio}. sin^2 + cos^2 = 1 is an IDENTITY over a complementary "
+                 f"pair and is labelled one, not a verdict conjunct. The counted-capacity "
+                 f"route is internal to this module; coordinated edits to the share and "
+                 f"its module comparands can escape this member."),
+        key_result=(f"the GH_OS on-shell share {val} is read off the counted capacity "
+                    f"{Csu}:{Cu}:{total} of the unique OSR survivor; the complement and "
+                    f"the side ratio are read off the same count. Nothing here derives "
+                    f"the weak angle: this check reports what the counting routine "
+                    f"returns on the survivor the declared rule set selects."),
+        artifacts={"sin2": str(val), "cos2": str(cos2), "gprime2_over_g2": str(g_ratio),
+                   "counted_capacity_SU2H_U1null_total": [Csu, Cu, total],
+                   "osr_survivor_count": survivor_count,
+                   "sin2_plus_cos2_is_one_identity": sum_is_one},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -322,16 +489,72 @@ def check_T_MW2_over_MZ2_capacity_counting_value_P() -> Dict[str, Any]:
     Promoted v24.3.109: grade strengthened P_structural → P_full_structural after 5-spine convergence.
     Promoted v24.3.114: grade strengthened P_full_structural → P_attractor_structural via the
     foundation-grounded UV-attractor check (see T_GH_OS_codomain_foundation_grounded_attractor_structural)."""
-    r2 = MW2_OVER_MZ2_CAPACITY_COUNTING
-    r_float = MW_OVER_MZ_CAPACITY_COUNTING_FLOAT
-    ok = (r2 == Fraction(7, 9) and abs(r_float - math.sqrt(7.0)/3.0) < 1e-15 and
-          abs(r_float**2 - 7.0/9.0) < 1e-15)
-    return _result(
-        name="T_MW2_over_MZ2_capacity_counting: M_W^2/M_Z^2 = 7/9 (tree, GH-structural) [P_attractor_structural | GH_OS_codomain]",
+    declared = {
+        "mass_ratio_squared_is_the_counted_complement": "value",
+        "mass_ratio_squared_ties_to_the_sibling_member": "consistency",
+        "survivor_is_unique": "control",
+    }
+    executed = []
+    failures = []
+
+    survivor_count = _enumerate(list(_OSR_RULES.values()))
+    executed.append("survivor_is_unique")
+    if survivor_count != 1:
+        failures.append("OSR survivor count %d != 1" % survivor_count)
+
+    survivors = _osr_survivors()
+    if not survivors:
+        failures.append("no OSR survivor: the value legs could not execute")
+        return _finish(
+            name="T_MW2_over_MZ2_capacity_counting: tree mass-ratio squared as the complement of the counted share, GH_OS codomain [P_attractor_structural | GH_OS_codomain]",
+            tier=4,
+            epistemic="P_attractor_structural_GH_OS_codomain",
+            summary="No candidate survives the declared OSR rule set; no value leg executed.",
+            artifacts={}, declared_legs=declared, executed_legs=executed,
+            failures=failures,
+        )
+    surv = survivors[0]
+
+    r2 = 1 - _compute_sin2(surv)
+    executed.append("mass_ratio_squared_is_the_counted_complement")
+    if r2 != MW2_OVER_MZ2_CAPACITY_COUNTING:
+        failures.append("complement of the counted share (%s) != the module "
+                        "constant (%s)" % (r2, MW2_OVER_MZ2_CAPACITY_COUNTING))
+
+    # CONSISTENCY, not a value tie: the sibling value check is called and its
+    # returned complement is parsed. After that member's repair its returned
+    # cos2 is the same module constant it has itself just tied to the counted
+    # capacity, so this leg can fail only where the sibling RAN and returned
+    # something other than what it computed. It is a cross-check that the
+    # sibling executed and reported honestly, not an independent derivation.
+    sib = _CHECKS["T_sin2_theta_W_OS_capacity_counting_value"]()
+    sib_cos2 = Fraction(str(sib["artifacts"]["cos2"]))
+    executed.append("mass_ratio_squared_ties_to_the_sibling_member")
+    if sib_cos2 != r2:
+        failures.append("sibling value check returned complement %s; this check "
+                        "computed %s" % (sib_cos2, r2))
+
+    return _finish(
+        name="T_MW2_over_MZ2_capacity_counting: tree mass-ratio squared as the complement of the counted share, GH_OS codomain [P_attractor_structural | GH_OS_codomain]",
         tier=4,
         epistemic="P_attractor_structural_GH_OS_codomain",
-        summary=f"M_W^2/M_Z^2 = {r2}; M_W/M_Z = sqrt(7)/3 = {r_float:.10f}",
-        artifacts={"MW2_over_MZ2": str(r2), "MW_over_MZ_float": r_float},
+        summary=(f"In the GH_OS codomain the tree mass-ratio squared is the complement "
+                 f"of the counted on-shell share: {r2}. M_W/M_Z is the square root of "
+                 f"that exact rational, {math.sqrt(r2.numerator / r2.denominator):.10f} "
+                 f"to 10 places, computed from the exact value at return time. The "
+                 f"value ties for consistency to the sibling value check's returned "
+                 f"complement. The counted-capacity route is internal to this module; "
+                 f"coordinated edits to the share and its module comparands can escape "
+                 f"this member."),
+        key_result=(f"the tree mass-ratio squared {r2} is the complement of the share "
+                    f"read off the counted capacity of the unique OSR survivor. Nothing "
+                    f"here concerns a measured mass, a loop correction, or the "
+                    f"derivation of the weak angle."),
+        artifacts={"MW2_over_MZ2": str(r2),
+                   "MW_over_MZ_float": math.sqrt(r2.numerator / r2.denominator),
+                   "sibling_returned_complement": str(sib_cos2),
+                   "osr_survivor_count": survivor_count},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -448,69 +671,158 @@ def check_T_kappa_l_composed_with_paper_18_P() -> Dict[str, Any]:
     Paper 18 sin^2 theta_eff^l = 3/13 piece remains at its original P_structural grade.
     Promoted v24.3.114: GH_OS_codomain piece strengthened P_full_structural → P_attractor_structural
     via foundation-grounded UV-attractor check; Paper 18 piece unchanged."""
-    kappa = KAPPA_L_CAPACITY_EQUILIBRIUM
-    delta = DELTA_KAPPA_L_CAPACITY_EQUILIBRIUM
-    composed_ok = (kappa == Fraction(27, 26) and delta == Fraction(1, 26))
-    factorization_ok = delta == Fraction(1, 2*13)  # 1/26 = 1/(2*13)
-    # DFGRU 1906.08815 SM all-orders kappa_l at reference inputs ≈ 1.038430,
-    # in the M_W-last-input scheme, 2012-2019 vintage (reference M_W = 80.385 GeV).
-    # 27/26 = 1.038461538... is the raw SOURCE-angle ratio (3/13)/(2/9), an arithmetic
-    # scheme-free fact; it matches the DFGRU reference to 3.2e-5 WITHIN THAT SCHEME
-    # (the reference's own M_W sensitivity ~4e-5 per 16 MeV is UNAUDITED). The cross-
-    # scheme spread is ~2.4e-3 (G_mu-coherent point ~1.0360); current data select the
-    # framework's lifted/physical ratio ~1.0368 (M_W_TRACE chain), not 27/26. Caveat,
-    # not retraction -- TWO OBJECTS (residual note 2026-06-11). numerical_match below
-    # certifies only the within-scheme arithmetic agreement (grade unchanged).
+    declared = {
+        "paper18_angle_consumed_by_value": "value-tie",
+        "os_angle_consumed_from_the_counted_capacity": "value-tie",
+        "kappa_l_is_the_quotient_of_the_two_consumed_angles": "value",
+        "delta_is_kappa_minus_one": "consistency",
+        "within_scheme_agreement_with_the_named_external_reference": "control",
+    }
+    executed = []
+    failures = []
+
+    # CROSS-MODULE VALUE TIE: the leptonic effective angle is read live off the
+    # banked sibling's returned quantity, never re-declared as a literal here.
+    from apf import bank as _bank
+    _bank._load()
+    _sib = _bank.REGISTRY["T24"]()
+    p18 = Fraction(str(_sib["artifacts"]["fraction"]))
+    executed.append("paper18_angle_consumed_by_value")
+    if p18 != PAPER_18_SIN2_THETA_EFF_L:
+        failures.append("banked sibling T24 returned %s; this module's constant is "
+                        "%s" % (p18, PAPER_18_SIN2_THETA_EFF_L))
+
+    # IN-MODULE VALUE TIE: the on-shell share is read off the counted capacity.
+    survivors = _osr_survivors()
+    os_angle = _compute_sin2(survivors[0]) if survivors else None
+    executed.append("os_angle_consumed_from_the_counted_capacity")
+    if os_angle != SIN2_THETA_W_OS_CAPACITY_COUNTING:
+        failures.append("share read off the counted capacity (%s) != the module "
+                        "constant (%s)" % (os_angle, SIN2_THETA_W_OS_CAPACITY_COUNTING))
+
+    kappa = (p18 / os_angle) if os_angle else None
+    executed.append("kappa_l_is_the_quotient_of_the_two_consumed_angles")
+    if kappa != KAPPA_L_CAPACITY_EQUILIBRIUM:
+        failures.append("quotient of the two consumed angles (%s) != the module "
+                        "constant (%s)" % (kappa, KAPPA_L_CAPACITY_EQUILIBRIUM))
+
+    delta = (kappa - 1) if kappa is not None else None
+    executed.append("delta_is_kappa_minus_one")
+    if delta != DELTA_KAPPA_L_CAPACITY_EQUILIBRIUM:
+        failures.append("kappa - 1 (%s) != the module constant (%s)"
+                        % (delta, DELTA_KAPPA_L_CAPACITY_EQUILIBRIUM))
+
+    # CONTROL, external and WITHIN-SCHEME ONLY. The reference value, its scheme
+    # and the tolerance are all declared comparands at this site. The leg
+    # certifies arithmetic agreement inside one named scheme against one named
+    # external reference, and nothing else.
     DFGRU_REFERENCE_KAPPA_L = 1.038430
     DFGRU_SCHEME = "M_W-last-input (DFGRU 1906.08815), 2012-2019 vintage, ref M_W=80.385 GeV"
-    LIFTED_PHYSICAL_KAPPA_L = 1.0368   # framework M_W_TRACE chain; current-data-selected
-    CROSS_SCHEME_SPREAD = 2.4e-3       # to the G_mu-coherent SM point (~1.0360)
-    MW_VINTAGE_SENSITIVITY_PER_16MEV = 4e-5  # within-scheme; UNAUDITED estimate
-    numerical_match = abs(float(kappa) - DFGRU_REFERENCE_KAPPA_L) < 5e-5  # within-scheme only
-    ok = composed_ok and factorization_ok and numerical_match
-    return _result(
-        name="T_kappa_l_composed_with_paper_18: kappa_l = (3/13)/(2/9) = 27/26 [P_attractor_structural | GH_OS_codomain + Paper-18 composition]",
+    residual = (float(kappa) - DFGRU_REFERENCE_KAPPA_L) if kappa is not None else None
+    executed.append("within_scheme_agreement_with_the_named_external_reference")
+    if residual is None or abs(residual) >= 5e-5:
+        failures.append("within-scheme residual %s is not below the declared "
+                        "tolerance 5e-5" % (residual,))
+
+    return _finish(
+        name="T_kappa_l_composed_with_paper_18: the quotient of the banked leptonic effective angle and the GH_OS counted share [P_attractor_structural | GH_OS_codomain + Paper-18 composition]",
         tier=4,
         epistemic="P_attractor_structural_GH_OS_codomain_composed",
-        summary=(f"kappa_l = {kappa} = 27/26 is the raw source-angle ratio (3/13)/(2/9); "
-                 f"Delta kappa_l = {delta} = 1/(2*13). Within the DFGRU scheme ({DFGRU_SCHEME}) "
-                 f"it matches the all-orders SM fit to {float(kappa) - DFGRU_REFERENCE_KAPPA_L:+.2e} "
-                 f"(within-scheme; ~4e-5 per 16 MeV M_W sensitivity, UNAUDITED). Cross-scheme "
-                 f"spread ~{CROSS_SCHEME_SPREAD}; current data select the lifted/physical ratio "
-                 f"~{LIFTED_PHYSICAL_KAPPA_L}, not 27/26 (caveat, not retraction -- TWO OBJECTS, "
-                 f"residual note 2026-06-11)."),
+        summary=(f"Paper 18's leptonic effective angle was consumed BY VALUE from the "
+                 f"banked check T24 in apf/generations.py and equals {p18}; the GH_OS "
+                 f"on-shell share was consumed from the counted capacity of the OSR "
+                 f"survivor and equals {os_angle}. Their quotient is {kappa}, and "
+                 f"{kappa} - 1 = {delta}. Within the named scheme ({DFGRU_SCHEME}) the "
+                 f"quotient agrees with the named external reference to {residual:+.2e}. "
+                 f"That is a within-scheme agreement against a single named external "
+                 f"reference and nothing more. The framework's lifted/physical ratio and "
+                 f"this source-angle ratio are two objects."),
+        key_result=(f"the quotient {kappa} of two consumed angles, one read live off a "
+                    f"banked sibling and one read off this module's counted capacity. "
+                    f"The agreement with the named external reference is within-scheme "
+                    f"only and is not evidence for either angle."),
         artifacts={"kappa_l": str(kappa), "delta_kappa_l": str(delta),
-              "dfgru_reference": DFGRU_REFERENCE_KAPPA_L,
-              "dfgru_scheme": DFGRU_SCHEME,
-              "lifted_physical_kappa_l": LIFTED_PHYSICAL_KAPPA_L,
-              "within_scheme_residual": float(kappa) - DFGRU_REFERENCE_KAPPA_L,
-              "cross_scheme_spread": CROSS_SCHEME_SPREAD,
-              "mw_vintage_sensitivity_per_16MeV": MW_VINTAGE_SENSITIVITY_PER_16MEV,
-              "mw_vintage_sensitivity_audited": False},
+                   "paper18_angle_consumed_from_T24": str(p18),
+                   "os_angle_from_counted_capacity": str(os_angle),
+                   "dfgru_reference": DFGRU_REFERENCE_KAPPA_L,
+                   "dfgru_scheme": DFGRU_SCHEME,
+                   "within_scheme_residual": residual},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
 def check_T_canonical_unique_under_OSR_enumeration_P() -> Dict[str, Any]:
     """T: canonical (7:2:9) assignment is uniquely picked out by OSR1-OSR7 over the 3^8 = 6561 candidate space. Mechanized enumeration. [P_structural]"""
+    declared = {
+        "candidate_space_enumerated": "uniqueness-among-finite",
+        "survivor_count_is_one": "uniqueness-among-finite",
+        "survivor_capacity_is_the_canonical_triple": "value",
+        "rule_set_is_set_exact": "control",
+        "every_rule_drop_moves_the_survivor_count": "control",
+    }
+    executed = []
+    failures = []
+
     expected_size = 3 ** len(_FIELD_ORDER)
     actual_size = sum(1 for _ in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)))
+    executed.append("candidate_space_enumerated")
+    if actual_size != expected_size:
+        failures.append("enumerated %d candidates; the declared space size is %d"
+                        % (actual_size, expected_size))
+
     survivor_count = _enumerate(list(_OSR_RULES.values()))
-    # Get the unique survivor and confirm its capacity
-    surv_caps = set()
-    for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
-        c = _build_candidate(tup)
-        if all(r(c) for r in _OSR_RULES.values()):
-            surv_caps.add(_compute_capacity(c))
-    ok = (expected_size == 6561 and actual_size == 6561 and
-          survivor_count == 1 and surv_caps == {(7, 2, 9)})
-    return _result(
-        name="T_canonical_unique_under_OSR_enumeration: 1 of 6561 candidates passes OSR1-OSR7, capacity (7,2,9) [P_structural]",
+    executed.append("survivor_count_is_one")
+    if survivor_count != 1:
+        failures.append("survivor count %d != 1" % survivor_count)
+
+    surv_caps = {_compute_capacity(c) for c in _osr_survivors()}
+    executed.append("survivor_capacity_is_the_canonical_triple")
+    if surv_caps != {(7, 2, 9)}:
+        failures.append("survivor capacities %s != the declared comparand {(7, 2, 9)}"
+                        % (sorted(surv_caps),))
+
+    DECLARED_RULES = frozenset(("OSR1", "OSR2", "OSR3", "OSR4", "OSR5", "OSR7"))
+    executed.append("rule_set_is_set_exact")
+    if set(_OSR_RULES) != set(DECLARED_RULES):
+        failures.append("rule set %s != the declared set %s"
+                        % (sorted(_OSR_RULES), sorted(DECLARED_RULES)))
+    if len(_OSR_RULES) != len(DECLARED_RULES):
+        failures.append("rule count %d != the declared count %d"
+                        % (len(_OSR_RULES), len(DECLARED_RULES)))
+
+    # EXECUTED NEGATIVE CONTROL: drop each declared rule in turn and re-enumerate.
+    # The leg asserts the strict inequality for every rule, not the drop counts.
+    drop_counts = {}
+    executed.append("every_rule_drop_moves_the_survivor_count")
+    for r_name in sorted(_OSR_RULES):
+        kept = [f for k, f in _OSR_RULES.items() if k != r_name]
+        n = _enumerate(kept)
+        drop_counts[r_name] = n
+        if not n > survivor_count:
+            failures.append("dropping %s leaves the survivor count at %d; it does "
+                            "not strictly increase it" % (r_name, n))
+
+    return _finish(
+        name="T_canonical_unique_under_OSR_enumeration: one candidate survives the declared rule set over the enumerated finite space [P_structural]",
         tier=4,
         epistemic="P_structural_exhaustive",
-        summary=(f"Enumerated 3^8 = {actual_size} candidate (counted, side) assignments; "
-                 f"{survivor_count} survives OSR1-OSR7 filter; survivor capacity = {surv_caps.pop() if surv_caps else None}."),
+        summary=(f"Enumerated {actual_size} candidate (counted, side) assignments over "
+                 f"the declared {len(_FIELD_ORDER)}-field ledger and "
+                 f"{len(_ASSIGNMENTS)}-assignment alphabet; {survivor_count} survives "
+                 f"the {len(_OSR_RULES)} named OSR rules; the survivor's counted "
+                 f"capacity is {sorted(surv_caps)}. Dropping any one named rule "
+                 f"strictly increases the survivor count. Uniqueness is uniqueness "
+                 f"within THAT finite space under THAT declared rule set; nothing "
+                 f"outside it is claimed."),
+        key_result=(f"{survivor_count} of {actual_size} candidate assignments survives "
+                    f"the declared rule set, and every single-rule drop strictly "
+                    f"increases that count. The assignment is canonical under the "
+                    f"declared rule set and in no wider sense."),
         artifacts={"candidate_space_size": actual_size, "survivor_count": survivor_count,
-              "expected_size": expected_size},
+                   "expected_size": expected_size,
+                   "declared_rule_names": sorted(DECLARED_RULES),
+                   "survivor_counts_under_single_rule_drop": drop_counts},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -545,27 +857,130 @@ def check_T_OSR_premise_implications_mechanized_P() -> Dict[str, Any]:
 
 def check_T_lyapunov_V_unique_global_minimum_P() -> Dict[str, Any]:
     """T: V(c) := # numeric premises violated has unique global minimum at canonical (V=0). [P_structural]"""
+    declared = {
+        "V_zero_is_unique": "uniqueness-among-finite",
+        "V_zero_candidate_is_the_OSR_survivor": "value-tie",
+        "histogram_is_a_partition_of_the_space": "consistency",
+        "premise_set_is_set_exact": "control",
+        "at_least_one_named_premise_drop_moves_the_minimum": "control",
+    }
+    executed = []
+    failures = []
+
     energy_hist = {}
     canonical_count = 0
+    zero_caps = set()
     for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
         c = _build_candidate(tup)
         v = sum(1 for p in _NUMERIC_PREMISES if not p(c))
         energy_hist[v] = energy_hist.get(v, 0) + 1
         if v == 0:
             canonical_count += 1
-    ok = canonical_count == 1
-    return _result(
-        name="T_lyapunov_V_unique_global_minimum: V := # numeric premises violated; unique V=0 at canonical [P_structural]",
+            zero_caps.add(_compute_capacity(c))
+
+    executed.append("V_zero_is_unique")
+    if canonical_count != 1:
+        failures.append("V=0 count %d != 1" % canonical_count)
+
+    # IN-MODULE VALUE TIE between the two mechanisations: the premise-count
+    # minimum and the OSR filter must select the same counted capacity.
+    osr_caps = {_compute_capacity(c) for c in _osr_survivors()}
+    executed.append("V_zero_candidate_is_the_OSR_survivor")
+    if zero_caps != osr_caps:
+        failures.append("the V=0 candidate's counted capacity %s differs from the "
+                        "OSR survivor's %s" % (sorted(zero_caps), sorted(osr_caps)))
+
+    space = 3 ** len(_FIELD_ORDER)
+    executed.append("histogram_is_a_partition_of_the_space")
+    if sum(energy_hist.values()) != space:
+        failures.append("energy histogram totals %d; the enumerated space is %d"
+                        % (sum(energy_hist.values()), space))
+
+    DECLARED_PREMISES = frozenset((
+        "_P4_auxiliary_quotient", "_P5_neutral_output_noncircularity",
+        "_P6_unquotiented_higgs_stabilizer", "_P7_unbroken_null_shell",
+        "_P9_charge_conjugation", "_P_GH_scope_fermion_exclusion",
+        "_P12_higgs_is_SU2_doublet_member", "_P13_charged_W_is_SU2_adjoint_member",
+        "_P14_charged_massive_vectors_counted"))
+    live_premises = frozenset(p.__name__ for p in _NUMERIC_PREMISES)
+    executed.append("premise_set_is_set_exact")
+    if live_premises != DECLARED_PREMISES:
+        failures.append("numeric premise set %s != the declared set %s"
+                        % (sorted(live_premises), sorted(DECLARED_PREMISES)))
+    if len(_NUMERIC_PREMISES) != len(DECLARED_PREMISES):
+        failures.append("premise count %d != the declared count %d"
+                        % (len(_NUMERIC_PREMISES), len(DECLARED_PREMISES)))
+
+    # EXECUTED NEGATIVE CONTROL over ONE NAMED premise. It is written over one
+    # named premise and not quantified over all nine because not every named
+    # premise is independently load-bearing for the minimum -- see the
+    # disclosure carried in the summary.
+    DROP_TARGET = "_P4_auxiliary_quotient"
+    kept = [p for p in _NUMERIC_PREMISES if p.__name__ != DROP_TARGET]
+    dropped_zero_count = 0
+    for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
+        c = _build_candidate(tup)
+        if all(p(c) for p in kept):
+            dropped_zero_count += 1
+    executed.append("at_least_one_named_premise_drop_moves_the_minimum")
+    if not dropped_zero_count > canonical_count:
+        failures.append("dropping %s leaves the V=0 count at %d; it does not "
+                        "strictly increase it" % (DROP_TARGET, dropped_zero_count))
+
+    # The unflattering fact, computed on this run rather than remembered: at
+    # least one named premise is NOT independently load-bearing.
+    non_load_bearing = []
+    for p in _NUMERIC_PREMISES:
+        rest = [q for q in _NUMERIC_PREMISES if q is not p]
+        n = 0
+        for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
+            c = _build_candidate(tup)
+            if all(q(c) for q in rest):
+                n += 1
+        if n == canonical_count:
+            non_load_bearing.append(p.__name__)
+
+    return _finish(
+        name="T_lyapunov_V_unique_global_minimum: V counts violated numeric premises; the minimum over the enumerated space is unique [P_structural]",
         tier=4,
         epistemic="P_structural_exhaustive",
-        summary=(f"V=0 count = {canonical_count} (of 6561); unique global minimum: {ok}. "
-                 f"Energy histogram: {dict(sorted(energy_hist.items()))}"),
-        artifacts={"V_zero_count": canonical_count, "energy_histogram": dict(sorted(energy_hist.items()))},
+        summary=(f"V counts violated numeric premises over the declared "
+                 f"{len(_NUMERIC_PREMISES)}-premise set. Exactly {canonical_count} of "
+                 f"{space} candidates attains V = 0, and that candidate carries the "
+                 f"same counted capacity {sorted(osr_caps)} the OSR filter selects. "
+                 f"Energy histogram: {dict(sorted(energy_hist.items()))}. Dropping the "
+                 f"named premise {DROP_TARGET} raises the V = 0 count to "
+                 f"{dropped_zero_count}. The premise set is SUFFICIENT, NOT MINIMAL: "
+                 f"{len(non_load_bearing)} of the named premises "
+                 f"({sorted(non_load_bearing)}) can be dropped with the minimum still "
+                 f"unique, so no minimality is claimed."),
+        key_result=(f"a unique V = 0 candidate over {space} enumerated assignments, "
+                    f"carrying the counted capacity the OSR filter selects. The "
+                    f"premise set is sufficient and not minimal, computed on this run."),
+        artifacts={"V_zero_count": canonical_count,
+                   "energy_histogram": dict(sorted(energy_hist.items())),
+                   "declared_premise_names": sorted(DECLARED_PREMISES),
+                   "drop_control_premise": DROP_TARGET,
+                   "V_zero_count_under_that_drop": dropped_zero_count,
+                   "premises_not_independently_load_bearing": sorted(non_load_bearing),
+                   "V_zero_counted_capacity": sorted(zero_caps)},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
 def check_T_lyapunov_k2_swap_strict_descent_P() -> Dict[str, Any]:
     """T: k=2-field-swap greedy descent on V reaches canonical from all 6561 starts. [P_structural]"""
+    declared = {
+        "k2_descent_reaches_the_minimum_from_every_start": "uniqueness-among-finite",
+        "start_count_is_the_full_space": "control",
+        "descent_terminates_within_the_declared_step_bound": "consistency",
+        "k1_descent_does_not_reach_the_minimum_from_every_start": "control",
+    }
+    executed = []
+    failures = []
+
+    STEP_BOUND = 50
+
     def V(c):
         return sum(1 for p in _NUMERIC_PREMISES if not p(c))
 
@@ -580,47 +995,88 @@ def check_T_lyapunov_k2_swap_strict_descent_P() -> Dict[str, Any]:
                     yield nc
 
     def descent(start, k):
+        """Return (reached_minimum, steps_taken, V_at_stop)."""
         c = dict(start)
-        for _ in range(50):
+        for step in range(STEP_BOUND):
             cur = V(c)
             if cur == 0:
-                return True
+                return True, step, 0
             best_V = cur; best = None
             for n in k_swap_neighbors(c, k):
                 nv = V(n)
                 if nv < best_V:
                     best_V = nv; best = n
             if best is None:
-                return False
+                return False, step, cur
             c = best
-        return False
+        return False, STEP_BOUND, V(c)
 
-    # Sample from a deterministic-but-representative subset to keep this check fast.
-    # We test ALL 6561 starts at k=2; per-start the loop is O(N_neighbors * descent_steps),
-    # bounded ~O(seconds). The full pass is acceptable as a single bank check.
-    all_reach = True
+    n_starts = 0
+    k2_reached = 0
+    k2_max_steps = 0
+    k1_stuck = 0
+    k1_stuck_hist = {}
     for tup in product(_ASSIGNMENTS, repeat=len(_FIELD_ORDER)):
         start = _build_candidate(tup)
-        if not descent(start, k=2):
-            all_reach = False
-            break
-    return _result(
-        name="T_lyapunov_k2_swap_strict_descent: k=2 swap greedy descent on V reaches canonical from all 6561 starts [P_structural]",
+        n_starts += 1
+        ok2, steps2, _ = descent(start, k=2)
+        if ok2:
+            k2_reached += 1
+        if steps2 > k2_max_steps:
+            k2_max_steps = steps2
+        ok1, _, v1 = descent(start, k=1)
+        if not ok1:
+            k1_stuck += 1
+            k1_stuck_hist[v1] = k1_stuck_hist.get(v1, 0) + 1
+
+    space = 3 ** len(_FIELD_ORDER)
+    executed.append("start_count_is_the_full_space")
+    if n_starts != space:
+        failures.append("iterated %d starts; the enumerated space is %d"
+                        % (n_starts, space))
+
+    executed.append("k2_descent_reaches_the_minimum_from_every_start")
+    if k2_reached != n_starts:
+        failures.append("k=2 descent reached the minimum from %d of %d starts"
+                        % (k2_reached, n_starts))
+
+    executed.append("descent_terminates_within_the_declared_step_bound")
+    if not k2_max_steps < STEP_BOUND:
+        failures.append("k=2 descent used %d steps against the declared bound %d; "
+                        "the bound is silently binding" % (k2_max_steps, STEP_BOUND))
+
+    # EXECUTED CONTROL: the k=1 neighbourhood does NOT close the descent. The
+    # stuck count and the stuck-at-V distribution are computed on this run.
+    executed.append("k1_descent_does_not_reach_the_minimum_from_every_start")
+    if not k1_stuck > 0:
+        failures.append("k=1 descent reached the minimum from every start; the "
+                        "control does not bite")
+
+    return _finish(
+        name="T_lyapunov_k2_swap_strict_descent: greedy descent on V with k=2 field swaps reaches the minimum from every enumerated start [P_structural]",
         tier=4,
         epistemic="P_structural_exhaustive",
-        summary=(f"All 6561 starting candidates reach canonical under k=2-field-swap descent: {all_reach}. "
-                 f"Discrete analog of Paper 18's continuous Lotka-Volterra Lyapunov function "
-                 f"(strict descent on V proves global convergence to unique minimum)."),
-        artifacts={"k": 2, "all_starts_reach_canonical": all_reach,
-              "n_starts": 6561,
-              "single_field_swap_FAILS": "k=1 single-field-swap descent fails (4536/6561 stuck at V=1 plateaus from Goldstone+ghost coupling); k=2 closes the descent."},
+        summary=(f"Greedy descent on V with k = 2 field swaps reaches the minimum from "
+                 f"every one of {n_starts} starts, within {k2_max_steps} steps against "
+                 f"a declared step bound of {STEP_BOUND}. Descent with k = 1 does not: "
+                 f"{k1_stuck} starts do not reach the minimum, with a stuck-at-V "
+                 f"distribution of {dict(sorted(k1_stuck_hist.items()))}. This is a "
+                 f"discrete analogue of a continuous Lyapunov argument."),
+        key_result=(f"k = 2 closes the descent over all {n_starts} enumerated starts and "
+                    f"k = 1 does not, both computed on this run. Executed scope: this "
+                    f"finite space, greedy descent, step bound {STEP_BOUND}."),
+        artifacts={"k": 2, "n_starts": n_starts,
+                   "k2_starts_reaching_minimum": k2_reached,
+                   "k2_max_descent_steps": k2_max_steps,
+                   "declared_step_bound": STEP_BOUND,
+                   "k1_starts_not_reaching_minimum": k1_stuck,
+                   "k1_stuck_at_V_distribution": dict(sorted(k1_stuck_hist.items()))},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
 def check_T_kappa_b_universality_falsified_C() -> Dict[str, Any]:
-    """T: naive carrier-counting extension to b-quark channel FAILS by factor 1.65;
-    rule is NOT a universal counting principle. Banked guard preserving the scope-restriction
-    finding so future work cannot claim universal extension. [C — scope-restriction]
+    """T: naive carrier-counting extension to b-quark channel. [C — scope-restriction]
 
     HF-06 reciprocal-guard reading (audit pack APF_HIDDEN_FRACTIONS_KAPPA_B_RECIPROCAL_GUARD_AUDIT_v1,
     closure-pack-only checkpoint, held-not-banked):
@@ -637,33 +1093,94 @@ def check_T_kappa_b_universality_falsified_C() -> Dict[str, Any]:
     warning. Bank disposition: this docstring cites the reciprocal observation for the reader;
     the falsifier guard at [C] is unchanged; no new bank check is introduced; the rule's scope
     remains GH+OS only."""
-    # b_L: 3 colors x 1 multiplet (Y=1/6) -> 3 U(1) counts; 2 SU(2) DOF x 3 colors = 6 SU(2)
-    # b_R: 3 colors x 1 multiplet (Y=-1/3) -> 3 U(1) counts; 0 SU(2)
-    # Combined with EW (2 U(1) + 7 SU(2) = 9): total U(1) = 8; total SU(2) = 13; grand = 21
-    # sin^2 theta_eff^b predicted by naive extension = 8/21 ≈ 0.38095
-    U1_b_added = 6; SU2_b_added = 6
-    total_U1_with_b = 2 + U1_b_added
-    total_SU2_with_b = 7 + SU2_b_added
+    declared = {
+        "naive_extension_capacity_is_counted": "value",
+        "naive_prediction_is_the_counted_share": "value",
+        "naive_prediction_misses_the_named_external_measurement": "control",
+        "the_gap_is_not_within_the_reference_uncertainty": "control",
+    }
+    executed = []
+    failures = []
+
+    # The b-sector additions are DECLARED counts at this site, not derived.
+    #   b_L: 3 colors x 1 multiplet (Y=1/6) -> 3 U(1); 2 SU(2) DOF x 3 colors = 6 SU(2)
+    #   b_R: 3 colors x 1 multiplet (Y=-1/3) -> 3 U(1); 0 SU(2)
+    U1_b_added = 6
+    SU2_b_added = 6
+
+    # The gauge+Higgs totals are RE-READ off the counted capacity of the OSR
+    # survivor rather than re-declared as literals here.
+    survivors = _osr_survivors()
+    gh_SU2, gh_U1, gh_total = _compute_capacity(survivors[0]) if survivors else (0, 0, 0)
+    total_U1_with_b = gh_U1 + U1_b_added
+    total_SU2_with_b = gh_SU2 + SU2_b_added
     grand_with_b = total_U1_with_b + total_SU2_with_b
-    sin2_b_predicted = Fraction(total_U1_with_b, grand_with_b)  # = 8/21
-    sin2_b_measured = 0.23200  # DFGRU at reference inputs (m_t=173.2, M_H=125.7)
+    executed.append("naive_extension_capacity_is_counted")
+    if (gh_SU2, gh_U1) != (7, 2):
+        failures.append("gauge+Higgs counted capacity %s != the declared comparand "
+                        "(7, 2)" % ((gh_SU2, gh_U1),))
+
+    sin2_b_predicted = Fraction(total_U1_with_b, grand_with_b)
+    executed.append("naive_prediction_is_the_counted_share")
+    if sin2_b_predicted != Fraction(8, 21):
+        failures.append("counted b-channel share %s != the declared comparand 8/21"
+                        % (sin2_b_predicted,))
+
+    # Named external value (DFGRU at reference inputs m_t=173.2, M_H=125.7).
+    sin2_b_measured = 0.23200
+    RATIO_FLOOR = 1.5
+    GAP_FLOOR = 0.1
     ratio_predicted_to_measured = float(sin2_b_predicted) / sin2_b_measured
-    is_falsified = abs(ratio_predicted_to_measured - 1.65) < 0.01
-    return _result(
-        name="T_kappa_b_universality_falsified: naive extension predicts 8/21 = 0.381 vs measured 0.232 (factor 1.65 off); rule NOT universal [C]",
+    absolute_gap = float(sin2_b_predicted) - sin2_b_measured
+
+    # CONTROL, as a computed inequality rather than a pin on a remembered
+    # rounding: the naive extension must MISS the named external value by more
+    # than the declared floor. A naive rule that SUCCEEDED would make this leg
+    # fail, which is the direction the leg's name means.
+    executed.append("naive_prediction_misses_the_named_external_measurement")
+    if not ratio_predicted_to_measured > RATIO_FLOOR:
+        failures.append("predicted/external ratio %.6f does not exceed the declared "
+                        "floor %s" % (ratio_predicted_to_measured, RATIO_FLOOR))
+
+    executed.append("the_gap_is_not_within_the_reference_uncertainty")
+    if not absolute_gap > GAP_FLOOR:
+        failures.append("absolute gap %.6f does not exceed the declared floor %s"
+                        % (absolute_gap, GAP_FLOOR))
+
+    # COMPUTED, not hardcoded: a sibling member ties to this field by value.
+    rule_is_universal = not (ratio_predicted_to_measured > RATIO_FLOOR
+                             and absolute_gap > GAP_FLOOR)
+
+    return _finish(
+        name="T_kappa_b_universality_falsified: the counted extension of the rule to a fermion channel misses the named external value by a computed factor [C]",
         tier=4,
         epistemic="C",
-        summary=(f"Naive extension of capacity-counting rule to b-quark channel: "
-                 f"total U(1) = {total_U1_with_b}, total SU(2) = {total_SU2_with_b}, "
-                 f"sin^2 theta_eff^b predicted = {sin2_b_predicted} = {float(sin2_b_predicted):.5f}; "
-                 f"measured = {sin2_b_measured} (DFGRU). Ratio = {ratio_predicted_to_measured:.3f} "
-                 f"(factor 1.65 — rule does NOT extend to fermion-channel form factors). "
-                 f"Banked guard against future overextension claims."),
+        summary=(f"Extending the counting rule to the b channel by the DECLARED "
+                 f"additions ({U1_b_added} U(1), {SU2_b_added} SU(2); declared counts, "
+                 f"not derived) over the gauge+Higgs capacity {gh_SU2}:{gh_U1} read off "
+                 f"the OSR survivor gives total U(1) = {total_U1_with_b}, total SU(2) = "
+                 f"{total_SU2_with_b}, and a predicted share of {sin2_b_predicted} = "
+                 f"{float(sin2_b_predicted):.5f}. The named external value at named "
+                 f"reference inputs is {sin2_b_measured} (DFGRU). The prediction exceeds "
+                 f"it by a computed factor of {ratio_predicted_to_measured:.3f}, an "
+                 f"absolute gap of {absolute_gap:.5f}, both above the floors declared at "
+                 f"the site. No fermion-channel extension is claimed; the module's scope "
+                 f"stays gauge+Higgs on-shell. One channel is one channel."),
+        key_result=(f"the counted b-channel share {sin2_b_predicted} exceeds the named "
+                    f"external value by a computed factor of "
+                    f"{ratio_predicted_to_measured:.3f}. That is what this check "
+                    f"computes; it is one channel against one named external value."),
         artifacts={"sin2_b_predicted": str(sin2_b_predicted),
-              "sin2_b_measured": sin2_b_measured,
-              "ratio": ratio_predicted_to_measured,
-              "rule_is_universal": False,
-              "scope": "gauge+Higgs OS sub-sector ONLY"},
+                   "sin2_b_measured": sin2_b_measured,
+                   "ratio": ratio_predicted_to_measured,
+                   "absolute_gap": absolute_gap,
+                   "declared_ratio_floor": RATIO_FLOOR,
+                   "declared_gap_floor": GAP_FLOOR,
+                   "declared_b_sector_additions_U1_SU2": [U1_b_added, SU2_b_added],
+                   "gauge_higgs_counted_capacity_SU2H_U1null": [gh_SU2, gh_U1],
+                   "rule_is_universal": rule_is_universal,
+                   "scope": "gauge+Higgs OS sub-sector ONLY"},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -702,44 +1219,84 @@ def check_T_GH_OS_codomain_full_structural_grade_promotion_P() -> Dict[str, Any]
     Promotion is scope-restricted to GH_OS_codomain. Outside-codomain non-claims preserved:
     physical-final, fermion channels, effective angle, loop-renormalized OS, global EW fit.
     """
-    five_spines = [
+    declared = {
+        "spine_pack_inventory_is_set_exact": "control",
+        "the_promotion_record_is_a_recorded_receipt": "recorded-receipt",
+        "scope_restriction_flag_is_consistent_with_the_kappa_b_member": "value-tie",
+    }
+    executed = []
+    failures = []
+
+    DECLARED_SPINES = frozenset((
         "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_DERIVATION_v5",
         "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_PROPAGATION_COMPLEMENT_ROUTE_v1",
         "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_PROJECTOR_TRACE_ROUTE_v1",
         "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_OS_ANGLE_TANGENT_NORMAL_ROUTE_v1",
         "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_OS_ANGLE_RESOLVED_SHELL_COMPLEMENT_ROUTE_v1",
-    ]
-    meta_pack = "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_FULL_P_CODOMAIN_CLOSURE_v1"
-    promotion_event = {
-        "from_grade": "P_structural_GH_OS_codomain",
-        "to_grade": "P_full_structural_GH_OS_codomain",
-        "promoted_in_version": "24.3.109",
-        "promoted_on_date_utc": "2026-05-26",
-        "promotion_justification": "5-spine convergence standalone-filed + snapshot-consistency verified",
-        "five_spines_filed": five_spines,
-        "meta_pack": meta_pack,
-        "promotion_scope": "GH_OS_codomain only — NOT extended to physical-final, fermion channels, effective angle, loop-renormalized OS, global EW fit",
-        "extends_to_kappa_b": False,
+    ))
+    # The count is enforced against a declared integer, NOT against the length
+    # of the set it is derived from: a coverage count checked against its own
+    # source cannot fail. (Found by this seat's own battery: dropping a name
+    # from the declared set moved both sides together and escaped.)
+    DECLARED_SPINE_COUNT = 5
+    five_spines = sorted(frozenset((
+        "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_DERIVATION_v5",
+        "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_PROPAGATION_COMPLEMENT_ROUTE_v1",
+        "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_PROJECTOR_TRACE_ROUTE_v1",
+        "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_OS_ANGLE_TANGENT_NORMAL_ROUTE_v1",
+        "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_OS_ANGLE_RESOLVED_SHELL_COMPLEMENT_ROUTE_v1",
+    )))
+    executed.append("spine_pack_inventory_is_set_exact")
+    if len(DECLARED_SPINES) != DECLARED_SPINE_COUNT:
+        failures.append("declared spine pack set holds %d names, not the declared "
+                        "count %d" % (len(DECLARED_SPINES), DECLARED_SPINE_COUNT))
+    if frozenset(five_spines) != DECLARED_SPINES:
+        failures.append("spine pack inventory %s != the declared set %s"
+                        % (five_spines, sorted(DECLARED_SPINES)))
+
+    # RECORDED RECEIPT, labelled and excluded from the verdict. This module
+    # performs no file I/O of any kind: nothing below is re-executed, and
+    # nothing below is read, by this check on this run.
+    recorded_receipt_not_re_executed = {
+        "bundle_path": "Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/",
+        "receipt_taken_on_date_utc": "2026-05-26",
+        "spine_pack_names": five_spines,
+        "meta_pack_name": "APF_INTERFACE_ENGINE_EW_GAUGE_HIGGS_ONLY_OS_ANGLE_FULL_P_CODOMAIN_CLOSURE_v1",
+        "re_executed_by_this_check": False,
     }
-    # All structural assertions present and self-consistent:
-    ok = (
-        len(five_spines) == 5 and
-        promotion_event["from_grade"] == "P_structural_GH_OS_codomain" and
-        promotion_event["to_grade"] == "P_full_structural_GH_OS_codomain" and
-        promotion_event["extends_to_kappa_b"] is False  # scope-restriction preserved
-    )
-    return _result(
-        name="T_GH_OS_codomain_full_structural_grade_promotion: P_structural → P_full_structural via 5-spine convergence [P_full_structural | GH_OS_codomain_meta]",
+    executed.append("the_promotion_record_is_a_recorded_receipt")
+
+    # IN-MODULE VALUE TIE, replacing the self-comparison this check used to
+    # carry: the sibling kappa_b member's returned non-universality flag is
+    # computed there from its own inequality legs.
+    sib = _CHECKS["T_kappa_b_universality_falsified"]()
+    sib_universal = sib["artifacts"]["rule_is_universal"]
+    executed.append("scope_restriction_flag_is_consistent_with_the_kappa_b_member")
+    if sib_universal is not False:
+        failures.append("the sibling kappa_b member returned rule_is_universal = %r; "
+                        "the scope restriction recorded here assumes False"
+                        % (sib_universal,))
+
+    return _finish(
+        name="T_GH_OS_codomain_full_structural_grade_promotion: a labelled recorded receipt for the spine packs, plus the scope-restriction tie to the sibling fermion-channel member [P_full_structural | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_full_structural_GH_OS_codomain_meta",
-        summary=(f"GH_OS_codomain grade promoted P_structural → P_full_structural in v24.3.109. "
-                 f"Justification: 5-spine convergence (capacity-share, propagation-complement, "
-                 f"projector-trace, tangent-normal, resolved-shell complement) standalone-filed at "
-                 f"DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/ + snapshot-consistency verified against "
-                 f"FULL_P_CODOMAIN_CLOSURE_v1's embedded DERIVATION_VERIFIER snapshots. "
-                 f"Promotion scope-restricted to GH_OS_codomain; outside-codomain non-claims preserved; "
-                 f"kappa_b universality failure remains banked as falsifier guard at [C]."),
-        artifacts=promotion_event,
+        summary=(f"The spine pack names are a declared set of {len(five_spines)}, "
+                 f"enforced. The promotion event of record is a RECORDED RECEIPT, taken "
+                 f"2026-05-26 against packs at "
+                 f"Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/, "
+                 f"and is NOT re-executed by this check: this module performs no file "
+                 f"I/O. The scope restriction is consistent with the sibling "
+                 f"fermion-channel member's returned non-universality flag, read live "
+                 f"off that member's own computed inequality legs. This check computes "
+                 f"nothing about the promotion itself."),
+        key_result=("one enforced coverage count, one in-module value tie, and one "
+                    "labelled receipt. Nothing here verifies, justifies or "
+                    "re-establishes any grade."),
+        artifacts={"recorded_receipt_not_re_executed": recorded_receipt_not_re_executed,
+                   "declared_spine_pack_count": len(five_spines),
+                   "sibling_rule_is_universal": sib_universal},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -801,73 +1358,106 @@ def check_T_GH_OS_codomain_scope_restriction_principled_P() -> Dict[str, Any]:
     Source: APF_INTERFACE_ENGINE_EW_KAPPA_L_GATE2_SCOPE_ADJUDICATION_v1
     at DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/ (verifier PASS 193 checks).
     """
-    # Multi-channel probe ratios (from the gate-2 closure pack's
-    # MULTI_CHANNEL_PROBE_LEDGER.csv, DFGRU values at reference inputs).
-    naive_pred = 8.0 / 21.0  # ≈ 0.38095, uniform across all charged fermion channels
-    channel_data = {
-        "lepton":  0.231464,  # DFGRU Table 3 s0 = 2314.64e-4
-        "u":       0.231329,  # DFGRU Table 6 form-factor derived
-        "c":       0.231329,  # same as u (DFGRU up-type)
-        "d":       0.231279,  # DFGRU Table 6 form-factor derived
-        "s":       0.231279,  # same as d (DFGRU down-type)
-        "b":       0.232704,  # DFGRU Table 3 s0 = 2327.04e-4
+    declared = {
+        "channel_ratios_computed_from_the_named_external_table": "value",
+        "naive_prediction_ties_to_the_kappa_b_member": "value-tie",
+        "channel_set_is_set_exact": "control",
+        "ratio_span_is_below_the_declared_uniformity_threshold": "control",
+        "every_channel_ratio_lies_in_the_declared_window": "control",
+        "the_source_pack_is_a_recorded_receipt": "recorded-receipt",
     }
-    ratios = {c: naive_pred / m for c, m in channel_data.items()}
+    executed = []
+    failures = []
+
+    # Named external table (DFGRU arXiv:1906.08815v2 reference inputs,
+    # Tables 3 + 6). These are named external literals; this check verifies
+    # their SPREAD, not their correctness.
+    channel_data = {
+        "lepton":  0.231464,
+        "u":       0.231329,
+        "c":       0.231329,
+        "d":       0.231279,
+        "s":       0.231279,
+        "b":       0.232704,
+    }
+    DECLARED_CHANNELS = frozenset(("lepton", "u", "c", "d", "s", "b"))
+    executed.append("channel_set_is_set_exact")
+    if frozenset(channel_data) != DECLARED_CHANNELS:
+        failures.append("channel set %s != the declared set %s"
+                        % (sorted(channel_data), sorted(DECLARED_CHANNELS)))
+    if len(channel_data) != len(DECLARED_CHANNELS):
+        failures.append("channel count %d != the declared count %d"
+                        % (len(channel_data), len(DECLARED_CHANNELS)))
+
+    # IN-MODULE VALUE TIE: the naive prediction is read off the sibling
+    # fermion-channel member's computed share rather than re-declared here.
+    sib = _CHECKS["T_kappa_b_universality_falsified"]()
+    naive_pred = float(Fraction(str(sib["artifacts"]["sin2_b_predicted"])))
+    executed.append("naive_prediction_ties_to_the_kappa_b_member")
+    if naive_pred != float(Fraction(8, 21)):
+        failures.append("sibling member returned a share of %r; the declared "
+                        "comparand at this site is 8/21" % (naive_pred,))
+
+    ratios = {c: naive_pred / mval for c, mval in channel_data.items()}
     ratio_max = max(ratios.values())
     ratio_min = min(ratios.values())
     ratio_span = (ratio_max - ratio_min) / ((ratio_max + ratio_min) / 2)
-    # Uniformity threshold: relative span < 1% counts as uniform
-    uniform_pattern = ratio_span < 0.01
+    executed.append("channel_ratios_computed_from_the_named_external_table")
+    if len(ratios) != len(channel_data):
+        failures.append("computed %d ratios for %d channels"
+                        % (len(ratios), len(channel_data)))
 
-    # Four structural distinguishers; all support Reading A.
-    distinguishers = {
-        "S1_Paper4_Paper8_domain":                   "supports_A",
-        "S2_Paper18_leptonic_specificity":           "supports_A",
-        "S3_SM_channel_form_factor_structure":       "supports_A",
-        "S4_denominator_to_numerator_role_swap":     "supports_A",
+    UNIFORMITY_THRESHOLD = 0.01
+    WINDOW_LOW = 1.6
+    WINDOW_HIGH = 1.7
+    executed.append("ratio_span_is_below_the_declared_uniformity_threshold")
+    if not ratio_span < UNIFORMITY_THRESHOLD:
+        failures.append("relative ratio span %.6f is not below the declared "
+                        "threshold %s" % (ratio_span, UNIFORMITY_THRESHOLD))
+
+    executed.append("every_channel_ratio_lies_in_the_declared_window")
+    outside = sorted(c for c, r in ratios.items()
+                     if not (WINDOW_LOW < r < WINDOW_HIGH))
+    if outside:
+        failures.append("channel ratios outside the declared window (%s, %s): %s"
+                        % (WINDOW_LOW, WINDOW_HIGH, outside))
+
+    # RECORDED RECEIPT, labelled and excluded from the verdict. No file I/O is
+    # performed by this module; the pack is not re-executed and is not read.
+    recorded_receipt_not_re_executed = {
+        "pack_name": "APF_INTERFACE_ENGINE_EW_KAPPA_L_GATE2_SCOPE_ADJUDICATION_v1",
+        "bundle_path": "Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/",
+        "receipt_taken_on_date_utc": "2026-05-26",
+        "re_executed_by_this_check": False,
     }
-    all_distinguishers_support_A = all(v == "supports_A" for v in distinguishers.values())
+    executed.append("the_source_pack_is_a_recorded_receipt")
 
-    adjudication_record = {
-        "adjudication_decided":            "A",
-        "reading_A_label":                  "scope-restriction",
-        "reading_B_label":                  "decisive_falsification",
-        "multi_channel_probe_complete":     True,
-        "multi_channel_pattern":            "uniform" if uniform_pattern else "uneven",
-        "ratio_min":                        ratio_min,
-        "ratio_max":                        ratio_max,
-        "ratio_relative_span":              ratio_span,
-        "uniformity_threshold":             0.01,
-        "structural_distinguishers":        distinguishers,
-        "all_distinguishers_support_A":     all_distinguishers_support_A,
-        "circular_reasoning_avoided":       True,
-        "bank_grade_change":                "promote_to_scope_principled",
-        "scope_qualifier_now_principled":   True,
-        "kappa_b_guard_recharacterized":    "principled_scope_witness",
-        "outside_codomain_nonclaims_preserved": True,
-        "flip_conditions_named":            3,
-        "source_pack":                      "APF_INTERFACE_ENGINE_EW_KAPPA_L_GATE2_SCOPE_ADJUDICATION_v1",
-        "source_pack_verifier_passed":      True,
-        "source_pack_passed_count":         193,
-        "promotion_event_version":          "24.3.110",
-        "promotion_event_date_utc":         "2026-05-26",
-    }
-
-    ok = (uniform_pattern and all_distinguishers_support_A and
-          ratio_span < 0.01 and ratio_min > 1.6 and ratio_max < 1.7)
-    return _result(
-        name="T_GH_OS_codomain_scope_restriction_principled: gate-2 adjudication closed in favor of scope-restriction; κ_b guard recharacterized as principled scope-witness [P_structural_meta | GH_OS_codomain_meta]",
+    return _finish(
+        name="T_GH_OS_codomain_scope_restriction_principled: the spread of the counted share against a named external channel table [P_structural_meta | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_structural_meta_GH_OS_codomain",
-        summary=(f"Gate-2 (κ_b decisive vs scope-mismatch) adjudicated A (scope-restriction) "
-                 f"via multi-channel probe + 4 structural distinguishers all supporting A. "
-                 f"Naive prediction 8/21 uniform across all charged fermion channels "
-                 f"(ℓ/u/c/d/s/b); DFGRU measured values cluster 0.231-0.233; "
-                 f"ratio span {ratio_span:.4f} < 0.01 (uniform failure). κ_b falsifier "
-                 f"guard recharacterized from convention to principled scope-witness. "
-                 f"Scope qualifier on [P_full_structural_GH_OS_codomain] now "
-                 f"structurally principled, not asserted."),
-        artifacts=adjudication_record,
+        summary=(f"{len(ratios)} named channel ratios were computed against a named "
+                 f"external table, using the counted share {naive_pred:.6f} tied by "
+                 f"value to the sibling fermion-channel member. Their relative span is "
+                 f"{ratio_span:.4f}, below the threshold {UNIFORMITY_THRESHOLD} declared "
+                 f"at the site, and every ratio lies in the declared window "
+                 f"({WINDOW_LOW}, {WINDOW_HIGH}): min {ratio_min:.4f}, max "
+                 f"{ratio_max:.4f}. The pack behind the gate-2 adjudication is a "
+                 f"RECORDED RECEIPT, not re-executed here. The four structural "
+                 f"distinguishers are a prose argument in the docstring; they are "
+                 f"computed by nothing and enter no leg."),
+        key_result=(f"a relative spread of {ratio_span:.4f} across {len(ratios)} named "
+                    f"external channel values against one counted share. The check "
+                    f"verifies the spread, not the correctness of the external values."),
+        artifacts={"channel_ratios": {c: ratios[c] for c in sorted(ratios)},
+                   "ratio_min": ratio_min, "ratio_max": ratio_max,
+                   "ratio_relative_span": ratio_span,
+                   "uniformity_threshold": UNIFORMITY_THRESHOLD,
+                   "declared_window_low_high": [WINDOW_LOW, WINDOW_HIGH],
+                   "declared_channel_names": sorted(DECLARED_CHANNELS),
+                   "naive_share_tied_from_sibling": naive_pred,
+                   "recorded_receipt_not_re_executed": recorded_receipt_not_re_executed},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -916,6 +1506,19 @@ def check_T_GH_OS_codomain_constraint_rank_algebraic_decomposition_P() -> Dict[s
     """
     from fractions import Fraction as F
 
+    declared = {
+        "r_star_at_SM_inputs": "value",
+        "sin2_from_r_star": "value",
+        "shell_capacities_from_the_rank_formulas": "value",
+        "aggregate_matches_the_counted_capacity": "value-tie",
+        "formula_is_genuinely_parameterised": "control",
+        "variation_set_is_set_exact": "control",
+        "the_source_pack_is_a_recorded_receipt": "recorded-receipt",
+        "declared_non_claims_are_carried": "declared_non_claim",
+    }
+    executed = []
+    failures = []
+
     def r_star(D, dim_R_H, dim_G_H):
         numerator = D - 2
         denominator = 2*(D - 1) + dim_R_H - dim_G_H
@@ -923,89 +1526,138 @@ def check_T_GH_OS_codomain_constraint_rank_algebraic_decomposition_P() -> Dict[s
             return None
         return F(numerator, denominator)
 
-    # SM-physical inputs: D=4, dim_R H=4 (complex Higgs doublet), dim(G/H) = 4 - 1 = 3
+    # Upstream field-content inputs, TAKEN AS GIVEN and not derived here.
     sm_inputs = {"D": 4, "dim_R_H": 4, "dim_G_H": 3}
     sm_r_star = r_star(**sm_inputs)
-    sm_sin2 = sm_r_star / (1 + sm_r_star)
+    executed.append("r_star_at_SM_inputs")
+    if sm_r_star != F(2, 7):
+        failures.append("r* at the declared inputs is %s, not the declared comparand "
+                        "2/7" % (sm_r_star,))
 
-    sm_check = (sm_r_star == F(2, 7) and sm_sin2 == F(2, 9))
+    sm_sin2 = sm_r_star / (1 + sm_r_star) if sm_r_star is not None else None
+    survivors = _osr_survivors()
+    counted_sin2 = _compute_sin2(survivors[0]) if survivors else None
+    executed.append("sin2_from_r_star")
+    if sm_sin2 != counted_sin2:
+        failures.append("the share read off r* (%s) differs from the share read off "
+                        "the counted capacity (%s)" % (sm_sin2, counted_sin2))
 
-    # Shell capacity decomposition at SM inputs:
-    #   c_W± = D - 1 = 3 (massive vector)
-    #   c_h  = dim_R H - dim(G/H) = 1 (radial Higgs)
-    #   c_A  = D - 2 = 2 (massless vector)
-    # Aggregate: 2 × c_W± + c_h = 2×3 + 1 = 7 ; c_A = 2 ; total = 9
     sm_D = sm_inputs["D"]
-    c_W = sm_D - 1; c_h = sm_inputs["dim_R_H"] - sm_inputs["dim_G_H"]; c_A = sm_D - 2
+    c_W = sm_D - 1
+    c_h = sm_inputs["dim_R_H"] - sm_inputs["dim_G_H"]
+    c_A = sm_D - 2
+    executed.append("shell_capacities_from_the_rank_formulas")
+    if (c_W, c_h, c_A) != (3, 1, 2):
+        failures.append("shell capacities from the rank formulas %s != the declared "
+                        "comparand (3, 1, 2)" % ((c_W, c_h, c_A),))
+
+    # IN-MODULE VALUE TIE: the algebraic route's aggregate and the counting
+    # route's survivor capacity are one claim, tied here rather than compared
+    # to two literals.
     aggregate_SU2H = 2 * c_W + c_h
     aggregate_U1null = c_A
-    aggregate_check = (aggregate_SU2H == 7 and aggregate_U1null == 2)
+    counted = _compute_capacity(survivors[0]) if survivors else None
+    executed.append("aggregate_matches_the_counted_capacity")
+    if counted is None or (aggregate_SU2H, aggregate_U1null,
+                           aggregate_SU2H + aggregate_U1null) != counted:
+        failures.append("algebraic aggregate %s does not match the counted capacity "
+                        "%s" % ((aggregate_SU2H, aggregate_U1null,
+                                 aggregate_SU2H + aggregate_U1null), counted))
 
-    # Parameter-variation tests: confirm the formula is genuinely parameterized,
-    # not a wrapper around the constant 2/7. Distinct (D, dim_R H, dim G/H) give
-    # distinct r*.
-    variations = [
-        # (D, dim_R H, dim G/H, expected r*)
-        (5, 4, 3, F(3, 9)),    # D=5: r* = 3/9 = 1/3 ≠ 2/7
-        (4, 5, 3, F(2, 8)),    # dim_R H=5: r* = 2/8 = 1/4 ≠ 2/7
-        (4, 4, 2, F(2, 8)),    # dim G/H=2 (different SSB): r* = 2/(6+2) = 2/8 ≠ 2/7
-        (6, 6, 5, F(4, 11)),   # higher-D toy: r* = 4/11 ≠ 2/7
-    ]
+    # CONTROL: a declared (not exhaustive) set of parameter variations, each
+    # recomputed and each required to differ from the SM value.
+    DECLARED_VARIATIONS = ((5, 4, 3, F(3, 9)), (4, 5, 3, F(2, 8)),
+                           (4, 4, 2, F(2, 8)), (6, 6, 5, F(4, 11)))
+    executed.append("variation_set_is_set_exact")
+    if len(DECLARED_VARIATIONS) != 4:
+        failures.append("variation count %d != the declared count 4"
+                        % len(DECLARED_VARIATIONS))
+    if len({(v[0], v[1], v[2]) for v in DECLARED_VARIATIONS}) != len(DECLARED_VARIATIONS):
+        failures.append("the declared variation triples are not distinct")
+
     distinct_r_stars = {sm_r_star}
     variation_results = []
-    for D, H, GH, expected in variations:
+    executed.append("formula_is_genuinely_parameterised")
+    for D, H, GH, expected in DECLARED_VARIATIONS:
         actual = r_star(D, H, GH)
         variation_results.append({"D": D, "dim_R_H": H, "dim_G_H": GH,
-                                  "r_star": str(actual), "matches_expected": actual == expected,
-                                  "differs_from_SM_2_over_7": actual != F(2, 7)})
+                                  "r_star": str(actual),
+                                  "matches_expected": actual == expected,
+                                  "differs_from_SM_value": actual != sm_r_star})
         distinct_r_stars.add(actual)
-    parameterization_check = (len(distinct_r_stars) >= 4 and
-                              all(v["matches_expected"] and v["differs_from_SM_2_over_7"]
-                                  for v in variation_results))
+        if actual != expected:
+            failures.append("variation (%d, %d, %d) gives r* = %s, not the declared "
+                            "comparand %s" % (D, H, GH, actual, expected))
+        if actual == sm_r_star:
+            failures.append("variation (%d, %d, %d) reproduces the SM value; the "
+                            "formula is not parameterised at that point" % (D, H, GH))
+    # DISCLOSED, and measured on this run rather than declared: two of the four
+    # declared variations, (4, 5, 3) and (4, 4, 2), give the SAME r*, so the
+    # distinct count across the declared point and its four variations is one
+    # fewer than the number of variations plus one. The enforced floor is
+    # written over what the variations actually separate.
+    MIN_DISTINCT = 4
+    if len(distinct_r_stars) < MIN_DISTINCT:
+        failures.append("only %d distinct r* values across the declared point and %d "
+                        "variations; the enforced floor is %d"
+                        % (len(distinct_r_stars), len(DECLARED_VARIATIONS), MIN_DISTINCT))
 
-    # Coupling independence: the flow dN_i/dτ = λ_i N_i (c_i - N_i) has fixed point
-    # N_i = c_i for any λ_i > 0; the equilibrium value is rate-independent by
-    # construction of the logistic equation.
-    coupling_independence = True
-
-    artifacts = {
-        "formula": "r* = (D - 2) / (2(D - 1) + dim_R H - dim(G/H))",
-        "sm_inputs": sm_inputs,
-        "sm_r_star": str(sm_r_star),
-        "sm_sin2_theta_W_OS": str(sm_sin2),
-        "shell_capacities_at_SM": {
-            "c_W_plus_or_minus_massive_vector_rank_D_minus_1": c_W,
-            "c_h_radial_higgs": c_h,
-            "c_A_gamma_massless_vector_rank_D_minus_2": c_A,
-        },
-        "aggregate_SU2H_post_equilibrium": aggregate_SU2H,
-        "aggregate_U1null_post_equilibrium": aggregate_U1null,
-        "parameter_variation_witnesses": variation_results,
-        "distinct_r_star_values_across_variations": len(distinct_r_stars),
-        "coupling_independent_fixed_point": coupling_independence,
-        "source_pack": "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_CONSTRAINT_RANK_DEEP_EQUILIBRIUM_ROUTE_v1",
-        "source_pack_verifier_passed": True,
-        "source_pack_passed_count": 196,
-        "single_gamma_like_invariant_derivation": False,  # honest non-claim
-        "claims_full_paper18_attractor_parity": False,    # honest non-claim
-        "promotion_event_version": "24.3.111",
-        "promotion_event_date_utc": "2026-05-26",
+    recorded_receipt_not_re_executed = {
+        "pack_name": "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_CONSTRAINT_RANK_DEEP_EQUILIBRIUM_ROUTE_v1",
+        "bundle_path": "Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/",
+        "receipt_taken_on_date_utc": "2026-05-26",
+        "re_executed_by_this_check": False,
     }
+    executed.append("the_source_pack_is_a_recorded_receipt")
 
-    ok = (sm_check and aggregate_check and parameterization_check and coupling_independence)
-    return _result(
-        name="T_GH_OS_codomain_constraint_rank_algebraic_decomposition: r* = (D-2)/(2(D-1)+dim_R H - dim G/H) = 2/7 at SM inputs; formula is genuinely parameterized [P_structural_meta | GH_OS_codomain_meta]",
+    # DECLARED NON-CLAIMS, carried and labelled, not verdict conjuncts.
+    declared_non_claims = {
+        "single_gamma_like_invariant_derivation": False,
+        "claims_full_paper18_attractor_parity": False,
+    }
+    executed.append("declared_non_claims_are_carried")
+
+    return _finish(
+        name="T_GH_OS_codomain_constraint_rank_algebraic_decomposition: a closed-form function of three declared upstream inputs, tied to the counted capacity [P_structural_meta | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_structural_meta_GH_OS_codomain",
-        summary=(f"Closed-form algebraic decomposition: r* = (D-2)/(2(D-1)+dim_R H - dim(G/H)). "
-                 f"At SM-physical inputs (D=4, dim_R H=4, dim(G/H)=3): r* = 2/(6+1) = {sm_r_star}; "
-                 f"sin²θ_W^OS = {sm_sin2}. Shell capacities (c_W±, c_h, c_A) = ({c_W}, {c_h}, {c_A}) "
-                 f"emerge as decoupled logistic fixed points. Aggregate (7, 2) is post-equilibrium sum. "
-                 f"Parameter-variation tests confirm {len(distinct_r_stars)} distinct r* values across "
-                 f"variations — formula is genuinely parameterized, not a wrapper around 2/7. Does NOT "
-                 f"claim full Paper-18 single-γ-like-invariant attractor parity; the value-check grades "
-                 f"stay at [P_full_structural_GH_OS_codomain]."),
-        artifacts=artifacts,
+        summary=(f"r* is a function of the three declared upstream inputs and evaluates "
+                 f"to {sm_r_star} at (D, dim_R H, dim(G/H)) = "
+                 f"({sm_inputs['D']}, {sm_inputs['dim_R_H']}, {sm_inputs['dim_G_H']}); "
+                 f"the share read off it, {sm_sin2}, equals the share read off the "
+                 f"counted capacity. The shell capacities from the rank formulas, "
+                 f"({c_W}, {c_h}, {c_A}), aggregate to the survivor's counted capacity "
+                 f"{counted}. {len(DECLARED_VARIATIONS)} declared parameter variations "
+                 f"each produce a distinct r* differing from the value at the declared "
+                 f"inputs, so the formula is parameterised rather than a wrapper; two "
+                 f"of those variations coincide with each other, so the distinct count "
+                 f"across the declared point and its variations is "
+                 f"{len(distinct_r_stars)}, against an enforced floor of "
+                 f"{MIN_DISTINCT}. The "
+                 f"source pack is a RECORDED RECEIPT, not re-executed here. Declared "
+                 f"non-claims, carried: no single-invariant derivation; no full Paper-18 "
+                 f"attractor parity. The three inputs are taken as given and are not "
+                 f"derived here; this decomposition derives no value."),
+        key_result=(f"a three-integer function evaluating to {sm_r_star}, whose share "
+                    f"and whose aggregate both tie by value to the counted capacity of "
+                    f"the OSR survivor. The declared variations are a set of "
+                    f"{len(DECLARED_VARIATIONS)}, not an exhaustive family."),
+        artifacts={"formula": "r* = (D - 2) / (2(D - 1) + dim_R H - dim(G/H))",
+                   "sm_inputs": sm_inputs, "sm_r_star": str(sm_r_star),
+                   "sm_sin2_theta_W_OS": str(sm_sin2),
+                   "share_from_counted_capacity": str(counted_sin2),
+                   "shell_capacities_at_SM": {
+                       "c_W_plus_or_minus_massive_vector_rank_D_minus_1": c_W,
+                       "c_h_radial_higgs": c_h,
+                       "c_A_gamma_massless_vector_rank_D_minus_2": c_A},
+                   "aggregate_SU2H_post_equilibrium": aggregate_SU2H,
+                   "aggregate_U1null_post_equilibrium": aggregate_U1null,
+                   "counted_capacity_of_the_OSR_survivor": list(counted) if counted else None,
+                   "parameter_variation_witnesses": variation_results,
+                   "distinct_r_star_values_across_variations": len(distinct_r_stars),
+                   "recorded_receipt_not_re_executed": recorded_receipt_not_re_executed,
+                   "declared_non_claims": declared_non_claims},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -1064,97 +1716,161 @@ def check_T_GH_OS_codomain_rank_variational_universality_gate1_maximal_P() -> Di
           inputs (D, dim_R H, gauge group).
     """
     from fractions import Fraction as F
+    import math
 
-    # At SM-physical inputs (D=4, dim_R H=4, dim G/H=3):
+    declared = {
+        "x_star_is_the_normalised_rank_vector": "value",
+        "x_star_sums_to_one": "consistency",
+        "rank_vector_ties_to_the_counted_capacity": "value-tie",
+        "capacity_vector_is_set_exact": "control",
+        "phi_family_is_set_exact": "control",
+        "equal_pressure_holds_at_x_star_for_the_declared_phi_family": "identity",
+        "pressures_are_not_equal_off_the_fixed_point": "control",
+        "the_source_pack_is_a_recorded_receipt": "recorded-receipt",
+        "declared_scope_boundary_is_carried": "declared_non_claim",
+    }
+    executed = []
+    failures = []
+
+    # Upstream field-content inputs, TAKEN AS GIVEN and not derived here.
     sm_inputs = {"D": 4, "dim_R_H": 4, "dim_G_H": 3}
     c_W = sm_inputs["D"] - 1
     c_h = sm_inputs["dim_R_H"] - sm_inputs["dim_G_H"]
     c_A = sm_inputs["D"] - 2
-    c_vec = (c_W, c_W, c_h, c_A)  # (W+, W-, h, A_γ)
+    c_vec = (c_W, c_W, c_h, c_A)  # (W+, W-, h, A_gamma)
     C_tot = sum(c_vec)
 
-    # Variational fixed point: x_i = c_i / C_tot
-    x_star = tuple(F(ci, C_tot) for ci in c_vec)
-    sum_x = sum(x_star)
+    executed.append("capacity_vector_is_set_exact")
+    if len(c_vec) != 4:
+        failures.append("capacity vector length %d != the declared 4" % len(c_vec))
+    if c_vec != (3, 3, 1, 2):
+        failures.append("capacity vector %s != the declared comparand (3, 3, 1, 2)"
+                        % (c_vec,))
 
-    # Universality property: for ANY monotone φ, equal-pressure equilibrium gives
-    # x_i ∝ c_i, hence x_i = c_i / C. We test this by trying several admissible φ
-    # (linear φ(u) = u, log φ(u) = log(1+u), power φ(u) = u^k for k>0) and confirming
-    # they all produce the same equilibrium ratio x_i/c_i = constant.
-    import math
+    x_star = tuple(F(ci, C_tot) for ci in c_vec)
+    executed.append("x_star_is_the_normalised_rank_vector")
+    if x_star != (F(c_W, C_tot), F(c_W, C_tot), F(c_h, C_tot), F(c_A, C_tot)):
+        failures.append("x* %s is not the normalised rank vector" % (x_star,))
+
+    sum_x = sum(x_star)
+    executed.append("x_star_sums_to_one")
+    if sum_x != 1:
+        failures.append("x* sums to %s, not 1" % (sum_x,))
+
+    # IN-MODULE VALUE TIE to the counted capacity of the OSR survivor.
+    survivors = _osr_survivors()
+    counted = _compute_capacity(survivors[0]) if survivors else None
+    executed.append("rank_vector_ties_to_the_counted_capacity")
+    if counted is None or (2 * c_W + c_h, c_A, C_tot) != counted:
+        failures.append("the rank vector aggregates to %s, which does not match the "
+                        "counted capacity %s" % ((2 * c_W + c_h, c_A, C_tot), counted))
+
+    DECLARED_PHI = ("linear", "log1p", "square", "cuberoot")
     phi_candidates = [
-        ("linear",  lambda u: u),
-        ("log1p",   lambda u: math.log(1.0 + u)),
-        ("square",  lambda u: u * u),
-        ("cuberoot", lambda u: u ** (1.0/3.0)),
+        ("linear",   lambda u: u),
+        ("log1p",    lambda u: math.log(1.0 + u)),
+        ("square",   lambda u: u * u),
+        ("cuberoot", lambda u: u ** (1.0 / 3.0)),
     ]
-    # At x_star, x_i / c_i = 1/C_tot for every i; pressure equality automatic
-    # because all u_i are equal to 1/C_tot.
+    executed.append("phi_family_is_set_exact")
+    if tuple(n for n, _ in phi_candidates) != DECLARED_PHI:
+        failures.append("phi family %s != the declared set %s"
+                        % ([n for n, _ in phi_candidates], list(DECLARED_PHI)))
+    if len(phi_candidates) != len(DECLARED_PHI):
+        failures.append("phi count %d != the declared count %d"
+                        % (len(phi_candidates), len(DECLARED_PHI)))
+
     universality_witnesses = []
+    executed.append("equal_pressure_holds_at_x_star_for_the_declared_phi_family")
     for name, phi in phi_candidates:
         u_vals = [float(x_star[i]) / c_vec[i] for i in range(len(c_vec))]
         p_vals = [phi(u) for u in u_vals]
         equal_pressure = all(abs(p - p_vals[0]) < 1e-12 for p in p_vals)
-        universality_witnesses.append({
-            "phi_name": name,
-            "u_values": u_vals,
-            "p_values": p_vals,
-            "equal_pressure_at_x_star": equal_pressure,
-        })
+        universality_witnesses.append({"phi_name": name, "u_values": u_vals,
+                                       "p_values": p_vals,
+                                       "equal_pressure_at_x_star": equal_pressure})
 
-    universality_holds = all(w["equal_pressure_at_x_star"] for w in universality_witnesses)
+    # EXECUTED NEGATIVE CONTROL. At x* every u_i = x_i/c_i equals 1/C_tot by
+    # construction, so pressure equality there is automatic for ANY phi. The
+    # leg above therefore discriminates nothing on its own. The control below
+    # names an off-fixed-point vector -- proportional to c in three
+    # coordinates and perturbed in the fourth, still summing to 1 -- and
+    # requires that at least one declared phi separate it from x*.
+    PERTURBED_X = (F(4, 9), F(3, 9), F(1, 9), F(1, 9))
+    off_results = []
+    executed.append("pressures_are_not_equal_off_the_fixed_point")
+    if sum(PERTURBED_X) != 1:
+        failures.append("the declared off-fixed-point vector does not sum to 1")
+    if PERTURBED_X == x_star:
+        failures.append("the declared off-fixed-point vector equals x*; the control "
+                        "cannot bite")
+    for name, phi in phi_candidates:
+        u_off = [float(PERTURBED_X[i]) / c_vec[i] for i in range(len(c_vec))]
+        p_off = [phi(u) for u in u_off]
+        separates = not all(abs(p - p_off[0]) < 1e-12 for p in p_off)
+        off_results.append({"phi_name": name, "separates_off_fixed_point": separates})
+    separating = sorted(r["phi_name"] for r in off_results
+                        if r["separates_off_fixed_point"])
+    if not separating:
+        failures.append("no declared phi separates the off-fixed-point vector from "
+                        "x*; the equal-pressure leg discriminates nothing")
 
-    # Gate-1 maximality boundary (explicit structural declaration)
-    gate1_maximality = {
-        "deeper_within_gate1_codomain_available": False,
+    recorded_receipt_not_re_executed = {
+        "pack_name": "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_RANK_VARIATIONAL_UNIVERSALITY_ROUTE_v1",
+        "bundle_path": "Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/",
+        "receipt_taken_on_date_utc": "2026-05-26",
+        "re_executed_by_this_check": False,
+    }
+    executed.append("the_source_pack_is_a_recorded_receipt")
+
+    # DECLARED SCOPE BOUNDARY, carried and labelled; computed by nothing.
+    declared_scope_boundary = {
         "remaining_inputs_are_upstream_field_content": True,
-        "upstream_inputs": {
-            "spacetime_dimension_D": 4,
-            "higgs_real_dimension": 4,
-            "broken_generators_dim_G_H": 3,
-            "source_papers": ["Paper 4 (field content)", "Paper 6 (spacetime)", "Paper 8 (capacity-redistribution)"],
-        },
-        "deeper_work_requires_reopening_paper4_paper8": True,
-        "this_is_max_rigor_within_gate1": True,
+        "upstream_inputs": {"spacetime_dimension_D": sm_inputs["D"],
+                            "higgs_real_dimension": sm_inputs["dim_R_H"],
+                            "broken_generators_dim_G_H": sm_inputs["dim_G_H"],
+                            "source_papers": ["Paper 4 (field content)",
+                                              "Paper 6 (spacetime)",
+                                              "Paper 8 (capacity-redistribution)"]},
+        "this_is_a_declared_boundary_not_a_computed_one": True,
     }
+    executed.append("declared_scope_boundary_is_carried")
 
-    artifacts = {
-        "variational_functional": "F(x) = Σ_i q_i log(q_i / x_i)",
-        "euler_lagrange_solution": "x_i = q_i = c_i / Σ_j c_j",
-        "rank_pressure_flow": "dx_i/dτ = λ (c_i - C x_i)",
-        "sm_inputs": sm_inputs,
-        "rank_capacities_c": list(c_vec),
-        "C_total": C_tot,
-        "x_star": [str(x) for x in x_star],
-        "sum_x_star": str(sum_x),
-        "universality_witnesses": universality_witnesses,
-        "universality_holds_across_phi_family": universality_holds,
-        "admissible_flow_family": "P_i = φ(x_i/c_i), φ strictly monotone",
-        "gate1_maximality": gate1_maximality,
-        "source_pack": "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_RANK_VARIATIONAL_UNIVERSALITY_ROUTE_v1",
-        "source_pack_verifier_passed": True,
-        "source_pack_passed_count": 236,
-        "single_gamma_like_invariant_derivation": False,  # honest non-claim
-        "claims_full_paper18_attractor_parity": False,    # honest non-claim
-        "promotion_event_version": "24.3.112",
-        "promotion_event_date_utc": "2026-05-26",
-    }
-
-    ok = (sum_x == 1 and universality_holds and
-          gate1_maximality["this_is_max_rigor_within_gate1"] and
-          x_star == (F(c_W, C_tot), F(c_W, C_tot), F(c_h, C_tot), F(c_A, C_tot)))
-    return _result(
-        name="T_GH_OS_codomain_rank_variational_universality_gate1_maximal: variational uniqueness + flow-family universality + explicit gate-1 maximality boundary [P_structural_meta | GH_OS_codomain_meta]",
+    return _finish(
+        name="T_GH_OS_codomain_rank_variational_universality_gate1_maximal: the normalised rank vector, its tie to the counted capacity, and an off-fixed-point separation control [P_structural_meta | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_structural_meta_GH_OS_codomain",
-        summary=(f"Variational uniqueness: F = KL divergence has unique minimum x_i = c_i/C at SM inputs "
-                 f"({c_W},{c_W},{c_h},{c_A})/{C_tot}. Universality: equilibrium invariant across admissible "
-                 f"monotone-homogeneous pressure-flow family P_i = φ(x_i/c_i) — tested with {len(phi_candidates)} "
-                 f"distinct φ (linear, log1p, square, cuberoot), all give equal pressure at x*. "
-                 f"Gate-1 maximality DECLARED: deeper structural work within OS codomain not available; "
-                 f"remaining inputs (D=4, dim_R H=4, dim G/H=3) are upstream Paper 4/6/8 field-content facts, "
-                 f"not flow choices. Closes gate-1 at its admissible structural maximum within the OS branch."),
-        artifacts=artifacts,
+        summary=(f"The normalised rank vector is {[str(x) for x in x_star]} and sums to "
+                 f"{sum_x} exactly; it aggregates to the counted capacity {counted} of "
+                 f"the OSR survivor. At that vector the declared "
+                 f"{len(phi_candidates)}-member phi family gives equal pressure. That "
+                 f"is automatic at the fixed point, where every u_i equals 1/{C_tot} by "
+                 f"construction, so an executed off-fixed-point control is carried: at "
+                 f"the declared perturbed vector {[str(x) for x in PERTURBED_X]}, "
+                 f"{len(separating)} of the declared phi ({separating}) give pressures "
+                 f"that are NOT equal, so the pair of legs separates the fixed point "
+                 f"from a named neighbour. The remaining inputs are upstream "
+                 f"field-content facts, carried as a DECLARED SCOPE BOUNDARY, computed "
+                 f"by nothing. The source pack is a RECORDED RECEIPT, not re-executed "
+                 f"here."),
+        key_result=(f"equal pressure at a named point, a named perturbed point where "
+                    f"{len(separating)} declared phi separate, and a value tie to the "
+                    f"counted capacity. The executed content is equality at one point "
+                    f"and separation at one named neighbour."),
+        artifacts={"variational_functional": "F(x) = sum_i q_i log(q_i / x_i)",
+                   "euler_lagrange_solution": "x_i = q_i = c_i / sum_j c_j",
+                   "sm_inputs": sm_inputs, "rank_capacities_c": list(c_vec),
+                   "C_total": C_tot, "x_star": [str(x) for x in x_star],
+                   "sum_x_star": str(sum_x),
+                   "counted_capacity_of_the_OSR_survivor": list(counted) if counted else None,
+                   "declared_phi_family": list(DECLARED_PHI),
+                   "equal_pressure_witnesses_at_x_star": universality_witnesses,
+                   "off_fixed_point_vector": [str(x) for x in PERTURBED_X],
+                   "off_fixed_point_separation": off_results,
+                   "phi_separating_off_fixed_point": separating,
+                   "declared_scope_boundary": declared_scope_boundary,
+                   "recorded_receipt_not_re_executed": recorded_receipt_not_re_executed},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
 
 
@@ -1230,87 +1946,115 @@ def check_T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence_P() -
           Paper 8 / Paper 1 reopening, which is out of gate-1 scope and not addressed
           by re-framing the polarization-count derivation.
     """
-    from fractions import Fraction as F
+    declared = {
+        "rank_tuple_ties_to_the_sibling_decomposition": "consistency",
+        "framing_inventory_is_set_exact": "control",
+        "the_three_framings_are_a_prose_argument": "identity",
+        "the_source_packs_are_recorded_receipts": "recorded-receipt",
+    }
+    executed = []
+    failures = []
 
-    # SM-physical inputs
+    # SM-physical inputs, hardcoded HERE and independently hardcoded in the
+    # sibling decomposition member. That divergence is exactly what the tie
+    # below guards; see the limitation carried in the summary.
     D = 4; dim_R_H = 4; dim_G_H = 3
 
-    # Compute the integer rank outputs from each framing's formula.
-    # All three framings use the same formulas at the integer level:
+    c_W = D - 1
+    c_A = D - 2
+    c_h = dim_R_H - dim_G_H
+
+    # CONSISTENCY, not a value tie: the sibling decomposition member is called
+    # and its returned shell capacities are read. Both members hardcode the
+    # three upstream integers independently, so this leg catches DIVERGENT
+    # HARDCODING between the two sites. It is not an independent derivation.
+    sib = _CHECKS["T_GH_OS_codomain_constraint_rank_algebraic_decomposition"]()
+    sib_shells = sib["artifacts"]["shell_capacities_at_SM"]
+    sib_tuple = (sib_shells["c_W_plus_or_minus_massive_vector_rank_D_minus_1"],
+                 sib_shells["c_h_radial_higgs"],
+                 sib_shells["c_A_gamma_massless_vector_rank_D_minus_2"])
+    executed.append("rank_tuple_ties_to_the_sibling_decomposition")
+    if (c_W, c_h, c_A) != sib_tuple:
+        failures.append("rank tuple computed here %s differs from the sibling "
+                        "decomposition's returned shell capacities %s -- the two "
+                        "sites have diverged" % ((c_W, c_h, c_A), sib_tuple))
+
+    DECLARED_FRAMINGS = frozenset(("constraint_projector", "BRST_cohomology",
+                                   "coset_little_group"))
     framings = {
         "constraint_projector": {
-            "massive_vector_rank": D - 1,
-            "massless_vector_rank": D - 2,
+            "massive_vector_rank": D - 1, "massless_vector_rank": D - 2,
             "radial_higgs_rank": dim_R_H - dim_G_H,
             "derivation_reference": "constraint surface dim = D-vector dim - constraint count",
         },
         "BRST_cohomology": {
-            "massive_vector_rank": D - 1,
-            "massless_vector_rank": D - 2,
+            "massive_vector_rank": D - 1, "massless_vector_rank": D - 2,
             "radial_higgs_rank": dim_R_H - dim_G_H,
             "derivation_reference": "H^phys = ker(Q_BRST)/im(Q_BRST); Dirac quotient",
         },
         "coset_little_group": {
-            "massive_vector_rank": D - 1,
-            "massless_vector_rank": D - 2,
+            "massive_vector_rank": D - 1, "massless_vector_rank": D - 2,
             "radial_higgs_rank": dim_R_H - dim_G_H,
             "derivation_reference": "Wigner little-group classification of Poincare reps",
         },
     }
+    executed.append("framing_inventory_is_set_exact")
+    if frozenset(framings) != DECLARED_FRAMINGS:
+        failures.append("framing set %s != the declared set %s"
+                        % (sorted(framings), sorted(DECLARED_FRAMINGS)))
+    if len(framings) != len(DECLARED_FRAMINGS):
+        failures.append("framing count %d != the declared count %d"
+                        % (len(framings), len(DECLARED_FRAMINGS)))
 
-    # Equivalence check: all three framings produce the same rank tuple
-    rank_tuples = [
-        (f["massive_vector_rank"], f["massless_vector_rank"], f["radial_higgs_rank"])
-        for f in framings.values()
-    ]
-    all_equivalent = len(set(rank_tuples)) == 1
+    # IDENTITY, labelled and excluded from the verdict. The three framings
+    # evaluate the SAME three expressions (D - 1, D - 2, dim_R H - dim(G/H));
+    # they differ only in a prose derivation_reference string. Their agreement
+    # is therefore TRUE BY CONSTRUCTION and cannot fail under any input. It is
+    # a prose argument recorded here, not a check.
+    rank_tuples = [(f["massive_vector_rank"], f["massless_vector_rank"],
+                    f["radial_higgs_rank"]) for f in framings.values()]
+    framings_agree_by_construction = len(set(rank_tuples)) == 1
+    executed.append("the_three_framings_are_a_prose_argument")
 
-    # Confirm the integer rank tuple is (3, 3, 1, 2) for (W+, W-, h, A) shells.
-    # (W+ and W- both use massive_vector_rank.)
-    rank = rank_tuples[0]
-    c_W = rank[0]; c_h = rank[2]; c_A = rank[1]
-    expected_shell_capacities = (c_W, c_W, c_h, c_A) == (3, 3, 1, 2)
-
-    # Algebraic formula: r* = (D-2) / (2(D-1) + dim_R H - dim(G/H))
-    r_star = F(D - 2, 2*(D - 1) + dim_R_H - dim_G_H)
-    sin2 = r_star / (1 + r_star)
-    formula_matches = (r_star == F(2, 7) and sin2 == F(2, 9))
-
-    artifacts = {
-        "framings": framings,
-        "rank_tuple_per_framing": [list(t) for t in rank_tuples],
-        "all_framings_yield_same_rank_tuple": all_equivalent,
-        "shell_capacities_W_plus_W_minus_h_A": (c_W, c_W, c_h, c_A),
-        "expected_shell_capacities_3_3_1_2": expected_shell_capacities,
-        "r_star": str(r_star),
-        "sin2_theta_W_OS_GH_structural": str(sin2),
-        "formula_matches_2_over_7_and_2_over_9": formula_matches,
-        "source_packs": [
+    recorded_receipts_not_re_executed = {
+        "pack_names": [
             "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_CONSTRAINT_RANK_DEEP_EQUILIBRIUM_ROUTE_v1",
             "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_BRST_COHOMOLOGY_DEEP_EQUILIBRIUM_ROUTE_v1",
             "APF_INTERFACE_ENGINE_EW_GH_OS_ANGLE_COSET_LITTLE_GROUP_RANK_FLOW_ROUTE_v1",
         ],
-        "source_pack_passed_counts": {"constraint_rank": 196, "BRST": 514, "coset_little_group": 238},
-        "foundational_rigor_strengthening_not_new_structural_content": True,
-        "gate1_maximality_v4_declaration_stands": True,
-        "promotion_event_version": "24.3.113",
-        "promotion_event_date_utc": "2026-05-26",
+        "bundle_path": "Codebase/APF_Codebase_v24.3/DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/",
+        "receipt_taken_on_date_utc": "2026-05-26",
+        "re_executed_by_this_check": False,
     }
+    executed.append("the_source_packs_are_recorded_receipts")
 
-    ok = (all_equivalent and expected_shell_capacities and formula_matches)
-    return _result(
-        name="T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence: rank formulas (D-1, D-2, dim_R H - dim G/H) admit three equivalent textbook QFT derivations (constraint-projector + BRST cohomology + coset/Wigner little-group), all yielding (3, 3, 1, 2) → r* = 2/7 → sin²θ_W^OS = 2/9 [P_structural_meta | GH_OS_codomain_meta]",
+    return _finish(
+        name="T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence: the rank tuple computed here against the sibling decomposition's returned shell capacities [P_structural_meta | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_structural_meta_GH_OS_codomain",
-        summary=(f"Three textbook QFT framings — constraint-projector ranks (v3), BRST/Dirac cohomology (v5), "
-                 f"Wigner little-group classification (v6) — all yield identical rank tuple (3, 3, 1, 2) at "
-                 f"SM-physical inputs and feed the same algebraic formula r* = (D-2)/(2(D-1)+dim_R H - dim(G/H)) "
-                 f"= 2/7. Foundational-rigor strengthening: the bank's underlying integer-rank inputs have "
-                 f"textbook-proper derivations across multiple equivalent mathematical apparatus. Does NOT add "
-                 f"new structural content beyond v3+v4 and does NOT reopen the gate-1 maximality declaration."),
-        artifacts=artifacts,
+        summary=(f"The rank tuple computed here, {(c_W, c_h, c_A)}, agrees by value with "
+                 f"the sibling decomposition member's returned shell capacities "
+                 f"{sib_tuple}. Both sites hardcode the three upstream integers "
+                 f"independently, so that leg catches divergent hardcoding between two "
+                 f"sites and is NOT an independent derivation. The three framings are a "
+                 f"declared set of {len(framings)}; they evaluate the SAME three "
+                 f"expressions and differ only in a prose reference string, so their "
+                 f"agreement is an IDENTITY, true by construction, and not a check -- it "
+                 f"is labelled one and carries no verdict. The framing argument is prose "
+                 f"in the docstring. The source packs are RECORDED RECEIPTS, not "
+                 f"re-executed here."),
+        key_result=("one consistency tie against a sibling member and one enforced "
+                    "coverage count. The three-framing equivalence is true by "
+                    "construction and certifies nothing."),
+        artifacts={"framings": framings,
+                   "rank_tuple_here_c_W_c_h_c_A": [c_W, c_h, c_A],
+                   "sibling_returned_shell_capacities": list(sib_tuple),
+                   "declared_framing_names": sorted(DECLARED_FRAMINGS),
+                   "three_framings_agree_by_construction_identity":
+                       framings_agree_by_construction,
+                   "recorded_receipts_not_re_executed": recorded_receipts_not_re_executed},
+        declared_legs=declared, executed_legs=executed, failures=failures,
     )
-
 
 
 def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[str, Any]:
@@ -1987,16 +2731,12 @@ IE_DECLARATIONS = (
             "P_structural_exhaustive certify the canonical capacity assignment "
             "unique among 3^8 = 6561 candidates under premises P0..P14, the OSR "
             "premise implications, and the Lyapunov unique-global-minimum/strict- "
-            "descent properties. Five meta checks "
-            "(P_full_structural_GH_OS_codomain_meta / "
-            "P_structural_meta_GH_OS_codomain) carry the grade promotion, "
-            "principled scope restriction, and constraint-rank decomposition; che "
+            "descent properties. che "
             "ck_T_sin2theta_W_OS_reconciliation_GH_OS_codomain_to_native_one_loop "
             "_P (P_reconciliation_GH_OS_codomain_to_native_one_loop) reconciles "
             "the codomain value to the native one-loop chain. "
-            "check_T_kappa_b_universality_falsified_C (epistemic=C) banks a "
-            "FALSIFICATION: the carrier-counting rule does NOT extend to kappa_b "
-            "(factor 1.65), so no fermion-channel extension is claimed. "
+            "the carrier-counting rule does NOT extend to kappa_b"
+            ", so no fermion-channel extension is claimed. "
             "check_T_ew_broken_phase_dof_conservation_12 (epistemic=P_structural) "
             "certifies 12 -> 12 gauge-Higgs DOF conservation across EWSB computed "
             "from banked T8/T_Higgs/T_gauge inputs. Preserved non-claims: not "
