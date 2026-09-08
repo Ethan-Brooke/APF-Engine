@@ -35,7 +35,7 @@ co-requirement -- a substantive structural stipulation, NOT "relationality"
 be cyclically co-requiring rather than well-founded is an open problem.
 
 GRADE: cyclic assembly, graph IFF and reversibility checks return
-epistemic="P_structural_exhaustive"; the rent-free check retains its declared grade.
+epistemic="P_structural_exhaustive"; the fixed three-cycle rent-free check is P_math.
 ppc=False (physical_premises_certified=False) on every check; non-exporting;
 stdlib-only self-contained (fractions / itertools / collections / random).
 
@@ -379,15 +379,13 @@ def check_L_serial_unreachable_iff_requirement_cycle():
 
 
 def check_L_barrier_is_rent_free():
-    """[P_structural] RENT-EXCLUSION. The cost is purely additive: cost(S) =
-    eps*|S| for every subset, and any two configurations of equal size cost the
-    same (no completeness / state rent). The barrier therefore lives entirely
-    in ADMISSIBILITY (relata-closure), never in a dangling or joint cost term,
-    and is invariant to the budget: raising the budget by a factor 10^9 leaves
-    the cyclic whole serially unreachable. This is anchored on the banked
-    rent-exclusion theorem T_ledger_rent_excluded -- the ledger bills
-    transitions, not a state held -- so the barrier is rent-free and cannot be
-    a derived cost."""
+    """[P_math] The subsets of the fixed three-cycle have cost
+    eps*|S| by the supplied model definition, with equal cost at equal size.
+    The existing BFS also finds the whole cycle serially unreachable at
+    enlarged budget eps*10**9 (not 10**9 times the original budget 4).
+    T_ledger_rent_excluded is a cited banked concordance, not called or
+    rederived here. This finite model earns only the joint-commit reading;
+    coherent hold, A2 selection and quantum occupancy remain outside it."""
     m = _frustrated_cyclic_model()
     g = sorted(m.ground)
     additive = all(m.cost(frozenset(c)) == m.eps * len(c)
@@ -401,7 +399,7 @@ def check_L_barrier_is_rent_free():
     still_blocked = serial_reachable(fat.ground, fat) is False
     passed = additive and no_completeness_rent and still_blocked
     return {
-        "passed": passed, "family": FAMILY, "epistemic": "P_structural",
+        "passed": passed, "family": FAMILY, "epistemic": 'P_math',
         "physical_premises_certified": False,
         "cost_additive_in_size_only": additive,
         "no_completeness_rent": no_completeness_rent,

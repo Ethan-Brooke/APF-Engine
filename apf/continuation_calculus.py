@@ -23,92 +23,40 @@ THE PRINCIPAL RULING OF RECORD (2026-07-03, note v0.3 sec 2.5): the floor's
 index set is COMPOSITE-INCLUSIVE ("go with the stronger one") -- Paper 10's
 floor quantifies over every tested distinction-expression including
 composites, so every feasible cover step (block or single) pays >= eps*.
-Consequences in force, certified structurally here: the block floor BF is
+Consequences of the ruling in the cited calculus: the block floor BF is
 DERIVABLE from the floor, and the weakened bound |S| <= N + J(S) is
 UNCONDITIONAL -- the ruled citable form downstream. The atomic-reading
 analysis (on which BF is a removable side hypothesis and the zero-cost
 block breaks every bound) is retained as record in the note, not as the
 citable form.
 
-WHAT check_T_admissibility_greedoid_structure CERTIFIES (tier 4,
-[P_structural]) -- the B3 package:
-  1. Randomized accessible models (hereditary truncations of modular +
-     pairwise costs): the floor exists, accessibility holds, every feasible
-     family obeys the capacity-floor bound |S| <= N = floor(C_Gamma/eps*),
-     and every feasible S is chain-buildable (Thm B3.3 shape:
-     accessibility ==> chain-buildability ==> the bound).
-  2. Greedoid exchange + empty set ==> accessibility (two constructed
-     greedoids -- a branching greedoid and a uniform matroid -- plus a
-     randomized family scan finding zero violations).
-  3. Union-closure does NOT imply accessibility (explicit two-element
-     model F = {empty, {1,2}}): the lattice-side closure property is
-     independent of the chain-side one.
-  4. M_coop (cooperative pair {A,B} jointly admissible, singletons not):
-     accessibility FAILS, the bound's conclusion survives (max |S| <= N).
-  5. M_break (anomaly-type 4-block at cost 2, floor priced by a witness
-     singleton): the naive bound genuinely FAILS (|S*| = 4 > N = 2); the
-     weakened bound |S| <= N + J(S) holds with J(S) = |S| - ell(S) the
-     cooperative-passenger count (ell = longest feasible cover chain).
-     Under the composite-inclusive ruling this weakened bound is
-     UNCONDITIONAL -- the in-check block-floor leg witnesses BF on M_break.
-  6. M_incomp (audit-donated): an accessible model whose block floor FAILS
-     (a genuine multi-element cover paying 0.5 < eps* = 1). BF and
-     accessibility are INCOMPARABLE -- at the MODEL level: M_incomp is a
-     model of the bare axioms (M1)-(M3), NOT of the calculus post-ruling
-     (the composite-inclusive floor excludes its cheap cover by pricing
-     every tested composite at >= eps*). It is retained as the axiom-level
-     independence witness, exactly as the note's sec 2.4 scopes it.
-  7. The greedy failure (Thm B3.5 shape): in the hereditary + modular case
-     the myopic greedy = sorted order minimizes the holding burden
-     B(pi) = sum of prefix costs (brute force over all orders); in a
-     general greedoid it does NOT -- the branching greedoid has greedy
-     B = 15.0 vs feasible optimum 14.5. No unconditional greedoid-level
-     greedy theorem for the holding burden exists.
+CURRENT CHECK SCOPE (tier 4, P_math):
+  T_admissibility_greedoid_structure checks supplied randomized cost
+  models, constructed greedoids, sampled five-label families,
+  explicit counterexamples, hereditary/modular greedy instances and
+  the branching failure (15.0 versus 14.5). Sampling is not exhaustion of
+  all families. The sufficient hereditary/modular theorem and conditional
+  general bounds have self-contained proofs in Paper 10 Supplement v0.6
+  sec:b34-greedoid; greedy necessity remains open there. The principal's
+  composite-inclusive floor ruling above is unchanged. Accessibility,
+  exchange, block-floor and cost-preserving physical representation remain
+  distinct hypotheses; these finite witnesses do not construct that
+  physical representation.
+  T_selection_approximate_A2 checks one supplied 40-point quadratic
+  problem from two starts, degenerate and constant-shift controls, and
+  approximate-A2 inequalities on the accepted survivors of independent
+  draws. Saturation, joint attainability and additivity scope that result.
+  PGD stops at iterate distance <1e-15 or 200000 iterations; agreement of
+  two starts is numerical evidence, not the proof of general uniqueness.
+  Strict positivity on mass-zero differences gives the conditional
+  uniqueness theorem in the current paper. One delta=1e-9 sharpness
+  construction certifies saturation using exact rational arithmetic.
 
-WHAT check_T_selection_approximate_A2 CERTIFIES (tier 4, [P_structural])
--- the B4 package, the derived tightness/selection content of Paper 10
-v1.15 sec:plec-recovery. Paper 10's A2 (argmin selection) and BW
-(cost-spectrum non-degeneracy) are constitutive commitments;
-SELECTION-AMONG-ALTERNATIVES REMAINS THE NAMED OPEN. This check certifies
-the derived approximate form and its hypotheses' sharpness:
-  1. Strictly-PD discretized E_rec kernel on the probability simplex:
-     two projected-gradient-descent runs from very different starts
-     converge to the SAME minimizer (uniqueness = the BW-side content that
-     strict positive-definiteness buys).
-  2. Degenerate (PSD, zero on mean-zero directions) kernel: distinct
-     profiles with IDENTICAL energy -- ties exist, BW fails; uniqueness is
-     not free.
-  3. Kernel I + c*(1 (x) 1) with c > 0 (degenerate only along constants):
-     uniqueness INHERITED from the strictly-PD mean-zero part -- the
-     physically relevant degeneracy class keeps the selection.
-  4. THE APPROXIMATE-A2 THEOREM with the honest independent sampler
-     (audit MINOR-1 repair, carried): marginals and capacity drawn
-     INDEPENDENTLY, saturation certified by REJECTION (floor(C/eps*) = k
-     and the family fits), and the squeeze inequalities -- total slack
-     < eps*, each slack < eps*, average slack < eps*/k, marginal squeeze
-     -- tested on the survivors only, so the squeeze emerges from the
-     theorem's hypotheses, not from the sampler.
-  5. SHARPNESS: total slack = eps* - delta approaches eps* (delta-
-     construction), with saturation certified in EXACT RATIONAL arithmetic
-     (fractions.Fraction floor division) at the float-ambiguous quotient
-     C/eps* = k + 1 - 1e-9 -- exactly the regime where a float fudge
-     would be untrustworthy. So sigma/eps* -> 1 is attained in the limit
-     and never at it: the approximate-A2 bound is tight.
-
-STATUS. Both checks [P_structural] tier 4: structural theorems over the
-finite cost-model class, machine-verified on constructed + randomized
-models (rng seeded 20260703; deterministic). They do NOT derive A2 or BW
-as theorems -- A2's selection-among-exact-ties and BW's non-degeneracy
-remain named constitutive commitments of the calculus (Paper 10 v1.15;
-the Mythos-review record: tightness/grading derived, selection/
-non-degeneracy named opens).
-
-FALSIFIERS: a finite cost model satisfying (M1)-(M3) + accessibility that
-violates |S| <= floor(C/eps*); a greedoid (exchange + empty) that is not
-accessible; a jointly admissible family violating |S| <= N + J(S) under
-the composite-inclusive floor; a strictly-PD E_rec instance with two
-distinct simplex minimizers; a saturated admissible instance with total
-slack >= eps*.
+STATUS FENCE: exact-A2 tie-selection, between-branch/dynamical selection,
+BW non-degeneracy and cross-distinction spectral injectivity remain named
+opens or constitutive commitments. Optimizer uniqueness does not close them.
+General theorem/falsifier statements belong to the cited paper proofs,
+not to an exhaustive machine check of the whole model class.
 
 Dependencies: A1, L_epsilon*.
 Cross-refs: T_PLEC_derived_from_spine, L_cost.
@@ -437,42 +385,26 @@ def check_T_admissibility_greedoid_structure():
         name='T_admissibility_greedoid_structure -- the greedoid structure '
              'of admissibility (Paper 10 Supplement B3)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_math',
         summary=(
-            'The finite admissible-family cost-model class (M1)-(M3) '
-            '[unit / admissibility / marginal floor eps*] carries a '
-            'greedoid-shaped structure theory, machine-certified: '
-            'accessibility ==> chain-buildability ==> the capacity-floor '
-            'bound |S| <= floor(C_Gamma/eps*) (randomized hereditary '
-            'models); greedoid exchange + empty set ==> accessibility '
-            '(constructed branching greedoid + uniform matroid + a '
-            'randomized-family scan, zero violations); union-closure does '
-            'NOT imply accessibility (explicit model). Cooperative binding '
-            'breaks the hypotheses without breaking the conclusion (M_coop) '
-            'until it does: M_break (anomaly-type 4-block) genuinely '
-            'defeats the naive bound (|S*| = 4 > N = 2), and the weakened '
-            'bound |S| <= N + J(S) with J the cooperative-passenger count '
-            'holds -- RULED UNCONDITIONAL (principal, 2026-07-03: the '
-            'floor index set is composite-inclusive, so the block floor BF '
-            'is derivable from the floor; the ruled citable form). '
-            'M_incomp retains the axiom-level independence: BF and '
-            'accessibility are INCOMPARABLE as properties of (M1)-(M3) '
-            'models (accessible model with a 0.5 multi-element cover below '
-            'eps* = 1) -- a model of the axioms, not of the calculus '
-            'post-ruling. And the greedy theorem is exactly conditional: '
-            'sorted greedy minimizes the holding burden in the hereditary '
-            '+ modular case (brute force over all orders) but NOT in a '
-            'general greedoid (branching example: greedy 15.0 vs optimal '
-            '14.5). Paper anchor: Paper 10 Technical Supplement v0.1 '
-            'sec:b34-greedoid.'
+            'Finite cost-model witnesses and numerical sampling: 40 hereditary '
+            'truncations satisfy the checked accessibility/chain/floor conditions; '
+            'constructed greedoids and sampled families test '
+            'exchange/accessibility. Explicit union-closure, M_coop, M_break and '
+            'M_incomp examples retain their stated distinctions. Twelve '
+            'hereditary/modular greedy instances and the branching counterexample '
+            '(15.0 versus 14.5) are checked. The sufficient hereditary/modular '
+            'theorem and conditional general bounds are proved in Paper 10 Supplement '
+            'v0.6 sec:b34-greedoid; necessity remains open. The composite-inclusive '
+            'floor ruling of 2026-07-03 remains in force. Physical representation and '
+            'cost-preserving cover hypotheses are not supplied by these witnesses.'
         ),
         key_result=(
-            'accessibility ==> |S| <= floor(C/eps*); exchange ==> '
-            'accessibility; union-closure does not; naive bound fails on '
-            'M_break (4 > 2) and |S| <= N + J(S) holds UNCONDITIONALLY '
-            '(composite-inclusive floor ruling 2026-07-03); BF/accessibility '
-            'incomparable at axiom level; greedy optimal iff hereditary + '
-            'modular (15.0 vs 14.5 counterexample)'
+            'Finite accessibility/exchange/floor witnesses and samples; M_break '
+            'defeats the naive bound (4 > 2), while its weakened bound holds; '
+            'BF/accessibility distinction retained at axiom level. Hereditary + '
+            'modular is sufficient for the cited greedy theorem; branching greedoid '
+            'failure is 15.0 versus 14.5. No necessity claim.'
         ),
         dependencies=['A1', 'L_epsilon*'],
         cross_refs=['T_PLEC_derived_from_spine', 'L_cost'],
@@ -563,8 +495,8 @@ def check_T_selection_approximate_A2():
     E1c = float(eps_loc @ p1c + p1c @ I_shift @ p1c)
     E2c = float(eps_loc @ p2c + p2c @ I_shift @ p2c)
     check(d_c < 1e-6 and abs(E1c - E2c) < 1e-10,
-          "constant-shift kernel (degenerate only along constants): "
-          "uniqueness inherited from the mean-zero part")
+          "constant-shift kernel: "
+          "two PGD starts must agree under the numerical gates")
 
     # --- 4. approximate-A2 with the honest independent sampler -------------
     trials, min_accepted = 1500, 60
@@ -617,42 +549,26 @@ def check_T_selection_approximate_A2():
         name='T_selection_approximate_A2 -- E_rec uniqueness + the '
              'approximate-A2 theorem (Paper 10 Supplement B4)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_math',
         summary=(
-            'The derived tightness/selection content of Paper 10 v1.15 '
-            'sec:plec-recovery, machine-certified on the discretized E_rec '
-            'functional over the probability simplex and on randomized '
-            'saturated allocation instances. (1) A strictly-PD interaction '
-            'kernel has a UNIQUE E_rec minimizer: two projected-gradient '
-            'runs from very different starts converge to the same profile. '
-            '(2) A degenerate (PSD-but-not-strictly-PD-on-mean-zero) '
-            'kernel admits TIES -- distinct profiles with identical energy '
-            '-- so the BW-side non-degeneracy is not free. (3) The '
-            'physically relevant degeneracy class I + c*(1 (x) 1), c > 0, '
-            'INHERITS uniqueness from its strictly-PD mean-zero part. '
-            '(4) THE APPROXIMATE-A2 THEOREM with the honest independent '
-            'sampler (audit repair carried): marginals and capacity drawn '
-            'independently, saturation certified by rejection, and the '
-            'squeeze -- total slack < eps*, each < eps*, average < eps*/k, '
-            'marginal squeeze -- holds on every survivor, so near-argmin '
-            'selection is forced by saturation, not by construction. '
-            '(5) SHARPNESS: total slack approaches eps* (delta-'
-            'construction), with saturation certified in exact rational '
-            'arithmetic at the float-ambiguous quotient. STATUS FENCE: '
-            'this is the derived APPROXIMATE form; A2 selection-among-'
-            'exact-ties and BW non-degeneracy remain named constitutive '
-            'commitments (the Mythos-review record: tightness/grading '
-            'derived, selection/non-degeneracy named opens). Paper '
-            'anchors: Supplement sec:b34-greedoid + sec:b5-erec.'
+            'One supplied 40-point quadratic problem: two PGD starts agree under the '
+            'stated numerical gates, with degenerate and constant-shift controls. PGD '
+            'stops at iterate distance <1e-15 or 200000 iterations; two starts do not '
+            'prove uniqueness. General uniqueness under strict positivity on '
+            'mass-zero differences belongs to the cited Paper 10 Supplement v0.6 '
+            'theorem. Approximate-A2 inequalities are checked on accepted saturated '
+            'survivors of 1500 independent draws under joint-attainability and '
+            'additivity assumptions. One delta=1e-9 construction has exact-rational '
+            'saturation certification and floating slack checks. Exact-A2 '
+            'tie-selection, between-branch/dynamical selection, BW non-degeneracy and '
+            'cross-distinction spectral injectivity remain named gaps.'
         ),
         key_result=(
-            'strict-PD E_rec: unique minimizer (two-start PGD agreement '
-            '< 1e-6); degenerate kernel: exact ties (BW fails); '
-            'I + c(1(x)1): uniqueness inherited; approximate-A2 slack '
-            'squeeze < eps* on all independently-sampled saturated '
-            'survivors; sharpness sigma/eps* -> 1 with exact-rational '
-            'saturation certification. Selection-among-alternatives stays '
-            'the named open.'
+            'Fixed 40-point PGD agreement (<1e-6 distance), degenerate equal-energy '
+            'control, constant-shift agreement, sampled saturated approximate-A2 '
+            'inequalities and one rationally saturation-certified sharpness instance. '
+            'Universal uniqueness is a conditional paper theorem; '
+            'selection-among-alternatives remains open.'
         ),
         dependencies=['A1', 'L_epsilon*'],
         cross_refs=['T_PLEC_derived_from_spine',
@@ -663,7 +579,7 @@ def check_T_selection_approximate_A2():
             'approx_a2': {'trials': trials, 'accepted': accepted,
                           'worst_total_slack_over_eps': worst},
             'sharpness_total_slack': total,
-            'status_fence': 'approximate form certified; A2 tie-selection '
+            'status_fence': 'sampled approximate form checked; A2 tie-selection '
                             '+ BW non-degeneracy remain named opens',
             'witness': 'The Turning/b3b4_witness_2026-07-03.py 13/13 PASS',
         },

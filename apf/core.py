@@ -10800,53 +10800,19 @@ def check_T_no_IJC_no_noncommutativity():
 
 
 def check_T_IJC_dichotomy():
-    """T_IJC_dichotomy: the IJC Dichotomy Theorem on test interfaces.
+    """T_IJC_dichotomy: set-inclusion dichotomy and two finite witnesses.
 
-    Phase 19b (Reference - IJC Dichotomy Theorem and the Quantum-Interface
-    Bridge, 2026-04-26, Theorem 1).  For any pair {d1, d2} of jointly
-    meaningful distinctions at an interface Gamma, exactly one of the
-    following holds:
-
-      (Sep) Separable joint threat structure:
-            T(d1, d2) = T(d1) U T(d2).
-            Defending the pair = defending each member, nothing more.
-
-      (IJC) Irreducible joint constraint:
-            T(d1, d2) ⊋ T(d1) U T(d2).
-            There exists p_{12} in T(d1, d2) \\ (T(d1) U T(d2)).
-
-    This is structurally a tautology (any superset relation is either
-    equality or strict inclusion -- logical exhaustion on set
-    inclusion), but the bank check certifies the OPERATIONALIZATION:
-    that distinct substrate types correctly classify into the two
-    branches and behave as the theorem predicts (F_Pi = 0 in (Sep);
-    F_Pi != 0 in (IJC)).
-
-    The theorem reframes IJC from a smuggled axiom into a regime
-    classifier.  Existence of branch-(IJC) pairs at an interface is
-    the criterion that the interface is QUANTUM-CAPABLE; absence of
-    branch-(IJC) pairs is the criterion that the interface is
-    CLASSICALLY SEPARABLE.  Both are admissible interface types under
-    PLEC.
-
-    PROOF STRUCTURE:
-      Step 1: Construct test interface in branch (Sep).  Encode threat
-              classes T(d1), T(d2), T(d1,d2) as frozensets of
-              perturbation IDs.  Verify T(d1,d2) = T(d1) U T(d2).
-      Step 2: Construct test interface in branch (IJC).  Verify
-              T(d1,d2) ⊋ T(d1) U T(d2) and exhibit p_{12} in the
-              excess.
-      Step 3: Verify exhaustion -- both (Sep) and (IJC) test cases
-              are well-formed and a third option (T(d1,d2) ⊊
-              T(d1) U T(d2)) is impossible by FD5/joint-meaningfulness.
-      Step 4: Verify mutual exclusion -- a pair cannot simultaneously
-              satisfy (Sep) and (IJC).
-      Step 5: Verify the substrate-side correlate: (Sep) substrate
-              has F_Pi = 0; (IJC) substrate has F_Pi != 0.
-
-    Companion to check_T_no_IJC_no_noncommutativity (19a, branch (Sep)
-    falsification anchor) and check_L_Pi (current branch-(IJC) witness
-    pending Phase 19e refactor).
+    [P_math] Under the named joint-threat inclusion hypothesis
+    T(d1,d2) >= T(d1) U T(d2), equality or strict inclusion is the
+    elementary exhaustive dichotomy. The body exhibits one equality and
+    one strict-superset construction and their mutual exclusion.
+    Step 3 checks authored option strings/list length; it does not test
+    arbitrary interfaces or prove the joint-threat inclusion hypothesis.
+    The two supplied matrix/capacity constructions have F_Pi = 0 and
+    F_Pi != 0 respectively. They do not establish a physical quantum-
+    capability or nonclassicality conclusion. Current P1 record/process
+    interpretations keep their own hypotheses and the two-branch structure.
+    Companion pointers: check_T_no_IJC_no_noncommutativity and check_L_Pi.
 
     GRADE NOTE (2026-07-07 ruling, the IJC-sector grade re-examination):
     lifted [P_structural_reading] -> [P_structural]. The _reading tag was
@@ -10952,21 +10918,24 @@ def check_T_IJC_dichotomy():
           f"(IJC) substrate: ||F_Pi|| = {_fnorm(F_Pi_ijc):.6f} > 0 (active-pool excess)")
 
     return _result(
-        name='T_IJC_dichotomy: the IJC Dichotomy Theorem on test interfaces [P_structural]',
+        name='T_IJC_dichotomy: set-inclusion dichotomy and two finite test interfaces [P_math]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_math',
         summary=(
-            'Theorem 1 of the IJC reference doc: for any pair {d1, d2} of '
-            'jointly meaningful distinctions at an interface, exactly one of '
-            '(Sep) T(d1,d2) = T(d1) U T(d2) or (IJC) T(d1,d2) ⊋ T(d1) U T(d2) '
-            'holds. Structurally a tautology (logical exhaustion on set '
-            'inclusion); operationalized here on two test interfaces (Sep, IJC) '
-            'with substrate-side correlate F_Pi = 0 (Sep) vs F_Pi != 0 (IJC). '
-            'Reframes IJC from a smuggled axiom into a regime classifier: '
-            '(IJC) selects quantum-capable interfaces, (Sep) selects classically '
-            'separable interfaces; both are admissible under PLEC.'
+            'Under the named joint-threat inclusion hypothesis, equality and strict '
+            'inclusion exhaust the elementary set-inclusion alternatives. Two '
+            'supplied finite threat constructions exhibit one branch each and mutual '
+            'exclusion, with the supplied matrix/capacity examples giving F_Pi = 0 '
+            'and F_Pi != 0. Step 3 is an authored option-list check, not an '
+            'exhaustive interface test. Physical quantum-capability, occupancy and '
+            'record/process nonclassicality interpretations are outside this graded '
+            'mathematical claim.'
         ),
-        key_result='Dichotomy at substrate-perturbation level: (Sep) or (IJC), exhaustive and exclusive [P_structural]',
+        key_result=(
+            'Conditional set-inclusion dichotomy; equality and strict-superset finite '
+            'witnesses [P_math]. Physical interface-typing remarks remain outside '
+            'this claim.'
+        ),
         # Phase 21 graph rewire (2026-06-29): coarse necessary condition;
         # necessary-not-sufficient -- see T_inseparable_IJC for the sufficient
         # (substrate-factorizability) criterion. Rooted on the branch classifier

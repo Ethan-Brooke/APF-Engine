@@ -21,7 +21,9 @@ verification-BREADTH gaps. Dispositions of record:
 
   W3.2 (S1-1 MAJOR)  the trilemma is RE-BILLED from a check_T universal to an
        INHABITATION + case-split exhibit over a run-data mechanism space of 16
-       specs (commit x preenc x live x delayed). The old 'fzc_forced' was
+       specs (commit x preenc x live x delayed). Current target coverage is
+       the fixed commit-at-t family plus a separate delayed complement.
+       The old 'fzc_forced' was
        f_live => f_live (a tautology on the 2-bit signature). The computed,
        falsifiable content now: all three arms inhabited by real specs;
        PREMATURE is not vacuous (a t-commit spec with NO B-source is computed
@@ -68,21 +70,21 @@ CEILINGS (per charter 4f-4i and 5):
   W2.1 [P_math, FAMILY-RELATIVE]     selection within the declared L**p ansatz;
                                      never 'the burden is necessarily quadratic'.
   W2.2 [P_math]                      exact chain-rule / linear-algebra facts.
-  W2.3 [P_structural]                inhabitation of a quotient dichotomy;
+  W2.3 [P_math]                      supplied polynomial inhabitation;
                                      consumes Sep/CoDef/IJC typing.
   W2.4 [P_math]                      convergent with the banked J
                                      (.432/.433); positivity LOAD-BEARING.
   W2.5 [P_math + prose]              instances; the compactness/averaging step
                                      is PROSE.
   W2.6 [P_math]                      the classical-wave ceiling is stated here.
-  W3.1 [P_structural]                exact propagation lower bound.
-  W3.2 [P_structural]                inhabitation + case split; nonlocal arm
+  W3.1 [P_math]                      supplied graph computations; separate 3-bit parity.
+  W3.2 [P_math]                      fixed t-spec family plus delayed exhibit; nonlocal arm
                                      governed by pending R-boundary-witness.
   W3.3 [P_math]                      existence exhibits only.
   W3.4 [P_math]                      discrete constancy + witnessed-jump
                                      dichotomy, on the enumerated cases.
   W3.5 [P_math]                      exact cross-derivative contrast.
-  W3.6 [P_structural]                instantiates banked finite-basis .425.
+  W3.6 [P_math]                      supplied rational floor instances; .425 concordance.
   W4.1-4.4 [P_math]                  exact moving-frame linear algebra.
   W4.5 [control]                     non-pool-reducibility WITHOUT mixing.
   W4.6 [concordance-citation]        structural re-verify + banked names;
@@ -111,7 +113,8 @@ MAY NOT BE CITED FROM THIS MODULE:
   'the gap is forced' without the premise names attached; the W3.2 trilemma
   as a 'derived necessity' (it is a declared case split with inhabited arms).
 
-PORT NOTES (self-contained bank port; computed content unchanged):
+HISTORICAL PORT NOTES (original self-contained bank port; current grades
+are the per-leg CEILINGS above):
   * Grades preserved at the source's honest per-leg ceilings -- fourteen
     [P_math]/[P_structural] legs (epistemic "P_math"/"P_structural"), plus
     W2.5 P_math (its GENERAL theorem rests on a disclosed prose step; the
@@ -442,14 +445,13 @@ def check_L_qc3_battery():
             "mismatch_defeats_total_ranking": leg_d}
 
 
-@_bank_leg("L_pool_or_defect_census", "P_structural", "W2.3 [P_structural]")
+@_bank_leg("L_pool_or_defect_census", "P_math", "W2.3 [P_math]")
 def check_L_pool_or_defect_census():
-    """W2.3 [P_structural]. INHABITATION of both arms of the pool-or-defect
-    dichotomy (re-billed from 'partition theorem', S1-3: the dichotomy is
-    excluded-middle for any family; what is computed is that BOTH arms are
-    realized, on named instances, and that a MIXED family is correctly read as
-    relational). Either every signature factors through the total a+b
-    (POOLED) or some carries the kernel direction a-b (RELATIONAL).
+    """W2.3 [P_math]. Finite polynomial inhabitation and derivative facts.
+    Exact differentiation along (1,-1) classifies the supplied pooled,
+    relational and mixed polynomial families, and checks
+    D_(1,-1)(ab) = b-a. The pooled/relational dichotomy is the declared
+    case split; no universal physical partition is certified here.
 
     CONCORDANCE: the pooled regime is the banked CoDef aggregation shape --
     check_L_codef_aggregation_argmin (.410); the relational regime is the
@@ -676,18 +678,15 @@ def _flood_steps(adj, terminal, n, relevant):
     return steps
 
 
-@_bank_leg("L_dependency_diameter_bound", "P_structural", "W3.1 [P_structural]")
+@_bank_leg("L_dependency_diameter_bound", "P_math", "W3.1 [P_math]")
 def check_L_dependency_diameter_bound():
-    """W3.1 [P_structural]. Resolution depth by TWO INDEPENDENT routes that
-    must agree: BFS lower bound (max_v dist(v, terminal)) and a synchronous
-    flood SIMULATION (a different code path). Agreement is the theorem.
-
-    Premise NOT-PREENCODED, rebuilt as a FALSIFIABLE computation (S2-3): the
-    parity relation depends on EVERY node -- flipping any single node's bit
-    flips the parity for some configuration (all_nodes_relevant), so the
-    relevant-origin set is all n nodes. PRE-ENCODED CONTROL: the
-    terminal-own-bit relation has relevant set {terminal}, and BOTH routes
-    return depth 0 on the SAME graphs -- so the premise is load-bearing."""
+    """W3.1 [P_math]. BFS distance and synchronous origin flooding agree
+    on the supplied paths, star and tree. Both routes give zero
+    depth for the terminal-own-bit control on those same graphs.
+    A SEPARATE three-bit parity enumeration checks relevance of all three
+    bits; it is not a relevance enumeration for every graph size.
+    NOT-PREENCODED remains a named application premise. These finite
+    computations do not prove all physical resolution depths."""
     graphs = []
     for n in (2, 3, 4, 5):
         adj = {i: set() for i in range(n)}
@@ -759,27 +758,18 @@ def _spec_faithful(spec, link_up):
                for aA in (0, 1) for bB in (0, 1))
 
 
-@_bank_leg("T_zero_clearance_trilemma_census", "P_structural", "W3.2 [P_structural]")
+@_bank_leg("T_zero_clearance_trilemma_census", "P_math", "W3.2 [P_math]")
 def check_T_zero_clearance_trilemma_census():
-    """W3.2 [P_structural]. INHABITATION + case split (re-billed from a
-    check_T universal, S1-1: the old headline was f_live => f_live). Two-site
-    world, propagation delay 1. Enumerate the mechanism specs
-    (commit x preenc x live x delayed); classify every ZERO-CLEARANCE
-    (commit='t') spec by RUN DATA -- live-link vs severed-link faithfulness:
-      PRE-ENCODED  faithful even with the live B->A link severed;
-      NONLOCAL     faithful only WITH the live link (reads B at t);
-      PREMATURE    commits at t and is UNFAITHFUL either way.
-    The trilemma is the charter's DECLARED case split (a 2-bit signature); it
-    is not derived here. What is COMPUTED and falsifiable:
-      (i)  all three arms are INHABITED by real specs;
-      (ii) PREMATURE is not vacuous -- a t-commit spec with NO B-source is
-           UNFAITHFUL on half the inputs (computed, a real wrong mechanism);
-      (iii)the CLEARANCE-CARRYING complement exists: a t1/delayed spec is
-           faithful using the LEGAL late arrival -- the nonzero interval.
-    CONCORDANCE: pre-encoded == register/accretion; premature == AE-1A; the
-    NONLOCAL arm's disposition is the PENDING R-boundary-witness ruling (this
-    census reports the arm, it does not close the fork). STORE-INVENTORY
-    imported from wave 1."""
+    """W3.2 [P_math]. The supplied commit-at-t specifications are
+    classified by their live-link and severed-link outputs on the supplied bit inputs.
+    The declared pre-encoded/nonlocal/premature case split has all three
+    arms inhabited. The source-free premature specification fails; one
+    separately tested t1/delayed complement succeeds using legal late arrival.
+    The historical product also varied commit time; this target loop fixes it.
+    CONCORDANCE: pre-encoded == register/accretion; premature == AE-1A.
+    The NONLOCAL arm's disposition remains the PENDING R-boundary-witness
+    ruling. This census reports the arm and does not close that fork.
+    STORE-INVENTORY is imported from wave 1."""
     specs = [("t", pe, lv, dl) for pe in (False, True)
              for lv in (False, True) for dl in (False, True)]
     arms = {"preencoded": [], "nonlocal": [], "premature": []}
@@ -915,17 +905,16 @@ def check_L_cross_derivative_marker():
             "frame_deforming_cross_value": deform_val}
 
 
-@_bank_leg("L_tangent_rank_bound", "P_structural", "W3.6 [P_structural]")
+@_bank_leg("L_tangent_rank_bound", "P_math", "W3.6 [P_math]")
 def check_L_tangent_rank_bound():
-    """W3.6 [P_structural]. Independent first-order response directions each
-    cost >= eps* and capacity C bounds the count: dim <= floor(C/eps*),
-    computed exactly. Each case reports (eps, C, floor) so the tightness is
-    RECOMPUTED independently by the test (S2-2): floor*eps <= C and
-    (floor+1)*eps > C, both exact.
-
-    CONCORDANCE: the bound is the banked finite-basis shape --
-    check_T_finite_operational_basis / check_T_admissibility_greedoid_structure
-    (.425). This INSTANTIATES that shape; it does not re-derive the theorem."""
+    """W3.6 [P_math]. The supplied rational (eps, C) instances compute
+    floor(C/eps), compare the authored expected integer, and verify exact
+    fit and next-step overflow: floor*eps <= C < (floor+1)*eps.
+    CONCORDANCE: check_T_finite_operational_basis and
+    check_T_admissibility_greedoid_structure (.425) supply the named
+    finite-basis shape; neither theorem is called or rederived here.
+    Physical use retains the joint-realizability, extension and floor
+    hypotheses. These divisions do not establish those hypotheses."""
     def floor_div(C, eps):
         q = C / eps
         return q.numerator // q.denominator
@@ -1060,20 +1049,16 @@ def check_L_reflection_product_rotation():
             "pinned_cos_sin": (cosd, sind)}
 
 
-@_bank_leg("L_exchange_isometry", "P_structural", "W4.4 [P_structural]")
+@_bank_leg("L_exchange_isometry", "P_math", "W4.4 [P_math]")
 def check_L_exchange_isometry():
-    """W4.4 [P_structural]. The exchange tau = [[0,1],[1,0]] (swap the two
-    continuation roles) preserves the DECLARED Euclidean form
-    Q(a,b) = a**2 + b**2. Re-billed (S1-4): the genuine tau-fact is
-    Q-invariance, EQUIVALENTLY preservation of the associated bilinear form g;
-    the polarization identity g(h,k) = (Q(h+k)-Q(h)-Q(k))/2 is a DEFINITIONAL
-    bridge (holds with or without tau) and is billed as such, NOT as a second
-    independent route.
-
-    Named premises (QC7F): role equivalence (tau swaps the two roles) +
-    CYCLIC-NEUTRALITY (the swap is committed-ledger-neutral -- consumes the
-    accounting ruling + bin-(ii) .413). ORDER preserved: tau is defined
-    pre-metric by the role swap; g-orthogonality is a DERIVED consequence."""
+    """W4.4 [P_math]. The supplied swap tau = [[0,1],[1,0]] preserves
+    the DECLARED Euclidean form Q(a,b) = a**2+b**2 on the supplied grid.
+    On the supplied prefix-pair grid it preserves the associated bilinear
+    form and satisfies the polarization identity. Polarization is one
+    definitional bridge, not a second independent physical argument.
+    Application premises remain role equivalence and CYCLIC-NEUTRALITY
+    (committed-ledger neutrality consumes the accounting ruling and
+    bin-(ii) .413). Tau is defined pre-metric by the role swap."""
     tau = [[F(0), F(1)], [F(1), F(0)]]
 
     def Q(v):

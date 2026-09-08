@@ -2498,7 +2498,7 @@ def check_T_which_v_no_registered_interior_reader():
 
 
 def check_T_vacuum_content_typing_status():
-    """T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural].
+    """T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural_instrument].
 
     v24.3.321 NEW (2026-07-02; .319/.320 were taken by the concurrent lane mid-banking). The typing-status pin for the vacuum
     sector's banked decomposition C_vacuum = 27 + 3 + 12, per the pricing
@@ -2537,9 +2537,9 @@ def check_T_vacuum_content_typing_status():
           decomposition vocabulary within a +-2-line window; the bare
           literal is everywhere -- kappa_l = 27/26, E6's 27, 8x8 rep
           arithmetic, Yang-Mills 4/27 -- all fenced by context) appears
-          ONLY at the enumerated assertion sites. No registered surface
-          independently characterizes the 27; it is 42 - 12 - 3 and
-          nothing more. A new 27-in-vacuum-context surface FAILS this
+          ONLY at the enumerated lexical sites. This detector cannot decide
+          whether a surface characterizes the 27; content remains open.
+          A new 27-in-vacuum-context surface FAILS this
           check until the typing status is re-adjudicated by hand.
           Mechanism stated honestly: the scan cannot distinguish
           "characterizes the 27" from "contains 27 near vacuum
@@ -2605,7 +2605,7 @@ def check_T_vacuum_content_typing_status():
     count- or slot-level / the cross-basis map / per-piece response
     roles) lives in the reference note.
 
-    GRADE [P_structural]: typing-status pin, closed-world over the
+    GRADE [P_structural_instrument]: typing-status pin, closed-world over the
     current corpus by construction.
     """
     import os as _os
@@ -2717,20 +2717,20 @@ def check_T_vacuum_content_typing_status():
           f"the current placeholder complement is (4, 4, 34), pinned (got ({comp_gauge}, {comp_higgs}, {comp_ferm}))")
 
     return _result(
-        name='T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural]',
+        name='T_vacuum_content_typing_status: The 27+3+12 Typing Status Pin [P_structural_instrument]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'The vacuum decomposition 27+3+12 = 42, at exactly its banked strength: the sum '
             'identity holds (C_vacuum literal-sourced, stated); the 12 count-matches banked '
             'dim G_SM and the 3 count-matches the conditional n_goldstone read from T_Higgs (count-matches, '
             'NOT content attributions -- the addressability readings stay adopted glosses); '
-            'the 27 is residual-only (42-12-3), closed-world context-scoped -- no registered '
-            'surface characterizes it independently; the slot-level identification of '
+            'the 27 is residual-only (42-12-3), closed-world context-scoped -- no selected '
+            'source-text count differs from the pin; the slot-level identification of '
             'V_global\'s irrep content is open (the banked complement is (4,4,34), not '
-            '(12,3,27), behavioral pin). A future independent 27 characterization or '
-            'slot-level identification fails this check and must announce itself -- the '
-            'falsifier working as intended.'
+            '(12,3,27), behavioral pin). A new in-scope 27 hit or changed placeholder '
+            'signature fails this detector; arbitrary content claims are not recognized '
+            'by the lexical scan.'
         ),
         key_result='27+3+12 typing pinned at banked strength: two count-witnesses, residual 27, slot-level open',
         dependencies=[

@@ -11,14 +11,13 @@ A CodomainReadingContract names a ledger quantity's HOME codomain + value, its l
 codomain projections (distinct codomains, no conflation), and a nonempty set of FORBIDDEN SWAPS,
 each annotated with the rule it violates and the actual past incident it would have caught.
 
-STATUS (architecture-only as of build): the two checks here validate (1) the contract SCHEMA +
-that the four EW domains are well-formed, and (2) that every HOME value is reproduced from capacity
-with no measured input. Those are sound machine-layer consistency facts. The FORBIDDEN-SWAP content
-encodes session judgments and is NOT yet enforced against the live bank, and is NOT yet promoted to
-a counted bank check: promotion (to BANK_REGISTRY_MODULES + a bank-scanning swap-enforcement check)
-waits for an independent COLD ADVERSARIAL AUDIT that each forbidden swap is a genuine category error
-and not a real open question being suppressed. A contract that forbids a live question is a
-blindfold, not a guard.
+STATUS: registered checks cover contract structure, home-value
+arithmetic, and named anchor existence/grade-prefix validation. CodomainRead
+stores physical-reading data grades separately from those instrument grades.
+The anchor check reads ANCHOR_REQUIREMENTS, not CodomainRead.grade. It does
+not inspect arbitrary live-bank claims for every forbidden swap. Its asserts,
+and the structure/home-value asserts, are disabled under Python -O; passing
+there is not equal predicate coverage. The six-swap extension remains separate.
 
 Pure arithmetic; no scipy/heavy imports, so the module always loads.
 """
@@ -112,7 +111,7 @@ def _val_kappa_l() -> bool:
 DOMAIN_WEAK_MIXING = CodomainReadingContract(
     quantity="sin^2 theta_W (weak mixing angle)",
     home=CodomainRead(
-        "capacity-competition equilibrium @ M_Z (effective leptonic)", "3/13", "[P_structural]",
+        "capacity-competition equilibrium @ M_Z (effective leptonic)", "3/13", "P_structural",
         "competition fixed point + running on the ledger values (47.02, 61); load gamma=(1,17/4)",
         "the effective leptonic angle; a READOUT of the ledger, not a primitive"),
     siblings=(
@@ -131,7 +130,7 @@ DOMAIN_WEAK_MIXING = CodomainReadingContract(
 DOMAIN_ABSOLUTE_SCALE = CodomainReadingContract(
     quantity="v_H / M_Pl (electroweak floor)",
     home=CodomainRead(
-        "bosonic root-measure of the ledger x Planck anchor", "sqrt(N_c)/(4pi)*d_eff^-8*(12/7)", "[P_structural]",
+        "bosonic root-measure of the ledger x Planck anchor", "sqrt(N_c)/(4pi)*d_eff^-8*(12/7)", "P_structural",
         "bosonic Gaussian determinant over the 16 bosonic slots (Grassmann slots carry no root-volume)",
         "the EW hierarchy as a microstate-volume root-amplitude; residual = the vacuum=bosonic-measure "
         "identification (a measure-theory question, not a Gleason Born amplitude -- LATER-5 refuted Born)"),
@@ -158,7 +157,7 @@ DOMAIN_ABELIAN = CodomainReadingContract(
         "rank-1 reads the uniform ledger: S_dS/sigma = C_total",
         "the coupling census: 61 = 45+4+12, the photon is one present U(1) carrier"),
     siblings=(
-        CodomainRead("record / mass (N_commit=4)", "60.75 = C_total-1/4", "[P_structural]",
+        CodomainRead("record / mass (N_commit=4)", "60.75 = C_total-1/4", "P_structural",
                      "photon fails C_4 (L_irr lock) -> counts 3/4 -> (4*61-1)/4",
                      "R_Y^commit; its content is m_gamma=0 -- NOT a coupling"),
         CodomainRead("measured / running (one-loop)", "60.75 +/- 0.12", "[C]",

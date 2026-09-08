@@ -21,20 +21,18 @@ Bank-registered theorems (7 total, tier 4; C3 is P_structural_seam; other grades
     sub-families {Z2/O(N), percolation, DP, Lifshitz QCP}; lower critical
     dimensions {1, 2, 1, 1} from Mermin-Wagner / analog.
 
-  * check_T_C4_dynamics_class -- L_irr regime stratification (Inactive,
-    Absorbing, Unitary) maps canonically to dynamics class via
-    Hohenberg-Halperin; three-case witness suite.
+  * check_T_C4_dynamics_class -- P_structural_reading for supplied
+    regime/subfamily mapping consistency with the declared dynamics table;
+    conditional interpretation, no dynamics evolution.
 
   * check_T_universality_forced -- composed master theorem; takes the
     substrate algebra, temporal structure, equilibrium uniqueness, Δα
     trichotomy, and C5 refinement and returns the forced sub-family
     (or parallel mean-field / disorder-relevant prediction).
 
-  * check_T_capacity_LV_equilibrium_uniqueness -- lifted Lotka-Volterra
-    for general capacity-utilization vector at saturation.  Existing
-    check_T_LV in generations.py is the fermion-counting form; this
-    lifts the structure.  3-interface witness with explicit Lyapunov
-    function and LaSalle convergence.
+  * check_T_capacity_LV_equilibrium_uniqueness -- P_math for the fixed
+    supplied numerical example. General capacity-law, uniqueness and
+    LaSalle claims remain owner obligations; no general gap is closed here.
 
   * check_T_C5_admissibility_classification -- per-regime predicate
     taking (substrate_disjoint, harris_clean_nu, dimension) and returning
@@ -507,29 +505,15 @@ def check_T_C3_dimensional_window():
 # =====================================================================
 
 def check_T_C4_dynamics_class():
-    """T_C4_dynamics_class: dynamics class of the saturation field theory
-    is determined by the substrate's L_irr regime classification.
+    """T_C4_dynamics_class: supplied dynamics-table consistency.
 
-    Tier 4 [P_structural].
-
-    Source-of-record: Paper 11 v3 §3.5 Theorem C4.
-
-    Verifies the canonical mapping:
-      L_irr regime           |  dynamics class      |  sub-families
-      ----------------------+----------------------+-----------------
-      Inactive              |  Model A (or B)      |  A, B
-      Absorbing             |  DP / Reggeon        |  C
-      Unitary               |  CPTP unitary        |  A''
-
-    The L_irr regime stratification itself is upstream: derived in
-    Paper 3 from A1 + L_nc + L_loc via the four-step proof
-    (superadditivity → locality → locally unrecoverable capacity →
-    structural irreversibility).  T_CPTP and T_CPT are downstream
-    consequences also bank-registered.
-
-    This check witnesses the regime → dynamics-class mapping, not the
-    upstream L_irr derivation.
-    """
+    Tier 4 [P_structural_reading]. Paper 11 v4.2 gives the conditional
+    interpretation. The body compares authored regime/subfamily maps with
+    _UC_TABLE, including A_prime, and checks nonempty equation strings.
+    It derives no Hohenberg-Halperin dynamics, detailed balance, Reggeon
+    noise or Stinespring theorem and executes no dynamics evolution.
+    Upstream L_irr and downstream T_CPTP/T_CPT retain their own hypotheses.
+    Existing constituent and owner holds remain in force."""
     regime_to_dynamics = {
         "Inactive":   "Model_A_B",
         "Absorbing":  "DP_Reggeon",
@@ -581,22 +565,20 @@ def check_T_C4_dynamics_class():
         "name": "T_C4_dynamics_class",
         "passed": True,
         "key_result": (
-            "C4 (dynamics class) verified: L_irr regime stratification "
-            "(Inactive, Absorbing, Unitary) maps canonically to dynamics "
-            "(Model A/B, DP/Reggeon, CPTP-unitary).  All five sub-families "
-            "{A, A', A'', B, C} consistently assigned via the regime->dynamics "
-            "mapping."
+            'Authored regime/subfamily mapping agrees with the declared _UC_TABLE for '
+            '{A, A_prime, A_double_prime, B, C}; three equation strings are nonempty. '
+            'Conditional dynamics interpretation only.'
         ),
         "summary": (
-            "Theorem C4 (Paper 11 v3 §3.5): substrate L_irr regime determines "
-            "dynamics class via Hohenberg-Halperin classification.  Inactive -> "
-            "Model A/B (sub-families A, B, A'); Absorbing -> DP/Reggeon "
-            "(sub-family C); Unitary -> CPTP-Schrödinger (sub-family A'').  "
-            "Upstream L_irr derivation in core.py (check_L_irr); downstream "
-            "T_CPTP, T_CPT also in core.py."
+            'Finite mapping consistency under the declared dynamics dictionary: '
+            'Inactive maps A, B and A_prime to Model_A_B; Absorbing maps C to '
+            'DP_Reggeon; Unitary maps A_double_prime to CPTP_unitary. The named Paper '
+            '11 conditional correspondence is not derived by table equality or '
+            'equation strings. No dynamics evolution is executed; constituent and '
+            'owner holds remain.'
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": 'P_structural_reading',
         "dependencies": [
             "L_irr", "T_CPTP", "T_CPT", "T_kappa", "T_entropy", "T_second_law",
             "L_loc",
@@ -609,28 +591,17 @@ def check_T_C4_dynamics_class():
 # =====================================================================
 
 def check_T_capacity_LV_equilibrium_uniqueness():
-    """T_capacity_LV_equilibrium_uniqueness: lifted Lotka-Volterra
-    equilibrium-uniqueness for the general capacity-utilization vector
-    at saturation.
+    """T_capacity_LV_equilibrium_uniqueness: fixed numerical LV example.
 
-    Tier 4 [P_structural].
-
-    Source-of-record: Paper 11 v3 §3.5 Theorem C2 step 2 (gap (b)).
-
-    The existing check_T_LV in generations.py proves the unique-interior-
-    equilibrium + Lyapunov-convergence theorem for the fermion-content
-    counting application.  This check lifts that structure to the general
-    saturation context: a capacity-utilization vector (E_1, ..., E_n)
-    obeying capacity-limited Lotka-Volterra dynamics has a unique interior
-    equilibrium with global Lyapunov-function convergence by LaSalle's
-    invariance principle.
-
-    Witness: 3-interface system with capacity vector (C_1, C_2, C_3) =
-    (10, 8, 6); Lotka-Volterra interaction matrix; numerical convergence
-    from 5 distinct initial conditions to the same interior equilibrium.
-
-    Closes gap (b) in Paper 11 v3 §3.5 Phase F3 plan.
-    """
+    Tier 4 [P_math]. Supplied three-interface data: C=(10,8,6), r=C/4,
+    A diagonal 1/off-diagonal 0.3. The direct inverse gives a positive
+    equilibrium; Euler integration uses 5000 steps of 0.01 from five
+    starts, with acceptance distance <1e-3. The sampled Lyapunov history
+    counts non-increases within 1e-9 and permits one missed comparison.
+    This is not a general-n/all-matrix or invariant-domain proof, physical
+    capacity law, universal LaSalle certificate, or closure of Paper 11's
+    general analytic/physical obligation. I66 and I71 remain held.
+    check_T_LV is a declared dependency, not executed here."""
     # 3-interface capacity-limited Lotka-Volterra system
     # dE_i/dt = E_i (r_i - sum_j A_ij E_j)
     # with r_i = capacity-pressure rate and A_ij = competition matrix
@@ -734,22 +705,24 @@ def check_T_capacity_LV_equilibrium_uniqueness():
         "name": "T_capacity_LV_equilibrium_uniqueness",
         "passed": True,
         "key_result": (
-            f"Lifted Lotka-Volterra equilibrium uniqueness verified on 3-interface "
+            f"Fixed Lotka-Volterra numerical consistency example on 3-interface "
             f"capacity system: analytic interior equilibrium E* = ({E_star_analytic[0]:.4f}, "
             f"{E_star_analytic[1]:.4f}, {E_star_analytic[2]:.4f}); convergence from 5 "
-            f"distinct ICs to within {max_dist:.2e}; Lyapunov function monotonically "
-            f"decreasing across {n_decreases} of {len(V_history)-1} sample steps."
+            f"distinct ICs to within {max_dist:.2e} (gate <1e-3); Lyapunov history "
+            f"has {n_decreases}/{len(V_history)-1} non-increases within 1e-9 "
+            f"(gate permits one missed comparison)."
         ),
         "summary": (
-            "Theorem (Paper 11 v3 §3.5 gap (b) closer): capacity-limited "
-            "Lotka-Volterra dynamics for general n-interface capacity-utilization "
-            "vector has unique strictly-positive interior equilibrium with global "
-            "Lyapunov-function convergence (LaSalle invariance principle).  Lifts "
-            "check_T_LV in generations.py from the fermion-counting application to "
-            "the saturation-event context used in Paper 11 Theorem C2 step 2."
+            'Fixed three-interface numerical consistency example: capacities '
+            '(10,8,6), rates C/4, competition matrix diagonal 1 and off-diagonal 0.3. '
+            'Five Euler runs use 5000 steps of 0.01 and an equilibrium-distance gate '
+            '<1e-3. One 21-value history requires at least 19/20 non-increases within '
+            '1e-9. General-n/all-matrix uniqueness, invariant-domain and physical '
+            'capacity-law claims, universal LaSalle convergence, and Paper 11 general '
+            'gap closure remain outside this check. I66 and I71 remain held.'
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": 'P_math',
         "dependencies": ["T_LV", "M_Omega"],
     }
 
@@ -972,11 +945,10 @@ IE_DECLARATIONS = (
             "alpha exhaustiveness); check_T_C3_dimensional_window (upper critical "
             "dimensions {4, 6, 4, d+z=4} and lower {1, 2, 1, 1} across the sub- "
             "families Z2/O(N), percolation, DP, Lifshitz QCP); "
-            "check_T_C4_dynamics_class (L_irr regime stratification maps to "
-            "dynamics class via Hohenberg-Halperin); "
-            "check_T_capacity_LV_equilibrium_uniqueness (lifted Lotka-Volterra "
-            "equilibrium uniqueness with explicit Lyapunov function + LaSalle "
-            "convergence on a 3-interface witness); "
+            "check_T_C4_dynamics_class (P_structural_reading: supplied "
+            "regime/subfamily map agrees with the declared dynamics table); "
+            "check_T_capacity_LV_equilibrium_uniqueness (P_math: fixed numerical "
+            "LV example; general analytic/physical claims remain open); "
             "check_T_C5_admissibility_classification (13-regime audit table as "
             "parametrized predicate); and the composed master "
             "check_T_universality_forced. Riders named in the module itself and "
@@ -987,6 +959,6 @@ IE_DECLARATIONS = (
             "comparisons under the disclosed standard-RG bridge; the other "
             "six checks retain their own declared grades. "
         ),
-        "note": "Wave 7; C1 is P_structural_reading for its supplied mock projections; C3 is P_structural_seam with standard-RG conditionality disclosed; other five grade fields unchanged.",
+        "note": "Wave 7; C1 is P_structural_reading for its supplied mock projections; C3 is P_structural_seam with standard-RG conditionality disclosed; C4 is P_structural_reading for declared-map consistency; LV is P_math for the fixed numerical example; other grades remain as declared.",
     },
 )

@@ -30,43 +30,17 @@ response lambda_s = -gamma_C; plane trace theta = lambda_t + lambda_s
 
 WHAT THE FOUR CHECKS CERTIFY:
 
-check_T_gammaC_carrier_fork (tier 3, [P_structural]) -- the fork geometry,
-exact rationals throughout:
-  - The four carrier closures, SOLVED from their defining linear conditions
-    (not hand-set): plane conservation (lambda_t + lambda_s = 0) -> gamma_C
-    = 1; four-cell conservation (lambda_t + 3*lambda_s = 0) -> 1/3;
-    per-channel closure (lambda_s = 0) -> 0; pooled/common depletion
-    (lambda_s = +lambda_t) -> -1. Pairwise distinct, and CROSS-EXCLUSIVE:
-    plane closure forces the four-cell trace to -2 (not 0); four-cell
-    closure forces the plane trace to 2/3 (not 0).
-  - The dimension table: gamma_GR(n) = 1/(n-2) for spatial dimension n.
-    FLAGGED CONTINUUM IMPORT: this row is recomputed from trace-reversed
-    linearized GR (h_00 = A(n-2)/(n-1), h_ij = A/(n-1)), an adopted
-    continuum object, not native APF content. LOVELOCK NOTE: Gauss-Bonnet
-    (and the higher Lovelock terms) contribute nothing to the linearized-
-    around-flat static response, so gamma_GR(n) = 1/(n-2) holds for the
-    whole Lovelock family, not just Einstein-Hilbert -- the dimension
-    audit's kill rows are Lovelock-robust. The plane row matches the
-    Einstein family ONLY at n = 3; the four-cell generalization (1/n),
-    the per-channel row (0), and the pooled row (-1) match in NO
-    dimension n >= 3.
-  - The Cassini kills (gamma_obs = 1 +/- 2.3e-5): pooled = Nordstrom
-    (gamma = -1, conformally flat response, zero first-order light
-    deflection) excluded at ~8.7e4 sigma; per-channel (gamma = 0, half-GR
-    deflection) excluded at ~4.3e4 sigma.
-  - THE WEIGHT-ONE CURVE (the audit-donated mechanism decomposition):
-    response = direct clock coupling + w * eta-weighted spread gives
-    gamma(w) = w/((n-1)-w) exactly; gamma(1, n) = 1/(n-2) for n = 3..8
-    (GR is w = 1 in EVERY dimension) and gamma(0, n) = 0 (direct-only is
-    the per-channel carrier); the spread-only limit carries the SIGNED leg
-    lambda_s = +lambda_t (the pooled shape, NOT the plane). The weight-one
-    walk (derive w = 1) is the live opener of record.
-  FALSIFIER HOOKS: a measured gamma_obs anomaly (any confirmed departure
-  from gamma = 1 re-opens the fork empirically); ANY change to the Paper 9
-  normal-form conventions (lambda_t = +1, lambda_s = -gamma_C) -- the fork
-  values are convention-anchored and must be re-solved under a new normal
-  form (the four-cell sign-slip artifact -1/3 vs +1/3 is the recorded
-  cautionary example).
+check_T_gammaC_carrier_fork (tier 3, [P_structural_reading]):
+  Four declared register closures give exact rational fork values
+  {1, 1/3, 0, -1} and cross-exclusivity in the adopted normal form.
+  The n=3..10 dimension table uses imported trace-reversed linearized GR;
+  the n=3..8 weight grid and spread-only sign checks are finite.
+  General dimensional identities are the named analytic formulas, not
+  an exhaustive dimension scan. Historical Cassini calibration gives
+  the quoted discrepancy ratios for the supplied fork readings.
+  Physical register choice, no-trace, nonlinear GR and w=1 are not derived.
+  Falsifier hooks remain a gamma_obs anomaly and a change to the adopted
+  normal-form conventions; the fork must be re-solved if those change.
 
 check_L_notrace_not_from_recruitment_instruments (tier 3,
 [P_structural_instrument]) -- the T2 + T2' route closure:
@@ -241,7 +215,7 @@ note's Sec 5 bank spec followed verbatim):
     pricing is NOT voided: sections 1-8 execute and pass with the
     thirteenth loaded, and only section 9's census guard fired.
 
-STATUS. Fork check [P_structural]; the two route-closures
+STATUS. Fork check [P_structural_reading]; the two route-closures
 [P_structural_instrument] -- instrument-enumeration-bounded negatives in
 the T2/T2' genre, tripwired; the weight-one reduction [P_structural] --
 arithmetic-certificate + route-boundary genre. The weight-one walk is
@@ -372,10 +346,10 @@ def check_T_gammaC_carrier_fork():
         if fork['pooled'] == g_gr:
             pool_matches.append(n)
     check(plane_matches == [3],
-          "the plane carrier matches the Einstein family ONLY at n = 3")
+          "in the tested n=3..10 table, only n=3 matches the plane carrier")
     check(cell_matches == [] and chan_matches == [] and pool_matches == [],
           "four-cell (1/n), per-channel (0), pooled (-1) match in NO "
-          "dimension n >= 3 -- Cassini-independent structural kills")
+          "tested dimension n=3..10 under the imported formula")
 
     # --- 4. the Cassini kills ----------------------------------------------
     sigma_pooled = abs(fork['pooled'] - 1) / _CASSINI
@@ -397,7 +371,7 @@ def check_T_gammaC_carrier_fork():
             check(_gamma_w(w, n) == w / ((n - 1) - w),
                   "gamma(w) = w/((n-1)-w) closed form")
         check(_gamma_w(Fraction(1), n) == Fraction(1, n - 2),
-              "GR is w = 1 in EVERY dimension: gamma(1, n) = 1/(n-2) exact")
+              "tested n=3..8: gamma(1, n) = 1/(n-2) exactly under the imported model")
         check(_gamma_w(Fraction(0), n) == fork['per_channel'],
               "direct-only is w = 0: the per-channel carrier, exactly")
     # the spread-only SIGNED leg: lambda_s = +lambda_t (pooled, not plane)
@@ -416,36 +390,22 @@ def check_T_gammaC_carrier_fork():
         name='T_gammaC_carrier_fork -- the four-point carrier fork, the '
              'dimension audit, the Cassini kills, and the weight-one curve',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
-            'In the Paper 9 v1.6 calibrated normal form (lambda_t = +1, '
-            'lambda_s = -gamma_C), the four carrier closures SOLVE to '
-            'gamma_C in {1, 1/3, 0, -1} (plane / four-cell / per-channel / '
-            'pooled), pairwise distinct and cross-exclusive (plane closure '
-            'forces four-cell trace -2; four-cell forces plane trace 2/3). '
-            'Dimension table: gamma_GR(n) = 1/(n-2) -- FLAGGED continuum '
-            'import, recomputed in-check from trace-reversed linearized GR '
-            'and Lovelock-robust (Gauss-Bonnet adds nothing linearized '
-            'around flat) -- matches the plane carrier ONLY at n = 3; '
-            'four-cell (1/n), per-channel (0), pooled (-1) match in no '
-            'dimension. Cassini: pooled = Nordstrom (zero first-order '
-            'deflection) dead at ~8.7e4 sigma; per-channel dead at ~4.3e4 '
-            'sigma. THE WEIGHT-ONE CURVE (audit-donated): response = '
-            'direct + w*spread gives gamma(w) = w/((n-1)-w) exactly; GR is '
-            'w = 1 in EVERY n (gamma(1, n) = 1/(n-2)); direct-only (w = 0) '
-            'is the per-channel carrier; spread-only carries the SIGNED '
-            'pooled leg lambda_s = +lambda_t. The two Cassini-dead traps '
-            'are the curve\'s two limits; deriving w = 1 is the live '
-            'opener of record. Falsifier hooks: a gamma_obs anomaly; any '
-            'change to the Paper 9 normal-form conventions (the four-cell '
-            'sign-slip -1/3 artifact is the recorded caution).'
+            'Under the adopted calibrated normal form lambda_t=1, lambda_s=-gamma_C, '
+            'four declared register closures solve exactly to {1, 1/3, 0, -1}, with '
+            'cross-exclusivity checks. The n=3..10 table compares against imported '
+            'trace-reversed linearized GR; finite n=3..8 weight/sign checks '
+            'instantiate the named analytic formulas. Historical Cassini calibration '
+            'supplies the discrepancy ratios. Exact closure algebra does not select '
+            'the physical register or derive w=1, a physical carrier, no-trace or '
+            'nonlinear GR.'
         ),
         key_result=(
-            'carrier fork gamma_C in {1, 1/3, 0, -1} solved from closures; '
-            'gamma_GR(n) = 1/(n-2) [continuum import, Lovelock-robust]; '
-            'plane matches Einstein only at n = 3; pooled killed 8.7e4 '
-            'sigma, per-channel 4.3e4 sigma (Cassini); weight-one curve '
-            'gamma(w) = w/((n-1)-w), GR = w=1 in every n'
+            'Four declared closure readings solve to {1, 1/3, 0, -1}; finite '
+            'dimension/weight/sign checks under adopted normal-form and GR inputs; '
+            'historical Cassini discrepancy ratios. Physical carrier and w=1 remain '
+            'open.'
         ),
         dependencies=['A1', 'T8', 'Delta_signature'],
         cross_refs=['T_ledger_rent_excluded', 'T11'],
