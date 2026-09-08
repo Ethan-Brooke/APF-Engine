@@ -21,8 +21,8 @@ this cost induce a functional on the diagonal subalgebra; at the uniform floor
 it is exactly eps*Tr), ``carrier_elliptope`` (the residual freedom parametrized
 as the eps-scaled elliptope), ``md_super_nodiscount`` (the crossing restated in
 MD's vocabulary, MD_SUPER_NODISCOUNT consumed not derived), and
-``fd3_valuation_born_chain`` (the transfer itself, conditional on four named
-clauses). The route count terminating on the carrier gap is FOUR, not two,
+``fd3_valuation_born_chain`` (the transfer itself, conditional on five named
+premises). The route count terminating on the carrier gap is FOUR, not two,
 three or five: the selection-side route (``counted_ledger_underdetermination``)
 and the cost-side route (``carrier_elliptope``) are DUALS under the
 Hilbert-Schmidt pairing -- nullity on Sym(n) = n(n-1)/2 = the elliptope's free

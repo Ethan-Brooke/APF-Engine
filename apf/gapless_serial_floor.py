@@ -223,14 +223,14 @@ def check_T_gapless_serial_floor():
     passed = not fails
     return {
         'name': 'T_gapless_serial_floor',
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': passed,
         'tier': 4,
         'key_result': (
             'all-Sep structure formation is serial + floor-billed: K1 no free '
             'switch (Bennett excluded by L_cost per-transition uniqueness) [P]; '
             'K2 no joint hold (T_sep + codef union floor; drawn clause = '
-            'Sep-branch reading) [P_structural]; K3 release recovers the level, '
+            'Sep-branch reading) [P_structural_reading]; K3 release recovers the level, '
             'throughput N*eps is the resource [P]; composed depth(x)->throughput '
             'floor exhaustively certified. Conditional corollary: built structure '
             '=> occupied gap [P_structural_reading], occupancy NOT derived '
@@ -245,12 +245,12 @@ def check_T_gapless_serial_floor():
                        'T_realignment_cost_is_transition_energy',
                        'T_IJC_dichotomy', 'check_T_aeon_turnover'],
         'artifacts': {
-            'grade_basis': ('K1/K3 [P]; K2 drawn clause = structural reading of '
-                            'L_commutative_no_unresolved_hold [P_math] under the '
-                            'Sep antecedent (T_no_IJC [P_structural]) -> caps at '
-                            '[P_structural]. The lemma discharges the stipulation '
-                            '(audit MAJOR-1) but does NOT lift the kernel: the '
-                            'Sep-branch antecedent is the principled wall'),
+            'grade_basis': ('K1/K3 anchors remain [P]. K2 uses the drawn definite-assignment '
+                            'Sep state family as a named reading; the union arithmetic is executed. '
+                            'L_commutative_no_unresolved_hold [P_math] is cited for the '
+                            'dephasing leg, not recomputed or called here. The kernel stays '
+                            'P_structural_reading under that supplied antecedent; '
+                            'no occupancy or physical gapless trajectory is derived.'),
             'corollary': ('[P_structural_reading]; imports N_max + witness depth '
                           '+ IJC-dichotomy exhaustiveness; occupancy stays QAC'),
             'bite': ('Levinthal serial floor (L=100,nu=3 -> Q~1e47) books ~1e27 J '

@@ -549,8 +549,8 @@ def check_T_vglobal_slot_identification_no_go():
       (2) BROKEN-BASIS RELOCATION, with degeneracy priced. The typing's
           only possible slot-level home is the residual basis: splitting
           the Higgs class by the SSB datum (n_goldstone = 3 vs the
-          radial h — the same dim(SU(2)×U(1)) − dim(U(1)_em) = 3
-          template arithmetic check_T_Higgs derives) makes Higgs-piece 3
+          radial h — counts read from the conditional check_T_Higgs
+          record, tied to this inventory) makes Higgs-piece 3
           achievable, and (12, 3, 27) IS then realizable. The 3+1 split
           is a COARSE MODEL of the residual decomposition (under the
           actual SU(3)×U(1)_em the three Goldstone directions are not
@@ -647,11 +647,34 @@ def check_T_vglobal_slot_identification_no_go():
           "(4, 4, 34) is realizable (clause-(v) coherence)")
 
     # ---- clause (2): broken-basis relocation + degeneracy ----
-    n_goldstone = (3 + 1) - 1  # dim(SU(2)xU(1)) - dim(U(1)_em), the T_Higgs template arithmetic
+    import apf.gauge as _gauge
+    _higgs_record = _gauge.check_T_Higgs()
+    check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    check(type(n_goldstone) is int and n_goldstone > 0,
+          "T_Higgs goldstone_count must be a positive exact integer")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+          "T_Higgs conditional count premise changed; re-adjudicate this value tie")
+    n_real_dof = _higgs_counts.get('scalar_real_dim')
+    n_radial = _higgs_counts.get('physical_scalar_count')
+    check(type(n_real_dof) is int and n_real_dof > 0,
+          "T_Higgs scalar_real_dim must be a positive exact integer")
+    check(type(n_radial) is int and n_radial > 0,
+          "T_Higgs physical_scalar_count must be a positive exact integer")
+    check(n_goldstone + n_radial == n_real_dof,
+          "T_Higgs consumed scalar counts must recompose")
+    check(n_real_dof == higgs_classes[0][1],
+          "T_Higgs scalar real dimension must match the model Higgs class")
     check(n_goldstone == 3, "SSB split: 3 Goldstone directions + 1 radial h")
     refined = [c for c in inv if c[0] != 'higgs'] + [
-        ('higgs', 'goldstone_directions', 3, 1),
-        ('higgs', 'radial_h', 1, 1),
+        ('higgs', 'goldstone_directions', n_goldstone, 1),
+        ('higgs', 'radial_h', n_radial, 1),
     ]
     refined_sigs = _achievable_invariant_signatures(refined, 42)
     check(target in refined_sigs,
@@ -726,12 +749,19 @@ def check_T_vglobal_slot_identification_no_go():
             'T_vacuum_content_typing_status',      # the .321 pin this sharpens (clause (v))
             'T_FormalKernel_VLambda_uniqueness',   # the slot-level construction + inventory
             'L_global_interface_is_horizon',       # assertion site of the typing
-            'T_Higgs',                             # the SSB split (n_goldstone = 3); arithmetic re-derived locally, check_T_Higgs executed by the .321 pin
+            'T_Higgs',                             # the conditional split counts read and tied to this inventory
             'T_gauge',                             # the gauge template (dims 8+3+1)
             'L_count',                             # the 45+4+12 field basis
         ],
         cross_refs=['T_interface_sector_bridge', 'T_horizon_reciprocity'],
         artifacts={
+            'higgs_count_source': {
+                'supplier': 'T_Higgs',
+                'goldstone_count': n_goldstone,
+                'scalar_real_dim': n_real_dof,
+                'physical_scalar_count': n_radial,
+                'conditional_on': list(_higgs_premises),
+            },
             'no_go': 'Higgs piece of any G_SM-invariant subspace is 0 or 4, never 3',
             'achievable_dim42_signatures': sorted(FROZEN_SIGNATURES),
             'target_excluded': str(target),

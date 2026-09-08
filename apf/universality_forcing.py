@@ -6,7 +6,7 @@ of Paper 11 §3.5's seven theorem statements (C1, C2, C3, C4, the composed
 master T_universality_forced, the lifted Lotka-Volterra equilibrium-
 uniqueness gap-closer, and the C5 admissibility classification predicate).
 
-Bank-registered theorems (7 total, all tier-4 [P_structural]):
+Bank-registered theorems (7 total, tier 4; C3 is P_structural_seam; other grades are declared by their checks):
 
   * check_T_C1_symmetry_class -- order parameter inherits substrate-algebra
     symmetry via P_A projection of slack; G_Γ-equivariance verified on a
@@ -251,27 +251,18 @@ def _z2_projection_witness() -> Dict:
 # =====================================================================
 
 def check_T_C1_symmetry_class():
-    """T_C1_symmetry_class: order parameter at a capacity-saturation event
-    inherits the symmetry of the substrate's local algebra.
+    """Supplied mock projection witness for the C1 symmetry-class reading.
 
-    Tier 4 [P_structural].
+    Tier 4 P_structural_reading. Historical pointer: Paper 11 v3 sec.3.5.
+    The U(1) helper tests one representative pi/6 rotation of the supplied
+    mock local slack projection. The Z_2 helper supplies inversion and
+    eigenvalues; Goldstone counts 1 and 0 are assigned from the selected
+    coset examples. These are model-consistency observations.
 
-    Source-of-record: Paper 11 v3 §3.5 Theorem C1.
-
-    Verifies on representative U(1) and Z_2 witnesses that:
-      (i)   The slack λ projects onto the substrate-algebra-equivariant
-            subspace via P_A.
-      (ii)  P_A · g(λ) = g · P_A(λ) for the substrate-algebra symmetry
-            action g (equivariance).
-      (iii) The order-parameter manifold is the broken-symmetry coset
-            G_Γ / H, with the standard Goldstone-mode count for the
-            broken continuous symmetry.
-
-    Does NOT re-prove the substrate algebra derivation (that's the chain
-    check_T_alg + check_L_T2_finite_gns + check_L_gauge_template_uniqueness
-    + check_Theorem_R + check_T_field + check_L_anomaly_nonpert in core.py
-    and gauge.py).  This check witnesses the projection step that turns
-    the derived algebra symmetry into the order-parameter symmetry.
+    This function does not implement the current Paper 11 finite
+    cost-response operator, derive the substrate algebra, select a leading
+    representation, prove all-group equivariance, or derive Goldstone's
+    theorem. Its dependency list records upstream context, not live calls.
     """
     # (i) + (ii): U(1) witness
     u1 = _u1_projection_witness()
@@ -295,23 +286,23 @@ def check_T_C1_symmetry_class():
         "name": "T_C1_symmetry_class",
         "passed": True,
         "key_result": (
-            f"C1 (symmetry class) verified on U(1) and Z_2 witnesses: "
-            f"slack projection P_A is G_Γ-equivariant (max diff {u1['max_equivariance_diff']:.2e} for U(1)); "
+            f"C1 supplied mock U(1)/Z_2 projection witness: "
+            f"pi/6 U(1) rotation agrees with supplied slack projection P_A (max diff {u1['max_equivariance_diff']:.2e} for U(1)); "
             f"Z_2 inversion preserved by projection; "
-            f"broken-symmetry cosets give {u1_goldstone_count} Goldstone mode (U(1)) and "
+            f"selected coset examples assign {u1_goldstone_count} Goldstone mode (U(1)) and "
             f"{z2_goldstone_count} (Z_2 discrete)."
         ),
         "summary": (
-            "Theorem C1 (Paper 11 v3 §3.5): order parameter ϕ_s = P_A(λ) inherits "
-            "the substrate-algebra symmetry G_Γ via the canonical equivariance of "
-            "the algebra projection P_A.  Witnessed on U(1) and Z_2 representative "
-            "substrates with explicit equivariance checks and Goldstone-mode counts.  "
-            "Substrate algebra derivation chain (T_alg + L_T2_finite_gns + "
-            "L_gauge_template_uniqueness + Theorem_R + T_field + L_anomaly_nonpert) "
-            "is upstream of this check."
+            "Supplied mock local slack projection: one pi/6 U(1) rotation "
+            "and the authored Z_2 inversion/eigenvalue witness are consistent. "
+            "Goldstone counts are assigned for the selected coset examples. "
+            "The substrate-algebra derivation chain is dependency context; "
+            "the current Paper 11 conditional response-operator construction "
+            "is not implemented here. No all-algebra symmetry forcing or "
+            "canonical representation selection is certified."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_reading",
         "dependencies": [
             "T_alg", "L_T2_finite_gns", "L_gauge_template_uniqueness",
             "Theorem_R", "T_field", "L_anomaly_nonpert", "L_loc",
@@ -433,27 +424,21 @@ def check_T_C2_codim_one():
 # =====================================================================
 
 def check_T_C3_dimensional_window():
-    """T_C3_dimensional_window: spatial dimension d lies within the
-    universality class's window d_l(X) ≤ d ≤ d_u(X), conditional on
-    C1 + C4 + standard renormalization-group analysis.
+    """T_C3_dimensional_window: five-subfamily table-consistency witness
+    under the named standard-RG bridge of Paper 11 C3.
 
-    Tier 4 [P_structural].
+    Tier 4 [P_structural_seam].
 
-    Source-of-record: Paper 11 v3 §3.5 Theorem C3.
+    For X in {A, A', A'', B, C}, compares the authored upper and lower
+    dimension tables with their existing expected entries and checks that
+    the stored beta value lies in (0, 1]. Standard renormalization-group
+    analysis is imported, conditional on the named C1/C4 bridge; the current
+    Paper 11 supplement further states locality/analyticity/stability and
+    C4* conditions for its physical dimensional-window theorem.
 
-    Verifies for each sub-family X ∈ {A, A', A'', B, C}:
-      (i)   d_u(X) matches the textbook upper critical dimension
-            (Wilson-Fisher 1972 for Z_2/O(N); Aharony-Stauffer 1976 for
-            percolation; Janssen-De Dominicis 1976 for DP; Hertz-Millis-
-            Sachdev for Lifshitz QCP via d_eff = d + z).
-      (ii)  d_l(X) matches Mermin-Wagner / analog lower critical
-            dimensions.
-      (iii) The mean-field starting point (Paper 16's T_critical) supplies
-            β = γ = 1 mean-field exponents that get RG-corrected below d_u.
-
-    Does NOT re-derive the textbook RG; this is a structural witness that
-    the dimensional window assignments are consistent with the audited
-    13-regime table.
+    This function does not compute RG, a physical spatial dimension,
+    beta=gamma=1 or a regime classification. Its native scope is the five
+    subfamilies and the existing table and beta-range comparisons only.
     """
     expected_d_u = {
         "A":              4.0,   # Wilson-Fisher
@@ -496,20 +481,20 @@ def check_T_C3_dimensional_window():
         "name": "T_C3_dimensional_window",
         "passed": True,
         "key_result": (
-            f"C3 (dimensional window) verified for 5 sub-families: "
+            f"C3 five-subfamily table-consistency witness: "
             f"d_u = {{4 (A: Wilson-Fisher), 2 (A' BKT), 4 (A'' Lifshitz d+z), "
             f"6 (B percolation), 4 (C DP/Reggeon)}}; d_l = {{1, 2, 1, 1, 1}}.  "
-            f"Mean-field β entry-point from Paper 16 T_critical."
+            f"Stored beta values checked in (0, 1]; standard RG is imported."
         ),
         "summary": (
-            "Theorem C3 (Paper 11 v3 §3.5): conditional on C1 + C4 + standard RG "
-            "(Wilson-Fisher 1972; Aharony-Stauffer 1976; Janssen-De Dominicis 1976; "
-            "Hertz-Millis-Sachdev for QCP), the dimensional window d_l ≤ d ≤ d_u is "
-            "fixed per sub-family.  Mean-field starting point supplied by "
-            "T_critical_mean_field (Paper 16 §4)."
+            "Paper 11 C3 standard-RG bridge: this five-subfamily witness compares "
+            "the existing upper/lower dimension tables and checks stored beta "
+            "values in (0, 1]. The physical theorem is conditional on C1, C4* "
+            "and the supplement's locality/analyticity/stability and standard-RG "
+            "assumptions; this routine does not derive RG or a physical dimension."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam",
         "dependencies": [
             "T_C1_symmetry_class", "T_C4_dynamics_class",
             "T_critical_mean_field", "L_loc",
@@ -978,9 +963,10 @@ IE_DECLARATIONS = (
         "axis": "ROUTE",
         "claim_text": (
             "Codebase landing of Paper 11 sec 3.5's Forced Universality theorems: "
-            "seven checks, all machine field epistemic='[P_structural]'. "
-            "check_T_C1_symmetry_class (order parameter inherits substrate- "
-            "algebra symmetry, G_Gamma-equivariance on U(1) and Z_2 witnesses); "
+            "seven checks: C3 returns epistemic='P_structural_seam'; "
+            "the other six grade fields remain as declared by their checks. "
+            "check_T_C1_symmetry_class (P_structural_reading: supplied mock "
+            "U(1) pi/6 and Z_2 projection witnesses, assigned coset counts); "
             "check_T_C2_codim_one (L_loc factorization makes slack a single "
             "scalar per connected component; multicritical exclusion via Delta- "
             "alpha exhaustiveness); check_T_C3_dimensional_window (upper critical "
@@ -996,11 +982,11 @@ IE_DECLARATIONS = (
             "check_T_universality_forced. Riders named in the module itself and "
             "preserved here: C3 is CONDITIONAL on C1 + C4 + standard RG, and "
             "Mermin-Wagner / Hohenberg-Halperin are imported standard critical- "
-            "phenomena results applied rather than re-derived -- the uniform "
-            "[P_structural] grade prices exactly that posture: forced structure "
-            "verified on finite witnesses, not an ab-initio RG derivation of "
-            "exponents. "
+            "phenomena results applied rather than re-derived. C3's "
+            "P_structural_seam grade describes its five-subfamily table "
+            "comparisons under the disclosed standard-RG bridge; the other "
+            "six checks retain their own declared grades. "
         ),
-        "note": "Wave 7; grade uniform across all 7 checks, matches docstring ('all tier-4 [P_structural]'); C3 conditionality carried as a rider.",
+        "note": "Wave 7; C1 is P_structural_reading for its supplied mock projections; C3 is P_structural_seam with standard-RG conditionality disclosed; other five grade fields unchanged.",
     },
 )

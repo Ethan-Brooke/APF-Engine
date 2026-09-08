@@ -97,7 +97,7 @@ bears to NRDT:
   the value and the source level (the predicate is falsifiable, not
   vacuous-by-design); delta_CKM and the count-exponent C_total in
   d_eff^C_total return CONSUMED under the same predicates (the predicate
-  discriminates). Grade [P_structural], the .355/.364 census/instrument
+  discriminates). Grade [P_structural_instrument], the .355/.364 census/instrument
   family, bank-closed-world, conditional on the .354/.359 partition (called
   live); the strength disanalogy with .359 is inherited unchanged --
   inventory-certified CONSTRUCTION-LEVEL absence, not slot-impossibility.
@@ -345,7 +345,7 @@ def check_L_wg2_dictionary_index_content_blind_native():
              'dictionary index is NO-RECORD and content-blind (the fence '
              'ceiling certified)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'Under the .354/.359 record-partition (called live: '
             'check_L_completion_angle_content_blind_native, [P_structural_reading]), '
@@ -443,7 +443,7 @@ def check_T_mcross_gate_dictionary_conditional():
              'supplies t natively but index-conditionally: the scale seam is '
              'nested inside the dictionary seam',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The banked forward solve (_alpha_s_forward, '
             'abelian_coupling_capacity_count.py) supplies t = ln(M_cross/M_Z) '
@@ -500,7 +500,7 @@ def check_T_mcross_gate_dictionary_conditional():
 def check_T_wg2_dictionary_index_no_native_consumer_census():
     """The C(n) constructor census: no banked constructor consumes the index.
 
-    CERTIFIED NEGATIVE at bank-closed-world strength, [P_structural] tier 4
+    CERTIFIED NEGATIVE at bank-closed-world strength, [P_structural_instrument] tier 4
     (the .355/.364 census/instrument family), conditional on the .354/.359
     partition called live in-body. Closed-world pin: landed at tree
     v24.3.394, EXPECTED_REGISTRY_SIZE 3880 (the in-check gate is monotone
@@ -554,16 +554,16 @@ def check_T_wg2_dictionary_index_no_native_consumer_census():
           "-- this census is CONDITIONAL on it (stated, not silently "
           "strengthened)")
     r1 = check_L_wg2_dictionary_index_content_blind_native()
-    check(r1.get('epistemic') == 'P_structural',
-          "check 1 (index content-blind) holds live at [P_structural]")
+    check(r1.get('epistemic') == 'P_structural_reading',
+          "check 1 (index content-blind) holds live at [P_structural_reading]")
     check('NRDT stays OPEN, NAMED, NOT ADOPTED' in r1['summary'],
           "NRDT sentinel: the live check-1 result carries OPEN / NAMED / "
           "NOT ADOPTED verbatim; this census reads the wall, it does not "
           "soften or adopt")
     r2 = check_T_mcross_gate_dictionary_conditional()
-    check(r2.get('epistemic') == 'P_structural',
+    check(r2.get('epistemic') == 'P_structural_reading',
           "check 2 (M_cross gate index-conditional) holds live at "
-          "[P_structural]")
+          "[P_structural_reading]")
     t_by = r2['artifacts']['t_by_index']
 
     # --- 2. Level V: the native invariant vector under the family ---------
@@ -822,7 +822,7 @@ def check_T_wg2_dictionary_index_no_native_consumer_census():
              'dictionary index (CERTIFIED NEGATIVE, bank-closed-world, '
              'tripwired forward)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             'Over the FULL bank registry at the census tree (closed-world '
             'pin: landed at v24.3.394, EXPECTED 3880; containment certified '

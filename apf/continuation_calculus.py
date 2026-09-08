@@ -1041,7 +1041,7 @@ def check_T_finite_operational_basis():
             "witness for the Finite Operational Basis mechanism"
         ),
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
         summary=(
             "Restricted executable theorem: on a finite atom-cover model, "
             "where admitted content is a finite atom set, operational classes "
@@ -1088,7 +1088,7 @@ def check_T_finite_operational_basis():
                 "complete_models": complete,
             },
             "arithmetic": "fractions.Fraction + _safe_floor_ratio; exact boundaries",
-            "paper_anchor": "Paper 10 v1.21 sec:finite-operational-basis",
+            "paper_anchor": "Paper 10 v1.26 sec:finite-operational-basis",
             "non_claims": [
                 "not_a_derivation_of_finite_joint_extension",
                 "not_a_general_physical_closure_theorem",
@@ -1168,7 +1168,7 @@ def check_T_finite_minimal_joint_realization_atom_cover():
             "minimum joint carrier and deterministic basis projections"
         ),
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
         summary=(
             "On every exercised closed finite atom-cover model, a complete "
             "inclusion-minimal basis is represented by one concrete joint "
@@ -1205,7 +1205,7 @@ def check_T_finite_minimal_joint_realization_atom_cover():
             ],
             "negative_control": "independent minima with distinct joint ids rejected",
             "general_open_obligation": "compatible_joint_realization",
-            "paper_anchor": "Paper 10 v1.21 cor:finite-minimal-joint-realization",
+            "paper_anchor": "Paper 10 v1.26 cor:finite-minimal-realization",
         },
     )
 

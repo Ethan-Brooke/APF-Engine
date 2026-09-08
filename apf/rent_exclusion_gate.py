@@ -50,7 +50,7 @@ THE THREE CHECKS
       (<=2) by linearity; the native above-facet target (CHSH 202/75 > 2, margin
       52/75) violates a facet, so a deposit-only account provably cannot reach it.
 
-  T_order_is_per_activation_not_standing_rent           [P_structural]
+  T_order_is_per_activation_not_standing_rent           [P_structural_reading]
       Therefore reproducing the above-facet correlation needs per-pair directed
       structure (communication) -- shared randomness is provably insufficient
       (Bell/Fine restated). Per-pair directed structure is booked EACH activation
@@ -481,13 +481,13 @@ def check_L_deposit_is_local_hidden_variable():
 # =====================================================================
 
 def check_T_order_is_per_activation_not_standing_rent():
-    """[P_structural].
+    """[P_structural_reading].
 
     Because a deposit-only account reaches only the local polytope (L1),
     reproducing the above-facet correlation requires PER-PAIR directed structure
     (communication) -- shared randomness is provably insufficient (Bell/Fine
     restated). Per-pair directed structure is booked EACH time the interface
-    activates -> a kind-(b) PER-ACTIVATION charge. It is NOT excluded standing-rent
+    activates -> a kind-(b) PER-ACTIVATION chargeable placement. It is NOT excluded standing-rent
     (mere persistence) and NOT a kind-(a) amortizable deposit (the deposit is the
     LHV that FAILS by L1).
 
@@ -604,7 +604,7 @@ def check_T_order_is_per_activation_not_standing_rent():
     passed = not fails
     out = {
         "name": "T_order_is_per_activation_not_standing_rent",
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "passed": passed,
         "key_result": (
             "Reproducing the above-facet correlation (CHSH 202/75 > 2) requires "
@@ -617,7 +617,7 @@ def check_T_order_is_per_activation_not_standing_rent():
             "into above-facet reproduction. Only per-pair directed input escapes "
             "(explicit signaling strategy, CHSH 4, correlator-product -1 -- "
             "structurally impossible for any deposit). The hidden order is a "
-            "kind-(b) PER-ACTIVATION charge, not excluded standing-rent and not a "
+            "kind-(b) PER-ACTIVATION chargeable placement, not excluded standing-rent and not a "
             "kind-(a) deposit; it PASSES the rent-exclusion gate as chargeable. "
             "FENCE: chargeABLE, not proven charged (enforcement-realism OPEN)."
         ),

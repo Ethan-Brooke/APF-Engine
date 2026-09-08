@@ -194,7 +194,7 @@ def check_T_fencea_hinge_coupling_trichotomy():
              'separability + the two-sided PPT threshold + the '
              'joint-sufficiency law (the FENCE-A hinge, re-walked)',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The FENCE-A cost-to-state hinge is a TRICHOTOMY, not the '
             '06-24 dichotomy: (B) diagonal L_nc cost separable (06-24 '
@@ -292,21 +292,30 @@ def check_T_correlation_hierarchy_ladder():
                                    x ~ 1.200805; cross-verified in-check
                                    by direct settings optimization.
       top     Tsirelson            family ceiling 2*sqrt(2)*102/103 --
-                                   the sup over the (mu, Delta) quadrant,
-                                   both fillings; fractional deficit
+                                   the cited analytic model supremum
+                                   over the (mu, Delta) quadrant, both
+                                   fillings; fractional deficit
                                    1/(d_eff+1) at the native calibration
                                    beta*|eps| = ln d_eff. Strictly inside
                                    the banked T_Tsirelson bound.
 
     FILLING DISCLOSURE: the rung-3 gate is exactly filling-independent
-    (.340); the rung-4/5 gates are NOT -- on the eps > 0 branch the
-    family entangles but never crosses CJWR-3 and never violates CHSH
-    (the latter exact). Reachability of rungs 4-5 is a one-branch
+    (.340); the rung-4/5 gates are NOT. The cited analytic model argument
+    states that the eps > 0 branch entangles but never crosses CJWR-3
+    and never violates CHSH; the finite sweep below is a numerical
+    consistency observation. Reachability of rungs 4-5 is a one-branch
     statement (occupied-favored, the 06-24 filling).
 
-    Grade P_structural tier 4: exact finite arithmetic; Horodecki-CHSH
-    and PPT are exact-iff finite mathematics cross-verified in-check;
-    CJWR-3 named above as the imported sufficient-only instrument.
+    Grade P_structural_reading tier 4: floating-point evaluations of
+    closed forms, bisection, finite-grid consistency checks and one finite
+    deep point. Horodecki-CHSH and 2x2 PPT are exact-iff mathematical
+    criteria; their floating-point evaluation here is not a universal
+    proof. The all-parameter supremum/no-crossing claims are attributed
+    to the analytic model argument in "Reference - The Correlation-
+    Hierarchy Ladder in the Native Two-Cell Family (2026-07-02)",
+    "The d_eff Bell ceiling" and "Fences", with the ladder/ceiling context
+    in Paper 14 Supplement v0.17. CJWR-3 remains the named imported
+    sufficient-only instrument; unsteerability is not certified.
     """
     e = -_LN102  # occupied-favored branch
 
@@ -373,7 +382,8 @@ def check_T_correlation_hierarchy_ladder():
     check(g3 < g4 < g5,
           "strict inclusion entanglement < steering < CHSH must hold")
 
-    # ---- the ceiling: sup = 2 sqrt(2) * 102/103, Tsirelson respected ----
+    # ---- ceiling: finite-grid/deep-point consistency with cited analytic sup ----
+    # The grid and mu=Delta=60 point do not prove the all-parameter bound or limit.
     ceil = 2.0 * _math.sqrt(2.0) * 102.0 / 103.0
     worst = 0.0
     for i in range(1, 25):
@@ -390,7 +400,8 @@ def check_T_correlation_hierarchy_ladder():
     check(ceil < 2.0 * _math.sqrt(2.0),
           "the family ceiling must sit strictly inside Tsirelson")
 
-    # ---- eps > 0 branch: entangles, never steers (CJWR-3), never CHSH ---
+    # ---- eps > 0: finite-grid consistency with cited analytic no-crossing claim ----
+    # CJWR-3 non-crossing does not certify unsteerability by other criteria.
     hit_ent, top_cjwr, top_M = False, 0.0, 0.0
     for i in range(1, 25):
         for j in range(0, 25):
@@ -437,24 +448,35 @@ def check_T_correlation_hierarchy_ladder():
              'realized rung by rung in the native two-cell family, with '
              'named gates and the d_eff Bell ceiling',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
-            'Rung 0 product (L_loc) / rung 1 classical correlation (the '
-            'forced L_nc cost) / rung 2 discord-only cq (the bridge '
-            'theorem\'s one-sided FLOOR, generic; exception locus '
-            'Delta = -eps pinned, where the state drops to rung 1) / '
-            'rung 3 entanglement (two-sided + the .340 gate; diagonal '
-            'closed form 2 ln(1+sqrt2)/ln102 = 0.3811) / rung 4 CJWR-3 '
+            'Numerical consistency observations from floating-point '
+            'evaluations, bisection and finite grids: rung 0 product '
+            '(L_loc) / rung 1 classical correlation (the forced L_nc '
+            'cost) / rung 2 discord-only cq (the bridge theorem\'s '
+            'one-sided FLOOR, generic; exception locus Delta = -eps '
+            'pinned, where the state drops to rung 1) / rung 3 '
+            'entanglement (two-sided + the .340 gate; diagonal closed '
+            'form 2 ln(1+sqrt2)/ln102 = 0.3811) / rung 4 CJWR-3 '
             'steering (1.1573, the one imported sufficient-only '
-            'instrument) / rung 5 CHSH (Horodecki exact iff, 1.2008, '
-            'cross-verified by settings optimization) — strict '
-            'inclusions. Family Bell ceiling 2 sqrt(2) * 102/103 = '
-            '2.8010, the sup over the quadrant on both fillings: '
-            'fractional deficit 1/(d_eff+1) at the native calibration '
-            'beta|eps| = ln d_eff; strictly inside banked T_Tsirelson. '
-            'Rung-4/5 reachability is occupied-branch-only (eps > 0 '
-            'entangles but crosses neither upper gate — CHSH exact, '
-            'unsteerability-by-other-criteria not certified). All '
+            'instrument) / rung 5 CHSH (Horodecki exact-iff mathematical '
+            'criterion, 1.2008, numerically cross-checked by a finite '
+            'settings search) -- strict gate order observed. The '
+            'all-parameter family Bell supremum 2 sqrt(2) * 102/103 = '
+            '2.8010 over the quadrant on both fillings, and the eps > 0 '
+            'branch entangling but crossing neither upper gate, are '
+            'claims of the cited analytic model argument: Reference - '
+            'The Correlation-Hierarchy Ladder in the Native Two-Cell '
+            'Family (2026-07-02), The d_eff Bell ceiling and Fences; '
+            'see also Paper 14 Supplement v0.17 ladder/ceiling passages. '
+            'This routine checks finite-grid consistency and one finite '
+            'deep point (mu=Delta=60), not a universal bound or limit '
+            'proof. The family ceiling has fractional deficit '
+            '1/(d_eff+1) at beta|eps| = ln d_eff, strictly inside banked '
+            'T_Tsirelson. Rung-4/5 reachability is occupied-branch-only; '
+            'unsteerability-by-other-criteria is not certified. PPT at '
+            '2x2 and Horodecki are exact-iff mathematical criteria, '
+            'distinct from their floating-point evaluation here. All '
             'model-level, conditional on the mu*P* placement convention; '
             'no physical-profile claim; no boost/2pi claim.'
         ),

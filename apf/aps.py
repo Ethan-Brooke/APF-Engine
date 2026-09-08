@@ -21,11 +21,11 @@ the remaining entries are induced.
 
 This module provides:
 
-  * APS dataclass: a finite-witness construction of the APS object.
-  * check_T_APS_construction: certifies that the witness APS satisfies the
-    structural invariants (substrate finite; continuation sets non-empty;
-    continuation equivalence partitions the substrate; induced state space
-    has correct cardinality; distinction set is finite-cost).
+  * WitnessAPS dataclass: supplied finite continuation data and named prices.
+  * check_T_APS_construction: checks six finite properties: nonempty substrate
+    and continuation sets; equivalence relation and quotient partition;
+    finite positive capacity and positive named prices. It does not implement
+    the full current APS composition or admissibility-cost valuation.
   * check_T_continuation_preorder: certifies the continuation preorder
     [x] preceq [y] iff Cont(y) subseteq Cont(x) is reflexive and transitive,
     and antisymmetric on quotient classes.
@@ -33,7 +33,7 @@ This module provides:
     physical distinctions, and ledgers are all downstream of the APS data
     (Lemma 4.2 of Paper 1 v7.1 supplement).
 
-Each check is bank-registered with epistemic tag [P_structural], tier 4.
+All checks are tier 4; T_APS_construction is P_math; the two siblings retain [P_structural].
 """
 
 from __future__ import annotations
@@ -107,19 +107,19 @@ def _build_canonical_witness() -> WitnessAPS:
 # =====================================================================
 
 def check_T_APS_construction():
-    """T_APS_construction: APS witness satisfies structural invariants.
+    """T_APS_construction: six properties of supplied finite continuation data.
 
-    Tier 4 [P_structural]. Paper 1 Supplement v7.1 Definition 4.1.
-
-    Verifies on the canonical witness:
-      (i) X_Gamma is a finite non-empty set.
-      (ii) Cont_Gamma(x) is non-empty for every raw possibility x.
-      (iii) Continuation equivalence ~_Gamma is reflexive, symmetric,
-            transitive (i.e., a true equivalence relation on X_Gamma).
-      (iv) Omega_Gamma = X_Gamma / ~_Gamma is well-defined.
-      (v) Capacity C_Gamma is finite and positive.
-      (vi) Every distinction in D_Gamma has positive cost (P1/A1 filter).
+    Tier 4 P_math. Current P1 Supplement v9.24
+    def:admissible-possibility-space is broader context, not implemented here.
+    Verifies on the supplied witness:
+      (i) a finite nonempty substrate;
+      (ii) nonempty continuation sets;
+      (iii) reflexivity, symmetry and transitivity of continuation equality;
+      (iv) its quotient classes partition the substrate;
+      (v) finite positive capacity; and (vi) positive named prices.
+    No admissible composition or full cost valuation is constructed.
     """
+
     A = _build_canonical_witness()
 
     # (i) finite non-empty substrate
@@ -165,7 +165,7 @@ def check_T_APS_construction():
 
     return {
         "name": "T_APS_construction",
-        "epistemic": "P_structural",
+        "epistemic": "P_math",
         "passed": True,
         "key_result": (
             f"APS witness '{A.name}': |X|={len(A.substrate)}, "
@@ -173,13 +173,13 @@ def check_T_APS_construction():
             f"|D|={len(A.distinction_costs)}"
         ),
         "summary": (
-            "Admissible Possibility Space witness satisfies all six "
-            "structural invariants of Paper 1 Supplement v7.1 Definition 4.1: "
-            "finite non-empty substrate; non-empty continuation sets; "
-            "continuation equivalence is a true equivalence relation; "
-            "physical state space well-defined as quotient; finite positive "
-            "capacity; every admissible distinction has positive admissibility "
-            "cost (P1/A1 filter)."
+            'The supplied finite continuation-data witness has a nonempty substrate '
+            'and continuation sets; equality of continuation sets induces an '
+            'equivalence relation and quotient partition; capacity is finite and '
+            'positive; the named distinction prices are positive. These are the six '
+            'finite properties checked here. Current Paper 1 Supplement v9.24, '
+            'def:admissible-possibility-space, supplies the broader definition; this function '
+            'does not implement its admissible composition or a full admissibility-cost valuation.'
         ),
     }
 

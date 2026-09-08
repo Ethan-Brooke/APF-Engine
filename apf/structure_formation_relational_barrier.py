@@ -34,7 +34,8 @@ co-requirement -- a substantive structural stipulation, NOT "relationality"
 (an acyclic relational chain assembles serially). Why fundamental folds would
 be cyclically co-requiring rather than well-founded is an open problem.
 
-GRADE: [P_structural] (epistemic="P_structural") on every banked check.
+GRADE: cyclic assembly, graph IFF and reversibility checks return
+epistemic="P_structural_exhaustive"; the rent-free check retains its declared grade.
 ppc=False (physical_premises_certified=False) on every check; non-exporting;
 stdlib-only self-contained (fractions / itertools / collections / random).
 
@@ -267,11 +268,11 @@ def _random_requirement_model(n: int, rng: random.Random) -> RelationalModel:
 
 
 # ---------------------------------------------------------------------------
-# Banked checks -- ONLY the cyclic-co-requirement graph theorem. [P_structural]
+# Banked checks -- ONLY the cyclic-co-requirement graph theorem; grades per check.
 # ---------------------------------------------------------------------------
 
 def check_L_cyclic_corequirement_blocks_serial_assembly():
-    """[P_structural] The canonical 3-cycle fold {0,1,2} (each distinction co-
+    """[P_structural_exhaustive] The canonical 3-cycle fold {0,1,2} (each distinction co-
     requires the next) has ONLY the empty set and the whole fold relata-closed,
     so it has no admissible proper partial. Monotone serial single-commit
     assembly is therefore impossible (BFS from the empty seat cannot take a
@@ -303,7 +304,7 @@ def check_L_cyclic_corequirement_blocks_serial_assembly():
               and rec_serial is True and rec_acyclic is True
               and chain_serial is True and chain_acyclic is True)
     return {
-        "passed": passed, "family": FAMILY, "epistemic": "P_structural",
+        "passed": passed, "family": FAMILY, "epistemic": "P_structural_exhaustive",
         "physical_premises_certified": False,
         "relata_closed_subsets": closed,
         "no_admissible_proper_partial": no_proper_partial,
@@ -320,7 +321,7 @@ def check_L_cyclic_corequirement_blocks_serial_assembly():
 
 
 def check_L_serial_unreachable_iff_requirement_cycle():
-    """[P_structural] THE GRAPH THEOREM. Over a deterministic battery -- ALL
+    """[P_structural_exhaustive] THE GRAPH THEOREM. Over a deterministic battery -- ALL
     requirement digraphs on 3 and 4 distinctions (no self-requirement) plus a
     seeded random battery of 6000 digraphs on 4..7 distinctions -- the whole
     fold is UNREACHABLE by monotone serial single-commitments IFF its
@@ -363,7 +364,7 @@ def check_L_serial_unreachable_iff_requirement_cycle():
     passed = (mismatches == 0 and tested >= 6000
               and cyclic_unreachable > 0 and acyclic_reachable > 0)
     return {
-        "passed": passed, "family": FAMILY, "epistemic": "P_structural",
+        "passed": passed, "family": FAMILY, "epistemic": "P_structural_exhaustive",
         "physical_premises_certified": False,
         "models_tested": tested,
         "iff_mismatches": mismatches,
@@ -412,7 +413,7 @@ def check_L_barrier_is_rent_free():
 
 
 def check_L_barrier_survives_reversibility():
-    """[P_structural] REVERSIBILITY DOES NOT LIFT IT. Even when single-commit
+    """[P_structural_exhaustive] REVERSIBILITY DOES NOT LIFT IT. Even when single-commit
     moves may be UNDONE (single removals as well as additions), the cyclic
     whole {0,1,2} remains serially unreachable: from the empty seat no
     admissible neighbour exists in either direction, so no reversible walk
@@ -427,7 +428,7 @@ def check_L_barrier_survives_reversibility():
     rec_rev = serial_reachable(rec.ground, rec, allow_remove=True)
     passed = (fwd is False and rev is False and rec_rev is True)
     return {
-        "passed": passed, "family": FAMILY, "epistemic": "P_structural",
+        "passed": passed, "family": FAMILY, "epistemic": "P_structural_exhaustive",
         "physical_premises_certified": False,
         "serial_reachable_forward": fwd,
         "serial_reachable_with_reversibility": rev,

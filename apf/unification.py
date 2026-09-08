@@ -63,9 +63,9 @@ A gravitational horizon: K_horizon = area / (4 ell_P^2), d_eff -> e
 (log-count identity in Planck units), N_horizon = exp(K_horizon),
 ACC_horizon = K_horizon.
 
-A finite-dim quantum interface: K is the dimension count, d_eff = 1
-(each "slot" is a single orthogonal basis element), N = d,
-ACC = ln d.
+A finite-dim quantum interface uses the acc_quantum bookkeeping
+convention K = 1, d_eff = d, so N = d and ACC = ln d; the constructor
+does not assign a physical slot decomposition to a generic quantum d.
 
 Dependencies
 ------------

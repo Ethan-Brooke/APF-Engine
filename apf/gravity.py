@@ -2080,7 +2080,7 @@ def check_T_v_global_accumulation_from_type_II_resolutions():
 
 
 def check_T_which_v_no_registered_interior_reader():
-    """T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural].
+    """T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural_instrument].
 
     v24.3.318 NEW (2026-07-02; the fingerprint map was first generated at
     .317 and regenerated recursively at .318 -- the Wave 5 IE lane took
@@ -2174,7 +2174,7 @@ def check_T_which_v_no_registered_interior_reader():
     as intended, exactly as the .305 fork walker fails if the fork
     acquires a new citing surface.
 
-    GRADE [P_structural]: closed-world over the current corpus, by
+    GRADE [P_structural_instrument]: closed-world over the current corpus, by
     construction.
     """
     import os as _os
@@ -2455,9 +2455,9 @@ def check_T_which_v_no_registered_interior_reader():
           f"{len(FINGERPRINT_MAP)}) -- a disposition tag with no counter fails here")
 
     return _result(
-        name='T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural]',
+        name='T_which_v_no_registered_interior_reader: No Registered Interior Which-v Reader [P_structural_instrument]',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_instrument',
         summary=(
             f'Closed-world walker (the .305 pattern) for the bank-closed-world half of the '
             f'off-saturation which-v lemma: (a) package-recursive literal-pattern scan with '
@@ -2525,11 +2525,10 @@ def check_T_vacuum_content_typing_status():
           generator bookkeeping stays an adopted gloss (the 2026-07-02
           gloss corrigendum in check_L_global_interface_is_horizon).
 
-      (iii) THE 3 IS COUNT-WITNESSED against the banked DERIVED value:
-          n_goldstone = dim(SU(2)xU(1)) - dim(U(1)_em) = 4 - 1 = 3,
-          the same dim counting check_T_Higgs performs ("DERIVED, not
-          hardcoded"); this clause requires check_T_Higgs to pass and
-          re-derives the arithmetic. Count-match only; the parent
+      (iii) THE HIGGS-INTERNAL COUNT IS COUNT-WITNESSED:
+          this clause requires check_T_Higgs's returned passed flag,
+          reads its computed Goldstone count, and records the named
+          premise attached to that count. Count-match only; the parent
           note's Section 9 fence stands (the confirmed EW face consumes
           the TEMPLATE fact, not a vacuum-unit read).
 
@@ -2629,10 +2628,21 @@ def check_T_vacuum_content_typing_status():
     check(dim_G_SM == piece_generators,
           f"count-match: dim G_SM = {dim_G_SM} = the typed 12 (count only, not content)")
 
-    # ---- (iii) the 3 count-witness against the banked derived value ----
+    # ---- (iii) count-witness read from the conditional supplier ----
     import apf.gauge as _gauge
-    _gauge.check_T_Higgs()  # must pass; carries the derived dim counting
-    n_goldstone = (3 + 1) - 1  # dim(SU(2)xU(1)) - dim(U(1)_em), the same arithmetic
+    _higgs_record = _gauge.check_T_Higgs()
+    check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    check(type(n_goldstone) is int and n_goldstone > 0,
+          "T_Higgs goldstone_count must be a positive exact integer")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+          "T_Higgs conditional count premise changed; re-adjudicate this value tie")
     check(n_goldstone == piece_higgs_internal,
           f"count-match: n_goldstone = {n_goldstone} = the typed 3 (template fact, not a unit read)")
 
@@ -2713,7 +2723,7 @@ def check_T_vacuum_content_typing_status():
         summary=(
             'The vacuum decomposition 27+3+12 = 42, at exactly its banked strength: the sum '
             'identity holds (C_vacuum literal-sourced, stated); the 12 count-matches banked '
-            'dim G_SM and the 3 count-matches the banked derived n_goldstone (count-matches, '
+            'dim G_SM and the 3 count-matches the conditional n_goldstone read from T_Higgs (count-matches, '
             'NOT content attributions -- the addressability readings stay adopted glosses); '
             'the 27 is residual-only (42-12-3), closed-world context-scoped -- no registered '
             'surface characterizes it independently; the slot-level identification of '
@@ -2727,7 +2737,7 @@ def check_T_vacuum_content_typing_status():
             'T12E',              # the decomposition's home + the 3+16 matter counts
             'L_global_interface_is_horizon',  # assertion site + the gloss corrigendum
             'T_interface_sector_bridge',      # assertion site (V_global = Sector B)
-            'T_Higgs',           # the derived n_goldstone
+            'T_Higgs',           # the returned conditional n_goldstone
             'T_gauge',           # dim G_SM group template (N_c DAG-consumed; SU(2)/U(1) dims local template literals)
             'T_FormalKernel_VLambda_uniqueness',  # the slot-level construction whose placeholder clause (v) freezes
             'L_count',           # the 45+4+12 basis whose 12 the count-match echoes
@@ -2736,12 +2746,17 @@ def check_T_vacuum_content_typing_status():
             'sum_identity': '27 + 3 + 12 = 42',
             'source_honesty': 'no dag-registered C_vacuum exists; 42 formed from C_total - (N_gen + 16), the 16 a named T12E literal',
             'count_witnessed': {'12': 'dim G_SM = 8+3+1 (group arithmetic, N_c from DAG)',
-                                '3': 'n_goldstone = 4-1 (check_T_Higgs dim counting)'},
+                                '3': f'n_goldstone = {n_goldstone} (read from conditional T_Higgs record)'},
             'residual': ('27 = 42 - 12 - 3; no banked DERIVATION -- an anchored candidate reading exists '
                          '(colour-index census at reading grade, REDUCE 0.85 NOTE-ONLY, counting rule adopted, '
                          'derivation open; see the 2026-07-02 census note)'),
             'pinned_27_context_counts': dict(EXPECTED_27_CONTEXT_COUNTS),
             'slot_level': f'OPEN at reference strength; unbroken slot realization EXCLUDED (check_T_vglobal_slot_identification_no_go, .326); banked complement = ({comp_gauge}, {comp_higgs}, {comp_ferm}) != (12, 3, 27)',
+            'higgs_count_source': {
+                'supplier': 'T_Higgs',
+                'goldstone_count': n_goldstone,
+                'conditional_on': list(_higgs_premises),
+            },
             'content_attributions': 'NOT certified -- adopted glosses per the 2026-07-02 gloss corrigendum',
             'promotion_routes': 'independent 27 characterization (count-level, or slot-level in the BROKEN basis only per the .326 no-go) / non-slot cross-basis map / per-piece response roles -- see the reference notes',
             'reference_note': ('Reference - The Vacuum-Content Witness Priced - Two Count-Witnesses, the 27 Residual-Only, '
@@ -2753,7 +2768,7 @@ def check_T_vacuum_content_typing_status():
 
 
 def check_T_vglobal_offdiagonal_blocks_scalar_typed():
-    """T_vglobal_offdiagonal_blocks_scalar_typed: The Global-Column Kernel Census [P_structural].
+    """T_vglobal_offdiagonal_blocks_scalar_typed: The Global-Column Kernel Census [P_structural_instrument].
 
     v24.3.339 NEW (2026-07-02). The kernel-level sibling of the .318
     reader walker, from the ICL_vac route-(b) walk + hostile cold audit
@@ -2821,7 +2836,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
     readout, the census row it would occupy is the named refutation
     surface for the scalar-typed statement above.
 
-    GRADE [P_structural]: closed-world over the current corpus, by
+    GRADE [P_structural_instrument]: closed-world over the current corpus, by
     construction.
     """
     import os as _os
@@ -2913,7 +2928,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
     return _result(
         name=('T_vglobal_offdiagonal_blocks_scalar_typed: The Global-Column '
               'Kernel Census (drift-guarded)'),
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_instrument',
         summary=(
             f'Closed-world census of the route-(b) dependence kernel\'s '
             f'global column: every banked interior<->global coupling is '
@@ -2957,9 +2972,7 @@ def check_T_vglobal_offdiagonal_blocks_scalar_typed():
             'demand_register_rider':
                 ('the vacuum demand register rides rows 3-4 at exchangeable form; '
                  'rank 1 <=> the OPEN a = b identity (L_common_demand_iff_degenerate)'),
-            'disposition_kinds':
-                {'infra': 4, 'declaration': 2, 'count-readout': 8,
-                 'no-go-witness': 1, 'proof-witness': 6, 'register-home': 1},
+            'disposition_kinds': dict(kinds),
             'does_not_certify':
                 ('kernel-list exhaustiveness (= RVC(V_global), unbanked); ICL_vac '
                  '(named [C], not adopted); protocol strength; semantic codomain '

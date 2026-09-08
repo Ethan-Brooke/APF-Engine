@@ -514,8 +514,8 @@ def check_T_frustration_center_partition():
        "is the check's own returned summary content")
     r_floor = check_T_gapless_serial_floor()
     ck(r_floor.get('passed') is True
-       and r_floor.get('epistemic') == 'P_structural',
-       "anchor T_gapless_serial_floor [P_structural] passes (source of "
+       and r_floor.get('epistemic') == 'P_structural_reading',
+       "anchor T_gapless_serial_floor [P_structural_reading] passes (source of "
        "the single-flip endpoint-gated move alphabet)")
     # ruling 3a grounds, consumed live:
     r_rent = check_T_ledger_rent_excluded()

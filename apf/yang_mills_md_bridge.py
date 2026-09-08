@@ -747,35 +747,27 @@ def check_T_su2_single_plaquette_curvature_exact():
 
 
 def check_T_su2_single_site_uniform_gap_drift():
-    """T_su2_single_site_uniform_gap_drift: the SU(2) single-plaquette / conditioned-link
-    heat-bath measure has a UNIFORM single-site spectral gap, via an exact confining
-    drift [P_structural].
+    """T_su2_single_site_uniform_gap_drift: exact drift and finite-mesh checks.
 
-    Single-site generator L_h f = f'' + (2 cot phi - h sin phi) f' on (0,pi), stationary
-    measure nu_h propto sin^2 phi . e^{h cos phi} (Weyl x Wilson). In maximal-tree gauge
-    the conditioned single-LINK measure is EXACTLY this heat-bath with h = beta.|staple|
-    >= 0, so the bound is uniform over beta AND environment.
+    Tier 4, P_structural_seam | R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT.
+    R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT names Paper 30 main
+    v1.8 lem:single_site_curvature_gap's imported BBCG drift-plus-local-
+    Poincare argument for a uniform conditional single-site gap, including
+    the conditioned-link identification h=beta.|staple|. The needed local
+    constant and uniform continuum inference are not computed here.
 
-    EXACT DRIFT IDENTITY. For W = exp[gamma (1 - cos phi)],
-        L_h W / W = 3 gamma cos phi + gamma (gamma - h) sin^2 phi   (exact).
-    With gamma = h/2 this equals -3h/2 < 0 at the antipode (cos phi = -1) and is <= 0 for
-    cos phi <= c* = -3/h + sqrt(9/h^2 + 1): a Bakry-Barthe-Cattiaux-Guillin
-    drift-and-minorization condition (confining drift toward the identity, growing with h).
-    Drift + a local Poincare inequality on the well K = [0, arccos c*] gives a UNIFORM
-    single-site gap rho(h) >= c_0 > 0 for all h >= 0. Numerically rho(0) = 3 (the first
-    S^3-Laplacian eigenvalue n^2-1) and rho is monotone increasing in h (3, 3.2, 4.05, 6.1
-    at h = 0,1,2.3,4) -- no single-site closure; the antipodal negative-curvature region
-    (h>2) is a measure-suppressed repeller, not a gap-closing mode.
+    For W=exp[gamma(1-cos phi)], SymPy checks
+    L_h W/W = 3 gamma cos phi + gamma(gamma-h)sin^2 phi and the antipodal
+    specialization at gamma=h/2. The latter is -3h/2, strictly negative
+    for h>0; it is zero at h=0. Separately, a finite mesh supplies sampled
+    eigenvalues at h=0,1,2.3,4.0 with the stated tolerances. These checks
+    supply no mesh error bound or all-h monotonicity/uniform-gap proof.
 
-    SCOPE / NON-CLAIMS. Certifies the single-site (DIAGONAL) stiffness ONLY: a uniform
-    conditional single-site gap, no single-site closure. It does NOT close the YANG-MILLS
-    MASS GAP. An attempt to tensorize this to the full gap via Otto-Reznikoff (rho > ||K||)
-    was REFUTED by cold audit (2026-06-30, 0.88): the small induced connected-character
-    coupling (kappa_2 <= 0.099) is NOT the Otto-Reznikoff Gibbs interaction norm (which is
-    the O(beta) Wilson-action Hessian on the true link coordinates), so the off-diagonal /
-    susceptibility assembly reverts to the cluster expansion and stays OPEN. The exact drift
-    identity is [P]; the uniform-gap reading rests on BBCG + a standard local-Poincare
-    constant (asserted, not written here), hence grade [P_structural].
+    Scope is single-site/DIAGONAL only. The full Yang-Mills gap and the
+    off-diagonal susceptibility assembly remain open. The prior attempted
+    Otto-Reznikoff tensorization was refuted: the small connected-character
+    coupling is not the Wilson-action Gibbs interaction norm. This witness
+    calls neither T_epsilon nor the held MD-bridge checks in its cross_refs.
     """
     import sympy as sp
     import numpy as np
@@ -786,7 +778,7 @@ def check_T_su2_single_site_uniform_gap_drift():
     _check(sp.simplify(LW / W - rhs) == 0,
            "exact drift identity L_h W/W = 3 gamma cos phi + gamma(gamma-h) sin^2 phi, W=exp[gamma(1-cos phi)]")
     _check(sp.simplify(rhs.subs(gamma, h / 2).subs(phi, sp.pi) + sp.Rational(3, 2) * h) == 0,
-           "at gamma=h/2 the antipodal drift is -3h/2 < 0 (confining BBCG drift, growing with h)")
+            "at gamma=h/2 the antipodal drift is -3h/2: strictly negative for h>0 and zero at h=0")
 
     def _gap(beta, N=1200):
         x = np.linspace(1e-6, np.pi - 1e-6, N); dx = x[1] - x[0]
@@ -797,27 +789,27 @@ def check_T_su2_single_site_uniform_gap_drift():
         d = np.sqrt(w); return float(np.linalg.eigvalsh(A / d[:, None] / d[None, :])[1])
     gaps = [_gap(b) for b in (0.0, 1.0, 2.3, 4.0)]
     _check(abs(gaps[0] - 3.0) < 0.06,
-           "single-site gap at h=0 is 3 = first S^3-Laplacian eigenvalue n^2-1 (validation)")
+            "finite-mesh h=0 eigenvalue agrees with 3 within the stated tolerance")
     _check(all(gaps[k + 1] >= gaps[k] - 1e-4 for k in range(len(gaps) - 1)) and all(x >= 3.0 - 0.06 for x in gaps),
-           "single-site gap monotone increasing in h and >= 3 (no single-site closure): "
+            "sampled finite-mesh eigenvalues are nondecreasing and >= 3 within the stated tolerances: "
            + ", ".join(f"{x:.3f}" for x in gaps))
     return _full_result(
-        name=("T_su2_single_site_uniform_gap_drift: the SU(2) single-plaquette/heat-bath measure has a "
-              "uniform single-site spectral gap via the exact confining drift W=exp[(h/2)(1-cos phi)] (BBCG); "
-              "DIAGONAL only, NOT the mass gap [P_structural]"),
-        tier=4, epistemic="P_structural",
+        name=("T_su2_single_site_uniform_gap_drift: exact SU(2) single-site drift and finite-mesh witnesses; "
+              "uniform-gap inference uses an external BBCG/local-Poincare argument; DIAGONAL only "
+              "P_structural_seam | R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT"),
+        tier=4, epistemic="P_structural_seam | R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT",
         dependencies=["T_su2_single_plaquette_curvature_exact"],
         cross_refs=["T_ym_gap_positivity_from_MD", "T_ym_conformal_phase_excluded_by_record_locking"],
-        key_result=("Exact drift L_h W/W = 3g cos phi + g(g-h) sin^2 phi; gamma=h/2 -> -3h/2 at the antipode "
-                    "(BBCG confining drift) -> uniform single-site gap rho(h) >= c_0 > 0; numerically rho(0)=3, "
-                    "monotone rising. DIAGONAL stiffness only; the mass-gap off-diagonal is OPEN (Otto-Reznikoff "
-                    "tensorization refuted 2026-06-30)."),
-        summary=("Uniform single-site spectral gap of the SU(2) heat-bath measure by an exact confining drift "
-                 "(BBCG): the conditioned single-link measure IS this heat-bath with h=beta.|staple|, so the gap "
-                 "is uniform over beta and environment; rho(0)=3, monotone rising, no single-site closure. "
-                 "Settles the DIAGONAL. Does NOT close the YM mass gap: the Otto-Reznikoff tensorization was "
-                 "refuted (small character-coupling is not the Gibbs interaction norm); the off-diagonal "
-                 "susceptibility assembly reverts to the cluster expansion and stays open."),
+        key_result=("Exact drift L_h W/W = 3g cos phi + g(g-h) sin^2 phi; gamma=h/2 gives -3h/2 at the "
+                    "antipode, negative for h>0 and zero for h=0. Finite-mesh eigenvalues check the stated "
+                    "sampled values/tolerances; the uniform continuum gap uses "
+                    "R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT. DIAGONAL only; off-diagonal OPEN."),
+        summary=("SymPy drift identities and finite-mesh single-site eigenvalue checks. "
+                 "R_PAPER30_SINGLE_SITE_BBCG_LOCAL_POINCARE_ARGUMENT names Paper 30 main v1.8 "
+                 "lem:single_site_curvature_gap's conditioned-link identification and BBCG plus local-Poincare "
+                 "inference; the local constant and uniform continuum bound are not proved here. "
+                 "The strict antipodal sign requires h>0, with h=0 handled separately. DIAGONAL only; "
+                 "the mass-gap off-diagonal remains open and the prior Otto-Reznikoff warning remains."),
     )
 
 

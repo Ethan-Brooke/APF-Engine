@@ -501,10 +501,13 @@ def _riesz_recover(vals, gram, basis, n):
 # recorded here because these tuples are otherwise easy to read as more
 # protection than they are.
 #
-# A NEGATIVE CONTROL IS OWED AND MISSING: no leg in this module demonstrates
-# that the set-exact comparison in `_finish` actually reports a dropped or
-# renamed leg -- `inventory_guard_negative_control` is that control, it is not
-# present here, and it is owed.
+# `inventory_guard_negative_control` calls `_finish` on three synthetic
+# inventories: complete, missing required_leg, and required_leg renamed to
+# renamed_leg. It compares all three pass flags and complete failure lists
+# with literal expectations. These cases do not certify predicates, discover
+# absent requirements, detect coordinated inventory/key renames or constant
+# replacement, or test physical completeness. A future bypass of `_finish`
+# can bypass both the check and this control.
 _INV_LEDGER = (
     "three_resolutions_determine_the_operator",
     "three_real_resolutions_return_only_the_real_part",
@@ -512,6 +515,7 @@ _INV_LEDGER = (
     "fail_control_non_psd_operator_rejected",
     "fail_control_wrong_diagonal_rejected",
     "positivity_predicate_negative_control",
+    "inventory_guard_negative_control",
     "off_diagonal_effect_separates_fiber_members",
     "resolution_read_nullity_complex",
     "resolution_read_rank_and_nullity_real",
@@ -890,6 +894,41 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
                  "False. The rank-one operators these checks lean on are "
                  "singular, which is exactly where the two tests differ"})
 
+    # ---- control on the same _finish used by the native return ------------
+    # Expectations below are literal, not derived from the probe records.
+    # The control lives in this check, so these _finish calls do not recurse.
+    _inv_complete = _finish(
+        "__inventory_probe_complete__", "probe", 0, "", {},
+        {"required_leg": (True, {})}, ("required_leg",), (), ())
+    _inv_missing = _finish(
+        "__inventory_probe_missing__", "probe", 0, "", {},
+        {}, ("required_leg",), (), ())
+    _inv_renamed = _finish(
+        "__inventory_probe_renamed__", "probe", 0, "", {},
+        {"renamed_leg": (True, {})}, ("required_leg",), (), ())
+    legs["inventory_guard_negative_control"] = (
+        _inv_complete["passed"] is True
+        and _inv_complete["fail_reasons"] == []
+        and _inv_missing["passed"] is False
+        and _inv_missing["fail_reasons"] ==
+            ["leg inventory mismatch: missing=['required_leg'] extra=[]"]
+        and _inv_renamed["passed"] is False
+        and _inv_renamed["fail_reasons"] ==
+            ["leg inventory mismatch: missing=['required_leg'] extra=['renamed_leg']"],
+        {"complete": {"passed": _inv_complete["passed"],
+                      "fail_reasons": _inv_complete["fail_reasons"]},
+         "missing": {"passed": _inv_missing["passed"],
+                     "fail_reasons": _inv_missing["fail_reasons"]},
+         "renamed": {"passed": _inv_renamed["passed"],
+                     "fail_reasons": _inv_renamed["fail_reasons"]},
+         "note": "Only the three synthetic complete, missing-required_leg, "
+                 "and renamed-to-renamed_leg cases are compared here. "
+                 "This does not certify predicates, discover absent "
+                 "requirements, detect coordinated inventory/key renames or "
+                 "constant replacement, or test physical completeness. "
+                 "A future bypass of _finish can bypass both the check and "
+                 "this control."})
+
     key = (
         "READING AN OUTCOME LAW OFF THE COMMIT-RECORD RESOLUTION DETERMINES "
         "THE DIAGONAL AND NOTHING ELSE. Affinity on the effect sector gives "
@@ -943,7 +982,10 @@ def check_L_counted_ledger_fixes_only_the_commit_record_diagonal():
          "an operator with an oversized off-diagonal must fail positivity",
          "an off-diagonal effect must separate fiber members",
          "the three-resolution recovery must NOT return rho_b on the two "
-         "complex members -- it returns the real part"),
+         "complex members -- it returns the real part",
+         "synthetic complete/missing/renamed inventories must return their "
+         "literal pass flags and exact failure lists, including required_leg "
+         "missing and renamed_leg extra in the renamed case"),
         ("born_at_ties.L_selection_ledger_completeness (the tautology at "
          ":400-403 and :456-457)",
          "presentation_gauge_forcing.T_presentation_gauge_forces_trace "

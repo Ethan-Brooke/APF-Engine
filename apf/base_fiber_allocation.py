@@ -581,32 +581,25 @@ def check_T_gauge_connection_is_gauge_variant_convention_P() -> Dict:
 
 
 def check_T_across_frame_fork_localized() -> Dict:
-    """The across-frame fork is LOCALIZED: a closed-world citation-hygiene theorem.
+    """The across-frame fork is LOCALIZED by citation hygiene.
 
-    CLAIM. The per-region-vs-diagonal (gauged-vs-global) across-frame fork is cited
-    by exactly three bank modules -- base_fiber_allocation (the no-B allocation,
-    adopted), gauge_quotient_ledger (GQL-2 + the two-region control, "the Goldstone
-    shadow"), ym_quotient_ledger (its own gauged-vs-global discriminating control) --
-    plus one FENCED MENTION in gauge_invariant_record (the loc_commut across-interface
-    frame, consumed as a reading, [P_structural_reading]). No other module references
-    the fork, and no confirmed quantitative prediction sits downstream of it as a
-    grade-carrying dependency (the 3/13 EW ledger share and the alpha_s forward chain
-    are horn-blind: cold audit 2026-07-01, REDUCE 0.85, Finding 1).
+    CLAIM. Citation hygiene over the enumerated top-level source surfaces:
+    the encountered filenames match the existing allowed_surfaces map exactly.
+    The map includes the no-B allocation, the two quotient-ledger controls,
+    the fenced record mention and the solder-form no-go surface.
 
-    HONEST GLOSS (required by the same audit, Finding 7): this check certifies
-    CITATION HYGIENE -- no check outside the enumerated surfaces NAMES a fork
-    object -- not semantic horn-blindness. The fork's historical failure mode is
-    being smuggled unnamed (the Skolem-Noether Step-1 charge); a source scan cannot
-    detect smuggling. What the check buys: the FOUNDATIONAL_BASE across_region row
-    ("no_B", status OPEN) is provably CONTAINED -- nothing confirmed rests on it.
+    This check certifies CITATION HYGIENE, not semantic horn-blindness or
+    prediction dependence. A source scan cannot detect a fork object smuggled
+    unnamed. The FOUNDATIONAL_BASE across_region row ("no_B") stays OPEN.
+    Historical audit attribution (2026-07-01): no confirmed prediction depended
+    on the fork; this check does not recompute that dependency claim.
 
-    Pattern precedent: the boundary-map corpus check (closed-world over the
-    enumerated registry). Falsifiers: (i) a new module cites the fork outside the
-    enumeration (this check fails -> re-audit the containment); (ii) a future theorem
-    supplies a canonical arrow (the sibling no-B check inverts); (iii) a confirmed
-    prediction acquires a fork surface as a grade-carrying dependency.
+    Falsifier for this check: a top-level source filename enters or leaves the
+    enumerated citation surfaces. A canonical arrow or a new prediction
+    dependency would require separate adjudication.
 
-    GRADE [P_structural]: closed-world over the current corpus, by construction.
+    GRADE [P_structural_instrument]: citation hygiene over the enumerated
+    top-level source surfaces.
     """
     import os
     import apf as _apf_pkg
@@ -653,17 +646,18 @@ def check_T_across_frame_fork_localized() -> Dict:
         "unexpected_surfaces": unexpected,
         "missing_expected_surfaces": missing,
         "gloss": "citation hygiene over the enumerated corpus; NOT semantic horn-blindness",
-        "containment": ("no confirmed prediction is downstream of the fork as a "
-                        "grade-carrying dependency (audit 2026-07-01)"),
+        "containment": ("Historical audit attribution (2026-07-01): no confirmed prediction "
+                        "depended on the fork; this citation-hygiene check does not "
+                        "recompute that dependency claim."),
     }
     if ok:
         return _ok(
             "check_T_across_frame_fork_localized",
-            status="P_structural",
-            summary=("The across-frame fork is cited at exactly three bank surfaces plus one "
-                     "fenced mention, nowhere else; the FOUNDATIONAL_BASE across_region row is "
-                     "provably contained (citation hygiene, closed-world over the current corpus; "
-                     "not semantic horn-blindness)."),
+            status="P_structural_instrument",
+            summary=("The across-frame fork is localized by citation hygiene over the "
+                     "enumerated top-level source surfaces in allowed_surfaces. "
+                     "The FOUNDATIONAL_BASE across_region row remains OPEN; "
+                     "prediction dependence is not recomputed by this check."),
             data=data,
             dependencies=["check_T_gauge_connection_is_gauge_variant_convention_P"],
         )
@@ -724,7 +718,7 @@ def check_T_canonical_token_requires_type_or_theorem() -> Dict:
     is supplied by the sibling check_T_billed_vs_derived_register_criterion (register
     exhaustiveness open, R5 uninstrumented, R4 scoped to the Delta=1 template class).
 
-    GRADE [P_structural]: certifies the model facts the trichotomy rests on, over the
+    GRADE [P_structural_reading]: certifies the model facts the trichotomy rests on, over the
     current corpus, by construction. Tier 4.
     """
     inv = substrate_inventory()
@@ -772,7 +766,7 @@ def check_T_canonical_token_requires_type_or_theorem() -> Dict:
                       "exhaustiveness open)")}
     if ok:
         return _ok("check_T_canonical_token_requires_type_or_theorem",
-                   status="P_structural",
+                   status="P_structural_reading",
                    summary=("Token-registered orientation content is reference-record (T1), "
                             "relocated type-level structure (T2, landing on the OPEN type-census "
                             "entry lemma), or the derived-canonicity falsifier slot (T3) -- "
@@ -830,7 +824,7 @@ def check_T_census_unit_exclusion_conditional() -> Dict:
     row), and undecidable for R5 (room-structure/tilt, uninstrumented). Register
     exhaustiveness stays open; the antecedent as a whole stays OPEN by design.
 
-    GRADE [P_structural] (conditional arithmetic over banked registers). Tier 4.
+    GRADE [P_structural_reading] (conditional arithmetic over banked registers). Tier 4.
     """
     import math
     from fractions import Fraction
@@ -875,7 +869,7 @@ def check_T_census_unit_exclusion_conditional() -> Dict:
                       "the 42-sector asymmetry is a staged lead, not decided here")}
     if ok:
         return _ok("check_T_census_unit_exclusion_conditional",
-                   status="P_structural",
+                   status="P_structural_reading",
                    summary=("IF a standing type-level commitment constitutes or displaces a "
                             "horizon census unit THEN excluded amplitude-independently: extension "
                             "shifts the CC register by ln(102)=4.625 nats (x24-x220 over the honest "
@@ -977,7 +971,7 @@ def check_T_billed_vs_derived_register_criterion() -> Dict:
       (vi)  docstring-tamper sentinel on this check's own non-claims (the .312
             F2 pattern).
 
-    GRADE [P_structural] (register-map strength: named premise + certified model
+    GRADE [P_structural_reading] (register-map strength: named premise + certified model
     facts, closed-world over the current corpus). Tier 4.
     """
     import math
@@ -1072,7 +1066,7 @@ def check_T_billed_vs_derived_register_criterion() -> Dict:
     if ok:
         res = _ok(
             "check_T_billed_vs_derived_register_criterion",
-            status="P_structural",
+            status="P_structural_reading",
             summary=("Billed-vs-derived is REGISTER-RELATIVE: CONSTITUTIVE (declared "
                      "adoption record, registry-relative) / DERIVED (theorem of the "
                      "stack-minus-X) / BILLED in a named register (R1 census unit; R3 "
@@ -1089,7 +1083,7 @@ def check_T_billed_vs_derived_register_criterion() -> Dict:
                           "T_ew_load_placement_P"],
         )
         res["tier"] = 4
-        res["epistemic"] = "P_structural"
+        res["epistemic"] = "P_structural_reading"
         res["key_result"] = key_result
         res["cross_refs"] = data["cross_refs"]
         return res
@@ -1168,8 +1162,8 @@ IE_DECLARATIONS = (
             "check_T_cross_interface_algebraic_impossibility_ceiling_P -- "
             "at their banked bespoke tokens [P_allocation] and "
             "[P_ceiling], not bare [P]); the across-frame fork is "
-            "provably CONTAINED "
-            "(check_T_across_frame_fork_localized [P_structural]) and the "
+            "localized by citation hygiene "
+            "(check_T_across_frame_fork_localized [P_structural_instrument]) and the "
             "across_region row (no-B) stays OPEN. "
         ),
         "note": "Wave 4 probe; the no-B row's OPEN status stated honestly",
@@ -1180,7 +1174,7 @@ IE_DECLARATIONS = (
         "axis": "ROUTE",
         "claim_text": (
             "The billed-vs-derived question is register-relative "
-            "(check_T_billed_vs_derived_register_criterion [P_structural], "
+            "(check_T_billed_vs_derived_register_criterion [P_structural_reading], "
             "v24.3.332): the trichotomy CONSTITUTIVE / DERIVED / BILLED "
             "evaluated in registers {R1, R3, R4} (R5 open; R2 killed by "
             "d_eff = (K-1) + C_vacuum); the monadic criterion is killed by "

@@ -16,10 +16,10 @@ structural rigidity theorem.
 This module provides three bank-registered checks witnessing the structural
 rigidity on a finite toy interface:
 
-  * check_T_kappa_int_lower_bound: certifies the marginal-floor lemma
-    (Lemma `lem:marginal-floor-on-joint-cost`) and its corollary
-    `cor:sum-of-floors-lower-bound` give a structural lower bound on
-    κ_Γ(S) and on the residue κ_{Γ,int}(S) on a worked toy interface.
+  * check_T_kappa_int_lower_bound: P_math singleton/joint-cost and residue
+    arithmetic on two supplied profiles with a nonnegative kernel. Current
+    v9.24 marginal-floor and sum-of-floors results require support-novel and
+    support-independent physical hypotheses not certified by this example.
 
   * check_T_kappa_int_upper_bound_C1C5: certifies the binary-form upper
     bound (Theorem `thm:kappa-int-binary-upper-bound`) and far-separation
@@ -31,11 +31,11 @@ rigidity on a finite toy interface:
     between explicit substrate-derived endpoints in the C1-C5 regime, with
     no remaining structural freedom.
 
-Each check is bank-registered with epistemic tag [P_structural], tier 4.
-
-Source-of-record: Paper 1 Supplement v8.27 §9 ("Structural shape of the
-joint cost and the interface term") + §14.5 ("Upper bound on the interface
-term in the continuum-bridge regime").
+Tier 4: lower_bound and repaired R1_R4 scope are P_math; minimum_distinction_floor
+is P under its adopted uniform singleton-domain floor (P1 Supplement v9.24).
+Upper_C1C5 and two_sided retain [P_structural]; upper_topological retains
+[P_structural_topological_regime_restricted]. Their v8.27 upper-bound source
+and continuum-bridge scope remain separate from these three admissions.
 """
 
 from __future__ import annotations
@@ -144,20 +144,20 @@ def _kappa_Gamma_joint(phi_list, eps_local, kernel, sites):
 # =====================================================================
 
 def check_T_kappa_int_lower_bound():
-    """T_kappa_int_lower_bound: marginal-floor lemma + sum-of-floors
-    corollary + structural lower bound on κ_{Γ,int}(S).
+    """T_kappa_int_lower_bound: supplied finite positive-kernel arithmetic.
 
-    Tier 4 [P_structural]. Paper 1 Supplement v8.27 §9
-    (Lemma `lem:marginal-floor-on-joint-cost`,
-     Corollary `cor:sum-of-floors-lower-bound`,
-     Theorem `thm:kappa-int-singleton-shape`).
+    Tier 4 P_math. Paper 1 Supplement v9.24
+    lem:marginal-floor-on-joint-cost, cor:sum-of-floors-lower-bound and
+    thm:kappa-int-singleton-shape are conditional source results.
+    Their positive-floor, support-novel and admissible support-independent
+    physical hypotheses are not certified by this fixed example.
 
-    Verifies on the toy interface that:
-      (i) Each per-distinction in-isolation cost satisfies κ_Γ(d) ≥ ε*
-          (MD floor).
-      (ii) The joint cost satisfies κ_Γ(S) ≥ n ε* (sum-of-floors).
-      (iii) The singleton-form residue satisfies
-            κ_{Γ,int}(S) ≥ n ε* - Σ κ_Γ(d_i).
+    On the four-site/two-profile model, checks:
+      (i) singleton costs at least the supplied epsilon_star;
+      (ii) joint cost at least two times that supplied floor;
+      (iii) the algebraically equivalent residue lower bound.
+    The joint helper retains its ordered i != j cross-term convention.
+
     """
     iface = _build_toy_interface()
     sites = iface["sites"]
@@ -172,12 +172,12 @@ def check_T_kappa_int_lower_bound():
     k_d1 = _kappa_Gamma_singleton(phi_d1, eps_local, kernel, sites)
     k_d2 = _kappa_Gamma_singleton(phi_d2, eps_local, kernel, sites)
 
-    # (i) MD floor on each in-isolation cost
+    # (i) Supplied toy floor on each in-isolation cost
     assert k_d1 >= eps_star, (
-        f"MD floor violated for d_1: κ(d_1) = {k_d1:.4f} < ε* = {eps_star}"
+        f"Supplied toy floor violated for d_1: κ(d_1) = {k_d1:.4f} < ε* = {eps_star}"
     )
     assert k_d2 >= eps_star, (
-        f"MD floor violated for d_2: κ(d_2) = {k_d2:.4f} < ε* = {eps_star}"
+        f"Supplied toy floor violated for d_2: κ(d_2) = {k_d2:.4f} < ε* = {eps_star}"
     )
 
     # Joint cost
@@ -209,15 +209,15 @@ def check_T_kappa_int_lower_bound():
             f"sum-of-floors n·ε* = {sum_of_floors}; all inequalities hold."
         ),
         "summary": (
-            "Marginal-floor lemma (Lemma `lem:marginal-floor-on-joint-cost`) "
-            "+ sum-of-floors corollary (Corollary `cor:sum-of-floors-lower-bound`) "
-            "+ structural lower bound (Theorem `thm:kappa-int-singleton-shape`) "
-            "all witnessed on a finite toy interface. The lower bound is "
-            "unconditional (any finite physical regime) and follows from MD "
-            "via BW without requiring any continuum-bridge assumption."
+            'On the supplied four-site interface, the singleton costs exceed the supplied epsilon_star floor, the '
+            'joint cost satisfies the two-profile sum-of-floors inequality, and the residue comparison is its '
+            'algebraic rearrangement. This P_math claim concerns the given nonnegative cost model. Paper 1 Supplement '
+            'v9.24 lem:marginal-floor-on-joint-cost, cor:sum-of-floors-lower-bound and thm:kappa-int-singleton-shape '
+            'concern a positive floor on support-novel increments and an admissible support-independent family. This '
+            'check does not certify those physical hypotheses or an unconditional bound for arbitrary finite physical regimes.'
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_math",
         "dependencies": ["MD", "BW", "L_epsilon_star"],
     }
 
@@ -401,7 +401,7 @@ def check_T_kappa_int_two_sided_rigidity():
 def check_T_R1_R4_spine_derivable():
     """R1-R4 scope on the finite toy interface (legacy registry key retained).
 
-    Tier 4 [P_structural]. Paper 1 Supplement v9.23
+    Tier 4 P_math. Paper 1 Supplement v9.24
     (subsec:R1-R4-mathematical-import).
 
     Checks only finite query size, disjoint positive supports, singleton
@@ -460,7 +460,7 @@ def check_T_R1_R4_spine_derivable():
             "It does not test compactness of a general family, general perturbation "
             "robustness, LSC, or finite capacity, and is not a derivation of R1-R4. "
             "The positive-floor leg does not verify finite capacity; the cost-floor "
-            "comparisons do not supply an LSC certificate. Paper 1 Supplement v9.23 "
+            "comparisons do not supply an LSC certificate. Paper 1 Supplement v9.24 "
             "(subsec:R1-R4-mathematical-import) treats R1 for non-finite families "
             "and R3 as additional modeling assumptions for the alternative route, "
             "and R2 and R4 as restatements of source commitments. That is the "
@@ -468,30 +468,30 @@ def check_T_R1_R4_spine_derivable():
             "does not need R1 or R3."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_math",
         "dependencies": ["T_four_input_declaration", "T_PLEC_derived_from_spine"],
     }
 
 
 def check_T_minimum_distinction_floor_via_MD():
-    """T_minimum_distinction_floor_via_MD: the floor theorem from Paper 1
-    supplement v8.31 §11, proved using MD's uniform floor directly --
-    no compactness, no LSC, no Weierstrass infimum-attainment theorem.
+    """T_minimum_distinction_floor_via_MD: named-hypothesis floor implication.
 
-    Tier 4 [P_structural]. Paper 1 Supplement v8.31 §11 Theorem
-    thm:minimum-distinction-floor.
-
-    Verifies on a finite admissible family Q (10 distinctions, each cost ≥ ε*):
-      (i)   Each distinction has cost ≥ ε* (MD uniform floor, applied
-            pointwise to every physical distinction).
-      (ii)  μ_Γ(Q) := inf_{d∈Q} κ_Γ(d) ≥ ε* > 0.
-      (iii) The proof requires no compactness, no LSC, no infimum-attainment
-            theorem — the inequality holds by uniform pointwise lower bound.
+    Tier 4 P. P1 Supplement v9.24 thm:minimum-distinction-floor proves:
+    if a nonempty queried family is covered by the adopted uniform
+    singleton-cost bound kappa(d) >= epsilon_star > 0, its infimum is
+    at least epsilon_star. Marginal-only input additionally needs coverage
+    of queried singleton increments and a zero-cost empty ledger.
+    The proof takes an infimum; no compactness, LSC or attainment is needed.
+    The two supplied arrays (10 and 1000 entries) witness the inequality;
+    they do not establish the hypothesis or its physical domain.
+    Authored False flags describe implementation, not dependency traversal.
+    The weaker Weierstrass floor and separate transition P4/scale remain
+    distinguished from this implication.
     """
     eps_star = 0.5
-    # Build a finite admissible family Q with 10 distinctions
-    # Each distinction has cost in (eps_star, 2*eps_star) -- all ≥ ε*.
-    # No compactness or LSC structure is invoked; just per-distinction floor.
+    # Supplied finite family Q with 10 costs, from 0.5 through 1.4.
+    # Every supplied cost is at least epsilon_star = 0.5.
+    # This array does not certify the physical coverage of the hypothesis.
     Q_costs = [eps_star + 0.1 * i for i in range(10)]  # 0.5, 0.6, 0.7, ..., 1.4
 
     # (i) MD uniform floor on each
@@ -503,8 +503,8 @@ def check_T_minimum_distinction_floor_via_MD():
     assert mu_Q >= eps_star, f"Floor μ(Q) = {mu_Q} < ε* = {eps_star}"
     assert mu_Q > 0, f"Floor μ(Q) = {mu_Q} not strictly positive"
 
-    # (iii) The argument used no compactness, no LSC, no Weierstrass.
-    # Just: every cost ≥ ε* implies inf ≥ ε*.  Pointwise uniform lower bound.
+    # (iii) Authored bookkeeping flags describe this implementation.
+    # The source proof is the uniform bound's infimum, not a flag traversal.
     used_compactness = False
     used_LSC = False
     used_weierstrass = False
@@ -512,8 +512,8 @@ def check_T_minimum_distinction_floor_via_MD():
         "Proof should not invoke compactness, LSC, or Weierstrass"
     )
 
-    # Stress-test: the uniform-floor argument extends to any size Q
-    # without invoking topology.  Verify on a larger family.
+    # A second supplied array witnesses the same inequality on 1000 costs.
+    # General-family validity is attributed to the named-hypothesis proof.
     big_Q_costs = [eps_star + 0.01 * i for i in range(1000)]  # 1000 distinctions
     big_mu_Q = min(big_Q_costs)
     assert big_mu_Q >= eps_star, "Uniform floor fails on large Q"
@@ -522,25 +522,25 @@ def check_T_minimum_distinction_floor_via_MD():
         "name": "T_minimum_distinction_floor_via_MD",
         "passed": True,
         "key_result": (
-            f"Floor theorem witnessed via MD uniform floor (no Weierstrass): "
+            f"Supplied arrays witness the conditional uniform-floor inequality: "
             f"on Q of size {len(Q_costs)}, μ_Γ(Q) = {mu_Q:.3f} ≥ ε* = {eps_star} > 0; "
             f"on Q of size {len(big_Q_costs)}, μ_Γ(Q) = {big_mu_Q:.3f} ≥ ε*; "
-            f"proof uses no compactness, no LSC, no infimum-attainment theorem -- "
-            f"just MD's uniform pointwise lower bound."
+            f"the source proof takes the infimum of an adopted uniform bound; "
+            f"these arrays do not establish physical domain coverage."
         ),
         "summary": (
-            "Theorem thm:minimum-distinction-floor (Paper 1 supplement v8.31 §11) "
-            "witnessed.  By MD, every physical distinction has cost ≥ ε* > 0; for "
-            "any nonempty admissible family Q ⊂ D_Γ, the floor μ_Γ(Q) := inf κ_Γ(d) "
-            "is bounded below by ε* by uniform pointwise lower bound.  No compactness, "
-            "no lower semicontinuity, no Weierstrass infimum-attainment theorem is "
-            "invoked.  R1-R4 + Weierstrass remain available as a sufficient alternative "
-            "proof route (Remark rem:weierstrass-alternative-route) but are not "
-            "load-bearing.  The floor theorem requires zero mathematical content "
-            "beyond the spine."
+            'Paper 1 Supplement v9.24 thm:minimum-distinction-floor: on any nonempty queried '
+            'family covered by the adopted uniform singleton-cost hypothesis kappa(d) >= '
+            'epsilon_star > 0, its infimum is at least epsilon_star. If only a marginal floor is '
+            'supplied, coverage of queried singleton increments and zero empty-ledger cost are '
+            'additionally required. The source proof takes the infimum of the uniform bound and '
+            'needs no compactness, LSC or attainment. The two arrays here witness that '
+            'inequality on supplied data; the False flags describe this implementation. R1/R3 and '
+            'Weierstrass give only a weaker positive, attained, family-dependent floor without the '
+            'MD calibration. The transition-floor P4 hypothesis and equality of scales remain separate.'
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P",
         "dependencies": ["T_four_input_declaration", "T_PLEC_derived_from_spine"],
     }
 
@@ -824,21 +824,21 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Six checks witnessing the kappa_int structural-rigidity program of "
-            "Paper 1 Supplement v8.27+ on finite toy interfaces. Five bank at "
-            "'[P_structural]': check_T_kappa_int_lower_bound (the MD-via-BW "
-            "marginal-floor lemma gives a structural lower bound on kappa_Gamma "
-            "and the residue kappa_int), check_T_kappa_int_upper_bound_C1C5 (the "
-            "binary-form upper bound plus far-separation exponential suppression, "
-            "valid ONLY in the C1-C5 continuum-bridge regime), "
-            "check_T_kappa_int_two_sided_rigidity (the residue sits between "
-            "explicit substrate-derived endpoints in the C1-C5 regime, no "
-            "remaining structural freedom), check_T_R1_R4_spine_derivable (legacy "
-            "key for finite toy query/support/floor checks, not a derivation of "
-            "R1-R4 or an LSC/finite-capacity certificate), and "
-            "check_T_minimum_distinction_floor_via_MD (the floor theorem "
-            "mu_Gamma(Q) >= eps* > 0 from MD's uniform floor alone -- no "
-            "compactness, no LSC, no Weierstrass). The sixth, "
+            'Six checks on finite toy interfaces. Under current P1 '
+            'Supplement v9.24, check_T_kappa_int_lower_bound is P_math '
+            'for supplied singleton/joint-cost and residue arithmetic; '
+            'check_T_R1_R4_spine_derivable is P_math (legacy key for '
+            'finite toy query/support/floor checks, not a derivation of '
+            'R1-R4 or an LSC/finite-capacity certificate); '
+            'check_T_minimum_distinction_floor_via_MD is P under the '
+            'adopted uniform singleton-domain floor on a nonempty queried '
+            'family, with marginal-only coverage and zero-empty-ledger '
+            'qualifications. check_T_kappa_int_upper_bound_C1C5 remains '
+            '[P_structural] (the binary-form upper bound plus far-separation '
+            'exponential suppression, valid ONLY in the C1-C5 continuum-bridge '
+            'regime), check_T_kappa_int_two_sided_rigidity remains '
+            '[P_structural] (the residue sits between explicit substrate-derived '
+            'endpoints in the C1-C5 regime, no remaining structural freedom). The sixth, '
             "check_T_kappa_int_upper_bound_topological_gap_regime_restricted_P, "
             "banks at the narrower token "
             "'[P_structural_topological_regime_restricted]': kappa_int <= "
@@ -850,6 +850,6 @@ IE_DECLARATIONS = (
             "The upper-bound side is regime-conditional throughout, never "
             "unconditional. "
         ),
-        "note": "Wave 7; module docstring line 34 says all checks are [P_structural] but the sixth carries the narrower regime-restricted token (field wins)",
+        "note": "Wave 7; member-specific grades and scopes govern; no blanket promotion of the six checks",
     },
 )

@@ -115,8 +115,8 @@ CLAIM_REFRESH: Dict[str, Dict[str, Any]] = {
             "across-interface connection is adjudicated gauge-variant "
             "convention (check_T_gauge_connection_is_gauge_variant_"
             "convention_P [P_structural_reading]), with the per-region-vs-"
-            "diagonal fork localized and contained "
-            "(check_T_across_frame_fork_localized [P_structural]) and the "
+            "diagonal fork localized by citation hygiene "
+            "(check_T_across_frame_fork_localized [P_structural_instrument]) and the "
             "across_region (no-B) row honestly OPEN."
         ),
         "provenance": ["check_T_ew_load_placement_P",

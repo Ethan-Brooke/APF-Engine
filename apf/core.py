@@ -18,8 +18,8 @@ module's own _CHECKS table at v24.3.482, where it was found stale at 49):
   Main theorems:         T2, T3, T_Born, T_CPTP, T_Hermitian, T_M,
                          T_canonical, T_entropy, T_epsilon, T_eta,
                          T_kappa, T_tensor, T_Tsirelson
-  Physical witnesses:    OR2_spin, OR2_repetition, OR2_steane,
-                         worked_example
+  Supplied-gap record:   OR2_spin
+  Physical witnesses:    OR2_repetition, OR2_steane, worked_example
   Phase 19a (IJC):       T_no_IJC_no_noncommutativity (spectator-
                          countermodel falsification test certifying
                          that A1+MD+A2+BW alone do not produce
@@ -344,8 +344,9 @@ def check_L_epsilon_star():
     cost-resolution reading. The "meaning = robustness" premise below is MD's
     content. The floor is therefore a downstream consequence of A1 + MD + BW.
     Read at the transition level it is the per-realignment floor eps_min(Gamma);
-    Paper 1 supp states the clean identification eps_min(Gamma) = eps*_Gamma
-    (machine-checked by check_T_realignment_floor_is_epsilon_star).
+    Paper 1 supp states the identification eps_min(Gamma) = eps*_Gamma;
+    check_T_realignment_floor_is_epsilon_star checks anchor consistency
+    under that named reading, not a derivation of the identification.
     """
     # Proof by contradiction (compactness argument):
     # Suppose foralln, exists admissible S_n and independent meaningful d_n with
@@ -1599,135 +1600,69 @@ def check_L_col():
 
 
 def check_L_loc():
-    """L_loc: Locality from Admissibility Physics.
+    """L_loc: Supplied cost comparisons.
 
-    CLAIM: A1 (admissibility physics) + M (multiplicity) + BW (cost-spectrum
-           non-degeneracy) ==> A3 (locality / admissibility decomposition
-           over interfaces).
+    Compares authored full-set, left, right and single-distinction costs
+    with an authored interface capacity using exact Fractions. These are
+    supplied values, not costs derived from a constructed distinction
+    family or interaction model. A passing record describes the
+    inequalities only.
 
-    PROOF (4 steps):
+    No richness or independence premise is executed. This check does not
+    establish product configuration spaces, complete local tests,
+    own-factor operations, an additive joint bill, absence of transfers,
+    or locality. The declared dependencies are retained as metadata;
+    no premise derivation is performed.
 
-    Step 1 -- Single-interface capacity bound.
-        A1: C < infinity. L_epsilon*: each independent distinction costs >= epsilon > 0.
-        A single interface can enforce at most floor(C/epsilon) distinctions.
+    The product-model claim in Paper 1 sec:L_loc has additional model
+    hypotheses which are not implemented or adopted here. The retained
+    P grade is scoped to the numerical comparisons and does not certify
+    the historical locality theorem. The capacity/epsilon quotient is
+    arithmetic, not a derived physical capacity bound.
 
-    Step 2 -- Richness exceeds single-interface capacity.
-        M + BW: the number of independently meaningful distinctions
-        N_phys exceeds any single interface's capacity: N_phys > floor(C_max/epsilon).
-
-    Step 3 -- Distribution is forced.
-        N_phys > floor(C_max/epsilon) ==> no single interface can enforce all
-        distinctions. Admissibility MUST distribute over >= 2 independent loci.
-
-    Step 4 -- Interface independence IS locality.
-        Multiple interfaces with independent budgets means:
-        (a) No interface has global access (each enforces a subset).
-        (b) Admissibility demand decomposes over interfaces.
-        (c) Subsystems at disjoint interfaces are independent.
-        This IS A3 (locality).
-
-    NO CIRCULARITY:
-        L_loc uses only A1 + M + BW (not L_nc, not A3).
-        Then L_nc uses A1 + A3 (= L_loc).
-        Then L_irr uses A1 + L_nc.
-        Each step uses only prior results.
-
-    EXECUTABLE WITNESS (verified in L_irr_L_loc_single_axiom_reduction.py):
-        6 distinctions, epsilon = 2:
-        - Single interface (C=10): full set costs 19.5 > 10 (inadmissible)
-        - Two interfaces (C=10 each): 8.25 each <= 10 (admissible)
-        - Locality FORCED: single interface insufficient, distribution works.
-
-    COUNTERMODEL:
-        |D|=1 world: single interface (C=10) easily enforces everything.
-        Confirms M (multiplicity) is necessary.
-
-    DEFINITIONAL POSTULATES (not physics axioms):
-        M (Multiplicity):  |D| >= 2. "The universe contains stuff."
-        These are boundary conditions like ZFC's axiom of infinity, not physics.
-
-    THE SECOND DECLARED PREMISE WAS RE-POINTED AT v24.3.482 (2026-08-30),
-    AND THE MOVE IS A NAMING MOVE AND NOTHING MORE.  This record declared
-    a separate framework input, NT, alongside A1, L_epsilon* and M.  That
-    input was retired as a separate input by NT-BW@2026-08-30 and its
-    content -- not all enforceable distinctions have the same cost -- is
-    carried by BW under the statement of record of OHC_N@2026-08-30.  The
-    declaration was RE-POINTED to BW rather than deleted: deleting the
-    string would leave this record declaring three premises where its own
-    argument uses four, which is a strengthening by omission.
-
-    WHAT DID NOT MOVE, STATED PLAINLY BECAUSE IT IS THE HONEST HALF.  The
-    premise content Step 2 uses -- that the number of independently
-    meaningful distinctions exceeds a single interface's capacity -- is
-    unchanged, and it is EXECUTED BY NO LEG, before or after.  The witness
-    below runs one uniform epsilon = 2 for every distinction and reads no
-    cost difference anywhere; the richness of Step 2 is asserted in this
-    docstring and is not computed.  So the re-point is at the
-    premise-DECLARATION level only.  It does not make the richness step
-    derived, it does not make it a BW witness, and nothing here is
-    evidence that BW's formal statements entail the distinction-level
-    sentence -- that delta is scoped, not closed.
+    This callable has no set-exact leg inventory and consumes no sibling
+    value; it carries an untested convention for its authored inputs.
+    Failed comparisons raise CheckFailure, including under -O.
     """
-    # Witness verification (numerical)
     C_interface = Fraction(10)
     epsilon = Fraction(2)
-    max_per_interface = int(C_interface / epsilon)  # = 5
+    max_per_interface = int(C_interface / epsilon)
 
-    # 6 distinctions with interactions: full set costs 19.5 at single interface
-    full_set_cost_single = Fraction(39, 2)  # 19.5
+    full_set_cost_single = Fraction(39, 2)
     check(full_set_cost_single > C_interface, (
-        f"Single interface inadmissible: {full_set_cost_single} > {C_interface}"
+        f'Expected supplied full-set cost > supplied capacity; got cost={full_set_cost_single}, capacity={C_interface}'
     ))
 
-    # Distributed: 8.25 at each of two interfaces
-    cost_left = Fraction(33, 4)   # 8.25
-    cost_right = Fraction(33, 4)  # 8.25
-    check(cost_left <= C_interface, f"Left interface admissible: {cost_left} <= {C_interface}")
-    check(cost_right <= C_interface, f"Right interface admissible: {cost_right} <= {C_interface}")
+    cost_left = Fraction(33, 4)
+    cost_right = Fraction(33, 4)
+    check(cost_left <= C_interface, f'Expected supplied left cost <= supplied capacity; got cost={cost_left}, capacity={C_interface}')
+    check(cost_right <= C_interface, f'Expected supplied right cost <= supplied capacity; got cost={cost_right}, capacity={C_interface}')
 
-    # Countermodel: |D|=1 trivially fits in single interface
-    single_distinction_cost = epsilon  # = 2
-    check(single_distinction_cost <= C_interface, "Single distinction: no locality needed")
+    single_distinction_cost = epsilon
+    check(single_distinction_cost <= C_interface, f'Expected supplied single-distinction cost <= supplied capacity; got cost={single_distinction_cost}, capacity={C_interface}')
 
     return _result(
-        name='L_loc: Locality from Admissibility Physics',
+        name='L_loc: Supplied cost comparisons',
         tier=0,
         epistemic='P',
         summary=(
-            'A1 + M + BW ==> A3. Chain: admissibility physics (floor(C/epsilon) bound) + '
-            'sufficient richness (N_phys > C/epsilon) -> admissibility must distribute '
-            'over multiple independent loci -> locality. Verified: 6 distinctions '
-            'with epsilon=2 fail at single interface (cost 19.5 > C=10) but succeed '
-            'distributed (8.25 each <= 10). Countermodel: |D|=1 needs no locality.'
+            'Supplied full-set cost exceeds the supplied interface capacity; supplied left, right '
+            'and single-distinction costs fit within it. The costs and capacity are authored '
+            'values, not derived from a distinction family or interaction model. Richness, '
+            'interface independence, product factorization, budget additivity and locality '
+            'are not established. Dependencies are retained metadata, not executed premises. '
+            'The retained P grade records these numerical comparisons only.'
         ),
-        key_result='A1 + M + BW ==> A3 (locality derived, not assumed)',
+        key_result='Supplied full-set cost exceeds capacity while supplied distributed costs and single-distinction cost fit.',
         dependencies=['A1', 'L_epsilon*', 'M', 'BW'],
+        conditional_on=['Supplied cost and capacity values; their physical realization is not tested.'],
         artifacts={
             'witness': {
-                'single_interface_max': 'floor(10/2) = 5, but full set costs 19.5 > 10',
                 'full_set_cost_single': str(full_set_cost_single),
                 'distributed_costs': f'left: {cost_left}, right: {cost_right} (both <= {C_interface})',
-                'locality_forced': True,
+                'single_distinction_cost': str(single_distinction_cost),
+                'interface_capacity': str(C_interface),
             },
-            'countermodel': 'CM_single_distinction: |D|=1 -> single interface sufficient',
-            'postulates': {
-                'M': '|D| >= 2 (universe contains stuff)',
-                'BW': 'cost-spectrum non-degeneracy (not all enforceable '
-                      'distinctions have the same cost)',
-            },
-            'derivation_order': 'A1 + M + BW -> L_loc -> A3',
-            'no_circularity': (
-                'L_loc uses A1+M+BW only. '
-                'L_nc uses A1+A3(=L_loc). '
-                'L_irr uses A1+L_nc. No circular dependencies.'
-            ),
-            'proof_steps': [
-                '(1) A1 + L_epsilon* -> single interface enforces <= floor(C/epsilon) distinctions',
-                '(2) M + BW -> N_phys > floor(C_max/epsilon) (richness exceeds capacity); '
-                'a declared premise, executed by no leg here',
-                '(3) Single-interface admissibility inadmissible -> must distribute',
-                '(4) Multiple independent interfaces = locality (A3)',
-            ],
         },
     )
 
@@ -6009,153 +5944,67 @@ def check_T_eta():
 
 
 def check_T_kappa():
-    """T_kappa: Directed Admissibility Multiplier.
-    
-    FULL PROOF (upgraded from sketch):
-    
-    Theorem: kappa = 2 is the unique admissibility multiplier consistent 
-    with L_irr (irreversibility) + L_nc (non-closure).
-    
-    Proof of >= 2 (lower bound):
-        (1) L_nc requires FORWARD admissibility: without active stabilization,
-            distinctions collapse (non-closure = the environment's default 
-            tendency is to merge/erase). This costs >= epsilon per distinction (T_epsilon).
-            Call this commitment C_fwd at the system interface Gamma_S.
-        
-        (2) L_irr requires an ENVIRONMENT RECORD: when the system creates
-            a distinction, the S-E correlation (Delta > 0) commits capacity
-            at the environment interface Gamma_E. This environmental record
-            is the "backward verification" -- it is physically the 
-            environment's independent copy of the distinction's existence.
-            This costs >= epsilon at Gamma_E (L_epsilon*). Call this C_env.
-        
-        (3) C_fwd and C_env are INDEPENDENT commitments at DIFFERENT interfaces:
-            C_fwd lives at Gamma_S (system's capacity budget).
-            C_env lives at Gamma_E (environment's capacity budget).
-            By L_loc, these are independent budgets. Removing C_fwd at Gamma_S
-            does not affect C_env at Gamma_E (and vice versa).
-            If C_env could be derived from C_fwd, they would share an 
-            interface -- contradicting L_loc's independence.
-        
-        (4) Total per-distinction cost >= C_fwd + C_env >= 2*epsilon.
-            So kappa >= 2.
-    
-    Proof of <= 2 (upper bound, minimality):
-        (5) A1 (admissibility physics) + principle of sufficient admissibility:
-            the system allocates exactly the minimum needed to satisfy
-            both L_irr and L_nc. Two interface-commitments suffice:
-            one at Gamma_S (stability), one at Gamma_E (environmental record).
-        
-        (6) A third commitment would require a THIRD independent interface.
-            But a single distinction's admissibility footprint spans at most
-            two interfaces: the system where it is maintained and the 
-            environment where its creation is recorded. A third interface
-            would require a second environment -- but that is a new 
-            correlation (a new distinction), not a third obligation on 
-            the original one. Two interfaces -> two commitments -> <= 2.
-        
-        (7) Combining: >= 2 (steps 1-4) and <= 2 (steps 5-6) -> = 2.  QED
-    
-    Physical interpretation: kappa=2 is the directed-admissibility version of 
-    the Nyquist theorem -- you need two independent samples (system and 
-    environment) to fully characterize a distinction's admissibility state.
-    The environment IS the independent auditor.
+    """T_kappa: Capacity arithmetic at supplied multiplier choices.
+
+    The inputs are supplied here; no sibling numeric value is read. The
+    integer quotient comparison does not establish physical interface
+    independence, a complete obligation bill, minimum-cost attainment,
+    physical multiplier uniqueness, or binary occupancy.
+
+    The key_result shorthand denotes the supplied multiplier. Tier, P and
+    dependency labels are retained metadata pending owner adjudication,
+    not executed value ties or ratification of those physical claims.
+    This supplied-input model carries an untested physical convention.
+    The existing raising comparison has no execution-inventory enforcement.
     """
-    # kappa = 2 from logical proof: L_nc gives forward commitment (>=epsilon)
-    # at Gamma_S, L_irr gives environment record (>=epsilon) at Gamma_E.
-    # Two independent interface-commitments, no more.
-
-    epsilon = Fraction(1)
-
-    # ================================================================
-    # COMPUTATIONAL WITNESS: kappa=1 FAILS (records erasable)
-    # ================================================================
-    # With only one commitment per distinction, the system can't
-    # simultaneously maintain forward stabilization AND backward
-    # verification. Model: 3 distinctions, C=3, kappa_test=1.
-    # Each distinction costs 1*epsilon = 1. Three fit exactly.
-    # But with kappa=1, the single commitment does double duty:
-    # stabilization AND verification share the same resource.
-    # Removing stabilization also removes verification -> record erasable.
-    kappa_1_C = 3
-    kappa_1_eps = 1
-    kappa_1_max = kappa_1_C // (kappa_1_eps * 1)  # 3 distinctions fit
-    # But verification is not independent of stabilization:
-    # If we reallocate the stabilization resource (admissible under A1),
-    # the record becomes unverifiable -> effectively erased.
-    # This violates L_irr (environment record is not independent of system).
-    # If the environment's record shares the same commitment as the system's,
-    # then freeing the system commitment also destroys the environmental record.
-    # But L_irr says the S-E correlation persists at Gamma_E regardless of
-    # what happens at Gamma_S (L_loc: independent budgets).
-    kappa_1_fwd_cost = kappa_1_eps  # forward stabilization
-    kappa_1_bwd_cost = 0  # no independent backward resource
-    kappa_1_independent = (kappa_1_bwd_cost > 0)
-    check(not kappa_1_independent,
-          "kappa=1: environment record not independent -> L_irr violated")
-
-    # ================================================================
-    # COMPUTATIONAL WITNESS: kappa=3 REDUNDANT (third commitment derivable)
-    # ================================================================
-    # With three commitments per distinction: system, environment, and X.
-    # What could X be? A distinction spans two interfaces (Gamma_S, Gamma_E).
-    # A third interface would require a second environment -- but that's a
-    # new correlation, not a third obligation on the same distinction.
-    # Test: C=6, epsilon=1, kappa_test=3. Max distinctions = 6/3 = 2.
-    # With kappa=2: max distinctions = 6/2 = 3.
-    # kappa=3 wastes capacity (fewer distinctions fit) with no benefit:
-    # L_nc is satisfied by C_fwd at Gamma_S, L_irr by C_env at Gamma_E.
-    kappa_3_C = 6
-    kappa_3_max_k2 = kappa_3_C // (kappa_1_eps * 2)  # 3 with kappa=2
-    kappa_3_max_k3 = kappa_3_C // (kappa_1_eps * 3)  # 2 with kappa=3
-    check(kappa_3_max_k3 < kappa_3_max_k2,
-          f"kappa=3 reduces capacity ({kappa_3_max_k3} < {kappa_3_max_k2} distinctions)")
-    # The third commitment is redundant: no axiom requires it
-    n_obligation_generators = 2  # L_nc (Gamma_S), L_irr (Gamma_E)
-    check(n_obligation_generators == 2,
-          "Only L_nc and L_irr generate per-distinction obligations")
-
-    # ================================================================
-    # COMBINED: kappa = 2 uniquely forced
-    # ================================================================
+    capacity = 6
+    unit_cost = 1
     kappa = 2
-    # Lower bound: two independent commitments needed (kappa >= 2)
-    check(kappa >= n_obligation_generators,
-          "Lower bound: one commitment per obligation generator")
-    # Upper bound: no third obligation exists (kappa <= 2)
-    check(kappa <= n_obligation_generators,
-          "Upper bound: no third independent obligation")
-    # Minimum capacity per distinction
-    min_capacity = kappa * epsilon
-    check(min_capacity == 2, "Minimum capacity per distinction = 2*epsilon")
+    alternative_multiplier = 3
+    quotient_supplied = capacity // (unit_cost * kappa)
+    quotient_alternative = capacity // (unit_cost * alternative_multiplier)
+    check(quotient_alternative < quotient_supplied,
+          f"Integer capacity quotient ordering: {quotient_alternative} < {quotient_supplied}")
 
     return _result(
-        name='T_kappa: Directed Admissibility Multiplier',
+        name='T_kappa: Supplied-multiplier capacity arithmetic',
         tier=0,
         epistemic='P',
         summary=(
-            'kappa = 2. Lower bound [P]: L_nc (system interface Gamma_S) + '
-            'L_irr (environment interface Gamma_E) give '
-            'two independent epsilon-commitments at separate interfaces -> '
-            'kappa >= 2. Upper bound [P_structural]: distinction spans at most '
-            'two interfaces (system + environment); third interface requires '
-            'second environment = new distinction, not third obligation. '
-            'Combined: kappa = 2.'
+            f'Supplied capacity {capacity}, unit cost {unit_cost}, multiplier '
+            f'{kappa} and alternative multiplier {alternative_multiplier} give '
+            f'integer capacity quotients {quotient_supplied} and '
+            f'{quotient_alternative}; {quotient_alternative} < {quotient_supplied}. '
+            'Supplied-input arithmetic only; physical claims and retained '
+            'metadata are limited in the complete artifact record.'
         ),
-        key_result='kappa = 2',
+        key_result=f'kappa = {kappa}',
         dependencies=['T_epsilon', 'A1', 'L_irr'],
         artifacts={
             'kappa': kappa,
-            'proof_status': 'FORMALIZED (7-step proof with uniqueness)',
-            'proof_steps': [
-                '(1) L_nc -> forward commitment C_fwd >= epsilon at Gamma_S',
-                '(2) L_irr -> environment record C_env >= epsilon at Gamma_E',
-                '(3) C_fwd _|_ C_env (independent interfaces via L_loc)',
-                '(4) >= 2 (lower bound)',
-                '(5) Minimality: two interface-commitments suffice',
-                '(6) Two interfaces per distinction -> <= 2 (upper bound)',
-                '(7) = 2 (unique)  QED',
-            ],
+            'proof_status': 'SUPPLIED_INPUT_ARITHMETIC_ONLY',
+            'capacity': capacity,
+            'unit_cost': unit_cost,
+            'alternative_multiplier': alternative_multiplier,
+            'capacity_quotients': {
+                'supplied_multiplier': quotient_supplied,
+                'alternative_multiplier': quotient_alternative,
+            },
+            'scope': (
+                'The capacity, unit cost and multiplier choices are supplied '
+                'inputs; no sibling numeric value is read. The key_result '
+                'shorthand denotes the supplied multiplier.'
+            ),
+            'limitations': (
+                'The integer quotient ordering does not establish physical '
+                'interface independence, a complete obligation bill, '
+                'minimum-cost attainment, physical multiplier uniqueness, '
+                'or binary occupancy. Tier, P and dependencies are retained '
+                'metadata pending owner adjudication, not executed value ties '
+                'or ratification of those physical claims. This supplied-input '
+                'model carries an untested physical convention. The raising '
+                'comparison has no execution-inventory enforcement.'
+            ),
         },
     )
 
@@ -7843,48 +7692,46 @@ def check_T_alg_FPi():
 
 
 def check_OR2_spin():
-    """OR2-strong for spin-1/2 in a thermal bath (Appendix F.1).
+    """OR2_spin: supplied-gap assignment record.
 
-    Verifies that for a spin-1/2 in a static field with gap Delta_E,
-    maintenance cost (per flip) = detection cost (WAY bound) = destruction cost
-    = Delta_E, so OR2-strong holds in the strong-gap regime.
+    The cost labels are assigned from a supplied positive gap in chosen cost units. Their equality is an assignment identity. The check requires eps_destr > 0; it computes no independent spin costs, thermal regime, maintenance protocol, measurement bound, or gap-collapse family.
+
+    No sibling value is consumed. The cost convention and assignment wiring have no independent value tie. Positivity alone does not validate alias wiring or returned descriptive text, and removing the check is not detected by a runtime inventory.
+
+    The retained P grade awaits separate adjudication. This record does not discharge the physical OR2 proof or the filed paper obligations.
     """
     from fractions import Fraction
 
-    # Per-event costs are all equal to the Zeeman gap Delta_E (= 1 in natural units)
     Delta_E = Fraction(1)
     eps_destr = Delta_E
-    eps_maint_per_event = Delta_E   # each re-initialization costs Delta_E
-    eps_detect = Delta_E            # WAY theorem lower bound = Delta_E
+    eps_maint_per_event = Delta_E
+    eps_detect = Delta_E
 
-    check(eps_destr == eps_destr, "destruction cost = Delta_E")
-    check(eps_maint_per_event == eps_destr,
-          "OR2-strong (spin): maintenance/event = destruction = Delta_E")
-    check(eps_detect == eps_destr,
-          "OR2-strong (spin): detection (WAY bound) = destruction = Delta_E")
-
-    # Gap-collapse limit: as Delta_E -> 0, d exits D (eps(d) -> 0)
-    # APF correctly predicts inapplicability; not an OR2 violation
-    check(eps_destr > 0, "gap > 0 required for d in D")
+    check(eps_destr > 0, "Supplied destruction cost must be positive")
 
     return _result(
-        name='check_OR2_spin: OR2-strong for spin-1/2 in thermal bath',
+        name='check_OR2_spin: supplied-gap assignment record',
         tier=0,
         epistemic='P',
         summary=(
-            'For spin-1/2 in Zeeman field Delta_E coupled to thermal bath: '
-            'destruction cost = maintenance cost per event = detection cost (WAY bound) = Delta_E. '
-            'OR2-strong holds in strong-gap regime (Delta_E >> k_BT). '
-            'Gap-collapse limit Delta_E -> 0 causes d to exit D (APF inapplicable by design), '
-            'not an OR2 violation.'
+            'Supplied-gap assignment model. The cost labels are assigned from Delta_E; '
+            'the predicate checks eps_destr > 0. The assignments provide no independent spin cost calculation. '
+            'No thermal regime, maintenance protocol, measurement bound, or gap-collapse family is computed. '
+            'The cost convention has no sibling value tie. The retained P grade awaits separate adjudication; '
+            'physical OR2 proof and paper obligations remain open.'
         ),
-        key_result='eps_destr = eps_maint/event = eps_detect = Delta_E',
+        key_result='Assigned cost labels from a supplied gap; positivity check only',
         dependencies=['OR2', 'L_epsilon*'],
         artifacts={
             'Delta_E': str(Delta_E),
             'eps_destr': str(eps_destr),
             'eps_maint_per_event': str(eps_maint_per_event),
             'eps_detect': str(eps_detect),
+            'cost_origin': 'Assigned from the supplied gap; no independent destruction, maintenance, or detection calculation.',
+            'scope_limit': 'No thermal regime, maintenance protocol, measurement bound, or gap-collapse family is computed.',
+            'value_ties': 'No sibling value is consumed; the cost convention has no independent value tie.',
+            'check_limit': 'Positivity alone does not validate alias wiring or returned descriptive text; removing the check is not detected by a runtime inventory.',
+            'grade_status': 'P retained pending separate adjudication; physical OR2 proof and paper obligations remain open.',
         },
     )
 
@@ -9748,16 +9595,7 @@ def check_disjoint_partition():
     here as a literal until v24.3.482 (2026-08-30), where the sibling's
     list was re-pointed and this sentence became false -- the same
     silent-falsehood genre repaired one version earlier.  A quotation
-    goes stale silently; a read cannot.  Its body does not cite this
-    proposition: over the searched set -- this check's name, its record
-    name, and the bare word 'disjoint' -- the only hit is Step 4(c)'s
-    "Subsystems at disjoint interfaces are independent", which is a
-    conclusion L_loc unpacks and not a citation of this record.  That
-    is an absence-of-hit over a named set, not a proof of absence, and
-    the same discipline is owed here as above.  The L_loc ->
-    disjoint_partition edge is asserted in Paper 1 main and DOES NOT
-    EXIST IN THE CODE, so this reclassification does not reach L_loc,
-    L_nc, L_irr, T_M, T_kappa, T_sep or T3.
+    goes stale silently; a read cannot.
 
     NOT TOUCHED: the unregistered names in this record's own
     `dependencies` ('SC', 'D-quotient') are a vacancy-lane question,

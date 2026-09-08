@@ -157,7 +157,7 @@ check_L_register_carrier_not_from_account_instruments (tier 3,
     closure is the read-off. H6' is [C], the named reduction target; it
     is not banked by this check.
 
-check_T_weight_one_reduction (tier 3, [P_structural]; ADDED v24.3.378,
+check_T_weight_one_reduction (tier 3, [P_structural_reading]; ADDED v24.3.378,
 2026-07-04) -- the weight-one walk banked ("Reference - The Weight-One
 Walk - The Deposit Identity, the Asymmetric Pair, and the Live Cassini
 Tension (2026-07-04)" v0.2, hostile-audit-repaired 0.83 -> 0.90; machine
@@ -1234,7 +1234,7 @@ def check_T_weight_one_reduction():
              'third coat, and the asymmetric conditional pair (the '
              'weight-one walk banked)',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The weight-one walk (2026-07-04, REDUCED) banked at its '
             'proved strength. UNCONDITIONAL ARITHMETIC (exact rationals, '

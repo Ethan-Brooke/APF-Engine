@@ -108,7 +108,7 @@ WHAT check_L_amount_graded_testedness_encoding_no_go CERTIFIES (tier 4,
   compressed? -- a record-structure question, outside the calculus's own
   vocabulary as formalized.
 
-WHAT check_T_agt_par_anatomy CERTIFIES (tier 3, [P_structural] over the
+WHAT check_T_agt_par_anatomy CERTIFIES (tier 3, [P_structural_reading] over the
 named adopted linear frame) -- shape (iii), the anatomy at proved strength
 ONLY:
   1. MONOTONE GRADING IS INSUFFICIENT: the discharge mechanism runs
@@ -735,7 +735,7 @@ def check_T_agt_par_anatomy():
              'rate, strict-strength countermodel, over-reach deflation '
              '(AGT-par NOT adopted)',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The anatomy of TCP-strong\'s discharge gap, certified at '
             'proved strength ONLY -- no axiom is adopted. (1) Monotone '
@@ -1092,7 +1092,7 @@ def check_T_fagt2_encoding_argmin_pressure_and_read_channel():
              'the strictly-superadditive flip gate pinned (tripwire '
              'F-AGT2-c); (E) NOT adopted, NOT refuted',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The F-AGT2 walk (2026-07-04, REDUCE 0.85) banked at its '
             'proved strength -- the (E) distributed-encoding door walked, '
@@ -1555,7 +1555,7 @@ def check_T_contention_law_granularity_occupancy_fork():
              'atom granularity NOT A1-forced), the occupancy fork '
              '((c1-occ) evidence-shaped, NOT adopted)',
         tier=3,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             'The contention-law walk (2026-07-04, REDUCE 0.85) banked at '
             'its proved strength -- the (c1) premise walked, neither '

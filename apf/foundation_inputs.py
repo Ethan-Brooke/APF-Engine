@@ -319,7 +319,7 @@ def check_T_four_input_declaration():
 def check_T_PLEC_derived_from_spine():
     """PLEC witness features and counting bound (legacy registry key retained).
 
-    Tier 4 [P_structural].
+    Tier 4 [P_structural_reading].
 
     Historical source pointers: Paper 10 v1.12 §3.5 (Lemmas A2 + BW) +
     Paper 1 Supplement v8.22+ §1. The executed scope is stated below.
@@ -627,7 +627,7 @@ def check_T_PLEC_derived_from_spine():
             "does not certify this witness's quotient typing."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_reading",
         "dependencies": ["T_four_input_declaration"],
     }
 

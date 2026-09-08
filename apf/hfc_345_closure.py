@@ -433,7 +433,7 @@ def check_T_hfc_345_conservative_dilation() -> Dict[str, object]:
             "SAME_TYPE_RETURN",
         ),
         negative_controls=("destructive classical commoning", "formal linear combination with no Held total realization"),
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
     )
 
 
@@ -464,7 +464,7 @@ def check_T_DSEB_345_discharged_from_HFC() -> Dict[str, object]:
         fails.append("transported exchange must be involutive")
     return _result(
         "T_DSEB_345_discharged_from_HFC",
-        "DSEB_345 is not an additional root once a live-interface HFC certificate and the conservative Held-dilation package are present. The physical HFC zipper F_345 and its record-free return transport the source contender exchange to S_u=F_345 P F_345^{-1}. The transport consumes ZIPPER_REVERSAL_IS_INVERSE (the reversed zipper path is represented by F_345^{-1}; reversal admission alone yields only a monoid -- the .429 H1-genre gate) and EXCHANGE_CARGO_NATURALITY (the represented action is linear on Held cargo; the banked affine_cargo_naturality leg of continuation_tesseract_bridge.HOC_PACKAGE is the fallback-route consumer). The live range/kernel factors are therefore a second effective binary Held presentation on the same character carrier. No sharp-projector-to-process rule and no first-jet identification is used. Conditional physical discharge claim, billed P_structural.",
+        "DSEB_345 is not an additional root once a live-interface HFC certificate and the conservative Held-dilation package are present. The physical HFC zipper F_345 and its record-free return transport the source contender exchange to S_u=F_345 P F_345^{-1}. The transport consumes ZIPPER_REVERSAL_IS_INVERSE (the reversed zipper path is represented by F_345^{-1}; reversal admission alone yields only a monoid -- the .429 H1-genre gate) and EXCHANGE_CARGO_NATURALITY (the represented action is linear on Held cargo; the banked affine_cargo_naturality leg of continuation_tesseract_bridge.HOC_PACKAGE is the fallback-route consumer). The live range/kernel factors are therefore a second effective binary Held presentation on the same character carrier. No sharp-projector-to-process rule and no first-jet identification is used. Conditional physical discharge claim, billed P_structural_reading.",
         {
             "source_exchange": _matrix_strings(P_SWAP),
             "physical_intertwiner": _matrix_strings(F_345),
@@ -489,7 +489,7 @@ def check_T_DSEB_345_discharged_from_HFC() -> Dict[str, object]:
             "EXCHANGE_CARGO_NATURALITY",
         ),
         negative_controls=("coordinate conjugacy without a physical zipper", "label swap represented trivially", "reversal admitted but represented by a non-inverse"),
-        epistemic="P_structural",
+        epistemic="P_structural_reading",
     )
 
 

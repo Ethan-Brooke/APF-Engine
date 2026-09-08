@@ -2937,10 +2937,18 @@ def check_T_PMNS():
 
     Imports: Seesaw (1977-79) via L_capacity_per_dimension.
              Schur (1905) via L_channel_crossing (for charged lepton sector).
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='T_PMNS')
     q_B = [7, 4, 0]; q_H = [7, 5, 0]
-    d_W = 5; d_Y = 4
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
+    d_Y = 4
 
     theta_W = _math.pi / d_W
     s, c = _math.sin(theta_W), _math.cos(theta_W)
@@ -3000,6 +3008,9 @@ def check_T_PMNS():
     # All eigenvalues positive
     check(all(ev > 0 for ev in evals_nu))
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='T_PMNS: Zero-Parameter PMNS Neutrino Mixing Matrix',
         tier=3, epistemic='P',
@@ -3018,6 +3029,19 @@ def check_T_PMNS():
             'L_dim_angle', 'L_Gram', 'L_gen_path', 'T27c',
             'T_capacity_ladder', 'T_q_Higgs', 'L_Weinberg_dim', 'T8',
         ],
+        artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
+        },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -3026,8 +3050,17 @@ def check_T_nu_ordering():
 
     v4.3.4: Inherits [P] from T_PMNS. All eigenvalues of M_nu positive
     and ordered m1 < m2 < m3 (normal ordering).
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
-    x = float(dag_get('x_overlap', default=0.5, consumer='T_nu_ordering')); d_Y = 4; d_W = 5; q_B = [7, 4, 0]
+    x = float(dag_get('x_overlap', default=0.5, consumer='T_nu_ordering')); d_Y = 4
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
+    q_B = [7, 4, 0]
     s, c = _math.sin(_math.pi/d_W), _math.cos(_math.pi/d_W)
 
     M_nu = [[x**(q_B[0]/d_Y), s**2*c**2, 0],
@@ -3043,6 +3076,9 @@ def check_T_nu_ordering():
     r = (ev[1] - ev[0]) / (ev[2] - ev[0])
     check(0.0 < r < 1.0, f"Ratio {r:.3f} outside unit interval")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='T_nu_ordering: Normal Neutrino Mass Ordering',
         tier=3, epistemic='P',
@@ -3052,7 +3088,20 @@ def check_T_nu_ordering():
             f'Splitting ratio: {r:.3f}.'
         ),
         key_result='Normal ordering [P]; inherits from T_PMNS',
-        dependencies=['T_PMNS'],
+        dependencies=['T_PMNS', 'L_Weinberg_dim'],
+        artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
+        },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -3176,7 +3225,8 @@ def check_L_LL_coherence():
 
     PROOF (3 steps):
 
-    Step 1 [L_Weinberg_dim, P]: The unique dim-5 Delta_L=2 operator is
+    Step 1 [L_Weinberg_dim, P]: Within the supplier's declared inventory,
+      insertion set and caps, the unique dim-5 Delta_L=2 operator is
       O_W = epsilon_ab L^a L^b H^c H^d epsilon_cd / Lambda.
       It contains TWO lepton doublets L_1, L_2 in a bilinear eps_ab L_1^a L_2^b.
 
@@ -3201,6 +3251,10 @@ def check_L_LL_coherence():
     weaker than full Bose/Fermi statistics).
 
     STATUS: [P] -- exchange symmetry is definitional, not an extra postulate.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     # Step 1: Weinberg operator has 2 L fields
     n_L_fields = 2  # in LLHH
@@ -3214,7 +3268,10 @@ def check_L_LL_coherence():
     D_internal = n_L_fields
     check(D_internal >= 2, "Coherence requires D_internal >= 2")
 
-    d_W = 5
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     d3_coherent = _math.cos(_math.pi / d_W)
     d3_incoherent = _math.sin(_math.pi / d_W)**2
 
@@ -3224,6 +3281,9 @@ def check_L_LL_coherence():
 
     # Cross-check: this matches the value used in T_PMNS
     check(abs(d3_coherent - _math.cos(_math.pi/5)) < 1e-15)
+
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
 
     return _result(
         name='L_LL_coherence: Neutrino LL Self-Conjugation Coherence',
@@ -3238,6 +3298,19 @@ def check_L_LL_coherence():
         ),
         key_result='d_3(nu) = cos(pi/5) from LL exchange coherence [P]',
         dependencies=['L_Weinberg_dim', 'T_canonical', 'L_dim_angle'],
+        artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
+        },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -3276,11 +3349,18 @@ def check_L_capacity_per_dimension():
       M_nu ~ M_D^T M_R^{-1} M_D is the standard UV completion of the
       dim-5 Weinberg operator. The framework derives d_W = 5
       (L_Weinberg_dim [P]); the seesaw provides the UV factorization.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='L_capacity_per_dimension')
     q_B1 = 7       # T_capacity_ladder [P]
     d_Y = 4        # T8 [P]
-    d_W = 5        # L_Weinberg_dim [P]
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']        # L_Weinberg_dim [P]
 
     # Capacity per dimension
     cap_per_dim = Fraction(q_B1, d_Y)
@@ -3309,6 +3389,9 @@ def check_L_capacity_per_dimension():
     # Renormalizable operators: sequential accumulation, not per-dim
     # Effective operators (dim>4): seesaw factorization -> per-dim
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_capacity_per_dimension: Neutrino d_1 = x^(q/d_Y)',
         tier=3, epistemic='P',
@@ -3325,6 +3408,19 @@ def check_L_capacity_per_dimension():
         key_result=f'd_1(nu) = x^(7/4) = {d1_nu:.6f} [P]',
         dependencies=['T_capacity_ladder', 'L_dim_angle', 'T8',
                       'L_Weinberg_dim', 'T_canonical', 'L_seesaw_type_I'],
+        artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
+        },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -4329,10 +4425,17 @@ def check_L_PMNS_NLO_immune():
     CONSEQUENCE: The NLO correction cannot degrade the PMNS
     predictions. The 0.11% mean accuracy of T_PMNS is protected
     to all orders of the curvature-propagation NLO expansion.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     x_f = float(dag_get('x_overlap', default=0.5, consumer='L_PMNS_NLO_immune'))
     q_B = [7, 4, 0]; q_H = [7, 5, 0]
-    d_W = 5
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
 
     # Step 1: Verify charged lepton sector is real
     Me = [[0.0 for _ in range(3)] for _ in range(3)]
@@ -4420,6 +4523,9 @@ def check_L_PMNS_NLO_immune():
     check(abs(theta_13 - 8.54) < 0.1,
           f"theta_13 = {theta_13:.2f} (T_PMNS: 8.54)")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_PMNS_NLO_immune: PMNS Is NLO-Free',
         tier=3,
@@ -4437,8 +4543,22 @@ def check_L_PMNS_NLO_immune():
         key_result='eta_e = eta_nu = 0 [P]; PMNS 0.11% accuracy NLO-protected',
         dependencies=[
             'L_kB_sector', 'L_NLO_texture', 'T_PMNS',
+            'L_Weinberg_dim',
         ],
         cross_refs=['L_rank2_texture'],
+        artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
+        },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -4606,8 +4726,16 @@ def check_T_PMNS_CP():
       2. Non-simply-connected generation space: could give nontrivial flat
          Wilson loops. No such structure in current FCF.
       3. Majorana phases (alpha_1, alpha_2): not constrained by J = 0.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
-    x_f = float(dag_get('x_overlap', default=0.5, consumer='T_PMNS_CP')); q_B = [7,4,0]; q_H = [7,5,0]; d_W = 5
+    x_f = float(dag_get('x_overlap', default=0.5, consumer='T_PMNS_CP')); q_B = [7,4,0]; q_H = [7,5,0]
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
 
     # Step 1: k_B(lepton) = 0 from L_kB_sector
     T3_VEV    = Fraction(-1, 2)
@@ -4670,6 +4798,9 @@ def check_T_PMNS_CP():
     check(abs(_math.degrees(_math.asin(s13)) - 8.54)  < 0.1, "theta_13 unchanged")
     check(abs(_math.degrees(_math.asin(s12)) - 33.38) < 0.1, "theta_12 unchanged")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='T_PMNS_CP: Leptonic CP Violation Vanishes Exactly',
         tier=3,
@@ -4689,14 +4820,26 @@ def check_T_PMNS_CP():
         dependencies=[
             'L_kB_sector', 'L_NLO_texture', 'T_PMNS',
             'L_LL_coherence', 'L_capacity_per_dimension', 'T_q_Higgs',
+            'L_Weinberg_dim',
         ],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'J_PMNS': 0.0, 'delta_CP_deg': 0.0,
             'max_Im_U_PMNS': max_im_U, 'k_B_lepton': 0, 'k_B_up': 3,
             'mechanism': 'W_e uses H (no conjugation) -> k_B=0 -> real texture',
             'prediction': 'delta_CP=0; falsifiable DUNE (2028+), HK (2027+)',
             'tension': 'T2K/NOvA ~-90 deg, ~2 sigma from 0',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -4732,8 +4875,16 @@ def check_L_nu_mass_gap():
       With universal M_R = M_0 * I: Dm^2 ratios = Gram ev ratios = 0.101.
       For Dm^2(exp) = 0.0295: need M_{R,2}/M_{R,3} ~ sqrt(0.101/0.0295) ~ 1.85.
       This mild (~factor 2) hierarchy is the defined derivation target.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
-    x_f = float(dag_get('x_overlap', default=0.5, consumer='L_nu_mass_gap')); d_W = 5
+    x_f = float(dag_get('x_overlap', default=0.5, consumer='L_nu_mass_gap'))
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     theta_W = _math.pi / d_W
     s, c = _math.sin(theta_W), _math.cos(theta_W)
     a12 = s**2*c**2; a23 = x_f; d2 = 1.0; d3 = c
@@ -4773,6 +4924,9 @@ def check_L_nu_mass_gap():
     MR_ratio = _math.sqrt(gap)
     check(1.0 < MR_ratio < 4.0, f"Implied M_R ratio mild: {MR_ratio:.2f}")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_nu_mass_gap: Gram Captures Angles, Not Dm^2 Hierarchy',
         tier=3,
@@ -4790,8 +4944,13 @@ def check_L_nu_mass_gap():
             f'Angles 0.11%; Dm^2 needs M_R structure (M_R2/M_R3~{MR_ratio:.2f}).'
         ),
         dependencies=['T_PMNS', 'L_capacity_per_dimension',
-                      'L_angular_far_edge', 'L_LL_coherence'],
+                      'L_angular_far_edge', 'L_LL_coherence', 'L_Weinberg_dim'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'gram_eigenvalues': [round(e, 6) for e in ev],
             'gram_ratio': round(ratio_gram, 4),
             'exp_ratio': round(ratio_exp, 4),
@@ -4806,6 +4965,12 @@ def check_L_nu_mass_gap():
             ],
             'open_problem': 'Derive M_R generation spectrum from A1',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -5544,11 +5709,18 @@ def check_L_seesaw_dimension():
       M_{R,2}/M_{R,3} = 2^{4/(9/2)} = 2^{8/9}  ≈ 1.852
 
     Import: Seesaw mechanism (Minkowski 1977, Yanagida 1979, Gell-Mann 1979).
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     from fractions import Fraction
 
     d_Y = 4    # T8 [P]
-    d_W = 5    # L_Weinberg_dim [P]
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']    # L_Weinberg_dim [P]
     q_B = [7, 4, 0]  # T_capacity_ladder [P]
 
     # Step 1-2: Capacity averaging
@@ -5583,6 +5755,9 @@ def check_L_seesaw_dimension():
     check(d_Y < float(d_seesaw) < d_W,
           "d_seesaw between d_Y and d_W")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_seesaw_dimension: Effective Seesaw Dimension = 9/2',
         tier=3, epistemic='P',
@@ -5602,6 +5777,11 @@ def check_L_seesaw_dimension():
             'L_Weinberg_dim', 'T_capacity_ladder', 'L_seesaw_type_I',
         ],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'd_seesaw': float(d_seesaw),
             'd_Y': d_Y,
             'd_W': d_W,
@@ -5612,6 +5792,12 @@ def check_L_seesaw_dimension():
             },
             'formula': 'M_R(g)/M_R(3) = 2^(q_B[g] / d_seesaw)',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -5669,12 +5855,21 @@ def check_L_seesaw_ordering():
 
     DEPENDENCIES: T_PMNS [P], L_seesaw_dimension [P], L_singlet_Gram
     [P_structural] (exchangeable form witnessed; rank 1 open), L_dark_budget.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math
     from fractions import Fraction
     from itertools import permutations as _perms
 
-    x = float(dag_get('x_overlap', default=0.5, consumer='L_seesaw_ordering')); d_W = 5; d_Y = 4
+    x = float(dag_get('x_overlap', default=0.5, consumer='L_seesaw_ordering'))
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
+    d_Y = 4
     d_seesaw = float(Fraction(d_Y + d_W, 2))
     q_B = [7, 4, 0]
     s_c = math.sin(math.pi / d_W); c_c = math.cos(math.pi / d_W)
@@ -5778,6 +5973,9 @@ def check_L_seesaw_ordering():
             check(ratio > RATIO_CUTOFF,
                   f"Perm {perm} correctly ruled out: ratio={ratio:.3f} > {RATIO_CUTOFF}")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_seesaw_ordering: Inverse-Rank Seesaw Pairing Uniquely Forced [P]',
         tier=3,
@@ -5801,8 +5999,13 @@ def check_L_seesaw_ordering():
             f'Ratio = {ratio_canonical:.6f} from APF eigenvalues alone. [P]'
         ),
         dependencies=['T_PMNS', 'L_seesaw_dimension', 'L_singlet_Gram',
-                      'L_dark_budget'],
+                      'L_dark_budget', 'L_Weinberg_dim'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'M_nu_gen1_diagonal': round(gen1_nu_diag, 4),
             'M_R_gen1_diagonal': round(gen1_MR_diag, 4),
             'M_nu_eigenstate0_gen1_pct': round(gen1_content_nu0 * 100, 1),
@@ -5811,6 +6014,12 @@ def check_L_seesaw_ordering():
             'canonical_ratio': round(ratio_canonical, 6),
             'ratio_cutoff_used': RATIO_CUTOFF,
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -5832,7 +6041,7 @@ def check_L_dm2_hierarchy():
     sector carries no generation label (core.py sector-typing species
     list: 'generation' is not an addressable vacuum label) -- true for
     ANY number of collective vacuum modes, i.e. at exchangeability
-    strength (L_singlet_Gram [P_structural], exchangeable form witnessed
+    strength (L_singlet_Gram [P_structural_reading], exchangeable form witnessed
     by check_L_singlet_Gram_exchangeable_form), and s = 4/15 is the
     vacuum saturation fraction (L_dark_budget).
 
@@ -5852,7 +6061,7 @@ def check_L_dm2_hierarchy():
       D_g = 2^{q_B[g]/d_seesaw} with d_seesaw = 9/2.
       D = [2.940, 1.852, 1.000].
 
-    Step 3 [generation-space re-anchor; L_singlet_Gram, P_structural]:
+    Step 3 [generation-space re-anchor; L_singlet_Gram, P_structural_reading]:
       the correction δM_R = s × D·D^T is rank-1 in GENERATION space
       because the vacuum sector carries no generation label (core.py
       sector-typing species list) -- whatever the number of collective
@@ -5885,11 +6094,20 @@ def check_L_dm2_hierarchy():
     The diagonal + rank-1 STRUCTURE does the heavy lifting; s = 4/15
     is the correct derived coefficient from L_dark_budget but the
     result is robust to its precise value.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math
     from fractions import Fraction
 
-    x = float(dag_get('x_overlap', default=0.5, consumer='L_dm2_hierarchy')); d_W = 5; d_Y = 4
+    x = float(dag_get('x_overlap', default=0.5, consumer='L_dm2_hierarchy'))
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
+    d_Y = 4
     d_seesaw = float(Fraction(d_Y + d_W, 2))  # 9/2
     q_B = [7, 4, 0]
     s_c, c_c = math.sin(math.pi / d_W), math.cos(math.pi / d_W)
@@ -5981,6 +6199,9 @@ def check_L_dm2_hierarchy():
         gen_pcts = [V[g][i]**2 * 100 for g in range(3)]
         comp[f'm_{i}'] = [round(p, 1) for p in gen_pcts]
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_dm2_hierarchy: Neutrino Δm² Ratio from Singlet Gram Feedback',
         tier=3, epistemic='P',
@@ -6006,8 +6227,14 @@ def check_L_dm2_hierarchy():
             'T_PMNS', 'L_seesaw_dimension', 'L_nu_mass_gap',
             'T_nu_ordering', 'T_capacity_ladder',
             'L_singlet_Gram', 'L_dark_budget',
+            'L_Weinberg_dim',
         ],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'ratio_predicted': round(ratio_pred, 6),
             'ratio_experimental': round(ratio_exp, 6),
             'error_pct': round(err * 100, 3),
@@ -6026,6 +6253,12 @@ def check_L_dm2_hierarchy():
                 'Approximate for m_1, m_2 (50-60% dominant gen).'
             ),
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -6095,6 +6328,10 @@ def check_L_mbb_prediction():
         reach of next-generation ton-scale experiments.
       - Cosmological Σmᵢ = 59 meV vs Planck+BAO upper limit ~120 meV:
         consistent, will be probed by CMB-S4 + DESI (σ ~ 20 meV).
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math as _m
     from fractions import Fraction as _F
@@ -6103,7 +6340,12 @@ def check_L_mbb_prediction():
     #  Step 1: PMNS mixing angles from T_PMNS [P]
     # ══════════════════════════════════════════════════════════════════
     x = float(dag_get('x_overlap', default=0.5, consumer='L_mbb_prediction'))
-    q_B = [7, 4, 0]; q_H = [7, 5, 0]; d_W = 5; d_Y = 4
+    q_B = [7, 4, 0]; q_H = [7, 5, 0]
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
+    d_Y = 4
     theta_W = _m.pi / d_W
     s_W, c_W = _m.sin(theta_W), _m.cos(theta_W)
 
@@ -6250,6 +6492,9 @@ def check_L_mbb_prediction():
     # ══════════════════════════════════════════════════════════════════
     contrib = [Ue[i] * m_meV[i] for i in range(3)]
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_mbb_prediction: Neutrinoless Double Beta Decay Mass',
         tier=4, epistemic='P',
@@ -6276,9 +6521,15 @@ def check_L_mbb_prediction():
             'L_seesaw_dimension',  # d_seesaw = 9/2
             'L_seesaw_type_I',     # seesaw formula
             'T_nu_ordering',       # normal ordering
+            'L_Weinberg_dim',
         ],
         cross_refs=['L_nuR_enforcement', 'L_sigma_VEV'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'masses_meV': [round(mi, 3) for mi in m_meV],
             'mass_ratios': [round(ri, 6) for ri in r],
             'scale_lambda_eV': round(lam, 6),
@@ -6305,6 +6556,12 @@ def check_L_mbb_prediction():
                 'LEGEND-1000': '~9-21 meV (proposed)',
             },
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -6356,6 +6613,10 @@ def check_L_Fisher_factorization():
     PHYSICAL CONSEQUENCE: N_gen = 3 (from generation block) and
     sin²θ_W = 3/13 (from sector block) are independently enforced.
     You cannot trade generation number for coupling constants.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math
 
@@ -6368,7 +6629,10 @@ def check_L_Fisher_factorization():
     check(abs(det_G_at_0 - 1.0) < 1e-15, "det(G) = 1 at c = 0")
 
     # Neutrino Gram at d = 5
-    d_W = 5
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     sc = math.sin(math.pi / d_W)
     cc = math.cos(math.pi / d_W)
     M_nu = [[x**(7/4), sc**2 * cc**2, 0.0],
@@ -6436,6 +6700,9 @@ def check_L_Fisher_factorization():
     cross_block_zero = True
     check(cross_block_zero, "All cross-block Fisher derivatives vanish identically")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_Fisher_factorization: 7D Fisher Metric Block-Diagonal',
         tier=3, epistemic='P',
@@ -6454,9 +6721,14 @@ def check_L_Fisher_factorization():
             f'condition number {cond:.0f} [P_structural]'
         ),
         dependencies=['L_Fisher_measure', 'T21', 'T22', 'T24', 'T_PMNS',
-                      'L_Gram_generation'],
+                      'L_Gram_generation', 'L_Weinberg_dim'],
         cross_refs=['L_Fisher_gradient', 'L_crossing_entropy'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'eigenvalues_7D': [round(e, 2) for e in all_eigs],
             'condition_number': round(cond, 1),
             'g_gen_eigenvalue': d_eff,
@@ -6465,6 +6737,12 @@ def check_L_Fisher_factorization():
             'det_Mnu': round(det_Mnu, 6),
             'factorization': 'det(M_total) = det(G) × det(M_nu) exact',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -6512,11 +6790,19 @@ def check_L_CP_geometric_bound():
       At Φ = π/2: ΔS ≈ 40 nats → Boltzmann suppression e^{-40} ≈ 10^{-17}.
       Fisher stiffness g_ΦΦ = -(d²S/dΦ²)|_{Φ=0} ≈ 34.
       Width σ = 1/√g_ΦΦ ≈ 10°.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math
 
     d_eff = 102
-    x = float(dag_get('x_overlap', default=0.5, consumer='L_CP_geometric_bound')); d_W = 5
+    x = float(dag_get('x_overlap', default=0.5, consumer='L_CP_geometric_bound'))
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     sc = math.sin(math.pi / d_W)
     cc = math.cos(math.pi / d_W)
 
@@ -6596,6 +6882,9 @@ def check_L_CP_geometric_bound():
     check(det_197 < 0,
           f"NuFIT δ=197°: det G = {det_197:.4f} < 0 (FORBIDDEN)")
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_CP_geometric_bound: Positivity Bound on Leptonic CP Phase',
         tier=3, epistemic='P',
@@ -6614,10 +6903,15 @@ def check_L_CP_geometric_bound():
             f'|δ_PMNS| < {phi_crit_deg:.0f}° (geometric), '
             f'δ_PMNS = 0° ± {sigma_deg:.0f}° (Boltzmann) [P_structural]'
         ),
-        dependencies=['T_PMNS', 'T_PMNS_CP', 'L_Gram_generation'],
+        dependencies=['T_PMNS', 'T_PMNS_CP', 'L_Gram_generation', 'L_Weinberg_dim'],
         cross_refs=['L_CP_dual_mechanism', 'L_Fisher_factorization',
                     'L_holonomy_phase'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'Q': round(Q, 5),
             'C': round(C, 5),
             'phi_crit_deg': round(phi_crit_deg, 1),
@@ -6633,6 +6927,12 @@ def check_L_CP_geometric_bound():
             'theta13_fw': round(theta13, 2),
             'prediction': 'δ_PMNS = 0° ± 10° (DUNE/HK ~2030-2035)',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -6686,6 +6986,10 @@ def check_L_CP_dual_mechanism():
       When Q → 1: entropy is phase-steep, Boltzmann kills all Φ ≠ 0.
       The same Fisher metric governs both regimes; only the
       operating point differs.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     import math
 
@@ -6712,7 +7016,11 @@ def check_L_CP_dual_mechanism():
           f"CKM worst Boltzmann = {boltz_CKM:.4f} > 0.9 (no suppression)")
 
     # Step 2: PMNS sector (from T_PMNS, using framework angles)
-    x = float(dag_get('x_overlap', default=0.5, consumer='L_CP_dual_mechanism')); d_W = 5
+    x = float(dag_get('x_overlap', default=0.5, consumer='L_CP_dual_mechanism'))
+    # Read the dimension under the supplier's declarations and premises.
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     sc = math.sin(math.pi / d_W)
     cc = math.cos(math.pi / d_W)
     M_nu = [[x**(7/4), sc**2*cc**2, 0.0],
@@ -6769,6 +7077,9 @@ def check_L_CP_dual_mechanism():
 
     stiffness_ratio = g_pp_PMNS / g_pp_CKM if g_pp_CKM > 0 else float('inf')
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: local d_W must equal the copied source value')
+
     return _result(
         name='L_CP_dual_mechanism: Two Independent CP Phase Mechanisms',
         tier=3, epistemic='P',
@@ -6787,9 +7098,14 @@ def check_L_CP_dual_mechanism():
             'PMNS δ=0 (entropy, thermodynamic) [P]'
         ),
         dependencies=['T_CKM', 'T_PMNS', 'T_PMNS_CP',
-                      'L_holonomy_phase', 'L_CP_geometric_bound'],
+                      'L_holonomy_phase', 'L_CP_geometric_bound', 'L_Weinberg_dim'],
         cross_refs=['L_Fisher_gradient', 'L_Fisher_factorization'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'Q_CKM': round(Q_C, 5),
             'C_CKM': round(C_C, 8),
             'C_over_Q_CKM': round(ratio_C, 5),
@@ -6806,6 +7122,12 @@ def check_L_CP_dual_mechanism():
             'mechanism_CKM': 'holonomy (geometric phase, Q << 1)',
             'mechanism_PMNS': 'entropy optimization (Boltzmann, Q → 1)',
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 
@@ -9659,6 +9981,9 @@ def check_T_sin2theta_higgs_record():
     and hence sin^2 theta_W = 3/13. It SUPERSEDES the refuted groundings (Delta_geo /
     owner-erasure / d+1/d-by-the-x=1/sqrt(d)-accident-at-d=4), which only hit 17/4 at x=1/2.
 
+    Counts are read from the conditional T_Higgs record and its named premise
+    is returned with the observed values; the load-form reading remains as below.
+
     THE READING (gamma_i = self-competition a_ii + the permanent record sector i locks):
       * gamma_1 = a_11 = 1.  U(1)_em is abelian -> Delta = 0 -> locks NO record (the photon is
         massless; T_photon_massless_from_reversibility; mass <=> record). No record surcharge.
@@ -9683,12 +10008,29 @@ def check_T_sin2theta_higgs_record():
     """
     x = dag_get('x_overlap', default=Fraction(1, 2), consumer='T_sin2theta_higgs_record')
 
-    # Higgs counts -- the SAME derivation banked in T_Higgs (gauge.py), recomputed here:
-    dim_before = 3 + 1   # dim(su(2)) + dim(u(1)_Y) = 4
-    dim_after = 1        # dim(u(1)_em)
-    n_goldstone = dim_before - dim_after        # = 3 = m (eaten Goldstones)
-    n_real_dof = 4                              # complex Higgs doublet = 4 real DOF
-    n_radial = n_real_dof - n_goldstone         # = 1 (the one physical Higgs, T_Higgs [P])
+    # Higgs counts read from the conditional supplier, with its premise retained.
+    import apf.gauge as _gauge
+    _higgs_record = _gauge.check_T_Higgs()
+    check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    check(type(n_goldstone) is int and n_goldstone > 0,
+          "T_Higgs goldstone_count must be a positive exact integer")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+          "T_Higgs conditional count premise changed; re-adjudicate this value tie")
+    n_real_dof = _higgs_counts.get('scalar_real_dim')
+    n_radial = _higgs_counts.get('physical_scalar_count')
+    check(type(n_real_dof) is int and n_real_dof > 0,
+          "T_Higgs scalar_real_dim must be a positive exact integer")
+    check(type(n_radial) is int and n_radial > 0,
+          "T_Higgs physical_scalar_count must be a positive exact integer")
+    check(n_goldstone + n_radial == n_real_dof,
+          "T_Higgs consumed scalar counts must recompose")
     check(n_goldstone == 3, "n_goldstone = dim su(2) = 3 (eaten Goldstones, T_Higgs)")
     check(n_radial == 1, "n_radial = 4 - 3 = 1 (the one physical/radial Higgs, T_Higgs)")
 
@@ -9744,6 +10086,7 @@ def check_T_sin2theta_higgs_record():
             'native structure whose capacity depends on the index.'
         ),
         summary=(
+            'The Higgs counts below are read from the conditional T_Higgs record. '
             'The electroweak load gamma = (1, 17/4) read as gamma_i = self-competition a_ii + the '
             'record sector i locks: gamma_1 = a_11 = 1 (U(1)_em massless, no record; photon theorem); '
             'gamma_2 = a_22 + n_radial = 13/4 + 1 = 17/4, the +1 being the one physical (radial) Higgs '
@@ -9754,8 +10097,17 @@ def check_T_sin2theta_higgs_record():
             'the source-codomain load-form identification + x = 1/2 collapse remain; no measured input consumed.'
         ),
         key_result='gamma_2 = a_22 + n_radial(=1, T_Higgs) = 17/4 -> sin^2 theta_W = 3/13; cross-check kappa_l = 27/26 [P_structural]',
-        dependencies=['T27c', 'T22', 'T24', 'T27d'],
+        dependencies=['T27c', 'T22', 'T24', 'T27d', 'T_Higgs'],
         cross_refs=['T_Higgs', 'T_photon_massless_from_reversibility', 'T_sin2theta'],
+        artifacts={
+            'higgs_count_source': {
+                'supplier': 'T_Higgs',
+                'goldstone_count': n_goldstone,
+                'scalar_real_dim': n_real_dof,
+                'physical_scalar_count': n_radial,
+                'conditional_on': list(_higgs_premises),
+            },
+        },
     )
 
 

@@ -36,7 +36,7 @@ check_T_deSitter_entropy (gravity.py).
   m > 0 (rank 2) the competition has a UV fixed point; its Fisher equilibrium resolves
   the within-slot d_eff microstates, reading S_dS smeared as B*sigma per running mode
   (L_coupling_capacity_id [P]). For m = 0 (rank 1) there is no fixed point and the
-  structure is a single collective mode (L_singlet_Gram [P_structural]) which reads the bare count
+  structure is a single collective mode (L_singlet_Gram [P_structural_reading]) which reads the bare count
   S_dS/sigma = C_total. The rank-1 reading is forced -- see T_gauge_reading_dichotomy [P].
 
   TYPE. A bosonic root-measure supports the 16 bosonic slots; a universal reading
@@ -161,7 +161,7 @@ def check_L_abelian_no_ledger_channel_structure():
     touch the 61 ledger channels at all, so the uniform full count is forced with no unstated premise.
     A gauge coupling's channel structure is its gauge group plus its running. For the rank-1 abelian
     both are absent from the ledger: (1) the U(1) Gram is rank 1, a single collective mode with no
-    internal index (L_singlet_Gram [P_structural]); (2) the abelian beta tiles the degeneracy COMPLEMENT,
+    internal index (L_singlet_Gram [P_structural_reading]); (2) the abelian beta tiles the degeneracy COMPLEMENT,
     6|b_Y| = 41 = d_eff - C_total, disjoint from the 61 ledger slots (T_gauge_beta_capacity_tiling
     [P]; the non-abelian betas tile the ledger, 6(|b3|+|b2|) = 61). With no structure to break the
     L_equip channel-equivalence, the only invariant reading is the uniform full count, so
@@ -199,7 +199,7 @@ def check_L_abelian_no_ledger_channel_structure():
     return _result(
         name=("L_abelian_no_ledger_channel_structure: the rank-1 abelian U(1) has NO structure that "
               "distinguishes the 61 ledger channels. Its gauge group is rank 1 (a single collective "
-              "mode, no internal index -- L_singlet_Gram [P_structural]) and its beta tiles the degeneracy "
+              "mode, no internal index -- L_singlet_Gram [P_structural_reading]) and its beta tiles the degeneracy "
               "complement (6|b_Y| = 41 = d_eff - C_total, disjoint from the ledger -- "
               "T_gauge_beta_capacity_tiling [P]; the non-abelian betas tile the ledger, 6(|b3|+|b2|)=61). "
               "With no distinguishing structure, the L_equip channel-equivalence leaves only the uniform "
@@ -214,7 +214,7 @@ def check_L_abelian_no_ledger_channel_structure():
             "discharges that premise for the abelian without the broad claim, by showing the abelian's "
             "ACTUAL structures are both absent from the ledger. A gauge coupling's channel structure is "
             "its gauge group plus its running. (1) The U(1) Gram A=[[1,x],[x,x^2]] (m=0) is rank 1 -- a "
-            "single collective mode with no internal index (L_singlet_Gram [P_structural]) -- so the group gives no "
+            "single collective mode with no internal index (L_singlet_Gram [P_structural_reading]) -- so the group gives no "
             "per-channel profile over the 61 slots. (2) The abelian beta tiles the degeneracy COMPLEMENT: "
             "6|b_Y| = 41 = d_eff - C_total, disjoint from the 61 ledger channels (the non-abelian betas "
             "tile the ledger, 6(|b3|+|b2|) = 61, and the three together tile d_eff = 102; "
@@ -407,7 +407,7 @@ def check_T_rank_field_selector():
         name=("T_rank_field_selector: a resolving structure's competition rank fixes which of the two "
               "ACC scalars it reads. Rank-2 (det A = m > 0) has a UV fixed point whose Fisher "
               "equilibrium reads S_dS smeared as B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id [P]); "
-              "rank-1 (m = 0) is a single collective mode (L_singlet_Gram [P_structural]) that reads the bare count "
+              "rank-1 (m = 0) is a single collective mode (L_singlet_Gram [P_structural_reading]) that reads the bare count "
               "S_dS/sigma = C_total = 61. The rank-1 whole-horizon support is ARGUED by "
               "T_gauge_reading_dichotomy; the selector is [P_structural_reading] (2026-06-27: the support-exhaustiveness is open, alpha_s-corroborated, not closed)"),
         tier=4,
@@ -420,7 +420,7 @@ def check_T_rank_field_selector():
             "A = [[1,x],[x,x^2+m]] has det A = m. For m > 0 (SU(3) m=8, SU(2) m=3) A is rank 2, has a "
             "UV fixed point, and its Fisher equilibrium distributes S_dS over the running modes -- the "
             "smeared reading B*sigma = S_dS/6 = 47.02 (L_coupling_capacity_id [P]). For U(1) m=0 A is "
-            "rank 1: a single collective mode (L_singlet_Gram [P_structural]) with no fixed point, forced to the "
+            "rank 1: a single collective mode (L_singlet_Gram [P_structural_reading]) with no fixed point, forced to the "
             "uniform full-ledger count S_dS/sigma = C_total = 61. GRADE [P_structural]: the rank-1 whole-horizon "
             "support -- the no-third-reading exhaustiveness that holds this at [P_structural] is argued (not closed to [P]) by "
             "T_gauge_reading_dichotomy [P_structural], which argues a gauge coupling has two readings "
@@ -446,11 +446,11 @@ def check_T_rank_field_selector():
 
 
 def check_T_acc_reading_selection():
-    """T_acc_reading_selection: one ledger, four readings, selected by rank and type [P_structural].
+    """T_acc_reading_selection: one ledger, four readings, selected by rank and type [P_structural_reading].
 
-    The top rule. Composes the rank clause (T_rank_field_selector [P]), the gauge dichotomy
-    (T_gauge_reading_dichotomy [P_structural]), and the four banked instances. [P_structural] overall: the
-    single open instance is the EW-floor type clause.
+    The top rule composes four supplied ACC instances under named readings.
+    [P_structural_reading] overall: abelian support-exhaustiveness and the
+    EW-floor suppression form remain open; the 61->16 mode restriction is banked.
     """
     non_abelian = (C_total / 6) * SIGMA
     abelian = S_dS / SIGMA
@@ -474,8 +474,7 @@ def check_T_acc_reading_selection():
 
     check(abs(non_abelian * 6 - S_dS) < 1e-6 and abs(abelian * SIGMA - S_dS) < 1e-6,
           "instances 1 and 2 read the SAME S_dS: 47.02*6 = S_dS = 61*sigma")
-
-    # honest non-claims: the gauge arm is closed; one type instance remains open.
+    # honest non-claims: abelian support and EW suppression form remain open.
     check(EXPORT_FLAGS["Export_structure_list_exhaustiveness_open"] == 1,
           "gauge arm is [P_structural_reading] (2026-06-27): the abelian support-exhaustiveness is OPEN (adopted, alpha_s-corroborated); the EW-floor TYPE clause is also open")
     check(EXPORT_FLAGS["Export_ew_floor_mode_restriction_banked"] == 1,
@@ -489,13 +488,13 @@ def check_T_acc_reading_selection():
               "rank-2 reads the smeared count S_dS/6, rank-1 the bare count S_dS/sigma = C_total) and "
               "TYPE (which slots a structure supports). Instances: non-abelian crossing = 47.02 [P]; "
               "abelian = 61 [P_structural]; EW floor = 8 [P_structural, type clause open]; cosmological "
-              "Omega_Lambda = 42/61 [P]. [P_structural] overall -- the single open instance is the "
-              "EW-floor type clause"),
+              "Omega_Lambda = 42/61 [P]. [P_structural_reading] overall -- abelian "
+              "support-exhaustiveness and EW-floor suppression form remain open"),
         tier=4,
         # 2026-07-03 PRINCIPAL RULING: field conformed to the docstring headline --
         # 'P_structural_exhaustive' -> 'P_structural' (the token mismatch flagged by the
         # reading-functional census, NEEDS-PRINCIPAL row; ruled [P_structural], v24.3.370).
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             "One capacity ledger -- C_total = 61 slots at per-slot degeneracy d_eff = 102 -- read four "
             "ways. The Reading-Selection Rule: a resolving structure reads the ACC scalar fixed by its "
@@ -510,16 +509,15 @@ def check_T_acc_reading_selection():
             "partition -- Omega_Lambda = 42/61 [P, L_equip / T12E]. Instances 1 and 2 are the SAME "
             "horizon log-count S_dS, read by opposite branches of the rank/fixed-point dichotomy (47.02*6 = S_dS "
             "= 61*sigma); that dichotomy is argued at [P_structural] -- a gauge coupling is read as having two "
-            "readings, the no-third exhaustiveness open. GRADE [P_structural] overall: with the gauge arm at [P_structural] and the "
-            "cosmological instance [P], the single remaining open arm is the EW-floor TYPE clause -- "
-            "that the bosonic root-measure supports exactly the 16 bosonic slots (the v24.3.179 "
-            "reservoir reading). That one statement is the residual; the type-clause close is the "
-            "remaining count-selection target. No measured coupling or target is consumed."
+            "readings, the no-third exhaustiveness open. GRADE [P_structural_reading] overall: "
+            "the abelian support-exhaustiveness and EW-floor suppression FORM remain open. "
+            "The 61->16 bosonic mode restriction is banked separately (.179/.184); "
+            "it does not close the suppression-form reading. No measured coupling or target is consumed."
         ),
         key_result=(
             "One 61-slot ledger, four readings selected by rank + type: 1/alpha_cross = 47.02 [P], "
             "1/alpha_Y = 61 [P_structural, dichotomy argued], EW floor 8 [P_structural], Omega_Lambda = 42/61 [P]. "
-            "[P_structural]; one open instance (EW-floor type clause)."
+            "[P_structural_reading]; abelian support-exhaustiveness and EW-floor suppression form open."
         ),
         dependencies=['T_rank_field_selector', 'T_gauge_reading_dichotomy', 'T_ACC_unification',
                       'L_crossing_entropy', 'L_coupling_capacity_id', 'L_sigma_intensive',
@@ -531,7 +529,7 @@ def check_T_acc_reading_selection():
             instance_3=f"EW floor, rank-irrelevant/bosonic -> C_boson/2 = {ew_floor:.0f} [P_structural, type open]",
             instance_4=f"cosmo fractions, equipartition -> Omega_Lambda = {OMEGA_LAMBDA[0]}/{OMEGA_LAMBDA[1]} [P]",
             same_horizon="instances 1,2 = same S_dS: 47.02*6 = S_dS = 61*sigma (opposite rank branches)",
-            open_residual="residual: EW-floor suppression FORM (vev-as-Born-root / absolute-scale); 61->16 mode-restriction banked .179/.184",
+            open_residual="residuals: abelian support-exhaustiveness and EW-floor suppression FORM; 61->16 mode-restriction banked .179/.184",
             export_flags=dict(EXPORT_FLAGS),
         ),
     )
@@ -985,7 +983,7 @@ def check_L_abelian_support_openness_pins():
             ("L_abelian_no_ledger_channel_structure",
              check_L_abelian_no_ledger_channel_structure, "P_structural_reading"),
             ("T_acc_reading_selection", check_T_acc_reading_selection,
-             "P_structural"),  # re-pinned 2026-07-03: principal ruling, field conformed to docstring (v24.3.370)
+             "P_structural_reading"),  # re-pinned 2026-07-03: principal ruling, field conformed to docstring (v24.3.370)
     ):
         _r = _fn()
         _got = str(_r.get("epistemic", "")).strip("[]")
@@ -1088,8 +1086,8 @@ IE_DECLARATIONS = (
             "inherits the open support-uniqueness "
             "(check_T_gauge_value_chain_is_P [P_structural_reading]); the "
             "top rule (check_T_acc_reading_selection) stands at "
-            "[P_structural] (field conformed to the docstring, principal ruling 2026-07-03) -- open instances: the EW-floor "
-            "type clause and the abelian sub-support exhaustiveness. "
+            "[P_structural_reading] -- open instances: the EW-floor suppression "
+            "form and the abelian sub-support exhaustiveness; 61->16 mode restriction banked separately. "
         ),
         "note": "Wave 6",
     },

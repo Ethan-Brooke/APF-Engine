@@ -515,14 +515,14 @@ def check_T12E():
 
 
 def check_L_singlet_Gram():
-    """L_singlet_Gram: Singlet Gram Matrix is S_42-Exchangeable (exchangeable form witnessed; rank 1 open) [P_structural].
+    """L_singlet_Gram: asserted-point arithmetic for the vacuum Gram reading [P_structural_reading].
 
-    v5.1.0 NEW.  Target 1 (Dark Sector Internal Structure).
-
-    STATEMENT: The 42 vacuum channels (gauge-singlet capacity from T12E)
-    project onto a SINGLE collective mode. The Gram matrix of the
-    singlet sector has rank 1.
-
+    v5.1.0 origin. Target 1 (Dark Sector Internal Structure).
+    Executed scope: at the supplied point a=b=1/61, compute 42/61 in
+    Fractions and report assigned rank=1, N_species=1 and delta_N_eff=0.
+    No demand vectors or Gram matrix are constructed here. The rank
+    dichotomy belongs to the separate exchangeable-form witness, and
+    the common-demand identity remains OPEN [C].
     REFERENT CORRIGENDUM (2026-07-02, count-neutral, rides the tree for signoff bundling -- three-referent drift found by
     the lemma-2 walk + its audit; STABILIZED HERE): the corpus cites
     "L_singlet_Gram" for THREE distinct objects. (1) THIS check's statement: the
@@ -554,25 +554,12 @@ def check_L_singlet_Gram():
     form G = (a-b)I + bJ, its spectrum, and the rank dichotomy are witnessed
     exactly in check_L_singlet_Gram_exchangeable_form (directly below).
 
-    PROOF (3 steps):
-
-    Step 1 [T12E, P]: The capacity budget partitions as
-      C_total = dag_get('C_total', default=61, consumer='L_singlet_Gram') = 19 (matter) + 42 (vacuum).
-      The 42 vacuum channels carry no gauge quantum numbers.
-
-    Step 2 [L_Gram, P]: For gauge-singlet demand vectors d_i,
-      the Gram matrix G_ij = <d_i, d_j> / C measures admissibility
-      overlap. Singlet vectors all point along the same direction
-      in admissibility space (no gauge index to distinguish them).
-
-    Step 3 [Rank computation]: Since all singlet demand vectors are
-      proportional to a single direction (the trivial representation),
-      G_singlet = v v^T is rank 1. The dark sector is one collective
-      mode, not 42 independent species.
-
-    PHYSICAL CONSEQUENCE: Dark matter behaves as a single fluid,
-    not as multiple species. N_species = 1, consistent with CMB
-    constraints on dark radiation (ΔN_eff ~ 0).
+    CURRENT READING: the supplied common-demand point identifies the 42
+    vacuum channels with one collective mode. This function checks the
+    19+42=61 partition and Fraction(42,61); rank and species are assigned,
+    not computed from a Gram. The single-mode and delta_N_eff statements
+    are conditional asserted-point consequences, not physical predictions.
+    The three-referent corrigendum above continues to govern every citation.
     """
     from fractions import Fraction
 
@@ -582,42 +569,35 @@ def check_L_singlet_Gram():
 
     check(C_vacuum + C_matter == C_total, "Budget closes")
 
-    # The singlet demand vectors are all proportional to the
-    # trivial-representation direction in admissibility space.
-    # G_singlet = v v^T has rank 1 by construction.
-    # v is the unit singlet direction, amplitude sqrt(C_vacuum/C_total).
-
-    # Verify: a rank-1 matrix has exactly 1 nonzero eigenvalue.
-    # For G = v v^T with |v|^2 = C_vacuum/C_total:
-    # eigenvalue = |v|^2 = C_vacuum/C_total = 42/61
-
+    # At the supplied point a=b=1/61, the asserted rank-one reading has
+    # nonzero eigenvalue 42/61. Only this Fraction arithmetic is computed;
+    # no demand vector or Gram matrix is constructed by this check.
     singlet_eigenvalue = Fraction(C_vacuum, C_total)
     check(singlet_eigenvalue == Fraction(42, 61),
           f"Singlet eigenvalue = {singlet_eigenvalue}")
 
-    rank = 1  # rank of outer product v v^T
+    rank = 1  # assigned rank at the supplied common-demand point
 
     # N_species = rank = 1
     N_species = rank
-    check(N_species == 1, "Dark sector = single collective mode")
+    check(N_species == 1, "assigned single-mode consequence at the supplied point")
 
-    # ΔN_eff contribution: a single bosonic mode at T << T_decouple
-    # contributes ΔN_eff = 0 (already decoupled before BBN).
+    # delta_N_eff is assigned under the supplied single-mode reading.
     delta_N_eff = 0
 
     return _result(
-        name='L_singlet_Gram: Singlet Gram Matrix is S_42-Exchangeable (exchangeable form witnessed; rank 1 open)',
-        tier=4, epistemic='P_structural',
+        name='L_singlet_Gram: asserted-point arithmetic for the 42-vacuum Gram reading; common demand open', 
+        tier=4, epistemic='P_structural_reading',
         summary=(
-            f'The 42 vacuum (gauge-singlet) channels: G_singlet is '
-            f'S_42-exchangeable [P_structural]. rank(G) = 1 (single '
-            f'collective mode) holds iff the common-demand identity a = b, '
-            f'OPEN [C] (witness: check_L_singlet_Gram_exchangeable_form). '
-            f'At the banked point a = b = 1/61: eigenvalue = 42/61 = '
-            f'{float(singlet_eigenvalue):.4f}, N_species = 1, ΔN_eff = 0 '
-            f'(asserted-form consequences at the demoted strength).'
+            f'At the supplied common-demand point a=b=1/61 for the 42 vacuum channels, '
+            f'the computed Fraction is 42/61 = {float(singlet_eigenvalue):.4f}. '
+            f'rank=1, N_species=1 and delta_N_eff=0 are assigned consequences of '
+            f'that reading, not a constructed Gram or physical species proof. '
+            f'The S_42-exchangeable form and rank dichotomy are checked separately '
+            f'by check_L_singlet_Gram_exchangeable_form [P_structural_reading]; '
+            f'the common-demand identity stays OPEN [C].' 
         ),
-        key_result='G_singlet is S_42-exchangeable [P_structural]; rank(G)=1 <=> the common-demand identity a=b, OPEN [C] (witnessed dichotomy: check_L_singlet_Gram_exchangeable_form)',
+        key_result='Supplied a=b=1/61 point: Fraction(42,61) computed; rank=1, N_species=1 and delta_N_eff=0 assigned, no Gram constructed. P_structural_reading; common-demand identity OPEN [C].', 
         dependencies=['T12E', 'T12', 'L_Gram', 'T_field'],
         artifacts={
             'C_vacuum': C_vacuum,
@@ -630,7 +610,7 @@ def check_L_singlet_Gram():
 
 
 def check_L_singlet_Gram_exchangeable_form():
-    """L_singlet_Gram_exchangeable_form: Vacuum Demand Gram is S_42-Exchangeable; Rank 1 <=> the Open Common-Demand Identity [P_structural].
+    """L_singlet_Gram_exchangeable_form: Vacuum Demand Gram is S_42-Exchangeable; Rank 1 <=> the Open Common-Demand Identity [P_structural_reading].
 
     v24.3.330 NEW (2026-07-02). The witness sub-lemma required by the
     L_singlet_Gram demotion (walk REDUCE + hostile audit LAND-WITH-FIXES
@@ -680,6 +660,7 @@ def check_L_singlet_Gram_exchangeable_form():
     exchangeable-per-block Gram with per-block common demand has
     collective rank <= 3 (one collective mode per block) plus block
     structure. One example computed exactly below: rank 3.
+    Its Goldstone block size is read from the conditional T_Higgs record.
 
     (v) OPEN, BY NAME: the a = b common-demand identity. Nothing banked
     forces every vacuum unit to place the same demand at the same
@@ -787,8 +768,22 @@ def check_L_singlet_Gram_exchangeable_form():
     N_c = dag_get('N_c', default=3,
                   consumer='L_singlet_Gram_exchangeable_form')
     n_generators = (N_c ** 2 - 1) + (2 ** 2 - 1) + 1   # dim G_SM = 12
-    n_goldstone = (3 + 1) - 1                          # 3 (check_T_Higgs arithmetic)
+    import apf.gauge as _gauge
+    _higgs_record = _gauge.check_T_Higgs()
+    check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    check(type(n_goldstone) is int and n_goldstone > 0,
+          "T_Higgs goldstone_count must be a positive exact integer")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+          "T_Higgs conditional count premise changed; re-adjudicate this value tie")
     n_residual = n - n_generators - n_goldstone        # the .321 residual block
+    check(n_residual > 0, "count-level example requires a positive residual block")
     check(n_residual + n_goldstone + n_generators == n,
           "count-level typing blocks tile the vacuum stratum")
     blocks = [n_residual, n_goldstone, n_generators]
@@ -807,7 +802,7 @@ def check_L_singlet_Gram_exchangeable_form():
     return _result(
         name=('L_singlet_Gram_exchangeable_form: Vacuum Demand Gram is '
               'S_42-Exchangeable (rank 1 <=> the open a=b identity)'),
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'Any label-functional vacuum demand Gram is S_42-exchangeable '
             'G = (a-b)I + bJ (P_exhaust zero-addressable-labels clause + two '
@@ -831,10 +826,15 @@ def check_L_singlet_Gram_exchangeable_form():
         key_result=('any label-functional vacuum demand Gram is G=(a-b)I+bJ; '
                     'spectrum {a+41b x1, a-b x41}; rank 1 <=> the '
                     'common-demand identity a=b, OPEN [C]'),
-        dependencies=['P_exhaust', 'L_Gram', 'T12E', 'T_horizon_reciprocity'],
+        dependencies=['P_exhaust', 'L_Gram', 'T12E', 'T_horizon_reciprocity', 'T_Higgs'],
         cross_refs=['T_which_v_no_registered_interior_reader',
                     'L_singlet_Gram', 'T_vglobal_slot_identification_no_go'],
         artifacts={
+            'higgs_count_source': {
+                'supplier': 'T_Higgs',
+                'goldstone_count': n_goldstone,
+                'conditional_on': list(_higgs_premises),
+            },
             'Export_demand_label_functionality_premise':
                 'NAMED (adopted: demand is built only from addressable/banked unit content)',
             'Export_config_demand_register_split_premise':
@@ -872,7 +872,7 @@ def check_L_singlet_Gram_exchangeable_form():
 
 
 def check_L_common_demand_iff_degenerate():
-    """L_common_demand_iff_degenerate: a = b <=> Demand Degeneracy; PSD Bounds on the Exchangeable Cone [P_structural].
+    """L_common_demand_iff_degenerate: a = b <=> Demand Degeneracy; PSD Bounds on the Exchangeable Cone [P_structural_reading].
 
     v24.3.338 NEW (2026-07-02). The PSD sharpening of the .330 open kernel,
     from the a=b walk + hostile cold audit (LAND-WITH-FIXES 0.75; all four
@@ -1014,7 +1014,7 @@ def check_L_common_demand_iff_degenerate():
     return _result(
         name=('L_common_demand_iff_degenerate: a = b <=> Demand Degeneracy '
               '(PSD sharpening of the open identity)'),
-        tier=4, epistemic='P_structural',
+        tier=4, epistemic='P_structural_reading',
         summary=(
             'Under the .330 premise pair PLUS the NAMED/OPEN PSD '
             '(demand-realizability) premise: the exchangeable vacuum Gram '
@@ -1695,6 +1695,11 @@ def check_T_config_demand_register_split_bank_respected():
         'vacuum_scheme_covariance.py',  # v24.3.373 (2026-07-03): the S_42-covariant fence split; abstract covariant-scheme instrument on banked constants, no register reader/writer; dispositioned at landing per the .352/.355 pattern
         'w_trace_denner_ward_identity_counterterm_import.py',
         'w_trace_native_bosonic_photon_vp.py',
+        # 2026-09-07 disposition (DSQ batch1d): the d=4 qualification is
+        # about plaquette covariance estimates in a lattice susceptibility
+        # comparison. I-76's ground-state/OS prose remains held; neither is a
+        # reader or writer of the cosmological register inspected here.
+        'yang_mills_gap.py',
         'yang_mills_md_bridge.py',
         'ym_quotient_ledger.py',
     })
@@ -2341,7 +2346,7 @@ def check_L_equation_of_state():
         'partition_evolves': False,   # BLOCKED by L_saturation_partition [P]
         'vacuum_dilutes': False,      # BLOCKED by T11 global locking [P]
         'types_change': False,        # BLOCKED by L_anomaly_free [P]
-        'Gram_evolves': False,        # BLOCKED at the density register: trace pin + S_42-invariance (L_singlet_Gram [P_structural] + check_L_singlet_Gram_exchangeable_form); the traceless scalar (a-b) is band-fenced at the response register, not frozen (v24.3.338 corrigendum)
+        'Gram_evolves': False,        # BLOCKED at the density register: trace pin + S_42-invariance (L_singlet_Gram [P_structural_reading] + check_L_singlet_Gram_exchangeable_form); the traceless scalar (a-b) is band-fenced at the response register, not frozen (v24.3.338 corrigendum)
     }
     for route, possible in escape_routes.items():
         check(not possible, f"Escape route '{route}' must be blocked")
@@ -3952,7 +3957,7 @@ IE_DECLARATIONS = (
         "claim_text": (
             "Any label-functional vacuum Gram on the 42 vacuum channels is "
             "S_42-exchangeable, G = (a-b)I + bJ "
-            "(check_L_singlet_Gram_exchangeable_form [P_structural], "
+            "(check_L_singlet_Gram_exchangeable_form [P_structural_reading], "
             "v24.3.330: dichotomy witness + named premises + exact rank "
             "dichotomy + block fence); rank 1 holds iff a = b -- the "
             "common-demand identity, UNBANKED/OPEN [C]. The prior "

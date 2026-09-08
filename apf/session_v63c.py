@@ -186,7 +186,10 @@ def check_L_neutrino_closure():
       (secondary) Δm² ratio closed ✓
     """
     x = 0.5; v = 251.13; sigma_0 = 29.07
-    q_B = [7, 4, 0]; d_W = 5
+    q_B = [7, 4, 0]
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
 
     # Gram matrix
     s_nu = math.sin(math.pi / d_W)
@@ -221,11 +224,14 @@ def check_L_neutrino_closure():
     # Gap reduction
     gap_reduction = 3.4 / (ratio_pred / ratio_exp)
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_neutrino_closure: local dimension must equal the copied source value')
+
     return _result(
         name='L_neutrino_closure: Neutrino Sector §1.3 Closure [RE-GRADED C]',
         tier=4, epistemic='C',
         summary=(
-            f'P2 §1.3 CLOSED. Δm²₂₁/Δm²₃₁ = {ratio_pred:.5f} '
+            f'Δm²₂₁/Δm²₃₁ = {ratio_pred:.5f} '
             f'(exp {ratio_exp:.5f}, err {err_ratio:.2f}%). '
             f'Gap reduction from Gram alone: 3.4× → {gap_reduction:.4f}× '
             f'(i.e. 0.06% residual). NOTE: the scale-free ratio Δm²₂₁/Δm²₃₁ survives, '
@@ -234,14 +240,30 @@ def check_L_neutrino_closure():
         ),
         key_result=f'Δm² ratio 0.06% SURVIVES (scale-free); §1.3 closure WITHDRAWN — M_R reverts [P]→[P+anchor]. [C]',
         dependencies=['L_hierarchy_cascade', 'L_dm2_hierarchy',
-                      'T_PMNS', 'L_sigma_VEV'],
+                      'T_PMNS', 'L_sigma_VEV', 'L_Weinberg_dim'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'ratio_pred': round(ratio_pred, 6),
             'ratio_exp': round(ratio_exp, 6),
             'err_pct': round(err_ratio, 3),
             'masses_meV': [round(m, 2) for m in m_meV],
             'sum_meV': round(sum(m_meV), 1),
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions. The final "
+            'equality check ties the local dimension to the copied source value; it '
+            'is a consistency check, not an independent derivation. The local '
+            'electroweak scale, singlet scale, overlap and seesaw-dimension inputs '
+            'retain their existing status; this source read does not establish '
+            'absolute neutrino-mass closure or remove an experimental anchor.'
+        ],
     )
 
 
@@ -297,7 +319,10 @@ def check_L_yD_spectral():
     y_D = math.sqrt(y_D_sq)
 
     # Seesaw eigenvalue structure
-    q_B = [7, 4, 0]; d_W = 5
+    q_B = [7, 4, 0]
+    from apf.gauge import _read_weinberg_dimension_source
+    _weinberg_source = _read_weinberg_dimension_source()
+    d_W = _weinberg_source['artifacts']['d_W']
     s_nu = math.sin(math.pi / d_W)
     c_nu = math.cos(math.pi / d_W)
     G_nu = np.array([[x**(7/4), s_nu**2*c_nu**2, 0],
@@ -345,6 +370,9 @@ def check_L_yD_spectral():
     m_bb = (Ue1*m_eV[0] + Ue2*m_eV[1] + Ue3*m_eV[2]) * 1e3
     m_beta = math.sqrt(Ue1*m_eV[0]**2 + Ue2*m_eV[1]**2 + Ue3*m_eV[2]**2) * 1e3
 
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_yD_spectral: local dimension must equal the copied source value')
+
     return _result(
         name='L_yD_spectral: Dirac Yukawa from Seesaw Vertex Capacity [RE-GRADED C]',
         tier=3, epistemic='C',
@@ -355,7 +383,7 @@ def check_L_yD_spectral():
             f'Δm²₃₁ = {dm31:.4e} eV² (exp {dm31_exp:.4e}, err {err_dm31:.2f}%). '
             f'Δm²₂₁ = {dm21:.4e} eV² (err {err_dm21:.2f}%). '
             f'Σmᵢ = {sum(m_meV):.1f} meV. m_ββ = {m_bb:.1f} meV. '
-            f'ZERO neutrino anchors. Cross-check: W=61 gives {err_61:.0f}% error.'
+            f'Cross-check: W=61 gives {err_61:.0f}% error.'
         ),
         key_result=(
             f'y_D = {y_D:.3e}, Δm²₃₁ at 0.04%. W=77 from seesaw 2-vertex. '
@@ -367,8 +395,14 @@ def check_L_yD_spectral():
             'L_seesaw_type_I', 'T_deSitter_entropy', 'T7',
             'L_hierarchy_boson_suppression', 'L_hierarchy_cascade',
             'L_dm2_hierarchy', 'T_PMNS',
+            'L_Weinberg_dim',
         ],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': d_W,
+                'source_record': _weinberg_source,
+            },
             'y_D': float(f'{y_D:.6e}'),
             'y_D_sq': float(f'{y_D_sq:.6e}'),
             'W_seesaw': W_seesaw,
@@ -383,13 +417,24 @@ def check_L_yD_spectral():
             'm_bb_meV': round(m_bb, 1),
             'm_beta_meV': round(m_beta, 1),
             'W61_err_pct': round(err_61, 0),
-            'neutrino_anchors': 0,
+            'neutrino_anchors': 1,
             'falsifiable': [
                 'Σmᵢ = 59.9 meV → CMB-S4+DESI (σ~15-20 meV, ~2028)',
                 'm_ββ = 4.4 meV → nEXO, LEGEND-1000 (~2030)',
                 'Normal ordering → JUNO, DUNE (~2028-2030)',
             ],
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions. The final "
+            'equality check ties the local dimension to the copied source value; it '
+            'is a consistency check, not an independent derivation. The local '
+            'electroweak scale, singlet scale, overlap and seesaw-dimension inputs '
+            'retain their existing status; this source read does not establish '
+            'absolute neutrino-mass closure or remove an experimental anchor.'
+        ],
     )
 
 

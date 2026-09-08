@@ -462,6 +462,8 @@ def check_T_record_demand_is_quotient_codim():
           transverse 1, Q kills the vev); the condensate fact H+H = v^2
           pins ONE quotient distinction; Delta = n_radial = 1 (T_Higgs [P]
           count), priced 1 in capacity units.
+    The counts are read from the conditional T_Higgs record and tied to
+    the independently computed orbit and transverse dimensions below.
 
     HONEST NON-CLAIMS: identification (ii) of the Schur-billing chain is
     REDUCED to GQL-1 (not dissolved); identifications (i) and (iii) stay
@@ -505,8 +507,32 @@ def check_T_record_demand_is_quotient_codim():
     orbit_dim, transverse, q_kills = _sm_tangent_block()
     _check(orbit_dim == 3 and transverse == 1 and q_kills,
            "SM block: orbit dim 3, transverse 1, Q kills the vev (exact)")
-    n_real_dof, n_goldstone = 4, 3
-    n_radial = n_real_dof - n_goldstone
+    import apf.gauge as _gauge
+    _higgs_record = _gauge.check_T_Higgs()
+    _check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    _check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    _check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    _check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    n_real_dof = _higgs_counts.get('scalar_real_dim')
+    n_radial = _higgs_counts.get('physical_scalar_count')
+    _check(type(n_goldstone) is int and n_goldstone > 0,
+           "T_Higgs goldstone_count must be a positive exact integer")
+    _check(type(n_real_dof) is int and n_real_dof > 0,
+           "T_Higgs scalar_real_dim must be a positive exact integer")
+    _check(type(n_radial) is int and n_radial > 0,
+           "T_Higgs physical_scalar_count must be a positive exact integer")
+    _check(n_goldstone + n_radial == n_real_dof,
+           "T_Higgs consumed scalar counts must recompose")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    _check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+           "T_Higgs conditional count premise changed; re-adjudicate this value tie")
+    _check(n_goldstone == orbit_dim,
+           "T_Higgs Goldstone count must match the computed orbit dimension")
+    _check(n_real_dof == orbit_dim + transverse,
+           "T_Higgs scalar real dimension must match orbit plus transverse")
     _check(n_radial == transverse == 1,
            "Delta(EW condensate) = orbit-transverse count = n_radial = 1 (T_Higgs)")
     _check(EPS * n_radial == F(1),
@@ -543,9 +569,16 @@ def check_T_record_demand_is_quotient_codim():
                     "T_particle_mass_is_locked_record", "L_operational_completeness",
                     "L_recoverability_is_orbit_reachability"],
         artifacts={
+            "higgs_count_source": {
+                "supplier": "T_Higgs",
+                "goldstone_count": n_goldstone,
+                "scalar_real_dim": n_real_dof,
+                "physical_scalar_count": n_radial,
+                "conditional_on": list(_higgs_premises),
+            },
             "k_sweep": {0: 0, 1: 1, 2: 2},
             "redundancy_contribution": 0,
-            "sm_delta": 1,
+            "sm_delta": n_radial,
             "identification_ii": "reduced to GQL-1 (covariance-totality), not dissolved",
             "identifications_i_iii": "open (Schur-billing chain; placement reading + RHS mapping)",
             "named_identifications": ["GQL-1", "GQL-2", "GQL-3 layer disjointness"],
@@ -2077,9 +2110,32 @@ def check_T_ew_load_placement_P():
     toggle table showing the placement is load-bearing (the three rival billings
     miss); the vev-orbit invariance (the modulus is the unique transverse
     invariant).  No measured input is consumed; no O(1) is fitted.
+    The counts are read from the conditional T_Higgs record and tied to
+    the independently computed orbit and transverse dimensions below.
     """
-    # n_radial from the Higgs content (T_Higgs): 4 real - 3 eaten Goldstones = 1
-    n_radial = 4 - 3
+    # Actual scalar counts and the named condition carried by T_Higgs.
+    import apf.gauge as _gauge
+    _higgs_record = _gauge.check_T_Higgs()
+    _check(isinstance(_higgs_record, dict), "T_Higgs must return a record mapping")
+    _check(_higgs_record.get('passed') is True, "T_Higgs returned passed must be True")
+    _higgs_artifacts = _higgs_record.get('artifacts')
+    _check(isinstance(_higgs_artifacts, dict), "T_Higgs artifacts must be a mapping")
+    _higgs_counts = _higgs_artifacts.get('computed_counts')
+    _check(isinstance(_higgs_counts, dict), "T_Higgs computed_counts must be a mapping")
+    n_goldstone = _higgs_counts.get('goldstone_count')
+    n_real_dof = _higgs_counts.get('scalar_real_dim')
+    n_radial = _higgs_counts.get('physical_scalar_count')
+    _check(type(n_goldstone) is int and n_goldstone > 0,
+           "T_Higgs goldstone_count must be a positive exact integer")
+    _check(type(n_real_dof) is int and n_real_dof > 0,
+           "T_Higgs scalar_real_dim must be a positive exact integer")
+    _check(type(n_radial) is int and n_radial > 0,
+           "T_Higgs physical_scalar_count must be a positive exact integer")
+    _check(n_goldstone + n_radial == n_real_dof,
+           "T_Higgs consumed scalar counts must recompose")
+    _higgs_premises = _higgs_record.get('conditional_on')
+    _check(_higgs_premises == ['UNBROKEN_SUBGROUP_IS_U1_EM'],
+           "T_Higgs conditional count premise changed; re-adjudicate this value tie")
     _check(n_radial == 1, "n_radial = 4 - 3 = 1 (single physical radial Higgs, T_Higgs)")
 
     # competition at the interface-symmetric overlap x = 1/2, m = dim su(2) = 3 (T22)
@@ -2112,6 +2168,10 @@ def check_T_ew_load_placement_P():
            "the Higgs modulus is the unique transverse invariant of the SU(2)xU(1) "
            "vev orbit (orbit dim 3, transverse 1; U(1)_Y propto identity on the "
            "doublet) -- the record is constitutively SU(2)'s")
+    _check(n_goldstone == orbit_dim and n_radial == transverse,
+           "T_Higgs split counts must match the computed orbit and transverse dimensions")
+    _check(n_real_dof == orbit_dim + transverse,
+           "T_Higgs scalar real dimension must match orbit plus transverse")
 
     return _full_result(
         name="T_ew_load_placement_P: the sin^2 theta_W = 3/13 LEDGER SHARE is [P] over the four-input foundation with FD1 structural completeness named",
@@ -2146,7 +2206,14 @@ def check_T_ew_load_placement_P():
                     "T_sin2theta_higgs_record", "T24", "T_sin2theta", "T27d",
                     "UB_usage_billing_adopted", "L_epsilon_star"],
         artifacts={
-            "n_radial": 1,
+            "higgs_count_source": {
+                "supplier": "T_Higgs",
+                "goldstone_count": n_goldstone,
+                "scalar_real_dim": n_real_dof,
+                "physical_scalar_count": n_radial,
+                "conditional_on": list(_higgs_premises),
+            },
+            "n_radial": n_radial,
             "gamma": "(1, 17/4)",
             "ledger_fraction": "3/13",
             "rivals_that_miss": {"inert": "13/35", "two_records": "5/43", "record_on_u1": "13/19"},
@@ -2160,15 +2227,15 @@ def check_T_ew_load_placement_P():
 def check_T_orientation_ew_route_priced():
     """T_orientation_ew_route_priced: the orientation->EW cell's route-pricing pin.
 
-    Tier 4 [P_structural] -- a closed-world hygiene + arithmetic pin over the one
+    Tier 4 [P_structural_instrument] -- a closed-world hygiene + arithmetic pin over the one
     in-bank route from orientation content to the EW spectrum (the record-term slot
     Delta in gamma_2 = a_22 + Delta), per the 2026-07-02 orientation-EW note SS5
     (the .305/.318 walker pattern). Three clauses:
 
       (a) THE QUARANTINE, EXACT. The two block-D/E adjudication lemmas -- scanned
           by BARE theorem name, never check_-prefixed (the v0.1 grep error is on
-          the record) -- are cited only in the two quotient-ledger modules,
-          per-file count-pinned. T_record_demand_is_quotient_codim and
+          the record) -- are cited on the enumerated quarantine surfaces, including the
+          pinned solder-form cross-reference, per-file count-pinned. T_record_demand_is_quotient_codim and
           T_ew_load_placement_P are OUTSIDE this clause by design: they ARE the
           route (consumed by fibration_census and the generations spine). The
           pinned gauge_quotient_ledger.py counts INCLUDE this check's own two
@@ -2205,7 +2272,7 @@ def check_T_orientation_ew_route_priced():
     reading); this pin certifies that the pricing exists and that the route's
     arithmetic is stable.
 
-    GRADE [P_structural]: closed-world over the current corpus. Falsifier: any
+    GRADE [P_structural_instrument]: closed-world over the current corpus. Falsifier: any
     new TOP-LEVEL apf/*.py file citing the quarantined lemmas or carrying the
     tokens (the scan is os.listdir over the package root, the .305/.318 scope;
     subpackages are outside the net -- verified clean at pin time), any per-file
@@ -2312,11 +2379,11 @@ def check_T_orientation_ew_route_priced():
     return _full_result(
         name="T_orientation_ew_route_priced: the orientation->EW cell's route-pricing pin (quarantine + token net + placement arithmetic, all four placements priced)",
         tier=4,
-        epistemic="P_structural",
+        epistemic="P_structural_instrument",
         summary=(
             "The orientation->EW cell's standing pin, per the 2026-07-02 note SS5. "
-            "(a) The block-D/E adjudication lemmas are quarantined to the two "
-            "quotient ledgers (bare-name scan, per-file count-pinned); the route "
+            "(a) The block-D/E lemma citation counts match the enumerated quarantine surfaces "
+            "(bare-name scan, per-file count-pinned); the route "
             "checks (T_record_demand_is_quotient_codim, T_ew_load_placement_P) are "
             "outside the clause by design -- they are the route. (b) The four "
             "orientation tokens appear only at the enumerated files, count-pinned; "
@@ -2327,7 +2394,7 @@ def check_T_orientation_ew_route_priced():
             "89% off + 1/alpha_2 x2.1 off -- the cell's last unpriced row, closed). "
             "NOT certified: the cross-quotient identification, the billing "
             "semantics, the rank-1 reading chain, anything continuum-side. "
-            "Closed-world [P_structural]; drift flags, human re-adjudicates."
+            "Closed-world [P_structural_instrument]; drift flags, human re-adjudicates."
         ),
         key_result="all four banked EW placements priced (3/13 survives; 13/35 77% off; 5/43 negative; 13/19 t<0 + 89% off); quarantine + token net pinned; the orientation->EW cell has no unpriced row (placement VERDICTS live in check_T_load_form_selected_by_alpha_s at its reading-conditional grade; this pin certifies the pricing exists and the arithmetic is stable)",
         dependencies=["T_ew_load_placement_P",
@@ -2405,9 +2472,11 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Every EW placement of the record-term slot Delta carries a "
-            "certificate (check_T_orientation_ew_route_priced "
-            "[P_structural], v24.3.327): Delta = 1 -> sin^2 theta_W = 3/13 "
+            "Source hygiene, local fraction recomputation and discriminator marker "
+            "presence are certified by check_T_orientation_ew_route_priced "
+            "[P_structural_instrument]. The existing forward discriminator "
+            "supplies the reading-conditional corroboration and exclusions: "
+            "Delta = 1 -> sin^2 theta_W = 3/13 "
             "(retains the 0.11 sigma corroboration); Delta = 0 -> 13/35 "
             "killed (alpha_s 77% off); Delta = 2 -> 5/43 excluded in-check "
             "(alpha_s negative); Reading D 13/19 killed at "

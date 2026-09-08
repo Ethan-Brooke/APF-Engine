@@ -61,25 +61,9 @@ The four locked v0 kills are:
    CORRECTION: this header read "and shows each is either derived
    elsewhere in the bank or structurally redundant with PLEC."
 
-4. R_Born_axiomatic — Rival framework that postulates the Born
-   probability rule axiomatically.
-   T_Born (apf.core) verifies the Born form p(E) = Tr(rho E) on a
-   3-dimensional witness; uniqueness -- the content the rival's
-   postulate carries -- is Gleason, supplied by L_Gleason_finite
-   (apf/supplements.py) over the frame functions of a Hilbert space
-   with dim >= 3. STRICT DOMINATION IS NOT ESTABLISHED: the reduction
-   runs on the structure the postulate is about.
-   CORRECTION: this header read "Killed by T_Born (apf.core) + T2
-   (apf.core): T_Born derives the Born rule from L_irr (irreducibility
-   of distinguishable carriers) plus the admissibility constraint,
-   with T2 supplying the Gleason countably-additive frame-function
-   premise. The axiomatic rival is strictly dominated: it postulates a
-   result that is provable from strictly weaker assumptions already in
-   the bank." check_T_Born returns dependencies ['T2', 'T_Hermitian',
-   'A1', 'L_Gleason_finite']: L_irr is not among them, 'admissibility'
-   is not a bank name, and the Gleason premise comes from
-   L_Gleason_finite, not from T2 (T2 supplies an operator algebra on a
-   Hilbert space).
+4. R_Born_axiomatic — The dedicated record reads the live conditional
+   T_Born result and checks its declared grade, dependencies and named
+   premises. Strict domination is not established by this check.
 
 Together, the four checks compose into ``check_T_killed_rivals_v0``
 (tier 4, [P_structural]), which certifies that each of the four
@@ -859,102 +843,73 @@ def check_R_extra_axiom_NT_killed():
 
 
 # =============================================================================
-# Kill 4 — R_Born_axiomatic: Rival that postulates the Born rule as an axiom.
+# Record 4 — R_Born_axiomatic: read the live conditional T_Born record.
 # =============================================================================
 
 def check_R_Born_axiomatic_killed():
-    """R_Born_axiomatic: Rival that axiomatizes the Born rule is dominated by T_Born + T2 [P_structural].
+    """R_Born_axiomatic: read the live conditional T_Born record.
 
-    STATEMENT: Any rival framework that postulates the Born probability
-    rule P(a_n) = |<a_n|psi>|^2 as a primitive axiom is strictly
-    dominated by the v6.9 derivation T_Born (apf.core) + T2 (apf.core).
-    T_Born derives the Born rule from L_irr (irreducibility of
-    distinguishable carriers) + the admissibility constraint; T2
-    supplies the Gleason countably-additive frame-function premise.
-    The rival is dominated because it postulates a result that is
-    provable from strictly weaker assumptions already in the bank.
+    This check calls T_Born and checks its returned PASS, grade,
+    dependencies and named premises against the scoped TB2 contract.
+    It returns those live values with the source's scope and limits.
+    Agreement is a record check; no strict domination is established.
 
-    KILL WITNESS: This is a *strict-domination* kill, parallel to kill 3
-    case 'Born_rule' but with a dedicated check for citation in Paper 8.
-    The kill record asserts:
+    The historical registry key is retained for compatibility. Neither
+    the key nor the legacy grade is a rival-exclusion result. No A1,
+    L_irr, admissibility or Gleason derivation is supplied here.
 
-      (a) The Born rule is bank-registered as a derived theorem
-          (T_Born is in the bank).
-
-      (b) T_Born's dependency chain bottoms out at A1 + L_irr +
-          admissibility — strictly weaker than postulating the rule.
-
-      (c) The Gleason frame-function premise that T2 supplies is itself
-          derivable in the bank under the standard countably-additive
-          measure-theoretic frame (not separately axiomatized).
-
-    DEPENDENCIES: T_Born, T2.
-    STATUS: [P_structural].
+    DEPENDENCIES: T_Born, T2 (the upstream dependency retained here).
     """
-    # (a) T_Born is bank-registered. We assert by structural claim
-    # (the function check_T_Born is importable from apf.core); we don't
-    # invoke it live to avoid re-entry / cycle.
+    from copy import deepcopy
     from apf import core as _apf_core
-    check(
-        hasattr(_apf_core, 'check_T_Born'),
-        "apf.core.check_T_Born missing; T_Born not bank-registered."
-    )
-    check(
-        callable(getattr(_apf_core, 'check_T_Born', None)),
-        "apf.core.check_T_Born not callable."
-    )
 
-    # (b) T_Born's dependency-chain weakness. The dependency is recorded
-    # in T_Born's _result dict via dependencies=[...]; we don't open the
-    # dict here (cycle risk), but the structural-domination claim is the
-    # following implication:
-    #
-    #   (A1 + L_irr + admissibility) |- Born_rule
-    #
-    # whereas the rival postulates Born_rule as a primitive. The first
-    # premise set is strictly contained in the second (by adding
-    # Born_rule as a separate axiom); domination is therefore strict.
-    domination_chain = [
-        'A1',                # finite admissibility capacity
-        'L_irr',             # irreducibility of distinguishable carriers
-        'admissibility',     # PLEC admissibility constraint
-    ]
+    source = _apf_core.check_T_Born()
+    check(isinstance(source, dict), "T_Born did not return a record.")
+    check(source.get('passed') is True, "T_Born did not pass.")
     check(
-        len(domination_chain) >= 3,
-        "Born-rule derivation chain too thin to claim strict domination."
-    )
-
-    # (c) T2 / Gleason frame-function premise.
-    check(
-        hasattr(_apf_core, 'check_T2'),
-        "apf.core.check_T2 missing; T2 (Gleason premise) not bank-registered."
+        source.get('epistemic') ==
+        'P_math | R_BOUNDED_ADDITIVE_EXTENSION + R_EFFECT_SPACE_MODEL',
+        "T_Born returned grade differs from the scoped TB2 contract."
     )
     check(
-        callable(getattr(_apf_core, 'check_T2', None)),
-        "apf.core.check_T2 not callable."
+        source.get('dependencies') == ['T2', 'T_Hermitian'],
+        "T_Born returned dependencies differ from the scoped contract."
     )
-
+    source_artifacts = source.get('artifacts')
+    check(isinstance(source_artifacts, dict), "T_Born artifacts missing.")
+    check(
+        source_artifacts.get('named_premises') == [
+            'R_BOUNDED_ADDITIVE_EXTENSION', 'R_EFFECT_SPACE_MODEL'],
+        "T_Born returned named premises differ from the scoped contract."
+    )
+    # These copies expose the live result. They do not discharge its inputs
+    # or independently test the mathematical meaning of its grade.
+    snapshot = deepcopy({
+        'name': source.get('name'),
+        'epistemic': source['epistemic'],
+        'dependencies': source['dependencies'],
+        'key_result': source.get('key_result'),
+        'named_premises': source_artifacts['named_premises'],
+        'executed_dimension_range': source_artifacts.get('executed_dimension_range'),
+        'may_not_cite': source_artifacts.get('may_not_cite'),
+        'disclosed_limitations': source_artifacts.get('disclosed_limitations'),
+    })
     return _result(
-        name='R_Born_axiomatic — Rival that axiomatizes the Born rule KILLED',
+        name='R_Born_axiomatic — live conditional T_Born record',
         tier=4,
         epistemic='P_structural_exhaustive',
         summary=(
-            'Rival framework that postulates the Born rule '
-            'P(a_n) = |<a_n|psi>|^2 as a primitive axiom is strictly '
-            'dominated by T_Born + T2 (apf.core). T_Born derives the '
-            'Born rule from A1 + L_irr + admissibility; T2 supplies the '
-            'Gleason countably-additive frame-function premise. The '
-            'rival postulates a result already provable from strictly '
-            'weaker assumptions in the bank, so it is dominated.'
+            'The live T_Born result passed and its returned grade, '
+            'dependencies and named premises match the scoped contract. '
+            'The source record and its limits are exposed below. '
+            'This check establishes no strict domination.'
         ),
-        key_result='Born axiomatic rival killed: strict domination by T_Born + T2 [P_structural]',
+        key_result='Live conditional T_Born record checked; strict domination not established',
         dependencies=['T_Born', 'T2'],
-        cross_refs=['L_irr', 'A1'],
+        conditional_on=deepcopy(snapshot['named_premises']),
         artifacts={
-            'rival_postulate': 'P(a_n) = |<a_n|psi>|^2 as primitive axiom',
-            'domination_chain': domination_chain,
-            'derivation_modules': ['apf.core'],
-            'derivation_theorems': ['T_Born', 'T2'],
+            'strict_domination_established': False,
+            'source_record': snapshot,
         },
     )
 

@@ -2189,9 +2189,11 @@ def check_T_positive_cone_quotient_compatible():
 # =====================================================================
 
 def check_T_split_composite_gates_tensor_closure():
-    """T_split_composite_gates_tensor_closure: only D in {R, C} pass
-    finite tensor closure of matrix algebras over R.  Quaternionic
-    M_n(H) has M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic.
+    """T_split_composite_gates_tensor_closure: only D = R passes
+    the same-size real-dimension test with tensor product over R.
+    A separate commutative-field tensor convention admits R and C.
+    Quaternionic M_n(H) has
+    M_n(H) (x)_R M_m(H) ~= M_{4nm}(R), not quaternionic.
 
     Tier 3 [P_math].  Paper 5 Supplement v5.97 section "Field
     selection by split closed-world composite gates", first leg of
@@ -2210,11 +2212,17 @@ def check_T_split_composite_gates_tensor_closure():
     OR D = C with the modification that we tensor over C (giving
     dim_C(M_n(C) (x)_C M_m(C)) = (nm)^2 = dim_C(M_{nm}(C))).
 
-    Stated cleanly: only when the tensor product is taken over the
-    field D itself does closure hold; for D = H, even tensoring
-    over H fails because H is not a field (noncommutative).  In
-    practice: the standard real-tensor-product convention used in
-    composite-system constructions selects D in {R, C}.
+    Stated cleanly: the real-dimension loop tests closure against
+    the same-size target M_{nm}(D) over R and admits R alone.
+    The separate field-tensor helper is a membership lookup
+    D in ("R", "C"), expressing the commutative-field convention
+    with tensor over R for R and over C for C.  H is outside that
+    convention because it is not a commutative field.  This helper
+    does not construct the tensor algebra.  The dimension test
+    alone neither proves the displayed real-algebra isomorphism
+    nor excludes quaternionic targets of every possible size.
+    Neither test derives a general field-selection theorem or a
+    physical justification for choosing that convention.
 
     The check verifies the parameter-count test on (n, m) in
     {2..5}^2 for each D in {R, C, H}, recording when closure holds.

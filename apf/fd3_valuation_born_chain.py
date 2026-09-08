@@ -35,8 +35,8 @@ unit coefficients, symmetric slice.
 
 THE TWO NAMED CLAUSES (spec Sec. 2; definitions, not theorems; carried
 in ``conditional_on`` on every returned record together with
-FD3_VALUATION_CONVENTION and the standing LINEAR_REALIZATION_TARGET
-residual):
+FD3_VALUATION_CONVENTION, the EQUAL_COST_UNIFORMITY scope premise and
+the standing LINEAR_REALIZATION_TARGET residual):
 
   DEF_REALIZATION_SIGNED_CONTRACTION.  A protocol is a finite multiset
   of (sign, word) pairs, e_i in {+1,-1}, w_i an admissible word (walk)
@@ -105,8 +105,8 @@ convention inside ``check_T_PLEC_derived_from_spine``
 (``foundation_inputs.py``), a parenthetical exercised on a toy
 witness, not a standalone registered statement (see the
 ``conditional_on`` note in-code); ``conditional_on`` carries the
-three named clauses plus the standing linearity residual (spec
-Sec. 2 + the 2026-08-04 ruling).  Computed over
+three named clauses plus EQUAL_COST_UNIFORMITY and the standing
+linearity residual (spec Sec. 2 + the 2026-08-04 ruling).  Computed over
 every signed set of sizes
 2 and 3 at n = 3 and 4 (60 + 160 and 264 + 1760 instances), at two eps
 scales.  Tied by value to the banked ``md_super_nodiscount`` system:
@@ -162,7 +162,7 @@ carry exactly that name); and what it does NOT touch (the linearity
 residual itself -- LINEAR_REALIZATION_TARGET is consumed and carried in
 conditional_on, not discharged; P1/P2/P3; CYCLICITY; the division-ring
 selection).  A fresh own-emitted record is read back as a leg: its
-``conditional_on`` equals the four-name conditional set by value
+``conditional_on`` equals the five-name conditional set by value
 (record-level carry; audit 3 MAJOR-1).
 
 C6 -- SCOPE FENCES (check_L_scope_fences).  The complete-uniform-
@@ -180,8 +180,9 @@ at DEF_REALIZATION -- the definition is the crossing, named, with the
 excluded alternatives on record.  The honest sentence for the chain's
 conclusion: Born pricing follows from three named clauses
 (FD3_VALUATION_CONVENTION, DEF_REALIZATION_SIGNED_CONTRACTION,
-COST_REPRESENTATION_ON_LOADS) plus the standing residuals.  Every
-stronger sentence is on the MAY-NOT-CITE list below.
+COST_REPRESENTATION_ON_LOADS) plus EQUAL_COST_UNIFORMITY and the
+standing residuals.  Every stronger sentence is on the MAY-NOT-CITE
+list below.
 
 eps NOTE (the siblings' note, carried): eps enters only through the
 word module's probed_eps() singleton probe on the banked
@@ -222,7 +223,8 @@ MAY NOT CITE (spec Sec. 4; in-module and for every downstream quote):
 - "Born is derived" WITHOUT the conditional clause.  The honest
   sentence: Born pricing follows from three named clauses
   (FD3_VALUATION_CONVENTION, DEF_REALIZATION_SIGNED_CONTRACTION,
-  COST_REPRESENTATION_ON_LOADS) plus the standing residuals.
+  COST_REPRESENTATION_ON_LOADS) plus EQUAL_COST_UNIFORMITY and the
+  standing residuals.
 - "The linearity residual is discharged."  It is consumed and carried
   in conditional_on on every record.
 - "The carrier gap is closed."  It is CROSSED BY DEFINITION at
@@ -293,11 +295,13 @@ EXCLUDED_ALTERNATIVES = {
 }
 
 # conditional_on = the chain's named premises: FD3_VALUATION_CONVENTION
-# + the two named definitional clauses + the standing linearity
-# residual.  RULED 2026-08-04: FD3_VALUATION_CONVENTION moved into
+# + the two named definitional clauses + the EQUAL_COST_UNIFORMITY
+# scope premise + the standing linearity residual.
+# RULED 2026-08-04: FD3_VALUATION_CONVENTION moved into
 # conditional_on.
 CONDITIONAL_ON = sorted(list(NAMED_CLAUSES)
-                        + ["FD3_VALUATION_CONVENTION",
+                        + ["EQUAL_COST_UNIFORMITY",
+                           "FD3_VALUATION_CONVENTION",
                            "LINEAR_REALIZATION_TARGET"])
 
 PREMISES_CONSUMED = (frozenset(WORD_PREMISES_CONSUMED)
@@ -502,7 +506,7 @@ EXPECTED_LEGS = {
         "word_image_no_superposed_element",
     ],
     "check_L_residual_ledger_retirement": [
-        "conditional_on_carries_four_clauses",
+        "conditional_on_carries_five_premises",
         "consumed_disjoint_from_not_consumed",
         "consumed_set_exact",
         "linearity_residual_carried_not_discharged",
@@ -1077,16 +1081,18 @@ def check_L_residual_ledger_retirement():
         and md_rec["conditional_on"] == sorted(DERIVED_HERE)
         and "MD_SUPER_NODISCOUNT" not in PREMISES_CONSUMED
         and "MD_SUPER_NODISCOUNT" not in CONDITIONAL_ON)
-    legs["conditional_on_carries_four_clauses"] = (
+    legs["conditional_on_carries_five_premises"] = (
         CONDITIONAL_ON == [
             "COST_REPRESENTATION_ON_LOADS",
             "DEF_REALIZATION_SIGNED_CONTRACTION",
+            "EQUAL_COST_UNIFORMITY",
             "FD3_VALUATION_CONVENTION",
             "LINEAR_REALIZATION_TARGET",
         ]
         and set(CONDITIONAL_ON)
             == frozenset(NAMED_CLAUSES)
-               | frozenset({"FD3_VALUATION_CONVENTION",
+               | frozenset({"EQUAL_COST_UNIFORMITY",
+                            "FD3_VALUATION_CONVENTION",
                             "LINEAR_REALIZATION_TARGET"})
         and sorted(NAMED_CLAUSES) == [
             "COST_REPRESENTATION_ON_LOADS",
@@ -1106,13 +1112,14 @@ def check_L_residual_ledger_retirement():
         and "LINEAR_REALIZATION_TARGET" in WORD_PREMISES_CONSUMED
         and "LINEAR_REALIZATION_TARGET" not in DERIVED_HERE)
     # a fresh own-emitted record, read back (audit 3 MAJOR-1): its
-    # conditional_on equals, by value, the four named premises and the
+    # conditional_on equals, by value, the five named premises and the
     # module-level CONDITIONAL_ON data
     own_rec = check_L_scope_fences()
     legs["own_emitted_record_carries_conditional_on"] = (
         own_rec["conditional_on"] == [
             "COST_REPRESENTATION_ON_LOADS",
             "DEF_REALIZATION_SIGNED_CONTRACTION",
+            "EQUAL_COST_UNIFORMITY",
             "FD3_VALUATION_CONVENTION",
             "LINEAR_REALIZATION_TARGET",
         ]
@@ -1125,7 +1132,7 @@ def check_L_residual_ledger_retirement():
                     "what_this_check_establishes":
                         "Five legs -- consumed_set_exact, "
                         "not_consumed_set_exact_with_derived_here_marker, "
-                        "conditional_on_carries_four_clauses, "
+                        "conditional_on_carries_five_premises, "
                         "consumed_disjoint_from_not_consumed, "
                         "linearity_residual_carried_not_discharged -- "
                         "read name lists declared in this file and "

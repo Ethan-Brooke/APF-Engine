@@ -275,7 +275,7 @@ def check_L_nuR_enforcement():
     mode of the distinguished collective eigenstate -- the uniform vector,
     an eigenvector of the exchangeable Gram (a-b)I + bJ for ALL a, b,
     symmetry-distinguished regardless of rank (L_singlet_Gram
-    [P_structural]; witness check_L_singlet_Gram_exchangeable_form) --
+    [P_structural_reading]; witness check_L_singlet_Gram_exchangeable_form) --
     not a new capacity channel. No cosmological predictions change.
     """
 

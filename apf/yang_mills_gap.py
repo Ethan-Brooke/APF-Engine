@@ -1,29 +1,20 @@
-"""apf/yang_mills_gap.py -- Codebase landing of the Yang-Mills Gap trilogy.
+"""apf/yang_mills_gap.py -- Finite witnesses for the Yang-Mills trilogy.
 
-Bank-registered theorems landing the structural content of:
+Source-of-record: Paper 29 main v1.10, Paper 30 main v1.8, and Paper 31
+main v1.6. The native checks compute numerical/algebraic witnesses; the
+corresponding all-parameter arguments are external inputs.
 
-  * Paper 29 -- Plaquette Representation Dominance and Confinement
-  * Paper 30 -- A Tube Mechanism for the Lattice Mass Gap
-  * Paper 31 -- Osterwalder-Schrader Structure of Lattice Yang-Mills
+The five individual checks use P_structural_seam with a named external
+argument. The composed OS master retains its current grade pending the
+weakest-named-constituent disposition; its kappa3 constituent's supplied
+certificate claim is held separately. Passing witnesses do not discharge
+that hold or independently validate the trilogy's analytic claims.
 
-Five new tier-4 [P_structural] checks, plus a sixth composed-master
-witness check stitching the trilogy's main theorem chain together.
-
-Source-of-record: Papers 29, 30, 31 (FINAL, 2026-04-14).  Combined,
-these three papers state a candidate proof of the Yang-Mills mass gap
-for SU(2) lattice gauge theory in d = 3 and d = 4 spacetime dimensions,
-modulo the continuum-limit step covered by Paper 31's Symanzik O(a^2)
-control.
-
-Bank-witness pattern.  Each check verifies the *algebraic structural
-content* invoked in the corresponding theorem -- the closed-form
-identities, the Casimir-cascade combinatorics, the polynomial sign
-conditions on the elliptic-reduction step, and the comparison
-inequalities -- not the full analytic proof, which lives in the papers.
-The bank-witness epistemic tag is [P_structural]: the algebraic
-content is verified; the dependent-paper analytic content is cited.
-
-Tier 4 [P_structural] throughout.
+Paper 30's d=3 bound is one-tube/sectoral. Its d=4 comparison and the
+full-gap sector-dominance upgrade are conditional on their stated inputs.
+Paper 31 carries the d=4 conditionality; its Symanzik continuum statement
+is perturbative and assumes the limit. The continuum construction remains
+open. No native check here supplies those missing inputs.
 """
 
 from __future__ import annotations
@@ -61,28 +52,18 @@ def _C_su3(p: int, q: int) -> float:
 # ======================================================================
 
 def check_T_PRD_SU2_Bessel():
-    """T_PRD_SU2_Bessel: Plaquette Representation Dominance for SU(2).
+    """T_PRD_SU2_Bessel: numerical SU(2) Bessel/character witnesses.
 
-    Tier 4 [P_structural].  Source-of-record: Paper 29 Theorem
-    thm:su2_bessel.
+    Tier 4, P_structural_seam | R_PAPER29_SU2_BESSEL_ARGUMENT.
+    R_PAPER29_SU2_BESSEL_ARGUMENT names Paper 29 main v1.10,
+    thm:su2_bessel (eq:cj_bessel, Bessel recurrence and cited Turan
+    argument), with lem:strict as supporting context. The all-beta,
+    all-spin argument is imported, not proved by this routine.
 
-    Claim: c_{1/2}(beta) > c_j(beta) for all j >= 1 and all beta > 0,
-    where c_j is the SU(2) Wilson character coefficient.
-
-    The analytic proof (Paper 29) reduces PRD to the modified-Bessel
-    monotonicity I_n(beta) > I_{n+1}(beta) for n >= 0, which follows
-    from the Turan inequality I_n^2 > I_{n-1} I_{n+1}.
-
-    Witness:
-      (a) For n in {0, 1, 2, 3, 4} and a 30-point logarithmic grid in
-          beta over [0.05, 50], verify I_n(beta) > I_{n+1}(beta).
-      (b) For j in {1, 3/2, 2, 5/2, 3} and the same beta grid, compute
-          c_{1/2}(beta) and c_j(beta) directly via the Bessel formula
-          and verify c_{1/2}(beta) > c_j(beta).
-
-    Both legs anchor the PRD theorem at the bank level.  The full
-    analytic argument (Turan + recurrence + product-to-sum) lives in
-    Paper 29.
+    For n in {0,1,2,3,4}, test I_n > I_(n+1) on the configured
+    logarithmic beta grid over [0.05,50]. On that same grid compare
+    c_(1/2) to c_j for j in {1,3/2,2,5/2,3}, using the Bessel formula.
+    These are finite numerical comparisons, without a uniform error bound.
     """
     import math
 
@@ -117,7 +98,7 @@ def check_T_PRD_SU2_Bessel():
             "error": f"Bessel monotonicity failed at {bessel_fail}",
             "key_result": "Bessel monotonicity violated",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU2_BESSEL_ARGUMENT",
         }
 
     # (b) c_{1/2} > c_j for j in {1, 3/2, 2, 5/2, 3} (twoj in {2,3,4,5,6})
@@ -145,7 +126,7 @@ def check_T_PRD_SU2_Bessel():
             "error": f"PRD failed at twoj={prd_fail[0]} beta={prd_fail[1]}",
             "key_result": "PRD violated",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU2_BESSEL_ARGUMENT",
         }
 
     return {
@@ -156,19 +137,18 @@ def check_T_PRD_SU2_Bessel():
             f"{{0..4}} on 31-point log grid beta in [0.05, 50]; "
             f"c_{{1/2}}(beta) > c_j(beta) for j in {{1, 3/2, 2, 5/2, 3}} "
             f"on same grid; min excess c_{{1/2}} - c_j = {float(prd_min_excess):.4e}. "
-            f"[P_structural]"
+            f"P_structural_seam | R_PAPER29_SU2_BESSEL_ARGUMENT"
         ),
         "summary": (
-            "Plaquette Representation Dominance for SU(2): the fundamental "
-            "(spin-1/2) Wilson character coefficient strictly exceeds all "
-            "higher-spin coefficients for all beta > 0.  Reduction: PRD <=> "
-            "I_n(beta) > I_{n+1}(beta) for n >= 0, which follows from the "
-            "Turan inequality.  Bank witness verifies both legs on a 30-point "
-            "logarithmic beta grid.  Source-of-record: Paper 29 Theorem "
-            "thm:su2_bessel + supporting Lemma lem:strict."
+            "Finite numerical witnesses for SU(2) Bessel monotonicity and "
+            "the stated character comparisons on the configured beta grid. "
+            "R_PAPER29_SU2_BESSEL_ARGUMENT names the external all-beta, "
+            "all-spin reduction/recurrence/Turan argument in Paper 29 main "
+            "v1.10 thm:su2_bessel (eq:cj_bessel; supporting lem:strict). "
+            "The sample does not independently prove that argument."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam | R_PAPER29_SU2_BESSEL_ARGUMENT",
         "dependencies": [],
     }
 
@@ -178,22 +158,19 @@ def check_T_PRD_SU2_Bessel():
 # ======================================================================
 
 def check_T_PRD_SU3_Casimir_cascade():
-    """T_PRD_SU3_Casimir_cascade: full PRD for SU(3) follows from adjoint.
+    """T_PRD_SU3_Casimir_cascade: finite SU(3) Casimir comparisons.
 
-    Tier 4 [P_structural].  Source-of-record: Paper 29 Proposition
-    prop:cascade + Corollary cor:prd_su3.
+    Tier 4, P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT.
+    R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT names the imported Casimir-to-
+    Wilson-character ordering argument of Paper 29 main v1.10,
+    prop:cascade and cor:prd_su3. That lift is not computed here.
 
-    Claim: For SU(3), every irreducible representation r != fund and
-    r != antifund satisfies C_r >= C_adj = 3 > C_fund = 4/3.  Combined
-    with the analytic fact that c_r(beta) decreases with C_r at fixed
-    beta (weak-coupling Casimir ordering), this lifts PRD from the
-    adjoint case (Theorem osc_su3) to all representations.
-
-    Witness:
-      - Verify C_(1,0) = C_(0,1) = 4/3, C_(1,1) = 3.
-      - Enumerate all (p, q) with p + q in [2, 8] excluding (1,1) and
-        verify C_(p,q) >= 10/3 > C_(1,1).
-      - Check the chain C_fund < C_adj < min(C_other).
+    Check the fundamental, anti-fundamental and adjoint Casimir values,
+    then enumerate (p,q) with 2 <= p+q <= 8, excluding (1,1), and
+    compare their minimum to the adjoint. The singlet (0,0) is excluded.
+    The finite Casimir checks do not prove all-representation or all-beta
+    character ordering, and the paper's universal statements require the
+    singlet exclusion and the external lift to be addressed separately.
     """
     C_fund = _C_su3(1, 0)
     C_antifund = _C_su3(0, 1)
@@ -211,7 +188,7 @@ def check_T_PRD_SU3_Casimir_cascade():
             ),
             "key_result": "Casimir formula misaligned",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT",
         }
 
     # Enumerate non-trivial reps
@@ -234,7 +211,7 @@ def check_T_PRD_SU3_Casimir_cascade():
             "error": f"Casimir cascade fails: rep {offender} has C = {min_other} < 10/3",
             "key_result": "Casimir cascade violated",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT",
         }
 
     if not (C_fund < C_adj < min_other):
@@ -244,7 +221,7 @@ def check_T_PRD_SU3_Casimir_cascade():
             "error": "Cascade chain C_fund < C_adj < min_other does not hold",
             "key_result": "Cascade chain violated",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT",
         }
 
     return {
@@ -255,19 +232,18 @@ def check_T_PRD_SU3_Casimir_cascade():
             f"C_adj = 3, min_{{other}} C = {min_other:.4f} (= 10/3) over all "
             f"(p,q) with p+q in [2,8] \\ {{(1,1)}}.  Cascade chain C_fund < "
             f"C_adj < min_{{other}} holds with strict separation. "
-            f"[P_structural]"
+            f"P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT"
         ),
         "summary": (
-            "Full PRD for SU(3) reduces (via Casimir cascade + weak-coupling "
-            "ordering) to PRD for the adjoint, which Paper 29 Theorem "
-            "thm:osc_su3 proves via exact elliptic-integral reduction.  Bank "
-            "witness verifies the Casimir cascade combinatorics: "
-            "C_{(p,q)} >= C_adj = 3 for every (p,q) other than fund and "
-            "antifund (which both equal 4/3).  Source-of-record: Paper 29 "
-            "Proposition prop:cascade + Corollary cor:prd_su3."
+            "Finite Casimir-formula checks for the fundamental, anti-fundamental, "
+            "adjoint and the specified 2 <= p+q <= 8 domain excluding (1,1). "
+            "The singlet is outside that domain. R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT "
+            "names Paper 29 main v1.10 prop:cascade and cor:prd_su3's external "
+            "lift to Wilson-character ordering; the lift and arbitrary "
+            "representations are not verified by this routine."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam | R_PAPER29_SU3_CASIMIR_LIFT_ARGUMENT",
         "dependencies": [],
     }
 
@@ -278,24 +254,19 @@ def check_T_PRD_SU3_Casimir_cascade():
 # ======================================================================
 
 def check_T_PRD_SU3_adjoint_step3():
-    """T_PRD_SU3_adjoint_step3: polynomial sign condition for SU(3) adjoint OSC.
+    """T_PRD_SU3_adjoint_step3: sampled cubic sign condition.
 
-    Tier 4 [P_structural].  Source-of-record: Paper 29 Theorem
-    thm:osc_su3 Step 3 (algebraic inequality reducing the SU(3) adjoint
-    OSC to a cubic sign condition).
+    Tier 4, P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT.
+    R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT names Paper 29 main v1.10,
+    thm:osc_su3 Step 3: the polynomial inequality used in the adjoint
+    sign argument. This routine locates a root numerically, checks q(3)
+    against the stated tolerance, and samples q on the configured grids
+    above and below v_c, with q(v)=3v^3-11v^2+18.
 
-    Claim: q(v) := 3 v^3 - 11 v^2 + 18 satisfies q(v) < 0 on (v_c, 3),
-    where v_c is the smallest positive root of q.  Combined with
-    Steps 1, 2, 4 of the proof, this gives g_adj(T) < 0 on (T_c, 1)
-    and hence the one-sign-change property required for OSC.
-
-    Witness:
-      - Locate v_c numerically as the smallest positive root.
-      - Verify q(3) = 0 exactly (the upper boundary).
-      - Verify q(v) < 0 on a 50-point grid in (v_c + eps, 3 - eps).
-      - Verify q(v) > 0 on (0, v_c - eps).
-
-    The full elliptic-reduction proof (Steps 1-5) lives in Paper 29.
+    Sampled signs and extrema are not a uniform interval certificate.
+    The full OSC assembly additionally uses Steps 1,2,4,5. Step 4's
+    external numerical optimization of an exact elliptic expression and
+    its cited notebook are not run or validated by this witness.
     """
     def q_poly(v):
         return 3 * v ** 3 - 11 * v ** 2 + 18
@@ -309,7 +280,7 @@ def check_T_PRD_SU3_adjoint_step3():
             "error": f"v_c = {v_c} not in expected range (1, 2)",
             "key_result": "v_c root mislocated",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT",
         }
 
     # q(3) = 0 exactly
@@ -321,7 +292,7 @@ def check_T_PRD_SU3_adjoint_step3():
             "error": f"q(3) = {float(q_at_3)} not zero",
             "key_result": "q(3)=0 fails",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT",
         }
 
     eps = 0.01
@@ -339,7 +310,7 @@ def check_T_PRD_SU3_adjoint_step3():
                 "error": f"q({v}) = {qv} >= 0 on (v_c, 3)",
                 "key_result": "Negativity claim fails",
                 "tier": 4,
-                "epistemic": "[P_structural]",
+                "epistemic": "P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT",
             }
         if qv > worst_neg:
             worst_neg = qv
@@ -357,7 +328,7 @@ def check_T_PRD_SU3_adjoint_step3():
                 "error": f"q({v}) = {qv} <= 0 on (0, v_c)",
                 "key_result": "Positivity below v_c fails",
                 "tier": 4,
-                "epistemic": "[P_structural]",
+                "epistemic": "P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT",
             }
         if qv < worst_pos:
             worst_pos = qv
@@ -366,24 +337,23 @@ def check_T_PRD_SU3_adjoint_step3():
         "name": "T_PRD_SU3_adjoint_step3",
         "passed": True,
         "key_result": (
-            f"q(v) = 3v^3 - 11v^2 + 18 sign condition verified: "
-            f"v_c = {v_c:.6f} (smallest positive root); q(3) = {float(q_at_3):.2e} (=0); "
-            f"q(v) < 0 on (v_c + 0.01, 3 - 0.01), worst value {worst_neg:.4f}; "
-            f"q(v) > 0 on (0, v_c - 0.01), worst value {worst_pos:.4f}. "
-            f"[P_structural]"
+            f"q(v) = 3v^3 - 11v^2 + 18 sampled sign witness: "
+            f"v_c = {v_c:.6f} (numerical root); q(3) = {float(q_at_3):.2e} (=0); "
+            f"q(v) < 0 at sampled points from v_c + 0.01 to 3 - 0.01, sampled maximum {worst_neg:.4f}; "
+            f"q(v) > 0 at sampled points below v_c - 0.01, sampled minimum {worst_pos:.4f}. "
+            f"P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT"
         ),
         "summary": (
-            "Polynomial sign inequality at the heart of Paper 29 Theorem "
-            "thm:osc_su3 Step 3: the cubic q(v) = 3v^3 - 11v^2 + 18 changes "
-            "sign at v_c approx 1.786 and at v = 3, with q < 0 on the "
-            "intervening interval.  This algebraic content licenses the "
-            "elliptic-reduction step that proves OSC for the SU(3) adjoint "
-            "without any numerical integration.  Bank witness verifies the "
-            "polynomial sign condition on a 50-point grid.  Source-of-record: "
-            "Paper 29 Theorem thm:osc_su3 Step 3."
+            "Numerical root, endpoint and sampled-sign checks for Paper 29 "
+            "main v1.10 thm:osc_su3 Step 3's cubic q. "
+            "R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT names the external "
+            "polynomial-to-adjoint sign argument. The artifact extrema are "
+            "sampled; no interval certificate or full OSC proof is supplied. "
+            "The separate Step 4 numerical elliptic-expression argument is "
+            "external and unverified by this routine."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam | R_PAPER29_SU3_ADJOINT_STEP3_ARGUMENT",
         "dependencies": [],
         "artifacts": {
             "v_c": v_c,
@@ -394,29 +364,26 @@ def check_T_PRD_SU3_adjoint_step3():
 
 
 # ======================================================================
-# 4. SU(2) all-beta mass gap d=3 -- Turan-bound structural witness
+# 4. SU(2) d=3 one-tube/sectoral gap -- finite witness
 # (Paper 30 thm:d3_gap)
 # ======================================================================
 
 def check_T_mass_gap_SU2_d3():
-    """T_mass_gap_SU2_d3: SU(2) Wilson all-beta mass gap in d = 3.
+    """T_mass_gap_SU2_d3: finite witness for a d=3 one-tube argument.
 
-    Tier 4 [P_structural].  Source-of-record: Paper 30 Theorem
-    thm:d3_gap (Delta(beta) >= log(27/4) > 0 uniformly in beta).
+    Tier 4, P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT.
+    R_PAPER30_D3_ONE_TUBE_ARGUMENT names Paper 30 main v1.8 thm:d3_gap:
+    two-dimensional spatial independence and the diagonal kernel, the
+    direct Bessel Turan bound, and the x^4(1-x^2) product maximum.
+    Its all-beta conclusion is a one-tube/sectoral bound; the full-gap
+    upgrade additionally requires the conditional sector-dominance input.
 
-    Mechanism summary: lambda_1(beta) = c_f(beta)^4 * chi_3(beta), where
-    chi_3 is the d=3 spatial susceptibility of the one-tube projection.
-    The Turan-type bound + tube-sector analysis gives lambda_1 < 4/27,
-    and the input kappa_3 < 0 (witnessed by check_T_kappa3_negative_all_beta)
-    is what makes the Turan step go through.
-
-    Bank witness (structural-record): verifies the algebraic identities
-    that Paper 30's all-beta mass-gap argument uses, plus the inequality
-    log(27/4) > 0 that gives the gap lower bound.
-
-    The full analytic argument -- the Schur orthogonality for the spatial
-    kernel, the bounded-thickness transport cores, and the Turan-based
-    tail bound -- lives in Paper 30 sections sec:tube + sec:tail_bound.
+    This routine checks log(27/4)>0, 4/27 in (0,1), and c_f<1 on the
+    configured character-coefficient samples. It does not compute the
+    transfer operator, susceptibility, or uniform bound. Its dependency
+    list is preserved metadata; neither listed check is called here.
+    In particular it does not validate the separately held kappa3
+    certificate claim or discharge that hold.
     """
     import math
 
@@ -429,7 +396,7 @@ def check_T_mass_gap_SU2_d3():
             "error": "log(27/4) is not positive",
             "key_result": "Gap lower bound fails",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT",
         }
 
     # Sample c_f(beta) for SU(2) at peak-region beta values.
@@ -437,18 +404,15 @@ def check_T_mass_gap_SU2_d3():
     c_f_peak = 0.0
     peak_beta = 0.0
     for i in range(1, 200):
-        beta = mpf(i) * mpf("0.2")  # beta in (0.2, 40)
+        beta = mpf(i) * mpf("0.2")  # beta = 0.2, 0.4, ..., 39.8
         c_f = float(_cj_su2(1, beta))
         if c_f > c_f_peak:
             c_f_peak = c_f
             peak_beta = float(beta)
 
-    # The actual analytic lambda_1 < 4/27 bound is uniform in beta.
-    # Bank witness records the structural inequality lambda_1 = c_f^4 * chi_3
-    # holds with chi_3 a finite spatial-kernel functional (Paper 30 prop:S_basic),
-    # and that the Turan input + the tube-counting bound give the 4/27 number.
-    # Numerical sanity check: at any beta, c_f < 1 so c_f^4 < 1; the bound
-    # 4/27 < 1 is structurally stronger.
+    # Paper 30's external one-tube argument supplies the uniform 4/27 bound.
+    # This routine records the supplied constant and finite c_f samples;
+    # it does not evaluate the spatial kernel or certify the uniform bound.
     bound_4_27 = 4.0 / 27.0
     if not (0.0 < bound_4_27 < 1.0):
         return {
@@ -457,7 +421,7 @@ def check_T_mass_gap_SU2_d3():
             "error": "4/27 not in (0, 1)",
             "key_result": "Bound numerics fail",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT",
         }
 
     # Verify c_f < 1 across the witness range (anchors the structural bound)
@@ -468,31 +432,30 @@ def check_T_mass_gap_SU2_d3():
             "error": f"c_f peak = {c_f_peak} >= 1 (PRD broken)",
             "key_result": "c_f bound fails",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT",
         }
 
     return {
         "name": "T_mass_gap_SU2_d3",
         "passed": True,
         "key_result": (
-            f"SU(2) d=3 all-beta mass gap structural witness: c_f = c_{{1/2}}(beta) "
-            f"peak = {c_f_peak:.4f} at beta = {peak_beta:.2f} (PRD bounds c_f < 1); "
-            f"Paper 30 Theorem thm:d3_gap establishes lambda_1 < 4/27 = "
-            f"{bound_4_27:.4f} uniformly in beta via Turan + tube-sector + "
-            f"Schur orthogonality; gap lower bound log(27/4) = {delta_lower:.4f} "
-            f"> 0.  [P_structural]"
+            f"SU(2) d=3 finite one-tube witness: sampled c_f = c_{{1/2}}(beta) "
+            f"peak = {c_f_peak:.4f} at beta = {peak_beta:.2f}; "
+            f"external one-tube bound input 4/27 = "
+            f"{bound_4_27:.4f}; arithmetic gap bound log(27/4) = {delta_lower:.4f} "
+            f"> 0. Uniform one-tube argument imported; full-gap upgrade conditional. "
+            f"P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT"
         ),
         "summary": (
-            "All-beta mass gap for SU(2) Wilson lattice in d = 3, structurally "
-            "witnessed.  lambda_1 < 4/27 uniformly in beta, hence Delta(beta) "
-            ">= log(27/4) > 0.  The Turan-based tail bound that closes the "
-            "argument depends on kappa_3(beta) < 0 for all beta > 0, which is "
-            "witnessed by the companion check_T_kappa3_negative_all_beta.  Full "
-            "analytic argument: Paper 30 sec:tube + sec:tail_bound.  "
-            "Source-of-record: Paper 30 Theorem thm:d3_gap."
+            "Finite arithmetic and character-coefficient samples accompanying "
+            "R_PAPER30_D3_ONE_TUBE_ARGUMENT: Paper 30 main v1.8 thm:d3_gap's "
+            "external diagonal-kernel, Bessel Turan and product-bound argument. "
+            "The imported bound is one-tube/sectoral; full-gap sector dominance "
+            "remains conditional. Neither dependency is executed here, and "
+            "the separately held kappa3 certificate claim is not validated."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam | R_PAPER30_D3_ONE_TUBE_ARGUMENT",
         "dependencies": ["T_kappa3_negative_all_beta", "T_PRD_SU2_Bessel"],
         "artifacts": {
             "c_f_peak": c_f_peak,
@@ -504,27 +467,26 @@ def check_T_mass_gap_SU2_d3():
 
 
 # ======================================================================
-# 5. SU(2) all-beta mass gap d=4 -- comparison-inequality witness
+# 5. SU(2) d=4 conditional comparison -- supplied-constant arithmetic
 # (Paper 30 thm:comparison + cor:d4_gap)
 # ======================================================================
 
 def check_T_mass_gap_SU2_d4():
-    """T_mass_gap_SU2_d4: SU(2) Wilson all-beta mass gap in d = 4.
+    """T_mass_gap_SU2_d4: arithmetic on supplied comparison constants.
 
-    Tier 4 [P_structural].  Source-of-record: Paper 30 Theorem
-    thm:comparison + Corollary cor:d4_gap.
+    Tier 4, P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT.
+    R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT names Paper 30 main v1.8
+    thm:comparison, thm:full_gap and cor:d4_gap, read under the existing
+    correction note. The d=4 inference requires conditional-mean variance
+    and off-diagonal control sufficient for chi_4 <= 1.11 chi_3. The
+    full-gap upgrade additionally requires the stated sector-dominance /
+    multi-tube-clustering and tight-constant hypotheses.
 
-    Mechanism summary: chi_4 <= C * chi_3 with C <= 1.11 < 27/4.
-    Combined with lambda_1 = c_f^4 chi_d and the d=3 bound c_f^4 chi_3
-    < 4/27, this gives c_f^4 chi_4 < (4/27) * (27/4) = 1, but the
-    sharper inequality C <= 1.11 means c_f^4 chi_4 < (4/27) * 1.11
-    < 4/24 < 1/2, which is well below the threshold required for the
-    one-tube sector to be the lightest excited sector
-    (Paper 30 Theorem thm:full_gap).
-
-    Bank witness: verify the algebraic chain
-        4/27 < 1.11 * (4/27) < 27/4
-    and confirm the input bounds are mutually consistent.
+    This routine checks arithmetic on supplied C_off=0.11, C=1.11 and
+    4/27, the comparison thresholds, and the resulting positive logarithm.
+    It supplies none of the external estimates or hypotheses and does not
+    execute its listed dependencies. Numeric artifacts are conditional
+    arithmetic consequences of those supplied constants.
     """
     bound_d3 = 4.0 / 27.0       # Paper 30 thm:d3_gap
     C_off = 0.11                # Paper 30 thm:comparison: C_off <= 0.11
@@ -543,7 +505,7 @@ def check_T_mass_gap_SU2_d4():
             ),
             "key_result": "Comparison chain fails",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT",
         }
 
     # Check 1.11 < 27/4 = 6.75 (this is Paper 30's headline structural margin)
@@ -554,7 +516,7 @@ def check_T_mass_gap_SU2_d4():
             "error": f"C={C} not below 27/4={bound_27_4}",
             "key_result": "Comparison constant exceeds threshold",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT",
         }
 
     import math
@@ -566,7 +528,7 @@ def check_T_mass_gap_SU2_d4():
             "error": f"Delta_d4 = log(1/{bound_d4}) = {delta_d4} not positive",
             "key_result": "d=4 gap not positive",
             "tier": 4,
-            "epistemic": "[P_structural]",
+            "epistemic": "P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT",
         }
 
     margin = bound_27_4 / C  # Paper 30 cites factor of ~6 to spare
@@ -574,26 +536,25 @@ def check_T_mass_gap_SU2_d4():
         "name": "T_mass_gap_SU2_d4",
         "passed": True,
         "key_result": (
-            f"SU(2) d=4 all-beta mass gap structural witness: comparison "
-            f"inequality chi_4 <= C * chi_3 with C <= 1.11; combined with "
-            f"lambda_1^{{d=3}} < 4/27 = {bound_d3:.4f} gives "
-            f"lambda_1^{{d=4}} < {bound_d4:.4f} = 1.11 * 4/27; "
+            f"SU(2) d=4 supplied-constant arithmetic: conditional comparison "
+            f"input C <= 1.11 and d=3 one-tube input "
+            f"4/27 = {bound_d3:.4f} give the arithmetic "
+            f"product {bound_d4:.4f} = 1.11 * 4/27; "
             f"comparison threshold 27/4 = {bound_27_4:.2f} clears C with "
-            f"factor {margin:.2f} margin; Delta(beta) >= log(1/lambda_1) "
-            f">= {delta_d4:.4f} > 0 uniformly in beta. [P_structural]"
+            f"factor {margin:.2f} margin; conditional logarithmic bound "
+            f"{delta_d4:.4f} > 0. P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT"
         ),
         "summary": (
-            "All-beta mass gap for SU(2) Wilson lattice in d = 4, structurally "
-            "witnessed.  Paper 30 Theorem thm:comparison establishes the "
-            "comparison inequality chi_4 <= 1.11 * chi_3 via Schur test on "
-            "plaquette independence + conditional variance + recoupling "
-            "deficit.  Combined with the d=3 bound and the one-tube full-gap "
-            "theorem (thm:full_gap, lambda_1 < 1/2), this gives the d=4 "
-            "result with comfortable margin.  Source-of-record: Paper 30 "
-            "Theorem thm:comparison + Corollary cor:d4_gap."
+            "Arithmetic on supplied C=1.11 and 4/27, with no susceptibility "
+            "or sector-dominance estimate executed. "
+            "R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT names Paper 30 "
+            "main v1.8 thm:comparison, thm:full_gap and cor:d4_gap under its "
+            "existing correction note: conditional-mean variance/off-diagonal "
+            "control and the multi-tube/sector-dominance hypotheses remain "
+            "external conditions. The returned bounds do not discharge them."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT",
         "dependencies": ["T_mass_gap_SU2_d3", "T_kappa3_negative_all_beta"],
         "artifacts": {
             "comparison_constant": C,
@@ -771,11 +732,14 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Papers 29-31 land a CANDIDATE proof of the SU(2) lattice mass "
-            "gap in d = 3, 4: the composed master and "
-            "check_T_mass_gap_SU2_d4 are graded [P_structural] throughout "
-            "-- candidate, never stronger; the continuum limit and the gap "
-            "VALUE (Lambda_QCD) stay open by design. "
+            "Papers 29-31 supply external arguments for finite bank witnesses. "
+            "The d=3 bound is one-tube/sectoral; d=4 comparison and full-gap "
+            "sector dominance are conditional. check_T_mass_gap_SU2_d4 uses "
+            "P_structural_seam | R_PAPER30_D4_CONDITIONAL_COMPARISON_ARGUMENT. "
+            "The composed OS master retains its current grade pending its "
+            "weakest-named-constituent disposition, with the kappa3 certificate "
+            "claim separately held. The continuum construction and physical "
+            "gap value remain open. "
         ),
         "note": "Wave 4 probe; the candidate framing is the banked framing",
     },

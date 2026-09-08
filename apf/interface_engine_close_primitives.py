@@ -2,7 +2,7 @@
 distilled from the sin^2theta_W = 3/13 close (2026-06-12).
 
 The close produced five reusable pieces of ENGINE machinery, not just a physics
-result. Each is encoded here as an executable [P_structural] primitive and tagged
+result. Each is encoded here as an executable [P_structural_instrument] primitive and tagged
 with the Interface-Engine-family component it feeds. None adds physical content;
 each is structural plumbing the engine family can consume.
 
@@ -38,7 +38,7 @@ each is structural plumbing the engine family can consume.
        moves the output. The 3/13 placement activates (toggling SU(2)->U(1) moves
        3/13 -> 13/19); an inert invocation does not.
 
-All checks are bank-registered [P_structural], tier 4. Source-of-record: the
+All checks are bank-registered [P_structural_instrument], tier 4. Source-of-record: the
 sin^2theta_W close (Reference - The sin2thetaW Close - FD1 Structural Completeness
 (2026-06-12).md; bank v24.3.247). Engine-family architecture: Paper 8 Supplement
 S F.8 + 'Reference - APF Interface Engine Family Architecture (2026-05-19)'.
@@ -175,7 +175,7 @@ def check_T_ie_codomain_obstruction_discriminator():
         'passed': True,
         'status': 'PASS',
         'tier': 4,
-        'epistemic': '[P_structural]',
+        'epistemic': 'P_structural_instrument',
         'engine_component': 'Codomain Selection engine; codomain_mismatch obstruction channel',
         'key_result': (
             'FD1 structural completeness as the codomain-mismatch discriminator: '
@@ -213,7 +213,7 @@ def check_T_ie_schur_placement_primitive():
         'passed': True,
         'status': 'PASS',
         'tier': 4,
-        'epistemic': '[P_structural]',
+        'epistemic': 'P_structural_instrument',
         'engine_component': 'Representation Descent engine',
         'key_result': (
             f'Invariant-algebra placement: su(2) commutant dim {dim_su2} (Schur, '
@@ -254,7 +254,7 @@ def check_T_ie_claim_kind_taxonomy():
         'passed': True,
         'status': 'PASS',
         'tier': 4,
-        'epistemic': '[P_structural]',
+        'epistemic': 'P_structural_instrument',
         'engine_component': 'claim compiler dispatcher; obligation_packet_meta_schema (kind field)',
         'key_result': (
             'Five-kind claim ontology (foundational-restatement / derived-theorem / '
@@ -287,7 +287,7 @@ def check_T_ie_rerun_gate_audit_template():
         'passed': True,
         'status': 'PASS',
         'tier': 4,
-        'epistemic': '[P_structural]',
+        'epistemic': 'P_structural_instrument',
         'engine_component': 'rerun gate (claim -> ... -> global-P export or named obstruction)',
         'key_result': (
             'Row-consumption / no-smuggling checklist as a gate: dependency-named AND '
@@ -316,7 +316,7 @@ def check_T_ie_activation_toggle_primitive():
         'passed': True,
         'status': 'PASS',
         'tier': 4,
-        'epistemic': '[P_structural]',
+        'epistemic': 'P_structural_instrument',
         'engine_component': "the gate's activation test (earned-keep ruling)",
         'key_result': (
             'read/feed/toggle: a choice activates a billed quantity iff toggling it '

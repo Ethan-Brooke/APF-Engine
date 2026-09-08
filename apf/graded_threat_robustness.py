@@ -35,7 +35,7 @@ threat". Commensurability is a well-typing precondition, not a reading choice
 among alternatives; without it the >= is not well-formed and one has left the
 FD vocabulary entirely.)
 
-THE COLLAPSE (the robustness lemma, [P_structural]). Define the excess
+THE COLLAPSE (the robustness lemma, [P_structural_exhaustive]). Define the excess
     Delta(p) = mu_12(p) - max(mu_d1(p), mu_d2(p)).
 Under graded-FD5 (Delta >= 0 pointwise):
 
@@ -64,14 +64,14 @@ CONCLUSION. Grading adds no branch: every graded threat structure satisfying
 graded-FD5 reduces to a threshold-stack of crisp Sep/IJC classifiers and
 carries the identical two-way verdict. The dichotomy is robust; the residual
 is retired. Its one fence is commensurable grading (a well-typing precondition),
-not a reading among alternatives -- hence [P_structural], not
+not a reading among alternatives -- hence [P_structural_exhaustive], not
 [P_structural_reading].
 
 The witness below certifies (C1)-(C5) by EXACT rational enumeration over a
 fixed finite grid (P = 3 points, memberships in {0, 1/2, 1}) -- an exhaustive
 27^3 sweep, no floats, plus explicit named Sep/IJC witnesses.
 
-Grade [P_structural]. Dependencies: A1, T_IJC_dichotomy,
+Grade [P_structural_exhaustive]. Dependencies: A1, T_IJC_dichotomy,
 T_no_IJC_no_noncommutativity. Reference:
 The Turning/graded_threat_robustness_2026-07-06/ (note + walk script).
 """
@@ -129,7 +129,7 @@ def _all_cuts_sep(mu1, mu2, mu12):
 
 def check_L_graded_threat_collapses_to_crisp():
     """L_graded_threat_collapses_to_crisp: the IJC dichotomy is robust under
-    graded (fuzzy/probabilistic) threat structures [P_structural].
+    graded (fuzzy/probabilistic) threat structures [P_structural_exhaustive].
 
     STATEMENT. Let each distinction carry a graded threat membership
     mu_d : P -> [0,1], the pair carry mu_12, and let graded-FD5 (monotone
@@ -153,7 +153,7 @@ def check_L_graded_threat_collapses_to_crisp():
     under graded-FD5; (C3) Sep <=> every cut crisp-Sep; (C4) boundary: sub-
     dominance <=> cut violation; (C5) t-conorm robustness.
 
-    GRADE [P_structural]. Structural collapse proved from FD5/joint-
+    GRADE [P_structural_exhaustive]. Structural collapse proved from FD5/joint-
     meaningfulness (via T_IJC_dichotomy); unconditional given commensurable
     grading. Dependencies: A1, T_IJC_dichotomy, T_no_IJC_no_noncommutativity.
     """
@@ -251,7 +251,7 @@ def check_L_graded_threat_collapses_to_crisp():
     return _result(
         name='L_graded_threat_collapses_to_crisp',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_exhaustive',
         summary=(
             'Vocabulary-robustness residual of the IJC dichotomy CLOSED. Under '
             'graded (fuzzy/probabilistic) threat memberships mu_d : P -> [0,1] '
@@ -264,14 +264,14 @@ def check_L_graded_threat_collapses_to_crisp():
             'violating graded-FD5 (sub-dominance <=> cut violation), which joint-'
             'meaningfulness forbids. Forcing is t-conorm-independent (max is the '
             'least t-conorm). Certified by exact-rational exhaustive enumeration '
-            '(27^3 grid) + explicit Sep/IJC witnesses. Grading collapses to the '
+            '(three-point, three-level 27^3 native grid) + explicit Sep/IJC witnesses. Grading collapses to the '
             'crisp classifier; only fence is commensurable grading (a well-typing '
-            'precondition, not a reading alternative) -- hence [P_structural].'
+            'precondition, not a reading alternative) -- hence [P_structural_exhaustive].'
         ),
         key_result=(
             'graded threat structure + graded-FD5 => threshold-stack of crisp '
             'Sep/IJC; Sep<=>Delta≡0, IJC<=>Delta≢0; third branch <=> FD5 '
-            'violation (excluded); conorm-independent [P_structural]'
+            'violation (excluded); conorm-independent [P_structural_exhaustive]; native witness on the stated finite grid'
         ),
         dependencies=['A1', 'T_IJC_dichotomy', 'T_no_IJC_no_noncommutativity'],
         cross_refs=['T_IJC_dichotomy', 'T_no_IJC_no_noncommutativity'],

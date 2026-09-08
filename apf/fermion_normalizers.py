@@ -155,7 +155,7 @@ def check_L_residual_up_normalizer_local():
     """L_residual_up_normalizer_local: the local up-sector normalizer
     theorem $\\Lambda_u = c_R = 2$.
 
-    Tier 4 [P_structural].
+    Tier 4 [P_structural_exhaustive].
 
     Source-of-record: Paper 32 v0.9 + DominantChannel sprint v0.12 / v0.14.
 
@@ -231,7 +231,7 @@ def check_L_residual_up_normalizer_local():
             "B_upstream.  Source-of-record: Paper 32 v0.9 + DC sprint v0.12 / v0.14."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_exhaustive",
         "dependencies": ["L_count", "L_gauge_template_uniqueness", "Q_spent"],
         "selected_channel": sel.name,
         "Lambda_u": int(coeff),
@@ -244,7 +244,7 @@ def check_T_no_inverse_inputs_up_normalizer(used_inputs: Optional[Iterable[str]]
     """T_no_inverse_inputs_up_normalizer: structural non-smuggling guard
     for the local up-normalizer theorem.
 
-    Tier 4 [P_structural].
+    Tier 4 [P_structural_instrument].
 
     Source-of-record: Paper 32 v0.9 + DominantChannel sprint v0.11 §
     "No-Inverse-Transport Theorem" (the trace-side form) + v0.12 §
@@ -296,7 +296,7 @@ def check_T_no_inverse_inputs_up_normalizer(used_inputs: Optional[Iterable[str]]
             "DC sprint v0.11 §No-Inverse-Transport + v0.12 §What is now closed."
         ),
         "tier": 4,
-        "epistemic": "[P_structural]",
+        "epistemic": "P_structural_instrument",
         "dependencies": ["L_residual_up_normalizer_local"],
         "forbidden_inputs_detected": bad,
         "used_inputs": sorted(used),
@@ -357,8 +357,10 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "Two bank-registered checks, both tier 4 with returned machine field "
-            "epistemic='[P_structural]'. check_L_residual_up_normalizer_local "
+            "Two bank-registered checks, both tier 4: the local theorem returns "
+            "epistemic='P_structural_exhaustive' and the declared-input guard "
+            "returns epistemic='P_structural_instrument'. "
+            "check_L_residual_up_normalizer_local "
             "certifies the LOCAL up-sector normalizer theorem: after the declared "
             "spent quotient Q_spent (removing weak-scale, common spectral, weak- "
             "carrier, Yukawa-bilinear, and projective trace-shape structure), the "

@@ -64,6 +64,9 @@ LEDGER_DISPOSITIONS_EXACT = {
 def _disposition(nid: str, grade: str) -> str:
     if nid in LEDGER_DISPOSITIONS_EXACT:
         return LEDGER_DISPOSITIONS_EXACT[nid]
+    grade = grade.split(' | ', 1)[0]
+    if grade == 'POSTULATE':
+        return 'declared framework postulate; not a derived theorem'
     if grade == 'P+IJC':
         return ('PERMANENT IMPORT: IJC = the empirical QAC (keystone '
                 'settlement 2026-06-26); not a theorem gap')
@@ -72,8 +75,8 @@ def _disposition(nid: str, grade: str) -> str:
     if grade == 'P_structural_reading':
         return 'reading grade; exhaustiveness open (candidate-walk family)'
     if grade == 'P_structural_seam':
-        return ('dictionary-fence family (Wall B); rides the measured-angle '
-                'half of the transport program')
+        return ('structural seam; relies on the check\'s declared external '
+                'or dictionary input')
     if grade in ('P_comp', 'P_structural_exhaustive'):
         return 'bespoke composition/exhaustive token by design'
     return 'structural grade; no named promotion route (disposition owed)'

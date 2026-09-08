@@ -61,7 +61,7 @@ _LOG10_OBS = -122.944           # Planck 2018, standard Planck-mass convention
 
 
 def check_T_vacuum_o1_reading_fork():
-    """T_vacuum_o1_reading_fork [P_structural] — the vacuum O(1) is a
+    """T_vacuum_o1_reading_fork [P_structural_reading] — the vacuum O(1) is a
     named two-branch reading fork with an H0 discriminator.
 
     CERTIFIES (all exact or computed live):
@@ -70,7 +70,7 @@ def check_T_vacuum_o1_reading_fork():
             (42/102) / (3/8) = 56/51    (9.8%).
     (b) BOTH coefficients pass the shared 0.05-decade gate at the
         current observation -122.944: residuals 0.034 (42/102) and
-        0.007 (3/8) decades. (Epoch-conditional — see module docstring;
+        0.007 (3/8) decades. (Measurement-conditional — see module docstring;
         at the 73.5 endpoint chain A fails, chain B passes.)
     (c) The two H0 endpoints obtained by composing each branch with
         Omega_Lambda = 42/61 [P] + flat FLRW (rho_crit = 3 H0^2 M_Pl^2
@@ -84,7 +84,7 @@ def check_T_vacuum_o1_reading_fork():
     (e) The honest gloss: a NAMED READING FORK (the .305 fork-
         containment precedent), never a prediction.
 
-    STATUS. [P_structural]: the arithmetic identities are exact and the
+    STATUS. [P_structural_reading]: the arithmetic identities are exact and the
     gate-passage facts computed, but the check's content is the FORK
     STRUCTURE — which reading is exact is empirically open and NOT
     decided here.
@@ -112,7 +112,7 @@ def check_T_vacuum_o1_reading_fork():
     check(abs(res_B - 0.034) < 0.002 and abs(res_A - 0.007) < 0.002,
           f"residuals off the adjudicated values: {res_B:.4f} vs 0.034, "
           f"{res_A:.4f} vs 0.007")
-    # Epoch-conditionality witness (audit finding C): at the 73.5
+    # Measurement-conditionality witness (audit finding C): at the 73.5
     # distance-ladder endpoint the gate's obs input shifts by
     # 2*log10(73.5/67.36) and chain A FAILS while chain B passes.
     obs_735 = _LOG10_OBS + 2 * _math.log10(73.5 / 67.36)
@@ -146,7 +146,7 @@ def check_T_vacuum_o1_reading_fork():
         name='T_vacuum_o1_reading_fork — the vacuum O(1) is a named '
              'two-branch reading fork with an H0 discriminator',
         tier=4,
-        epistemic='P_structural',
+        epistemic='P_structural_reading',
         summary=(
             f"NAMED READING FORK (never a prediction row; the .305 "
             f"fork-containment precedent). The vacuum O(1) in "
@@ -454,7 +454,7 @@ IE_DECLARATIONS = (
         "axis": "ROUTE",
         "claim_text": (
             "The vacuum O(1) is a named two-branch reading fork with an H0 "
-            "discriminator (check_T_vacuum_o1_reading_fork [P_structural], "
+            "discriminator (check_T_vacuum_o1_reading_fork [P_structural_reading], "
             "v24.3.320): both banked O(1) coefficients (42/102 count=area and "
             "3/8 two-factor) are reading-conditional, ratio exactly "
             "sqrt(56/51); H0 = 66.84 km/s/Mpc (count=area) vs 70.03 "

@@ -152,6 +152,14 @@ EXPORT_READING_BOUNDARY = frozenset({
     # name is added and none is removed, so the tripwire stays armed
     # set-exactly for any further entrant and for any departure.
     "OR2_steane",
+    # 2026-09-07 IE05 batch1c: five admitted model-reading entrants.
+    # The unchanged cache-free export census establishes 17 + 5 = 22;
+    # both set-difference directions remain active, with no dispositions.
+    "T_correlation_hierarchy_ladder",
+    "T_fencea_hinge_coupling_trichotomy",
+    "T_finite_minimal_joint_realization_atom_cover",
+    "T_finite_operational_basis",
+    "T_realignment_floor_is_epsilon_star",
 })
 
 #: Leg 3 -- the named roots the export core bottoms out in: axioms and

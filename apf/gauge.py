@@ -3915,14 +3915,91 @@ def check_L_Weinberg_dim():
             'premises in `conditional_on`, at the grade and tier it '
             'already had. Any movement on a tier-2 member is held; the '
             'tension is filed elsewhere and nothing here licenses a move.',
-            'A sibling in this file re-derives one of these arithmetic '
-            'cases in line rather than consuming this record, and a sibling '
-            'in another module assigns the same integer to a differently '
-            'named variable. Both are named so the silence is not read as '
-            'absence; neither is repaired here, and this record publishes '
-            'nothing to the derivation graph for them to read.',
         ],
     )
+
+
+def _read_weinberg_dimension_source():
+    """Read and deep-copy the fresh scoped Weinberg dimension record."""
+    from copy import deepcopy
+
+    source = check_L_Weinberg_dim()
+    check(isinstance(source, dict), 'L_Weinberg_dim source: record must be a dictionary')
+    check(source.get('passed') is True, 'L_Weinberg_dim source: passed must be True')
+    check(isinstance(source.get('fail_reasons'), list)
+          and not source['fail_reasons'],
+          'L_Weinberg_dim source: fail_reasons must be an empty list')
+    for field in ('name', 'epistemic', 'summary', 'key_result', 'status'):
+        check(isinstance(source.get(field), str),
+              'L_Weinberg_dim source: %s must be a string' % field)
+    check(type(source.get('tier')) is int,
+          'L_Weinberg_dim source: tier must be an integer')
+    for field in ('dependencies', 'cross_refs', 'disclosures'):
+        check(isinstance(source.get(field), list)
+              and all(isinstance(item, str) for item in source[field]),
+              'L_Weinberg_dim source: %s must be a list of strings' % field)
+    check(bool(source['disclosures']),
+          'L_Weinberg_dim source: disclosures must be nonempty')
+    check(isinstance(source.get('conditional_on'), list)
+          and source['conditional_on'] == [
+              'WEINBERG_YUKAWA_CLOSURE', 'SCALAR_SPECTRUM_IS_ONE_DOUBLET'],
+          'L_Weinberg_dim source: conditional_on must match the ordered premises')
+
+    check(isinstance(source.get('legs'), dict),
+          'L_Weinberg_dim source: legs must be a dictionary')
+    legs = source['legs']
+    check(set(legs) == set(_WEINBERG_EXPECTED_LEGS),
+          'L_Weinberg_dim source: legs must match the declared inventory')
+    check(type(source.get('leg_count')) is int
+          and source['leg_count'] == len(legs),
+          'L_Weinberg_dim source: leg_count must match the reported legs')
+    for label, leg in legs.items():
+        check(isinstance(leg, dict),
+              'L_Weinberg_dim source: %s must be a dictionary' % label)
+        check(leg.get('passed') is True,
+              'L_Weinberg_dim source: %s must pass' % label)
+        check(isinstance(leg.get('evidence'), str),
+              'L_Weinberg_dim source: %s evidence must be a string' % label)
+
+    check(isinstance(source.get('artifacts'), dict),
+          'L_Weinberg_dim source: artifacts must be a dictionary')
+    artifacts = source['artifacts']
+    check('d_W' in artifacts and type(artifacts['d_W']) is int
+          and artifacts['d_W'] > 0,
+          'L_Weinberg_dim source: d_W must be a present positive integer')
+    for field in ('spacetime_dimension', 'candidates_enumerated', 'candidates_surviving'):
+        check(type(artifacts.get(field)) is int and artifacts[field] > 0,
+              'L_Weinberg_dim source: %s must be a positive integer' % field)
+    check(type(artifacts.get('candidates_neutral')) is int
+          and artifacts['candidates_neutral'] >= 0,
+          'L_Weinberg_dim source: candidates_neutral must be a nonnegative integer')
+    for field in ('dim_fermion', 'dim_scalar', 'scalar_hypercharge_computed'):
+        check(isinstance(artifacts.get(field), str),
+              'L_Weinberg_dim source: %s must be a string' % field)
+    check(isinstance(artifacts.get('survivor_label'), str)
+          and bool(artifacts['survivor_label']),
+          'L_Weinberg_dim source: survivor_label must be a nonempty string')
+    check(isinstance(artifacts.get('scope'), str)
+          and artifacts['scope'] == (
+              'complete relative to the declared inventory, the declared '
+              'insertion set and the declared caps, and to nothing wider'),
+          'L_Weinberg_dim source: scope must match the frozen declaration')
+    check(isinstance(artifacts.get('declared_blocks'), list)
+          and artifacts['declared_blocks'] == ['LL', 'Le_R', 'e_Re_R'],
+          'L_Weinberg_dim source: declared_blocks must match the ordered inventory')
+    check(isinstance(artifacts.get('declared_insertions'), list)
+          and artifacts['declared_insertions'] == ['H', 'Hc'],
+          'L_Weinberg_dim source: declared_insertions must match the ordered inventory')
+    check(isinstance(artifacts.get('declared_caps'), dict),
+          'L_Weinberg_dim source: declared_caps must be a dictionary')
+    caps = artifacts['declared_caps']
+    check(set(caps) == {'max_fermions', 'max_insertions', 'max_mass_dimension'},
+          'L_Weinberg_dim source: declared_caps must match the frozen fields')
+    check(type(caps['max_fermions']) is int and caps['max_fermions'] == 2
+          and type(caps['max_insertions']) is int and caps['max_insertions'] == 4
+          and type(caps['max_mass_dimension']) is str and caps['max_mass_dimension'] == '5',
+          'L_Weinberg_dim source: declared_caps must match the frozen types and values')
+    return deepcopy(source)
 
 
 def check_L_dim_angle():
@@ -3953,6 +4030,10 @@ def check_L_dim_angle():
     VERIFICATION: theta_W = pi/5 predicts all 3 PMNS angles to 0.11% mean error.
     pi/4 (CKM angle) gives the T_PMNS_partial structural wall. pi/5 resolves it.
     Isolation: n=5 beats all other pi/n by > 100x.
+
+    This calculation consumes the supplied dimension under the copied
+    declarations and premises. The source read does not establish this
+    calculation's other physical or structural assumptions.
     """
     from fractions import Fraction
 
@@ -3976,6 +4057,10 @@ def check_L_dim_angle():
 
     d_W = 2 * dim_fermion + 2 * dim_scalar
     check(d_W == 5)
+    # Compare the independent dimension with the scoped supplier record.
+    _weinberg_source = _read_weinberg_dimension_source()
+    check(d_W == _weinberg_source['artifacts']['d_W'],
+          'L_Weinberg_dim source: independent d_W must equal the copied source value')
     theta_W = Phi / float(d_W)
     check(abs(theta_W - _math.pi / 5) < 1e-14)
 
@@ -4038,11 +4123,22 @@ def check_L_dim_angle():
         ),
         dependencies=['T8', 'T_field', 'L_holonomy_phase', 'L_Weinberg_dim'],
         artifacts={
+            'weinberg_dimension_source': {
+                'source_key': 'L_Weinberg_dim',
+                'value_used': int(d_W),
+                'source_record': _weinberg_source,
+            },
             'd_Y': int(d_Y), 'd_W': int(d_W),
             'theta_Y': 'pi/4 (verified = holonomy)',
             'theta_W': 'pi/5 (predicted)',
             'scan': {n: f'{err:.2f}%' for n, err in scan_results.items()},
         },
+        conditional_on=list(_weinberg_source['conditional_on']),
+        disclosures=[
+            'This calculation consumes the supplied dimension under the copied '
+            'declarations and premises. The source read does not establish this '
+            "calculation's other physical or structural assumptions.",
+        ],
     )
 
 

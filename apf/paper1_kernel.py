@@ -11,90 +11,90 @@ bedrock formal definition of an enforcement interface:
     realignment cost ε(d) > 0), and C(Γ) ∈ ℝ_{>0} is the
     admissibility capacity exclusively assigned to Γ.
 
-This module supplies the **executable witness**: a small concrete
-worked example instantiating FD1 + FD2 (admissible state) + FD4
-(perturbation cost function K1--K3) + the K3 forced-additivity
-theorem on a finite substrate, certifying that all five FD1
-properties hold by direct numpy/python construction.
+This module supplies a finite set-and-cost construction with four substrate
+configurations and three binary partitions, supplied costs 2/1/1, capacity 5
+and a supplied positive floor 1. Admissible subsets are budget-filtered at
+construction; the check compares their residuals with the supplied bills.
 
-The construction mirrors Paper 1 Supplement §"Worked example: the
-complete construction on R^3" (sec:worked) at the FD1 level: a
-3-element substrate carrying two distinctions plus a non-null pool
-direction, with explicit realignment costs and a finite capacity.
-The point is to demonstrate that FD1 is set-theoretically realisable
-(no measure theory, no σ-algebra, no topology imposed) while still
-supporting the full PLEC discipline (A1 budget bound; MD positive
-cost floor; A2 argmin selection).
+Six authored perturbations supply the K1/K2 predicates and three pairwise K3
+sum equalities. The axis support labels are supplied. In particular, d_pool
+is determined by d_1 and d_2; those labels do not prove physical independence.
 
-This is the Paper 1 analog of `apf/formal_kernel.py` (which witnesses
-Paper 8 Supplement Theorem 1.1 V_61 / V_local / V_Lambda construction).
-Both modules give the canonical bedrock papers an executable witness
-that the abstract definitions are realised by explicit constructions.
+This is P_math for the given finite records and cost table. It does not prove
+forced or unique additivity, full PLEC, A2 selection, or physical realization.
+Paper 1 main v5.13 lines 677-709 distinguish supplied model structures/laws
+from the conditional protocol-product and bill-factorization theorem.
+
+The legacy FD labels below retain their historical numbering. They are not
+assertions of identity with the current paper's numbered definitions.
+The related formal_kernel module and downstream operator/Born chain are
+outside this check's certified claim.
+
 
 Scope / honest limits
 ---------------------
 
-This module is a **structural witness at the FD1 level**: it certifies
-that the FD1 triple (substrate, distinctions, capacity), FD2 admissible
-state, FD4 cost function K1--K3, and the forced-additivity K3 theorem
-hold on a small finite worked example. It does NOT reconstruct the
-full Paper 1 derivation chain (T_form, T_embed, T_sep, T_alg,
-T_Born, ...) — that chain is downstream of FD1 + PLEC and lives in
-its own modules (apf.core for L_eps_star / L_NZ / L_loc / L_cost;
-apf.quantum_operator_derivation for the algebraic structure).
+This P_math check concerns the supplied finite substrate, partition and price
+records, budget-filtered subsets, six perturbations and three K3 pair sums.
+It checks configuration separation, not the physical implementation of SP.
+It does not derive the physical model laws or their general hypotheses.
+No A2 argmin is selected, and no full Paper 1 operator or Born chain is
+reconstructed here. Those downstream objects have their own source and scope.
+The historical FD labels identify this implementation's fields only.
+
 
 What this witness DOES certify:
 
-1. **FD1 substrate is set-theoretic.** S_Γ is a finite set; no
-   measure or topology is required for the framework's definitions
-   to be well-posed.
-2. **Distinctions are binary partitions with positive cost.** Each
-   d ∈ 𝒟(Γ) maps S_Γ → {0, 1} with both classes non-empty and
-   ε(d) > 0.
-3. **A1 (FD1 capacity bound) holds for every admissible state.**
-   Σ ε(d) ≤ C(Γ) for every admissible state σ ∈ Ω(Γ).
-4. **FD2 admissible state structure is internally consistent.**
-   Each admissible state σ has a residual budget δ_σ ≥ 0.
-5. **K1 (non-negativity), K2 (positivity), K3 (additivity on
-   disjoint supports) hold for the perturbation cost function κ
-   on disjoint-support admissibility acts.**
+1. The supplied substrate is a nonempty finite set of four configurations.
+2. Three supplied distinctions are binary partitions with both cells nonempty.
+3. Costs 2/1/1 meet the supplied floor 1; capacity is the positive number 5.
+4. All eight subsets are enumerated through a budget filter. Their bills and
+   nonnegative residuals are rechecked; physical record independence is not.
+5. Six supplied perturbations satisfy the nonnegativity/positivity predicates.
+   The three single-axis pairs match their supplied composite costs under
+   authored support labels; this does not force a unique additive cost law.
+6. Every pair of substrate configurations is separated by a distinction.
+   No measure, topology, A2 selector or physical operator model is constructed.
+
+
+
 
 Tags and status
 ---------------
 
-Bank-registered via ``register(registry)`` at the bottom. Tag:
-``[P_structural]``. Tier: 4.
+Bank-registered via ``register(registry)`` at the bottom.
+Tag: ``P_math`` for this supplied finite construction. Tier: 4.
 
 Relationship to Paper 1 Supplement v2
 --------------------------------------
 
-- **§"Definitions (FD1--FD6)":** FD1, FD2, FD4 are instantiated
-  here as concrete python data structures.
-- **§"Worked example on R^3":** the substrate construction below
-  follows the same pattern (3-element substrate carrying two
-  irreducible distinctions plus a non-null pool direction).
-- **Theorem K3 (forced additivity on disjoint supports):**
-  certified here on the finite worked example.
-- **Constitutive principle SP (substrate faithfulness):**
-  the substrate is set-theoretic; configurations differ iff they
-  differ on the admissibility status of some distinction.
+Historical FD1/FD2/FD4 labels refer to the April 2026 implementation and the
+then-current supplement; the field names remain stable for their consumers.
+The current Paper 1 main v5.13 lines 677-698 explicitly treat model structures
+and laws as supplied and require independently admissible active sets.
+Lines 700-709 state additivity under protocol-product and bill-factorization
+hypotheses. This finite cost table does not prove those physical hypotheses.
 
 Relationship to ``apf.formal_kernel`` (Paper 8 witness)
 -------------------------------------------------------
 
-`formal_kernel.py` witnesses Paper 8 Supplement §1 Theorem 1.1
-(V_61 / V_local / V_Lambda) at the representation-theoretic level
-on the post-T_embed vector-space realisation of admissibility space
-at the SM interface.
+That module is a separate representation-level construction with its own
+premises and limitations. No result about its irreducibility, uniqueness or
+SM-interface interpretation follows from the finite records checked here.
 
-`paper1_kernel.py` (this module) witnesses Paper 1 Supplement
-§"Definitions" FD1 + FD2 + FD4 + Theorem K3 at the **pre-T_embed
-set-theoretic level** — the foundational bedrock from which the
-post-T_embed vector-space machinery (and Paper 8's V_61 in
-particular) is downstream.
+This module supplies a concrete pre-linear record/cost example. Its binary
+partitions separate four configurations, while the authored disjoint support
+labels do not turn the parity-dependent third partition into an independent
+physical record. The check is not a certification of the downstream
+T_form/T_embed/algebra/Born chain or the complete PLEC discipline.
 
-Together: paper1_kernel certifies the bedrock; formal_kernel
-certifies the SM-interface representation built on top.
+
+
+
+
+
+
+
 """
 
 from __future__ import annotations
@@ -367,53 +367,53 @@ def _verify_SP_substrate_faithfulness(substrate, distinctions):
 # ═══════════════════════════════════════════════════════════════════
 
 def check_T_FD1_substrate_distinctions_capacity():
-    """T_FD1_substrate_distinctions_capacity — Paper 1 FD1 executable
-    witness.
+    """T_FD1_substrate_distinctions_capacity: supplied finite record/cost model.
 
-    Phase 18: instantiates Paper 1 Supplement v2's FD1 definition
-    (enforcement interface = (substrate, distinctions, capacity) triple)
-    on a finite 4-element substrate carrying three distinctions
-    (d_1, d_2, d_pool) with capacity C = 5 and MD floor μ* = 1.
+    Phase 18 retains its historical FD field names. The construction uses
+    four configurations, three binary partitions, costs 2/1/1, capacity 5
+    and supplied floor 1. Tier 4 P_math is restricted to this finite model.
 
-    Certifies six bedrock properties:
+    Checks the nonempty set, partitions, positive costs and capacity;
+    rechecks bills and nonnegative residuals of eight budget-filtered subsets;
+    checks six supplied perturbations for K1/K2 and the three K3 pair sums
+    under authored support labels; and checks configuration separation.
 
-    (i)   FD1 substrate is set-theoretic (no measure / σ-algebra
-          / topology imposed).
+    d_pool is determined by d_1 and d_2. Disjoint axis labels do not establish
+    physical independence. The enumeration assumes its cost/budget inputs.
+    The pair sums establish neither forced nor unique additivity, and there
+    is no A2 argmin selection or full downstream operator/Born construction.
 
-    (ii)  Each distinction d ∈ 𝒟(Γ) is a binary partition on S_Γ
-          with both classes non-empty.
+    Current P1 main v5.13 lines 677-709 distinguish supplied model structures
+    and laws from the conditional protocol-product/bill-factorization result.
+    The legacy FD numbering and R^3 historical analogy are not identities
+    with the current definitions or a proof of their physical applicability.
 
-    (iii) Each cost ε(d) satisfies the MD positive floor μ*.
 
-    (iv)  C(Γ) ∈ ℝ_{>0} (FD1 capacity).
 
-    (v)   A1 holds: Σ ε(d) ≤ C(Γ) for every admissible state σ
-          ∈ Ω(Γ); FD2 residual budget δ_σ ≥ 0 is internally
-          consistent for all enumerated admissible states.
 
-    (vi)  K1 (non-negativity), K2 (positivity for non-trivial
-          perturbations), K3 (additivity on disjoint supports —
-          the unique scalar admissibility semantics per Paper 1
-          Supplement Theorem K3) all certified on the
-          perturbation cost function κ.
 
-    Plus the constitutive principle:
 
-    (vii) SP (substrate faithfulness): every pair of distinct
-          substrate configurations is distinguished by at least
-          one d ∈ 𝒟(Γ).
 
-    Structural reading: this certifies, at the level of an explicit
-    finite worked example, that Paper 1 Supplement's FD1 + FD2 +
-    FD4 + K3 theorem + SP all hold on a concrete construction. The
-    canonical abstract treatment is Paper 1 Supplement §"Definitions
-    (FD1--FD6)" + §"Worked example on R^3"; this file gives the
-    pre-linear set-theoretic witness from which the post-T_embed
-    vector-space chain (and Paper 8's V_61 in particular) is downstream.
 
-    STATUS: [P_structural]. Executable witness; full set-theoretic
-    treatment in Paper 1 Supplement v2 §"Definitions" + §"Worked
-    example".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     """
     substrate = _SUBSTRATE
     distinctions = _DISTINCTIONS
@@ -467,31 +467,31 @@ def check_T_FD1_substrate_distinctions_capacity():
     check(a1_ok, f"A1 budget bound: {a1_msg}")
     check(k1_ok, f"K1 (non-negativity): {k1_msg}")
     check(k2_ok, f"K2 (positivity for non-trivial): {k2_msg}")
-    check(k3_ok, f"K3 (forced additivity on disjoint supports): {k3_msg}")
+    check(k3_ok, f"K3 (supplied pair sums under authored support labels): {k3_msg}")
     check(sp_ok, f"SP (substrate faithfulness): {sp_msg}")
 
     return _result(
         name='T_FD1_substrate_distinctions_capacity',
         tier=4,
-        epistemic='[P_structural]',
+        epistemic='P_math',
         summary=(
-            'Executable witness for Paper 1 Supplement v2 §"Definitions" '
-            'FD1 (enforcement interface = (S_Γ, 𝒟(Γ), C(Γ)) triple) + '
-            'FD2 (admissible state) + FD4 (perturbation cost function) + '
-            'K3 (forced additivity on disjoint supports) + SP (substrate '
-            'faithfulness), instantiated on a finite 4-element substrate '
-            'with three distinctions, capacity C = 5, MD floor μ* = 1. '
-            'Certifies all bedrock properties hold on a concrete '
-            'pre-T_embed set-theoretic worked example.'
+            'Finite set-and-cost construction with four configurations, three '
+            'binary partitions, supplied costs 2/1/1, capacity 5 and supplied floor '
+            '1. It checks the supplied partitions and prices, enumerates '
+            'budget-filtered subsets with nonnegative residuals, checks six supplied '
+            'perturbations for K1/K2 and three pairwise K3 additivity equalities under '
+            'authored support labels, and verifies that the distinctions separate '
+            'configurations. This P_math scope does not establish physical independence, '
+            'forced or unique additivity, A2 selection or the downstream operator/Born chain.'
         ),
         key_result=(
             f'FD1 triple (|S_Γ|={len(substrate)}, |𝒟(Γ)|={len(distinctions)}, '
             f'C={capacity}) realised concretely; {len(states)} admissible '
-            f'states enumerated, all satisfy A1; K1+K2+K3 certified on '
-            f'perturbation set; SP certified on substrate.'
+            f'states enumerated by the supplied budget filter; K1/K2 and three '
+            f'K3 pair sums checked on supplied perturbations; configurations separated.'
         ),
         dependencies=['A1', 'MD', 'FD1', 'FD2', 'FD4', 'SP'],
-        cross_refs=['K3_theorem (Paper 1 Supplement forced-additivity; certified in-body by this check, leg k3_ok)',
+        cross_refs=['K3_theorem (related conditional model-law claim; this body checks the supplied perturbation pair sums in leg k3_ok)',
                     'T_FormalKernel_VLambda_uniqueness',
                     'L_epsilon_star',
                     'T_form',
@@ -540,17 +540,17 @@ IE_DECLARATIONS = (
         "expect_export": False,
         "axis": "ROUTE",
         "claim_text": (
-            "The FD1 executable witness "
-            "(check_T_FD1_substrate_distinctions_capacity [P_structural]): "
-            "Paper 1 Supplement's bedrock definition of an enforcement "
-            "interface -- the triple (S_Gamma, D(Gamma), C(Gamma)) -- is "
-            "set-theoretically realisable by direct construction on a "
-            "3-element substrate (two distinctions + a non-null pool "
-            "direction, explicit realignment costs, finite capacity), "
-            "supporting the full PLEC discipline (A1 budget bound, MD "
-            "positive cost floor, A2 argmin selection) with no measure "
-            "theory, sigma-algebra, or topology imposed. A realisability "
-            "witness for the definition, not a physics claim. "
+            'The finite record/cost construction '
+            '(check_T_FD1_substrate_distinctions_capacity P_math) has '
+            'four configurations, three binary partitions, supplied costs '
+            '2/1/1, capacity 5 and floor 1. It checks budget-filtered '
+            'subsets and their residuals, six supplied perturbations, three '
+            'K3 pair sums under authored support labels, and separation of '
+            'configurations. The parity-dependent third partition does not '
+            'establish physical independence. Current P1 main v5.13 '
+            'supplies the model specifications and conditional factorization '
+            'hypotheses; this example does not derive them, forced additivity, '
+            'A2 selection, full PLEC or downstream operator/Born conclusions. '
         ),
         "note": "Wave 7; the Paper 1 analog of formal_kernel's Theorem 1.1 witness",
     },

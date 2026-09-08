@@ -243,36 +243,23 @@ def check_T_class_transition_completion() -> dict:
 
 
 def check_T_realignment_floor_is_epsilon_star() -> dict:
-    """Identification: the per-transition realignment floor IS the marginal admissibility floor.
+    """Reading identification of the realignment floor with the marginal floor.
 
-    Paper 36 (The Missing Floor) introduced a per-transition cost floor
-    kappa_min and posited it. The bank already DERIVES that floor under a
-    different name: the marginal admissibility floor eps*_Gamma
-    (check_L_epsilon_star, apf/core.py), itself the structural primitive MD (Minimum
-    Distinction) -- independent of A1, witnessed without compactness by
-    check_T_minimum_distinction_floor_via_MD (apf/kappa_int_bounds.py). A1
-    supplies only the capacity bound; MD supplies the floor (Paper 1 supp
-    v8.40 sec.11; floor = downstream consequence of A1 + MD + BW).
+    The named reading treats a realignment as creation of a new resolved
+    structure and release of the old one. Under that identification,
+    kappa_min and eps*_Gamma name the same structural floor.
 
-    This check composes the three witnesses to assert
+    This check tests anchor consistency: check_L_epsilon_star,
+    check_T_minimum_distinction_floor_via_MD and check_T_class_transition
+    return passed=True, and the local EPS_MIN is positive. It does not
+    derive the identification or calculate a cross-normalization equality.
+    MD supplies the positive floor independently of A1; A1 supplies the
+    capacity bound. Each module retains its own units: EPS_MIN = 1.0 here,
+    eps* = 0.5 in the kappa_int_bounds witness. No numbers are equated or refit.
 
-        kappa_min  ==  eps*_Gamma     (as structural objects)
-
-    i.e. the energy to move the substrate from one admissible structure to
-    another is bounded below by the same floor that bounds the cost of
-    holding a distinction, because a realignment is the creation of a new
-    resolved structure (and release of the old one) at a class transition.
-
-    The identification is STRUCTURAL, not numeric. Each module reports the
-    floor in its own normalisation (class_transition.EPS_MIN = 1.0
-    normalised substrate units; kappa_int_bounds witnesses eps* = 0.5 in its
-    measure units). What is identified is that both name the same
-    bounded-below quantity -- the marginal realignment cost -- derived from
-    A1 via MD and paid one-way at a class transition. No new number is
-    claimed and no constant is refit.
-
-    Reframe audit: APF Reference Docs/Reference - Distinctions as Durable
-    Structures - Reframe Audit (2026-05-20).md, sec.3.
+    Current grade: P_structural_reading. Historical source pointers:
+    Paper 36 Def 4(i), Paper 1 supp v8.40 sec.11, and the Reframe Audit
+    2026-05-20 sec.3. The source claims require the named identification.
     """
     from apf.core import check_L_epsilon_star
     from apf.kappa_int_bounds import check_T_minimum_distinction_floor_via_MD
@@ -290,19 +277,18 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
     # (4) the per-transition floor used by the class-transition machinery is > 0
     kappa_min_positive = EPS_MIN > 0.0
 
-    # The identification: all three witnesses name the same structural floor
-    # (the marginal realignment cost), each strictly positive and derived
-    # rather than posited. Numeric normalisations differ by module and are
-    # NOT asserted equal.
+    # Anchor consistency under the supplied structural identification.
+    # Positivity and passed flags do not derive the identification;
+    # numeric normalizations differ and are not asserted equal.
     identified = (eps_star_positive and md_derived
                   and transition_one_way and kappa_min_positive)
 
     return {
         'name': 'T_realignment_floor_is_epsilon_star',
-        'epistemic': 'P_structural',
+        'epistemic': 'P_structural_reading',
         'passed': identified,
         'key_result': (
-            f'kappa_min == eps*_Gamma (structural identification): '
+            f'kappa_min read as eps*_Gamma (assumed structural identification; anchor consistency): '
             f'eps*_positive={eps_star_positive}, MD_derived={md_derived}, '
             f'transition_one_way={transition_one_way}, '
             f'kappa_min={EPS_MIN} > 0 = {kappa_min_positive}; '
@@ -488,9 +474,9 @@ IE_DECLARATIONS = (
             "check_T_class_transition_completion (the formula t_trans = "
             "(|S| Gamma_app)^-1 x ln(Phi_IJC(0)/eps_min) at machine precision "
             "plus boundary limits). check_T_realignment_floor_is_epsilon_star "
-            "[P_structural] banks the identification kappa_min == eps*_Gamma "
-            "(the Paper 36 posited floor is the MD-derived marginal "
-            "admissibility floor). check_T_coherent_free_spend_permanent [P] "
+            "[P_structural_reading] checks anchor consistency under the named "
+            "identification kappa_min == eps*_Gamma; MD independently supplies "
+            "the positive marginal floor. check_T_coherent_free_spend_permanent [P] "
             "(v24.3.397) states the collapse triad as a COMPOSITION of banked "
             "[P] theorems over the constitutive base (A1 + occupancy, "
             "occupancy constitutive since v24.3.304): FREE coherent hold = "
@@ -512,7 +498,7 @@ IE_DECLARATIONS = (
             "eps_star giving cost >= eps* > 0, so NO [P_structural] sits in "
             "the gate; the realignment-floor identification is a cross_ref "
             "only; substrate ODE reported-only; fresh audit LAND-[P] 0.88) "
-            "and check_T_realignment_floor_is_epsilon_star [P_structural] "
+            "and check_T_realignment_floor_is_epsilon_star [P_structural_reading] "
             "carry machine epistemic fields. The other THREE "
             "(T_class_transition, L_per_slot_capacity_flow, "
             "T_class_transition_completion) are DELIBERATELY grade-in-prose "

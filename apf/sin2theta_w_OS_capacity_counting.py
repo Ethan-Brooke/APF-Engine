@@ -382,6 +382,34 @@ def _finish(*, name, tier, epistemic, summary, artifacts,
     }
 
 
+def _read_higgs_count_source():
+    """Read conditional scalar counts; return an explicit error, never fallback counts."""
+    from apf.gauge import check_T_Higgs
+
+    try:
+        record = check_T_Higgs()
+    except Exception as exc:
+        return None, "T_Higgs supplier raised %s" % type(exc).__name__
+    if not isinstance(record, dict) or record.get("passed") is not True:
+        return None, "T_Higgs must return a dict with passed is True"
+    artifacts = record.get("artifacts")
+    if not isinstance(artifacts, dict):
+        return None, "T_Higgs artifacts must be a dict"
+    counts = artifacts.get("computed_counts")
+    if not isinstance(counts, dict):
+        return None, "T_Higgs computed_counts must be a dict"
+    names = ("goldstone_count", "scalar_real_dim", "physical_scalar_count")
+    if any(type(counts.get(key)) is not int or counts[key] <= 0 for key in names):
+        return None, "T_Higgs scalar counts must be positive exact integers"
+    premises = record.get("conditional_on")
+    if not isinstance(premises, list) or premises != ["UNBROKEN_SUBGROUP_IS_U1_EM"]:
+        return None, "T_Higgs conditional_on differs from the consumed unbroken-subgroup premise"
+    if counts["goldstone_count"] + counts["physical_scalar_count"] != counts["scalar_real_dim"]:
+        return None, "T_Higgs scalar counts do not recompose"
+    return {"supplier": "T_Higgs", **{key: counts[key] for key in names},
+            "conditional_on": list(premises)}, None
+
+
 # ===========================================================================
 # Bank-registered check_T_* functions.
 # ===========================================================================
@@ -1947,6 +1975,7 @@ def check_T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence_P() -
           by re-framing the polarization-count derivation.
     """
     declared = {
+        "conditional_higgs_counts_are_read": "value-tie",
         "rank_tuple_ties_to_the_sibling_decomposition": "consistency",
         "framing_inventory_is_set_exact": "control",
         "the_three_framings_are_a_prose_argument": "identity",
@@ -1955,19 +1984,32 @@ def check_T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence_P() -
     executed = []
     failures = []
 
-    # SM-physical inputs, hardcoded HERE and independently hardcoded in the
-    # sibling decomposition member. That divergence is exactly what the tie
-    # below guards; see the limitation carried in the summary.
-    D = 4; dim_R_H = 4; dim_G_H = 3
+    source, source_error = _read_higgs_count_source()
+    executed.append("conditional_higgs_counts_are_read")
+    if source_error is not None:
+        failures.append(source_error)
+        result = _finish(
+            name="T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence: conditional count read failed",
+            tier=4, epistemic="P_structural_meta_GH_OS_codomain",
+            summary="Ranks and sibling comparison were not computed because the Higgs source was rejected.",
+            artifacts={"higgs_count_source": None}, declared_legs=declared,
+            executed_legs=executed, failures=failures,
+        )
+        result["dependencies"] = ["T_Higgs"]
+        return result
+
+    D = 4  # declared continuum dimension, not a source-record read
+    dim_R_H = source["scalar_real_dim"]
+    dim_G_H = source["goldstone_count"]
 
     c_W = D - 1
     c_A = D - 2
     c_h = dim_R_H - dim_G_H
 
-    # CONSISTENCY, not a value tie: the sibling decomposition member is called
-    # and its returned shell capacities are read. Both members hardcode the
-    # three upstream integers independently, so this leg catches DIVERGENT
-    # HARDCODING between the two sites. It is not an independent derivation.
+    # CONSISTENCY: compare ranks using the consumed conditional scalar counts
+    # against the sibling's returned capacities at its declared local inputs.
+    # Equal radial differences remain indistinguishable in this comparison;
+    # it is not an independent derivation of the source counts or QFT framings.
     sib = _CHECKS["T_GH_OS_codomain_constraint_rank_algebraic_decomposition"]()
     sib_shells = sib["artifacts"]["shell_capacities_at_SM"]
     sib_tuple = (sib_shells["c_W_plus_or_minus_massive_vector_rank_D_minus_1"],
@@ -2028,25 +2070,27 @@ def check_T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence_P() -
     }
     executed.append("the_source_packs_are_recorded_receipts")
 
-    return _finish(
+    result = _finish(
         name="T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence: the rank tuple computed here against the sibling decomposition's returned shell capacities [P_structural_meta | GH_OS_codomain_meta]",
         tier=4,
         epistemic="P_structural_meta_GH_OS_codomain",
         summary=(f"The rank tuple computed here, {(c_W, c_h, c_A)}, agrees by value with "
                  f"the sibling decomposition member's returned shell capacities "
-                 f"{sib_tuple}. Both sites hardcode the three upstream integers "
-                 f"independently, so that leg catches divergent hardcoding between two "
-                 f"sites and is NOT an independent derivation. The three framings are a "
+                 f"{sib_tuple}. Scalar counts are read from T_Higgs under "
+                 f"{source['conditional_on']}; D remains a declared continuum input. "
+                 f"The sibling uses declared local inputs. This comparison can distinguish "
+                 f"different radial ranks, not changes preserving that difference, and is "
+                 f"NOT an independent derivation. The three framings are a "
                  f"declared set of {len(framings)}; they evaluate the SAME three "
                  f"expressions and differ only in a prose reference string, so their "
                  f"agreement is an IDENTITY, true by construction, and not a check -- it "
                  f"is labelled one and carries no verdict. The framing argument is prose "
                  f"in the docstring. The source packs are RECORDED RECEIPTS, not "
                  f"re-executed here."),
-        key_result=("one consistency tie against a sibling member and one enforced "
-                    "coverage count. The three-framing equivalence is true by "
-                    "construction and certifies nothing."),
-        artifacts={"framings": framings,
+        key_result=("Conditional Higgs scalar counts feed the existing rank comparison "
+                    "against a sibling's declared inputs; the framing inventory is enforced. "
+                    "The three-framing equivalence is true by construction and certifies nothing."),
+        artifacts={"higgs_count_source": source, "framings": framings,
                    "rank_tuple_here_c_W_c_h_c_A": [c_W, c_h, c_A],
                    "sibling_returned_shell_capacities": list(sib_tuple),
                    "declared_framing_names": sorted(DECLARED_FRAMINGS),
@@ -2055,6 +2099,9 @@ def check_T_GH_OS_codomain_rank_derivations_foundational_rigor_equivalence_P() -
                    "recorded_receipts_not_re_executed": recorded_receipts_not_re_executed},
         declared_legs=declared, executed_legs=executed, failures=failures,
     )
+
+    result["dependencies"] = ["T_Higgs"]
+    return result
 
 
 def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[str, Any]:
@@ -2069,9 +2116,9 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
     "deeper work would require reopening Paper 4 / Paper 6 / Paper 8 / Paper 1 to derive
     these upstream inputs from a deeper invariant" and graded the gate-1 closure at
     [P_structural_meta]. This check resolves that gap NOT by reopening upstream papers
-    but by mechanizing the foundation-grounding chain in bank-check structure: each of
-    the four claimed "upstream premises" of the UV-attractor route is in fact a banked
-    APF theorem at [P] grade.
+    but by composing its rank and flow calculations with bank-motivated inputs.
+    The Higgs scalar counts are read from T_Higgs under its named unbroken-subgroup
+    premise; this consumer does not derive that premise or resolve its grade disclosure.
 
     Foundation-grounding chain (audit-traceable in bank structure, not narrative-only):
 
@@ -2084,12 +2131,10 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
                   - Theorem_R(R2): faithful pseudoreal 2-dim chiral carrier (SU(2)_L)
                   - Theorem_R(R3): single abelian grading (U(1)_Y)
                   - dim(SU(2)) = 3, dim(U(1)_Y) = 1
-            └→ T_Higgs [P] (apf/gauge.py)
-                  - Complex doublet, dim_R(H) = 4 real DOF
-                  - SSB SU(2)_L × U(1)_Y → U(1)_em
-                  - dim(G/H_em) = (3+1) - 1 = 3 broken generators
-                  - n_goldstone = 3 (DERIVED, not hardcoded — banked check())
-                  - n_physical = 4 - 3 = 1 (the radial Higgs)
+            └→ T_Higgs (apf/gauge.py)
+                  - Reads actual scalar-real, Goldstone and physical-scalar counts
+                  - Carries conditional_on from the returned record
+                  - Retains the declared UNBROKEN_SUBGROUP_IS_U1_EM premise
 
     Rank-source map (foundation-grounded):
 
@@ -2154,8 +2199,8 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
         - Export_target_consumption = 0  (no measured M_W, DIZET/ZFITTER, DFGRU input)
         - Export_EW_group_from_nothing = 0  (Theorem_R derives SU(2)×U(1) from A1+L_irr+L_nc,
           not from "nothing"; chain still depends on A1)
-        - Export_Higgs_doublet_from_nothing = 0  (T_Higgs derives doublet structure from
-          T_particle+L_irr+A1+T_gauge+T_channels; chain still depends on those)
+        - Export_Higgs_doublet_from_nothing = 0  (the conditional Higgs count read
+          does not derive its unbroken-subgroup premise)
         - Export_spacetime_dimension_from_nothing = 0  (T8 derives D=4 from A1+L_irr+T_gauge
           via Lovelock uniqueness; chain still depends on those)
     """
@@ -2173,12 +2218,14 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
     dim_G = dim_SU2_L + dim_U1_Y  # total EW gauge group dim
     check(dim_G == 4, "Theorem_R [P]: dim(SU(2)_L × U(1)_Y) = 4")
 
-    # Step 3: Higgs doublet structure (from T_Higgs [P], apf/gauge.py:1476)
-    #   T_Higgs banks: dim_before = 3 + 1 = 4, dim_after = 1, n_goldstone = 3, n_physical = 1
-    dim_R_H = 4                          # complex doublet = 4 real DOF (banked in T_Higgs)
-    dim_U1_em = 1                        # residual U(1)_em after SSB
-    dim_broken = dim_G - dim_U1_em       # = 3 (n_goldstone from T_Higgs banked derivation)
-    n_radial_higgs = dim_R_H - dim_broken  # = 1 (n_physical from T_Higgs)
+    # Step 3: actual conditional scalar counts, with the local group comparison retained.
+    source, source_error = _read_higgs_count_source()
+    check(source_error is None, source_error)
+    dim_R_H = source["scalar_real_dim"]
+    dim_broken = source["goldstone_count"]
+    n_radial_higgs = source["physical_scalar_count"]
+    dim_U1_em = 1  # declared unbroken subgroup for the independent local comparison
+    check(dim_broken == dim_G - dim_U1_em, "T_Higgs Goldstone count differs from local group remainder")
     check(dim_R_H == 4, "T_Higgs [P]: dim_R(H) = 4 (complex doublet)")
     check(dim_broken == 3, "T_Higgs [P]: dim(G/H_em) = 3 broken generators")
     check(n_radial_higgs == 1, "T_Higgs [P]: 1 physical Higgs (4 - 3 = 1)")
@@ -2265,10 +2312,9 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
                       "banked_in": "apf/gauge.py:444",
                       "epistemic": "P",
                       "dependencies": ["A1", "L_nc", "L_irr", "L_irr_uniform", "B1_prime"]},
-        "T_Higgs": {"derived_value": "complex doublet, SSB → U(1)_em, dim(G/H)=3, n_goldstone=3, n_physical=1",
-                    "banked_in": "apf/gauge.py:1476",
-                    "epistemic": "P",
-                    "dependencies": ["T_particle", "L_irr", "A1", "T_gauge", "T_channels"]},
+        "T_Higgs": {"consumed_counts": dict(source),
+                    "banked_in": "apf/gauge.py::check_T_Higgs",
+                    "reading": "Conditional count consumption; no derivation of the unbroken subgroup or supplier grade ruling."},
     }
 
     paper_18_parity = {
@@ -2281,6 +2327,7 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
     }
 
     artifacts = {
+        "higgs_count_source": source,
         "core_outputs": {
             "r_star": str(r_star),
             "sin2_theta_W_OS": str(sin2_theta_W_OS),
@@ -2343,13 +2390,14 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
     return _result(
         name=("T_GH_OS_codomain_foundation_grounded_attractor_structural: UV-attractor flow + KL "
               "Lyapunov composed with banked APF foundation chain (T8 [P] D=4 + Theorem_R [P] "
-              "SU(2)×U(1) + T_Higgs [P] doublet/SSB) → ranks (3,3,1,2) → x*=(3/9,3/9,1/9,2/9) → "
+              "SU(2)×U(1) + conditional T_Higgs scalar counts) → ranks (3,3,1,2) → x*=(3/9,3/9,1/9,2/9) → "
               "r*=2/7 → sin²θ_W^OS = 2/9 [P_attractor_structural | GH_OS_codomain]"),
         tier=4,
         epistemic="P_attractor_structural_GH_OS_codomain",
         summary=(f"Paper-18 structural parity for the GH_OS angle, delivered by composition. "
                  f"Chain: A1 → T8 [P] (D={D}) → Theorem_R [P] (dim(SU(2)×U(1))={dim_G}) → "
-                 f"T_Higgs [P] (dim_R H={dim_R_H}, dim(G/H)={dim_broken}, n_radial={n_radial_higgs}) "
+                 f"T_Higgs counts under {source['conditional_on']} "
+                 f"(dim_R H={dim_R_H}, dim(G/H)={dim_broken}, n_radial={n_radial_higgs}) "
                  f"→ rank-source map (c_W+, c_W-, c_h, c_A) = ({c_W_plus}, {c_W_minus}, {c_h}, {c_A_gamma}) "
                  f"→ KL-Lyapunov replicator flow with closed-form exponential global convergence "
                  f"→ fixed point x* = ({fixed_point[0]}, {fixed_point[1]}, {fixed_point[2]}, {fixed_point[3]}) "
@@ -2357,6 +2405,7 @@ def check_T_GH_OS_codomain_foundation_grounded_attractor_structural_P() -> Dict[
                  f"value-checks from [P_full_structural] → [P_attractor_structural]. Source packs filed at "
                  f"DOCTRINE_CONSEQUENCES_BUNDLE_LATEST_44/ as the 18th-21st OS_ANGLE-arc closure packs."),
         artifacts=artifacts,
+        dependencies=["T_Higgs"],
     )
 
 
@@ -2610,54 +2659,43 @@ if __name__ == "__main__":
 # ---------------------------------------------------------------------------
 
 def check_T_ew_broken_phase_dof_conservation_12() -> Dict[str, Any]:
-    """T_ew_broken_phase_dof_conservation_12: the physical gauge-Higgs mode
-    count is conserved across electroweak symmetry breaking, 12 -> 12.
+    """Gauge-Higgs mode bookkeeping with conditional Higgs scalar-count reads.
 
-    Pre-breaking:  dim_R H real scalar DOF (H in C^2 -> 4, the T_Higgs
-                   input) + (dim SU(2) + dim U(1)) massless vectors x (D-2)
-                   transverse DOF each (the same T8 rank formula this
-                   module's shell census uses for c_A) => 4 + 4x2 = 12.
-    Post-breaking: n_goldstone massive vectors x (D-1) DOF each (the c_W
-                   formula) + 1 unbroken photon x (D-2) + (dim_R H -
-                   n_goldstone) radial scalar => 9 + 2 + 1 = 12, with
-                   n_goldstone = dim_before - dim_after = 3 DERIVED exactly
-                   as the banked T_Higgs derives it.
+    T_Higgs supplies the scalar-real, Goldstone and physical-scalar counts under
+    its named unbroken-subgroup premise. D, the electroweak group dimension and
+    the unbroken dimension remain declared local continuum/group inputs. This
+    function does not read T8 or T_gauge returns. A source rejection returns a
+    failed record before the mode arithmetic is evaluated.
 
-    All counts are COMPUTED from the shared inputs (D = 4 from T8; dim_R H
-    = 4, dim(G) = 3+1, dim(H_unbroken) = 1 from T_Higgs/T_gauge) through the
-    same rank formulas the banked shell census uses (c_W = D-1, c_A = D-2,
-    c_h = dim_R H - dim(G/H)) -- so the check FAILS under drift of any of
-    those banked inputs, not only under arithmetic error. The equality of
-    pre and post given the eaten-once assignment is definitional
-    bookkeeping (each broken generator eats exactly one Goldstone); what
-    this check certifies is that the SM-valued census lands on 12 on BOTH
-    sides with the banked component values (3 Goldstones, 1 radial h,
-    1 unbroken generator), cross-consistent with the shell census above.
-
-    Status: [P_structural] tier 4. The vector DOF assignments (D-1 massive
-    / D-2 massless) are little-group rank counting over the banked T8
-    d = 4 -- the same attribution the shell census carries; treating that
-    continuum polarization structure as input is the [P_structural]
-    boundary. No numeric mass or coupling enters. Absorbed from the held
-    sibling pack SM_BROKEN_PHASE_FIELD_PROPAGATION_COROLLARY_v2 per the
-    Phase 2 disposition.
+    The existing SM-valued comparisons and eaten-once assignment remain. Equality
+    of the pre/post formulas with consistent components is bookkeeping in the
+    adopted continuum polarization interpretation, not an independent physical
+    proof. Status: P_structural_reading. No mass/coupling input or physical-final
+    OS-W closure. Historical provenance: the held broken-phase propagation v2 pack.
     """
     failures = []
+    source, source_error = _read_higgs_count_source()
+    if source_error is not None:
+        return {
+            "name": "T_ew_broken_phase_dof_conservation_12: conditional Higgs count read failed",
+            "passed": False, "epistemic": "P_structural_reading",
+            "dependencies": ["T_Higgs", "T_gauge", "T8"],
+            "failures": [source_error],
+            "key_result": "Mode counts were not computed because the Higgs source was rejected.",
+            "artifacts": {"higgs_count_source": None},
+        }
 
-    # shared banked inputs (same values the shell census consumes)
-    D = 4                     # spacetime dim, banked T8 rank map
-    dim_R_H = 4               # H in C^2 (T_Higgs)
-    dim_G = 3 + 1             # dim SU(2)_L + dim U(1)_Y (T_gauge template)
-    dim_H_unbroken = 1        # U(1)_em (T_Higgs)
+    D = 4  # declared continuum dimension
+    dim_G = 3 + 1  # declared electroweak group dimension
+    dim_H_unbroken = 1  # declared unbroken subgroup dimension
+    dim_R_H = source["scalar_real_dim"]
+    n_goldstone = source["goldstone_count"]
+    n_physical_scalar = source["physical_scalar_count"]
+    if n_goldstone != dim_G - dim_H_unbroken:
+        failures.append("T_Higgs Goldstone count differs from local group remainder")
 
-    # the T_Higgs derivation pattern, mirrored exactly (gauge.py ~1651-1658)
-    n_goldstone = dim_G - dim_H_unbroken          # = 3, DERIVED
-    n_physical_scalar = dim_R_H - n_goldstone     # = 1 (radial h)
-
-    # the shell-census rank formulas (c_W = D-1, c_A = D-2)
     dof_massless_vector = D - 2
     dof_massive_vector = D - 1
-
     pre = dim_R_H + dim_G * dof_massless_vector
     post = (n_goldstone * dof_massive_vector
             + dim_H_unbroken * dof_massless_vector
@@ -2679,27 +2717,26 @@ def check_T_ew_broken_phase_dof_conservation_12() -> Dict[str, Any]:
 
     passed = not failures
     return {
-        "name": ("T_ew_broken_phase_dof_conservation_12: the gauge-Higgs mode "
-                 "count is conserved across EWSB, 12 -> 12, computed from the "
-                 "banked inputs (T8 D=4 rank formulas; T_Higgs dim counting) "
-                 "with 3 derived Goldstones, 1 radial h, 1 unbroken generator "
-                 "[P_structural]"),
+        "name": ("T_ew_broken_phase_dof_conservation_12: conditional gauge-Higgs "
+                 "mode bookkeeping with declared continuum/group inputs [P_structural_reading]"),
         "passed": passed,
-        "epistemic": "P_structural",
+        "epistemic": "P_structural_reading",
         "dependencies": ["T_Higgs", "T_gauge", "T8"],
         "failures": failures,
+        "artifacts": {
+            "higgs_count_source": source,
+            "mode_counts": {"pre": pre, "post": post,
+                            "massive_vector": dof_massive_vector,
+                            "massless_vector": dof_massless_vector},
+            "declared_inputs": {"D": D, "dim_G": dim_G, "dim_H_unbroken": dim_H_unbroken},
+        },
         "key_result": (
-            "12 -> 12 at the SM values, computed (not asserted) from the "
-            "shared banked inputs through the shell census's own rank "
-            "formulas (c_W = D-1, c_A = D-2, c_h = dim_R H - dim(G/H)); the "
-            "check fails under drift of D, dim_R H, dim(G), or the unbroken "
-            "subgroup. The equality pre == post given eaten-once assignment "
-            "is definitional bookkeeping; the certified content is the "
-            "cross-census consistency of the SM-valued component counts. "
-            "Vector DOF assignments are little-group counting over banked "
-            "T8 d = 4 -- the [P_structural] boundary. Absorbed from the "
-            "held pack SM_BROKEN_PHASE_FIELD_PROPAGATION_COROLLARY_v2; no "
-            "numeric mass or coupling enters."
+            f"Mode counts {pre} -> {post} using T_Higgs scalar counts under "
+            f"{source['conditional_on']} and local D={D}, dim_G={dim_G}, "
+            f"dim_H_unbroken={dim_H_unbroken}. T8 and T_gauge returns are not read. "
+            "Equality with consistent components under the eaten-once assignment is "
+            "conditional bookkeeping; the fixed SM-valued comparisons remain. "
+            "No mass/coupling input or physical-final OS-W closure."
         ),
     }
 
@@ -2737,9 +2774,9 @@ IE_DECLARATIONS = (
             "the codomain value to the native one-loop chain. "
             "the carrier-counting rule does NOT extend to kappa_b"
             ", so no fermion-channel extension is claimed. "
-            "check_T_ew_broken_phase_dof_conservation_12 (epistemic=P_structural) "
-            "certifies 12 -> 12 gauge-Higgs DOF conservation across EWSB computed "
-            "from banked T8/T_Higgs/T_gauge inputs. Preserved non-claims: not "
+            "check_T_ew_broken_phase_dof_conservation_12 (epistemic=P_structural_reading) "
+            "computes gauge-Higgs mode bookkeeping using conditional T_Higgs scalar-count "
+            "reads and local continuum/group inputs; T8/T_gauge returns are not read. Preserved non-claims: not "
             "physical-final, not a loop-renormalized OS-W close, does not replace "
             "Paper 18's 3/13; 27/26 is the source-angle ratio while data select "
             "the lifted ratio ~1.0368 -- two objects, as banked. Note: the "
