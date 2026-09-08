@@ -81,7 +81,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="apf",
-    version='24.3.501',
+    version='24.3.502',
     description=(
         "Admissibility Physics Framework: a machine-verifiable theorem bank "
         "deriving the Standard Model and cosmological structure from finite "

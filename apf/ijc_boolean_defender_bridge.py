@@ -406,35 +406,41 @@ def check_T_ijc_boolean_defender_bridge() -> Dict:
 # =====================================================================
 
 def check_T_chsh_raw_count_confidence_box_local_exclusion() -> Dict:
-    """Raw-count CHSH confidence-box excludes the local polytope (Paper 1 supp v9.18).
+    """Fixed illustrative raw-count CHSH exclusion (Paper 1 end-to-end walk).
 
-    Anchors the Paper 1 Technical Supplement v9.18 end-to-end walk integer-count
-    realization (Example ex:end-to-end-walk) + Remark rem:boundary-safe-delta, in
-    exact rational arithmetic (no float in the load-bearing path).
+    Exact arithmetic computes the empirical correlators and the minimum of a
+    CHSH facet on a fixed-width box. That width is used only for geometry.
+    A separate conservative Hoeffding enclosure uses the same sample count.
+    The bounded-outcome sampling model, per-correlator error allocation and
+    standard mathematical premise e > 27/10 are declared inputs. No logarithm
+    approximation or statistical-model validation is claimed here.
 
-    Content:
-      * INTEGER COUNTS. N = 4000 per context; observed (n++,n+-,n-+,n--) =
-        (1650,350,350,1650) for (0,0),(0,1),(1,0) and (350,1650,1650,350) for
-        (1,1). Empirical correlators E_ij = (n++ + n-- - n+- - n-+)/N are exactly
-        (13/20,13/20,13/20,-13/20), one-site marginals exactly 1/2, and the CHSH
-        functional S = E00+E01+E10-E11 = 13/5.
-      * CONFIDENCE BOX. For a per-correlator half-width t, the local (Boole)
-        polytope obeys the Fine facet c.E <= 2, c = (+1,+1,+1,-1). The MINIMUM of
-        c.E over the box [E_ij - t, E_ij + t] is S - 4t, so 4t < S - 2 = 3/5 puts
-        the ENTIRE box strictly above the facet bound: box disjoint from the local
-        polytope, defender LP infeasible, margin (S-2) - 4t, Fine facet the separator.
-      * HOEFFDING INSTANCE. t = 58/1000 is a certified over-estimate of the
-        Hoeffding half-width sqrt(2 ln(2/alpha')/N) at alpha'=1/400, N=4000
-        (~0.05781); exact margin (S-2) - 4t = 3/5 - 232/1000 = 368/1000, matching
-        the supplement's ~0.369.
-      * FEASIBLE CONTROL. Replacing 0.65 by 0.40 gives S = 8/5; the box centre is
-        itself local, so no exclusion witness -- not itself a Static-Sep proof.
+    Grade P_math: finite local-polytope/facet geometry with the confidence
+    interpretation conditional on those inputs. The local control centre is
+    not a confidence-level Static-Sep proof. This is a fixed-input example,
+    not an arbitrary-input confidence engine or a new experiment.
 
-    Grade P_math (exact finite LP / facet geometry; the confidence interpretation
-    is the empirical layer). Companion to
-    check_T_correlation_ladder_exact_rational_chsh_witness -- its raw-count counterpart.
+    The value tie to feasbool_structural is within this module. No banked
+    external confidence callee is tied by value; the sampling convention
+    remains an untested input. The leg inventory records execution, not
+    whether a leg could have failed.
     """
     failures: List[str] = []
+    expected_legs = (
+        "count_domain", "correlators", "count_totals", "marginals", "chsh",
+        "fixed_width_positive", "fixed_box_separation", "fixed_box_margin",
+        "deterministic_facet", "vertex_outside_fixed_box", "point_infeasible",
+        "point_value_tie", "log_bound", "enclosure_positive",
+        "confidence_enclosure", "confidence_separation", "control_chsh",
+        "control_local",
+    )
+    seen_legs: List[str] = []
+
+    def require(leg, condition, reason):
+        seen_legs.append(leg)
+        if not condition:
+            failures.append(reason)
+
     N = 4000
     counts = {
         (0, 0): (1650, 350, 350, 1650),
@@ -455,72 +461,82 @@ def check_T_chsh_raw_count_confidence_box_local_exclusion() -> Dict:
         npp, npm, nmp, nmm = c
         return Fraction(npp + nmp, N)
 
+    require("count_domain", type(N) is int and N > 0
+            and set(counts) == {(0, 0), (0, 1), (1, 0), (1, 1)}
+            and all(len(c) == 4 and all(type(n) is int and n >= 0 for n in c)
+                    for c in counts.values()), "invalid fixed count-table domain")
     E = {ctx: corr(c) for ctx, c in counts.items()}
-    if not (E[(0, 0)] == E[(0, 1)] == E[(1, 0)] == Fraction(13, 20)
-            and E[(1, 1)] == Fraction(-13, 20)):
-        failures.append(f"empirical correlators wrong: {E}")
-    for ctx, c in counts.items():
-        if sum(c) != N:
-            failures.append(f"counts for {ctx} do not sum to {N}: {c}")
-        if marg_A(c) != Fraction(1, 2) or marg_B(c) != Fraction(1, 2):
-            failures.append(f"marginals not balanced at {ctx}")
+    require("correlators", E[(0, 0)] == E[(0, 1)] == E[(1, 0)] == Fraction(13, 20)
+            and E[(1, 1)] == Fraction(-13, 20), f"empirical correlators wrong: {E}")
+    require("count_totals", all(sum(c) == N for c in counts.values()),
+            f"count totals differ from N={N}: {[sum(c) for c in counts.values()]}")
+    require("marginals", all(marg_A(c) == marg_B(c) == Fraction(1, 2)
+                            for c in counts.values()), "marginals not balanced")
     S_hat = E[(0, 0)] + E[(0, 1)] + E[(1, 0)] - E[(1, 1)]
-    if S_hat != Fraction(13, 5):
-        failures.append(f"CHSH value != 13/5: {S_hat}")
+    require("chsh", S_hat == Fraction(13, 5), f"CHSH value != 13/5: {S_hat}")
 
     t = Fraction(58, 1000)
     box_min_S = S_hat - 4 * t
     margin = box_min_S - 2
-    if not (box_min_S > 2):
-        failures.append(f"confidence box does not exclude local polytope: {box_min_S}")
-    if margin != Fraction(368, 1000):
-        failures.append(f"exclusion margin != 368/1000: {margin}")
+    require("fixed_width_positive", t > 0, f"fixed box width is not positive: {t}")
+    require("fixed_box_separation", box_min_S > 2,
+            f"fixed-width box does not exclude local polytope: {box_min_S}")
+    require("fixed_box_margin", margin == Fraction(368, 1000),
+            f"fixed-width exclusion margin differs from the example: {margin}")
 
     c_sign = (1, 1, 1, -1)
     verts = _deterministic_vertices()
-    for v in verts:
-        val = sum(Fraction(s) * vi for s, vi in zip(c_sign, v))
-        if val > 2:
-            failures.append(f"a deterministic vertex violates the Fine facet: {v} -> {val}")
+    require("deterministic_facet", bool(verts) and all(
+        sum(Fraction(s) * vi for s, vi in zip(c_sign, v)) <= 2 for v in verts),
+        "a deterministic vertex violates the Fine facet")
     Evec = (E[(0, 0)], E[(0, 1)], E[(1, 0)], E[(1, 1)])
-    for v in verts:
-        if all(abs(vi - ei) <= t for vi, ei in zip(v, Evec)):
-            failures.append(f"a local vertex lies inside the confidence box: {v}")
+    require("vertex_outside_fixed_box", not any(
+        all(abs(vi - ei) <= t for vi, ei in zip(v, Evec)) for v in verts),
+        "a local vertex lies inside the fixed-width box")
 
     fb = feasbool_structural(Evec)
-    if fb["feasible"]:
-        failures.append("point estimate misclassified Sep (should be IJCStr)")
-    if fb.get("max_chsh_value") != "13/5":
-        failures.append(f"engine CHSH value != 13/5: {fb.get('max_chsh_value')}")
+    require("point_infeasible", not fb["feasible"],
+            "point estimate misclassified Sep (should be IJCStr)")
+    require("point_value_tie", fb.get("max_chsh_value") == str(S_hat),
+            f"engine CHSH value differs from counts: {fb.get('max_chsh_value')}")
 
-    # Hoeffding box exclusion, certified exactly (no float in the load-bearing path).
-    # True half-width t_H = sqrt(2 ln(2/alpha')/N), alpha'=1/400, N=4000.
-    # ln(800) < 7 since e^7 > (27/10)^7 = 27^7/10^7 > 800 and e > 27/10, so
-    #   t_H^2 = 2 ln(800)/N < 14/4000 = 7/2000.
-    # (6/100)^2 = 36/10000 = 7.2/2000 > 7/2000 >= t_H^2, so t_H < 6/100, hence
-    # 4 t_H < 24/100 < 3/5: the ACTUAL Hoeffding confidence box is excluded.
-    if not (Fraction(27, 10) ** 7 > 800):
-        failures.append("rational bound e^7 > 800 failed")
-    tH_sq_upper = Fraction(7, 2000)      # > t_H^2  (from ln(800) < 7)
-    tH_upper = Fraction(6, 100)          # certified upper bound on t_H
-    if not (tH_upper * tH_upper > tH_sq_upper):
-        failures.append("6/100 is not a certified upper bound on the Hoeffding half-width")
-    if not (4 * tH_upper < S_hat - 2):
-        failures.append("Hoeffding box not certified excluded (4 t_H < S-2 fails)")
+    # Standard premise e > 27/10 supplies the rational logarithm bound.
+    # The bound's denominator is the same N used for the count correlators.
+    alpha_prime = Fraction(1, 400)
+    log_upper = 7
+    require("log_bound", Fraction(27, 10) ** log_upper > 2 / alpha_prime,
+            "rational logarithm upper bound failed")
+    tH_sq_upper = Fraction(2 * log_upper, N)
+    tH_upper = Fraction(6, 100)
+    require("enclosure_positive", tH_upper > 0,
+            f"Hoeffding enclosure radius is not positive: {tH_upper}")
+    require("confidence_enclosure", tH_upper * tH_upper > tH_sq_upper,
+            f"Hoeffding enclosure not certified at N={N}: radius squared "
+            f"{tH_upper * tH_upper} <= square upper bound {tH_sq_upper}")
+    confidence_margin = S_hat - 4 * tH_upper - 2
+    require("confidence_separation", confidence_margin > 0,
+            f"Hoeffding enclosure touches or crosses the local facet: margin {confidence_margin}")
 
     Ectrl = (Fraction(2, 5), Fraction(2, 5), Fraction(2, 5), Fraction(-2, 5))
     S_ctrl = Ectrl[0] + Ectrl[1] + Ectrl[2] - Ectrl[3]
-    if S_ctrl != Fraction(8, 5):
-        failures.append(f"control CHSH != 8/5: {S_ctrl}")
-    if not feasbool_structural(Ectrl)["feasible"]:
-        failures.append("control point should be Static-Sep (box meets the polytope)")
+    require("control_chsh", S_ctrl == Fraction(8, 5), f"control CHSH != 8/5: {S_ctrl}")
+    require("control_local", feasbool_structural(Ectrl)["feasible"],
+            "control point should be local (box meets the polytope)")
 
+    if tuple(seen_legs) != expected_legs:
+        failures.append(f"leg inventory mismatch: expected {expected_legs}, ran {tuple(seen_legs)}")
     passed = not failures
+    quantities = (
+        f"Fixed illustrative {len(counts)}x{N}-trial CHSH count table: "
+        f"E=({','.join(str(e) for e in Evec)}), S={S_hat}. "
+        f"Exact fixed-width geometry: t={t}, box minimum={box_min_S}, margin={margin}; "
+        "no confidence coverage is claimed for this fixed width. "
+    )
     return {
         "name": (
             "T_chsh_raw_count_confidence_box_local_exclusion: raw-count CHSH "
             "confidence box disjoint from the local polytope [P_math] "
-            "(Paper 1 supp v9.18 anchor)"
+            "(Paper 1 end-to-end-walk anchor)"
         ),
         "passed": passed,
         "epistemic": "P_math",
@@ -530,16 +546,15 @@ def check_T_chsh_raw_count_confidence_box_local_exclusion() -> Dict:
         ],
         "cross_refs": ["T_correlation_ladder_exact_rational_chsh_witness"],
         "failures": failures,
-        "key_result": (
-            "A literal 4x4000-trial CHSH count table gives exact correlators "
-            "(13/20,13/20,13/20,-13/20), balanced 1/2 marginals, S=13/5. For any "
-            "half-width t with 4t < S-2 = 3/5 the confidence box's minimum of the "
-            "Fine functional (+,+,+,-) is S-4t > 2, so the whole box lies outside "
-            "the local polytope: defender LP infeasible, Fine facet the separator, "
-            "margin (S-2)-4t. At t=58/1000 (a certified over-estimate of "
-            "sqrt(2 ln(2/alpha')/N), alpha'=1/400,N=4000) the exact margin is "
-            "368/1000, matching the supplement's ~0.369. The S=1.6 control is local "
-            "(no witness). Anchors Paper 1 supp v9.18 ex:end-to-end-walk."
+        "key_result": quantities + (
+            f"Under the declared bounded-outcome Hoeffding model, alpha'={alpha_prime}, "
+            f"union-bound error at most {len(counts) * alpha_prime}: "
+            f"t_H^2 < {tH_sq_upper} < {tH_upper * tH_upper}, so t_H < {tH_upper}. "
+            f"The certified enclosure has facet margin {confidence_margin}; the actual "
+            f"Hoeffding box has margin strictly greater than {confidence_margin}. "
+            f"The S={S_ctrl} control centre is local; this is not a confidence-level "
+            "Static-Sep proof. Anchors Paper 1 ex:end-to-end-walk."
+            if passed else f"Certification failed for N={N}; see failures."
         ),
     }
 

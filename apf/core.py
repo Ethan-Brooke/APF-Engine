@@ -1820,21 +1820,21 @@ def check_L_T2_finite_gns():
 
 
 def check_L_cost():
-    """L_cost: Cost Functional Uniqueness (v3.1).
+    """L_cost: Tests of the authored count-linear cost form.
 
-    STATEMENT: The realignment cost of any structure E under A1 is
-    uniquely C(E) = n(E) * epsilon. No alternative cost functional
-    compatible with A1 exists.
+    EXECUTED SCOPE: C(E) = n(E)*epsilon is the authored form tested for
+    additivity, monotonicity and normalization. Ledger completeness is
+    a POSTULATE; this check does not execute it.
 
     SPLIT (2026-07-06, v24.3.404, principal ruling on the SCC hygiene
     report's edge A1, option (c)): the gauge clause -- for a gauge group G,
     n(G) = dim(G), hence C(G) = dim(G) * epsilon -- and its generator-
     primitivity proofs now live in L_cost_gauge (this module), downstream
-    of T3. L_cost states and proves the abstract functional only; it no
-    longer depends on T3 or L_nc. Consumers of the gauge clause cite
-    L_cost_gauge; consumers of the abstract form cite this lemma.
+    of T3. L_cost tests the authored abstract functional; it no longer
+    depends on T3 or L_nc. Consumers of the gauge clause cite
+    L_cost_gauge; consumers of the tested abstract form cite this check.
 
-    PROOF STRUCTURE (3 sub-lemmas; C1 is a POSTULATE, C2 and
+    RECORDED SUB-LEMMA STRUCTURE (C1 is a POSTULATE, C2 and
     L_cost_MAIN are [P]):
 
     L_cost_C1 (Ledger Completeness) -- a stated commitment of the
@@ -1872,50 +1872,11 @@ def check_L_cost():
       count-only property of the banked cost; or as authority on the
       archived monograph, which this record does not re-read.
 
-      REPORTED, NOT REPAIRED (1) -- A SIBLING'S SENTENCE:
-      check_T_cost_count_characterization (delta_calculus.py, tier 4
-      [P]) returns a summary containing the literal 'L_cost_C1 [P]'.
-      This edit makes that sentence false. It is a string, so nothing
-      reddens on it. The cascade question -- whether that check's own
-      grade moves -- is escalated and NOT taken here.
-
-      REPORTED, NOT REPAIRED (2) -- THIS CHECK'S OWN TWO SENTENCES.
-      check_L_cost stays green at tier 0 with epistemic 'P' and keeps
-      returning, byte for byte, the key_result
-        'C(E) = n(E)*epsilon is FORCED (unique cost under A1)'
-      and a summary reading 'A1 cardinality bound + Cauchy functional
-      equation -> the UNIQUE realignment cost ...' and closing
-        'Cost functional freedom under A1 is ZERO.'
-      The warrant for the words 'under A1' is precisely the sub-lemma
-      this edit relabels a POSTULATE. After E1 the chain reads A1 PLUS
-      A STATED COMMITMENT -> the cost functional, so both sentences
-      now claim more than the grades behind them carry.
-
-      NEITHER IS REPAIRED HERE, and the reason is a hard bar rather
-      than a judgement: the key_result string is pinned as CONTENT by
-      a live assertion in hold_cost_dominance.py, which reads this
-      exact substring off this check's returned record, and checks
-      there go red if it moves. Repairing the wording is therefore a
-      change with its own blast radius, and it belongs to a ruled pass
-      that takes that radius deliberately -- not to a patch whose
-      whole scope is one sub-lemma's grade.
-
-      NOTE TO A LATER EDITOR: the two strings quoted just above are
-      QUOTATIONS of what this check returns, so each of them now occurs
-      TWICE in this file -- once here as prose, once at the assignment
-      that actually produces it. A needle aimed at either must carry
-      its assignment context ('key_result=...', 'summary=(...') or it
-      will match this docstring as well. The existing needles do, and
-      their exactly-once assertions are what will say so if that ever
-      stops being true.
-
-      THE DEFENCE, stated rather than left implicit: on this record C1
-      is not EXECUTED in this check at all -- its stage is the comment
-      block described above -- so these two sentences were already
-      looser than they read, at every version before this one. E1
-      REVEALS that looseness; it does not create it. That is a reason
-      to name them here, not a reason to leave them unnamed. Silence
-      would be the flattering direction.
+      CLAIM SCOPE: the returned fields describe the finite tests of the
+      authored cost form. The conditional count-cost characterization
+      remains in delta_calculus.check_T_cost_count_characterization.
+      The live hold_cost_dominance content pin reads the tested-form
+      wording; it does not derive ledger completeness.
 
       WHERE THIS GRADE LIVES, AND WHO CANNOT SEE IT
       (E2R4@2026-08-30): C1's POSTULATE is carried three dicts deep in
@@ -1941,14 +1902,15 @@ def check_L_cost():
       coarser invariants) are defeated in L_cost_gauge, where the
       generator-primitivity content lives.
 
-    CONSEQUENCE: cost functional freedom under A1 is ZERO. The downstream
-    'forced by L_cost' upgrade on T_gauge routes through L_cost_gauge.
+    SCOPE: the executed checks test the authored count-linear form and
+    reject the authored exponent rivals at the tested additivity pair.
+    The downstream gauge clause routes through L_cost_gauge.
 
     STATUS: [P]. No external imports (Brouwer rides L_cost_gauge).
     Dependencies: A1, L_epsilon*, L_loc, T_M.
     
 
-    CROSS-REF (v24.3.243): L_cost fixes the unique realignment functional
+    CROSS-REF (v24.3.243): L_cost tests the authored realignment functional
     C(E) = n*eps; the cost-kind dichotomy check_T_ledger_rent_excluded [P]
     (operational_completeness.py) is its completeness companion -- the
     ledger books transition commitments and per-activation charges only,
@@ -1964,14 +1926,14 @@ def check_L_cost():
     """
 
     # ================================================================
-    # Stage 1: Ledger Completeness (C1)
+    # Stage 1: Ledger Completeness (C1) -- POSTULATE, not executed here.
     # ================================================================
-    # A1: |S| <= C(Gamma) for ANY distinction set S.
-    # Universal quantifier -> capacity ledger is exhaustive.
-    # Cost = f(n(E)) where n(E) = channel count.
+    # Stated argument: A1's universal quantifier -> exhaustive capacity
+    # ledger -> cost = f(n(E)), where n(E) = channel count.
+    # This comment block does not test that argument.
 
     # ================================================================
-    # Stage 2: Cauchy uniqueness -- f(n) = n*epsilon
+    # Stage 2: finite tests of the authored form f(n) = n*epsilon
     # (Stages on the gauge clause -- channel correspondence and generator
     #  primitivity -- moved to check_L_cost_gauge at the v24.3.404 split.)
     # ================================================================
@@ -2037,19 +1999,19 @@ def check_L_cost():
     }
 
     return _result(
-        name='L_cost: Cost Functional Uniqueness',
+        name='L_cost: Tested cost form',
         tier=0,
         epistemic='P',
         summary=(
-            'A1 cardinality bound + Cauchy functional equation -> '
-            'the UNIQUE realignment cost is C(E) = n(E)*epsilon. '
-            'Functional-form rival defeated: n^alpha (C2 additivity). '
-            'The gauge clause n(G) = dim(G) and the generator-primitivity '
-            'proofs live in L_cost_gauge (v24.3.404 split); gauge-invariant '
-            'rivals are defeated there. '
-            'Cost functional freedom under A1 is ZERO.'
+            'The authored cost form C(E) = n(E)*epsilon passes the executed '
+            'additivity, monotonicity and normalization checks. The authored '
+            'n^alpha rivals fail the tested additivity comparison. Ledger '
+            'completeness (L_cost_C1) is a POSTULATE and is not executed here. '
+            'The conditional count-cost characterization is checked in '
+            'delta_calculus.check_T_cost_count_characterization; the gauge '
+            'clause remains in L_cost_gauge.'
         ),
-        key_result='C(E) = n(E)*epsilon is FORCED (unique cost under A1)',
+        key_result='Tested cost form: C(E) = n(E)*epsilon; ledger completeness is a POSTULATE.',
         dependencies=['A1', 'L_epsilon*', 'L_loc', 'T_M'],
         cross_refs=['L_cost_gauge (the gauge clause n(G)=dim(G); '
                     'split out 2026-07-06 per the principal ruling, '
@@ -2057,9 +2019,8 @@ def check_L_cost():
         artifacts={
             'sub_lemmas': sub_lemmas,
             'rivals_defeated': rivals_defeated,
-            'endgame': 'A (full lock on the functional form): zero free '
-                       'functional choices; C(G) = dim(G)*epsilon rides '
-                       'L_cost_gauge',
+            'endgame': 'This check tests the authored count-linear cost form; '
+                       'the gauge clause remains in L_cost_gauge.',
         },
     )
 

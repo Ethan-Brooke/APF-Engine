@@ -1,4 +1,4 @@
-"""apf/foundation_inputs.py -- Executable witness for the canonical 4-input
+"""apf/foundation_inputs.py -- Raw-pair construction for the canonical 4-input
 declaration of Admissibility Physics + PLEC witness features and an
 admissible-family counting bound.
 
@@ -17,20 +17,23 @@ canonical input set is exactly four:
     3. FD3 -- Physical distinctions carry positive realignment cost.
     4. Finite-physical-regime hypothesis: C_Γ < ∞ at every interface.
 
-This module provides two bank-registered checks witnessing the foundation:
+This module provides two bank-registered checks of a supplied raw-pair
+construction. Its priced objects are raw pairs across continuation classes;
+their prices do not define a cost on the corresponding quotient separators.
+It does not establish a quotient-compatible physical distinction cost.
 
-  * check_T_four_input_declaration -- witnesses that the canonical
-    APS satisfies the four declared inputs.
+  * check_T_four_input_declaration -- checks the continuation partition,
+    cross-class raw pairs, supplied positive prices, capacity and floor.
 
   * check_T_PLEC_derived_from_spine -- legacy key for A1 and MD witness
     features and an admissible-family counting bound: A1 = finite-physical-
     regime hypothesis directly; MD-value = ε* > 0 as the second half of
     the finite-physical-regime hypothesis with the tested/gauge cleavage
     from FD2. The counting bound does not certify saturation, attainment,
-    no-waste, or outcome selection. BW is carried under its STATEMENT OF
-    RECORD (OHC_N@2026-08-30) -- cost-spectrum non-degeneracy at the
-    element-distinction level -- and the increment condition it used to
-    be stated by is retained beside it as MD's content under MD's name.
+    no-waste, or outcome selection. The implemented BW transcription
+    (OHC_N@2026-08-30) tests non-degeneracy of the supplied raw-pair
+    cost list; the increment condition it used to be stated by is
+    retained beside it as MD's content under MD's name.
 
     THE INCREMENT-FORM WAS RETIRED AS A STATEMENT OF BW AT v24.3.482
     (2026-08-30), on an executed control rather than on a reading.  The
@@ -38,12 +41,12 @@ This module provides two bank-registered checks witnessing the foundation:
     graded at scale μ*_Γ" is satisfied by the FLAT WORLD -- every
     distinction at one cost at or above the floor -- which is Paper 0's
     own countermodel to BW and precisely the world BW exists to exclude.
-    The canonical witness was itself flat, so the leg passed on a
-    maximally degenerate cost spectrum while its sentence claimed
-    non-degeneracy.  The flat world is now BUILT AND EXECUTED in this
-    module as a permanent negative control: it FAILS the repaired BW leg
-    and PASSES the A1, MD-value and increment legs, which is the whole
-    content of the repair.
+    The supplied raw-pair cost map was itself flat, so the leg passed
+    on a degenerate cost list while its sentence claimed non-degeneracy.
+    A flat raw-pair cost list is now executed as a permanent negative
+    control: it FAILS the implemented BW transcription and PASSES the
+    A1, MD-value and increment legs. This is a cost-list control, not
+    certification of a physical quotient-distinction countermodel.
 
     WHAT THAT CONTROL DOES NOT SHOW, named here so it is not read off the
     code: it does not show that BW is underivable from MD, that Lemma BW
@@ -77,26 +80,23 @@ from typing import FrozenSet, Tuple, Dict, List
 
 @dataclass(frozen=True)
 class FourInputWitness:
-    """A finite witness exhibiting the canonical 4-input declaration.
+    """A finite raw-pair construction for the canonical 4-input declaration.
 
-    The witness is a small concrete admissibility space that satisfies all
-    four declared inputs; it is not a derivation of PLEC's four features.
-
-    Substrate Σ = {0, 1, 2, 3} (4 raw configurations).
-    Continuation equivalence partitions Σ into 2 physical states.
-    Distinctions are finite-cost separators of continuation profiles.
-    Capacity bound C = 5 (finite); marginal floor μ* = 1 (positive).
+    The checks concern the supplied continuation partition, cross-class
+    raw pairs and their prices; they do not derive PLEC's four features.
+    The raw-pair prices do not descend to the corresponding quotient
+    separators or establish a physical distinction cost.
     """
     substrate: FrozenSet[int]
     continuations: Dict[int, FrozenSet[int]]  # FD1: continuation profile
-    distinctions: FrozenSet[Tuple[int, int]]  # FD2: separator pairs
-    distinction_costs: Dict[Tuple[int, int], float]  # FD3: positive cost
+    distinctions: FrozenSet[Tuple[int, int]]  # raw pairs across continuation classes
+    distinction_costs: Dict[Tuple[int, int], float]  # supplied positive raw-pair prices
     capacity: float  # finite-physical-regime hypothesis
     marginal_floor: float  # μ* derived from finite-physical-regime
 
 
 def _build_canonical_witness() -> FourInputWitness:
-    """Construct a canonical 4-input witness."""
+    """Construct the supplied raw-pair witness for the 4-input checks."""
     substrate = frozenset({0, 1, 2, 3})
     # Continuation profiles: states 0,1 share continuation class A;
     # states 2,3 share continuation class B
@@ -106,15 +106,13 @@ def _build_canonical_witness() -> FourInputWitness:
         2: frozenset({2, 3}),
         3: frozenset({2, 3}),
     }
-    # Distinctions: separate the two continuation-equivalence classes
+    # Raw pairs with endpoints in different continuation-equivalence classes.
     distinctions = frozenset({(0, 2), (0, 3), (1, 2), (1, 3)})
-    # NON-DEGENERATE cost spectrum (v24.3.482): two distinct values, every
-    # value > 0 and >= μ*, so the witness satisfies FD3, the marginal-floor
-    # bound AND BW's statement of record.  It was a FLAT map (every
-    # distinction at 1.5) until this version, and a flat map is the world
-    # BW exists to exclude -- see the module docstring.  The costs are
-    # keyed by distinction, never by position, so no reading here depends
-    # on the iteration order of a frozenset.
+    # Supplied nonconstant raw-pair prices, positive and at or above μ*.
+    # These prices do not descend to the corresponding quotient separators.
+    # The cost-list predicate below is the implemented BW transcription;
+    # it does not establish a quotient-compatible physical distinction cost.
+    # Costs are keyed by raw pair, not by iteration position.
     distinction_costs = {
         (0, 2): 1.5,
         (0, 3): 1.5,
@@ -153,16 +151,12 @@ _PLEC_SPINE_LEGS: FrozenSet[str] = frozenset({
 
 
 def _build_flat_witness() -> FourInputWitness:
-    """Paper 0's own BW countermodel, built so it can be executed.
+    """A flat raw-pair cost-list control for the implemented BW transcription.
 
-    Paper 0 v6.2.56: "a world in which every distinction costs exactly
-    μ*, with total capacity C ... satisfies A1 and MD but has maximally
-    degenerate cost spectrum."  This witness is that world at the scale
-    the canonical witness uses: the SAME substrate, continuations and
-    distinctions, with every distinction carrying ONE cost at or above
-    the floor.  It is byte-for-byte the cost map the canonical witness
-    carried before v24.3.482, which is what makes it the sharp control:
-    it is the world the retired increment-form leg passed on.
+    Inspired by Paper 0's flat-cost discussion, this retains the supplied
+    substrate, continuations and raw pairs and assigns a constant price
+    at or above the floor. It tests the cost-list predicate, not the
+    physical adoption of the task/price interface.
     """
     base = _build_canonical_witness()
     return FourInputWitness(
@@ -176,7 +170,7 @@ def _build_flat_witness() -> FourInputWitness:
 
 
 def _cost_spectrum(costs) -> Tuple[float, ...]:
-    """The multiset of element-distinction costs, as a SORTED tuple.
+    """The multiset of supplied costs, as a SORTED tuple.
 
     Sorting is what makes every reading below independent of the
     iteration order of the underlying frozenset (a stated requirement of
@@ -186,17 +180,18 @@ def _cost_spectrum(costs) -> Tuple[float, ...]:
 
 
 def _bw_non_degeneracy(costs) -> bool:
-    """BW under its STATEMENT OF RECORD (OHC_N@2026-08-30).
+    """Cost-list non-degeneracy: the implemented BW transcription (OHC_N).
 
-    Informal, canonical: not all enforceable distinctions have the same
-    cost -- there exist distinctions d_i, d_j with eps(d_i) != eps(d_j).
+    The framework's stated BW condition concerns unequal distinction
+    costs. Here the predicate receives a supplied list; in this module's
+    construction those charged objects are raw pairs, whose prices do
+    not descend to the corresponding quotient separators.
 
-    DOMAIN, and it is a recorded scope and NOT a theorem: the
-    quantification ranges over ELEMENT distinctions -- the objects the
-    implemented ledger charges.  Round 10 closed OHC_N, so neither a
-    wider domain (a loop-class charge) nor the completeness of this one
-    (a derived absence) is established, and nothing computed by this
-    function may be cited for either direction of the domain question.
+    DOMAIN, and it is a recorded scope and NOT a theorem: OHC_N@2026-08-30
+    concerns the element-distinction domain. Neither a wider domain
+    (a loop-class charge) nor the completeness of this one (a derived
+    absence) is established, and nothing computed by this function may
+    be cited for either direction of the domain question.
 
     Non-degeneracy, not gradedness: the predicate is on the SIZE OF THE
     VALUE SET, and it is order-independent by construction.
@@ -234,14 +229,16 @@ def check_T_four_input_declaration():
 
     Source-of-record: Paper 0 v6.0.5 §3.1 + Paper 1 Supplement v8.22+ §1.
 
-    Verifies on the canonical witness that:
+    Checks the supplied raw-pair construction:
       (i) FD1: every raw substrate element has a non-empty continuation
           profile, and continuation equivalence partitions the substrate.
-      (ii) FD2: every distinction is a finite separator of continuation
-          profiles -- i.e., a pair of substrate elements that lie in
-          different continuation-equivalence classes.
-      (iii) FD3: every distinction has strictly positive realignment cost.
+      (ii) FD2 transcription: raw-pair endpoints lie in different
+          continuation-equivalence classes.
+      (iii) FD3 transcription: supplied raw-pair prices are positive.
       (iv) Finite-physical-regime hypothesis: C_Γ < ∞ AND μ*_Γ > 0.
+
+    These raw-pair prices do not define a cost on the corresponding
+    quotient separators or establish a physical distinction cost.
 
     No fifth input is invoked in this witness check. It does not certify
     derivability of PLEC's four features or the general R1-R4 conditions.
@@ -293,10 +290,10 @@ def check_T_four_input_declaration():
         "name": "T_four_input_declaration",
         "passed": True,
         "key_result": (
-            f"4-input declaration witnessed on substrate of size {len(w.substrate)}: "
+            f"4-input raw-pair construction checked on substrate of size {len(w.substrate)}: "
             f"FD1 partition into {len(classes_seen)} continuation classes; "
-            f"FD2 {len(w.distinctions)} continuation-separating distinctions; "
-            f"FD3 all distinction costs > 0 (min {min(w.distinction_costs.values())}); "
+            f"FD2 transcription: {len(w.distinctions)} raw pairs across continuation classes; "
+            f"FD3 transcription: supplied raw-pair prices > 0 (min {min(w.distinction_costs.values())}); "
             f"finite-physical-regime C_Γ = {w.capacity} < ∞, μ*_Γ = {w.marginal_floor} > 0; "
             f"no fifth input invoked."
         ),
@@ -305,9 +302,12 @@ def check_T_four_input_declaration():
             "admissible continuation identity) + FD2 (physical distinction = finite "
             "enforceable separator of continuation profiles) + FD3 (physical "
             "distinctions carry positive realignment cost) + finite-physical-regime "
-            "hypothesis (C_Γ < ∞ AND μ*_Γ > 0), witnessed on the canonical finite "
-            "admissibility space. This record checks those declared inputs; it "
-            "does not certify derivability of PLEC's four features or the general "
+            "hypothesis (C_Γ < ∞ AND μ*_Γ > 0). The priced objects in this "
+            "construction are raw pairs across continuation classes. Their prices "
+            "do not define a cost on the corresponding quotient separators. The "
+            "record checks the supplied raw-pair construction; it does not "
+            "establish a quotient-compatible physical distinction cost. It does "
+            "not certify derivability of PLEC's four features or the general "
             "R1-R4 conditions."
         ),
         "tier": 4,
@@ -324,7 +324,7 @@ def check_T_PLEC_derived_from_spine():
     Historical source pointers: Paper 10 v1.12 §3.5 (Lemmas A2 + BW) +
     Paper 1 Supplement v8.22+ §1. The executed scope is stated below.
 
-    Verifies on the canonical witness that:
+    Checks on the supplied raw-pair construction that:
       (i)   A1 (capacity bound) is the finite-physical-regime hypothesis
             half-1 directly: C_Γ < ∞.
       (ii)  MD (positive cost floor) is the finite-physical-regime hypothesis
@@ -339,26 +339,26 @@ def check_T_PLEC_derived_from_spine():
             not as an inference tested here or a newly adopted premise.
       (iv)  MD-increment: every admissible cost increment is ≥ μ*_Γ.  This
             is TRUE and it is MD's content, and it is retained under MD's
-            name.  IT IS NOT A STATEMENT OF BW -- the flat world satisfies
-            it, and the flat world is what BW exists to exclude.
-      (v)   BW under its STATEMENT OF RECORD (OHC_N@2026-08-30):
-            cost-spectrum non-degeneracy at the element-distinction level,
-            there exist d_i, d_j with eps(d_i) != eps(d_j).  The domain
+            name. IT IS NOT A STATEMENT OF BW -- the flat raw-pair
+            cost list satisfies it.
+      (v)   Non-degeneracy of the supplied raw-pair cost list: the
+            implemented BW transcription (OHC_N@2026-08-30). The domain
             restriction to element distinctions is a RECORDED SCOPE and
             not a theorem; the distinction-level/configuration-level delta
             is scoped, not closed.
 
-    A1 and MD are exhibited on the canonical witness, alongside the
-    admissible-family counting bound. BW is EXHIBITED, not derived here: what
-    this record establishes about the (iv)/(v) pair is a SEPARATION, and it
-    establishes it by execution --
+    The priced objects are raw pairs across continuation classes. Their
+    prices do not define a cost on the corresponding quotient separators.
+    This check does not establish a quotient-compatible physical distinction
+    cost. A1 and MD witness features and the counting bound concern the
+    supplied raw-pair construction. The (iv)/(v) separation is a cost-list
+    control within this transcription:
 
-      * the flat world (every distinction at one cost at or above the
-        floor) PASSES (i), (ii) and (iv) and FAILS (v);
-      * a two-valued world PASSES (v).
+      * the flat raw-pair list PASSES (i), (ii) and (iv) and FAILS (v);
+      * a two-valued supplied list PASSES (v).
 
-    Both directions are executed as permanent controls.  So the increment
-    condition AS EXECUTED HERE does not entail the statement of record.
+    Both directions are executed as permanent controls. So the increment
+    condition AS EXECUTED HERE does not entail cost-list non-degeneracy.
     That is a statement about this transcription and about nothing else:
     it is NOT a claim that BW is underivable from MD, NOT a claim that
     Lemma BW of Paper 10 v1.12 §3.5 is wrong, and NOT a claim that BW is
@@ -394,12 +394,11 @@ def check_T_PLEC_derived_from_spine():
     MD_value_witnessed = w.marginal_floor > 0
     assert MD_value_witnessed, "MD-value derivation failed: μ*_Γ not positive"
 
-    # MD tested/gauge cleavage: from FD2.  All distinctions in our witness
-    # are tested (continuation-profile separators).  A gauge transformation
-    # would be a continuation-profile-preserving relabeling -- which is NOT
-    # a separator under FD2, hence outside the distinction set.  Verify by
-    # checking the contrapositive: every distinction in our set is a tested
-    # (cost > 0) separator, not a zero-cost relabeling.
+    # MD tested/gauge cleavage transcription: each supplied raw pair has
+    # endpoints in different continuation classes and a positive price.
+    # A continuation-profile-preserving relabeling is outside this raw-pair
+    # set. This test does not identify distinct quotient separators or
+    # establish descent of the supplied prices.
     for d, cost in w.distinction_costs.items():
         x, y = d
         assert w.continuations[x] != w.continuations[y], (
@@ -439,14 +438,14 @@ def check_T_PLEC_derived_from_spine():
     )
     legs_run.append("MD_increment_at_least_floor")
 
-    # (v) BW under its statement of record: element-distinction-level
-    # cost-spectrum NON-DEGENERACY.  Not gradedness.
+    # (v) Implemented BW transcription: non-degeneracy of the supplied
+    # raw-pair cost list. This is not quotient-compatible physical pricing.
     spectrum = _cost_spectrum(w.distinction_costs.values())
     distinct_costs = sorted(set(spectrum))
     assert _bw_non_degeneracy(w.distinction_costs.values()), (
-        f"BW (statement of record) violated: the canonical witness carries "
-        f"{len(distinct_costs)} distinct element-distinction cost(s) "
-        f"{distinct_costs}; the statement requires d_i, d_j with "
+        f"BW transcription violated: the supplied raw-pair cost list carries "
+        f"{len(distinct_costs)} distinct supplied cost(s) "
+        f"{distinct_costs}; the predicate requires d_i, d_j with "
         f"eps(d_i) != eps(d_j)"
     )
     legs_run.append("BW_non_degeneracy_statement_of_record")
@@ -463,10 +462,9 @@ def check_T_PLEC_derived_from_spine():
     legs_run.append("BW_order_independence")
 
     # ---- PERMANENT CONTROL 1 (the load-bearing one): the flat world ----
-    # Paper 0's own BW countermodel, EXECUTED.  It must FAIL the BW leg
-    # and PASS A1, MD-value and the increment leg.  If this control ever
-    # stops firing, the BW leg has stopped discriminating and this check
-    # must go red rather than quietly certify a degenerate world.
+    # The supplied flat list must FAIL the BW transcription and PASS A1,
+    # MD-value and the increment leg. This is a cost-list control, not a
+    # certification of a physical quotient-distinction countermodel.
     #
     # THIS TEST IS THE DISCRIMINATION.  The predicate's threshold is not
     # independently tied by any leg here, so weakening _bw_non_degeneracy
@@ -476,8 +474,8 @@ def check_T_PLEC_derived_from_spine():
     flat_bw = _bw_non_degeneracy(flat.distinction_costs.values())
     if flat_bw:
         failure_reasons.append(
-            "CONTROL FAILED: the flat world satisfies the BW leg, so the "
-            "leg does not discriminate the world BW exists to exclude"
+            "CONTROL FAILED: the flat raw-pair list satisfies the BW leg, so "
+            "the implemented transcription does not discriminate a flat cost list"
         )
     legs_run.append("CONTROL_flat_world_fails_BW")
 
@@ -492,21 +490,21 @@ def check_T_PLEC_derived_from_spine():
     flat_incr = _md_increment_at_least_floor(flat, flat_list[:flat_max_size])
     if not (flat_A1 and flat_MD and flat_incr):
         failure_reasons.append(
-            f"CONTROL FAILED: the flat world was expected to satisfy A1, "
+            f"CONTROL FAILED: the flat raw-pair list was expected to satisfy A1, "
             f"MD-value and the increment condition; got A1={flat_A1}, "
             f"MD={flat_MD}, increment={flat_incr}.  The separation between "
-            f"the increment condition and the statement of record is what "
+            f"the increment condition and cost-list non-degeneracy is what "
             f"this control exhibits, and it is not exhibited"
         )
     legs_run.append("CONTROL_flat_world_passes_A1_MD_and_increment")
 
     # ---- PERMANENT CONTROL 2 (the other direction) ----
-    # A two-valued world -- built here, NOT the canonical witness, so the
-    # control is not the thing it is controlling -- must PASS the BW leg.
+    # A separately supplied two-valued cost list must PASS the implemented
+    # BW transcription; this control does not certify quotient pricing.
     two_valued = [1.0, 1.0, 1.0, 3.0]
     if not _bw_non_degeneracy(two_valued):
         failure_reasons.append(
-            f"CONTROL FAILED: a two-valued cost spectrum {sorted(set(two_valued))} "
+            f"CONTROL FAILED: a two-valued supplied cost list {sorted(set(two_valued))} "
             f"was refused by the BW leg, so the leg is not satisfiable"
         )
     legs_run.append("CONTROL_two_valued_witness_passes_BW")
@@ -581,41 +579,42 @@ def check_T_PLEC_derived_from_spine():
         "legs_run": sorted(_ran),
         "key_result": (
             f"PLEC witness features and admissible-family counting bound; "
-            f"BW exhibited under its statement of record: "
+            f"implemented BW transcription on supplied raw-pair costs: "
             f"A1 = finite-physical-regime half-1 ({w.capacity} < ∞); "
             f"MD-value = finite-physical-regime half-2 (μ*_Γ = {w.marginal_floor} > 0); "
             f"MD tested/gauge cleavage = FD2 distinction definition; "
             f"maximum admissible family size {max_size} ≤ floor bound ⌊C_Γ/μ*_Γ⌋ = {expected_max}; "
             f"saturation, attainment/no-waste, and outcome selection are not certified; "
             f"MD-increment = every admitted increment ≥ μ*_Γ (MD's content, under MD's name); "
-            f"BW = cost-spectrum non-degeneracy at the element-distinction level "
-            f"(statement of record, OHC_N@2026-08-30): {len(distinct_costs)} distinct "
-            f"element costs {distinct_costs}, so there exist d_i, d_j with "
-            f"eps(d_i) != eps(d_j).  The flat world PASSES the increment leg and "
-            f"FAILS the BW leg, executed here as a permanent control."
+            f"BW transcription = non-degeneracy of the supplied raw-pair cost list "
+            f"(OHC_N@2026-08-30): {len(distinct_costs)} distinct supplied "
+            f"costs {distinct_costs}, so there exist raw pairs d_i, d_j with "
+            f"eps(d_i) != eps(d_j). The flat raw-pair list PASSES the increment "
+            f"leg and FAILS the BW transcription, as a permanent cost-list control."
         ),
         "summary": (
-            "A1 and MD are exhibited on the canonical witness: A1 + MD-value are "
+            "A1 and MD witness features on the supplied raw-pair construction: A1 + MD-value are "
             "the two halves of the finite-physical-regime hypothesis; the MD "
             "tested/gauge cleavage is FD2's separator-vs-relabeling distinction. "
             "The subset enumeration supplies an admissible-family counting bound, "
             "not an A2 derivation: saturation, attainment/no-waste, and outcome "
-            "selection are not certified here. BW is carried under its STATEMENT OF "
-            "RECORD (OHC_N@2026-08-30) -- not all enforceable distinctions have "
-            "the same cost, there exist d_i, d_j with eps(d_i) != eps(d_j) -- and "
-            "is EXHIBITED on the witness, not derived here.  THE DOMAIN OF THAT "
-            "QUANTIFICATION IS A RECORDED SCOPE AND NOT A THEOREM: it ranges over "
-            "element distinctions, the objects the implemented ledger charges, and "
+            "selection are not certified here. The priced objects in this "
+            "construction are raw pairs across continuation classes. Their prices "
+            "do not define a cost on the corresponding quotient separators. The "
+            "record checks the supplied raw-pair construction; it does not "
+            "establish a quotient-compatible physical distinction cost. The "
+            "implemented BW transcription (OHC_N@2026-08-30) checks non-degeneracy "
+            "of the supplied raw-pair cost list. THE ELEMENT-DISTINCTION DOMAIN "
+            "IS A RECORDED SCOPE AND NOT A THEOREM: "
             "neither a wider domain nor the completeness of this one is "
             "established; this record may not be cited for either direction of "
             "the domain question.  The distinction-level/configuration-level delta "
             "remains scoped, not closed.  WHAT IS ESTABLISHED HERE BY EXECUTION IS "
             "A SEPARATION: the increment condition AS EXECUTED IN THIS MODULE does "
-            "not entail the statement of record, because the flat world -- every "
-            "distinction at one cost at or above the floor, Paper 0's own BW "
-            "countermodel -- is built and run here and PASSES the A1, MD-value and "
-            "increment legs while FAILING the BW leg; a two-valued world passes it, "
-            "so the leg is satisfiable in both directions.  The increment form was "
+            "not entail cost-list non-degeneracy: the flat raw-pair list is built "
+            "and run here and PASSES the A1, MD-value and increment legs while "
+            "FAILING the BW transcription; a two-valued supplied list passes it. "
+            "These are cost-list controls within that transcription. The increment form was "
             "this record's statement of BW until v24.3.482 and is retained beside "
             "it under MD's name, because it is true and it is MD's.  THIS IS NOT a "
             "claim that BW is underivable from MD, that Lemma BW of Paper 10 v1.12 "
@@ -623,8 +622,9 @@ def check_T_PLEC_derived_from_spine():
             "open that section, and the statement is about the transcription that ships "
             "here.  The BW predicate is tied BY VALUE to the executed record of "
             "check_worked_example (apf/core.py), the corpus's element-distinction "
-            "non-degeneracy anchor, whose costs are parsed from its own returned "
-            "record rather than re-typed here."
+            "non-degeneracy anchor, whose supplied element costs are parsed from "
+            "its own returned record rather than re-typed here. This value tie "
+            "does not certify this witness's quotient typing."
         ),
         "tier": 4,
         "epistemic": "[P_structural]",
@@ -783,8 +783,11 @@ IE_DECLARATIONS = (
         "axis": "ROUTE",
         "claim_text": (
             "The canonical foundational base: the four-input declaration "
-            "(FD1, FD2, FD3, finiteness), witnessed on the canonical finite "
-            "admissibility space (check_T_four_input_declaration [P_structural]); FD1's "
+            "(FD1, FD2, FD3, finiteness), checked on a supplied raw-pair "
+            "construction (check_T_four_input_declaration [P_structural]). Its "
+            "priced objects are raw pairs across continuation classes; their "
+            "prices do not define a cost on the corresponding quotient separators "
+            "or establish a quotient-compatible physical distinction cost. FD1's "
             "structural-completeness clause is an ADOPTED clause, banked at "
             "check_FD1_structural_completeness with the canonical [P] "
             "definition resting on the Paper 0 four -- the clause itself "

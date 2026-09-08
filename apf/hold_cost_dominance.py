@@ -815,9 +815,9 @@ def check_L_mechanism_trichotomy():
     r_cost = check_L_cost()
     ck(r_cost.get('passed') is True and r_cost.get('epistemic') == 'P',
        "anchor L_cost [P] passes")
-    ck('C(E) = n(E)*epsilon is FORCED' in r_cost.get('key_result', ''),
-       "L_cost CONTENT PIN: the intrinsic n(E)*eps form this model embeds is "
-       "the check's own returned key_result")
+    ck('Tested cost form: C(E) = n(E)*epsilon' in r_cost.get('key_result', ''),
+       "L_cost CONTENT PIN: this model's n(E)*eps form is reported as a tested "
+       "cost form; this pin does not derive ledger completeness")
     r_eps = check_L_epsilon_star()
     ck(r_eps.get('passed') is True and r_eps.get('epistemic') == 'P',
        "anchor L_epsilon_star [P] passes")
