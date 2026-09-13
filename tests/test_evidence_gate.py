@@ -111,6 +111,45 @@ class GateTests(unittest.TestCase):
         self.f.request.update(method="POST", path="/verify", content_type="multipart/form-data; boundary=x", body_sha256=digest(self.f.payload))
         self.assertEqual(self.invoke(), "simulated mutation")
 
+    def configure_milestone_delete(self):
+        self.f.action = "private_stage"
+        self.f.payload = b"{}"
+        self.f.request.update(method="DELETE", path="/milestones/9a54f1bf-66eb-4f87-9c57-3cca8b584baf",
+                              body_sha256=digest(self.f.payload))
+
+    def test_reviewed_milestone_delete_sends_exactly_once(self):
+        self.configure_milestone_delete()
+        self.assertEqual(self.invoke(), "simulated mutation")
+        self.assertEqual(self.calls, [("DELETE", self.f.request["path"], b"{}", "application/json")])
+
+    def test_even_reviewed_delete_rejects_other_routes(self):
+        for route in ("/theorems/9a54f1bf-66eb-4f87-9c57-3cca8b584baf", "/missions/private-id",
+                      "/milestones/not-a-uuid", "/milestones", "/milestones/9a54f1bf-66eb-4f87-9c57-3cca8b584baf/history",
+                      "/milestones/9a54f1bf-66eb-4f87-9c57-3cca8b584baf?x=1"):
+            with self.subTest(route=route):
+                self.configure_milestone_delete()
+                self.f.request["path"] = route
+                self.rejected("invalid_mutation_route")
+
+    def test_milestone_delete_rejects_nonempty_or_unreviewed_body(self):
+        self.configure_milestone_delete()
+        self.f.payload = b'{"theorem_id":"other"}'
+        self.f.request["body_sha256"] = digest(self.f.payload)
+        self.rejected("milestone_delete_requires_empty_object")
+
+    def test_milestone_delete_cannot_promote_a_claim(self):
+        self.configure_milestone_delete()
+        self.f.action = "foundation_promote"
+        self.rejected("milestone_delete_requires_private_stage")
+
+    def test_milestone_delete_rejects_changed_uuid_and_expiry(self):
+        self.configure_milestone_delete()
+        pin = self.f.freeze()
+        args = self.f.kwargs()
+        args["path"] = "/milestones/00000000-0000-0000-0000-000000000000"
+        self.rejected("exact_request_mismatch", pin, kwargs=args)
+        self.rejected(pin=pin, clock=lambda: NOW + timedelta(minutes=2))
+
     def test_positive_boundary_invokes_exact_bytes_once(self):
         self.assertEqual(self.invoke(), "simulated mutation")
         self.assertEqual(self.calls, [("PATCH", "/missions/private-id", self.f.payload, "application/json")])

@@ -56,6 +56,52 @@ class TransportTests(unittest.TestCase):
         self.assertEqual(req.get_method(), "PATCH")
         self.assertEqual(req.get_header("Content-type"), "application/json")
 
+    def test_reviewed_delete_accepts_empty_204_once(self):
+        self.fixture.action = "private_stage"
+        self.fixture.payload = b"{}"
+        self.fixture.request.update(method="DELETE", path="/milestones/9a54f1bf-66eb-4f87-9c57-3cca8b584baf",
+                                    body_sha256=digest(b"{}"))
+        requests = self.capture.requests
+        class Empty204:
+            def open(self, request, timeout):
+                requests.append(request)
+                response = io.BytesIO(b"")
+                response.status = 204
+                return response
+        self.capture = Empty204()
+        client = self.client()
+        self.assertEqual(self.invoke(client), {"http_status": 204, "body": None})
+        self.assertEqual(len(requests), 1)
+        self.assertEqual(requests[0].data, b"{}")
+        self.assertEqual(requests[0].get_method(), "DELETE")
+        with self.assertRaises(GateRejected):
+            self.invoke(client, path="/theorems/9a54f1bf-66eb-4f87-9c57-3cca8b584baf")
+        self.assertEqual(len(requests), 1)
+
+    def test_unexpected_empty_json_success_is_still_an_error(self):
+        class Empty200:
+            def open(self, request, timeout):
+                response = io.BytesIO(b"")
+                response.status = 200
+                return response
+        self.capture = Empty200()
+        with self.assertRaises(json.JSONDecodeError):
+            self.invoke()
+
+    def test_204_with_unexpected_body_is_still_an_error(self):
+        self.fixture.action = "private_stage"
+        self.fixture.payload = b"{}"
+        self.fixture.request.update(method="DELETE", path="/milestones/9a54f1bf-66eb-4f87-9c57-3cca8b584baf",
+                                    body_sha256=digest(b"{}"))
+        class Bad204:
+            def open(self, request, timeout):
+                response = io.BytesIO(b"unexpected")
+                response.status = 204
+                return response
+        self.capture = Bad204()
+        with self.assertRaisesRegex(RuntimeError, "unexpectedly contained"):
+            self.invoke()
+
     def test_all_json_mutation_methods_use_guard(self):
         for method in ("POST", "PUT", "PATCH"):
             with self.subTest(method=method):

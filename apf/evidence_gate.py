@@ -354,7 +354,13 @@ def validate_request(authorization_pin, *, publisher_id: str, action: str,
             _graph(release["graph"], review, auth, release, nodes, instant)
         request = release["request"]
         require(request in review["accepted_requests"], "outgoing_request_not_independently_reviewed")
-        require(method in ("POST", "PUT", "PATCH"), "invalid_mutation_route")
+        milestone_delete = (method == "DELETE" and isinstance(path, str) and
+                            re.fullmatch(r"/milestones/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", path) is not None)
+        require(method in ("POST", "PUT", "PATCH") or milestone_delete, "invalid_mutation_route")
+        if milestone_delete:
+            require(action == "private_stage", "milestone_delete_requires_private_stage")
+            require(payload == b"{}" and content_type == "application/json",
+                    "milestone_delete_requires_empty_object")
         # Supported mutation endpoints use plain ASCII route segments. Queries,
         # escapes, dot segments, fragments and backslashes require a separately
         # reviewed adapter; never apply policy to an ambiguous literal string.

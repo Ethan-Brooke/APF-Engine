@@ -83,6 +83,10 @@ class P2MClient:
         if before_open is not None:
             before_open()
         with self._opener.open(request, timeout=30) as response:
+            if method == "DELETE" and getattr(response, "status", None) == 204:
+                if response.read() != b"":
+                    raise RuntimeError("P2M 204 response unexpectedly contained a body")
+                return {"http_status": 204, "body": None}
             return json.load(response)
 
     def _mutation_transport(self, method, path, payload, content_type, *, final_validation):
