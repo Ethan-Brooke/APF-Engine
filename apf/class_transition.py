@@ -1,38 +1,16 @@
-"""APF v24.3 — Class-Transition Primitive (Paper 37 bank-side companion).
+"""Paper 37 capacity-flow companion (main v0.18, supplement v0.16).
 
-Closes Q4 of the Paper 37 Technical Supplement v0.12 open-questions list:
-the bank-side machinery for the class-transition theorem developed in
-Paper 37 (Collapse as Realignment).
+The three flow checks are worked-instance model-integrity witnesses: exact
+integration of the printed headroom-driven ODE, release-dependent threshold
+time, and direct substitution into the per-slot Markov-breakdown form.
+They do not establish physical registration or exclude an inverse. The
+positive round-trip check establishes non-refund accounting only.
 
-Three bank checks land:
+The separate structural-reading and collapse-triad checks retain their named
+dependencies and existing grades; permanence there is imported through L_irr,
+not derived from the scalar ODE. Five existing registry entries are retained.
 
-    T_class_transition              composition of existence + uniqueness +
-                                    irreversibility (Theorems 5.1, 5.2, 5.3
-                                    of the Supplement)
-    L_per_slot_capacity_flow        the per-slot capacity-flow equation
-                                    \\dot{phi}_i = Gamma_app (C_vac - phi_i)
-                                    - Gamma_rel phi_i, reducing exactly to
-                                    the Paper 16 v1.1 Markov-breakdown rate
-                                    equation (Theorem 6.1 of the Supplement)
-    T_class_transition_completion   completion-time formula t_trans =
-                                    (|S| Gamma_app)^{-1} ln(Phi_IJC(0)/eps_min)
-                                    derived from the existence proof Step C
-                                    (Theorem 5.1 of the Supplement)
-
-The bank checks are model-integrity checks. They verify that the
-substrate-side framework's per-slot capacity-flow equations admit the
-explicit solutions claimed in the Supplement, that the class-transition
-completion time is finite under the substrate's hypotheses, and that the
-per-slot Markov-breakdown reduction holds at machine precision on a
-worked numerical instance.
-
-Status (per Paper 37 Supplement v0.12 closure surface): closes the v0.1 Q4
-"bank-side machinery for the class transition" reserved flag. Promotes
-the Phase~4 codebase deliverable for the Vocabulary Refactor + Three-
-Regime Ontology Rollout work plan.
-
-Created: 2026-05-14 (Phase 4 codebase pass; Paper 37 v0.7 main +
-Supplement v0.12 substrate-side Class-Transition Primitive at proof grade).
+Created 2026-05-14; capacity-flow correction 2026-09-12.
 """
 from __future__ import annotations
 
@@ -53,44 +31,140 @@ EPS_MIN = 1.0  # per-realignment floor (in normalised substrate units; Paper 1 s
 # Per-slot capacity-flow equation
 # ---------------------------------------------------------------------
 
-def per_slot_phi(t: float, gamma_app: float, gamma_rel: float = 0.0) -> float:
-    """Per-slot saturation depth phi_i(t) for a single capacity slot.
+def _nonnegative(**values):
+    for name, value in values.items():
+        if not math.isfinite(value) or value < 0:
+            raise ValueError(f"{name} must be finite and nonnegative")
 
-    Solves the apparatus-dominated regime (gamma_rel << gamma_app) of
-    the per-slot capacity-flow equation \\dot{phi}_i = gamma_app (C_vac
-    - phi_i) - gamma_rel phi_i with phi_i(0) = 0.
+
+def _flow_inputs(slots, gamma_app, gamma_rel, phi_ijc_0):
+    if isinstance(slots, bool) or not isinstance(slots, int) or slots < 0:
+        raise ValueError("slots must be a nonnegative integer")
+    _nonnegative(gamma_app=gamma_app, gamma_rel=gamma_rel,
+                 phi_ijc_0=phi_ijc_0, total_rate=gamma_app + gamma_rel)
+
+
+def per_slot_phi(t: float, gamma_app: float, gamma_rel: float = 0.0) -> float:
+    """Exact driven-phase slot solution with phi_i(0)=0.
+
+    The apparatus remains on in this expression. For a finite load use
+    transition_state to stop the drive at the supplied registration threshold.
     """
-    if gamma_app <= 0:
+    _nonnegative(t=t, gamma_app=gamma_app, gamma_rel=gamma_rel,
+                 total_rate=gamma_app + gamma_rel)
+    if gamma_app == 0:
         return 0.0
     rate = gamma_app + gamma_rel
-    if rate <= 0:
+    return C_VACUUM * (gamma_app / rate) * (-math.expm1(-rate * t))
+
+
+def _drained_load(t, slots, gamma_app, gamma_rel):
+    if slots == 0 or gamma_app == 0:
         return 0.0
-    asymptote = (gamma_app * C_VACUUM) / rate
-    return asymptote * (1.0 - math.exp(-rate * t))
+    rate = gamma_app + gamma_rel
+    fraction = gamma_app / rate
+    # Integral of m*a*(C-phi(t)), with expm1 for short-time accuracy.
+    return slots * C_VACUUM * fraction * (
+        gamma_rel * t + fraction * (-math.expm1(-rate * t)))
 
 
-def ijc_load(t: float, phi_ijc_0: float, slots: int, gamma_app: float) -> float:
-    """Residual IJC load Phi_IJC(t) under the apparatus-dominated solution.
+def ijc_load(t: float, phi_ijc_0: float, slots: int, gamma_app: float,
+             gamma_rel: float = 0.0) -> float:
+    """Exact driven-phase IJC solution for the printed headroom ODE.
 
-    Solves \\dot{Phi}_IJC = -|S| gamma_app * (C_vac - phi_i(t)) reducing
-    to exponential discharge Phi_IJC(t) = Phi_IJC(0) exp(-|S| gamma_app t)
-    in the early-time regime (phi_i << C_vac).
+    This is an algebraic continuation: after exhausting the initial load it
+    becomes negative and is no longer a physical trajectory. No clipping is
+    concealed in this ODE solution. Use transition_state for a drive that
+    switches off at a positive registration threshold.
     """
-    return phi_ijc_0 * math.exp(-slots * gamma_app * t)
+    _nonnegative(t=t)
+    _flow_inputs(slots, gamma_app, gamma_rel, phi_ijc_0)
+    return phi_ijc_0 - _drained_load(t, slots, gamma_app, gamma_rel)
 
 
-def completion_time(slots: int, gamma_app: float, phi_ijc_0: float, eps_min: float = EPS_MIN) -> float:
-    """Completion timescale t_trans of a class transition.
+def completion_time(slots: int, gamma_app: float, phi_ijc_0: float,
+                    eps_min: float = EPS_MIN, gamma_rel: float = 0.0) -> float:
+    """First time the driven load reaches a supplied positive threshold.
 
-    From the existence proof Step C (Theorem 5.1):
-        t_trans <= (|S| gamma_app)^{-1} * ln(Phi_IJC(0) / eps_min)
-    with strict equality in the apparatus-dominated regime.
+    For zero release, finite completion requires Phi0-eps < m*C; equality
+    is reached only asymptotically. Positive release and drive give a unique
+    finite root, found by monotone bracketing. This threshold convention is
+    not a derivation of physical registration or record irreversibility.
+    The original fourth positional argument remains eps_min.
     """
-    if slots <= 0 or gamma_app <= 0 or eps_min <= 0:
-        return float('inf')
-    if phi_ijc_0 <= eps_min:
+    _flow_inputs(slots, gamma_app, gamma_rel, phi_ijc_0)
+    _nonnegative(eps_min=eps_min)
+    if eps_min == 0:
+        raise ValueError("eps_min must be positive")
+    deficit = phi_ijc_0 - eps_min
+    if deficit <= 0:
         return 0.0
-    return (1.0 / (slots * gamma_app)) * math.log(phi_ijc_0 / eps_min)
+    if slots == 0 or gamma_app == 0:
+        return math.inf
+    capacity = slots * C_VACUUM
+    if gamma_rel == 0:
+        if deficit >= capacity:
+            return math.inf
+        if deficit < capacity / 2:
+            return -math.log1p(-deficit / capacity) / gamma_app
+        return math.log(capacity / (capacity - deficit)) / gamma_app
+
+    rate = gamma_app + gamma_rel
+    drive_fraction = gamma_app / rate
+    release_fraction = gamma_rel / rate
+
+    def threshold_residual(t):
+        if deficit < capacity / 2:
+            return _drained_load(t, slots, gamma_app, gamma_rel) - deficit
+        # D(t)-d near d=m*C: do not round 1-exp(-k*t) to 1 and
+        # discard the exponentially small term that determines the root.
+        # M-A = M*(r/k)*(1+a/k), where A=M*(a/k)^2.
+        return math.fsum((
+            capacity - deficit,
+            -capacity * release_fraction * (1.0 + drive_fraction),
+            -capacity * drive_fraction**2 * math.exp(-rate * t),
+            capacity * drive_fraction * (gamma_rel * t),
+        ))
+
+    # Initial-rate estimate is a lower bound. Doubling brackets the root
+    # without assuming that a release-independent exponential solves the ODE.
+    low = 0.0
+    high = deficit / capacity / gamma_app
+    if high == 0 or not math.isfinite(high):
+        raise OverflowError("threshold time outside floating-point range")
+    while threshold_residual(high) < 0:
+        high *= 2.0
+        if not math.isfinite(high):
+            raise OverflowError("threshold time outside floating-point range")
+    for _ in range(160):
+        middle = low + (high - low) / 2.0
+        if middle == low or middle == high:
+            break
+        if threshold_residual(middle) < 0:
+            low = middle
+        else:
+            high = middle
+    return high
+
+
+def transition_state(t: float, phi_ijc_0: float, slots: int,
+                     gamma_app: float, gamma_rel: float = 0.0,
+                     eps_min: float = EPS_MIN) -> tuple[float, float]:
+    """(Residual IJC load, per-slot fill) under an explicit stopping protocol.
+
+    Drive stops at completion_time; the residual stays booked at eps_min
+    (or its initial value if already below threshold), and occupied slots
+    release exponentially. Neither discarding the residual nor permanent
+    locking is supplied by this scalar model. Exact clearing is asymptotic
+    when release is positive. With no slots, the reported slot fill is zero.
+    """
+    _nonnegative(t=t)
+    stop = completion_time(slots, gamma_app, phi_ijc_0, eps_min, gamma_rel)
+    driven_t = min(t, stop)
+    phi = per_slot_phi(driven_t, gamma_app, gamma_rel) if slots else 0.0
+    if t >= stop:
+        return min(phi_ijc_0, eps_min), phi * math.exp(-gamma_rel * (t - stop))
+    return ijc_load(t, phi_ijc_0, slots, gamma_app, gamma_rel), phi
 
 
 # ---------------------------------------------------------------------
@@ -117,47 +191,22 @@ def per_slot_capacity_flow_rhs(phi: float, gamma_app: float, gamma_rel: float) -
 # ---------------------------------------------------------------------
 
 def check_T_class_transition() -> dict:
-    """Composition of class-transition existence + uniqueness + irreversibility.
-
-    Verifies on a worked instance:
-      (a) the per-slot saturation depth phi_i(t) is monotone-increasing
-          and bounded by C_vacuum (existence);
-      (b) the completion time t_trans is finite under the substrate's
-          hypotheses (existence Step C);
-      (c) the realignment-cost floor eps_min is paid one-way at the
-          transition (irreversibility): the round-trip cost is 2*eps_min,
-          not zero.
-    """
-    gamma_app = 1.0
-    gamma_rel = 0.01
-    slots = 4
-
-    # (a) monotone-increasing, bounded by C_vacuum
-    phi_vals = [per_slot_phi(t, gamma_app, gamma_rel) for t in [0.0, 0.5, 1.0, 5.0, 50.0]]
-    monotone = all(phi_vals[i] <= phi_vals[i+1] + 1e-9 for i in range(len(phi_vals)-1))
-    bounded = all(p <= C_VACUUM + 1e-9 for p in phi_vals)
-
-    # (b) finite completion time
-    phi_ijc_0 = 100.0  # well above eps_min
-    t_trans = completion_time(slots, gamma_app, phi_ijc_0)
-    finite_completion = math.isfinite(t_trans) and t_trans > 0.0
-
-    # (c) irreversibility: forward + reverse pays 2*eps_min
-    forward_cost = EPS_MIN
-    reverse_cost = EPS_MIN
-    round_trip = forward_cost + reverse_cost
-    irreversible = (round_trip == 2 * EPS_MIN) and (round_trip > 0.0)
-
-    passed = monotone and bounded and finite_completion and irreversible
+    """Worked-instance flow and non-refund accounting, not an inverse no-go."""
+    slots, ga, gr, phi0 = 4, 1.0, 0.01, 100.0
+    stop = completion_time(slots, ga, phi0, gamma_rel=gr)
+    fills = [per_slot_phi(f * stop, ga, gr) for f in (0, .25, .5, .75, 1)]
+    monotone = all(x <= y for x, y in zip(fills, fills[1:]))
+    bounded = all(0 <= x < C_VACUUM for x in fills)
+    threshold = abs(ijc_load(stop, phi0, slots, ga, gr) - EPS_MIN) < 1e-10
+    no_refund = EPS_MIN > 0 and EPS_MIN + EPS_MIN == 2 * EPS_MIN
     return {
         'name': 'T_class_transition',
-        'passed': passed,
-        'key_result': (
-            f'phi_monotone={monotone}; phi_bounded={bounded}; '
-            f't_trans={t_trans:.4f} (finite={finite_completion}); '
-            f'round_trip_cost={round_trip} (irreversible={irreversible})'
-        ),
-        'theorem_refs': ['Paper 37 Supp v0.12 Theorem 5.1', 'Theorem 5.2', 'Theorem 5.3'],
+        'passed': monotone and bounded and threshold and no_refund,
+        'key_result': (f'phi_monotone={monotone}; phi_bounded={bounded}; '
+                       f'transition_threshold={threshold}; t_trans={stop:.8f}; '
+                       f'positive_round_trip={no_refund}; '
+                       'non-refund accounting does not exclude an inverse'),
+        'theorem_refs': ['Paper 37 Supp v0.16 Theorem 5.1', 'Theorem 5.3'],
     }
 
 
@@ -197,48 +246,32 @@ def check_L_per_slot_capacity_flow() -> dict:
 
 
 def check_T_class_transition_completion() -> dict:
-    """Class-transition completion time formula at machine precision.
-
-    Verifies the explicit completion-time formula
-        t_trans = (|S| gamma_app)^{-1} * ln(Phi_IJC(0) / eps_min)
-    on a worked instance, and confirms that:
-      (a) t_trans is finite for positive inputs;
-      (b) t_trans -> 0 as Phi_IJC(0) -> eps_min (transition is already complete);
-      (c) t_trans -> infinity as gamma_app -> 0 (no apparatus = no transition);
-      (d) t_trans is independent of gamma_rel in the apparatus-dominated regime
-          (release rate doesn't affect completion-time scaling).
-    """
-    # Worked instance: 4 slots, gamma_app=1, Phi_IJC(0)=100, eps_min=1
-    slots = 4
-    gamma_app = 1.0
-    phi_ijc_0 = 100.0
-    expected = (1.0 / (slots * gamma_app)) * math.log(phi_ijc_0 / EPS_MIN)
-    computed = completion_time(slots, gamma_app, phi_ijc_0)
-    formula_match = abs(expected - computed) < 1e-12
-
-    # (a) finite for positive inputs
-    finite = math.isfinite(computed)
-
-    # (b) Phi_IJC(0) = eps_min => t_trans = 0
-    boundary_zero = completion_time(slots, gamma_app, EPS_MIN) == 0.0
-
-    # (c) gamma_app -> 0 => t_trans -> infinity
-    boundary_infty = math.isinf(completion_time(slots, 0.0, phi_ijc_0))
-
-    # (d) independence of gamma_rel: completion_time signature does not
-    # take gamma_rel; verify by inspection that the formula is structural
-    independence_of_rel = True
-
-    passed = formula_match and finite and boundary_zero and boundary_infty and independence_of_rel
+    """Independent fixed-time witness, root residual and release boundaries."""
+    # Directly integrated zero-release ODE: four slots drain 3 units when
+    # exp(-t)=55/56. The old exponential gives about 3.72 remaining, not 1.
+    fixed_t = math.log(56 / 55)
+    witness = abs(ijc_load(fixed_t, 4.0, 4, 1.0) - 1.0) < 1e-12
+    zero_t = completion_time(4, 1.0, 4.0)
+    zero_root = abs(zero_t - fixed_t) < 1e-14
+    slow = completion_time(4, 1.0, 100.0, gamma_rel=.01)
+    fast = completion_time(4, 1.0, 100.0, gamma_rel=2.0)
+    residuals = all(abs(ijc_load(t, 100.0, 4, 1.0, r) - EPS_MIN) < 1e-10
+                    for t, r in ((slow, .01), (fast, 2.0)))
+    release_dependence = 0 < fast < slow < completion_time(4, 1.0, 100.0)
+    boundaries = (
+        completion_time(4, 0.0, EPS_MIN) == 0
+        and math.isinf(completion_time(4, 0.0, 4.0))
+        and math.isinf(completion_time(0, 1.0, 4.0))
+        and math.isinf(completion_time(4, 1.0, 169.0))
+        and math.isinf(completion_time(4, 1.0, 170.0))
+        and math.isfinite(completion_time(4, 1.0, 170.0, gamma_rel=.01)))
     return {
         'name': 'T_class_transition_completion',
-        'passed': passed,
-        'key_result': (
-            f't_trans = {computed:.6f} (formula={expected:.6f}, match={formula_match}); '
-            f'boundary_zero={boundary_zero}; boundary_infty={boundary_infty}; '
-            f'independence_of_rel={independence_of_rel}'
-        ),
-        'theorem_refs': ['Paper 37 Supp v0.12 Theorem 5.1 Step C'],
+        'passed': witness and zero_root and residuals and release_dependence and boundaries,
+        'key_result': (f'fixed_time_ODE_witness={witness}; zero_release_root={zero_root}; '
+                       f'root_residuals={residuals}; release_dependence={release_dependence}; '
+                       f'boundary_regimes={boundaries}'),
+        'theorem_refs': ['Paper 37 Supp v0.16 Theorem 5.1'],
     }
 
 
@@ -272,8 +305,8 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
     eps_star_positive = bool(eps_star.get('passed') is True)
     # (2) the floor is DERIVED from MD (not posited)
     md_derived = bool(md_floor.get('passed') is True)
-    # (3) a realignment is a finite-cost, one-way (irreversible) class transition
-    transition_one_way = bool(transition.get('passed') is True)
+    # (3) the supplied flow model and positive round-trip accounting are consistent
+    transition_model_consistent = bool(transition.get('passed') is True)
     # (4) the per-transition floor used by the class-transition machinery is > 0
     kappa_min_positive = EPS_MIN > 0.0
 
@@ -281,7 +314,7 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
     # Positivity and passed flags do not derive the identification;
     # numeric normalizations differ and are not asserted equal.
     identified = (eps_star_positive and md_derived
-                  and transition_one_way and kappa_min_positive)
+                  and transition_model_consistent and kappa_min_positive)
 
     return {
         'name': 'T_realignment_floor_is_epsilon_star',
@@ -290,7 +323,7 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
         'key_result': (
             f'kappa_min read as eps*_Gamma (assumed structural identification; anchor consistency): '
             f'eps*_positive={eps_star_positive}, MD_derived={md_derived}, '
-            f'transition_one_way={transition_one_way}, '
+            f'transition_model_consistent={transition_model_consistent}, '
             f'kappa_min={EPS_MIN} > 0 = {kappa_min_positive}; '
             f'per-module normalisations differ (identification is structural, not numeric)'
         ),
@@ -304,63 +337,36 @@ def check_T_realignment_floor_is_epsilon_star() -> dict:
 
 
 def check_T_coherent_free_spend_permanent() -> dict:
-    """T_coherent_free_spend_permanent: the collapse triad, [P] as a
-    composition of banked [P] theorems over the constitutive base
-    (A1 + occupancy). Coherent hold is FREE, resolving BOOKS the enforcement
-    floor (>= eps* > 0), and the committed distinction is PERMANENT (one-way).
+    """Existing collapse-triad dependency composition with a numerical guard.
 
-    THE THREE LEGS, each discharged by a banked [P] theorem:
-      (1) FREE while coherent/held -- check_T_ledger_rent_excluded [P]
-          (Paper 3): "no cost accrues to a held alignment at fixed
-          structure." Holding continuations open, at fixed structure, is
-          free.
-      (2) SPEND at resolution -- check_L_irr [P] (a resolution / cross-
-          interface interaction COMMITS capacity Delta > 0, given occupancy)
-          + check_L_epsilon_star [P] (any committed distinction is floored
-          by the marginal admissibility floor eps* > 0, MD-derived).
-          Composing: a resolution's committed cost is >= eps* > 0 -- it is
-          not free. NOTE the routing: this leg does NOT gate on the
-          kappa_min == eps* identification (check_T_realignment_floor_is_
-          epsilon_star, [P_structural], which additionally carries the
-          substrate ODE); the triad needs only ">= eps* > 0", which L_irr +
-          eps_star give directly at [P]. The exact-equality identification
-          stays a [P_structural] cross-ref for anyone who wants kappa == eps*.
-      (3) PERMANENT / one-way -- check_L_irr [P]: committed cross-interface
-          capacity is locally unrecoverable, so the record is irreversible
-          (the arrow); the reverse is itself a resolution that books its own
-          floor (no refund).
+    The existing machine grade P is retained, not independently certified by
+    the capacity-flow repair. FREE uses T_ledger_rent_excluded; SPEND uses
+    L_irr and L_epsilon_star; PERMANENT imports L_irr. The floor-identification
+    check is a cross-reference rather than a pass-gate dependency.
 
-    GRADE [P]: dependencies occupancy, L_irr, T_ledger_rent_excluded,
-    L_epsilon_star -- ALL banked [P] over the constitutive base; the triad is
-    their composition, and the class-transition ORDER (free-hold -> paid
-    resolution -> permanent record) is what rent-exclusion + L_irr + the eps*
-    floor jointly force. No [P_structural] check sits inside the pass gate
-    (the earlier [P_structural] grade was an artifact of gating on the
-    realignment-floor identification, now dropped to a cross-ref); the
-    substrate ODE is REPORTED only, never gating. No new derivation, no grade
-    uplift beyond the pillars.
+    In addition, resolves() consumes the scalar completion solver for the
+    fixed worked instance: free requires no completion with no drive, while
+    spend and permanent require finite completion with drive. This numerical
+    completion guard DOES participate in the pass gate. Only the separately
+    reported driven-phase monotonicity check is non-gating.
 
-    FENCE (situational line): the quantum/classical SPLIT -- the FORM
-    free-hold -> eps_min-at-resolution -> permanent -- is what this check
-    fixes, and it is [P]. But the LINE itself (WHICH side a given situation is
-    on: still coherent/quantum vs already resolved/classical) is SITUATIONAL,
-    set by the actual OCCUPANCY of that situation, read off the world, never
-    derived here. Occupancy-obtains (that resolution happens at all) is
-    constitutive [P] base (v24.3.304); the occupancy-PROFILE (which interface,
-    resolved or not, its interpretation) is empirical. The mechanism is
-    settled and [P]; where the cut falls is per-situation.
+    The scalar guard does not establish that a physical resolution occurs,
+    that the supplied rates/threshold are realized, or that an inverse is
+    excluded. Permanence remains the imported L_irr claim. The occupancy
+    profile and physical applicability are not derived by this check.
     """
     from apf.core import check_L_irr, check_L_epsilon_star
     from apf.operational_completeness import check_T_ledger_rent_excluded
 
     slots, ga, gr, phi0 = 4, 1.0, 0.01, 100.0
-    tgrid = [0.0, 0.25, 0.5, 1.0, 2.0, 5.0, 20.0]
+    t_trans = completion_time(slots, ga, phi0, gamma_rel=gr)
+    tgrid = [f * t_trans for f in (0.0, .1, .25, .5, .75, 1.0)]
 
     def resolves(gamma_app):
         # structural: does a class transition COMPLETE (a resolution occur)?
-        return math.isfinite(completion_time(slots, gamma_app, phi0))
+        return math.isfinite(completion_time(slots, gamma_app, phi0, gamma_rel=gr))
 
-    # ===== THE [P] GATE: three banked [P] theorems, no [P_structural] inside =====
+    # Existing dependency gate plus the fixed-instance completion guard.
     rent_excluded_P = bool(check_T_ledger_rent_excluded().get('passed') is True)
     irr_P = bool(check_L_irr().get('passed') is True)
     eps_star_P = bool(check_L_epsilon_star().get('passed') is True)
@@ -379,22 +385,22 @@ def check_T_coherent_free_spend_permanent() -> dict:
 
     # ===== SECONDARY (instrument-level, NON-gating): Paper 37 substrate ODE
     phi_seq = [per_slot_phi(t, ga, gr) for t in tgrid]
-    ijc_seq = [ijc_load(t, phi0, slots, ga) for t in tgrid]
+    ijc_seq = [ijc_load(t, phi0, slots, ga, gr) for t in tgrid]
     dyn_consistent = (all(phi_seq[i] <= phi_seq[i + 1] + 1e-12 for i in range(len(phi_seq) - 1))
                       and all(ijc_seq[i] >= ijc_seq[i + 1] - 1e-12 for i in range(len(ijc_seq) - 1)))
-    t_trans = completion_time(slots, ga, phi0)
+    t_trans = completion_time(slots, ga, phi0, gamma_rel=gr)
 
     return {
         'name': 'T_coherent_free_spend_permanent',
         'epistemic': 'P',
         'passed': passed,
         'key_result': (
-            f'[P] composition over A1+occupancy (no [P_structural] in the gate): '
+            f'Existing [P] composition with a numerical completion guard: '
             f'FREE = ledger_rent_excluded[P] (+ a held/non-resolving alignment '
             f'does not complete) -> {free}; SPEND = L_irr[P] (resolution commits '
             f'Delta>0) + L_epsilon_star[P] (floor eps*>0) => cost >= eps*>0, booked '
             f'-> {spend}; PERMANENT = L_irr[P] one-way (reverse books its own floor) '
-            f'-> {permanent}. Secondary (non-gating): Paper 37 ODE consistent '
+            f'-> {permanent}. Secondary (non-gating): Paper 37 driven-phase monotonicity '
             f'(phi up/IJC down = {dyn_consistent}, t_trans={t_trans:.4f}).'
         ),
         'dependencies': ['occupancy', 'L_irr', 'T_ledger_rent_excluded', 'L_epsilon_star'],
@@ -426,7 +432,7 @@ _CHECKS = {
 def register(registry):
     """Register the class-transition checks into the bank.
 
-    4 checks total (v24.3.47 added T_realignment_floor_is_epsilon_star,
+    Five checks total (v24.3.47 added T_realignment_floor_is_epsilon_star,
     the kappa_min == eps*_Gamma bridge). Closes Paper 37 Supplement v0.12 Q4
     (bank-side machinery for the class-transition theorem).
     """
@@ -468,12 +474,12 @@ IE_DECLARATIONS = (
             "worked-instance model-integrity witnesses of the substrate "
             "dynamics: check_T_class_transition (per-slot saturation phi "
             "monotone and bounded by C_vacuum = 42, finite completion time, "
-            "one-way round-trip cost); check_L_per_slot_capacity_flow (the "
+            "positive round-trip accounting, not exclusion of an inverse); check_L_per_slot_capacity_flow (the "
             "per-slot capacity-flow RHS equals the Paper 16 v1.1 Markov-"
             "breakdown RHS exactly, max diff < 1e-12); "
-            "check_T_class_transition_completion (the formula t_trans = "
-            "(|S| Gamma_app)^-1 x ln(Phi_IJC(0)/eps_min) at machine precision "
-            "plus boundary limits). check_T_realignment_floor_is_epsilon_star "
+            "check_T_class_transition_completion (integrated headroom ODE, "
+            "independent fixed-time witness, release-dependent threshold root "
+            "and zero-release reachability limits). check_T_realignment_floor_is_epsilon_star "
             "[P_structural_reading] checks anchor consistency under the named "
             "identification kappa_min == eps*_Gamma; MD independently supplies "
             "the positive marginal floor. check_T_coherent_free_spend_permanent [P] "
@@ -486,8 +492,9 @@ IE_DECLARATIONS = (
             "eps*>0) => cost >= eps*>0, booked not free; PERMANENT one-way = "
             "check_L_irr [P]. The [P] is INHERITED from the three pillars; NO "
             "[P_structural] check sits in the pass gate (the kappa_min==eps* "
-            "identification is a cross_ref only) and the substrate ODE is "
-            "reported-only. Fresh audit LAND-[P] 0.88."
+            "identification is a cross_ref only). The scalar completion "
+            "guard participates in the pass gate; only the monotonicity "
+            "report is non-gating. Historical banking audit: LAND-[P] 0.88."
         ),
         "note": (
             "Wave 7 (v24.3.397 adds check_T_coherent_free_spend_permanent, "
@@ -497,7 +504,8 @@ IE_DECLARATIONS = (
             "L_epsilon_star -- all banked [P]; SPEND routed via L_irr + "
             "eps_star giving cost >= eps* > 0, so NO [P_structural] sits in "
             "the gate; the realignment-floor identification is a cross_ref "
-            "only; substrate ODE reported-only; fresh audit LAND-[P] 0.88) "
+            "only; numerical completion guards the gate, monotonicity is "
+            "non-gating; historical banking audit LAND-[P] 0.88) "
             "and check_T_realignment_floor_is_epsilon_star [P_structural_reading] "
             "carry machine epistemic fields. The other THREE "
             "(T_class_transition, L_per_slot_capacity_flow, "
@@ -535,8 +543,9 @@ IE_DECLARATIONS = (
                 "reverse transition books its own forward floor, round trip "
                 "2*eps_min > 0, no refund (check_L_irr [P]). NO "
                 "[P_structural] check sits in the gate: the kappa_min == "
-                "eps* identification is a cross_ref, and the substrate ODE "
-                "is reported-only. "
+                "eps* identification is a cross_ref. The scalar completion "
+                "guard participates in the pass gate; the monotonicity "
+                "report does not. "
                 "(check_T_coherent_free_spend_permanent, class_transition.py)"
             ),
         },
