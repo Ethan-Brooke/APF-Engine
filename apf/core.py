@@ -5583,12 +5583,38 @@ def check_T_entropy():
     rho_AB_ent = _outer(psi, psi)
     eigs_AB_ent = _eigvalsh(rho_AB_ent)
     S_AB_ent = -sum(ev * _math.log(ev) for ev in eigs_AB_ent if ev > 1e-15)
-    # Pure entangled state: S(AB) = 0, but S(A) > 0
-    rho_A_ent = _mat([[abs(psi[0])**2, psi[0]*psi[3].conjugate()],
-                       [psi[3]*psi[0].conjugate(), abs(psi[3])**2]])
+    # Trace out B for rho_A, and A for rho_B, in the |i>_A |k>_B basis.
+    rho_A_ent = _zeros(d2, d2)
+    rho_B_ent = _zeros(d2, d2)
+    for i in range(d2):
+        for j in range(d2):
+            for k in range(d2):
+                rho_A_ent[i][j] += rho_AB_ent[i * d2 + k][j * d2 + k]
+                rho_B_ent[i][j] += rho_AB_ent[k * d2 + i][k * d2 + j]
     eigs_A_ent = _eigvalsh(rho_A_ent)
+    eigs_B_ent = _eigvalsh(rho_B_ent)
+    for label, marginal, spectrum in (
+        ("A", rho_A_ent, eigs_A_ent), ("B", rho_B_ent, eigs_B_ent)
+    ):
+        check(_aclose(marginal, _diag([0.7, 0.3]), 1e-12),
+              f"Entangled marginal {label}: true partial trace")
+        check(all(abs(ev - expected) < 1e-12
+                  for ev, expected in zip(sorted(spectrum), [0.3, 0.7])),
+              f"Entangled marginal {label}: spectrum is (0.3, 0.7)")
+        check(abs(_tr(marginal).real - 1.0) < 1e-12,
+              f"Entangled marginal {label}: normalized")
+        check(abs(_tr(_mm(marginal, marginal)).real - 0.58) < 1e-12,
+              f"Entangled marginal {label}: mixed, purity 0.58")
     S_A_ent = -sum(ev * _math.log(ev) for ev in eigs_A_ent if ev > 1e-15)
-    check(S_AB_ent < S_A_ent + 1e-6, "Subadditivity: S(AB) <= S(A) + S(B)")
+    S_B_ent = -sum(ev * _math.log(ev) for ev in eigs_B_ent if ev > 1e-15)
+    S_expected = -0.7 * _math.log(0.7) - 0.3 * _math.log(0.3)
+    check(abs(S_AB_ent) < 1e-12, "Pure entangled joint state: S(AB) = 0")
+    check(S_A_ent > 0.0 and S_B_ent > 0.0,
+          "Entangled marginals have positive entropy")
+    check(abs(S_A_ent - S_expected) < 1e-12 and abs(S_B_ent - S_expected) < 1e-12,
+          "Entangled marginal entropies equal the binary entropy (nats)")
+    check(S_AB_ent <= S_A_ent + S_B_ent + 1e-12,
+          "Subadditivity: S(AB) <= S(A) + S(B)")
 
     # Step 5: Concavity -- mixing increases entropy
     p = 0.4
@@ -12481,30 +12507,51 @@ def _branch_taxonomy_witnesses() -> Dict[str, QueryInterface]:
 
 @dataclass(frozen=True)
 class CoherentInterface:
-    """A finite record-complete coherent interface (Definition 1511)."""
+    """Supplied pure-state record-basis model; is_ijc is an input label."""
     name: str
     record_basis: Tuple[str, ...]
     coherent_states: Tuple[Tuple[complex, ...], ...]   # superposition coefficients
     is_ijc: bool
 
     def boolean_record_locking_distortion(self) -> float:
-        """Distortion incurred when forcing each coherent state into the
-        nearest record class (i.e., projecting onto the record basis).
+        """Maximum matched-projector overlap loss under nonselective pinching.
 
-        For an equally-weighted superposition over n record classes, the
-        Boolean record-locking projector retains 1/n of the original
-        coherence; preservation distortion = 1 - 1/n.
+        Model scope: each supplied coefficient vector is a normalized pure
+        state in the declared orthonormal record basis.  For probabilities
+        p_i = |c_i|**2, pinching rho = |c><c| to diag(p_i) retains overlap
+        Tr(rho * diag(p_i)) = sum(p_i**2).  Return the largest loss over
+        the supplied finite family.  Equal weights give 1 - 1/n; a record
+        eigenstate gives zero.  This is not nearest-record-state projection,
+        normalized analyzer contrast, or the general APF profile distortion.
+        The supplied is_ijc flag is neither used nor established here.
+
+        Empty families retain the legacy zero result. Nonempty families
+        require matching dimensions and finite unit-norm coefficients;
+        normalization within 1e-12 is rounded to unit total for arithmetic.
         """
         if not self.coherent_states:
             return 0.0
-        # Witness: equal superposition |+> = (|0> + |1>)/sqrt(2) and
-        # |-> = (|0> - |1>)/sqrt(2) on a 2-level basis. Boolean record-
-        # locking annihilates the off-diagonal terms; preservation
-        # distortion of the original coherent pair = 1/2.
         n = len(self.record_basis)
         if n == 0:
-            return 0.0
-        return 1.0 - (1.0 / n)
+            raise ValueError("a nonempty state family requires a record basis")
+        losses = []
+        for state in self.coherent_states:
+            if len(state) != n:
+                raise ValueError("state dimension must match the record basis")
+            magnitudes = [abs(c) for c in state]
+            probabilities = [a * a for a in magnitudes]
+            if not all(_math.isfinite(p) for p in probabilities):
+                raise ValueError("state coefficients must be finite")
+            try:
+                total = _math.fsum(probabilities)
+            except OverflowError as exc:
+                raise ValueError("state coefficients must have unit norm") from exc
+            if not _math.isclose(total, 1.0, rel_tol=0.0, abs_tol=1e-12):
+                raise ValueError("state coefficients must have unit norm")
+            probabilities = [p / total for p in probabilities]
+            loss = 1.0 - _math.fsum(p * p for p in probabilities)
+            losses.append(max(0.0, loss))  # remove possible negative roundoff
+        return max(losses)
 
 def _qac_witness_coherent_2level() -> CoherentInterface:
     """Two-level coherent interface witness: |+>, |-> over basis {|0>, |1>}."""
@@ -12637,20 +12684,20 @@ def check_T_branch_taxonomy_inclusions():
     }
 
 def check_T_quantum_admissibility_condition():
-    """T_quantum_admissibility_condition: branch (IJC) at a record-complete
-    coherent interface produces a QAC witness.
+    """T_quantum_admissibility_condition: supplied two-level model check.
 
-    Tier 4 [P_regime]. Paper 5 Supplement v5.1 Theorem 1518 ("IJC produces
-    a QAC witness in record-complete coherent interfaces").
+    Existing Tier 4 [P_regime] registration is retained. Paper 5 Supplement
+    v5.1 Theorem 1518 is the associated source theorem, not proved by this
+    numerical example. The check executes nonselective record-basis pinching
+    on supplied normalized pure-state families: maximum matched-projector
+    overlap loss is 1/2 for |+>, |-> and zero for record eigenstates.
+    Constructor IJC labels, Hilbert representation, pinching and Born-model
+    overlap meaning are inputs. A positive loss for this one locking map
+    does not certify the complete QAC, general profile distortion, all
+    repaired Boolean defenders, or an original admitted physical experiment.
 
-    Verifies:
-      (i) On the coherent IJC witness, Boolean record-locking incurs
-          strictly positive preservation distortion -- the QAC is satisfied
-          (records and coherent continuations are operationally
-          incompatible, with positive distortion).
-      (ii) On the classical record-eigenstate witness, Boolean record-
-          locking incurs zero distortion -- the classical case correctly
-          fails QAC (no quantum structure forced).
+    The historical programme commentary below is retained as provenance;
+    its broader claims are not established or re-reviewed by this check.
 
     Reading (2026-07-24, count-neutral cross-ref; no grade change).  The
     observable structure above the QAC is forced -- Sep/IJC, the
@@ -12691,33 +12738,27 @@ def check_T_quantum_admissibility_condition():
     close them: APF Reference Docs/Reference - THE BORN LEDGER - Open Items
     and What Would Close It (2026-07-28).md.
     """
+    # Scope clarification (2026-09-10): the historical discussion above is
+    # provenance, not established by this numerical check. The executed scope
+    # is the supplied pure-state/pinching model stated in the result below.
     coh = _qac_witness_coherent_2level()
     cls = _qac_witness_classical_2level()
 
-    # (i) coherent IJC witness: distortion > 0
+    # Supplied pure-state/pinching model: verify the exact declared statistic.
+    # Branch labels remain constructor inputs, not conclusions of this check.
     d_coh = coh.boolean_record_locking_distortion()
-    assert d_coh > 0.0, (
-        f"QAC witness for coherent IJC must have distortion > 0; got {d_coh}"
+    assert abs(d_coh - 0.5) < 1e-12, (
+        f"coherent matched-projector overlap loss must be 1/2; got {d_coh}"
     )
-    assert coh.is_ijc, "coherent witness must be in branch (IJC)"
+    assert coh.is_ijc, "supplied coherent fixture label must remain IJC"
 
-    # (ii) classical witness: distortion is 0 only when inputs are record
-    # eigenstates -- here the *generic* basis-projection distortion of the
-    # canonical projector is 1 - 1/n = 1/2 in the abstract, but on these
-    # specific record-eigenstate inputs the per-state distortion is 0.
-    # We check the classical baseline by inspecting the inputs themselves.
-    d_classical_per_input = 0.0
-    for state in cls.coherent_states:
-        # Distortion on record-eigenstate input is 0 (record-locking is
-        # the identity on basis states).
-        amp_max = max(abs(c) for c in state)
-        per_input = abs(1.0 - amp_max ** 2)
-        d_classical_per_input = max(d_classical_per_input, per_input)
+    # Use the SAME declared statistic for the actual classical inputs.
+    d_classical_per_input = cls.boolean_record_locking_distortion()
     assert d_classical_per_input < 1e-12, (
         f"classical record-eigenstate inputs must have zero distortion; "
         f"got {d_classical_per_input}"
     )
-    assert not cls.is_ijc, "classical witness must NOT be in branch (IJC)"
+    assert not cls.is_ijc, "supplied classical fixture label must remain non-IJC"
 
     return {
         "name": "T_quantum_admissibility_condition",
@@ -12732,24 +12773,21 @@ def check_T_quantum_admissibility_condition():
         "epistemic": "P_regime",
         "dependencies": [],
         "key_result": (
-            f"Coherent IJC: preservation distortion = {d_coh} > 0 "
-            f"(QAC satisfied); classical inputs: "
-            f"per-state distortion = {d_classical_per_input} (QAC trivially "
-            "absent)"
+            f"Supplied two-level pinching model: maximum matched-projector "
+            f"overlap loss is {d_coh} on coherent inputs and "
+            f"{d_classical_per_input} on record eigenstates. "
+            "IJC flags are supplied; no physical QAC certification is performed."
         ),
         "summary": (
-            "Paper 5 v5.1 Theorem 1518 (IJC produces a QAC witness in "
-            "record-complete coherent interfaces): branch (IJC) plus "
-            "record-completeness plus coherent-continuation richness "
-            "produces a Quantum Admissibility Condition witness -- coherent "
-            "continuations whose Boolean record-locking incurs strictly "
-            "positive preservation distortion. The witness here is the "
-            "two-level coherent interface |+>, |-> on basis {|0>, |1>}: "
-            "Boolean record-locking annihilates the off-diagonal coherence "
-            "and produces preservation distortion 1/2 > 0. The classical "
-            "baseline on the same basis (inputs |0>, |1>) does not "
-            "satisfy QAC because the record-eigenstate inputs are already "
-            "record-locked."
+            "Numerical illustration associated with Paper 5 v5.1 Theorem 1518. "
+            "Given normalized pure-state coefficients, an orthonormal record "
+            "basis and nonselective pinching, the check computes maximum "
+            "matched-projector overlap loss over each supplied input family. "
+            "It obtains 1/2 for |+>, |-> and zero for |0>, |1>, using the same "
+            "helper on both families. This is one supplied locking-map model, "
+            "not a proof of the general theorem, the full QAC clauses, or "
+            "exclusion of all repaired Boolean defenders. No physical "
+            "preparation, readout calibration or whole protocol bill is derived."
         ),
     }
 
